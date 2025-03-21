@@ -1,1 +1,3 @@
+# Bazel itermediat files and directories
 bazel-*
+MODULE.bazel.lock

@@ -1,0 +1,42 @@
+# *******************************************************************************
+# Copyright (c) 2024 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+name: "Gitlint Action"
+description: "An action to install and run Gitlint on PR commits"
+inputs:
+  pr-number:
+    description: "Pull Request number used to fetch commits"
+    required: true
+  base-branch:
+    description: "Base branch to compare commits against (default: origin/main)"
+    default: "origin/main"
+    required: false
+runs:
+  using: "docker"
+  image: "jorisroovers/gitlint:0.19.1"
+  entrypoint: /bin/sh
+  args:
+    - -c
+    - |
+      git config --global --add safe.directory /github/workspace && \
+      git fetch origin +refs/heads/main:refs/remotes/origin/main && \
+      git fetch origin +refs/pull/${{ inputs.pr-number }}/head && \
+      if ! gitlint --commits origin/main..HEAD; then \
+        echo -e "\nWARNING: Your commit message does not follow the required format." && \
+        echo "Formatting rules: https://eclipse-score.github.io/score/process/guidance/git/index.html" && \
+        echo -e "To fix your commit message, run:\n" && \
+        echo " git commit --amend" && \
+        echo "Then update your commit (fix gitlint warnings). Finally, force-push:" && \
+        echo " git push --force-with-lease" && \
+        exit 1; \
+      fi
