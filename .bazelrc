@@ -2,6 +2,6 @@
 common --//score/mw/log/detail/flags:KUse_Stub_Implementation_Only=False
 common --//score/mw/log/flags:KRemote_Logging=False
 common --//score/json:base_library=nlohmann
-# common --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+common --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
 build --incompatible_strict_action_env
 test --test_tag_filters=-manual

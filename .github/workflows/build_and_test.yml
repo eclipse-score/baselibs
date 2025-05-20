@@ -1,0 +1,62 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Workflow configuration for S-CORE CI - Bazel Build & Test baselibs
+# This workflow runs Bazel build and test when triggered by specific pull request events.
+
+name: Bazel Build & Test baselibs (host config)
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
+
+env:
+  IMAGE_NAME: "bazel-clang-image"
+  ENV_VARS: |
+    - "USER_NAME=$USER"
+    - "USER_UID=$(id -u)"
+    - "USER_GID=$(id -g)"
+    - "DOCKER_GID=$(getent group docker | cut -d: -f3)"
+  VOL_BIDS: |
+    - "${{ github.workspace }}:/workspace"
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  OUTPUT_USER_CACHE: "/output_user_cache"
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.9.1
+      # Following steps are needed due to issue with the Clang Bazel toolchain setup
+      # Bug ticket: https://github.com/eclipse-score/score/issues/1104
+      - name: Build Docker image
+        run: |
+          docker build -t bazel-clang-image .
+      - name: Create cache folder for Bazel targets
+        run: |
+          sudo mkdir -p ${{ env.OUTPUT_USER_CACHE }}
+          sudo chmod -R 777 ${{ env.OUTPUT_USER_CACHE}}
+      - name: Execute Dependix docker run action to run formatters
+        uses: ./.github/actions/docker-run-bazel
+        with:
+          image: ${{ env.IMAGE_NAME }}:latest
+          command: "test"
+          output_user_cache: ${{ env.OUTPUT_USER_CACHE }}
+          environment_variables: ${{ env.ENV_VARS }}
+          volume_bindings: ${{ env.VOL_BIDS }}
+          targets: |
+            - "//score/analysis/tracing/common/flexible_circular_allocator/test/unit_test:flexible_circular_allocator_factory_test"
