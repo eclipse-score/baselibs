@@ -36,20 +36,9 @@ use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
 bazel_dep(name = "googletest", version = "1.15.0")
 bazel_dep(name = "google_benchmark", version = "1.9.1")
-
-bazel_dep(name = "rules_boost", repo_name = "com_github_nelhage_rules_boost")
-archive_override(
-    module_name = "rules_boost",
-    urls = "https://github.com/nelhage/rules_boost/archive/refs/heads/master.tar.gz",
-    strip_prefix = "rules_boost-master",
-)
-
-non_module_boost_repositories = use_extension("@com_github_nelhage_rules_boost//:boost/repositories.bzl", "non_module_dependencies")
-use_repo(
-    non_module_boost_repositories,
-    "boost",
-)
-
+bazel_dep(name = "boost.container", version = "1.87.0.bcr.2")
+bazel_dep(name = "boost.interprocess", version = "1.87.0")
+bazel_dep(name = "boost.program_options", version = "1.87.0")
 bazel_dep(name = "download_utils", version = "1.0.1")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
