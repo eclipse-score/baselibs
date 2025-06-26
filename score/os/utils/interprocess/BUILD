@@ -18,6 +18,8 @@ cc_library(
     srcs = ["interprocess_mutex.cpp"],
     hdrs = ["interprocess_mutex.h"],
     features = COMPILER_WARNING_FEATURES,
+    # ToDo: Remove the linkopts if clarified with score toolchain (needed after boost dep update)
+    linkopts = ["-lpthread"],
     tags = ["FFI"],
     visibility = [
         "@score-baselibs//score/concurrency:__pkg__",
