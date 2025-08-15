@@ -20,13 +20,6 @@ bazel_dep(name = "download_utils", version = "1.0.1")
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(
-    name = "acl-deb",
-    build = "//third_party/acl:acl.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.2.52-3build1_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
     name = "libcap2-deb",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap2_2.25-1.2_amd64.deb"],
     visibility = ["//visibility:public"],
