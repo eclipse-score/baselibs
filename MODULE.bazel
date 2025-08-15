@@ -27,13 +27,6 @@ deb(
 )
 
 deb(
-    name = "valgrind-deb",
-    build = "//third_party/valgrind:valgrind.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
     name = "libcap2-deb",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap2_2.25-1.2_amd64.deb"],
     visibility = ["//visibility:public"],

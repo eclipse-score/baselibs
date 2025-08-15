@@ -399,14 +399,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "valgrind_on_host",
-    deps = select({
-        "@platforms//os:qnx": [],
-        "//conditions:default": ["//third_party/valgrind"],
-    }),
-)
-
 cc_gtest_unit_test(
     name = "synchronized_queue_test",
     srcs = ["synchronized_queue_test.cpp"],
@@ -416,7 +408,6 @@ cc_gtest_unit_test(
     flaky = True,  # TODO: Remove flakiness (Ticket-178835)
     deps = [
         ":synchronized_queue",
-        ":valgrind_on_host",
     ],
 )
 
