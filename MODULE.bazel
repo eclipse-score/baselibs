@@ -14,10 +14,5 @@ module(name = "score-baselibs")
 
 bazel_dep(name = "googletest", version = "1.15.0")
 bazel_dep(name = "google_benchmark", version = "1.9.1")
-
-bazel_dep(name = "download_utils", version = "1.0.1")
-
-deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
-
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "platforms", version = "0.0.11")
