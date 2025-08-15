@@ -19,18 +19,5 @@ bazel_dep(name = "download_utils", version = "1.0.1")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
-deb(
-    name = "libseccomp2-deb",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp2_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
-    name = "libseccomp2-dev-deb",
-       build = "//third_party/libseccomp2:libseccomp2.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_i386.deb"],
-    visibility = ["//visibility:public"],
-)
-
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "platforms", version = "0.0.11")
