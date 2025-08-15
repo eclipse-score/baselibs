@@ -18,6 +18,6 @@ common --registry=https://bcr.bazel.build
 common --//score/mw/log/detail/flags:KUse_Stub_Implementation_Only=False
 common --//score/mw/log/flags:KRemote_Logging=False
 common --//score/json:base_library=nlohmann
-common --extra_toolchains=@gcc_toolchain//:host_gcc_12
 build --incompatible_strict_action_env
+build --cxxopt=-std=c++17 --cxxopt=-Wno-error=deprecated-declarations --cxxopt=-Wno-error=self-move --cxxopt=-Wno-error=pessimizing-move
 test --test_tag_filters=-manual
