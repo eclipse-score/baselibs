@@ -20,19 +20,6 @@ bazel_dep(name = "download_utils", version = "1.0.1")
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(
-    name = "libcap2-deb",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap2_2.25-1.2_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
-    name = "libcap2-dev-deb",
-    build = "//third_party/libcap2:libcap2.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap-dev_2.25-1.2_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
     name = "libseccomp2-deb",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp2_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
     visibility = ["//visibility:public"],
