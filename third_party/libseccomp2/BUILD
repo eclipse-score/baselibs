@@ -1,5 +1,5 @@
-alias(
+cc_library(
     name = "libseccomp2",
-    actual = "@libseccomp2-dev-deb//:libseccomp2",
-    visibility = ["//visibility:public"], 
+    linkopts = ["-lseccomp"],
+    visibility = ["//visibility:public"],
 )

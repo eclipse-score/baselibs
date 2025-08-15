@@ -21,7 +21,6 @@ cc_library(
     deps = [
         "@score-baselibs//score/json/internal/model",
         "@score-baselibs//score/result",
-        "@nlohmann_json//:json",
         "@score-baselibs//score/language/futurecpp",
     ],
 )
@@ -37,7 +36,6 @@ cc_library(
         ":json_builder",
         "@score-baselibs//score/json/internal/model",
         "@score-baselibs//score/result",
-        "@nlohmann_json//:json",
     ],
 )
 

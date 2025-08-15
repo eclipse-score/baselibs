@@ -1,5 +1,5 @@
-alias(
+cc_library(
     name = "acl",
-    actual = "@acl-deb//:acl",
-    visibility = ["//visibility:public"], 
+    linkopts = ["-lacl"],
+    visibility = ["//visibility:public"],
 )

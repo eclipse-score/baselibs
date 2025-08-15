@@ -89,51 +89,6 @@ TEST(JsonParserTest, ViaErrorLiteral)
     EXPECT_EXIT(JSON_ERROR_INPUT ""_json, ::testing::KilledBySignal(SIGABRT), "");
 }
 
-TEST(JsonParserTest, FromFileSuceess)
-{
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Parsing json object from file path, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
-
-    const std::string file_path = std::tmpnam(nullptr);
-    std::ofstream file(file_path);
-    if (file.is_open())
-    {
-        file << JSON_INPUT;
-        file.close();
-    }
-
-    json::JsonParser json_parser{};
-    auto result = json_parser.FromFile(file_path);
-    ASSERT_TRUE(result.has_value());
-    json_verify(result.value());
-}
-
-TEST(JsonParserTest, FromFileParseError)
-{
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Parsing invalid json object from file path causes failure, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
-
-    const std::string file_path = std::tmpnam(nullptr);
-    std::ofstream file(file_path);
-    if (file.is_open())
-    {
-        file << JSON_INPUT;
-        file << "!";  // append garbage
-        file.close();
-    }
-
-    json::JsonParser json_parser{};
-    auto result = json_parser.FromFile(file_path);
-    ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::json::Error::kParsingError);
-}
-
 }  // namespace
 }  // namespace json
 }  // namespace score

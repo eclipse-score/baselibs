@@ -1,5 +1,5 @@
-alias(
+cc_library(
     name = "libcap2",
-    actual = "@libcap2-dev-deb//:libcap2",
-    visibility = ["//visibility:public"], 
+    linkopts = ["-lcap"],
+    visibility = ["//visibility:public"],
 )

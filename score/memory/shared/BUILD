@@ -401,7 +401,6 @@ cc_library(
     ] + select({
         "@platforms//os:linux": [
             "//third_party/boost:container",
-            "//third_party/boost:interprocess",
         ],
         "@platforms//os:qnx": [],
     }),
