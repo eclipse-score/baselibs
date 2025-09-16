@@ -1,2 +1,4 @@
 bazel-*
 user.bazelrc
+target/
+Cargo.lock
