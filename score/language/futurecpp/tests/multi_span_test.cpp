@@ -8,6 +8,7 @@
 
 #include <score/assert_support.hpp>
 
+#include <algorithm>
 #include <cstdint>
 #include <numeric>
 #include <sstream>
