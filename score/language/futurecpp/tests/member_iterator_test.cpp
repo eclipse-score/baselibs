@@ -6,6 +6,7 @@
 #include <score/member_iterator.hpp>
 #include <score/member_iterator.hpp> // check include guard
 
+#include <algorithm>
 #include <forward_list>
 #include <list>
 #include <vector>
