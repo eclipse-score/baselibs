@@ -1,4 +1,10 @@
+# Bazel related files
 bazel-*
 user.bazelrc
+MODULE.bazel.lock
+
+# Local cache related files
 .cache
+
+# Local command scripts
 compile_commands.json

@@ -17,10 +17,9 @@ jobs:
           uses: bazel-contrib/setup-bazel@0.9.1
         - name: Bazel build baselibs targets
           run: |
-            bazel build //score/...
+            bazel build --config bl-x86_64-linux -- //score/...
         - name: Bazel test baselibs targets
           run: |
-            bazel test //score/... \
-            --build_tests_only -- \
+            bazel test --config bl-x86_64-linux -- //score/... \
             -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
             -//score/containers:dynamic_array_test
