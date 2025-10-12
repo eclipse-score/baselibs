@@ -10,7 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-"""Prints all relative paths in the QNX SDP at `target/qnx7/usr/include` that are not contained in SAFE_HEADERS."""
+"""Prints all relative paths in the QNX SDP at `target/qnx7/usr/include` that are not contained in SAFE_HEADERS.
+"""
 
 import argparse
 import os
