@@ -11,7 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/qnx/mman_impl.h"
-
+#include <sys/mman.h>
+#include <sys/types.h>
 namespace score
 {
 namespace os
@@ -21,14 +22,14 @@ namespace qnx
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<void*, Error> MmanQnxImpl::mmap(void* const addr,
-                                              const std::size_t length,
-                                              const std::int32_t protection,
-                                              const std::int32_t flags,
-                                              const std::int32_t fd,
-                                              const std::int64_t offset) const noexcept
+                                                 const std::size_t length,
+                                                 const std::int32_t protection,
+                                                 const std::int32_t flags,
+                                                 const std::int32_t fd,
+                                                 const std::int64_t offset) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
-    void* const ret{::mmap(addr, length, protection, flags, fd, offset)};
+ void* const ret{::mmap(addr, length, protection, flags, fd, offset)};
     /* KW_SUPPRESS_START:AUTOSAR.CAST.CSTYLE:Cast is happening outside our code domain */
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     // Suppress "autosar_cpp14_m5_2_9_violation" rule finding. This rule states: "A cast shall not
@@ -53,12 +54,12 @@ score::cpp::expected<void*, Error> MmanQnxImpl::mmap64(void* addr,
                                                 const std::int32_t fd,
                                                 const std::int64_t offset) const noexcept
 {
+#if defined(__QNX__) && defined(__LP64__)
+    // On LP64 QNX, mmap already uses 64-bit offsets.
+    void* const ret{::mmap(addr, length, protection, flags, fd, offset)};
+#else
     void* const ret{::mmap64(addr, length, protection, flags, fd, offset)};
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.CSTYLE:Cast is happening outside our code domain */
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
-    // Cast is happening outside our code domain
-    // coverity[autosar_cpp14_m5_2_9_violation]
-    // coverity[autosar_cpp14_a5_2_2_violation] MAP_FAILED is builtin macro
+#endif
     if (ret == MAP_FAILED)
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     /* KW_SUPPRESS_END:AUTOSAR.CAST.CSTYLE:Cast is happening outside our code domain */
@@ -202,13 +203,17 @@ score::cpp::expected_blank<Error> MmanQnxImpl::mem_offset64(const void* addr,
                                                      std::size_t* contig_len) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
+#if defined(__QNX__) && defined(__LP64__)
+    // On LP64 QNX only mem_offset() exists; off_t is 64-bit already.
+    if (::mem_offset(addr, fd, length,offset,contig_len) == -1)
+#else
     if (::mem_offset64(addr, fd, length, offset, contig_len) == -1)
+#endif
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
     return {};
 }
-
 }  // namespace qnx
 }  // namespace os
 }  // namespace score
