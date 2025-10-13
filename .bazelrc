@@ -18,6 +18,7 @@ common --registry=https://bcr.bazel.build
 build:_bl_common_stub --//score/mw/log/detail/flags:KUse_Stub_Implementation_Only=False
 build:_bl_common_stub --//score/mw/log/flags:KRemote_Logging=False
 build:_bl_common_stub --//score/json:base_library=nlohmann
+build:_bl_common_stub --//score/memory/shared/flags:use_typedshmd=False
 
 # use mw/log stub implementation by default
 build:_bl_common --config=_bl_common_stub

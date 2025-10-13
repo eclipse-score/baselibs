@@ -33,7 +33,7 @@ gcc.warning_flags(
 )
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
-bazel_dep(name = "score_toolchains_qnx", version = "0.0.1")
+bazel_dep(name = "score_toolchains_qnx", version = "0.0.2")
 toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx")
 toolchains_qnx.sdp(
     sha256 = "f2e0cb21c6baddbcb65f6a70610ce498e7685de8ea2e0f1648f01b327f6bac63",

@@ -43,8 +43,18 @@ jobs:
       - name: Setup Bazel
         uses: bazel-contrib/setup-bazel@0.9.1
       - name: Bazel build baselibs targets
+        # Currently, only a subset of targets are building with QNX toolchain
+        # due to various issues such as https://github.com/eclipse-score/baselibs/issues/28
         run: |
-          bazel build --config bl-x86_64-qnx -- //score/...
+          bazel build --config bl-x86_64-qnx -- \
+          //score/bitmanipulation/... \
+          //score/datetime_converter/... \
+          //score/json/... \
+          //score/mw/... \
+          //score/filesystem/... \
+          //score/quality/... \
+          //score/static_reflection_with_serialization/... \
+          //score/result/...
   test_host:
     runs-on: ubuntu-latest
     steps:
