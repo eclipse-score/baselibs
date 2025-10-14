@@ -42,9 +42,18 @@ jobs:
         uses: actions/checkout@v4.2.2
       - name: Setup Bazel
         uses: bazel-contrib/setup-bazel@0.9.1
+      - name: Setup QNX License
+        env:
+          SCORE_QNX_LICENSE: ${{ secrets.SCORE_QNX_LICENSE }}
+        run: |
+          mkdir -p /opt/score_qnx/license
+          echo "${SCORE_QNX_LICENSE}" | base64 --decode > /opt/score_qnx/license/licenses
       - name: Bazel build baselibs targets
         # Currently, only a subset of targets are building with QNX toolchain
         # due to various issues such as https://github.com/eclipse-score/baselibs/issues/28
+        env:
+          SCORE_QNX_USER: ${{ secrets.SCORE_QNX_USER }}
+          SCORE_QNX_PASSWORD: ${{ secrets.SCORE_QNX_PASSWORD }}
         run: |
           bazel build --config bl-x86_64-qnx -- \
           //score/bitmanipulation/... \
@@ -54,6 +63,9 @@ jobs:
           //score/quality/... \
           //score/static_reflection_with_serialization/... \
           //score/result/...
+      - name: Cleanup QNX License
+        if: always()
+        run: rm -rf /opt/score_qnx
   test_host:
     runs-on: ubuntu-latest
     steps:
