@@ -62,7 +62,8 @@ jobs:
           //score/filesystem/... \
           //score/quality/... \
           //score/static_reflection_with_serialization/... \
-          //score/result/...
+          //score/result/... \
+          --credential_helper=*.qnx.com=%worksapce%/.github/tools/qnx_credential_helper.py
       - name: Cleanup QNX License
         if: always()
         run: rm -rf /opt/score_qnx
