@@ -55,15 +55,14 @@ jobs:
           SCORE_QNX_USER: ${{ secrets.SCORE_QNX_USER }}
           SCORE_QNX_PASSWORD: ${{ secrets.SCORE_QNX_PASSWORD }}
         run: |
-          bazel build --config bl-x86_64-qnx -- \
+          bazel build --config bl-x86_64-qnx --credential_helper=*.qnx.com=${{ github.workspace }}/.github/tools/qnx_credential_helper.py -- \
           //score/bitmanipulation/... \
           //score/json/... \
           //score/mw/... \
           //score/filesystem/... \
           //score/quality/... \
           //score/static_reflection_with_serialization/... \
-          //score/result/... \
-          --credential_helper=*.qnx.com=%worksapce%/.github/tools/qnx_credential_helper.py
+          //score/result/...
       - name: Cleanup QNX License
         if: always()
         run: rm -rf /opt/score_qnx
