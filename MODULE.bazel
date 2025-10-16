@@ -10,10 +10,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-module(name = "score-baselibs")
+module(
+    name = "score-baselibs",
+    version = "0.1.0",
+)
 
-
-# Configure and register the toolchain.
+# Configure the host toolchain.
 bazel_dep(name = "score_toolchains_gcc", version = "0.4", dev_dependency=True)
 gcc = use_extension("@score_toolchains_gcc//extentions:gcc.bzl", "gcc", dev_dependency=True)
 gcc.toolchain(
@@ -33,8 +35,9 @@ gcc.warning_flags(
 )
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
-bazel_dep(name = "score_toolchains_qnx", version = "0.0.2")
-toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx")
+# Configure the target toolchain.
+bazel_dep(name = "score_toolchains_qnx", version = "0.0.2", dev_dependency=True)
+toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx", dev_dependency=True)
 toolchains_qnx.sdp(
     sha256 = "f2e0cb21c6baddbcb65f6a70610ce498e7685de8ea2e0f1648f01b327f6bac63",
     strip_prefix = "installation",
@@ -95,10 +98,10 @@ deb(
 
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
-bazel_dep(name = "platforms", version = "0.0.11")
 #############################################################
 #
 # Constraint values for specifying platforms and toolchains
 #
 #############################################################
-bazel_dep(name = "score_bazel_platforms", version = "0.0.1")
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "score_bazel_platforms", version = "0.0.2")
