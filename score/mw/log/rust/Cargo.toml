@@ -1,0 +1,36 @@
+[package]
+
+name = "mw_log"
+version = "0.0.1"
+authors = ["S-CORE"]
+readme = "README.md"
+description = """
+A lightweight logging facade for Rust
+"""
+
+rust-version = "1.61.0"
+edition = "2021"
+
+[features]
+max_level_off   = []
+max_level_error = []
+max_level_warn  = []
+max_level_info  = []
+max_level_debug = []
+max_level_trace = []
+
+release_max_level_off   = []
+release_max_level_error = []
+release_max_level_warn  = []
+release_max_level_info  = []
+release_max_level_debug = []
+release_max_level_trace = []
+
+std = []
+kv = []
+
+# Not available but listed here to suppress warnings.
+kv_sval = []
+kv_std = []
+kv_serde = []
+serde = []

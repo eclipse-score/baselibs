@@ -33,6 +33,10 @@ gcc.warning_flags(
     minimal_warnings = ["-Wall", "-Wno-error=deprecated-declarations", "-Wno-error=narrowing"],
     strict_warnings = ["-Wextra", "-Wpedantic"],
 )
+
+# Rust rules for Bazel
+bazel_dep(name = "rules_rust", version = "0.56.0")
+
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
 # Configure the target toolchain.
