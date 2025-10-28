@@ -138,12 +138,8 @@ cc_library(
         ":errno",
         ":object_seam",
         "@score-baselibs//score/bitmanipulation:bitmask_operators",
-    ] + select({
-        "//bazel/platforms/qnx_version:qnx8": [
-            "//third_party/qnx:libfsnotify",
-        ],
-        "//conditions:default": [],
-    }),
+        "//third_party/libfsnotify",
+    ],
 )
 
 cc_library(
