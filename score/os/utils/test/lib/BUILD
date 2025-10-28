@@ -16,7 +16,7 @@ cc_library(
     srcs = ["random_string.cpp"],
     hdrs = ["random_string.h"],
     visibility = [
-        "@score-baselibs//score/os/test:__subpackages__",
-        "@score-baselibs//score/os/utils/test:__subpackages__",
+        "@score_baselibs//score/os/test:__subpackages__",
+        "@score_baselibs//score/os/utils/test:__subpackages__",
     ],
 )

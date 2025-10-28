@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "filestream",
@@ -29,23 +29,23 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES + ["throws_upon_exception"],
     implementation_deps = [
-        "@score-baselibs//score/filesystem:file_status",
-        "@score-baselibs//score/os:fcntl",
-        "@score-baselibs//score/os:stdio",
-        "@score-baselibs//score/os:unistd",
+        "@score_baselibs//score/filesystem:file_status",
+        "@score_baselibs//score/os:fcntl",
+        "@score_baselibs//score/os:stdio",
+        "@score_baselibs//score/os:unistd",
     ],
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/filesystem:__subpackages__",
-        "@score-baselibs//score/json:__subpackages__",
+        "@score_baselibs//score/filesystem:__subpackages__",
+        "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/filesystem:error",
-        "@score-baselibs//score/filesystem:path",
-        "@score-baselibs//score/os:object_seam",
-        "@score-baselibs//score/os:stat",
-        "@score-baselibs//score/result",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/filesystem:error",
+        "@score_baselibs//score/filesystem:path",
+        "@score_baselibs//score/os:object_seam",
+        "@score_baselibs//score/os:stat",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -66,7 +66,7 @@ cc_library(
         "simple_string_stream_collection.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score-baselibs//score/filesystem:__subpackages__"],
+    visibility = ["@score_baselibs//score/filesystem:__subpackages__"],
     deps = [
         ":filestream",
         "@googletest//:gtest",
@@ -83,16 +83,16 @@ cc_test(
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     visibility = [
-        "@score-baselibs//score/filesystem:__pkg__",
+        "@score_baselibs//score/filesystem:__pkg__",
     ],
     deps = [
         ":fake",
         ":filestream",
-        "@score-baselibs//score/filesystem/factory",
-        "@score-baselibs//score/filesystem/file_utils:file_test_utils",
-        "@score-baselibs//score/os/mocklib:fcntl_mock",
-        "@score-baselibs//score/os/mocklib:stat_mock",
-        "@score-baselibs//score/os/mocklib:unistd_mock",
+        "@score_baselibs//score/filesystem/factory",
+        "@score_baselibs//score/filesystem/file_utils:file_test_utils",
+        "@score_baselibs//score/os/mocklib:fcntl_mock",
+        "@score_baselibs//score/os/mocklib:stat_mock",
+        "@score_baselibs//score/os/mocklib:unistd_mock",
         "@googletest//:gtest_main",
     ],
 )
@@ -119,24 +119,24 @@ cc_test(
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     visibility = [
-        "@score-baselibs//score/filesystem:__pkg__",
-        # "@ddad@score-baselibs//score/filesystem:__pkg__",
+        "@score_baselibs//score/filesystem:__pkg__",
+        # "@ddad@score_baselibs//score/filesystem:__pkg__",
     ],
     deps = [
-        "@score-baselibs//score/filesystem:error",
-        "@score-baselibs//score/filesystem:file_status",
-        "@score-baselibs//score/filesystem:path",
-        "@score-baselibs//score/filesystem/file_utils:file_test_utils",
-        "@score-baselibs//score/os:fcntl",
-        "@score-baselibs//score/os:object_seam",
-        "@score-baselibs//score/os:stat",
-        "@score-baselibs//score/os:stdio",
-        "@score-baselibs//score/os:unistd",
-        "@score-baselibs//score/os/mocklib:fcntl_mock",
-        "@score-baselibs//score/os/mocklib:stdio_mock",
-        "@score-baselibs//score/os/mocklib:unistd_mock",
-        "@score-baselibs//score/result",
+        "@score_baselibs//score/filesystem:error",
+        "@score_baselibs//score/filesystem:file_status",
+        "@score_baselibs//score/filesystem:path",
+        "@score_baselibs//score/filesystem/file_utils:file_test_utils",
+        "@score_baselibs//score/os:fcntl",
+        "@score_baselibs//score/os:object_seam",
+        "@score_baselibs//score/os:stat",
+        "@score_baselibs//score/os:stdio",
+        "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/os/mocklib:fcntl_mock",
+        "@score_baselibs//score/os/mocklib:stdio_mock",
+        "@score_baselibs//score/os/mocklib:unistd_mock",
+        "@score_baselibs//score/result",
         "@googletest//:gtest_main",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )

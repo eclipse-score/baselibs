@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "acl",
@@ -25,7 +25,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -75,7 +75,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -96,7 +96,7 @@ cc_library(
         ":errno",
         ":object_seam",
         ":stat",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -132,12 +132,12 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
         "//third_party/libfsnotify",
     ],
 )
@@ -193,7 +193,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -214,7 +214,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -233,13 +233,13 @@ cc_library(
         ":errno",
         ":object_seam",
         ":static_destruction_guard",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
 alias(
     name = "ifaddrs_mock",
-    actual = "@score-baselibs//score/os/mocklib:ifaddrs_mock",
+    actual = "@score_baselibs//score/os/mocklib:ifaddrs_mock",
     visibility = [
         ":__subpackages__",
         "//platform/aas/network/xnm:__subpackages__",
@@ -262,13 +262,13 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
 alias(
     name = "netdb_mock",
-    actual = "@score-baselibs//score/os/mocklib:netdb_mock",
+    actual = "@score_baselibs//score/os/mocklib:netdb_mock",
     visibility = [
         ":__subpackages__",
         "//platform/aas/network/xnm:__subpackages__",
@@ -291,7 +291,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -306,7 +306,7 @@ cc_library(
         ":errno",
         ":object_seam",
         ":static_destruction_guard",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -332,14 +332,14 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         ":__subpackages__",
-        "@score-baselibs//score/analysis/tracing/daemon:__subpackages__",
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
         "//platform/aas/network/xnm:__subpackages__",
     ],
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -352,7 +352,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -362,7 +362,7 @@ cc_library(
     hdrs = ["cpuid.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -385,7 +385,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ] + select({
         "@platforms//os:qnx": [
             "//third_party/libsocket",
@@ -400,7 +400,7 @@ cc_library(
     hdrs = ["makedev.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -414,7 +414,7 @@ cc_library(
     hdrs = ["file_stream.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
         ":errno",
@@ -482,11 +482,11 @@ cc_library(
     name = "capability",
     srcs = select({
         "@platforms//os:linux": [
-            "@score-baselibs//score/os/linux:capability.cpp",
-            "@score-baselibs//score/os/linux:capability.h",
+            "@score_baselibs//score/os/linux:capability.cpp",
+            "@score_baselibs//score/os/linux:capability.h",
         ],
         "@platforms//os:qnx": [
-            "@score-baselibs//score/os/qnx:capability.h",
+            "@score_baselibs//score/os/qnx:capability.h",
         ],
     }) + [
         "capability.cpp",
@@ -512,7 +512,7 @@ cc_library(
     }) + [
         ":errno_logging",
         ":object_seam",
-        "@score-baselibs//score/mw/log",
+        "@score_baselibs//score/mw/log",
     ],
 )
 
@@ -532,13 +532,13 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
 alias(
     name = "socket_mock",
-    actual = "@score-baselibs//score/os/mocklib:socket_mock",
+    actual = "@score_baselibs//score/os/mocklib:socket_mock",
     visibility = [
         ":__subpackages__",
         "//platform/aas/pas/sysmon:__subpackages__",
@@ -561,7 +561,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -642,7 +642,7 @@ cc_library(
         ":object_seam",
         ":rt",
         ":static_destruction_guard",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
 
@@ -657,7 +657,7 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     # TODO: (Ticket-75170) Clarify if amp is allowed to be used in ASIL B context
-    deps = ["@score-baselibs//score/language/futurecpp"],
+    deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
 cc_library(
@@ -669,7 +669,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":errno",
-        "@score-baselibs//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log:log_stream",
     ],
 )
 
@@ -776,8 +776,8 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os:errno",
-        "@score-baselibs//score/os:object_seam",
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:object_seam",
     ],
 )
 
@@ -795,8 +795,8 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os:errno",
-        "@score-baselibs//score/os:object_seam",
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:object_seam",
     ],
 )
 
@@ -814,8 +814,8 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os:errno",
-        "@score-baselibs//score/os:object_seam",
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:object_seam",
     ],
 )
 
@@ -856,8 +856,8 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        "@score-baselibs//score/bitmanipulation:bitmask_operators",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -875,7 +875,7 @@ cc_library(
         "//visibility:public", # platform_only
     ],
     deps = [
-        "@score-baselibs//score/result",
+        "@score_baselibs//score/result",
     ],
 )
 
@@ -897,8 +897,8 @@ cc_library(
     deps = [
         ":object_seam",
         ":sigevent_error",
-        "@score-baselibs//score/result",
-        "@score-baselibs//score/mw/log",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/mw/log",
     ],
 )
 
@@ -911,7 +911,7 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = select({
-        "@platforms//os:qnx": ["@score-baselibs//score/os/qnx:qnx_version"],
+        "@platforms//os:qnx": ["@score_baselibs//score/os/qnx:qnx_version"],
         "//conditions:default": [],
     }),
 )

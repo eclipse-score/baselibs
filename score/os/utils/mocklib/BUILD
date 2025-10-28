@@ -17,9 +17,9 @@ cc_library(
     hdrs = ["mqueuemock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/utils:mqueue_headers",
+        "@score_baselibs//score/os/utils:mqueue_headers",
         "@googletest//:gtest",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -30,8 +30,8 @@ cc_library(
     hdrs = ["semaphoremock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os:errno",
-        "@score-baselibs//score/os/utils:semaphore_headers",
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os/utils:semaphore_headers",
         "@googletest//:gtest",
     ],
 )
@@ -43,7 +43,7 @@ cc_library(
     hdrs = ["signalmock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/utils:signal_headers",
+        "@score_baselibs//score/os/utils:signal_headers",
         "@googletest//:gtest",
     ],
 )
@@ -55,7 +55,7 @@ cc_library(
     hdrs = ["threadmock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/utils:thread_headers",
+        "@score_baselibs//score/os/utils:thread_headers",
         "@googletest//:gtest",
     ],
 )
@@ -67,7 +67,7 @@ cc_library(
     hdrs = ["tcp_keep_alivemock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/utils:tcp_keep_alive",
+        "@score_baselibs//score/os/utils:tcp_keep_alive",
         "@googletest//:gtest",
     ],
 )
@@ -78,7 +78,7 @@ cc_library(
     hdrs = ["pathmock.h"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/utils:path_header",
+        "@score_baselibs//score/os/utils:path_header",
         "@googletest//:gtest",
     ],
 )

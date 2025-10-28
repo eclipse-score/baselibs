@@ -11,8 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 module(
-    name = "score-baselibs",
-    version = "0.1.0",
+    name = "score_baselibs",
+    version = "0.1.1",
 )
 
 # Configure the host toolchain.

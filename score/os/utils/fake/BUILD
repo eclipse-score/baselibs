@@ -15,7 +15,7 @@ cc_library(
     srcs = ["machineFake.cpp"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os:stdlib",
-        "@score-baselibs//score/os/utils:machine_header",
+        "@score_baselibs//score/os:stdlib",
+        "@score_baselibs//score/os/utils:machine_header",
     ],
 )

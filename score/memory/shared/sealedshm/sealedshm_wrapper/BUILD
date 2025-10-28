@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "sealedshm",
@@ -25,15 +25,15 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/memory/shared:__subpackages__",
-        "@score-baselibs//score/memory/shared/test:__subpackages__",
+        "@score_baselibs//score/memory/shared:__subpackages__",
+        "@score_baselibs//score/memory/shared/test:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/os:errno_logging",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/os:errno_logging",
+        "@score_baselibs//score/language/futurecpp",
     ] + select({
         "@platforms//os:qnx": [
-            "@score-baselibs//score/os/qnx:mman",
+            "@score_baselibs//score/os/qnx:mman",
         ],
         "//conditions:default": [],
     }),
@@ -51,12 +51,12 @@ cc_library(
         "sealed_shm_mock.h",
     ],
     visibility = [
-        "@score-baselibs//score/memory/shared:__pkg__",
+        "@score_baselibs//score/memory/shared:__pkg__",
     ],
     deps = [
-        "@score-baselibs//score/os:errno_logging",
+        "@score_baselibs//score/os:errno_logging",
         "@googletest//:gtest",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -66,15 +66,15 @@ cc_gtest_unit_test(
         "sealed_shm_test.cpp",
     ],
     visibility = [
-        "@score-baselibs//score/memory:__pkg__",
+        "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
         ":sealedshm",
         ":sealedshm_mock",
-        "@score-baselibs//score/os:stat",
+        "@score_baselibs//score/os:stat",
     ] + select({
         "@platforms//os:linux": [],
-        "@platforms//os:qnx": ["@score-baselibs//score/os/mocklib/qnx:mman_mock"],
+        "@platforms//os:qnx": ["@score_baselibs//score/os/mocklib/qnx:mman_mock"],
     }),
 )
 
@@ -84,6 +84,6 @@ cc_unit_test_suites_for_host_and_qnx(
         ":unit_test",
     ],
     visibility = [
-        "@score-baselibs//score/memory/shared:__pkg__",
+        "@score_baselibs//score/memory/shared:__pkg__",
     ],
 )

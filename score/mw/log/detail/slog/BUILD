@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 load("//score/mw:common_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score-baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
+load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
 
 cc_library(
     name = "slog_backend",
@@ -25,13 +25,13 @@ cc_library(
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "@score-baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/os/qnx:slog2",
-        "@score-baselibs//score/mw/log/detail:backend_interface",
-        "@score-baselibs//score/mw/log/detail:circular_allocator",
-        "@score-baselibs//score/mw/log/detail:initialization_reporter",
+        "@score_baselibs//score/os/qnx:slog2",
+        "@score_baselibs//score/mw/log/detail:backend_interface",
+        "@score_baselibs//score/mw/log/detail:circular_allocator",
+        "@score_baselibs//score/mw/log/detail:initialization_reporter",
     ],
 )
 
@@ -41,7 +41,7 @@ cc_library(
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "@score-baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
     ],
     deps = [
         ":slog_backend",
@@ -61,12 +61,12 @@ cc_library(
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "@score-baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
     ],
     deps = [
         ":slog_backend",
-        "@score-baselibs//score/mw/log/detail:log_recorder_factory",
-        "@score-baselibs//score/mw/log/detail/file_logging:text_recorder",
+        "@score_baselibs//score/mw/log/detail:log_recorder_factory",
+        "@score_baselibs//score/mw/log/detail/file_logging:text_recorder",
     ],
 )
 
@@ -83,15 +83,15 @@ cc_test(
         "unit",
     ],
     deps = [
-        "@score-baselibs//score/mw/log/configuration",
+        "@score_baselibs//score/mw/log/configuration",
         "@googletest//:gtest",
         "@googletest//:gtest_main",
-        "@score-baselibs//score/language/futurecpp:futurecpp_test_support",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
     ] + select({
         "@platforms//os:linux": [],
         "@platforms//os:qnx": [
             ":slog",
-            "@score-baselibs//score/os/mocklib/qnx:slog2_mock",
+            "@score_baselibs//score/os/mocklib/qnx:slog2_mock",
         ],
     }),
 )
@@ -101,7 +101,7 @@ py_unittest_qnx_test(
     test_cases = [
         ":slog_backend_test",
     ],
-    visibility = ["@score-baselibs//score/mw/log/detail:__pkg__"],
+    visibility = ["@score_baselibs//score/mw/log/detail:__pkg__"],
 )
 
 test_suite(

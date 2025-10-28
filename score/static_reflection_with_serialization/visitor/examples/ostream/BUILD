@@ -21,7 +21,7 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
-        "@score-baselibs//score/static_reflection_with_serialization/visitor",
+        "@score_baselibs//score/static_reflection_with_serialization/visitor",
     ],
 )
 

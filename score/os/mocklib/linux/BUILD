@@ -20,9 +20,9 @@ cc_library(
         "//platform/aas/pas/sysmon:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/os/linux:linux_header",
-        "@score-baselibs//score/os/mocklib:nonposixwrapper_mock",
+        "@score_baselibs//score/os/linux:linux_header",
+        "@score_baselibs//score/os/mocklib:nonposixwrapper_mock",
         "@googletest//:gtest_main",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )

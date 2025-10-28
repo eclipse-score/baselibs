@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "comparison",
@@ -20,19 +20,19 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details/absolute:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details/addition_subtraction:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details/cast:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details/multiplication:__pkg__",
-        "@score-baselibs//score/language/safecpp/safe_math/details/negate:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details/absolute:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details/addition_subtraction:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details/cast:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details/multiplication:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math/details/negate:__pkg__",
     ],
     deps = [
-        "@score-baselibs//score/language/safecpp/safe_math:error",
-        "@score-baselibs//score/language/safecpp/safe_math/details/type_traits",
-        "@score-baselibs//score/result",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math:error",
+        "@score_baselibs//score/language/safecpp/safe_math/details/type_traits",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -41,11 +41,11 @@ cc_gtest_unit_test(
     srcs = ["comparison_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
     ],
     deps = [
         ":comparison",
-        "@score-baselibs//score/language/safecpp/safe_math/details:test_type_collection",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math/details:test_type_collection",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )

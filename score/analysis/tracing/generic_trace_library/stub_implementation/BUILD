@@ -23,8 +23,8 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api_header",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api_header",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )

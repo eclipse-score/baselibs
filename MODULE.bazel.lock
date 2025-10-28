@@ -2850,7 +2850,7 @@
     "@@score_toolchains_gcc~//extentions:gcc.bzl%gcc": {
       "general": {
         "bzlTransitiveDigest": "625W04EMFCSpzHutpEkupks7tjaCN8GaZyYPK67p5KE=",
-        "usagesDigest": "x/sKjbCfPnzgrYSxijbZMGlIiWI/oyM27slTaDBTCoc=",
+        "usagesDigest": "GYBejyx+GJLyxAiz2ZrFZMbVy4R3hpVOFGXJYXUzpRg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -2901,6 +2901,50 @@
             "score_toolchains_gcc~",
             "score_toolchains_gcc",
             "score_toolchains_gcc~"
+          ]
+        ]
+      }
+    },
+    "@@score_toolchains_qnx~//:extensions.bzl%toolchains_qnx": {
+      "general": {
+        "bzlTransitiveDigest": "+d7BWwUzbWeB0OnPv7z3lZz0P+Z3xg8WZmLsEvFXhSs=",
+        "usagesDigest": "3c4h3QlzYtcV06NEeZCyjdon+V7P+QGVm+tLPLIupms=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "toolchains_qnx_sdp": {
+            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+            "ruleClassName": "http_archive",
+            "attributes": {
+              "urls": [
+                "https://www.qnx.com/download/download/79858/installation.tgz"
+              ],
+              "build_file": "@@score_toolchains_qnx~//toolchains:sdp.BUILD",
+              "sha256": "f2e0cb21c6baddbcb65f6a70610ce498e7685de8ea2e0f1648f01b327f6bac63",
+              "strip_prefix": "installation"
+            }
+          },
+          "toolchains_qnx_qcc": {
+            "bzlFile": "@@score_toolchains_qnx~//toolchains:rules.bzl",
+            "ruleClassName": "qcc_toolchain",
+            "attributes": {
+              "sdp_repo": "toolchains_qnx_sdp"
+            }
+          },
+          "toolchains_qnx_ifs": {
+            "bzlFile": "@@score_toolchains_qnx~//toolchains:rules.bzl",
+            "ruleClassName": "ifs_toolchain",
+            "attributes": {
+              "sdp_repo": "toolchains_qnx_sdp"
+            }
+          }
+        },
+        "recordedRepoMappingEntries": [
+          [
+            "score_toolchains_qnx~",
+            "bazel_tools",
+            "bazel_tools"
           ]
         ]
       }

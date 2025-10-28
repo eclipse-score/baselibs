@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "channel_mock",
@@ -20,7 +20,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:channel",
+        "@score_baselibs//score/os/qnx:channel",
         "@googletest//:gtest",
     ],
 )
@@ -33,7 +33,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:dispatch",
+        "@score_baselibs//score/os/qnx:dispatch",
         "@googletest//:gtest",
     ],
 )
@@ -46,7 +46,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:devctl",
+        "@score_baselibs//score/os/qnx:devctl",
         "@googletest//:gtest",
     ],
 )
@@ -60,7 +60,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:inout",
+        "@score_baselibs//score/os/qnx:inout",
         "@googletest//:gtest",
     ],
 )
@@ -74,7 +74,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:mman",
+        "@score_baselibs//score/os/qnx:mman",
         "@googletest//:gtest",
     ],
 )
@@ -87,7 +87,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:iofunc",
+        "@score_baselibs//score/os/qnx:iofunc",
         "@googletest//:gtest",
     ],
 )
@@ -100,7 +100,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:procmgr",
+        "@score_baselibs//score/os/qnx:procmgr",
         "@googletest//:gtest",
     ],
 )
@@ -113,7 +113,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:neutrino",
+        "@score_baselibs//score/os/qnx:neutrino",
         "@googletest//:gtest",
     ],
 )
@@ -126,7 +126,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:pci",
+        "@score_baselibs//score/os/qnx:pci",
         "@googletest//:gtest",
     ],
 )
@@ -139,11 +139,11 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "@score-baselibs//score/os:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
         "//platform/aas/pas/hw_reg_res_mgrs:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/os/qnx:resmgr",
+        "@score_baselibs//score/os/qnx:resmgr",
         "@googletest//:gtest",
     ],
 )
@@ -156,7 +156,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:secpol",
+        "@score_baselibs//score/os/qnx:secpol",
         "@googletest//:gtest",
     ],
 )
@@ -169,7 +169,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:secpolev",
+        "@score_baselibs//score/os/qnx:secpolev",
         "@googletest//:gtest",
     ],
 )
@@ -182,7 +182,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:sysctl",
+        "@score_baselibs//score/os/qnx:sysctl",
         "@googletest//:gtest",
     ],
 )
@@ -195,7 +195,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:slog2",
+        "@score_baselibs//score/os/qnx:slog2",
         "@googletest//:gtest",
     ],
 )
@@ -208,7 +208,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:sysmgr",
+        "@score_baselibs//score/os/qnx:sysmgr",
         "@googletest//:gtest",
     ],
 )
@@ -221,7 +221,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:timer",
+        "@score_baselibs//score/os/qnx:timer",
         "@googletest//:gtest",
     ],
 )
@@ -234,7 +234,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:thread_ctl",
+        "@score_baselibs//score/os/qnx:thread_ctl",
         "@googletest//:gtest",
     ],
 )
@@ -247,7 +247,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:unistd",
+        "@score_baselibs//score/os/qnx:unistd",
         "@googletest//:gtest",
     ],
 )
@@ -260,7 +260,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:fs_crypto",
+        "@score_baselibs//score/os/qnx:fs_crypto",
         "@googletest//:gtest",
     ],
 )
@@ -273,7 +273,7 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
     deps = [
-        "@score-baselibs//score/os/qnx:sigevent_qnx",
+        "@score_baselibs//score/os/qnx:sigevent_qnx",
         "@googletest//:gtest",
     ],
 )

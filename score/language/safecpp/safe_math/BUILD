@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "safe_math",
@@ -22,15 +22,15 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":error",
-        "@score-baselibs//score/language/safecpp/safe_math/details/absolute",
-        "@score-baselibs//score/language/safecpp/safe_math/details/addition_subtraction",
-        "@score-baselibs//score/language/safecpp/safe_math/details/cast",
-        "@score-baselibs//score/language/safecpp/safe_math/details/comparison",
-        "@score-baselibs//score/language/safecpp/safe_math/details/division",
-        "@score-baselibs//score/language/safecpp/safe_math/details/multiplication",
-        "@score-baselibs//score/language/safecpp/safe_math/details/negate",
-        "@score-baselibs//score/language/safecpp/safe_math/details/type_traits",
-        "@score-baselibs//score/result",
+        "@score_baselibs//score/language/safecpp/safe_math/details/absolute",
+        "@score_baselibs//score/language/safecpp/safe_math/details/addition_subtraction",
+        "@score_baselibs//score/language/safecpp/safe_math/details/cast",
+        "@score_baselibs//score/language/safecpp/safe_math/details/comparison",
+        "@score_baselibs//score/language/safecpp/safe_math/details/division",
+        "@score_baselibs//score/language/safecpp/safe_math/details/multiplication",
+        "@score_baselibs//score/language/safecpp/safe_math/details/negate",
+        "@score_baselibs//score/language/safecpp/safe_math/details/type_traits",
+        "@score_baselibs//score/result",
     ],
 )
 
@@ -40,8 +40,8 @@ cc_library(
     hdrs = ["error.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score-baselibs//score/language/safecpp/safe_math:__subpackages__"],
-    deps = ["@score-baselibs//score/result"],
+    visibility = ["@score_baselibs//score/language/safecpp/safe_math:__subpackages__"],
+    deps = ["@score_baselibs//score/result"],
 )
 
 cc_gtest_unit_test(
@@ -49,8 +49,8 @@ cc_gtest_unit_test(
     srcs = ["error_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
-        "@score-baselibs//score/memory/shared:__subpackages__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/memory/shared:__subpackages__",
         "//platform/aas/mw/com/impl:__subpackages__",
         "//platform/aas/network/tunneling/pdu_handling:__subpackages__",
     ],
@@ -60,20 +60,20 @@ cc_gtest_unit_test(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
-        "@score-baselibs//score/language/safecpp/safe_math:error_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details:floating_point_environment_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/absolute:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/addition_subtraction:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/cast:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/comparison:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/division:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/multiplication:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/negate:unit_test",
-        "@score-baselibs//score/language/safecpp/safe_math/details/type_traits:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math:error_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details:floating_point_environment_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/absolute:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/addition_subtraction:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/cast:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/comparison:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/division:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/multiplication:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/negate:unit_test",
+        "@score_baselibs//score/language/safecpp/safe_math/details/type_traits:unit_test",
     ],
     excluded_tests_filter = [
         # TODO(Ticket-203919): qemu on ubuntu 20.04 without KVM incorrectly supports FPE
         "FloatingPointEnvironmentTest.*",
     ],
-    visibility = ["@score-baselibs//score/language/safecpp:__pkg__"],
+    visibility = ["@score_baselibs//score/language/safecpp:__pkg__"],
 )

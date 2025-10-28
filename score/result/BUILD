@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "error",
@@ -29,7 +29,7 @@ cc_library(
     tags = ["FFI"],
     visibility = [
         "//platform/aas/ara/log:__pkg__",
-        "@score-baselibs//score/mw/log:__pkg__",
+        "@score_baselibs//score/mw/log:__pkg__",
     ],
 )
 
@@ -44,9 +44,9 @@ cc_library(
     ],
     deps = [
         ":error",
-        "@score-baselibs//score/result/details/expected",
-        "@score-baselibs//score/result/details/expected:extensions",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result/details/expected",
+        "@score_baselibs//score/result/details/expected:extensions",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -69,7 +69,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":tests",
     ],
     test_suites_from_sub_packages = [
-        "@score-baselibs//score/result/details/expected:unit_test_suite",
+        "@score_baselibs//score/result/details/expected:unit_test_suite",
     ],
     visibility = [
         "//visibility:public",

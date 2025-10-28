@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
@@ -26,9 +26,9 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        "@score-baselibs//score/os/linux/utils/mocklib:network_interface_mock",
-        "@score-baselibs//score/os/mocklib:nonposixwrapper_mock",
-        "@score-baselibs//score/os/mocklib:stat_mock",
+        "@score_baselibs//score/os/linux/utils/mocklib:network_interface_mock",
+        "@score_baselibs//score/os/mocklib:nonposixwrapper_mock",
+        "@score_baselibs//score/os/mocklib:stat_mock",
         "@googletest//:gtest_main",
-    ] + ["@score-baselibs//score/os/linux/utils:network_interface"],
+    ] + ["@score_baselibs//score/os/linux/utils:network_interface"],
 )

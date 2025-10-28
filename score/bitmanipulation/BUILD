@@ -1,4 +1,4 @@
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 
 # *******************************************************************************
 # Copyright (c) 2025 Contributors to the Eclipse Foundation
@@ -12,7 +12,7 @@ load("@score-baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_test(
     name = "bit_manipulation_test",

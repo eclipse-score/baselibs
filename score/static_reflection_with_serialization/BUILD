@@ -13,8 +13,8 @@
 test_suite(
     name = "unit_tests",
     tests = [
-        "@score-baselibs//score/static_reflection_with_serialization/serialization:unit_tests",
-        "@score-baselibs//score/static_reflection_with_serialization/visitor:unit_tests",
+        "@score_baselibs//score/static_reflection_with_serialization/serialization:unit_tests",
+        "@score_baselibs//score/static_reflection_with_serialization/visitor:unit_tests",
     ],
     visibility = ["//visibility:public"],
 )

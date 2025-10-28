@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "time_conversion",
@@ -19,7 +19,7 @@ cc_library(
     hdrs = ["time_conversion.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os/utils:__subpackages__",
+        "@score_baselibs//score/os/utils:__subpackages__",
     ],
 )
 
@@ -29,7 +29,7 @@ cc_library(
     hdrs = ["pimpl_ptr.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os/utils:__subpackages__",
+        "@score_baselibs//score/os/utils:__subpackages__",
     ],
 )
 
@@ -39,7 +39,7 @@ cc_library(
     hdrs = ["string_hash.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/os/utils:__subpackages__",
+        "@score_baselibs//score/os/utils:__subpackages__",
     ],
 )
 
@@ -61,7 +61,7 @@ cc_library(
     visibility = [
         "//visibility:public", # platform_only
     ],
-    deps = ["@score-baselibs//score/language/futurecpp"],
+    deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
 cc_gtest_unit_test(

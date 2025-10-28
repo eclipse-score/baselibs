@@ -23,6 +23,6 @@ config_setting(
         ":KRemote_Logging": "True",
     },
     visibility = [
-        "@score-baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
     ],
 )

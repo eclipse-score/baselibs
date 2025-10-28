@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "division",
@@ -19,15 +19,15 @@ cc_library(
     hdrs = ["division.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score-baselibs//score/language/safecpp/safe_math:__pkg__"],
+    visibility = ["@score_baselibs//score/language/safecpp/safe_math:__pkg__"],
     deps = [
-        "@score-baselibs//score/language/safecpp/safe_math:error",
-        "@score-baselibs//score/language/safecpp/safe_math/details:floating_point_environment",
-        "@score-baselibs//score/language/safecpp/safe_math/details/absolute",
-        "@score-baselibs//score/language/safecpp/safe_math/details/cast",
-        "@score-baselibs//score/language/safecpp/safe_math/details/negate",
-        "@score-baselibs//score/language/safecpp/safe_math/details/type_traits",
-        "@score-baselibs//score/result",
+        "@score_baselibs//score/language/safecpp/safe_math:error",
+        "@score_baselibs//score/language/safecpp/safe_math/details:floating_point_environment",
+        "@score_baselibs//score/language/safecpp/safe_math/details/absolute",
+        "@score_baselibs//score/language/safecpp/safe_math/details/cast",
+        "@score_baselibs//score/language/safecpp/safe_math/details/negate",
+        "@score_baselibs//score/language/safecpp/safe_math/details/type_traits",
+        "@score_baselibs//score/result",
     ],
 )
 
@@ -36,10 +36,10 @@ cc_gtest_unit_test(
     srcs = ["division_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
     ],
     deps = [
         ":division",
-        "@score-baselibs//score/language/safecpp/safe_math/details:test_type_collection",
+        "@score_baselibs//score/language/safecpp/safe_math/details:test_type_collection",
     ],
 )

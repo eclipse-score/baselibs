@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "floating_point_environment",
@@ -19,12 +19,12 @@ cc_library(
     hdrs = ["floating_point_environment.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score-baselibs//score/language/safecpp/safe_math/details:__subpackages__"],
+    visibility = ["@score_baselibs//score/language/safecpp/safe_math/details:__subpackages__"],
     deps = [
-        "@score-baselibs//score/language/safecpp/safe_math:error",
-        "@score-baselibs//score/language/safecpp/safe_math/details/comparison",
-        "@score-baselibs//score/result",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math:error",
+        "@score_baselibs//score/language/safecpp/safe_math/details/comparison",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -34,12 +34,12 @@ cc_gtest_unit_test(
     # Required to know in code if the test is running under memcheck
     features = COMPILER_WARNING_FEATURES + ["memcheck_macro"],
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
     ],
     deps = [
         ":floating_point_environment",
-        "@score-baselibs//score/language/safecpp/safe_math:error",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math:error",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -49,6 +49,6 @@ cc_library(
     srcs = ["test_type_collection.cpp"],
     hdrs = ["test_type_collection.h"],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score-baselibs//score/language/safecpp/safe_math/details:__subpackages__"],
+    visibility = ["@score_baselibs//score/language/safecpp/safe_math/details:__subpackages__"],
     deps = ["@googletest//:gtest"],
 )

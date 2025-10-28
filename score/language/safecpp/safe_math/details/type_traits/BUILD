@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "type_traits",
@@ -19,7 +19,7 @@ cc_library(
     hdrs = ["type_traits.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score-baselibs//score/language/safecpp/safe_math:__subpackages__"],
+    visibility = ["@score_baselibs//score/language/safecpp/safe_math:__subpackages__"],
 )
 
 cc_gtest_unit_test(
@@ -27,7 +27,7 @@ cc_gtest_unit_test(
     srcs = ["type_traits_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score-baselibs//score/language/safecpp/safe_math:__pkg__",
+        "@score_baselibs//score/language/safecpp/safe_math:__pkg__",
     ],
     deps = [":type_traits"],
 )

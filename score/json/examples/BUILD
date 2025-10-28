@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_test(
     name = "json_object",
@@ -24,12 +24,12 @@ cc_test(
     ],
     features = COMPILER_WARNING_FEATURES,
     # This is not a unit test, but with this tag we ensure the program is checked in the CI to prevent breaking changes.
-    # It will not be accounted for unit test coverage as we do not add it here: `@score-baselibs//score/json:unit_tests`
+    # It will not be accounted for unit test coverage as we do not add it here: `@score_baselibs//score/json:unit_tests`
     tags = ["unit"],
     deps = [
-        "@score-baselibs//score/json",
-        "@score-baselibs//score/os:unistd",
-        "@score-baselibs//score/mw/log",
+        "@score_baselibs//score/json",
+        "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/mw/log",
     ],
 )
 
@@ -45,12 +45,12 @@ cc_test(
     ],
     features = COMPILER_WARNING_FEATURES,
     # This is not a unit test, but with this tag we ensure the program is checked in the CI to prevent breaking changes.
-    # It will not be accounted for unit test coverage as we do not add it here: `@score-baselibs//score/json:unit_tests`
+    # It will not be accounted for unit test coverage as we do not add it here: `@score_baselibs//score/json:unit_tests`
     tags = ["unit"],
     deps = [
-        "@score-baselibs//score/json",
-        "@score-baselibs//score/os:unistd",
-        "@score-baselibs//score/mw/log",
+        "@score_baselibs//score/json",
+        "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/mw/log",
     ],
 )
 
@@ -65,11 +65,11 @@ cc_test(
     ],
     features = COMPILER_WARNING_FEATURES,
     # This is not a unit test, but with this tag we ensure the program is checked in the CI to prevent breaking changes.
-    # It will not be accounted for unit test coverage as we do not add it here: `@score-baselibs//score/json:unit_tests`
+    # It will not be accounted for unit test coverage as we do not add it here: `@score_baselibs//score/json:unit_tests`
     tags = ["unit"],
     deps = [
-        "@score-baselibs//score/json",
-        "@score-baselibs//score/os:unistd",
-        "@score-baselibs//score/mw/log",
+        "@score_baselibs//score/json",
+        "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/mw/log",
     ],
 )

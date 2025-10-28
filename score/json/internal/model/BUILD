@@ -10,7 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@score-baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "model",
@@ -31,11 +31,11 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score-baselibs//score/json:__subpackages__"],
+    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
-        "@score-baselibs//score/memory:string_comparison_adaptor",
-        "@score-baselibs//score/result",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/memory:string_comparison_adaptor",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -50,7 +50,7 @@ cc_test(
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
     tags = ["unit"],
     visibility = [
-        "@score-baselibs//score/json:__pkg__",
+        "@score_baselibs//score/json:__pkg__",
     ],
     deps = [
         ":model",

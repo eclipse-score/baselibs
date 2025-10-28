@@ -25,10 +25,10 @@ cc_library(
     ],
     tags = ["FUSA"],
     visibility = [
-        "@score-baselibs//score/analysis:__subpackages__",
+        "@score_baselibs//score/analysis:__subpackages__",
     ],
     deps = [
-        "@score-baselibs//score/analysis/tracing/common/flexible_circular_allocator:flexible_circular_allocator_interface",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
+        "@score_baselibs//score/analysis/tracing/common/flexible_circular_allocator:flexible_circular_allocator_interface",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
     ],
 )

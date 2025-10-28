@@ -21,13 +21,13 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
     ],
     deps = [
         ":meta_info",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -41,14 +41,14 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
     ],
     deps = [
         ":meta_info",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
-        "@score-baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score-baselibs//score/concurrency",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
+        "@score_baselibs//score/concurrency",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -73,12 +73,12 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/analysis/tracing:__subpackages__",
+        "@score_baselibs//score/analysis/tracing:__subpackages__",
     ],
     deps = [
         ":type_definitions",
-        "@score-baselibs//score/memory:string_literal",
-        "@score-baselibs//score/language/futurecpp",
+        "@score_baselibs//score/memory:string_literal",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -95,6 +95,6 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "@score-baselibs//score/analysis/tracing:__subpackages__",
+        "@score_baselibs//score/analysis/tracing:__subpackages__",
     ],
 )
