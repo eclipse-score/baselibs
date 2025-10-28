@@ -48,7 +48,6 @@ jobs:
         run: |
           bazel build --config bl-x86_64-qnx -- \
           //score/bitmanipulation/... \
-          //score/datetime_converter/... \
           //score/json/... \
           //score/mw/... \
           //score/filesystem/... \
