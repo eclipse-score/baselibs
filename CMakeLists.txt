@@ -261,14 +261,6 @@ install(TARGETS
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-# Install headers
-install(DIRECTORY score/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score
-    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-    PATTERN "*/futurecpp/include" EXCLUDE
-    PATTERN "*/futurecpp/src" EXCLUDE
-)
-
 # Create aliases for commonly used targets (without score:: namespace)
 # This allows projects to use score_* targets directly
 if(TARGET score_memory_shared_resource)

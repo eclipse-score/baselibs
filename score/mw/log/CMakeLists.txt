@@ -112,7 +112,7 @@ target_include_directories(score_mw_log_detail
 
 target_link_libraries(score_mw_log_detail
     PUBLIC
-        score_static_reflection_serialization
+        score_static_reflection_with_serialization
         score_compiler_flags
         score_mw_log_core
         score_mw_log_configuration

@@ -13,7 +13,7 @@
 
 # Create datetime converter library with implementations
 add_library(score_datetime_converter
-    DateTimeConverter.cpp
+    datetime_converter.cpp
     time_conversion.cpp
 )
 
@@ -42,7 +42,7 @@ install(TARGETS score_datetime_converter
 
 # Install headers
 install(FILES
-    DateTimeConverter.h
+    datetime_converter.h
     time_conversion.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/datetime_converter
 )

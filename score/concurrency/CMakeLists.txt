@@ -270,6 +270,7 @@ target_link_libraries(score_thread_pool
         score_notification
         score_concurrency_future
         score_executor
+        score_os
         pthread
 )
 

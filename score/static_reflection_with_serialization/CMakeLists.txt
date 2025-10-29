@@ -22,6 +22,7 @@ target_link_libraries(score_static_reflection_with_serialization
     INTERFACE
         score_compiler_flags
         score_static_reflection_visitor
+        score_static_reflection_serialization
 )
 
 # Create alias target

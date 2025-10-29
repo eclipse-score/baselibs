@@ -194,7 +194,7 @@ target_link_libraries(score_os
         score_bitmask_operators
         pthread
         acl
-        $<LINK_ONLY:score_static_reflection_visitor>
+        $<LINK_ONLY:score_static_reflection_with_serialization>
 )
 
 # OS Fake/Mock library for testing

@@ -28,7 +28,7 @@ target_link_libraries(score_analysis_tracing_common_interface_types PUBLIC
     score_containers
     score_result
     score_memory_shared_resource
-    score_static_reflection_visitor
+    score_static_reflection_with_serialization
 )
 
 # Add subdirectories for additional components

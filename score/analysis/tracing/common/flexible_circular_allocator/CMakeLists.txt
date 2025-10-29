@@ -31,7 +31,7 @@ target_link_libraries(score_analysis_tracing_flexible_circular_allocator
         score_compiler_flags
         score_language_futurecpp
         score_memory
-        score_static_reflection_visitor
+        score_static_reflection_with_serialization
         score_analysis_tracing_common_interface_types
 )
 

@@ -14,9 +14,37 @@
 # Static reflection serialization library - header only
 add_library(score_static_reflection_serialization INTERFACE)
 
+# Copy headers to build directory with desired structure
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/serialization/for_logging.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization/for_logging.h
+    COPYONLY
+)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/serialization/skip_deserialize.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization/skip_deserialize.h
+    COPYONLY
+)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/serialization/visit_serialize.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization/visit_serialize.h
+    COPYONLY
+)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/serialization/visit_size.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization/visit_size.h
+    COPYONLY
+)
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/serialization/visit_type_traits.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization/serialization/visit_type_traits.h
+    COPYONLY
+)
+
 target_include_directories(score_static_reflection_serialization
     INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
@@ -33,8 +61,8 @@ install(TARGETS score_static_reflection_serialization
     EXPORT score-baselibsTargets
 )
 
-# Install headers
-install(DIRECTORY include/
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+# Install ONLY from the copied location with the desired structure
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score
     FILES_MATCHING PATTERN "*.h"
 )

@@ -37,7 +37,7 @@ target_link_libraries(score_json
         score_result
         score_json_internal
         score_filesystem_filestream
-        score_static_reflection_visitor
+        score_static_reflection_with_serialization
         score_language_futurecpp
 )
 
