@@ -30,7 +30,7 @@ configure_file(
 target_include_directories(score_static_reflection_visitor
     INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/score/static_reflection_with_serialization/visitor>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 target_link_libraries(score_static_reflection_visitor
