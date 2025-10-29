@@ -233,3 +233,12 @@ add_library(score::os_fake ALIAS score_os_fake)
 install(TARGETS score_os score_os_fake
     EXPORT score-baselibsTargets
 )
+
+# Install all headers recursively with directory exclusions
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/os
+    FILES_MATCHING 
+    PATTERN "*.h"
+    # Exclude directories
+    PATTERN "qnx" EXCLUDE
+)

@@ -65,3 +65,10 @@ target_link_libraries(score_safecpp
 install(TARGETS score_safecpp
     EXPORT score-baselibsTargets
 )
+
+# Install all headers recursively from source to include directory
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/language/safecpp
+    FILES_MATCHING 
+    PATTERN "*.h"
+)

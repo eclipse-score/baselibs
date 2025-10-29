@@ -108,6 +108,16 @@ install(TARGETS
     EXPORT score-baselibsTargets
 )
 
+# Install all headers recursively with directory exclusions
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/memory
+    FILES_MATCHING 
+    PATTERN "*.h"
+    # Exclude directories
+    PATTERN "shared" EXCLUDE
+    PATTERN "design" EXCLUDE
+)
+
 # Add subdirectories for sub-components
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/shared" AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/shared/CMakeLists.txt")
     add_subdirectory(shared)

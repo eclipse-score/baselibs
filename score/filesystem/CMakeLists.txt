@@ -191,12 +191,54 @@ install(FILES
     i_standard_filesystem.h
     filesystem.h
     filesystem_struct.h
-    factory/i_filesystem_factory.h
+    standard_filesystem_mock.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem
+)
+
+# Install headers
+install(FILES
+    filestream/stdio_filebuf_base.h
+    filestream/file_buf.h
+    filestream/file_stream.h
+    filestream/file_factory.h
+    filestream/i_file_factory.h
+    filestream/file_factory_fake.h
+    filestream/file_factory_mock.h
+    filestream/i_string_stream_collection.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem/filestream
+)
+
+# Install headers
+install(FILES
+    details/standard_filesystem.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem/details
+)
+
+# Install headers
+install(FILES
     file_utils/i_file_utils.h
+    file_utils/file_utils.h
+    file_utils/file_utils_fake.h
+    file_utils/file_utils_mock.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem/file_utils
+)
+
+# Install headers
+install(FILES
+    factory/filesystem_factory.h
+    factory/i_filesystem_factory.h
+    factory/filesystem_factory_fake.h
+    factory/filesystem_factory_mock.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem/factory
+)
+
+# Install headers
+install(FILES
     iterator/directory_entry.h
     iterator/directory_iterator.h
     iterator/recursive_directory_iterator.h
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem
+    iterator/dirent_fake.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/filesystem/iterator
 )
 
 # Install fake headers when testing is enabled

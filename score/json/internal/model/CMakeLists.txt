@@ -47,3 +47,10 @@ add_library(score::json_internal_model ALIAS score_json_internal_model)
 install(TARGETS score_json_internal_model
     EXPORT score-baselibsTargets
 )
+
+# Install all headers recursively with directory exclusions
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/json/internal/model
+    FILES_MATCHING 
+    PATTERN "*.h"
+)

@@ -13,7 +13,6 @@
 
 # Add subdirectories
 add_subdirectory(nlohmann)
-add_subdirectory(vajson)
 
 # Parser test suite library (only built when testing is enabled)
 if(SCORE_BUILD_TESTING AND GTEST_FOUND)

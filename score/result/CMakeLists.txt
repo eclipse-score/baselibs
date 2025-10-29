@@ -54,6 +54,13 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/result
 )
 
+# Install headers
+install(FILES
+    details/expected/expected.h
+    details/expected/extensions.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/result/details/expected
+)
+
 # Tests
 if(SCORE_BUILD_TESTING)
     add_executable(result_test

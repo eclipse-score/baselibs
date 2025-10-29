@@ -48,6 +48,6 @@ install(TARGETS score_static_reflection_visitor
 
 # Install ONLY from the copied location with the desired structure
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/static_reflection_with_serialization
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     FILES_MATCHING PATTERN "*.h"
 )

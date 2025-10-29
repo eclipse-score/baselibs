@@ -191,3 +191,17 @@ install(TARGETS
     score_memory_shared_test_resources
     EXPORT score-baselibsTargets
 )
+
+# Install all headers recursively with directory exclusions
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/memory/shared
+    FILES_MATCHING 
+    PATTERN "*.h"
+    # Exclude directories
+    PATTERN "fake" EXCLUDE
+    PATTERN "flags" EXCLUDE
+    PATTERN "flock" EXCLUDE
+    PATTERN "sealedshm" EXCLUDE
+    PATTERN "test_offset_ptr" EXCLUDE
+    PATTERN "typedshm" EXCLUDE
+)

@@ -234,3 +234,14 @@ install(TARGETS
     score_mw_log
     EXPORT score-baselibsTargets
 )
+
+# Install all headers recursively with directory exclusions
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/score/mw/log
+    FILES_MATCHING 
+    PATTERN "*.h"
+    # Exclude directories
+    PATTERN "design" EXCLUDE
+    PATTERN "rust" EXCLUDE
+    PATTERN "test" EXCLUDE
+)
