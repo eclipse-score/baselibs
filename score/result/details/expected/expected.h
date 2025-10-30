@@ -146,18 +146,18 @@ class unexpected : impl::base_unexpected
         return lhs.error() != rhs.error();
     }
 
+    constexpr void swap(unexpected& other) noexcept(std::is_nothrow_swappable_v<E>)
+    {
+        static_assert(std::is_swappable_v<E>);
+        std::swap(value_, other.value_);
+    }
+
     // coverity[autosar_cpp14_a11_3_1_violation] friend is required for std::swap to work
     // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
     friend constexpr void swap(unexpected& x, unexpected& y) noexcept(noexcept(x.swap(y)))
     {
         static_assert(std::is_swappable_v<E>);
         x.swap(y);
-    }
-
-    constexpr void swap(unexpected& other) noexcept(std::is_nothrow_swappable_v<E>)
-    {
-        static_assert(std::is_swappable_v<E>);
-        std::swap(value_, other.value_);
     }
 
   private:
