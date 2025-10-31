@@ -476,7 +476,7 @@ cc_library(
         "@score_baselibs//score/os:errno",
         "//third_party/fscrypto",
     ] + select({
-        "//bazel/platforms/qnx_version:qnx8": [
+        "@platforms//os:qnx": [
             "//third_party/qcrypto",
         ],
         "//conditions:default": [],
