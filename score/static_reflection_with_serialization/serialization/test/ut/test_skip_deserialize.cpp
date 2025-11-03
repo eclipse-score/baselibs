@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "static_reflection_with_serialization/serialization/skip_deserialize.h"
+#include "serialization/skip_deserialize.h"
 
 #include <type_traits>
 

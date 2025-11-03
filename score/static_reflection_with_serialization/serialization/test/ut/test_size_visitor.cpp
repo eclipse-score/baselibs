@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "static_reflection_with_serialization/serialization/visit_serialize.h"
-#include "static_reflection_with_serialization/serialization/visit_size.h"
-#include "static_reflection_with_serialization/serialization/visit_type_traits.h"
+#include "serialization/visit_serialize.h"
+#include "serialization/visit_size.h"
+#include "serialization/visit_type_traits.h"
 #include "visitor_test_types.h"
 
 #include <gtest/gtest.h>

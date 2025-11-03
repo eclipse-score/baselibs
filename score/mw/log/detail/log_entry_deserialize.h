@@ -15,7 +15,7 @@
 
 #include "score/mw/log/detail/logging_identifier.h"
 #include "score/mw/log/log_level.h"
-#include "static_reflection_with_serialization/visitor/visit_as_struct.h"
+#include "visitor/visit_as_struct.h"
 
 #include <score/span.hpp>
 

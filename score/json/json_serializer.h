@@ -17,8 +17,8 @@
 
 #include "score/result/result.h"
 
-#include <static_reflection_with_serialization/visitor/visit.h>
-#include <static_reflection_with_serialization/visitor/visit_as_struct.h>
+#include <visitor/visit.h>
+#include <visitor/visit_as_struct.h>
 
 #include <cstdint>
 #include <optional>

@@ -13,8 +13,8 @@
 #ifndef SCORE_COMMON_VISITOR_EXAMPLES_OSTREAM_INCLUDE_VISITOR_VISIT_OSTREAM_H
 #define SCORE_COMMON_VISITOR_EXAMPLES_OSTREAM_INCLUDE_VISITOR_VISIT_OSTREAM_H
 
-#include "static_reflection_with_serialization/visitor/visit.h"
-#include "static_reflection_with_serialization/visitor/visit_as_struct.h"
+#include "visitor/visit.h"
+#include "visitor/visit_as_struct.h"
 
 #include <ostream>
 #include <tuple>

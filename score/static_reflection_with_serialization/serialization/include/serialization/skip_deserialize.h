@@ -13,7 +13,7 @@
 #ifndef SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_SKIP_DESERIALIZE_H
 #define SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_SKIP_DESERIALIZE_H
 
-#include "static_reflection_with_serialization/serialization/for_logging.h"
+#include "serialization/for_logging.h"
 
 namespace score
 {

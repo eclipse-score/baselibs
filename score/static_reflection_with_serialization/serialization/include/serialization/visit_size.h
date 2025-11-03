@@ -13,9 +13,9 @@
 #ifndef SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_VISIT_SIZE_H
 #define SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_VISIT_SIZE_H
 
-#include "static_reflection_with_serialization/serialization/visit_type_traits.h"
-#include "static_reflection_with_serialization/visitor/visit.h"
-#include "static_reflection_with_serialization/visitor/visit_as_struct.h"
+#include "serialization/visit_type_traits.h"
+#include "visitor/visit.h"
+#include "visitor/visit_as_struct.h"
 
 #include "score/assert.hpp"
 #include <cstdint>
