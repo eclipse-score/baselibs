@@ -25,6 +25,8 @@ import urllib.request
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
+def dprint(*args, **kwargs):
+    print(*args, file=sys.stdout, **kwargs)
 
 if __name__ == "__main__":
     data = json.load(sys.stdin)
@@ -65,6 +67,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     cookies = {c.name: c.value for c in list(cookie_jar)}
+    dprint("Cookies after login:", list(cookie_jar))
     if not "myQNX" in cookies:
         eprint("Failed to get myQNX cookie from login page")
         sys.exit(1)
