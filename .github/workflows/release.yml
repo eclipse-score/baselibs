@@ -1,0 +1,52 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Workflow configuration for S-CORE CI - Release Build & Test baselibs
+# This workflow runs Bazel build and when triggered by tag creation.
+
+name: Release verification (baselibs components)
+on:
+  push:
+    tags:
+      - 'v*' # Triggers on version tags like v1.0.0
+      - 'release-*' # Triggers on release tags like release-1.0.0
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  call_jobs:
+    uses: ./.github/workflows/jobs.yml
+    with:
+      build_type: release_verification
+  release_verification:
+    runs-on: ubuntu-latest
+    needs: call_jobs
+    if: ${{ always() }}
+    steps:
+    - name: Check common workflow result
+      id: check
+      run: |
+        echo "Common workflow result: ${{ needs.common.result }}"
+        if [ "${{ needs.common.result }}" != "success" ]; then
+          echo "failed=true" >> $GITHUB_OUTPUT
+        else
+          echo "failed=false" >> $GITHUB_OUTPUT
+        fi
+    - name: Delete release & tag on failure
+      if: ${{ steps.check.outputs.failed == 'true' }}
+      uses: nikhilbadyal/ghaction-rm-releases@v0.7.0
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_PATTERN: ${{ github.ref_name }}
