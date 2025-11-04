@@ -12,7 +12,8 @@
 # *******************************************************************************
 module(
     name = "score_baselibs",
-    version = "0.1.2",
+    version = "0.1.3",
+    compatibility_level = 0,
 )
 
 # Configure the host toolchain.
