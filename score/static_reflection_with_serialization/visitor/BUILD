@@ -23,7 +23,6 @@ cc_library(
         "include/visitor/visit_as_struct.h",
     ],
     features = _compiler_warning_features,
-    include_prefix = "static_reflection_with_serialization",
     strip_include_prefix = "include",
     tags = ["FFI"],
     visibility = [
