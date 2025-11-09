@@ -17,9 +17,9 @@
 #include "score/mw/log/detail/file_logging/svp_time.h"
 #include "score/mw/log/log_level.h"
 
-#include "static_reflection_with_serialization/serialization/for_logging.h"
-#include "static_reflection_with_serialization/visitor/visit.h"
-#include "static_reflection_with_serialization/visitor/visit_as_struct.h"
+#include "serialization/for_logging.h"
+#include "visitor/visit.h"
+#include "visitor/visit_as_struct.h"
 
 #include <arpa/inet.h>
 #include <chrono>

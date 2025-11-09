@@ -15,7 +15,7 @@
 
 #include <string_view>
 
-#include "static_reflection_with_serialization/visitor/visit_as_struct.h"
+#include "visitor/visit_as_struct.h"
 
 #include <array>
 #include <functional>
