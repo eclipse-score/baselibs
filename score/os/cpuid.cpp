@@ -20,6 +20,8 @@
 #include <arm_acle.h>
 #elif defined(__linux__) && defined(__x86_64__)
 #include <cpuid.h>
+#elif defined(__linux__) && defined(__aarch64__)
+#include "score/utility.hpp"
 #else
 #error "Target platform not supported"
 #endif
@@ -68,6 +70,11 @@ class CpuIdImpl final : public CpuId
         /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
         __cpuid(leaf, eax, ebx, ecx, edx);
         /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
+#elif defined(__linux__) && defined(__aarch64__)
+        // ARM64/aarch64 doesn't have CPUID instruction like x86
+        // Return dummy values for compatibility
+        score::cpp::ignore = leaf;
+        eax = ebx = ecx = edx = 0;
 #endif
     }
 };

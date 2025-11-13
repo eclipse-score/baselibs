@@ -54,7 +54,7 @@ TEST(StdIntegralTypes, signess_and_bytes_number)
     // How to move forward in this ticket Ticket-141110
     // static_assert(std::numeric_limits<char>::is_signed == false,
     //               "it is expected a 'char' to be unsigned in a QNX environment");
-#else
+#elif !defined(__aarch64__) // on aarch64 linux char is unsigned
     static_assert(std::numeric_limits<char>::is_signed == true,
                   "it is expected a 'char' to be signed in a linux environment");
 #endif
