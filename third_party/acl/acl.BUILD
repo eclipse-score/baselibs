@@ -1,7 +1,7 @@
 cc_library(
     name = "acl",
     srcs = [
-        "usr/lib/libacl.a",
+        "usr/lib/aarch64-linux-gnu/libacl.a",
     ],
     hdrs = [
         "usr/include/acl/libacl.h",
