@@ -16,14 +16,22 @@ module(
     compatibility_level = 0,
 )
 
-# Configure the host toolchain.
-bazel_dep(name = "score_toolchains_gcc", version = "0.5", dev_dependency=True)
+# Configure the EB corbos Linux for Safety Applications (aarch64) toolchain.
+bazel_dep(name = "score_toolchains_gcc", dev_dependency=True)
+git_override( # Elektrobit corbos Linux for Safety Applications needs a specific toolchain
+   module_name = "score_toolchains_gcc",
+   remote = "https://github.com/Elektrobit/eclipse-score_toolchains_gcc.git",
+   #tag = "0.5.0-alpha", # commit sha: fb009e490b9b8f28805d587f50d0bf6d885f3414
+   commit = "1255dd71ffec33e527aef76f86b4fdb3b48e01db",
+)
 gcc = use_extension("@score_toolchains_gcc//extentions:gcc.bzl", "gcc", dev_dependency=True)
 gcc.toolchain(
-    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/0.0.1/x86_64-unknown-linux-gnu_gcc12.tar.gz",
-    sha256 = "457f5f20f57528033cb840d708b507050d711ae93e009388847e113b11bf3600",
-    strip_prefix = "x86_64-unknown-linux-gnu",
+    url = "https://github.com/Elektrobit/eclipse-score_toolchains_gcc/releases/download/0.5.0-alpha/fastdev-sdk-ubuntu-ebcl-deb-qemu-arm64.tar.xz",
+    sha256 = "cf8d277a2b95bbdad3e177c488fa77d01723510690a911218ef33747574d78fe",
+    strip_prefix = "fastdev-sdk-ubuntu-ebcl-deb-qemuarm64",
 )
+
+# TODO to be moved to toolchain. https://github.com/eclipse-score/toolchains_gcc/issues/11
 gcc.extra_features(
     features = [
         "minimal_warnings",
@@ -31,9 +39,11 @@ gcc.extra_features(
     ],
 )
 gcc.warning_flags(
-    minimal_warnings = ["-Wall", "-Wno-error=deprecated-declarations", "-Wno-error=narrowing"],
+    minimal_warnings = ["-Wall", "-Wno-error=deprecated-declarations"],
     strict_warnings = ["-Wextra", "-Wpedantic"],
+    treat_warnings_as_errors = ["-Werror"],
 )
+
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
 # Configure the target toolchain.

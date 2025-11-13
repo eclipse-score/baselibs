@@ -32,9 +32,16 @@ build:bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux
 # Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
 build:bl-x86_64-linux --config=bl_stub
 build:bl-x86_64-linux --config=bl_toolchain_common
-build:bl-x86_64-linux --platforms=@score_bazel_platforms//:x86_64-linux
+build:bl-x86_64-linux --platforms=@score_toolchains_gcc//platforms:aarch64-linux
 build:bl-x86_64-linux --extra_toolchains=@gcc_toolchain//:host_gcc_12
 test:bl-x86_64-linux --config=bl_common
+
+# Target configuration for CPU:aarch64|OS:EBcLfSA build (do not use it in case of system toolchains!)
+build:bl-aarch64-ebclfsa --config=bl_stub
+build:bl-aarch64-ebclfsa --platforms=@score_bazel_platforms//:arm64-linux
+build:bl-aarch64-ebclfsa --extra_toolchains=@gcc_toolchain//:aarch64_gcc_13
+build:bl-aarch64-ebclfsa --spawn_strategy=local
+test:bl-aarch64-ebclfsa --config=bl_common
 
 # Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-x86_64-qnx --config=bl_stub
