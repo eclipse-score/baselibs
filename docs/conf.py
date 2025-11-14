@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2024 Contributors to the Eclipse Foundation
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,6 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@score_docs_as_code//:docs.bzl", "docs")
+# Configuration file for the Sphinx documentation builder.
 
-docs(source_dir = "docs", data = ["@score_platform//:needs_json", "@score_process//:needs_json"])
+project = "S-CORE"
+project_url = "https://eclipse-score.github.io/score-baselibs"
+project_prefix = "S-CORE_"
+version = "0.1"
+
+extensions = ["score_sphinx_bundle"]
