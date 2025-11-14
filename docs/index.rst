@@ -18,8 +18,8 @@ S-CORE Baselibs Documentation
 .. toctree::
    :maxdepth: 2
 
-   requirements
-   architecture
+   baselibs_requirements
+   baselibs_architecture
    safety
    implementation
    verification
