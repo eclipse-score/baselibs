@@ -41,6 +41,7 @@ build:bl-x86_64-qnx --config=bl_stub
 build:bl-x86_64-qnx --config=bl_toolchain_common
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx
 build:bl-x86_64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_x86_64
+test:bl-x86_64-qnx --config=bl_common
 
 build --java_language_version=17
 build --tool_java_language_version=17
