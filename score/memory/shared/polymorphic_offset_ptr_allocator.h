@@ -50,7 +50,7 @@ class PolymorphicOffsetPtrAllocator
     {
     }
 
-    // TODO: Keep backward compatibility with raw pointer for now
+    // DEPRECATED: This will be removed in a future release
     // Non-explicit constructor is good enough for maintaining required implicit conversion
     // NOLINTNEXTLINE(google-explicit-constructor): Tolerated, discard explicit.
     PolymorphicOffsetPtrAllocator(const MemoryResourceProxy* const proxy) noexcept : proxy_{proxy} {}
