@@ -150,7 +150,7 @@ class DynamicArrayTestFixture : public ::testing::Test
                                       bool>::type = true>
     Allocator getAllocator()
     {
-        return PolymorphicOffsetPtrAllocator<TrivialType>{memory_resource_.getMemoryResourceProxy()};
+        return PolymorphicOffsetPtrAllocator<TrivialType>{memory_resource_};
     }
 
     template <typename T, typename Alloc = Allocator>

@@ -32,7 +32,7 @@ TEST(PolymorphicOffsetPtrAllocator, AllocatesAndDeallocatesMemory)
 {
     MyMemoryResource resource{};
 
-    std::vector<std::uint64_t, PolymorphicOffsetPtrAllocator<std::uint64_t>> unit(resource.getMemoryResourceProxy());
+    std::vector<std::uint64_t, PolymorphicOffsetPtrAllocator<std::uint64_t>> unit(resource);
     unit.emplace_back(42U);
     unit.emplace_back(43U);
 }
@@ -46,7 +46,7 @@ TEST(PolymorphicOffsetPtrAllocator, SupportsRebinding)
                        std::hash<std::uint64_t>,
                        std::equal_to<std::uint64_t>,
                        PolymorphicOffsetPtrAllocator<std::pair<const std::uint64_t, std::uint64_t>>>
-        unit(resource.getMemoryResourceProxy());
+        unit(resource);
 
     unit.insert({42U, 0U});
 }
