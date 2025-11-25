@@ -19,6 +19,7 @@ cc_library(
     srcs = ["pimpl_ptr.cpp"],
     hdrs = ["pimpl_ptr.h"],
     features = COMPILER_WARNING_FEATURES,
+    copts = ["-Wno-mismatched-new-delete"],
     visibility = [
         "@score_baselibs//score/os/utils:__subpackages__",
     ],
