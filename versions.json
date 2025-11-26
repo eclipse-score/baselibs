@@ -2,5 +2,9 @@
   {
     "version": "main",
     "url": "https://eclipse-score.github.io/baselibs/main/"
+  },
+  {
+    "version": "pr-49",
+    "url": "https://eclipse-score.github.io/baselibs/pr-49/"
   }
 ]
