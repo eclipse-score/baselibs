@@ -20,19 +20,10 @@ on:
     types: [opened, reopened, synchronize]
   merge_group:
     types: [checks_requested]
+  workflow_dispatch:
+
 jobs:
-    build_and_test_gcc_host_gcc12:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v4.2.2
-        - name: Setup Bazel
-          uses: bazel-contrib/setup-bazel@0.9.1
-        - name: Bazel build baselibs targets
-          run: |
-            bazel build --config bl-x86_64-linux -- //score/...
-        - name: Bazel test baselibs targets
-          run: |
-            bazel test --config bl-x86_64-linux -- //score/... \
-            -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
-            -//score/containers:dynamic_array_test
+  call_jobs:
+    uses: ./.github/workflows/jobs.yml
+    with:
+      build_type: check
