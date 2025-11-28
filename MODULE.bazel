@@ -53,6 +53,9 @@ toolchains_qnx.sdp(
     strip_prefix = "installation",
     url = "https://www.qnx.com/download/download/79858/installation.tgz",
 )
+toolchains_qnx.warning_flags(
+    minimal_warnings = ["-Wno-error=mismatched-new-delete"],
+)
 use_repo(toolchains_qnx, "toolchains_qnx_sdp")
 use_repo(toolchains_qnx, "toolchains_qnx_qcc")
 
