@@ -85,6 +85,29 @@ python.toolchain(
 bazel_dep(name = "aspect_rules_py", version = "1.4.0")
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2")
 
+## Component Integration Testing
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip", dev_dependency = True)
+pip.parse(
+    hub_name = "pip_score_venv_test",
+    python_version = PYTHON_VERSION,
+    requirements_lock = "//tests/python_test_cases:requirements.txt.lock",
+)
+use_repo(pip, "pip_score_venv_test")
+
+bazel_dep(name = "score_test_scenarios", version = "0.3.1", dev_dependency = True)
+
+# Override until 0.3.1 is released
+git_override(
+    module_name = "score_test_scenarios",
+    commit = "0452d65bb5366115041e10e30d05db585e718a21",
+    remote = "https://github.com/qorix-group/testing_tools.git",
+)
+ 
+
+# bazel cc rules
+bazel_dep(name = "rules_cc", version = "0.1.2", dev_dependency = True)
+
+
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(
