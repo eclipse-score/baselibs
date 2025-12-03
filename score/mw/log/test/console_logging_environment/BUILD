@@ -37,7 +37,8 @@ cc_library(
     ],
     deps = [
         "@googletest//:gtest",
-        "@score_baselibs//score/mw/log",
+        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
     ],
 )

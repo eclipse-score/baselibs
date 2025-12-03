@@ -62,18 +62,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "file_output_backend_mocks",
-    testonly = True,
-    hdrs = ["mock/message_builder_mock.h"],
-    features = COMPILER_WARNING_FEATURES,
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/mw/log/detail/text_recorder:non_blocking_writer",
-    ],
-)
-
 cc_test(
     name = "unit_test",
     srcs = [

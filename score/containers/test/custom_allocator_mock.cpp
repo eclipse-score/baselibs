@@ -10,18 +10,4 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/utils/string_hash.h"
-
-namespace score
-{
-namespace common
-{
-
-std::size_t get_string_as_hash(const std::string& name)
-{
-    std::hash<std::string> hash_fn;
-    return hash_fn(name);
-}
-
-}  // namespace common
-}  // namespace score
+#include "score/containers/test/custom_allocator_mock.h"

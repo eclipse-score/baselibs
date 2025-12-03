@@ -11,4 +11,4 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"

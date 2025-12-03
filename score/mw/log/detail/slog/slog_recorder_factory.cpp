@@ -23,7 +23,7 @@ namespace detail
 std::unique_ptr<Recorder> SlogRecorderFactory::CreateConcreteLogRecorder(const Configuration& config,
                                                                          score::cpp::pmr::memory_resource* memory_resource)
 {
-    auto backend = CreateSystemBackend(config, memory_resource);
+    auto backend = CreateSystemBackend(config, memory_resource);  // LCOV_EXCL_LINE : no branches to test
     constexpr bool check_log_level_for_console = false;
     return std::make_unique<TextRecorder>(config, std::move(backend), check_log_level_for_console);
 }

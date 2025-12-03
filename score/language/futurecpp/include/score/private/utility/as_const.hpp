@@ -5,6 +5,8 @@
 /// \brief Score.Futurecpp.Utility Component
 ///
 
+// IWYU pragma: private
+
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_UTILITY_AS_CONST_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_UTILITY_AS_CONST_HPP
 

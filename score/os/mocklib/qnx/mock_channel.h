@@ -44,7 +44,7 @@ class MockChannel : public Channel
 
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 MsgReply,
-                (std::int64_t rcvid, std::int64_t status, const void* msg, std::size_t bytes),
+                (std::int32_t rcvid, std::int64_t status, const void* msg, std::size_t bytes),
                 (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),

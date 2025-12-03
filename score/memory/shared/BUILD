@@ -60,6 +60,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
+        "@score_baselibs//score/language/safecpp/safe_math",
+        "@score_baselibs//score/memory:data_type_size_info",
         "@score_baselibs//score/mw/log:frontend",
     ],
 )
@@ -351,6 +353,7 @@ cc_library(
         ":pointer_arithmetic_util",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/safe_math",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 
@@ -534,15 +537,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "data_type_size_info",
-    srcs = ["data_type_size_info.cpp"],
-    hdrs = ["data_type_size_info.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = ["//visibility:public"],
-)
-
 cc_unit_test(
     name = "pointer_arithmetic_util_precondition_violation_test",
     srcs = [
@@ -561,6 +555,27 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",  # TODO: Remove when SubtractPointersBytes is no longer noexcept and we remove the last death test.
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+    ],
+)
+
+cc_unit_test(
+    name = "pointer_arithmetic_util_calculate_aligned_size_test",
+    srcs = [
+        "pointer_arithmetic_util_calculate_aligned_size_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
+        "-aborts_upon_exception",
+    ],
+    visibility = [
+        "@score_baselibs//score/memory:__pkg__",
+    ],
+    deps = [
+        ":pointer_arithmetic_util",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -832,6 +847,7 @@ cc_gtest_unit_test(
         ":pointer_arithmetic_util",
         ":shared_memory_test_resources",
         "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
+        "@score_baselibs//score/memory/shared/sealedshm/sealedshm_wrapper:sealedshm_mock",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -888,16 +904,6 @@ cc_gtest_unit_test(
     ],
 )
 
-cc_gtest_unit_test(
-    name = "data_type_size_info_test",
-    srcs = ["data_type_size_info_test.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    deps = [
-        ":data_type_size_info",
-        "@score_baselibs//score/mw/log",
-    ],
-)
-
 # Separate test suite for string test as it should not be executed on qnx
 test_suite(
     name = "unit_tests_host",
@@ -916,7 +922,6 @@ cc_unit_test_suites_for_host_and_qnx(
         ":lock_file_test",
         ":managed_memory_resource_test",
         ":map_test",
-        ":data_type_size_info_test",
         ":memory_region_bounds_test",
         ":memory_region_map_test",
         ":memory_resource_proxy_test",
@@ -924,6 +929,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":new_delete_delegate_resource_test",
         ":polymorphic_offset_ptr_allocator_test",
         ":pointer_arithmetic_util_precondition_violation_test",
+        ":pointer_arithmetic_util_calculate_aligned_size_test",
         ":shared_memory_error_test",
         ":shared_memory_factory_test",
         ":shared_memory_resource_allocate_test",

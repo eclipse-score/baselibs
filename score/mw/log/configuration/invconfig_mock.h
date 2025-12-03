@@ -10,14 +10,31 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/shared/data_type_size_info.h"
+#ifndef SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_
+#define SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_
 
-namespace score::memory::shared
+#include "score/mw/log/configuration/invconfig.h"
+
+#include "gmock/gmock.h"
+
+namespace score
+{
+namespace mw
+{
+namespace log
 {
 
-bool operator==(const DataTypeSizeInfo& lhs, const DataTypeSizeInfo& rhs) noexcept
+class INvConfigMock final : public INvConfig
 {
-    return ((lhs.size == rhs.size) && (lhs.alignment == rhs.alignment));
-}
+  public:
+    MOCK_METHOD(const config::NvMsgDescriptor*,
+                getDltMsgDesc,
+                (const std::string& typeName),
+                (const, noexcept, override));
+};
 
-}  // namespace score::memory::shared
+}  // namespace log
+}  // namespace mw
+}  // namespace score
+
+#endif  // SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_

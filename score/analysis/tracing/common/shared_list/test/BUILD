@@ -27,6 +27,7 @@ cc_test(
         "@score_baselibs//score/analysis/tracing/common/flexible_circular_allocator/test/mocks:flexible_circular_allocator_mock",
         "@score_baselibs//score/analysis/tracing/common/interface_types:shared_memory_location_helpers",
         "@score_baselibs//score/analysis/tracing/common/shared_list",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
 

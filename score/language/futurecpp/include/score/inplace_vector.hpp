@@ -16,6 +16,7 @@
 #include <score/utility.hpp>
 
 #include <algorithm>
+#include <cstddef>
 #include <initializer_list>
 #include <memory>
 #include <type_traits>
@@ -40,6 +41,9 @@ public:
 
     /// \brief The type to hold a size information
     using size_type = std::size_t;
+
+    /// \brief The type that can be used to identify distance between iterators
+    using difference_type = std::ptrdiff_t;
 
     /// \brief The type of a non-const iterator
     using iterator = score::cpp::detail::iterator<inplace_vector<T, MaxSize>>;
@@ -281,10 +285,10 @@ public:
     /// \pre n < size()
     reference operator[](const size_type n)
     {
-        static_assert(MaxSize < static_cast<size_type>(std::numeric_limits<std::ptrdiff_t>::max()), "Overflow");
+        static_assert(MaxSize < static_cast<size_type>(std::numeric_limits<difference_type>::max()), "Overflow");
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION(n < size());
         // The following static_cast is valid because of static_assert above.
-        return *(std::begin(*this) + static_cast<std::ptrdiff_t>(n));
+        return *(std::begin(*this) + static_cast<difference_type>(n));
     }
 
     /// \brief Mimics std::vector<>::operator[]()
@@ -292,10 +296,10 @@ public:
     /// \pre n < size()
     const_reference operator[](const size_type n) const
     {
-        static_assert(MaxSize < static_cast<size_type>(std::numeric_limits<std::ptrdiff_t>::max()), "Overflow");
+        static_assert(MaxSize < static_cast<size_type>(std::numeric_limits<difference_type>::max()), "Overflow");
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION(n < size());
         // The following static_cast is valid because of static_assert above.
-        return *(std::cbegin(*this) + static_cast<std::ptrdiff_t>(n));
+        return *(std::cbegin(*this) + static_cast<difference_type>(n));
     }
 
     /// \brief Returns the number elements in the vector
@@ -391,7 +395,7 @@ public:
 
         const auto old_end = end();
         const auto new_end = std::uninitialized_copy(first, last, std::end(*this));
-        const std::ptrdiff_t num_new_elements{new_end - old_end};
+        const difference_type num_new_elements{new_end - old_end};
         size_ += static_cast<std::size_t>(num_new_elements);
         const iterator it{const_iterator_cast(where)};
         score::cpp::ignore = std::rotate(it, old_end, new_end);
@@ -436,8 +440,8 @@ public:
         const iterator first_non_const{const_iterator_cast(first)}; // same as first but non-constant iterator
         const iterator last_non_const{const_iterator_cast(last)};   // same as last but non-constant iterator
         score::cpp::ignore = std::move(last_non_const, std::end(*this), first_non_const);
-        const std::ptrdiff_t number_of_elements_to_erase = std::distance(first, last);
-        for (std::ptrdiff_t i{0}; i < number_of_elements_to_erase; ++i)
+        const difference_type number_of_elements_to_erase{std::distance(first, last)};
+        for (difference_type i{0}; i < number_of_elements_to_erase; ++i)
         {
             pop_back();
         }

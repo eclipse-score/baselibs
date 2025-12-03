@@ -77,7 +77,7 @@ score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::MsgReceivePuls
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReply(const std::int64_t rcvid,
+score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReply(const std::int32_t rcvid,
                                                           const std::int64_t status,
                                                           const void* const msg,
                                                           const std::size_t bytes) const noexcept

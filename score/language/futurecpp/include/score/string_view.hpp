@@ -15,6 +15,7 @@
 #include <cstddef>
 #include <limits>
 #include <string>
+#include <string_view>
 #include <score/algorithm.hpp>
 #include <score/assert.hpp>
 #include <score/hash.hpp>
@@ -74,6 +75,20 @@ public:
         : basic_string_view{s.data(), s.size()}
     {
     }
+
+    /// \brief Conversion from std::basic_string_view.
+    ///
+    /// \note non-standard. but simplifies transition to `std::string_view`
+    // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversion from `std::string_view`
+    constexpr basic_string_view(const std::basic_string_view<CharT> s) noexcept : basic_string_view{s.data(), s.size()}
+    {
+    }
+
+    /// \brief Conversion to std::basic_string_view.
+    ///
+    /// \note non-standard. but simplifies transition to `std::string_view`
+    // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversion to `std::string_view`
+    constexpr operator std::basic_string_view<CharT>() const noexcept { return {data(), size()}; }
 
     /// \brief Returns a pointer to the underlying character array.
     ///
@@ -323,11 +338,7 @@ struct hash<score::cpp::string_view>
 {
     std::size_t operator()(const score::cpp::string_view s) const noexcept
     {
-#if __cplusplus >= 201703L
-        return std::hash<std::string_view>{}(std::string_view{s.data(), s.size()});
-#else
-        return score::cpp::hash_bytes(s.data(), s.size());
-#endif
+        return std::hash<std::string_view>{}({s.data(), s.size()});
     }
 };
 

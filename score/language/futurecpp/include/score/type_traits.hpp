@@ -8,22 +8,25 @@
 #ifndef SCORE_LANGUAGE_FUTURECPP_TYPE_TRAITS_HPP
 #define SCORE_LANGUAGE_FUTURECPP_TYPE_TRAITS_HPP
 
-#include <score/private/type_traits/conjunction.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/invoke_traits.hpp>     // IWYU pragma: export
-#include <score/private/type_traits/is_detected.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/is_expected.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/is_hash_for.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/is_inplace_vector.hpp> // IWYU pragma: export
-#include <score/private/type_traits/is_iterable.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/is_optional.hpp>       // IWYU pragma: export
-#include <score/private/type_traits/is_pair.hpp>           // IWYU pragma: export
-#include <score/private/type_traits/is_span.hpp>           // IWYU pragma: export
-#include <score/private/type_traits/is_static_vector.hpp>  // IWYU pragma: export
-#include <score/private/type_traits/is_tuple.hpp>          // IWYU pragma: export
-#include <score/private/type_traits/iterator_category.hpp> // IWYU pragma: export
-#include <score/private/type_traits/remove_cvref.hpp>      // IWYU pragma: export
-#include <score/private/type_traits/type_identity.hpp>     // IWYU pragma: export
-#include <score/private/type_traits/void_t.hpp>            // IWYU pragma: export
+#include <score/private/type_traits/conjunction.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/has_operator_indirection.hpp>   // IWYU pragma: export
+#include <score/private/type_traits/has_operator_pre_increment.hpp> // IWYU pragma: export
+#include <score/private/type_traits/invoke_traits.hpp>              // IWYU pragma: export
+#include <score/private/type_traits/is_detected.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/is_expected.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/is_hash_for.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/is_inplace_vector.hpp>          // IWYU pragma: export
+#include <score/private/type_traits/is_iterable.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/is_not_equal_comparable.hpp>    // IWYU pragma: export
+#include <score/private/type_traits/is_optional.hpp>                // IWYU pragma: export
+#include <score/private/type_traits/is_pair.hpp>                    // IWYU pragma: export
+#include <score/private/type_traits/is_span.hpp>                    // IWYU pragma: export
+#include <score/private/type_traits/is_static_vector.hpp>           // IWYU pragma: export
+#include <score/private/type_traits/is_tuple.hpp>                   // IWYU pragma: export
+#include <score/private/type_traits/iterator_category.hpp>          // IWYU pragma: export
+#include <score/private/type_traits/remove_cvref.hpp>               // IWYU pragma: export
+#include <score/private/type_traits/type_identity.hpp>              // IWYU pragma: export
+#include <score/private/type_traits/void_t.hpp>                     // IWYU pragma: export
 
 #include <iterator>
 #include <type_traits>

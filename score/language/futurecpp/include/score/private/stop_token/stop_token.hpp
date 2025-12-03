@@ -5,6 +5,8 @@
 /// \brief Score.Futurecpp.StopToken component
 ///
 
+// IWYU pragma: private
+
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_STOP_TOKEN_STOP_TOKEN_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_STOP_TOKEN_STOP_TOKEN_HPP
 

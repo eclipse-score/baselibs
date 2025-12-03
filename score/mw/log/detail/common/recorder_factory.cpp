@@ -131,8 +131,10 @@ std::unique_ptr<Recorder> RecorderFactory::CreateFromConfiguration(
         std::for_each(result->GetLogMode().begin(),
                       result->GetLogMode().end(),
                       [this, &result, &recorders, &memory_resource](const auto& log_mode) {
+                          // LCOV_EXCL_START : no branches to test
                           std::ignore = recorders.emplace_back(CreateRecorderFromLogMode(
                               log_mode, result.value(), score::os::Fcntl::Default(memory_resource), memory_resource));
+                          // LCOV_EXCL_STOP
                       });
 
     if (recorders.empty())

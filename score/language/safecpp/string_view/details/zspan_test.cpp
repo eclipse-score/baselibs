@@ -12,10 +12,11 @@
  ********************************************************************************/
 #include "score/language/safecpp/string_view/null_termination_violation_policies.h"
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"
 #include "score/language/safecpp/string_view/zstring_view.h"
 
 #include <score/string.hpp>
+#include <score/utility.hpp>
 
 #include <gtest/gtest.h>
 
@@ -382,6 +383,74 @@ TEST(ZSpan, TypeTraits)
     EXPECT_TRUE((std::is_trivially_copy_constructible_v<zspan>));
     EXPECT_TRUE((std::is_trivially_move_constructible_v<zspan>));
     EXPECT_TRUE((std::is_trivially_destructible_v<zspan>));
+}
+
+TEST(ZSpan, FrontInvokedWhileViolatingPrecondition)
+{
+    // Given a default-constructed modifiable `zspan`
+    zspan<char> span{};
+
+    // When invoking `front()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = span.front(), ::testing::KilledBySignal{SIGABRT}, "");
+
+    // Given a default-constructed non-modifiable `zspan`
+    const zspan<char> const_span{};
+
+    // When invoking `front()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = const_span.front(), ::testing::KilledBySignal{SIGABRT}, "");
+}
+
+TEST(ZSpan, BackInvokedWhileViolatingPrecondition)
+{
+    // Given a default-constructed modifiable `zspan`
+    zspan<char> span{};
+
+    // When invoking `back()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = span.back(), ::testing::KilledBySignal{SIGABRT}, "");
+
+    // Given a default-constructed non-modifiable `zspan`
+    const zspan<char> const_span{};
+
+    // When invoking `back()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = const_span.back(), ::testing::KilledBySignal{SIGABRT}, "");
+}
+
+TEST(ZSpan, AtInvokedWhileViolatingPrecondition)
+{
+    // Given a default-constructed modifiable `zspan`
+    zspan<char> span{};
+
+    // When invoking `at()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_THROW(score::cpp::ignore = span.at(0), std::out_of_range);
+
+    // Given a default-constructed non-modifiable `zspan`
+    const zspan<char> const_span{};
+
+    // When invoking `at()`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_THROW(score::cpp::ignore = const_span.at(0), std::out_of_range);
+}
+
+TEST(ZSpan, SubscriptOperatorInvokedWhileViolatingPrecondition)
+{
+    // Given a default-constructed modifiable `zspan`
+    zspan<char> span{};
+
+    // When invoking `operator[]`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = span[0], ::testing::KilledBySignal{SIGABRT}, "");
+
+    // Given a default-constructed non-modifiable `zspan`
+    const zspan<char> const_span{};
+
+    // When invoking `operator[]`
+    // Then immediate termination is expected due to precondition violation
+    EXPECT_EXIT(score::cpp::ignore = const_span[0], ::testing::KilledBySignal{SIGABRT}, "");
 }
 
 }  // namespace

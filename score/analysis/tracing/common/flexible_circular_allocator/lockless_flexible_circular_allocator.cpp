@@ -14,6 +14,7 @@
 #include "score/analysis/tracing/common/flexible_circular_allocator/error_code.h"
 
 #include <score/utility.hpp>
+#include <memory>
 
 namespace score
 {
@@ -21,13 +22,36 @@ namespace analysis
 {
 namespace tracing
 {
+namespace
+{
+// Cast from uint8_t* to BufferBlock* for accessing block metadata
+// Validates alignment before casting to ensure safe type-punning
+static inline BufferBlock* cast_to_buffer_block(uint8_t* from) noexcept
+{
+    // Validate alignment before casting
+    void* aligned_ptr = from;
+    std::size_t space = sizeof(BufferBlock);
 
+    // Check if pointer is properly aligned for BufferBlock
+    if ((std::align(alignof(BufferBlock), sizeof(BufferBlock), aligned_ptr, space) == nullptr) ||
+        (aligned_ptr != static_cast<void*>(from)))
+    {
+        return nullptr;  // Alignment validation failed
+    }
+
+    // Suppress "AUTOSAR C++14 A5-2-4" rule finding. This rule states:
+    // "reinterpret_cast shall not be used."
+    // Rationale: BufferBlock* pointer is used to access block metadata stored at calculated offsets.
+    // Alignment has been validated above using std::align before performing the cast.
+    // coverity[autosar_cpp14_a5_2_4_violation]
+    return reinterpret_cast<BufferBlock*>(from);  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast): Required for
+                                                  // type-punning byte buffer to structured metadata
+}
+}  // anonymous namespace
 constexpr std::uint8_t kMaxRetries = 200u;
 constexpr std::uint32_t kInvalidAddressValue = 0xFFFFFFFFUL;
 
 template <template <class> class AtomicIndirectorType>
-// This is false-positive everything is already initialized
-// coverity[autosar_cpp14_a12_1_1_violation]
 LocklessFlexibleCircularAllocator<AtomicIndirectorType>::LocklessFlexibleCircularAllocator(void* base_address,
                                                                                            std::size_t size)
     : IFlexibleCircularAllocator(),
@@ -42,8 +66,8 @@ LocklessFlexibleCircularAllocator<AtomicIndirectorType>::LocklessFlexibleCircula
       buffer_queue_head_{0U},
       buffer_queue_tail_{0U},
       list_array_{},
-      list_queue_head_{0},
-      list_queue_tail_{0},
+      list_queue_head_{0U},
+      list_queue_tail_{0U},
       // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
       // being given values that are not subsequently used"
       // False positive, variable is used.
@@ -55,12 +79,8 @@ LocklessFlexibleCircularAllocator<AtomicIndirectorType>::LocklessFlexibleCircula
       alloc_cntr_(0U),
       dealloc_cntr_(0U),
       tmd_stats_enabled_(false),
-      last_error_code_(0U)
+      last_error_code_(0)
 {
-    // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
-    // being given values that are not subsequently used"
-    // False positive, variable is used.
-    // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
     SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(list_queue_head_.is_always_lock_free == true, "ListQueue head is not lock free");
     SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(list_queue_head_.is_always_lock_free == true, "ListQueue tail is not lock free");
     SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(buffer_queue_head_.is_always_lock_free == true, "BufferQueue head is not lock free");
@@ -72,7 +92,7 @@ LocklessFlexibleCircularAllocator<AtomicIndirectorType>::LocklessFlexibleCircula
 template <template <class> class AtomicIndirectorType>
 std::size_t LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetAvailableMemory() noexcept
 {
-    return static_cast<size_t>(available_size_);
+    return static_cast<std::size_t>(available_size_);
 }
 
 template <template <class> class AtomicIndirectorType>
@@ -92,7 +112,10 @@ template <template <class> class AtomicIndirectorType>
 void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetTmdMemUsage(TmdStatistics& tmd_stats) noexcept
 {
     tmd_stats_enabled_.store(true, std::memory_order_release);
-    tmd_stats.tmd_max = total_size_ - lowest_size_.exchange(total_size_);
+    static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
+                  "std::size_t must be able to represent all values of std::uint32_t");
+    tmd_stats.tmd_max =
+        static_cast<std::size_t>(total_size_) - static_cast<std::size_t>(lowest_size_.exchange(total_size_));
     const std::uint32_t number_of_allocations = std::max(1U, alloc_cntr_.exchange(0U));
     tmd_stats.tmd_average = cumulative_usage_.exchange(0U) / number_of_allocations;
     tmd_stats.tmd_alloc_rate =
@@ -106,10 +129,7 @@ template <template <class> class AtomicIndirectorType>
 void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const std::size_t size,
                                                                         const std::size_t alignment_size) noexcept
 {
-    // Clear any previous error state
     ClearError();
-
-    //  NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
     // not lead to data loss.".
     // Rationale: The addition of 'size' and 'sizeof(BufferBlock)' is performed using std::size_t arithmetic.
@@ -128,7 +148,11 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
 
         return nullptr;
     }
-    score::cpp::ignore = available_size_.fetch_sub(static_cast<unsigned int>(aligned_size), std::memory_order_seq_cst);
+    if (aligned_size > std::numeric_limits<std::uint32_t>::max())
+    {
+        return nullptr;
+    }
+    std::ignore = available_size_.fetch_sub(static_cast<std::uint32_t>(aligned_size), std::memory_order_seq_cst);
 
     std::uint32_t list_entry_element_index = 0U;
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
@@ -138,10 +162,8 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
         if (AtomicIndirectorType<decltype(list_queue_head_.load())>::compare_exchange_strong(
                 list_queue_head_, old_list_queue_head, new_list_queue_head, std::memory_order_seq_cst) == true)
         {
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
             list_entry_element_index = new_list_queue_head;
-            retries = kMaxRetries;
+            break;
         }
 
         if (retries == kMaxRetries - 1U)
@@ -160,10 +182,6 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
         wrap_around_.store(true);
         gap_address_.store(buffer_queue_head_.load());
     }
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: casting from std::size_t to std::uint32_t won't cause data loss.
-    // coverity[autosar_cpp14_a4_7_1_violation]
     void* allocated_address = nullptr;
 
     // This prevents race condition where multiple threads think they should wrap around
@@ -172,6 +190,8 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
             wrap_around_, expected_wrap_around, false, std::memory_order_seq_cst))
     {
         // Only one thread will successfully enter this branch
+        static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
+                      "std::size_t must be able to represent all values of std::uint32_t");
         // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
         // not lead to data loss.".
         // Rationale: casting from std::size_t to std::uint32_t won't cause data loss.
@@ -181,11 +201,13 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
     else
     {
         // Either wrap_around_ was false, or another thread already claimed the wrap-around
+        static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
+                      "std::size_t must be able to represent all values of std::uint32_t");
         // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
         // not lead to data loss.".
         // Rationale: casting from std::size_t to std::uint32_t won't cause data loss.
+        // coverity[autosar_cpp14_a4_7_1_violation]
         allocated_address =
-            // coverity[autosar_cpp14_a4_7_1_violation]
             AllocateWithNoWrapAround(static_cast<std::uint32_t>(aligned_size), list_entry_element_index);
     }
 
@@ -193,12 +215,18 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
     {
         const std::uint32_t available_tmd_size = available_size_.load(std::memory_order_seq_cst);
         lowest_size_ = std::min(available_tmd_size, lowest_size_.load(std::memory_order_seq_cst));
-        cumulative_usage_ += total_size_ - available_tmd_size;
+
+        static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
+                      "std::size_t must be able to represent all values of std::uint32_t");
+        // Both total_size_ and available_tmd_size are std::uint32_t. Casted to std::size_t for safe subtraction.
+        // The subtraction result is guaranteed to be within [0, total_size_] since available_tmd_size <=
+        // total_size_ by design. cumulative_usage_ is std::uint64_t with ample headroom for accumulation,
+        // and is periodically reset via GetTmdMemUsage().
+        cumulative_usage_ += (static_cast<std::size_t>(total_size_) - static_cast<std::size_t>(available_tmd_size));
         alloc_cntr_++;
     }
 
     return allocated_address;
-    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
 }
 template <template <class> class AtomicIndirectorType>
 void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::ResetBufferQueuTail()
@@ -229,7 +257,6 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::MarkListEntryAsFre
         SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
         return;  // Early return to prevent crash
     }
-
     // The retries loop is designed to secure successful completion well within the set limit. kMaxRetries
     // is intentionally set high to ensure operations reliably complete without reaching it, aligning with
     // the system's robustness goals. Scenarios hitting the max retries conflict with this design, focusing on
@@ -250,10 +277,10 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::MarkListEntryAsFre
     }
 }
 template <template <class> class AtomicIndirectorType>
-// Suppress "AUTOSAR C++14 A8-4-10", The rule states: "A parameter shall be passed by reference if it can’t be NULL".
-// The whole algorithm by design here relied on address manipulation
-// coverity[autosar_cpp14_a8_4_10_violation]
 bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsRequestedBlockAtBufferQueueTail(
+    // Suppress "AUTOSAR C++14 A8-4-10", The rule states: "A parameter shall be passed by reference if it can’t be
+    // NULL". Function scope is pointer address manipulation passing by reference only delays obtaining
+    // pointer into function body.
     // coverity[autosar_cpp14_a8_4_10_violation]
     const BufferBlock* meta) const
 {
@@ -263,7 +290,6 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsRequestedBlockAt
         SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
         return false;  // For invalid offset
     }
-
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
     // not lead to data loss.".
     // Rationale: All operands and operations are performed using std::uint32_t. Since both
@@ -286,21 +312,24 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDea
     auto init_tail = buffer_queue_tail_.load();
     while (init_tail != buffer_queue_head_.load())
     {
-        // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic) : tolerated for algorithm
-        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-        // coverity[autosar_cpp14_a5_2_4_violation]
-        // coverity[autosar_cpp14_m5_0_15_violation]
-        // coverity[autosar_cpp14_m5_2_8_violation]
-        auto current_block = reinterpret_cast<BufferBlock*>(static_cast<uint8_t*>(base_address_) + init_tail);
-        // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-        // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
-
+        uint8_t* block_ptr = GetBufferPositionAt(init_tail);
+        if (block_ptr == nullptr)
+        {
+            SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
+            break;  // Out-of-bounds offset detected
+        }
+        BufferBlock* current_block = cast_to_buffer_block(block_ptr);
+        if (current_block == nullptr)
+        {
+            SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
+            break;  // Alignment validation failed, stop iteration
+        }
         if (init_tail == 0U)
         {
             MarkListEntryAsFree(current_block);
             // Check if MarkListEntryAsFree encountered an error
             auto error = GetLastError();
-            if (*error != 0U)
+            if (*error != 0)
             {
                 break;  // break the loop to avoid further corruption
             }
@@ -318,14 +347,14 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDea
                 FreeBlock(*current_block);
                 // Check if FreeBlock encountered an error
                 auto error = GetLastError();
-                if (*error != 0U)
+                if (*error != 0)
                 {
                     break;  // break the loop to avoid further corruption
                 }
 
                 init_tail += current_block->block_length;
 
-                if ((init_tail == gap_address_.load() && init_tail != buffer_queue_head_.load()) ||
+                if (((init_tail == gap_address_.load()) && (init_tail != buffer_queue_head_.load())) ||
                     (init_tail >= total_size_))
                 {
                     // The retries loop is designed to secure successful completion well within the set limit.
@@ -359,27 +388,44 @@ template <template <class> class AtomicIndirectorType>
 // coverity[autosar_cpp14_a15_5_3_violation]
 bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(void* const addr, const std::size_t) noexcept
 {
-    // Clear any previous error state
     ClearError();
 
-    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    // coverity[autosar_cpp14_a5_2_4_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-    // coverity[autosar_cpp14_m5_2_9_violation]
-    auto addr_to_validate = reinterpret_cast<uintptr_t>(addr);
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    if (!IsInBounds(addr, 0U) || ((addr_to_validate % alignof(std::max_align_t)) != 0U))
+    // Validate bounds
+    if (!IsInBounds(addr, 0U))
     {
         return false;
     }
-    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic) : tolerated for algorithm
-    BufferBlock* meta = nullptr;
-    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    // coverity[autosar_cpp14_a5_2_4_violation]
+
+    // Validate alignment using std::align to avoid pointer-to-integer casts
+    void* aligned_ptr = addr;
+    std::size_t space = sizeof(std::max_align_t);
+    if ((std::align(alignof(std::max_align_t), sizeof(std::max_align_t), aligned_ptr, space) == nullptr) ||
+        (aligned_ptr != addr))
+    {
+        return false;  // Alignment validation failed
+    }
+
+    auto user_data_ptr =
+        // Suppress "AUTOSAR C++14 A5-2-4" rule finding. This rule states:
+        // "reinterpret_cast shall not be used."
+        // Suppress "AUTOSAR C++14 M5-2-8" rule finding. This rule states:
+        // "An object with integer type or pointer to void type shall not be
+        // converted to an object with pointer type"
+        // Rationale: BufferBlock* pointer is used to access block metadata stored at calculated offsets.
+        // Alignment has been validated above using std::align before performing the cast.
+        // coverity[autosar_cpp14_a5_2_4_violation]
+        // coverity[autosar_cpp14_m5_2_8_violation]
+        reinterpret_cast<BufferBlock*>(addr);  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast): Cast user data
+                                               // address to BufferBlock* for pointer arithmetic
+
+    // Suppress "AUTOSAR C++14 M5-0-15" rule finding. This rule states:
+    // "Array indexing shall be the only form of pointer arithmetic."
+    // Rationale: Every block's metadata is located immediately before its user data.
+    // To access the metadata, we subtract one BufferBlock from the user data pointer.
+    // Memory layout: [BufferBlock metadata][User data at 'addr']
     // coverity[autosar_cpp14_m5_0_15_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-    meta = reinterpret_cast<BufferBlock*>(static_cast<uint8_t*>(addr) - sizeof(BufferBlock));
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
+    BufferBlock* meta = user_data_ptr - 1;  // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic): Required for
+                                            // accessing metadata block before user data
     if (buffer_queue_tail_.load() == gap_address_)
     {
         ResetBufferQueuTail();
@@ -388,7 +434,7 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(void* c
     MarkListEntryAsFree(meta);
     // Check if MarkListEntryAsFree encountered an error
     auto error = GetLastError();
-    if (*error != 0U)
+    if (*error != 0)
     {
         return false;
     }
@@ -402,7 +448,6 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(void* c
     // the primary deallocation still succeeds, which is the desired behavior.
     dealloc_cntr_++;
     return true;
-    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
 }
 
 template <template <class> class AtomicIndirectorType>
@@ -415,11 +460,9 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(BufferBl
         if (AtomicIndirectorType<decltype(buffer_queue_tail_.load())>::compare_exchange_strong(
                 buffer_queue_tail_, old_buffer_queue_tail, new_buffer_queue_tail, std::memory_order_seq_cst) == true)
         {
-            score::cpp::ignore = available_size_.fetch_add(static_cast<std::uint32_t>(current_block.block_length),
+            std::ignore = available_size_.fetch_add(static_cast<std::uint32_t>(current_block.block_length),
                                                     std::memory_order_seq_cst);
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
-            retries = kMaxRetries;
+            break;
         }
     }
 
@@ -445,9 +488,7 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(BufferBl
                 list_entry_new,
                 std::memory_order_seq_cst) == true)
         {
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
-            retries = kMaxRetries;
+            break;
         }
         // LCOV_EXCL_STOP
     }
@@ -476,28 +517,32 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetBaseAddress() 
 template <template <class> class AtomicIndirectorType>
 std::size_t LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetSize() const noexcept
 {
-    return static_cast<size_t>(total_size_);
+    return static_cast<std::size_t>(total_size_);
 }
 
 template <template <class> class AtomicIndirectorType>
 bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsInBounds(const void* const address,
                                                                          const std::size_t size) const noexcept
 {
-    // NOLINTBEGIN(score-no-pointer-comparison): Both pointers points to the same type of pointer (so no UB).
-    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic): Bound check is needed.
-    if ((address >= GetBaseAddress()) &&
-        // coverity[autosar_cpp14_m5_0_15_violation]
-        // coverity[autosar_cpp14_m5_2_8_violation]
-        (address <= static_cast<void*>(static_cast<uint8_t*>(GetBaseAddress()) + GetSize() - size)))
+    if (GetSize() < size)
+    {
+        return false;
+    }
+    // NOLINTBEGIN(score-no-pointer-comparison): Needed pointer comparisons for validating memory ranges safely
+    uint8_t* end_ptr = GetBufferPositionAt(GetSize() - size);
+    if (end_ptr == nullptr)
+    {
+        return false;  // Invalid offset, out of bounds
+    }
+    if ((address >= GetBaseAddress()) && (address <= static_cast<void*>(end_ptr)))
     {
         return true;
     }
+    // NOLINTEND(score-no-pointer-comparison)
     else
     {
         return false;
     }
-    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): Bound check is needed.
-    // NOLINTEND(score-no-pointer-comparison): Both pointers points to the same type of pointer (so no UB).
 }
 
 template <template <class> class AtomicIndirectorType>
@@ -515,25 +560,31 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithWr
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
         {
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
-            retries = kMaxRetries;
+            break;
         }
     }
-    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
-    // coverity[autosar_cpp14_a5_2_4_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-    auto block_meta_data =
-        reinterpret_cast<BufferBlock*>(static_cast<uint8_t*>(base_address_) + new_buffer_queue_head - aligned_size);
+    if (new_buffer_queue_head < aligned_size)
+    {
+        return nullptr;
+    }
+    uint8_t* block_ptr = GetBufferPositionAt(static_cast<std::uint32_t>(new_buffer_queue_head) - aligned_size);
+    if (block_ptr == nullptr)
+    {
+        return nullptr;  // Out-of-bounds offset detected
+    }
+    auto block_meta_data = cast_to_buffer_block(block_ptr);
+    if (block_meta_data == nullptr)
+    {
+        return nullptr;  // Alignment validation failed in cast_to_buffer_block
+    }
     block_meta_data->list_entry_offset = list_entry_element_index;
     block_meta_data->block_length = static_cast<uint32_t>(aligned_size);
-    // coverity[autosar_cpp14_m5_0_15_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-    allocated_address =
-        static_cast<uint8_t*>(base_address_) + new_buffer_queue_head - aligned_size + sizeof(BufferBlock);
-    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
+    allocated_address = GetBufferPositionAt(static_cast<std::size_t>(new_buffer_queue_head) -
+                                            static_cast<std::size_t>(aligned_size) + sizeof(BufferBlock));
+    if (allocated_address == nullptr)
+    {
+        return nullptr;  // Out-of-bounds offset detected
+    }
     if (aligned_size > std::numeric_limits<std::uint16_t>::max())
     {
         // Return early if aligned_size exceeds the maximum value representable by std::uint32_t,
@@ -561,9 +612,7 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithWr
                 list_entry_new,
                 std::memory_order_seq_cst) == true)
         {
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
-            retries = kMaxRetries;
+            break;
         }
     }
 
@@ -584,27 +633,31 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithNo
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
         {
+            if (new_buffer_queue_head < static_cast<unsigned int>(aligned_size))
+            {
+                return nullptr;
+            }
             offset = new_buffer_queue_head - aligned_size;
-            // It's intended to cover the for loop condition decisions and carry no functional harm
-            // coverity[autosar_cpp14_m6_5_3_violation]
-            retries = kMaxRetries;
+            break;
         }
     }
-    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
-    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    // coverity[autosar_cpp14_a5_2_4_violation]
-    // coverity[autosar_cpp14_m5_0_15_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-
-    auto block_meta_data = reinterpret_cast<BufferBlock*>(static_cast<uint8_t*>(base_address_) + offset);
+    uint8_t* block_ptr = GetBufferPositionAt(offset);
+    if (block_ptr == nullptr)
+    {
+        return nullptr;  // Out-of-bounds offset detected
+    }
+    auto block_meta_data = cast_to_buffer_block(block_ptr);
+    if (block_meta_data == nullptr)
+    {
+        return nullptr;  // Alignment validation failed in cast_to_buffer_block
+    }
     block_meta_data->list_entry_offset = list_entry_element_index;
     block_meta_data->block_length = static_cast<std::uint32_t>(aligned_size);
-    // coverity[autosar_cpp14_m5_0_15_violation]
-    // coverity[autosar_cpp14_m5_2_8_violation]
-    allocated_address = static_cast<uint8_t*>(base_address_) + offset + sizeof(BufferBlock);
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): tolerated for algorithm
-    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic): tolerated for algorithm
-
+    allocated_address = GetBufferPositionAt(static_cast<std::size_t>(offset) + sizeof(BufferBlock));
+    if (allocated_address == nullptr)
+    {
+        return nullptr;  // Out-of-bounds offset detected
+    }
     if (aligned_size > std::numeric_limits<std::uint16_t>::max())
     {
         // Return early if aligned_size exceeds the maximum value representable by std::uint32_t,
@@ -653,7 +706,6 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::ValidateListEntryI
     }
     return result;
 }
-
 template <template <class> class AtomicIndirectorType>
 void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::SetError(
     FlexibleAllocatorErrorCode error_code) const noexcept
@@ -665,13 +717,62 @@ template <template <class> class AtomicIndirectorType>
 score::result::Error LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetLastError() const noexcept
 {
     auto error_code = last_error_code_.load(std::memory_order_seq_cst);
+    // Suppress "AUTOSAR C++14 A7-2-1" rule finding. This rule states:
+    // "An expression with enum underlying type shall only have values corresponding to the enumerators of the
+    // enumeration." Rationale: The error_code value is always set via SetError() which stores valid
+    // FlexibleAllocatorErrorCode enumerators. This cast is the inverse operation of SetError() and is guaranteed to
+    // produce valid enum values by design.
+    // coverity[autosar_cpp14_a7_2_1_violation]
     return MakeError(static_cast<FlexibleAllocatorErrorCode>(error_code));
 }
 
 template <template <class> class AtomicIndirectorType>
 void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::ClearError() noexcept
 {
-    last_error_code_.store(0U, std::memory_order_seq_cst);
+    last_error_code_.store(0, std::memory_order_seq_cst);
+}
+
+template <template <class> class AtomicIndirectorType>
+template <typename OffsetT>
+uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetBufferPositionAt(OffsetT offset) const noexcept
+{
+    static_assert(std::is_integral_v<OffsetT>, "OffsetT must be an integral type");
+    static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
+                  "std::size_t must be able to represent all values of std::uint32_t");
+
+    // Runtime bounds validation - ensures offset is within buffer bounds
+    // Returns nullptr if offset exceeds total_size_ to prevent out-of-bounds access
+    // Suppress "AUTOSAR C++14 A7-1-8" rule finding. This rule states:
+    // "A non-type specifier shall be placed before a type specifier in a declaration."
+    // Rationale: Not a typical use case of this rule. Here, we are using constexpr before
+    // if condition, not in declaration context. (false positive).
+    // coverity[autosar_cpp14_a7_1_8_violation: False]
+    if constexpr (std::is_signed_v<OffsetT>)
+    {
+        if (offset < 0)
+        {
+            return nullptr;  // Negative offset is out-of-bounds
+        }
+    }
+    if (static_cast<std::size_t>(offset) > static_cast<std::size_t>(total_size_))
+    {
+        return nullptr;  // Out-of-bounds offset
+    }
+    // Suppress "AUTOSAR C++14 M5-2-8" rule finding. This rule states:
+    // "An object with integer type or pointer to void type shall not be
+    // converted to an object with pointer type"
+    // Rationale: uint8_t is the smallest addressable unit. No UB arises as we're converting
+    // to unsigned char type which can alias any object. Used for calculating positions within
+    // the allocator's managed memory buffer.
+    // coverity[autosar_cpp14_m5_2_8_violation]
+    auto byte_ptr = static_cast<uint8_t*>(base_address_);
+    // Suppress "AUTOSAR C++14 M5-0-15" rule finding. This rule states:
+    // "Array indexing shall be the only form of pointer arithmetic."
+    // Rationale: Array indexing is used for pointer arithmetic. Offset validity has been verified
+    // above to ensure it does not exceed the buffer size.
+    // coverity[autosar_cpp14_m5_0_15_violation]
+    return &byte_ptr[offset];  // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic): Array indexing is used for
+                               // pointer arithmetic
 }
 
 template class LocklessFlexibleCircularAllocator<score::memory::shared::AtomicIndirectorReal>;

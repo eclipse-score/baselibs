@@ -23,6 +23,12 @@
 
 namespace score
 {
+namespace common
+{
+
+std::size_t get_string_as_hash(const std::string& name);
+
+}
 namespace os
 {
 

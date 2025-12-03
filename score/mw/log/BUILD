@@ -157,21 +157,7 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "//platform/aas/lib/hash/code/common:__pkg__",
-        "//platform/aas/sysfunc/BasicSecurity/code/secure_feature_activation:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/auto_sync/error:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/bank_information:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/common_programming_attributes/check_programming_dependencies_flag:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/common_programming_attributes/last_preprocessing_state_flag:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/data_provider/read_programming_counter/details:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/minion_data/error:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/mirror_protocol/01_preprocessing/preprocessing_step:__pkg__",
-        "//platform/aas/sysfunc/common/logistics/error:__pkg__",
-        "@score_baselibs//score/mw/log/detail:__pkg__",
-        "@score_baselibs//score/mw/log/log_ext:__pkg__",
-        "@score_baselibs//score/mw/log/test/my_custom_lib:__pkg__",
-        "@score_baselibs//score/mw/log/test/sample_ara_core_logging:__pkg__",
-        "@score_baselibs//score/os:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":recorder",
@@ -262,7 +248,7 @@ cc_test(
 )
 
 cc_test(
-    name = "runtime_test",  # leave
+    name = "runtime_test",
     srcs = [
         ":runtime_test.cpp",
     ],
@@ -274,7 +260,7 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log:frontend",
         "@score_baselibs//score/mw/log:recorder_mock",
-        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
     ],
 )
 
@@ -340,9 +326,16 @@ cc_test(
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
         "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
     ],
+)
+
+# Allows unit testing with production code running with the recorder_factory
+# that includes all the backends supporting coverage and qualification.
+exports_files(
+    ["log_stream_test.cpp"],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -358,9 +351,16 @@ cc_test(
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
-        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
     ],
+)
+
+# Allows unit testing with production code running with the recorder_factory
+# that includes all the backends supporting coverage and qualification.
+exports_files(
+    ["log_stream_factory_test.cpp"],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(

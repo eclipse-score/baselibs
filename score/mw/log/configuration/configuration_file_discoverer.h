@@ -13,6 +13,7 @@
 #ifndef SCORE_MW_LOG_DETAIL_CONFIG_FILE_DISCOVERER_H
 #define SCORE_MW_LOG_DETAIL_CONFIG_FILE_DISCOVERER_H
 
+#include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/mw/log/configuration/iconfiguration_file_discoverer.h"
 
 #include <memory>
@@ -44,8 +45,8 @@ class ConfigurationFileDiscoverer final : public IConfigurationFileDiscoverer
   private:
     // std::string_view as return is intended here on purpose since it points to a constexpr global variable.
     // It's better here for optimization purpose.
-    score::cpp::optional<std::string_view> GetGlobalConfigFile() const noexcept;
-    bool FileExists(const std::string_view& path) const noexcept;
+    score::cpp::optional<safecpp::zstring_view> GetGlobalConfigFile() const noexcept;
+    bool FileExists(const safecpp::zstring_view& path) const noexcept;
     score::cpp::optional<std::string> FindLocalConfigFile() const noexcept;
     score::cpp::optional<std::string> FindEnvironmentConfigFile() const noexcept;
     score::cpp::optional<std::string> GetConfigFileByExecutableLocation() const noexcept;

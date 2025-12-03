@@ -1161,6 +1161,16 @@ TEST(inplace_vector_test, iterator)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#17893146
+TEST(inplace_vector_test, difference_type_matches_with_iterator)
+{
+    using type = score::cpp::inplace_vector<std::int32_t, 20>;
+
+    static_assert(std::is_same_v<type::difference_type, std::iterator_traits<type::iterator>::difference_type>);
+    static_assert(std::is_same_v<type::difference_type, std::iterator_traits<type::const_iterator>::difference_type>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17893146
 TEST(inplace_vector_test, iterator_conversion_from_non_const_to_const_iterator)
 {
     score::cpp::inplace_vector<std::int32_t, 20> container(20, 23);

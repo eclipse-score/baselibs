@@ -6,6 +6,7 @@
 #include <score/type_traits.hpp>
 #include <score/type_traits.hpp> // test include guard
 
+#include <array>
 #include <cstdint>
 #include <forward_list>
 #include <functional>
@@ -152,6 +153,68 @@ struct valid_hash_type
 {
     template <typename T>
     std::size_t operator()(const T&) const;
+};
+
+struct non_iterable_with_void_begin_end_type
+{
+    void begin() {}
+    void end() {}
+
+    void cbegin() const {}
+    void cend() const {}
+};
+
+template <typename T>
+struct iterable_type
+{
+    using iterator = T*;
+    using const_iterator = T const*;
+
+    iterator begin() { return std::begin(array_); }
+    iterator end() { return std::end(array_); }
+
+    const_iterator cbegin() const { return std::cbegin(array_); }
+    const_iterator cend() const { return std::cend(array_); }
+
+private:
+    T array_[4]{};
+};
+
+///
+/// \brief This 'simple_iterator' is based on the concept of 'Simple Input/Output Iterator', yet with an addition of the
+/// '!=' not-equal comparison operator
+///
+/// \see https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator.html
+///
+struct simple_iterator
+{
+    using difference_type = std::ptrdiff_t;
+
+    int operator*() { return {}; }
+    simple_iterator& operator++() { return *this; }
+    void operator++(int) { ++*this; }
+    bool operator!=(simple_iterator&) { return {}; }
+};
+
+///
+/// \brief Non swappable iterator(almost) type
+///
+/// \see https://en.cppreference.com/w/cpp/algorithm/swap.html
+///
+struct simple_non_swappable_iterator
+{
+    using difference_type = std::ptrdiff_t;
+    simple_non_swappable_iterator() = default;
+    simple_non_swappable_iterator(const simple_non_swappable_iterator&) = default;
+    simple_non_swappable_iterator(simple_non_swappable_iterator&&) = default;
+    simple_non_swappable_iterator& operator=(const simple_non_swappable_iterator&) = default;
+    // enough to render the type non-swappable
+    simple_non_swappable_iterator& operator=(simple_non_swappable_iterator&&) = delete;
+
+    int operator*() { return {}; }
+    simple_non_swappable_iterator& operator++() { return *this; }
+    void operator++(int) { ++*this; }
+    bool operator!=(simple_non_swappable_iterator&) { return {}; }
 };
 
 /// @testmethods TM_REQUIREMENT
@@ -392,6 +455,126 @@ TEST(has_size, when_container_has_size_method)
 }
 
 /// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770042
+TEST(is_not_equal_comparable, when_used_with_notequal_and_non_notequal_comparable_types)
+{
+    static_assert(score::cpp::is_not_equal_comparable<int>::value,
+                  "Error: type isn't not-equal comparable type but should be");
+    static_assert(score::cpp::is_not_equal_comparable<int*>::value,
+                  "Error: type isn't not-equal comparable type but should be");
+    static_assert(score::cpp::is_not_equal_comparable_v<typename std::vector<int>::iterator>,
+                  "Error: type isn't not-equal comparable type but should be");
+    static_assert(
+        !score::cpp::is_not_equal_comparable_v<decltype(std::declval<non_iterable_with_void_begin_end_type>().begin())>,
+        "Error: type should not be an a not-equal comparable type");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17769132
+TEST(has_operator_pre_increment, when_used_with_incrementable_and_non_incrementable_types)
+{
+    static_assert(!score::cpp::has_operator_pre_increment<decltype(
+                      std::declval<non_iterable_with_void_begin_end_type>().begin())>::value,
+                  "Error: type should not be incrementable");
+    static_assert(score::cpp::has_operator_pre_increment<decltype(std::declval<std::array<float, 2UL>>().begin())>::value,
+                  "Error: type isn't incrementable type but should be");
+    static_assert(score::cpp::has_operator_pre_increment_v<iterable_type<double>::iterator>,
+                  "Error: type isn't incrementable type but should be");
+    static_assert(score::cpp::has_operator_pre_increment<int>::value, "Error: type isn't incrementable type but should be");
+    static_assert(score::cpp::has_operator_pre_increment<char*>::value, "Error: type isn't incrementable type but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17769132
+TEST(has_operator_indirection, when_used_with_dereferenceable_and_non_dereferenceable_types)
+{
+    static_assert(
+        !score::cpp::has_operator_indirection<decltype(std::declval<non_iterable_with_void_begin_end_type>().begin())>::value,
+        "Error: type should not be dereferenceable type");
+    static_assert(score::cpp::has_operator_indirection<int*>::value, "Error: type isn't a dereferenceable type but should be");
+    static_assert(score::cpp::has_operator_indirection<std::vector<double>::iterator>::value,
+                  "Error: type isn't a dereferenceable type but should be");
+    static_assert(score::cpp::has_operator_indirection_v<iterable_type<int>::iterator>,
+                  "Error: type isn't a dereferenceable type but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_non_iterator_type)
+{
+    static_assert(!score::cpp::detail::is_legacy_input_iterator<decltype(
+                      std::declval<non_iterable_with_void_begin_end_type>().begin())>::value,
+                  "Error: type should not be an a legacy iterator type");
+    static_assert(!score::cpp::detail::is_legacy_input_iterator<int>::value,
+                  "Error: type should not be a legacy iterator type");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_container_iterator)
+{
+    static_assert(score::cpp::detail::is_legacy_input_iterator<decltype(std::declval<std::vector<int>>().begin())>::value,
+                  "Error: type is not a legacy input iterator but should be");
+    static_assert(score::cpp::detail::is_legacy_input_iterator<decltype(std::declval<std::array<int, 3UL>>().end())>::value,
+                  "Error: type is not a legacy input iterator but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_simple_iterator)
+{
+    static_assert(score::cpp::detail::is_legacy_input_iterator<simple_iterator>::value,
+                  "Error: type is not a legacy input iterator but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_iterable_begin_end_type)
+{
+    static_assert(
+        score::cpp::detail::is_legacy_input_iterator<decltype(std::declval<iterable_type<std::size_t>>().end())>::value,
+        "Error: type is not a legacy input iterator but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_builtin_c_array_supports_std_cbegin_std_cend)
+{
+    static_assert(score::cpp::detail::is_legacy_input_iterator_v<decltype(std::cbegin(std::declval<int[4]>()))>,
+                  "Error: type is not legacy input iterator but should be");
+    // int[] shouldn't be considered a legacy iterator
+    static_assert(!score::cpp::detail::is_legacy_input_iterator_v<int[]>, "Error: type should not be a legacy input iterator");
+    // However with its decayed version, it is considered legacy iterator, since it's decayed into 'int*'
+    static_assert(score::cpp::detail::is_legacy_input_iterator_v<std::decay_t<int[]>>,
+                  "Error: type is not a legacy input iterator but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_pointer)
+{
+    // So as with the 'int*', that's also behaves as an iterator like
+    static_assert(score::cpp::detail::is_legacy_input_iterator_v<int*>,
+                  "Error: type is not a legacy input iterator but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_legacy_input_iterator, when_used_with_non_swappable_type)
+{
+    static_assert(!score::cpp::detail::is_legacy_input_iterator_v<simple_non_swappable_iterator>,
+                  "Error: type should not be a legacy input iterator");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_iterable, when_used_with_builtin_c_array)
+{
+    static_assert(score::cpp::is_iterable_v<int[5]>, "Error: type is not iterable but should be");
+    static_assert(score::cpp::is_iterable_v<const int[5]>, "Error: type is not iterable but should be");
+}
+
+/// @testmethods TM_REQUIREMENT
 /// @requirement CB-#17770107
 TEST(is_iterable, when_iterable)
 {
@@ -405,6 +588,21 @@ TEST(is_iterable, when_not_iterable)
 {
     static_assert(!score::cpp::is_iterable<double>::value, "Error: type is iterable but shouldn't");
     static_assert(!score::cpp::is_iterable_v<double>, "Error: type is iterable but shouldn't");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_iterable, when_used_with_non_iterable_begin_end_type)
+{
+    static_assert(!score::cpp::is_iterable<non_iterable_with_void_begin_end_type>::value,
+                  "Error: type should not be iterable");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17770107
+TEST(is_iterable, when_used_with_iterable_begin_end_type)
+{
+    static_assert(score::cpp::is_iterable<iterable_type<int>>::value, "Error: type is not iterable but should be");
 }
 
 /// @testmethods TM_REQUIREMENT

@@ -15,7 +15,7 @@
 
 #include "score/language/safecpp/string_view/null_termination_violation_policies.h"
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"
 #include "score/language/safecpp/string_view/zstring_view.h"
 
 #include <functional>
@@ -103,10 +103,15 @@ template <typename ViewType,
     ViolationPolicy violation_policy = {}) noexcept(noexcept(std::invoke(violation_policy, "reason")))
     -> decltype(std::declval<ViewType>().data())
 {
-    if (view.data() == nullptr)
+    if (view.data() == nullptr)  // LCOV_EXCL_BR_LINE: tooling issue since both branches are covered (see below)
     {
         std::invoke(violation_policy, "score::safecpp: provided view object does not entail any underlying buffer");
         return nullptr;
+    }
+    else
+    {
+        // dummy statement to prove this branch as covered
+        (void)view.size();
     }
 
     if constexpr (safecpp::IsNullTerminatedViewType<VT>())

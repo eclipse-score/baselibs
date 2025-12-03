@@ -10,7 +10,6 @@
 
 #include <score/private/execution/scheduler_t.hpp>
 #include <score/private/execution/sender_t.hpp>
-#include <score/private/utility/static_const.hpp>
 
 #include <utility>
 
@@ -42,9 +41,6 @@ struct schedule_t
 
 using detail::schedule_t_disable_adl::schedule_t;
 
-namespace // NOLINT(google-build-namespaces)
-{
-
 /// \brief Returns a sender describing the start of a task graph on the provided scheduler.
 ///
 /// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2300r7.html#design-sender-factory-schedule
@@ -53,9 +49,7 @@ namespace // NOLINT(google-build-namespaces)
 /// the first argument. Follows https://wg21.link/p2855r1.
 ///
 /// \return A schedule sender.
-constexpr auto& schedule = score::cpp::static_const<schedule_t>::value; // NOLINT(misc-definitions-in-headers)
-
-} // namespace
+inline constexpr schedule_t schedule{};
 
 } // namespace execution
 } // namespace score::cpp

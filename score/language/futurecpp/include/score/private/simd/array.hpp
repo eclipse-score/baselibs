@@ -16,7 +16,6 @@
 
 #include <array>
 #include <cstddef>
-#include <initializer_list>
 #include <utility>
 
 // usable on QNX for ASIL B software. covered by requirement broken_link_c/issue/4049789
@@ -65,21 +64,15 @@ struct array_mask
 
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE all_of(const type v) noexcept
     {
-        bool r{true};
-        score::cpp::ignore = std::initializer_list<int>{(r = r && Abi::all_of(v[Is]), 0)...};
-        return r;
+        return (... && Abi::all_of(v[Is]));
     }
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE any_of(const type v) noexcept
     {
-        bool r{false};
-        score::cpp::ignore = std::initializer_list<int>{(r = r || Abi::any_of(v[Is]), 0)...};
-        return r;
+        return (... || Abi::any_of(v[Is]));
     }
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE none_of(const type v) noexcept
     {
-        bool r{true};
-        score::cpp::ignore = std::initializer_list<int>{(r = r && Abi::none_of(v[Is]), 0)...};
-        return r;
+        return (... && Abi::none_of(v[Is]));
     }
 };
 
@@ -111,11 +104,11 @@ struct array
     }
     static void SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE store(T* const v, const type a) noexcept
     {
-        score::cpp::ignore = std::initializer_list<int>{(Abi::store(v + (Is * Abi::width), a[Is]), 0)...};
+        (..., Abi::store(v + (Is * Abi::width), a[Is]));
     }
     static void SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE store_aligned(T* const v, const type a) noexcept
     {
-        score::cpp::ignore = std::initializer_list<int>{(Abi::store(v + (Is * Abi::width), a[Is]), 0)...};
+        (..., Abi::store(v + (Is * Abi::width), a[Is]));
     }
 
     static T SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_ARRAY_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept

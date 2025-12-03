@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "nvconfig.h"
+#include "nvconfigfactory.h"
 #include <fstream>
 #include <iostream>
 
@@ -22,7 +23,8 @@ namespace
 {
 
 using NvConfig = score::mw::log::NvConfig;
-using ReadResult = NvConfig::ReadResult;
+using NvConfigFactory = score::mw::log::NvConfigFactory;
+using INvConfig = score::mw::log::INvConfig;
 
 class NonVerboseConfig : public ::testing::Test
 {
@@ -97,8 +99,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValues)
     RecordProperty("Description", "Logging libraries use static configuration based on .json files.");
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
-    NvConfig nvc1(JSON_PATH());
-    EXPECT_EQ(ReadResult::kOK, nvc1.parseFromJson());  // ok json results
+    auto result = NvConfigFactory::CreateAndInit(JSON_PATH());
+    ASSERT_TRUE(result.has_value());  // Verify config was created successfully
+    auto& nvc1 = result.value();
     EXPECT_EQ(301,
               nvc1.getDltMsgDesc("score::logging::PersistentLogFileEvent")->GetIdMsgDescriptor());  // id value reading
     EXPECT_EQ(
@@ -128,8 +131,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValuesWithOtherFile)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc2(JSON_PATH_2());
-    EXPECT_EQ(ReadResult::kOK, nvc2.parseFromJson());                                               // ok json results
+    auto result = NvConfigFactory::CreateAndInit(JSON_PATH_2());
+    ASSERT_TRUE(result.has_value());  // Verify config was created successfully
+    auto& nvc2 = result.value();
     EXPECT_EQ(8650816, nvc2.getDltMsgDesc("score::plg::awa::DebugData")->GetIdMsgDescriptor());  // id value reading
     EXPECT_EQ(
         3,
@@ -163,8 +167,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenEmptyFile)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc3(EMPTY_FILE());
-    EXPECT_EQ(ReadResult::kERROR_PARSE, nvc3.parseFromJson());  // error parse because it is a general empty file
+    auto result = NvConfigFactory::CreateAndInit(EMPTY_FILE());
+    ASSERT_FALSE(result.has_value());  // error parse because it is a general empty file
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kParseError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenPathToNonExistentFile)
@@ -175,8 +180,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenPathToNonExistentFile)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc4(WRONG_JSON_PATH());
-    EXPECT_EQ(ReadResult::kERROR_PARSE, nvc4.parseFromJson());  // error parse because the file doesn't exist
+    auto result = NvConfigFactory::CreateAndInit(WRONG_JSON_PATH());
+    ASSERT_FALSE(result.has_value());  // error parse because the file doesn't exist
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kParseError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsOkWhenGivenEmptyJsonFile)
@@ -187,8 +193,8 @@ TEST_F(NonVerboseConfig, NvConfigReturnsOkWhenGivenEmptyJsonFile)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc5(EMPTY_JSON());
-    EXPECT_EQ(ReadResult::kOK, nvc5.parseFromJson());  // ok because this json file doesn't have items
+    auto result = NvConfigFactory::CreateAndInit(EMPTY_JSON());
+    EXPECT_TRUE(result.has_value());  // ok because this json file doesn't have items
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfEmptyObject)
@@ -200,9 +206,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfEmptyObject)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc6(EMPTY_JSON_OBJECT());
-    EXPECT_EQ(ReadResult::kERROR_PARSE,
-              nvc6.parseFromJson());  // array instead of json object as one of the values
+    auto result = NvConfigFactory::CreateAndInit(EMPTY_JSON_OBJECT());
+    ASSERT_FALSE(result.has_value());  // array instead of json object as one of the values
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kParseError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfThereIsSomethingElseInstedOfObjectAsValue)
@@ -213,9 +219,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfThereIsSomethingElseInstedOf
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc6(ERROR_PARSE_1_PATH());
-    EXPECT_EQ(ReadResult::kERROR_PARSE,
-              nvc6.parseFromJson());  // aray instead of json object as one of the values
+    auto result = NvConfigFactory::CreateAndInit(ERROR_PARSE_1_PATH());
+    ASSERT_FALSE(result.has_value());  // aray instead of json object as one of the values
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kParseError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfCtxidValuePairDoesntExistsForOneObject)
@@ -228,9 +234,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfCtxidValuePairDoesntExists
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc7(ERROR_CONTENT_1_PATH());
-    EXPECT_EQ(ReadResult::kERROR_CONTENT,
-              nvc7.parseFromJson());  // ctxid key-value pair is missing in one of the objects
+    auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_1_PATH());
+    ASSERT_FALSE(result.has_value());  // ctxid key-value pair is missing in one of the objects
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kContentError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfAppidValuePairDoesntExistsForOneObject)
@@ -243,9 +249,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfAppidValuePairDoesntExists
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc8(ERROR_CONTENT_2_PATH());
-    EXPECT_EQ(ReadResult::kERROR_CONTENT,
-              nvc8.parseFromJson());  // appid key-value pair is missing in one of the objects
+    auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_2_PATH());
+    ASSERT_FALSE(result.has_value());  // appid key-value pair is missing in one of the objects
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kContentError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfIdValuePairDoesntExistsForOneObject)
@@ -257,9 +263,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfIdValuePairDoesntExistsFor
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc9(ERROR_CONTENT_3_PATH());
-    EXPECT_EQ(ReadResult::kERROR_CONTENT,
-              nvc9.parseFromJson());  // id key-value pair is missing in one of the objects
+    auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_3_PATH());
+    ASSERT_FALSE(result.has_value());  // id key-value pair is missing in one of the objects
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kContentError), *result.error());
 }
 
 TEST_F(NonVerboseConfig, NvConfigReturnsErrorIfIdDataTypeIsWrong)
@@ -270,8 +276,9 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorIfIdDataTypeIsWrong)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    NvConfig nvc10(ERROR_CONTENT_WRONG_ID_VALUE());
-    EXPECT_EQ(ReadResult::kERROR_CONTENT, nvc10.parseFromJson());  // wrong ID data type (string instead of int).
+    auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_WRONG_ID_VALUE());
+    ASSERT_FALSE(result.has_value());  // wrong ID data type (string instead of int).
+    EXPECT_EQ(static_cast<uint8_t>(score::mw::log::NvConfigErrorCode::kContentError), *result.error());
 }
 
 }  // namespace

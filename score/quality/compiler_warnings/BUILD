@@ -14,5 +14,6 @@ cc_library(
     name = "compiler_warnings",
     srcs = ["warnings.cpp"],
     hdrs = ["warnings.h"],
+    tags = ["FFI"],
     visibility = ["//:__subpackages__"],
 )

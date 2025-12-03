@@ -29,7 +29,6 @@ def cc_middleware_com_frontend(
     franca2arxml_converter(
         name = "{}_arxml".format(name),
         srcs = srcs,
-        allow_missing_model_files = True,
         design_input_only = True,
         target_compatible_with = target_compatible_with,
     )

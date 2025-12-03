@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/qnx/neutrino_impl.h"
+#include "score/os/version.h"
 
 namespace score
 {
@@ -101,7 +102,12 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(clockid_t i
                                                               const std::uint64_t* ntime,
                                                               std::uint64_t* otime) const noexcept
 {
+#ifdef SPP_OS_QNX8  // QNX 8.x: TimerTimeout uses uint32_t flags
     const std::int32_t ret{::TimerTimeout(id, flags, notify, ntime, otime)};
+#else  // QNX 7.x: TimerTimeout uses int32_t flags
+    const std::int32_t ret{::TimerTimeout(id, static_cast<std::int32_t>(flags), notify, ntime, otime)};
+#endif
+
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -136,6 +142,11 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
     const auto nano_in = static_cast<std::uint64_t>(ntime.count());
     std::uint64_t nano_out{};
     std::uint64_t* nano_time = otime.has_value() ? &nano_out : nullptr;
+
+#ifdef SPP_OS_QNX8  // QNX 8.x: TimerTimeout uses uint32_t flags
+    const std::int32_t ret{::TimerTimeout(
+        ClockTypeToNativeClock(clock_type), TimerTimeoutFlagToNativeFlag(flags), notify, &nano_in, nano_time)};
+#else  // QNX 7.x: TimerTimeout uses int32_t flags
     const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
                                           // As clarified in Ticket-145671, TimerTimeout flags in bitmask are unsigned
                                           // NOLINTNEXTLINE(cppcoreguidelines-narrowing-conversions): See above
@@ -143,6 +154,8 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
                                           notify,
                                           &nano_in,
                                           nano_time)};
+#endif
+
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -176,6 +189,14 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
     std::uint64_t nano_out{};
     auto nano_time = otime.has_value() ? &nano_out : nullptr;
     const auto& raw_signal_event = signal_event->GetSigevent();
+
+#ifdef SPP_OS_QNX8  // QNX 8.x: TimerTimeout uses uint32_t flags
+    const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
+                                          TimerTimeoutFlagToNativeFlag(flags),
+                                          &raw_signal_event,
+                                          &nano_in,
+                                          nano_time)};
+#else  // QNX 7.x: TimerTimeout uses int32_t flags
     const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
                                           // As clarified in Ticket-145671, TimerTimeout flags in bitmask are unsigned
                                           // NOLINTNEXTLINE(cppcoreguidelines-narrowing-conversions): See above
@@ -183,6 +204,7 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
                                           &raw_signal_event,
                                           &nano_in,
                                           nano_time)};
+#endif
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());

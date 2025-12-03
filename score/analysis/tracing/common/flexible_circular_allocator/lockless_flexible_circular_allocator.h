@@ -27,6 +27,7 @@ namespace analysis
 {
 namespace tracing
 {
+
 template <template <class> class AtomicIndirectorType = score::memory::shared::AtomicIndirectorReal>
 class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
 {
@@ -54,6 +55,9 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     bool IsRequestedBlockAtBufferQueueTail(const BufferBlock* meta) const;
     void IterateBlocksToDeallocate();
     void SetError(FlexibleAllocatorErrorCode error_code) const noexcept;
+    template <typename OffsetT>
+    uint8_t* GetBufferPositionAt(OffsetT offset) const noexcept;
+
     void* base_address_;
     std::uint32_t total_size_;
     std::atomic<std::uint32_t> gap_address_;

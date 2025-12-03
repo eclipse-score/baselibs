@@ -284,7 +284,10 @@ score::mw::log::detail::AddArgumentResult TryStore(score::mw::log::detail::Verbo
                                                  const std::uint64_t max_string_len_incl_null,
                                                  const std::string_view data) noexcept
 {
+    // LCOV_EXCL_START : see below
+    // Defensive programming, this local function never called with max_string_len_incl_null == 0
     const std::uint64_t max_string_len = (max_string_len_incl_null > 0ULL) ? max_string_len_incl_null - 1ULL : 0ULL;
+    // LCOV_EXCL_STOP
 
     const std::size_t data_size = data.size();
 
@@ -572,7 +575,9 @@ AddArgumentResult DLTFormat::Log(VerbosePayload& payload, const LogRawBuffer dat
     const std::uint16_t length_cropped =
         (data_size > static_cast<std::size_t>(max_length)) ? max_length : static_cast<std::uint16_t>(data_size);
 
-    const LogRawBuffer data_cropped{data.first(length_cropped)};
+    static_assert(sizeof(LogRawBuffer::size_type) >= sizeof(decltype(length_cropped)),
+                  "Size type of LogRawBuffer is smaller than uint16_t, can't safely cast");
+    const LogRawBuffer data_cropped{data.first(static_cast<LogRawBuffer::size_type>(length_cropped))};
 
     return Store(payload, type_info, length_cropped, data_cropped);
 }

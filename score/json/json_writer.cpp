@@ -21,13 +21,12 @@
 #include <array>
 #include <iterator>
 #include <limits>
-// NOLINTNEXTLINE(score-banned-include) std::locale provides functionalities (e.g. facets) to customize parts of iostream
-//                                    implementation. In this case it is used for serializing integers efficiently.
-//                                    An implementation without std::locale might require (massive) amounts of code
-//                                    duplication. Furthermore, this header is allowed to be used for character
-//                                    conversion purposes if and it must be ensured that libcatalog is not linked using
-//                                    the target toolchain, which is the case for libjson.
-//                                    Reference: broken_link_c/issue/4600528
+// std::locale provides functionalities (e.g. facets) to customize parts of iostream implementation. In this case it is
+// used for serializing integers efficiently. An implementation without std::locale might require (massive) amounts of
+// code duplication. Furthermore, this header is allowed to be used for character conversion purposes if and it must be
+// ensured that libcatalog is not linked using the target toolchain, which is the case for libjson.
+// Reference: broken_link_c/issue/4600528
+// NOLINTNEXTLINE(score-banned-include): see rationale above
 #include <locale>
 #include <sstream>
 #include <string_view>
@@ -129,6 +128,8 @@ template <typename T>
     return std::string_view(&*it, static_cast<std::size_t>(std::distance(it, buffer.end())));
 }
 
+// This specialization of std::num_put<char> ignores parameter widths (see std::setw) as this feature is neither useful
+// nor used for serializing JSON.
 class OptimizedNumPut : public std::num_put<char>
 {
   public:
@@ -153,30 +154,29 @@ class OptimizedNumPut : public std::num_put<char>
     }
     // Coverity thinks this function is unused, wheras it is used for std::locale
     // coverity[autosar_cpp14_a0_1_3_violation]
+    // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, long long v) const override
     {
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // LCOV_EXCL_STOP
     // Coverity thinks this function is unused, wheras it is used for std::locale
     // coverity[autosar_cpp14_a0_1_3_violation]
+    // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, unsigned long long v) const override
     {
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // LCOV_EXCL_STOP
 
   private:
     template <typename T>
-    iter_type OptimizedPutForInts(iter_type out, std::ios_base& str, char_type fill, T val) const
+    iter_type OptimizedPutForInts(iter_type out, std::ios_base&, char_type, T val) const
     {
         std::array<char, kIntBufLen<T>> buf{};
         const auto sv = integer_to_chars<T>(buf, val);
-
-        const auto width = static_cast<std::size_t>(str.width());
-        const auto n = sv.size();
-        if (width > n)
-        {
-            out = std::fill_n(out, width - n, fill);
-        }
         return std::copy(sv.begin(), sv.end(), out);
     }
 };

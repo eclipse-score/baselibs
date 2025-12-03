@@ -76,6 +76,16 @@ bazel test --config=bl-x86_64-linux //...
 bazel build --credential_helper="*.qnx.com=$(pwd)/.git/tools/qnx_credential_helper.py" --config=bl-x86_64-qnx //...
 ```
 
+### Generating Documentation
+
+To generate the documentation locally:
+
+```bash
+bazel run //:docs
+```
+
+Access the documentation at `_build/index.html` in your browser.
+
 ## Support and Community
 
 - **GitHub Issues**: [Report bugs or request features](https://github.com/eclipse-score/baselibs/issues).

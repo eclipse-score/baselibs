@@ -10,27 +10,4 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_OS_UTILS_MOCKLIB_SEMAPHOREMOCK_H
-#define SCORE_LIB_OS_UTILS_MOCKLIB_SEMAPHOREMOCK_H
-
-#include "score/os/utils/semaphore.h"
-
-#include <gmock/gmock.h>
-
-namespace score
-{
-namespace os
-{
-namespace utils
-{
-
-struct SemaphoreMock
-{
-    SemaphoreMock();
-};
-
-}  // namespace utils
-}  // namespace os
-}  // namespace score
-
-#endif  // SCORE_LIB_OS_UTILS_MOCKLIB_SEMAPHOREMOCK_H
+#include "score/mw/log/configuration/invconfig_mock.h"

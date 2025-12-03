@@ -242,12 +242,19 @@ score::cpp::expected_blank<Error> AbortableBlockingReader::WaitForData(
 {
     std::array<struct pollfd, 2> fds{};
 
+// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+// Checks whether we run over QNX or linux to choose the appropriate timeout.
+// coverity[autosar_cpp14_a16_0_1_violation]
 #ifdef __QNXNTO__
     // QNX8 workaround until Ticket-221150 is resolved : add finite timeout so we don't sleep forever if the
     // resource manager fails to wake pollers; keep true blocking elsewhere.
     constexpr std::int8_t kPollTimeoutMs = 50;  // tuneable: 10–100 ms
+// coverity[autosar_cpp14_a16_0_1_violation]
 #else
     constexpr std::int8_t kPollTimeoutMs = -1;  // infinite blocking on other OSes
+// coverity[autosar_cpp14_a16_0_1_violation]
 #endif
 
     fds[0].fd = stop_read_file_descriptor_;

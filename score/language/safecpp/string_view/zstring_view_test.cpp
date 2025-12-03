@@ -12,7 +12,7 @@
  ********************************************************************************/
 #include "score/language/safecpp/string_view/zstring_view.h"
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"
 
 #include "score/mw/log/logging.h"
 
@@ -53,7 +53,31 @@ TEST(ZStringView, CanConstructFromLiteral)
     EXPECT_EQ(view.data()[view.size()], '\0');
 }
 
-TEST(ZStringView, CanConstructFromBuffer)
+TEST(ZStringView, CanImplicitlyConstructFromLiteral)
+{
+    // Given a function which expects a `zstring_view` as parameter
+    auto test = [](safecpp::zstring_view view) {
+        // Then it must not be empty
+        EXPECT_FALSE(view.empty());
+
+        // And its size must be the length of the string literal minus the null-terminator
+        EXPECT_EQ(view.length(), 5U);
+        EXPECT_EQ(view.size(), 5U);
+
+        // And its data must point to the start of the string literal
+        EXPECT_STREQ(view.c_str(), "hello");
+        EXPECT_STREQ(view.data(), "hello");
+
+        // And its underlying character buffer must be null-terminted
+        EXPECT_EQ(view.data()[view.size()], '\0');
+    };
+
+    // When calling the above lambda with a string literal
+    // Then its contained expectations must be fulfilled
+    test("hello");
+}
+
+TEST(ZStringView, CanConstructFromNullTerminatedBuffer)
 {
     // Given a null-terminated character buffer
     char buffer[] = {'h', 'e', 'l', 'l', 'o', '\0'};
@@ -78,6 +102,16 @@ TEST(ZStringView, CanConstructFromBuffer)
 
     // And its underlying character buffer must be null-terminted
     EXPECT_EQ(view.data()[view.size()], '\0');
+}
+
+TEST(ZStringView, AbortsWhenConstructingFromNonNullTerminatedBuffer)
+{
+    // Given a non-null-terminated character buffer
+    char buffer[] = {'h', 'e', 'l', 'l', 'o'};
+
+    // When constructing a `zstring_view` from it
+    // Then immediate termination of the program is expected due to the missing null-termination
+    EXPECT_EXIT(score::cpp::ignore = safecpp::zstring_view{buffer}, ::testing::KilledBySignal{SIGABRT}, "");
 }
 
 TEST(ZStringView, CanConstructFromAmpString)

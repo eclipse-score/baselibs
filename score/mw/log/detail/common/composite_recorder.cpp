@@ -78,9 +78,11 @@ void LogForEachActiveSlot(const std::vector<std::unique_ptr<Recorder>>& recorder
                           const SlotHandle& composite_slot,
                           const T& arg)
 {
+    // LCOV_EXCL_START : no branches to test
     ForEachActiveSlot(recorders, composite_slot, [arg](Recorder& recorder, const SlotHandle& slot) noexcept {
         recorder.Log(slot, arg);
     });
+    // LCOV_EXCL_STOP
 }
 }  // namespace
 
@@ -105,9 +107,9 @@ score::cpp::optional<SlotHandle> CompositeRecorder::StartRecord(const std::strin
                         const auto result = recorder.StartRecord(context_id, log_level);
                         if (result.has_value())
                         {
-                            composite_slot.SetSlot(result->GetSlotOfSelectedRecorder(),
-                                                   recorder_id);  // LCOV_EXCL_BR_LINE: there
-                            //  are no branches to be covered.
+                            // LCOV_EXCL_START : no branches to test
+                            composite_slot.SetSlot(result->GetSlotOfSelectedRecorder(), recorder_id);
+                            // LCOV_EXCL_STOP
                         }
                     });
 

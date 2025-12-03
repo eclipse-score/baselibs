@@ -10,4 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/utils/pimpl_ptr.h"
+#include "score/memory/data_type_size_info.h"
+
+namespace score::memory
+{
+
+bool operator==(const DataTypeSizeInfo& lhs, const DataTypeSizeInfo& rhs) noexcept
+{
+    return ((lhs.Size() == rhs.Size()) && (lhs.Alignment() == rhs.Alignment()));
+}
+
+}  // namespace score::memory

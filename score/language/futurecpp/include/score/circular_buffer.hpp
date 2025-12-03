@@ -38,6 +38,9 @@ public:
     /// \brief The type to hold a size information. This is a requirement of STL compliant types.
     using size_type = std::size_t;
 
+    /// \brief The type that can be used to identify distance between iterators
+    using difference_type = std::ptrdiff_t;
+
     /// \brief The type of a non-const iterator. This is a requirement of STL compliant types.
     using iterator = detail::circular_buffer_iterator<circular_buffer<T, MaxSize>>;
 
@@ -292,12 +295,12 @@ public:
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION(last <= end());
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION(first <= last);
 
-        const auto diff = last - first;
+        const difference_type diff{last - first};
 
         if ((first - begin()) <= (end() - last))
         {
             score::cpp::ignore = std::move_backward(begin(), first, last);
-            for (typename iterator::difference_type i{0}; i < diff; ++i)
+            for (difference_type i{0}; i < diff; ++i)
             {
                 pop_front();
             }
@@ -305,7 +308,7 @@ public:
         else
         {
             score::cpp::ignore = std::move(last, end(), first);
-            for (typename iterator::difference_type i{0}; i < diff; ++i)
+            for (difference_type i{0}; i < diff; ++i)
             {
                 pop_back();
             }

@@ -64,6 +64,8 @@ TEST_F(SharedListFixture, PushBackSingleElement)
         return allocated_memory;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
         return true;
@@ -107,6 +109,8 @@ TEST_F(SharedListFixture, PushBackMultipleElementsAndClear)
             return allocated_memory;
         });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _))
         .Times(number_of_elements)
         .WillRepeatedly([](void* const address, const std::size_t) {
@@ -137,6 +141,8 @@ TEST_F(SharedListFixture, EmplaceBack)
         return allocated_memory;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
         return true;
@@ -159,6 +165,8 @@ TEST_F(SharedListFixture, AtIndex)
             auto allocated_memory = malloc(size);
             return allocated_memory;
         });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
 
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillRepeatedly([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
@@ -195,6 +203,8 @@ TEST_F(SharedListFixture, Iterators)
         return true;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     shared::List<std::uint8_t> list(flexible_allocator_mock_);
 
     list.push_back(1);
@@ -222,6 +232,8 @@ TEST_F(SharedListFixture, ArrowOperatorAccessesMember)
         free(address);  // Simulate deallocation
         return true;
     });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
 
     struct TestData
     {

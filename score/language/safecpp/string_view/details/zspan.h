@@ -33,9 +33,17 @@ constexpr inline auto kNullByte = '\0';
 
 ///
 /// @brief view type over contiguous sequence of objects which is guaranteed to be null-terminated
+/// @note The main motivation of `zspan` is to provide _safe_ access to an underlying contiguous sequence of
+///       elements which is always guaranteed to be null-terminated rather than offering maximum efficiency.
 /// @details The null-termination guarantee for the underlying sequence gets preserved by every
 ///          member function offered by `zspan`. That’s why the underlying sequence can only
-///          get accessed via a `const_pointer` as returned by `data()`.
+///          get accessed via a `const_pointer` as returned by `data()`. In addition, the
+///          `element_accessor` helper type is provided to facilitate controlled write
+///          access to single elements of the underlying sequence while protecting the
+///          trailing null-terminator from getting overwritten. That's also the reason
+///          why the methods `front()`, `back()` as well as `operator[]`, in contrast to
+///          to how it is usually handled within the C++ standard library, perform bounds
+///          checks to disallow unchecked accesses to the underlying sequence.
 ///
 template <typename T>
 class zspan

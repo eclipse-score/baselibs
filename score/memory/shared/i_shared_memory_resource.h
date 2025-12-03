@@ -23,10 +23,11 @@
 #include <score/span.hpp>
 #include <sys/types.h>
 
-#include <functional>
+#include <algorithm>
 #include <memory>
 #include <optional>
 #include <string>
+#include <string_view>
 
 namespace score::memory::shared
 {
@@ -41,7 +42,13 @@ class ISharedMemoryResource : public ManagedMemoryResource
     using UserPermissionsMap = permission::UserPermissionsMap;
     using UserPermissions = permission::UserPermissions;
 
-    using InitializeCallback = std::function<void(std::shared_ptr<SharedMemoryResource>)>;
+    // size of stored callback should be the base size of amp callback and a unique_ptr
+    // this way the user can pass any information to the callback through the pointer.
+    static constexpr std::size_t kCallbackSize{
+        sizeof(score::cpp::callback<void()>) +
+        std::max(score::cpp::callback<void()>::alignment_t::value, sizeof(std::unique_ptr<void>))};
+    using InitializeCallback = score::cpp::callback<void(std::shared_ptr<ISharedMemoryResource>), kCallbackSize>;
+
     using FileDescriptor = os::Acl::FileDescriptor;
 
     using AccessControlListFactory = score::cpp::callback<std::unique_ptr<score::os::IAccessControlList>(FileDescriptor)>;
@@ -66,6 +73,7 @@ class ISharedMemoryResource : public ManagedMemoryResource
     virtual void UnlinkFilesystemEntry() const noexcept = 0;
     virtual FileDescriptor GetFileDescriptor() const noexcept = 0;
     virtual bool IsShmInTypedMemory() const noexcept = 0;
+    virtual std::string_view GetIdentifier() const noexcept = 0;
 
   protected:
     ISharedMemoryResource(const ISharedMemoryResource&) noexcept = default;

@@ -141,7 +141,10 @@ class alignas(std::max_align_t) List
         // DeallocateNode won't be called so this condition always evaluate to true.
         if (node != nullptr)  // LCOV_EXCL_BR_LINE not testable see comment above.
         {
-            score::cpp::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
+            if (flexible_allocator_)
+            {
+                score::cpp::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
+            }
         }
     }
     std::uint64_t canary_start_ = kCanaryStart;                       ///< Start canary.
@@ -150,6 +153,10 @@ class alignas(std::max_align_t) List
     std::atomic<std::ptrdiff_t> tail_offset_;                         ///< Offset of the tail node.
     std::atomic_size_t size_;
     std::uint64_t canary_end_ = kCanaryEnd;
+
+  public:
+    static constexpr std::uint64_t kCanaryStart = 0xDEADBEEFCAFEBABEULL;
+    static constexpr std::uint64_t kCanaryEnd = 0xBABECAFEBEEFDEADULL;
 
     /**
      * @brief Validate list integrity by checking magic numbers
@@ -167,10 +174,6 @@ class alignas(std::max_align_t) List
         }
         return true;
     }
-
-  public:
-    static constexpr std::uint64_t kCanaryStart = 0xDEADBEEFCAFEBABEULL;
-    static constexpr std::uint64_t kCanaryEnd = 0xBABECAFEBEEFDEADULL;
 
     /**
      * @brief Custom Iterator class for the List.
@@ -383,6 +386,17 @@ class alignas(std::max_align_t) List
      */
     void clear()
     {
+        // Validate list integrity before attempting to clear
+        // If list is corrupted, skip deallocation to prevent crash
+        if (!IsValid())
+        {
+            // List is corrupted - just reset pointers without deallocating
+            AtomicIndirectorType<std::ptrdiff_t>::store(tail_offset_, 0U);
+            AtomicIndirectorType<std::ptrdiff_t>::store(head_offset_, 0U);
+            AtomicIndirectorType<std::size_t>::store(size_, 0U);
+            return;
+        }
+
         while (ResolveOffset(AtomicIndirectorType<std::ptrdiff_t>::load(head_offset_)) != nullptr)
         {
             Node* temp = ResolveOffset(AtomicIndirectorType<std::ptrdiff_t>::load(head_offset_));
@@ -459,9 +473,12 @@ class alignas(std::max_align_t) List
             return score::MakeUnexpected(ErrorCode::kIndexOutOfBoundsInSharedListRecoverable);
         }
 
-        // No need to check against nullptr in the following line due to the check against the size
-        // otherwise, it yields to unreachable code
         Node* current = ResolveOffset(AtomicIndirectorType<std::ptrdiff_t>::load(head_offset_));
+
+        if (!flexible_allocator_->IsInBounds(current, sizeof(Node)))
+        {
+            return score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal);
+        }
 
         for (std::size_t i = 0U; i < index; ++i)
         {
@@ -470,6 +487,13 @@ class alignas(std::max_align_t) List
             // coverity[autosar_cpp14_a5_3_2_violation] See above
             current = ResolveOffset(current->next);
         }
+
+        // Additional safety check: verify current is valid before dereferencing
+        if (current == nullptr)
+        {
+            return score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal);
+        }
+
         if constexpr (std::is_same<T, SharedMemoryChunk>::value)
         {
             if (current->data.IsCorrupted())

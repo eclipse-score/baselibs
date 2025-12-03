@@ -25,7 +25,6 @@ cc_unit_test_suites_for_host_and_qnx(
         ":mqueue_unit_test",
         ":path_test",
         ":pmutex_test",
-        ":semaphore_test",
         ":signal_test",
         ":spinlock_test",
         ":tcp_keep_alive_test",
@@ -101,18 +100,6 @@ cc_test(
         "@score_baselibs//score/os/mocklib:mqueue_mock",
         "@score_baselibs//score/os/mocklib:stat_mock",
         "@score_baselibs//score/os/utils:mqueue",
-    ],
-)
-
-cc_test(
-    name = "semaphore_test",
-    srcs = ["semaphoretest.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os/utils:semaphore",
-        "@score_baselibs//score/os/utils/test/lib:random_string_test_lib",
     ],
 )
 

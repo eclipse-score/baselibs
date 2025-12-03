@@ -98,7 +98,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "//platform/aas/pas/logging:__pkg__",
-        "//platform/aas/pas/logging/test:__pkg__",
+        "//platform/aas/pas/logging/test:__subpackages__",
     ],
     deps = [
         "@score_baselibs//score/mw/log:shared_types",
@@ -290,6 +290,59 @@ cc_test(
     ],
 )
 
+cc_test(
+    name = "runtime_test",
+    srcs = [
+        ":runtime_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log:recorder_mock",
+        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
+    ],
+)
+
+cc_test(
+    name = "log_stream_test",
+    srcs = [
+        "@score_baselibs//score/mw/log:log_stream_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log:recorder_mock",
+        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
+        "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
+    ],
+)
+
+cc_test(
+    name = "log_stream_factory_test",
+    srcs = [
+        "@score_baselibs//score/mw/log:log_stream_factory_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log:recorder_mock",
+        "@score_baselibs//score/mw/log/detail:thread_local_guard",
+        "@score_baselibs//score/mw/log/detail/common:recorder_factory",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
@@ -299,6 +352,9 @@ cc_unit_test_suites_for_host_and_qnx(
         ":recorder_factory_test",
         ":statistics_reporter_test",
         ":helper_functions_test",
+        ":runtime_test",
+        ":log_stream_test",
+        ":log_stream_factory_test",
     ],
     visibility = [
         "@score_baselibs//score/mw/log/detail:__pkg__",

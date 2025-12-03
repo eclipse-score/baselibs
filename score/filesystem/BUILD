@@ -137,21 +137,6 @@ cc_library(
 )
 
 cc_library(
-    name = "test_helper",
-    testonly = True,
-    srcs = ["details/test_helper.cpp"],
-    hdrs = ["details/test_helper.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        ":__subpackages__",
-        "//platform/aas/sysfunc/common/path_operator:__subpackages__",
-    ],
-    deps = [
-        ":filesystem",
-    ],
-)
-
-cc_library(
     name = "standard_filesystem_fake",
     testonly = True,
     srcs = [

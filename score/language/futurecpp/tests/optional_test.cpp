@@ -1887,7 +1887,7 @@ struct object_initializer_list
     }
     object_initializer_list(const object_initializer_list&) = default;
     object_initializer_list(object_initializer_list&&) = default;
-    object_initializer_list& operator=(object_initializer_list&) = delete;
+    object_initializer_list& operator=(const object_initializer_list&) = delete;
     object_initializer_list& operator=(object_initializer_list&&) = delete;
     ~object_initializer_list() = default;
 

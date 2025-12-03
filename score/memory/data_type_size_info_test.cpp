@@ -10,25 +10,48 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/shared/data_type_size_info.h"
+#include "score/memory/data_type_size_info.h"
 
 #include <gtest/gtest.h>
 
+#include <score/assert_support.hpp>
+
 #include <cstddef>
 
-namespace score::memory::shared
+namespace score::memory
 {
 namespace
 {
 
-constexpr std::size_t kDummySize{10U};
-constexpr std::size_t kDummyAlignment{20U};
+constexpr std::size_t kValidSize{32U};
+constexpr std::size_t kValidAlignment{16U};
+
+TEST(DataTypeSizeInfoTest, ConstructingWithAlignmentOfZeroTerminates)
+{
+    // When constructing a DataTypeSizeInfo with invalid alignment
+    // Then the program terminates
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(DataTypeSizeInfo(kValidSize, 0U));
+}
+
+TEST(DataTypeSizeInfoTest, ConstructingWithAlignmentNotPowerOfTwoTerminates)
+{
+    // When constructing a DataTypeSizeInfo with invalid alignment
+    // Then the program terminates
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(DataTypeSizeInfo(kValidSize, kValidAlignment + 1U));
+}
+
+TEST(DataTypeSizeInfoTest, ConstructingWithSizeNotMultipleOfAlignmentTerminates)
+{
+    // When constructing a DataTypeSizeInfo with invalid alignment
+    // Then the program terminates
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(DataTypeSizeInfo(kValidAlignment + 1U, kValidAlignment));
+}
 
 TEST(DataTypeSizeInfoEqualityTest, ObjectsWithSameSizeAndAlignmentCompareTrue)
 {
     // Given two DataTypeSizeInfo objects with the same size and alignment
-    DataTypeSizeInfo unit{kDummySize, kDummyAlignment};
-    DataTypeSizeInfo unit2{kDummySize, kDummyAlignment};
+    DataTypeSizeInfo unit{kValidSize, kValidAlignment};
+    DataTypeSizeInfo unit2{kValidSize, kValidAlignment};
 
     // When comparing the two objects
     const auto compare_result = unit == unit2;
@@ -40,8 +63,8 @@ TEST(DataTypeSizeInfoEqualityTest, ObjectsWithSameSizeAndAlignmentCompareTrue)
 TEST(DataTypeSizeInfoEqualityTest, ObjectsWithDifferentSizeCompareFalse)
 {
     // Given two DataTypeSizeInfo objects with the different sizes
-    DataTypeSizeInfo unit{kDummySize, kDummyAlignment};
-    DataTypeSizeInfo unit2{kDummySize + 1U, kDummyAlignment};
+    DataTypeSizeInfo unit{kValidSize, kValidAlignment};
+    DataTypeSizeInfo unit2{kValidSize * 2U, kValidAlignment};
 
     // When comparing the two objects
     const auto compare_result = unit == unit2;
@@ -53,8 +76,8 @@ TEST(DataTypeSizeInfoEqualityTest, ObjectsWithDifferentSizeCompareFalse)
 TEST(DataTypeSizeInfoEqualityTest, ObjectsWithDifferentAlignemtCompareFalse)
 {
     // Given two DataTypeSizeInfo objects with the different alignments
-    DataTypeSizeInfo unit{kDummySize, kDummyAlignment};
-    DataTypeSizeInfo unit2{kDummySize, kDummyAlignment + 1U};
+    DataTypeSizeInfo unit{kValidSize, kValidAlignment};
+    DataTypeSizeInfo unit2{kValidSize, kValidAlignment * 2U};
 
     // When comparing the two objects
     const auto compare_result = unit == unit2;
@@ -64,4 +87,4 @@ TEST(DataTypeSizeInfoEqualityTest, ObjectsWithDifferentAlignemtCompareFalse)
 }
 
 }  // namespace
-}  // namespace score::memory::shared
+}  // namespace score::memory

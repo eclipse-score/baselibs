@@ -444,4 +444,12 @@ TEST(StringViewTest, GivenStringView_ExpectConversionToString)
     EXPECT_EQ(score::cpp::string_view{"test"}.to_string(), score::cpp::pmr::string{"test"});
 }
 
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9372297
+TEST(StringViewTest, NonStandard_SimplifyTransitionToStdStringView)
+{
+    static_assert(std::is_convertible_v<std::string_view, score::cpp::string_view>);
+    static_assert(std::is_convertible_v<score::cpp::string_view, std::string_view>);
+}
+
 } // namespace

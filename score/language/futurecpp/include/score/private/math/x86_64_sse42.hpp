@@ -190,14 +190,12 @@ inline SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_X86_64_SSE42_ALWAYS_INLINE bool isn
 
 inline SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_X86_64_SSE42_ALWAYS_INLINE bool signbit_sse42(double num)
 {
-    const auto v = _mm_movemask_pd(_mm_set_pd1(num));
-    return (score::cpp::bit_cast<std::uint32_t>(v) & 1U) != 0U;
+    return (score::cpp::bit_cast<std::uint64_t>(num) >> 63U) != 0U;
 }
 
 inline SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_X86_64_SSE42_ALWAYS_INLINE bool signbit_sse42(float num)
 {
-    const auto v = _mm_movemask_ps(_mm_set_ps1(num));
-    return (score::cpp::bit_cast<std::uint32_t>(v) & 1U) != 0U;
+    return (score::cpp::bit_cast<std::uint32_t>(num) >> 31U) != 0U;
 }
 
 inline SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_X86_64_SSE42_ALWAYS_INLINE double sqrt_sse42(double num)

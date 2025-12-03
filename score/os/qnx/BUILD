@@ -187,6 +187,7 @@ cc_library(
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:object_seam",
         "@score_baselibs//score/os:sigevent",
+        "@score_baselibs//score/os:version",
     ],
 )
 
@@ -363,7 +364,7 @@ cc_library(
         "@score_baselibs//score/os/qnx:__subpackages__",
     ],
     deps = [
-        "//third_party/libslog2",
+        "@//third_party/libslog2",
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:object_seam",
     ],

@@ -94,6 +94,20 @@ class expected
         !std::is_same<unexpected<ErrorType>, score::cpp::remove_cvref_t<DummyType>>::value;
 
 public:
+    ///
+    /// \typedef value_type
+    ///
+    /// \brief Alias for the type of the expected value
+    ///
+    using value_type = ValueType;
+
+    ///
+    /// \typedef error_type
+    ///
+    /// \brief Alias for the type of the unexpected value
+    ///
+    using error_type = ErrorType;
+
     /// \brief Default constructor. The instance is assumed to have a value.
     template <typename U = ValueType, typename = std::enable_if_t<std::is_default_constructible<U>::value>>
     expected() noexcept(std::is_nothrow_default_constructible<ValueType>::value) : has_value_{true}

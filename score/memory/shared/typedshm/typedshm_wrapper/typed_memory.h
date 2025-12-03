@@ -51,7 +51,9 @@ class TypedMemory
     virtual score::cpp::expected<int, score::os::Error> AllocateAndOpenAnonymousTypedMemory(
         const std::uint64_t shm_size) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<score::os::Error> Unlink(const std::string shm_name) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> Unlink(std::string_view shm_name) const noexcept = 0;
+
+    virtual score::cpp::expected<uid_t, score::os::Error> GetCreatorUid(std::string_view shm_name) const noexcept = 0;
 
   protected:
     // Make all special member functions protected to prevent them ever being explicitly called (which can lead to
@@ -91,7 +93,9 @@ class TypedMemoryImpl final : public TypedMemory
     score::cpp::expected<int, score::os::Error> AllocateAndOpenAnonymousTypedMemory(
         const std::uint64_t shm_size) const noexcept override;
 
-    score::cpp::expected_blank<score::os::Error> Unlink(const std::string shm_name) const noexcept override;
+    score::cpp::expected_blank<score::os::Error> Unlink(std::string_view shm_name) const noexcept override;
+
+    score::cpp::expected<uid_t, score::os::Error> GetCreatorUid(std::string_view shm_name) const noexcept override;
 
 // coverity[autosar_cpp14_a16_0_1_violation] Different implementation required for linux and QNX
 #if defined(__QNX__) && defined(USE_TYPEDSHMD)
