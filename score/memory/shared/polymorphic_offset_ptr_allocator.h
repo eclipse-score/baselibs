@@ -50,11 +50,6 @@ class PolymorphicOffsetPtrAllocator
     {
     }
 
-    // DEPRECATED: This will be removed in a future release
-    // Non-explicit constructor is good enough for maintaining required implicit conversion
-    // NOLINTNEXTLINE(google-explicit-constructor): Tolerated, discard explicit.
-    PolymorphicOffsetPtrAllocator(const MemoryResourceProxy* const proxy) noexcept : proxy_{proxy} {}
-
     template <typename U>
     // Non-explicit constructor is good enough for maintaining required implicit conversion.
     // In addition semantically is a copy constructor.

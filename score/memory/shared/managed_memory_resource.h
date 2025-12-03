@@ -154,7 +154,7 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
      *          isn't usable anymore/lies after the valid memory region of this resource.
      * @return void* past-the-end address of memory resource
      */
-    virtual const void *getEndAddress() const noexcept = 0;
+    virtual const void* getEndAddress() const noexcept = 0;
 
     /**
      * We need to return a raw pointer, since we need to convert this
