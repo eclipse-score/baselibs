@@ -53,7 +53,7 @@ jobs:
       matrix:
         include:
           - language: c-cpp
-            build-mode: autobuild  
+            build-mode: manual  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -69,7 +69,27 @@ jobs:
 
       - if: matrix.build-mode == 'manual'
         shell: bash
-        run: ${{ inputs.build-script }}
+        run: |
+          # Clean Bazel cache to ensure a fresh build that CodeQL can trace.
+          # This is crucial as Bazel often uses cached results, which CodeQL cannot observe.
+          bazel clean --expunge
+
+          # Build using specific Bazel flags to help CodeQL detect the build.
+          # --spawn_strategy=local: Ensures local compilation, not distributed.
+          # --nouse_action_cache: Prevents using action cache, forcing recompilation.
+          # --noremote_accept_cached, --noremote_upload_local_results: Avoids remote caching.
+          # --disk_cache=: Disables disk cache.
+          bazel build \
+            --spawn_strategy=local \
+            --nouse_action_cache \
+            --noremote_accept_cached \
+            --noremote_upload_local_results \
+            --disk_cache= \
+            //score/...
+
+          # Shut down Bazel server processes after the build.
+          # This ensures future build commands start in a clean Bazel server process without CodeQL attached.
+          bazel shutdown
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
