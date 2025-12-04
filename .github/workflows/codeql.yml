@@ -25,15 +25,62 @@ on:
   merge_group:
     types: [checks_requested]
 
+#jobs:
+#  analyze:
+#    uses: eclipse-score/cicd-workflows/.github/workflows/codeql.yml@main
+#    with:
+#      build-script: |
+#        bazel build --config bl-x86_64-linux -- //score/...
+
+#    permissions:
+#      security-events: write
+#      packages: read
+#      actions: read
+#      contents: read
+
 jobs:
   analyze:
-    uses: eclipse-score/cicd-workflows/.github/workflows/codeql.yml@main
-    with:
-      build-script: |
-        bazel build --config bl-x86_64-linux -- //score/...
-
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
     permissions:
       security-events: write
       packages: read
       actions: read
       contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: c-cpp
+            build-mode: none
+          - language: rust
+            build-mode: none   
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          packs: codeql/misra-cpp-coding-standards
+          dependency-caching: true
+
+      - if: matrix.build-mode == 'manual'
+        shell: bash
+        run: ${{ inputs.build-script }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+          output: sarif-results.sarif
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarif-results.sarif
+          path: sarif-results.sarif
