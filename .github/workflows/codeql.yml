@@ -66,6 +66,8 @@ jobs:
           build-mode: ${{ matrix.build-mode }}
           packs: codeql/misra-cpp-coding-standards
           dependency-caching: true
+        env: 
+          CODEQL_ACTION_DEBUG: true
 
       - if: matrix.build-mode == 'manual'
         shell: bash
