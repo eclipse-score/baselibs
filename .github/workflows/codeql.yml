@@ -1,14 +1,19 @@
-# For most projects, this workflow file will not need changing; you simply need
-# to commit it to your repository.
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
-# You may wish to alter this file to override the set of languages analyzed,
-# or to provide custom queries or build logic.
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
 #
-# ******** NOTE ********
-# We have attempted to detect the languages in your repository. Please check
-# the `language` matrix defined below to confirm you have the correct set of
-# supported CodeQL languages.
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
 #
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Workflow configuration for S-CORE CI - Release Check
+# This workflow runs Bazel build and test when triggered by tag creation.
+
 name: "CodeQL Advanced"
 
 on:
@@ -22,8 +27,8 @@ jobs:
     uses: eclipse-score/cicd-workflows/.github/workflows/codeql.yml@main
     with:
       build-script: |
-        bazel build //src/...
-        bazel build //examples/...
+        bazel build --config bl-x86_64-linux -- //score/...
+
     permissions:
       security-events: write
       packages: read
