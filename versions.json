@@ -18,5 +18,9 @@
   {
     "version": "pr-52",
     "url": "https://eclipse-score.github.io/baselibs/pr-52/"
+  },
+  {
+    "version": "pr-56",
+    "url": "https://eclipse-score.github.io/baselibs/pr-56/"
   }
 ]
