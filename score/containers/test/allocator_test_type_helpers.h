@@ -44,7 +44,7 @@ template <
                             bool>::type = true>
 Allocator GetAllocator(memory::shared::ManagedMemoryResource& memory_resource)
 {
-    return memory::shared::PolymorphicOffsetPtrAllocator<ElementType>{memory_resource.getMemoryResourceProxy()};
+    return memory::shared::PolymorphicOffsetPtrAllocator<ElementType>{memory_resource};
 }
 
 namespace test_types
