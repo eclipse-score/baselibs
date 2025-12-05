@@ -47,3 +47,5 @@ build:bl-x86_64-qnx --config=bl_toolchain_common
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx
 build:bl-x86_64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_x86_64
 test:bl-x86_64-qnx --config=bl_common
+
+build --action_env=LD_PRELOAD
