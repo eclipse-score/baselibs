@@ -94,6 +94,13 @@ jobs:
           # Shut down Bazel server processes after the build.
           # This ensures future build commands start in a clean Bazel server process without CodeQL attached.
           bazel shutdown
+      
+      - name: Check CodeQL Tracer Log
+        if: always() 
+        run: |
+          echo "--- Contents of CODEQL_TRACER_LOG ---"
+          cat "${CODEQL_TRACER_LOG}" || echo "Tracer log file not found or empty."
+          echo "-------------------------------------"
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
