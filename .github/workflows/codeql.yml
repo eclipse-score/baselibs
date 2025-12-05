@@ -85,9 +85,9 @@ jobs:
             --spawn_strategy=local \
             --strategy=Genrule=local \
             --nouse_action_cache \
-            --action_env=LD_PRELOAD=$LD_PRELOAD \
             --noremote_accept_cached \
             --noremote_upload_local_results \
+            --experimental_action_remote_execution_strategy=local \
             --disk_cache= \
             //score/...
 
