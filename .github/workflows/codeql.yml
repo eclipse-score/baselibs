@@ -81,9 +81,11 @@ jobs:
           # --nouse_action_cache: Prevents using action cache, forcing recompilation.
           # --noremote_accept_cached, --noremote_upload_local_results: Avoids remote caching.
           # --disk_cache=: Disables disk cache.
-          bazel build -j 4 --config bl-x86_64-linux  \
+          bazel --batch build -j 4 --config bl-x86_64-linux  \
             --spawn_strategy=local \
+            --strategy=Genrule=local \
             --nouse_action_cache \
+            --action_env=LD_PRELOAD=$LD_PRELOAD \
             --noremote_accept_cached \
             --noremote_upload_local_results \
             --disk_cache= \
