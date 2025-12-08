@@ -208,6 +208,56 @@ void Configuration::SetDynamicDatarouterIdentifiers(const bool enable_dynamic_id
 {
     dynamic_datarouter_identifiers_ = enable_dynamic_identifiers;
 }
+bool Configuration::IsCircularFileLogging() const noexcept
+{
+    return circular_file_logging_;
+}
+
+void Configuration::SetCircularFileLogging(const bool circular_file_logging) noexcept
+{
+    circular_file_logging_ = circular_file_logging;
+}
+
+std::size_t Configuration::GetMaxLogFileSizeBytes() const noexcept
+{
+    return max_log_file_size_bytes_;
+}
+
+void Configuration::SetMaxLogFileSizeBytes(const std::size_t max_log_file_size_bytes) noexcept
+{
+    max_log_file_size_bytes_ = max_log_file_size_bytes;
+}
+
+bool Configuration::IsOverwriteLogOnFull() const noexcept
+{
+    return overwrite_log_on_full_;
+}
+
+void Configuration::SetOverwriteLogOnFull(const bool overwrite_log_on_full) noexcept
+{
+    // The JSON configuration key for this parameter is "overwriteLogOnFull".
+    overwrite_log_on_full_ = overwrite_log_on_full;
+}
+
+std::size_t Configuration::GetNoOfLogFiles() const noexcept
+{
+    return no_of_log_files_;
+}
+
+void Configuration::SetNoOfLogFiles(const std::size_t no_of_log_files) noexcept
+{
+    no_of_log_files_ = no_of_log_files;
+}
+
+bool Configuration::IsDeleteOldLogFiles() const noexcept
+{
+    return delete_old_log_files_;
+}
+
+void Configuration::SetDeleteOldLogFiles(const bool delete_old_log_files) noexcept
+{
+    delete_old_log_files_ = delete_old_log_files;
+}
 
 }  // namespace detail
 }  // namespace log

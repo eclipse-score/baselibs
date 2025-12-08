@@ -48,6 +48,11 @@ constexpr StringLiteral kNumberOfSlotsKey{"numberOfSlots"};
 constexpr StringLiteral kSlotSizeBytesKey{"slotSizeBytes"};
 constexpr StringLiteral kDatarouterUidKey{"datarouterUid"};
 constexpr StringLiteral kDynamicDatarouterIdentifiersKey{"dynamicDatarouterIdentifiers"};
+constexpr StringLiteral kCircularFileLoggingKey{"circularFileLogging"};
+constexpr StringLiteral kMaxLogFileSizeBytesKey{"maxLogFileSizeBytes"};
+constexpr StringLiteral kOverwriteKey{"overwriteLogOnFull"};
+constexpr StringLiteral kNoOfLogFilesKey{"noOfLogFiles"};
+constexpr StringLiteral kDeleteOldLogFilesKey{"deleteOldLogFiles"};
 
 // Suppress Coverity warning because:
 // 1. 'constexpr' cannot be used with std::unordered_map.
@@ -427,6 +432,65 @@ score::ResultBlank ParseDynamicDatarouterIdentifiers(const score::json::Object& 
     // clang-format on
 }
 
+score::ResultBlank ParseCircularFileLogging(const score::json::Object& root, Configuration& config) noexcept
+{
+    // clang-format off
+    return GetElementAndThen<bool>(
+        root,
+        kCircularFileLoggingKey,
+        [&config](auto value) noexcept { config.SetCircularFileLogging(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseMaxLogFileSizeBytes(const score::json::Object& root, Configuration& config) noexcept
+{
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<std::size_t>(
+        root,
+        kMaxLogFileSizeBytesKey,
+        [&config](auto value) noexcept { config.SetMaxLogFileSizeBytes(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseOverwriteLogOnFull(const score::json::Object& root, Configuration& config) noexcept
+{
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<bool>(
+        root,
+        kOverwriteKey,
+        [&config](auto value) noexcept { config.SetOverwriteLogOnFull(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseNoOfLogFiles(const score::json::Object& root, Configuration& config) noexcept
+{
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<std::size_t>(
+        root,
+        kNoOfLogFilesKey,
+        [&config](auto value) noexcept { config.SetNoOfLogFiles(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseDeleteOldLogFiles(const score::json::Object& root, Configuration& config) noexcept
+{
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<bool>(
+        root,
+        kDeleteOldLogFilesKey,
+        [&config](auto value) noexcept { config.SetDeleteOldLogFiles(value); }
+    );
+    // clang-format on
+}
+
 void ParseConfigurationElements(const score::json::Object& root, const std::string& path, Configuration& config) noexcept
 {
     ReportOnError(ParseEcuId(root, config), path);
@@ -444,6 +508,11 @@ void ParseConfigurationElements(const score::json::Object& root, const std::stri
     ReportOnError(ParseSlotSizeBytes(root, config), path);
     ReportOnError(ParseDatarouterUid(root, config), path);
     ReportOnError(ParseDynamicDatarouterIdentifiers(root, config), path);
+    ReportOnError(ParseCircularFileLogging(root, config), path);
+    ReportOnError(ParseMaxLogFileSizeBytes(root, config), path);
+    ReportOnError(ParseOverwriteLogOnFull(root, config), path);
+    ReportOnError(ParseNoOfLogFiles(root, config), path);
+    ReportOnError(ParseDeleteOldLogFiles(root, config), path);
 }
 
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".

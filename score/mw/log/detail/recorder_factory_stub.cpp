@@ -44,7 +44,12 @@ std::unique_ptr<Backend> CreateConsoleLoggingBackend(const Configuration& config
                                                STDOUT_FILENO,
                                                std::move(allocator),
                                                score::os::FcntlImpl::Default(memory_resource),
-                                               score::os::Unistd::Default(memory_resource));
+                                               score::os::Unistd::Default(memory_resource),
+                                               config.IsCircularFileLogging(),
+                                               false, // overwrite log on full
+                                               config.GetMaxLogFileSizeBytes(),
+                                               1,     // no of log files
+                                               false); // delete old log files
 }
 
 std::unique_ptr<Recorder> RecorderFactory::CreateFromConfiguration(

@@ -81,7 +81,12 @@ TEST_F(FileOutputBackendFixture, ReserveSlotShouldTriggerFlushing)
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))
@@ -107,7 +112,12 @@ TEST_F(FileOutputBackendFixture, FlushSlotShouldTriggerFlushing)
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))                              //  first unitialized
@@ -140,7 +150,12 @@ TEST_F(FileOutputBackendFixture, DepletedAllocatorShouldCauseEmptyOptionalReturn
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
@@ -164,7 +179,12 @@ TEST_F(FileOutputBackendFixture, GetLogRecordReturnsObjectSameAsAllocatorWould)
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan).WillRepeatedly(Return(OptionalSpan{}));
     const auto slot = unit.ReserveSlot();
@@ -204,7 +224,12 @@ TEST_F(FileOutputBackendFixture, BackendConstructionShallCallNonBlockingFileSetu
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 }
 
 TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
@@ -231,7 +256,12 @@ TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
-                           std::move(unistd_mock));
+                           std::move(unistd_mock),
+                           false,
+                           false,
+                           0,
+                           1,
+                           false);
 }
 
 }  // namespace

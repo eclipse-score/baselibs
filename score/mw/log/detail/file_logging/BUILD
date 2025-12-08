@@ -153,8 +153,11 @@ cc_library(
         "@score_baselibs//score/mw/log/detail:__pkg__",
     ],
     deps = [
+        "@score_baselibs//score/filesystem:filesystem",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/mw/log/detail:types_and_errors",
+        "@score_baselibs//score/os:fcntl",
+        "@score_baselibs//score/os:os",
         "@score_baselibs//score/os:unistd",
     ],
 )

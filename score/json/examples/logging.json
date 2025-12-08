@@ -1,6 +1,14 @@
+
 {
-    "appId": "JSON",
-    "appDesc": "JSON example programs",
-    "logMode" : "kConsole",
-    "logLevel": "kVerbose"
+    "ecuId": "ECU1",
+    "appId": "log",
+    "logLevel": "kError",
+    "logMode": "kConsole|kFile",
+    "logLevelThresholdConsole": "kInfo",
+    "logFilePath": "./",
+    "circularFileLogging": false,
+    "overwriteLogOnFull": false, 
+    "maxLogFileSizeBytes": 500,
+    "deleteOldLogFiles": false, 
+    "noOfLogFiles": 2
 }

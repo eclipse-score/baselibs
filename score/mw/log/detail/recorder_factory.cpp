@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/mw/log/detail/recorder_factory.h"
 
+#include <cstdio>
+
 #include "score/mw/log/detail/composite_recorder.h"
 #include "score/mw/log/detail/empty_recorder.h"
 #include "score/mw/log/detail/error.h"

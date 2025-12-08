@@ -38,13 +38,21 @@ std::unique_ptr<Backend> FileRecorderFactory::CreateFileLoggingBackend(
     const Configuration& config,
     score::cpp::pmr::memory_resource* memory_resource) noexcept
 {
-    const std::string file_name{std::string(config.GetLogFilePath().data(), config.GetLogFilePath().size()) + "/" +
-                                std::string{config.GetAppId().data(), config.GetAppId().size()} + ".dlt"};
+    const std::string file_path_base{std::string(config.GetLogFilePath().data(), config.GetLogFilePath().size())};
+    const std::string app_id{std::string{config.GetAppId().data(), config.GetAppId().size()}};
+    const std::string file_extension{".dlt"};
+    std::string file_name{file_path_base + "/" + app_id + file_extension};
+    if (config.GetNoOfLogFiles() > 1) {
+        file_name = file_path_base + "/" + app_id + "_1" + file_extension;
+    }
+
+    auto open_flags =
+        score::os::Fcntl::Open::kReadWrite | score::os::Fcntl::Open::kCreate | score::os::Fcntl::Open::kCloseOnExec;
 
     // NOLINTBEGIN(score-banned-function): FileLoggingBackend is disabled in production. Argumentation: Ticket-75726
     const auto descriptor_result = fcntl_->open(
         file_name.data(),
-        score::os::Fcntl::Open::kWriteOnly | score::os::Fcntl::Open::kCreate | score::os::Fcntl::Open::kCloseOnExec,
+        open_flags,
         score::os::Stat::Mode::kReadUser | score::os::Stat::Mode::kWriteUser | score::os::Stat::Mode::kReadGroup |
             score::os::Stat::Mode::kReadOthers);
     // NOLINTEND(score-banned-function): see above for detailed explanation
@@ -72,9 +80,15 @@ std::unique_ptr<Backend> FileRecorderFactory::CreateFileLoggingBackend(
 
     return std::make_unique<FileOutputBackend>(std::move(message_builder),
                                                descriptor,
+                                               file_name,
                                                std::move(allocator),
                                                score::os::Fcntl::Default(memory_resource),
-                                               score::os::Unistd::Default(memory_resource));
+                                               score::os::Unistd::Default(memory_resource),
+                                               config.IsCircularFileLogging(),
+                                               config.IsOverwriteLogOnFull(),
+                                               config.GetMaxLogFileSizeBytes(),
+                                               config.GetNoOfLogFiles(),
+                                               config.IsDeleteOldLogFiles());
 }
 
 }  // namespace detail

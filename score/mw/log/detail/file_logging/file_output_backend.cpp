@@ -25,21 +25,30 @@ namespace detail
 
 FileOutputBackend::FileOutputBackend(std::unique_ptr<IMessageBuilder> message_builder,
                                      const std::int32_t file_descriptor,
+                                     const std::string& file_path,
                                      std::unique_ptr<CircularAllocator<LogRecord>> allocator,
-                                     score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl_instance,
-                                     score::cpp::pmr::unique_ptr<score::os::Unistd> unistd) noexcept
+                                     score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl,
+                                     score::cpp::pmr::unique_ptr<score::os::Unistd> unistd,
+                                     const bool circular_file_logging,
+                                     const bool overwrite_log_on_full,
+                                     const std::size_t max_log_file_size_bytes,
+                                     const std::size_t no_of_log_files,
+                                     const bool delete_old_log_files) noexcept
     : Backend(),
       buffer_allocator_(std::move(allocator)),
-      slot_drainer_(std::move(message_builder), buffer_allocator_, file_descriptor, std::move(unistd))
+      slot_drainer_(std::move(message_builder),
+                    buffer_allocator_,
+                    file_descriptor,
+                    file_path,
+                    std::move(unistd),
+                    std::move(fcntl),
+                    circular_file_logging,
+                    overwrite_log_on_full,
+                    max_log_file_size_bytes,
+                    no_of_log_files,
+                    delete_old_log_files)
+
 {
-    const auto flags = fcntl_instance->fcntl(file_descriptor, score::os::Fcntl::Command::kFileGetStatusFlags);
-    if (flags.has_value())
-    {
-        std::ignore = fcntl_instance->fcntl(
-            file_descriptor,
-            score::os::Fcntl::Command::kFileSetStatusFlags,
-            flags.value() | score::os::Fcntl::Open::kNonBlocking | score::os::Fcntl::Open::kCloseOnExec);
-    }
 }
 
 score::cpp::optional<SlotHandle> FileOutputBackend::ReserveSlot() noexcept
