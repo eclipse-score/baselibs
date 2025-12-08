@@ -49,3 +49,7 @@ build:bl-x86_64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_x86_64
 test:bl-x86_64-qnx --config=bl_common
 
 build --action_env=LD_PRELOAD
+build --copt=-gdwarf-5
+build --copt=-fno-var-tracking-assignments
+build --copt=-fvar-tracking
+build --copt=-g3
