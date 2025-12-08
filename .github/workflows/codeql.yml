@@ -87,7 +87,6 @@ jobs:
             --nouse_action_cache \
             --noremote_accept_cached \
             --noremote_upload_local_results \
-            --experimental_action_remote_execution_strategy=local \
             --disk_cache= \
             //score/...
 
