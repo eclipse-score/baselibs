@@ -28,6 +28,9 @@ test:bl_common --build_tests_only
 test:bl_common --test_tag_filters=-manual
 test:bl_common --test_output=errors
 
+# Component Integration Test configuration
+build:cit --//score/json:base_library=nlohmann
+
 # Common BaseLibs Toolchain flags for build (do not use it in case of system toolchains!)
 build:bl_toolchain_common --incompatible_strict_action_env
 build:bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux

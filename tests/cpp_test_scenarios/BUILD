@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2024 Contributors to the Eclipse Foundation
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -10,17 +10,22 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 
-load("@score_docs_as_code//:docs.bzl", "docs")
 
-docs(
-    data = [
-       "@score_process//:needs_json",
+cc_binary(
+    name = "cpp_test_scenarios",
+    srcs = [
+        "src/main.cpp",
+        "src/test_basic.cpp",
+        "src/test_basic.hpp",
     ],
-    source_dir = "docs",
-)
-
-test_suite(
-    name = "cit_tests",
-    tests = ["//tests/python_test_cases:cit_cpp"]
+    copts = [
+        "-g",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//score/json:json",
+        "@score_test_scenarios//test_scenarios_cpp",
+    ],
 )

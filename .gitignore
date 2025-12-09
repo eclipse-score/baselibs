@@ -6,3 +6,14 @@ compile_commands.json
 # docs build artifacts
 _build
 docs/ubproject.toml
+
+# Python
+.venv
+__pycache__/
+/.coverage
+**/*.egg-info/*
+
+# Vscode
+.vscode*
+*.orig
+.venv_docs
