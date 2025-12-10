@@ -101,6 +101,7 @@ class NonBlockingWriter final
     std::string file_path_;
     std::string file_name_;
     std::string file_extension_;
+    bool rotation_failed_{false};
 };
 
 }  // namespace detail

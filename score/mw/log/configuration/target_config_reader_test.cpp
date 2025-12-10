@@ -516,6 +516,46 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallFallBackToContextLogLevelDefa
     EXPECT_EQ(GetReader().ReadConfig()->GetContextLogLevel(), ContextLogLevelMap{});
 }
 
+TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseFileRotationStructure)
+{
+    RecordProperty("Requirement", "N/A");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "TargetConfigReader shall parse the new nested fileRotation configuration structure correctly.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "Analysis of requirements");
+
+    // Create a temporary config file with the new structure
+    const std::string new_config_content = R"({
+        "logFileSizePolicy": {
+            "enabled": true,
+            "maxFileSizeInBytes": 12345,
+            "numberOfFiles": 5,
+            "overwriteExistingFiles": true,
+            "truncateOnRotation": true
+        }
+    })";
+    const std::string temp_file_path = "new_config.json";
+    std::ofstream temp_file(temp_file_path);
+    temp_file << new_config_content;
+    temp_file.close();
+
+    SetConfigurationFiles({temp_file_path});
+
+    const auto config_result = GetReader().ReadConfig();
+    ASSERT_TRUE(config_result.has_value());
+    const auto& config = config_result.value();
+
+    EXPECT_TRUE(config.IsCircularFileLogging());
+    EXPECT_EQ(config.GetMaxLogFileSizeBytes(), 12345);
+    EXPECT_EQ(config.GetNoOfLogFiles(), 5);
+    EXPECT_TRUE(config.IsOverwriteLogOnFull());
+    EXPECT_TRUE(config.IsDeleteOldLogFiles());
+
+    // Clean up the temporary file
+    std::remove(temp_file_path.c_str());
+}
+
 }  // namespace
 }  // namespace detail
 }  // namespace log

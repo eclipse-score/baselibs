@@ -6,9 +6,11 @@
     "logMode": "kConsole|kFile",
     "logLevelThresholdConsole": "kInfo",
     "logFilePath": "./",
-    "circularFileLogging": false,
-    "overwriteLogOnFull": false, 
-    "maxLogFileSizeBytes": 500,
-    "deleteOldLogFiles": false, 
-    "noOfLogFiles": 2
+    "logFileSizePolicy": {
+        "enabled": false,
+        "maxFileSizeInBytes": 500,
+        "numberOfFiles": 2,
+        "overwriteExistingFiles": false,
+        "truncateOnRotation": false
+    }
 }

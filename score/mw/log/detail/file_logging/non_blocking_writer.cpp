@@ -208,7 +208,15 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
 {
     if (file_handle_ == -1)
     {
-        return 0;  // File is not open, do nothing.
+        if (rotation_failed_)
+        {
+            return 0;  // A rotation attempt already failed, do nothing.
+        }
+        RotateLogFile();
+        if (file_handle_ == -1)
+        {
+            return 0; // Rotation failed, do nothing.
+        }
     }
 
     const auto buffer_size = static_cast<uint64_t>(buffer_.size());
@@ -223,6 +231,10 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
         // If the file size is limited and the next write would exceed it, rotate the file.
         if (max_log_file_size_bytes_ > 0 && (current_file_position_ + size_to_flush > max_log_file_size_bytes_))
         {
+            if (rotation_failed_)
+            {
+                return 0; // A rotation attempt already failed, do nothing.
+            }
             RotateLogFile();
         }
 
@@ -333,6 +345,7 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
             if (!seek_result.has_value())
             {
                 // If seek fails, we cannot proceed with the circular write.
+                rotation_failed_ = true;
                 return score::cpp::make_unexpected(seek_result.error());
             }
 
@@ -350,6 +363,7 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
             const auto written_count = static_cast<uint64_t>(num_of_bytes_written.value());
             number_of_flushed_bytes_ += written_count;
             current_file_position_ = written_count;
+            rotation_failed_ = false; // Success
             return num_of_bytes_written.value();
         }
     }
@@ -376,13 +390,22 @@ void NonBlockingWriter::RotateLogFile() noexcept
     std::string next_file_path = file_path_ + "/" + file_name_ + "_" + std::to_string(current_log_file_index_) + file_extension_;
 
     // Check for file existence using the Unistd wrapper.
-    const bool file_exists = unistd_->access(next_file_path.c_str(), score::os::Unistd::AccessMode::kExists).has_value();
+    const auto access_result = unistd_->access(next_file_path.c_str(), score::os::Unistd::AccessMode::kExists);
+    if (!access_result.has_value() && access_result.error() != score::os::Error::Code::kNoSuchFileOrDirectory)
+    {
+        rotation_failed_ = true;
+        const std::string console_warning = "ERROR: Could not access next log file: " + next_file_path + "\n";
+        unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
+        return;
+    }
+    const bool file_exists = access_result.has_value();
 
     if (file_exists && !overwrite_log_on_full_)
     {
         const std::string console_warning = "WARNING: Log file rotation stopped. File exists and overwrite is disabled.\n";
         unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
         current_file_position_ = 0;
+        rotation_failed_ = true; // Set failure flag
         return;  // Stop, leaving file_handle_ as -1.
     }
 
@@ -404,16 +427,55 @@ void NonBlockingWriter::RotateLogFile() noexcept
     if (descriptor_result.has_value())
     {
         file_handle_ = descriptor_result.value();
+
+        const auto flags = fcntl_->fcntl(file_handle_, score::os::Fcntl::Command::kFileGetStatusFlags);
+        if (!flags.has_value())
+        {
+            rotation_failed_ = true;
+            const std::string console_warning = "ERROR: Could not get flags for new log file: " + next_file_path + "\n";
+            unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
+            unistd_->close(file_handle_);
+            file_handle_ = -1;
+            return;
+        }
+
+        auto fcntl_result = fcntl_->fcntl(
+            file_handle_,
+            score::os::Fcntl::Command::kFileSetStatusFlags,
+            flags.value() | score::os::Fcntl::Open::kNonBlocking | score::os::Fcntl::Open::kCloseOnExec);
+
+        if (!fcntl_result.has_value())
+        {
+            rotation_failed_ = true;
+            const std::string console_warning = "ERROR: Could not set flags for new log file: " + next_file_path + "\n";
+            unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
+            unistd_->close(file_handle_);
+            file_handle_ = -1;
+            return;
+        }
+
+
         if (file_exists && overwrite_log_on_full_ && !delete_old_log_files_)
         {
-            unistd_->lseek(file_handle_, 0, SEEK_SET);
+            const auto seek_result = unistd_->lseek(file_handle_, 0, SEEK_SET);
+            if (!seek_result.has_value())
+            {
+                rotation_failed_ = true;
+                const std::string console_warning = "ERROR: Could not seek to beginning of log file: " + next_file_path + "\n";
+                unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
+                unistd_->close(file_handle_);
+                file_handle_ = -1;
+                return;
+            }
         }
+        rotation_failed_ = false; // Rotation fully succeeded
     }
     else
     {
         // Handle remains -1 from earlier.
         const std::string console_warning = "ERROR: Could not open next log file: " + next_file_path + "\n";
         unistd_->write(STDERR_FILENO, console_warning.c_str(), console_warning.length());
+        rotation_failed_ = true; // Set failure flag
     }
 
     current_file_position_ = 0;
