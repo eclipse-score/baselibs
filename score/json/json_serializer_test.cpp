@@ -410,7 +410,7 @@ TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
 
 TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "data-flow-analysis");
     RecordProperty("Description",
                    "Verify that deserializing a struct does not work if the JSON is not an object but a number");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -431,7 +431,7 @@ TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
 
 TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "data-flow-analysis");
     RecordProperty(
         "Description",
         "Verify that deserializing an attribute of an integer type fails if the JSON instead contains a float number");
@@ -461,7 +461,7 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
 
 TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "data-flow-analysis");
     RecordProperty("Description",
                    "Verify that deserializing an attribute of a bool type fails if the JSON instead contains a string");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -490,7 +490,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
 
 TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "data-flow-analysis");
     RecordProperty("Description",
                    "Verify that deserializing an attribute of an integer type fails if the JSON instead contains a "
                    "string");
@@ -542,7 +542,7 @@ TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
 
 TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "data-flow-analysis");
     RecordProperty("Description",
                    "Verify that deserializing a vector of numbers won't work in case the JSON list contains other "
                    "entries than integers");
