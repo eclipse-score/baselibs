@@ -179,7 +179,7 @@ TEST(struct_visitor, struct_visitable)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_TRUE(check_visitable<test::S1>("test::S1", 1));
@@ -209,7 +209,7 @@ TEST(struct_visitor, visit_as)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures fields.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S1{}), 1);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S2{}), 2);
@@ -278,7 +278,7 @@ TEST(struct_visitor, namespaces)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability fields.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     using namespace ::score::common::visitor;
     EXPECT_EQ(struct_visitable<S1>::field_name(0), "x1");
@@ -305,7 +305,7 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
     RecordProperty("Description",
                    "Verifies that the templated structs shall not contain trailing whaitspace."
                    "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     using namespace ::score::common::visitor;
 

@@ -45,7 +45,7 @@ TEST_F(MqueueTest, mq_open_succeeds)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_open_succeeds");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     Mqueue::OpenFlag flags{Mqueue::OpenFlag::kCreate};
@@ -65,7 +65,7 @@ TEST_F(MqueueTest, mq_open_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_open_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     Mqueue::OpenFlag flags{Mqueue::OpenFlag::kExclusive};
@@ -78,7 +78,7 @@ TEST_F(MqueueTest, mq_open_failure_without_create_flag)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_open_failure_without_create_flag");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     Mqueue::OpenFlag flags{Mqueue::OpenFlag::kReadOnly};
@@ -90,7 +90,7 @@ TEST_F(MqueueTest, mq_unlink_fails)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_unlink_fails");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ASSERT_FALSE(mqueue_.mq_unlink(m_name_.c_str()).has_value());
@@ -101,7 +101,7 @@ TEST_F(MqueueTest, mq_send_and_timedreceive_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_send_and_timedreceive_success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string message = "Test Message";
@@ -155,7 +155,7 @@ TEST_F(MqueueTest, mq_send_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_send_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string message = "Test Message";
@@ -185,7 +185,7 @@ TEST_F(MqueueTest, mq_timedsend_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_timedsend_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string message = "Test Message";
@@ -217,7 +217,7 @@ TEST_F(MqueueTest, mq_timedreceive_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_timedreceive_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     mq_attr attr;
@@ -247,7 +247,7 @@ TEST_F(MqueueTest, mq_timedsend_and_mq_receive_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_timedsend_and_mq_receive_success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string message = "Test Message";
@@ -304,7 +304,7 @@ TEST_F(MqueueTest, mq_receive_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_receive_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     char buffer[100];
@@ -319,7 +319,7 @@ TEST_F(MqueueTest, mq_close_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_close_success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto mqd =
@@ -338,7 +338,7 @@ TEST_F(MqueueTest, mq_close_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_close_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = mqueue_.mq_close(kInvalidMqd);
@@ -350,7 +350,7 @@ TEST_F(MqueueTest, mq_getattr_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_getattr_success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     mq_attr attr;
@@ -373,7 +373,7 @@ TEST_F(MqueueTest, mq_getattr_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest mq_getattr_failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     mq_attr attr;
@@ -386,7 +386,7 @@ TEST_F(MqueueTest, modeflag_to_nativeflag)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MqueueTest modeflag_to_nativeflag");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     using OpenFlag = Mqueue::OpenFlag;
@@ -404,7 +404,7 @@ TEST(SchedTest, get_instance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SchedTest get_instance");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_NO_FATAL_FAILURE(Mqueue::instance());

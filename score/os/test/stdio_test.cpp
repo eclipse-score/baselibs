@@ -27,7 +27,7 @@ TEST(FOpenTest, ReturnsValidFileDescriptor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FOpenTest Returns Valid File Descriptor");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test"};
@@ -42,7 +42,7 @@ TEST(FOpenTest, ReturnsErrorWithWrongMode)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FOpenTest Returns Error With Wrong Mode");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test"};
@@ -57,7 +57,7 @@ TEST(FCloseTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FCloseTest Returns Blank Value If Successful");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test"};
@@ -74,7 +74,7 @@ TEST(FCloseTest, ReturnsErrorWithInvalidFileDescriptor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FCloseTest Returns Error With Invalid File Descriptor");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
 #if defined(GTEST_OS_LINUX)
@@ -92,7 +92,7 @@ TEST(RemoveTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RemoveTest Returns Blank Value If Successful");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test"};
@@ -112,7 +112,7 @@ TEST(RemoveTest, ReturnsErrorIfFileDoesNotExist)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RemoveTest Returns Error If File Does Not Exist");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test-invalid-file"};
@@ -126,7 +126,7 @@ TEST(RenameTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RenameTest Returns Blank Value If Successful");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"test"};
@@ -150,7 +150,7 @@ TEST(RenameTest, ReturnsErrorIfNameInvalid)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RenameTest Returns Error If Name Invalid");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto filename{"invalid-test"};
@@ -165,7 +165,7 @@ TEST(POpenTest, ReturnsValidPipe)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "POpenTest Returns Valid Pipe");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto cmd{"echo 1"};
@@ -187,7 +187,7 @@ TEST(POpenTest, ReturnsErrorWithInvalidMode)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "POpenTest Returns Error With Invalid Mode");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto cmd{"echo 1"};
@@ -202,7 +202,7 @@ TEST(PCloseTest, ProvidesReturnCodeOfPipeCommand)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PCloseTest Provides Return Code Of Pipe Command");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto cmd{"exit 1"};
@@ -222,7 +222,7 @@ TEST(FileNoTest, CanTranslateFileDescriptorOfStream)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FileNoTest Can Translate File Descriptor Of Stream");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto result = score::os::Stdio::instance().fileno(stdin);
@@ -235,7 +235,7 @@ TEST(FileNoTest, ReturnsErrorForInvalidFileStream)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FileNoTest Returns Error For Invalid File Stream");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
 #if defined(GTEST_OS_LINUX)

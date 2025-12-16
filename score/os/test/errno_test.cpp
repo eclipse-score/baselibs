@@ -50,7 +50,7 @@ TEST_F(OsErrorViaLogStreamFixture, CanStreamViaRValueStream)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OsErrorViaLogStreamFixture Can Stream Via RValue Stream");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     // Given a constructed error
@@ -70,7 +70,7 @@ TEST_F(OsErrorViaLogStreamFixture, StreamIntoMwLogStream2)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OsErrorViaLogStreamFixture Stream Into Mw Log Stream2");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     // Given a constructed error
@@ -91,7 +91,7 @@ TEST(Error, CreationFromErrno)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Creation From Errno");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     Error error{Error::createFromErrno(EPERM)};
@@ -103,7 +103,7 @@ TEST(Error, EqualityCompare)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Equality Compare");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
@@ -116,7 +116,7 @@ TEST(Error, InequalityCompare)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Inequality Compare");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
@@ -129,7 +129,7 @@ TEST(Error, InequalityCompareToErrorCode)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Inequality Compare To Error Code");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
@@ -141,7 +141,7 @@ TEST(Error, CreateUnspecifiedError)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create Unspecified Error");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createUnspecifiedError()};
@@ -153,7 +153,7 @@ TEST(Error, StreamingOut)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Streaming Out");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::stringstream ss;
@@ -166,7 +166,7 @@ TEST(Error, SetErrno)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Set Errno");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     seterrno(EPERM);
@@ -178,7 +178,7 @@ TEST(Error, ToString)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error To String");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
@@ -190,7 +190,7 @@ TEST(Error, GetOsDependentErrorCode)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Get Os Dependent Error Code");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
@@ -202,7 +202,7 @@ TEST(Error, CreateFromGlobErrorNoSpace)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Glob Error No Space");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromGlobError(GLOB_NOSPACE)};
@@ -214,7 +214,7 @@ TEST(Error, CreateFromGlobErrorNotImplemented)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Glob Error Not Implemented");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromGlobError(GLOB_NOSYS)};
@@ -226,7 +226,7 @@ TEST(Error, CreateFromErrnoFlockSpecificOperationNotSupported)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Errno Flock Specific Operation Not Supported");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error1{Error::createFromErrnoFlockSpecific(EOPNOTSUPP)};
@@ -238,7 +238,7 @@ TEST(Error, ErrorCodeConversion)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Error Code Conversion");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::map<const std::int32_t, const Error::Code> error_code_map = {

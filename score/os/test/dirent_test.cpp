@@ -44,7 +44,7 @@ TEST_F(DirentTest, ScanPositiveTest)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Scan shall return success for scan dir");
@@ -64,7 +64,7 @@ TEST_F(DirentTest, ScanNegativeTest)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Scan shall return error for invalid path");
@@ -78,7 +78,7 @@ TEST_F(DirentTest, OpenDirSuccess)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Open dir shall return success for valid dir");
@@ -94,7 +94,7 @@ TEST_F(DirentTest, OpenDirFailure)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Open dir shall return error for invalid dir");
@@ -107,7 +107,7 @@ TEST_F(DirentTest, ReadDirSuccess)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Read dir shall return success for valid dir");
@@ -141,7 +141,7 @@ TEST_F(DirentTest, ReadDirEnd)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Read dir shall return success for valid dir");
@@ -163,7 +163,7 @@ TEST_F(DirentTest, CloseDirSuccess)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Close dir shall return success for valid dir");
@@ -179,7 +179,7 @@ TEST(Dirent, get_instance)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     RecordProperty("Description", "Dirent shall provide instance functionality");

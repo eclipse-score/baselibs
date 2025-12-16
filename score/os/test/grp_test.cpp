@@ -26,7 +26,7 @@ TEST(GetGrNam, ReturnsCorrectBuffer)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Correct Buffer");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto group_name{"root"};
@@ -41,7 +41,7 @@ TEST(GetGrNam, SecondCallDoesNotOverwriteBuffer)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Second Call Does Not Overwrite Buffer");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto group_name_root{"root"};
@@ -74,7 +74,7 @@ TEST(GetGrNam, ReturnsErrorWhenGroupUnknown)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Error When Group Unknown");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto group_name{"invalid"};
@@ -88,7 +88,7 @@ TEST(GetGrNam, ReturnsErrorWhenGroupNameSizeBiggerThanSupported)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Error When Group Name Size Bigger Than Supported");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto group_name{"VeryVeryVeryVeryGroup"};

@@ -33,7 +33,7 @@ TEST_F(PciSafetylTest, pci_device_cfg_rd32_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Cfg Rd Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     pci_bdf_t bdf;
@@ -49,7 +49,7 @@ TEST_F(PciSafetylTest, pci_device_read_did_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Did Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     pci_bdf_t bdf;
@@ -64,7 +64,7 @@ TEST_F(PciSafetylTest, pci_device_read_vid_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Vid Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     pci_bdf_t bdf;

@@ -69,7 +69,7 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidReturnsErrorIfPassInvalidParams)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set groups pid returns Error If Pass Invalid Params");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto val = unit_->setgroupspid(-1, nullptr, 0);
@@ -81,7 +81,7 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidNewGroupAdded)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set groups pid New Group Added");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ForkAndExpectTrue([]() noexcept {
@@ -135,7 +135,7 @@ TEST_F(QnxUnistdFixture, SetuidChangesUidIfPassValidId)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set uid Changes Uid If Pass Valid Id");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ASSERT_EQ(::getuid(), 0);
@@ -154,7 +154,7 @@ TEST_F(QnxUnistdFixture, SetGidSetsGidIfPassValidId)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set Gid Sets Gid If Pass Valid Id");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ASSERT_EQ(::getuid(), 0);

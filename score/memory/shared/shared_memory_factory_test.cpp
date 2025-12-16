@@ -271,7 +271,7 @@ TEST_P(SharedMemoryFactoryTest, SharedMemoryResourceIsCreatedWithCorrectPath)
     RecordProperty("Verifies", "SCR-6223575");
     RecordProperty("Description",
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -305,7 +305,7 @@ TEST_F(SharedMemoryFactoryTest, SharedMemoryResourceFallbackToSystemMemory)
     RecordProperty("Verifies", "SCR-6223575");
     RecordProperty("Description",
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -345,7 +345,7 @@ TEST_F(SharedMemoryFactoryTest, SharedMemoryResourceIsOpenedWithCorrectPath)
     RecordProperty("Verifies", "SCR-6223575");
     RecordProperty("Description",
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -475,7 +475,7 @@ TEST_F(SharedMemoryFactoryTest, AllowsAccessToMatchingProvidersPreventsNonMatchi
     RecordProperty("Description",
                    "Checks that SharedMemoryFactory::Open will return a nullptr if the provided of the "
                    "SharedMemoryResource to be opened is not in the passed list of allowed providers.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

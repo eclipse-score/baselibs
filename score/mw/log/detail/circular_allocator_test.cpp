@@ -52,7 +52,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreads)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Writing into the circular allocator shall succeed if there are multiple free slots.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given a Ring-Buffer with enough space
@@ -69,7 +69,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreadsWithSingleSlotCap
     RecordProperty("Requirement", "SCR-861534, SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writing into the circular allocator shall succeed if a single slot is free.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given a Ring-Buffer with enough space
@@ -88,7 +88,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleThreadedOverBufferSize)
     RecordProperty("Description",
                    "When writing more slots in the circular allocator than capacity, the write to the next slot shall "
                    "wrap around and succeed.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Overview of the expected storage layout:
@@ -120,7 +120,7 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafe)
         "When writing to the CircularAllocator from multiple threads and each thread shall occupy one slot at a time "
         "every slot allocation from every thread shall succeed if the number of threads is equal the "
         "number of slots.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given a Ring-Buffer
@@ -152,7 +152,7 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafeWithInsufficien
     RecordProperty("Description",
                    "When writing to CircularAllocator with multiple threads in parallel and trying to allocate more "
                    "slots than capacity, the number of reserved slots shall be equal to the capacity.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given a Ring-Buffer
@@ -192,7 +192,7 @@ TEST_F(CircularAllocatorFixture, TryAcquireWhenAllSlotsAcquired)
     RecordProperty("Requirement", "SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "When every slot is occupied acquiring another slot shall return an empty result.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given a Ring-Buffer where all slots are acquired

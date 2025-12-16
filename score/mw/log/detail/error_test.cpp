@@ -59,7 +59,7 @@ TEST_P(LogDetailErrorFixture, EachErrorShallReturnNonEmptyMessage)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of raising the error codes with a specific error message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error_code = ReturnError(GetParam());
@@ -70,7 +70,7 @@ TEST(LgDetailErrorUnknown, TestUnknownError)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of raising the error codes with a specific error message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error_code_out_of_range =

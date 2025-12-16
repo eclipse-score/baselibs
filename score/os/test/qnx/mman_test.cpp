@@ -36,7 +36,7 @@ TEST_F(MmanTestFixture, MmapMunmapDeviceIOReturnNoErrorIfPassValidAddress)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mmap Munmap Device Io Return No Error If Pass Valid Address");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto val = unit_->mmap_device_io(1, address_);
@@ -53,7 +53,7 @@ TEST_F(MmanTestFixture, ShmCtlFailsWithInvalidPhysicalAddress)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Ctl Fails With Invalid Physical Address");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto shm_open_result = ::shm_open(shm_name, O_RDWR | O_CREAT | O_EXCL, 0000);
@@ -72,7 +72,7 @@ TEST_F(MmanTestFixture, ShmCtlSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Ctl Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/memory";
@@ -95,7 +95,7 @@ TEST_F(MmanTestFixture, MemOffsetFailsWhenPassInvalidVirtualAddress)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mem Offset Fails When Pass Invalid Virtual Address");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     off_t physical_addr{};
@@ -110,7 +110,7 @@ TEST_F(MmanTestFixture, MemOffsetSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mem Offset Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/memory";
@@ -132,7 +132,7 @@ TEST_F(MmanTestFixture, MemOffset64FailsWhenPassInvalidVirtualAddress)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mem Offset Fails When Pass Invalid Virtual Address");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     off_t physical_addr{};
@@ -147,7 +147,7 @@ TEST_F(MmanTestFixture, MemOffset64Succeeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mem Offset Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/memory";
@@ -169,7 +169,7 @@ TEST_F(MmanTestFixture, ShmOpenSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Open Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t oflag = O_CREAT | O_RDWR;
@@ -186,7 +186,7 @@ TEST_F(MmanTestFixture, ShmOpenFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Open Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t oflag = O_RDWR;
@@ -202,7 +202,7 @@ TEST_F(MmanTestFixture, ShmOpenHandleSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Open Handle Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t fd = ::shm_open(shm_name, O_CREAT | O_RDWR, 0666);
@@ -226,7 +226,7 @@ TEST_F(MmanTestFixture, ShmOpenHandleFailsWithInvalidHandle)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Open Handle Fails With Invalid Handle");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     shm_handle_t invalid_handle = -1;
@@ -243,7 +243,7 @@ TEST_F(MmanTestFixture, ShmCreateHandleSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Create Handle Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t fd = shm_open(shm_name, O_CREAT | O_RDWR, 0666);
@@ -265,7 +265,7 @@ TEST_F(MmanTestFixture, ShmCreateHandleFailsWithBadFileDescritor)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Shm Create Handle Fails With Bad File Descritor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t invalid_fd = -1;
@@ -285,7 +285,7 @@ TEST_F(MmanTestFixture, MmapSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mmap Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t length = 4096;
@@ -305,7 +305,7 @@ TEST_F(MmanTestFixture, MmapFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mmap Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t length = 0;
@@ -325,7 +325,7 @@ TEST_F(MmanTestFixture, Mmap64Succeeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mmap Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t length = 4096;
@@ -345,7 +345,7 @@ TEST_F(MmanTestFixture, Mmap64Fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mmap Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t length = 0;
@@ -365,7 +365,7 @@ TEST_F(MmanTestFixture, MunmapSucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Munmap Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t length = 4096;
@@ -387,7 +387,7 @@ TEST_F(MmanTestFixture, MunmapFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Munmap Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t invalid_length = 0;

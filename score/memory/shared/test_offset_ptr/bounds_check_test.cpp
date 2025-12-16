@@ -182,7 +182,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, DereferencingOffsetPtrReturnsCorrectValue)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that dereferencing performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -202,7 +202,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtr)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -222,7 +222,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtrWithTypedGet)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling typed get() performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -242,7 +242,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtrWithSizedGet)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling get() that accepts size as argument performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -301,7 +301,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, DereferencingOffsetPtrTerminates)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that dereferencing performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -319,7 +319,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrGetTerminates)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -337,7 +337,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrTypedGetTerminates)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling typed get() performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -355,7 +355,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrSizedGetTerminates)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling get() that takes size as argument performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -386,7 +386,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, ArrowOperatorTerminates)
 {
     RecordProperty("Verifies", "SCR-5899238");
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

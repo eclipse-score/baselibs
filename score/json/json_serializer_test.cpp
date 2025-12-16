@@ -112,7 +112,7 @@ STRUCT_VISITABLE(TypeToSerialize, integer_val, string_val, nested_val)
 
 TEST(JsonSerializerTest, TestSerialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Test the serialization of a visitable structure and all its contents");
     RecordProperty("ASIL", "QM");
@@ -166,7 +166,7 @@ TEST(JsonSerializerTest, TestSerialization)
 
 TEST(JsonSerializerTest, TestDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description", "Test the deserialization of a visitable structure and all its contents");
     RecordProperty("ASIL", "QM");
@@ -200,7 +200,7 @@ TEST(JsonSerializerTest, TestDeserialization)
 
 TEST(JsonSerializerTest, TestFailingDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Check whether the deserialization of a JSON that does not match a visitable structure fails with "
@@ -239,7 +239,7 @@ STRUCT_VISITABLE(TypeWithCustomSerializable, custom_type)
 
 TEST(JsonSerializerTest, UserProvidedDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Test that the deserialization of a struct works that defines a custom deserialization scheme");
@@ -264,7 +264,7 @@ TEST(JsonSerializerTest, UserProvidedDeserialization)
 
 TEST(JsonSerializerTest, UserProvidedSerialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description",
                    "Test that the serialization of a struct works that defines a custom serialization scheme");
@@ -298,7 +298,7 @@ STRUCT_VISITABLE(TypeWithOptionalValue, mandatory_val, never_ever_val, optional_
 
 TEST(JsonSerializerTest, DeserializeOptionalFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -328,7 +328,7 @@ TEST(JsonSerializerTest, DeserializeOptionalFields)
 
 TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -358,7 +358,7 @@ TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
 
 TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -386,7 +386,7 @@ TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
 
 TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty(
         "Description",
@@ -520,7 +520,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
 
 TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector will fail if the JSON does not contain an array as the value "
@@ -564,7 +564,7 @@ TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
 
 TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameType)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector of numbers works if the JSON list contains only integers");
@@ -585,7 +585,7 @@ TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameTyp
 
 TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector of Any works even if the JSON list contains mixed types");
@@ -612,7 +612,7 @@ TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
 
 TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Verify that optional values are added as JSON object keys if they contain a value");
     RecordProperty("ASIL", "QM");
@@ -636,7 +636,7 @@ TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
 
 TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing an optional value fails if the enclosed type does not match");
@@ -657,7 +657,7 @@ TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch
 
 TEST(JsonSerializerTest, SerializeConstantObjects)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Verify that constant objects can be serialized");
     RecordProperty("ASIL", "QM");
@@ -701,7 +701,7 @@ TEST(JsonSerializerTest, SerializeConstantObjects)
 
 TEST(JsonSerializerTest, UseCustomSerializationOnVisitableStruct)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "JsonSerializer");
     RecordProperty("Description",
                    "This test verifies that the custom serialization function of a struct is used, even if the struct "
