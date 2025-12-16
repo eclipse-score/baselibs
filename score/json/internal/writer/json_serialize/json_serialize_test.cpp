@@ -40,7 +40,7 @@ TEST(JsonSerializeTest, SerializeString)
     RecordProperty("Description",
                    "constructing json object with string elements and serializing it, cf. RFC-8259 section 7");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "string1": "foo",
@@ -61,7 +61,7 @@ TEST(JsonSerializeTest, SerializeStringWithSpecialChars)
                    "constructing json object with string elements and serializing it, cf. RFC-8259 section 7 "
                    "considering special characters");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string expected_json_string{R"({
     "string1": "String with \"special\" characters like \\",
@@ -81,7 +81,7 @@ TEST(JsonSerializeTest, SerializeInt8)
     RecordProperty("Description",
                    "constructing json object with Int8 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(INT8_MIN) +
@@ -107,7 +107,7 @@ TEST(JsonSerializeTest, SerializeInt16)
     RecordProperty("Description",
                    "constructing json object with Int16 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(INT16_MIN) +
@@ -133,7 +133,7 @@ TEST(JsonSerializeTest, SerializeInt32)
     RecordProperty("Description",
                    "constructing json object with Int32 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(INT32_MIN) +
@@ -159,7 +159,7 @@ TEST(JsonSerializeTest, SerializeInt64)
     RecordProperty("Description",
                    "constructing json object with Int64 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(INT64_MIN) +
@@ -185,7 +185,7 @@ TEST(JsonSerializeTest, SerializeUint8)
     RecordProperty("Description",
                    "constructing json object with Uint8 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(UINT8_MAX) +
@@ -208,7 +208,7 @@ TEST(JsonSerializeTest, SerializeUint16)
     RecordProperty("Description",
                    "constructing json object with Uint16 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(UINT16_MAX) +
@@ -231,7 +231,7 @@ TEST(JsonSerializeTest, SerializeUint32)
     RecordProperty("Description",
                    "constructing json object with Uint32 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(UINT32_MAX) +
@@ -254,7 +254,7 @@ TEST(JsonSerializeTest, SerializeUint64)
     RecordProperty("Description",
                    "constructing json object with Uint64 elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "num1": )" + std::to_string(UINT32_MAX) +
@@ -277,7 +277,7 @@ TEST(JsonSerializeTest, SerializeFloat)
     RecordProperty("Description",
                    "constructing json object with float elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::ostringstream string_stream{};
     string_stream.precision(std::numeric_limits<float>::max_digits10);
@@ -307,7 +307,7 @@ TEST(JsonSerializeTest, SerializeDouble)
     RecordProperty("Description",
                    "constructing json object with double elements and serializing it, cf. RFC-8259 section 6");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::ostringstream string_stream{};
     string_stream.precision(std::numeric_limits<double>::max_digits10);
@@ -337,7 +337,7 @@ TEST(JsonSerializeTest, SerializeBool)
     RecordProperty("Description",
                    "constructing json object with bool elements and serializing it, cf. RFC-8259 section 3");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "bool1": 1,
@@ -357,7 +357,7 @@ TEST(JsonSerializeTest, SerializeNull)
     RecordProperty("Description",
                    "constructing json object with Null element and serializing it, cf. RFC-8259 section 3");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
     "null": null
@@ -375,7 +375,7 @@ TEST(JsonSerializeTest, SerializeMultipleTypes)
     RecordProperty("Description",
                    "constructing json object with multiple types elements and serializing it, cf. RFC-8259 section 3");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::ostringstream string_stream{};
     string_stream.precision(std::numeric_limits<float>::max_digits10);
@@ -404,7 +404,7 @@ TEST(JsonSerializeTest, SerializeList)
     RecordProperty("Description",
                    "constructing json object with list of elements and serializing it, cf. RFC-8259 section 5");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"([
     5,
@@ -424,7 +424,7 @@ TEST(JsonSerializeTest, SerializeEmptyList)
     RecordProperty("Description",
                    "constructing json object with empty list and serializing it, cf. RFC-8259 section 5");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"([
 ])"};
@@ -440,7 +440,7 @@ TEST(JsonSerializeTest, SerializeEmptyObject)
     RecordProperty("Description",
                    "constructing json object with empty object and serializing it, cf. RFC-8259 section 3");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"({
 })"};
@@ -458,7 +458,7 @@ TEST(JsonSerializeTest, SerializeNestedObjectAndList)
         "Description",
         "constructing json object with nested object and list and serializing it, cf. RFC-8259 section 4 and 5");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string input_json{R"([
     {
@@ -494,7 +494,7 @@ TEST(JsonSerializeAnyTest, SerializeAny)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test serializing json::Any with all type variants, cf. RFC-8259 section 3-7");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::vector<std::pair<std::string, score::json::Any>> v;
 

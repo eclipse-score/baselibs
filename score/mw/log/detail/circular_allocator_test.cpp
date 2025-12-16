@@ -53,7 +53,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreads)
     RecordProperty("Description",
                    "Writing into the circular allocator shall succeed if there are multiple free slots.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a Ring-Buffer with enough space
     CircularAllocator<std::int32_t> unit{5};
@@ -70,7 +70,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreadsWithSingleSlotCap
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writing into the circular allocator shall succeed if a single slot is free.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a Ring-Buffer with enough space
     CircularAllocator<std::int32_t> unit{1};
@@ -89,7 +89,7 @@ TEST_F(CircularAllocatorFixture, WriteSingleThreadedOverBufferSize)
                    "When writing more slots in the circular allocator than capacity, the write to the next slot shall "
                    "wrap around and succeed.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Overview of the expected storage layout:
     // | Slot 0 | Slot 1 | Slot 2 |
@@ -121,7 +121,7 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafe)
         "every slot allocation from every thread shall succeed if the number of threads is equal the "
         "number of slots.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a Ring-Buffer
     constexpr size_t number_of_slots = 10U;
@@ -153,7 +153,7 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafeWithInsufficien
                    "When writing to CircularAllocator with multiple threads in parallel and trying to allocate more "
                    "slots than capacity, the number of reserved slots shall be equal to the capacity.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a Ring-Buffer
     constexpr std::size_t number_of_slots{100};
@@ -193,7 +193,7 @@ TEST_F(CircularAllocatorFixture, TryAcquireWhenAllSlotsAcquired)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "When every slot is occupied acquiring another slot shall return an empty result.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a Ring-Buffer where all slots are acquired
     CircularAllocator<std::int32_t> unit{1};

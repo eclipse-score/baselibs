@@ -34,7 +34,7 @@ TEST(vistor_type_traits, is_vector_serializable)
         "Logging library shall provide an annotation mechanism for data structures to support automatic "
         "serialization/deserialization, So, we are checking some data types to be treated for vector serialization.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     using test::clearable_container;
     using std_basic_string = std::basic_string<char, std::char_traits<char>, std::allocator<char>>;
@@ -59,7 +59,7 @@ TEST(vistor_type_traits, is_not_vector_serializable)
                    "serialization/deserialization. So, we are checking those some data types shouldn't be treated as "
                    "vector serialization.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     using test::unserializable_container;
     static_assert(!is_vector_serializable<std::array<int, 3>>::value,

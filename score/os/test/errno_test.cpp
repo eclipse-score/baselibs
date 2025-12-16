@@ -51,7 +51,7 @@ TEST_F(OsErrorViaLogStreamFixture, CanStreamViaRValueStream)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OsErrorViaLogStreamFixture Can Stream Via RValue Stream");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given a constructed error
     const Error error{Error::createFromErrno(EPERM)};
@@ -71,7 +71,7 @@ TEST_F(OsErrorViaLogStreamFixture, StreamIntoMwLogStream2)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OsErrorViaLogStreamFixture Stream Into Mw Log Stream2");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given a constructed error
     const Error error{Error::createFromErrno(EPERM)};
@@ -92,7 +92,7 @@ TEST(Error, CreationFromErrno)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Creation From Errno");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     Error error{Error::createFromErrno(EPERM)};
     EXPECT_EQ(error, Error::Code::kOperationNotPermitted);
@@ -104,7 +104,7 @@ TEST(Error, EqualityCompare)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Equality Compare");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
     const auto error2{Error::createFromErrno(EPERM)};
@@ -117,7 +117,7 @@ TEST(Error, InequalityCompare)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Inequality Compare");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
     const auto error3{Error::createFromErrno(EOVERFLOW)};
@@ -130,7 +130,7 @@ TEST(Error, InequalityCompareToErrorCode)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Inequality Compare To Error Code");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
     EXPECT_NE(error1, Error::Code::kNotEnoughSpace);
@@ -142,7 +142,7 @@ TEST(Error, CreateUnspecifiedError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create Unspecified Error");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createUnspecifiedError()};
     EXPECT_EQ(error1, Error::Code::kUnexpected);
@@ -154,7 +154,7 @@ TEST(Error, StreamingOut)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Streaming Out");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::stringstream ss;
     ss << Error::createFromErrno(EPERM);
@@ -167,7 +167,7 @@ TEST(Error, SetErrno)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Set Errno");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     seterrno(EPERM);
     EXPECT_EQ(geterrno(), EPERM);
@@ -179,7 +179,7 @@ TEST(Error, ToString)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error To String");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
     EXPECT_EQ(error1.ToString(), "An OS error has occurred with error code: Operation not permitted");
@@ -191,7 +191,7 @@ TEST(Error, GetOsDependentErrorCode)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Get Os Dependent Error Code");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrno(EPERM)};
     EXPECT_EQ(error1.GetOsDependentErrorCode(), EPERM);
@@ -203,7 +203,7 @@ TEST(Error, CreateFromGlobErrorNoSpace)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Glob Error No Space");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromGlobError(GLOB_NOSPACE)};
     EXPECT_EQ(error1, Error::Code::kGlobNoSpace);
@@ -215,7 +215,7 @@ TEST(Error, CreateFromGlobErrorNotImplemented)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Glob Error Not Implemented");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromGlobError(GLOB_NOSYS)};
     EXPECT_EQ(error1, Error::Code::kUnexpected);
@@ -227,7 +227,7 @@ TEST(Error, CreateFromErrnoFlockSpecificOperationNotSupported)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Create From Errno Flock Specific Operation Not Supported");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto error1{Error::createFromErrnoFlockSpecific(EOPNOTSUPP)};
     EXPECT_EQ(error1, Error::Code::kFdRefersToAnObject);
@@ -239,7 +239,7 @@ TEST(Error, ErrorCodeConversion)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Error Error Code Conversion");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::map<const std::int32_t, const Error::Code> error_code_map = {
         {EPERM, Error::Code::kOperationNotPermitted},

@@ -61,7 +61,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenFlushingTwiceMaxChunkS
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite can flush 2 max chunks size.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::array<uint8_t, 2 * max_chunk_size> payload{};
 
@@ -87,7 +87,7 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite can flush 2 different spans with different sizes.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::array<uint8_t, (2 * max_chunk_size) + 3> first_payload{};
 
@@ -127,7 +127,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterShallReturnFalseWhenWriteS
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite cannot flush if the system call write fails with error EBADF.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::array<uint8_t, max_chunk_size> payload{};
     score::cpp::span<const std::uint8_t> buffer{payload.data(),
@@ -151,7 +151,7 @@ TEST_F(NonBlockingWriterTestFixture,
         "Description",
         "NonBlockingWrite can flush 2 max chunk sizes when flushing span with correct indexes to system call write");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::array<uint8_t, 2 * max_chunk_size> payload{};
     score::cpp::span<const std::uint8_t> buffer{payload.data(),
@@ -178,7 +178,7 @@ TEST_F(NonBlockingWriterTestFixture,
                    "NonBlockingWrite can flush 1 k max chunk size on two different times even if the write returns "
                    "half of max chunk size");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::array<uint8_t, max_chunk_size> payload{};
 

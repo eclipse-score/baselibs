@@ -132,7 +132,7 @@ TYPED_TEST_SUITE(TestSafeExcept, ExceptionThrowerTypes, /*unused*/);
 
 TYPED_TEST(TestSafeExcept, AllocationOfExceptionAbortsExecutionImmediately)
 {
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("ParentRequirement", "SSR-6593458");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty(
@@ -162,7 +162,7 @@ TYPED_TEST(TestSafeExcept, AllocationOfExceptionAbortsExecutionImmediately)
 
 TYPED_TEST(TestSafeExcept, AllocationOfExceptionAbortsExecutionImmediatelyEvenWhenBeingCaughtByType)
 {
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("ParentRequirement", "SSR-6593458");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty(
@@ -194,7 +194,7 @@ TYPED_TEST(TestSafeExcept, AllocationOfExceptionAbortsExecutionImmediatelyEvenWh
 
 TYPED_TEST(TestSafeExcept, AllocationOfExceptionAbortsExecutionImmediatelyEvenWhenBeingCaughtByWildcard)
 {
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("ParentRequirement", "SSR-6593458");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty(

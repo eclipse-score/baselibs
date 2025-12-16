@@ -46,7 +46,7 @@ TEST_F(VerbosePayloadFixture, SinglePutStoresMemoryCorrect)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function stores data in correct order in the payload (buffer) if called once.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty verbose payload with enough space
     VerbosePayload unit = constructUnitWithSize(10);
@@ -71,7 +71,7 @@ TEST_F(VerbosePayloadFixture, MultiplePutStoresMemoryCorrectly)
     RecordProperty("Description",
                    "Put function stores data in correct order in the payload (buffer) if called multiple times.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an already filled buffer with enough space
     VerbosePayload unit = constructUnitWithSize(20);
@@ -98,7 +98,7 @@ TEST_F(VerbosePayloadFixture, PutZeroSize)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function handles zero size data requests gracefully");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an already filled buffer with enough space
     VerbosePayload unit = constructUnitWithSize(20);
@@ -114,7 +114,7 @@ TEST_F(VerbosePayloadFixture, PutStopsAtMaximumSize)
     RecordProperty("Description",
                    "Put function continues to fill data to maximum size and any additional data will not be filled.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty verbose payload with to few space
     VerbosePayload unit = constructUnitWithSize(3);
@@ -136,7 +136,7 @@ TEST_F(VerbosePayloadFixtureDeathTest, AssertForInvalidPointerKicksIn)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function will exit with failure in case of invalid data pointer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty buffer
     VerbosePayload unit = constructUnitWithSize(0);
@@ -153,7 +153,7 @@ TEST_F(VerbosePayloadFixture, EmptyBufferHasNoWrongBehavior)
     RecordProperty("Description",
                    "Put function will not fill any data in case of empty buffer and will return successfully.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty verbose payload with no space
     VerbosePayload unit = constructUnitWithSize(0);
@@ -172,7 +172,7 @@ TEST_F(VerbosePayloadFixture, SizeFitsInPayload)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies size fits in payload.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty verbose payload with enough space
     VerbosePayload unit = constructUnitWithSize(5);
@@ -188,7 +188,7 @@ TEST_F(VerbosePayloadFixture, SizeFitsNotInPayload)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies size does not fit in payload.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given an empty verbose payload with enough space
     VerbosePayload unit = constructUnitWithSize(5);
@@ -207,7 +207,7 @@ TEST_F(VerbosePayloadFixture, SetBufferShallRebindReference)
         "Verifies setting new buffer for VerbosePayload will update the pointer to the new buffer and discards "
         "the old one.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given VerbosePayload is constructed with a different buffer.
     constexpr std::size_t kOldBufferSize = 5U;

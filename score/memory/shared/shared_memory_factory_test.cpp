@@ -273,7 +273,7 @@ TEST_P(SharedMemoryFactoryTest, SharedMemoryResourceIsCreatedWithCorrectPath)
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     // Given that we can successfully create a shared memory region
@@ -307,7 +307,7 @@ TEST_F(SharedMemoryFactoryTest, SharedMemoryResourceFallbackToSystemMemory)
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     std::array<std::uint8_t, kSharedMemorySize> dataRegion{};
@@ -347,7 +347,7 @@ TEST_F(SharedMemoryFactoryTest, SharedMemoryResourceIsOpenedWithCorrectPath)
                    "The SharedMemoryFactory shall return the Shared Memory Resource associated with the given path.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr bool is_read_write = false;
@@ -477,7 +477,7 @@ TEST_F(SharedMemoryFactoryTest, AllowsAccessToMatchingProvidersPreventsNonMatchi
                    "SharedMemoryResource to be opened is not in the passed list of allowed providers.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr bool is_read_write = false;

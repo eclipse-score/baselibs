@@ -113,7 +113,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "Interface test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -129,7 +129,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "Interface test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -148,7 +148,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "Interface test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -166,7 +166,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "Interface test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -185,7 +185,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "Invalid file path returns error when writing unsynced file");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -207,7 +207,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "Invalid file path returns error when writing with atomic update");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;

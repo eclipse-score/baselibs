@@ -55,7 +55,7 @@ TEST(LogRecord, LogRecordShallReturnExpectedLogEntry)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can be constructed with max payload size.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     LogRecord unit{kMaxPayloadSize};
     EXPECT_EQ(unit.getLogEntry().payload.capacity(), kMaxPayloadSize);
@@ -67,7 +67,7 @@ TEST(LogRecord, LogRecordShallReturnExpectedVerbosePayload)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can provide the expected verbose payload.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     LogRecord unit{kMaxPayloadSize};
     EXPECT_EQ(unit.getVerbosePayload().RemainingCapacity(), kMaxPayloadSize);
@@ -79,7 +79,7 @@ TEST_P(LogRecordCopyAndMoveOperatorsFixture, LogRecordShallCopyAssignAndUpdateRe
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can provide copy assignment operator with valid state.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     LogRecord unit{kMaxPayloadSize};
     {
@@ -96,7 +96,7 @@ TEST_P(LogRecordCopyAndMoveOperatorsFixture, LogRecordShallCopyConstructAndUpdat
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can provide copy constructor with valid state.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     score::cpp::optional<LogRecord> unit{};
     {
@@ -113,7 +113,7 @@ TEST_P(LogRecordCopyAndMoveOperatorsFixture, LogRecordShallMoveAssignAndUpdateRe
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can provide move assigment operator with validstate.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     LogRecord unit{kMaxPayloadSize};
     {
@@ -130,7 +130,7 @@ TEST_P(LogRecordCopyAndMoveOperatorsFixture, LogRecordShallMoveConstructAndUpdat
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord can provide move constructor with valid state.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     score::cpp::optional<LogRecord> unit{};
     {
@@ -147,7 +147,7 @@ TEST(LogRecord, SelfAssignmentShallNotModifyState)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogRecord handles self-assignment without modifying state.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Arrange: Create a LogRecord object and set some initial state
     LogRecord unit{kMaxPayloadSize};

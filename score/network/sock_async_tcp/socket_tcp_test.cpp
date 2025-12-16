@@ -79,7 +79,7 @@ TEST_F(SocketTCPTest, ConnectSuccess)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that connection on TCP async socket is successful");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
         in_pollfd[0].revents = POLLIN;
@@ -110,7 +110,7 @@ TEST_F(SocketTCPTest, CreationSuccess)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of TCP async socket is successful");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
         in_pollfd[0].revents = POLLIN;
@@ -129,7 +129,7 @@ TEST_F(SocketTCPTest, CreationFailed)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of TCP async socket fails");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _))
         .Times(Exactly(1))
         .WillOnce(Return(score::cpp::make_unexpected(Error::createFromErrno(0))));

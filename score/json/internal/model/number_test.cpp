@@ -88,7 +88,7 @@ TEST(Number, FromUint8ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint8 max value to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromUnsignedToAnyOtherType<uint8_t>(true,   // uint8
@@ -110,7 +110,7 @@ TEST(Number, FromUint16ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint16 max value to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromUnsignedToAnyOtherType<uint16_t>(false,  // uint8
@@ -132,7 +132,7 @@ TEST(Number, FromUint32ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint32 max value to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromUnsignedToAnyOtherType<uint32_t>(false,  // uint8
@@ -154,7 +154,7 @@ TEST(Number, FromUint64ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint64 max value to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromUnsignedToAnyOtherType<uint64_t>(false,  // uint8
@@ -233,7 +233,7 @@ TEST(Number, FromInt8ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int8 different values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromSignedToAnyOtherType<std::int8_t>(true,  // int8
@@ -251,7 +251,7 @@ TEST(Number, FromInt16ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int16 different values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromSignedToAnyOtherType<std::int16_t>(false,  // int8
@@ -269,7 +269,7 @@ TEST(Number, FromInt32ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int32 different values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromSignedToAnyOtherType<std::int32_t>(false,  // int8
@@ -287,7 +287,7 @@ TEST(Number, FromInt64ToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int64 different values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFromSignedToAnyOtherType<std::int64_t>(false,  // int8
@@ -603,7 +603,7 @@ TEST(Number, FromFloatToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of float values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFloatingPointValues<float>(GetMaximumIntegerInFloat());
@@ -615,7 +615,7 @@ TEST(Number, FromDoubleToAnyOtherType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of double values to different data types.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
 
     TestFloatingPointValues<double>(GetMaximumIntegerInDouble());
@@ -633,7 +633,7 @@ TEST(Number, CheckEqualOperator)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests the equal comparator of Number.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Priority", "3");
     {
         uint64_t content = 42;

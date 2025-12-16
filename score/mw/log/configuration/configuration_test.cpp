@@ -31,7 +31,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsBelowThresho
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The log message shall be enabled if the log level is below the threshold.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -47,7 +47,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsEqualThresho
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The log message shall be enabled if the log level is equal to the threshold.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -63,7 +63,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsAboveThresh
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The log message shall be disabled if the log level is above to the threshold.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -80,7 +80,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqual
     RecordProperty("Description",
                    "The log message shall be enabled if the log level is equal to the default log level threshold.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -96,7 +96,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaul
     RecordProperty("Description",
                    "The log message shall be disabled if the log level is below the default log level threshold.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -114,7 +114,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqual
         "The log message for the console shall be enabled if the log level is equal to the default log level "
         "threshold for the console.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -131,7 +131,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaul
                    "The log message shall be disabled for the console if the log level is below the default log level "
                    "threshold for the console.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -146,7 +146,7 @@ TEST(ConfigurationTestSuite, AppidWithMoreThanFourCharactersShallBeTruncated)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The application identifier shall be limited to four characters.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 
@@ -160,7 +160,7 @@ TEST(ConfigurationTestSuite, EcuidWithMoreThanFourCharactersShallBeTruncated)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The ECU identifier shall be limited to four characters.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Configuration config{};
 

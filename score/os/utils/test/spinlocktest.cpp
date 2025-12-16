@@ -59,7 +59,7 @@ TEST(SpinlockTest, ConcIntManipulation)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpinlockTest Conc Int Manipulation");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     Spinlock lk;
     std::uint32_t val1, val2, loopCount;
@@ -85,7 +85,7 @@ TEST(SpinlockTest, TryLock)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpinlockTest Try Lock");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     Spinlock lk;
 
@@ -108,7 +108,7 @@ TEST(SpinlockTest, LockGuardSupport)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpinlockTest Lock Guard Support");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     Spinlock spinlock;
 

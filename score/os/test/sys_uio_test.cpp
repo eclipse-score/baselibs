@@ -44,7 +44,7 @@ TEST_F(SysUioImplTest, WritevFailsBadFd)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysUioImplTest Writev Fails Bad Fd");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr std::int32_t kInvalidFd{-1};
     std::array<iovec, 2UL> io{};
@@ -67,7 +67,7 @@ TEST_F(SysUioImplTest, WritevSucceeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysUioImplTest Writev Succeeds");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::array<iovec, 2UL> io{};
     std::uint8_t byte1{1};
@@ -93,7 +93,7 @@ TEST_F(SysUioImplTest, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysUioImplTest PMRDefault Shall Return Impl Instance");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::SysUio::Default(memory_resource);

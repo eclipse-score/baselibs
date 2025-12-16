@@ -122,7 +122,7 @@ TEST_F(MemoryResourceManagerDeathTest, ProperHandleNonExistingMemoryResource)
                    "The MemoryRessourceProxy shall store its identifier in a way, that it can detect corruptions.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given multiple registered memory resources, but a MemoryResourceProxy pointing to a non-existing resource
     MemoryResourceProxy notValidIdentifier{12U};
@@ -186,7 +186,7 @@ TEST_F(BoundCheckedMemoryResourceManagerDeathTest, AllocationTerminatesWhenProxy
                    "The MemoryRessourceProxy shall store its identifier in a way, that it can detect corruptions.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a registered memory resource and a MemoryResourceProxy with the same ID but not in the memory region
     // managed by the ManagedMemoryResource.

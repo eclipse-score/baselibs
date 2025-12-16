@@ -49,7 +49,7 @@ TEST_F(RuntimeFixture, CanSetALoggingBackend)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability to set backend logging without exception.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given an empty process
 
@@ -64,7 +64,7 @@ TEST_F(RuntimeFixture, CanRetrieveSetRecorder)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability to get the recorder properly.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given the recorder was already set
     Runtime::SetRecorder(&recorder_mock_);
@@ -79,7 +79,7 @@ TEST_F(RuntimeFixture, CanRetrieveFallbackRecorder)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability to get a fallback recorder.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given the runtime was initialized
 
@@ -96,7 +96,7 @@ TEST_F(RuntimeFixture, DefaultRecorderShallBeReturned)
     RecordProperty("Description",
                    "Verify the ability of returning the default recorder in case of null recorder is set.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given the unset recorder:
     Runtime::SetRecorder(&recorder_mock_);
@@ -117,7 +117,7 @@ TEST_F(RuntimeFixture, WithLoggerContainerHasFreeCapacityExpectedThatNewLoggerCo
     RecordProperty("Description",
                    "Verify if logger container has capacity will create this logger if it's not available.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::string_view context{"ctx"};
     EXPECT_EQ(context, Runtime::GetLoggerContainer().GetLogger(context).GetContext());
@@ -130,7 +130,7 @@ TEST(RuntimeTest, RuntimeInitializationWithPointer)
                    "This suite only exists to test the second branch of the runtime initialization. Since this is "
                    "static state we need a separate binary for this.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // This suite only exists to test the second branch of the runtime initialization.
     // Since this is static state we need a separate binary for this.

@@ -31,7 +31,7 @@ TEST(StdlibImpl, system_call)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl system_call");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = score::os::Stdlib::instance().system_call("ls /tmp");
     EXPECT_EQ(result, score::cpp::expected_blank<Error>{});
@@ -43,7 +43,7 @@ TEST(StdlibImpl, system_callFail)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl system_call Fail");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result1 = score::os::Stdlib::Default()->system_call("d");
     ASSERT_FALSE(result1.has_value());
@@ -55,7 +55,7 @@ TEST(StdlibImpl, getenv)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl getenv");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_EQ(setenv("TEST_ENV", "TEST_VALUE", 0), 0);
     const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
@@ -69,7 +69,7 @@ TEST(StdlibImpl, realpath)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl realpath");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     char resolved_path[PATH_MAX];
     auto res = score::os::Stdlib::instance().realpath("/etc", resolved_path);
@@ -84,9 +84,9 @@ TEST(StdlibImpl, realpath)
 TEST(StdlibImpl, calloc_fail)
 {
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecordProperty("Verifies", "SCR-109773");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -111,7 +111,7 @@ TEST(StdlibImpl, calloc)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl calloc");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto size = 2;
     const auto result = score::os::Stdlib::instance().calloc(size, sizeof(uint16_t));
@@ -132,7 +132,7 @@ TEST(StdlibImpl, free)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl free");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto size = 1;
     std::uint16_t* ptr = static_cast<std::uint16_t*>(::calloc(size, sizeof(uint16_t)));
@@ -147,7 +147,7 @@ TEST(StdlibImpl, mkstemp)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl mkstemp");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     char path[] = "/tmp/fileXXXXXX";
     auto fd = score::os::Stdlib::instance().mkstemp(path);
@@ -161,7 +161,7 @@ TEST(StdlibImpl, mkstempFail)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl mkstemp Fail");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     char path[] = "/tmp/fileXXXX";
     auto fd = score::os::Stdlib::instance().mkstemp(path);
@@ -174,7 +174,7 @@ TEST(StdlibImpl, mkstemps)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl mkstemps");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     char path[] = "/tmp/fileXXXXXXsuffix";
     auto fd = score::os::Stdlib::instance().mkstemps(path, 6);
@@ -188,7 +188,7 @@ TEST(StdlibImpl, mkstempsFail)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibImpl mkstemps Fail");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     char path[] = "/tmp/fileXXXXXX";
     auto fd = score::os::Stdlib::instance().mkstemps(path, 6);
@@ -201,7 +201,7 @@ TEST(StdlibTest, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StdlibTest PMRDefault Shall Return Impl Instance");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Stdlib::Default(memory_resource);

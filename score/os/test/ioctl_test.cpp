@@ -33,7 +33,7 @@ TEST(IoctlTest, ReadNumberOfCharactorsWaitingToBeRead)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "The operating system shall support ioctl");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto sockfd = socket(AF_INET, SOCK_STREAM, 0);
     ASSERT_NE(sockfd, -1) << "Error creating socket: " << errno;
@@ -54,7 +54,7 @@ TEST(IoctlTest, InvalidFd)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "The operating system shall support ioctl for invalid file descriptor");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto invalid_fd = -1;
     std::int32_t number_of_char{};
@@ -78,7 +78,7 @@ TEST_F(IoctlMockTest, NoAdditionalArgument)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "The operating system shall support ioctl");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_CALL(ioctlmock, ioctl(1, 2, An<void*>()));
     score::os::Ioctl::instance().ioctl(1, 2, nullptr);
@@ -90,7 +90,7 @@ TEST_F(IoctlMockTest, Integer)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "The operating system shall support ioctl");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto value{0};
     EXPECT_CALL(ioctlmock, ioctl(1, 2, &value));
@@ -103,7 +103,7 @@ TEST_F(IoctlMockTest, Pointer)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "The operating system shall support ioctl");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_CALL(ioctlmock, ioctl(1, 2, An<void*>()))
         .WillOnce(DoAll(Invoke([](std::int32_t, std::int32_t, void* arg) {

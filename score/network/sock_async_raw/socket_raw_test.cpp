@@ -67,7 +67,7 @@ TEST_F(SocketRAWTest, CreationSuccess)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of RAW async socket is successful");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     factory = new SocketFactory();
     std::shared_ptr<SocketAsync> socket_raw = factory->CreateSocket(SockType::RAW, Endpoint{}, 1);
@@ -81,7 +81,7 @@ TEST_F(SocketRAWTest, CreationFailed)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of RAW async socket fails");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _))
         .Times(Exactly(1))
         .WillOnce(Return(score::cpp::make_unexpected(Error::createFromErrno(93))));
@@ -98,7 +98,7 @@ TEST_F(SocketRAWTest, ConnectFailed)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that connection on RAW async socket fails");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     factory = new SocketFactory();
     std::shared_ptr<SocketAsync> socket_async = factory->CreateSocket(SockType::RAW, Endpoint{});
