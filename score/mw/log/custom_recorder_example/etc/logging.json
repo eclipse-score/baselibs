@@ -1,0 +1,9 @@
+{
+    "appId": "TEST",
+    "appDesc": "test custom recorder",
+    "logMode": "kCustom",
+    "logLevel": "kVerbose",
+    "numberOfSlots": 10000,
+    "slotSizeBytes": 1500,
+    "ringBufferSize": 100097152
+}

@@ -11,24 +11,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
 cc_library(
-    name = "my_custom_type_mw_log",
-    testonly = True,
+    name = "custom_recorder_example",
     srcs = [
-        "my_custom_type_mw_log.cpp",
+        "custom_recorder_factory_impl.cpp",
+        "custom_recorder_impl.cpp",
     ],
     hdrs = [
-        "my_custom_type.h",
-        "my_custom_type_mw_log.h",
+        "custom_recorder.h",
+        "custom_recorder_factory_impl.h",
+        "custom_recorder_impl.h",
     ],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "//platform/aas/test/pas/logging/utils:__pkg__",
-        "@score_baselibs//score/mw/log:__subpackages__",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/mw/log:recorder",
+        "@score_baselibs//score/mw/log/detail:log_recorder_factory",
+    ],
+)
+
+cc_binary(
+    name = "test",
+    srcs = [
+        "main.cpp",
     ],
     deps = [
-        "@score_baselibs//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log",
     ],
 )

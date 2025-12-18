@@ -166,13 +166,13 @@ cc_test(
         ":file_output_backend",
         ":file_output_backend_mocks",
         ":text_recorder",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/detail:backend_mock",
+        "@score_baselibs//score/mw/log/detail:circular_allocator",
+        "@score_baselibs//score/mw/log/test/console_logging_environment",
         "@score_baselibs//score/os/mocklib:fcntl_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/os/utils/mocklib:path_mock",
-        "@score_baselibs//score/mw/log/detail:backend_mock",
-        "@score_baselibs//score/mw/log/detail:circular_allocator",
-        #"@score_baselibs//score/mw/log/test/console_logging_environment",
-        "@googletest//:gtest_main",
     ],
 )
 
@@ -211,8 +211,8 @@ cc_test(
     tags = ["unit"],
     deps = [
         ":non_blocking_writer",
-        "@score_baselibs//score/os/mocklib:unistd_mock",
-        #"@score_baselibs//score/mw/log/test/console_logging_environment",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/test/console_logging_environment",
+        "@score_baselibs//score/os/mocklib:unistd_mock",
     ],
 )

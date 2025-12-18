@@ -167,12 +167,12 @@ cc_test(
         ":configuration_file_discoverer_mock",
         ":configuration_parser",
         ":target_config_reader_mock",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/test/console_logging_environment",
         "@score_baselibs//score/os/mocklib:fcntl_mock",
         "@score_baselibs//score/os/mocklib:stdlib_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/os/utils/mocklib:path_mock",
-        #"@score_baselibs//score/mw/log/test/console_logging_environment",
-        "@googletest//:gtest_main",
     ],
 )
 

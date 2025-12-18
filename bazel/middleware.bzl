@@ -11,8 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("//platform/aas/bazel/generators:aragen_tree.bzl", "cc_mw_com_library", "mw_artifacts")
-load("//platform/aas/bazel/generators:franca2arxml.bzl", "franca2arxml_converter")
+load("@safe_posix_platform//platform/aas/bazel/generators:aragen_tree.bzl", "cc_mw_com_library", "mw_artifacts")
+load("@safe_posix_platform//platform/aas/bazel/generators:franca2arxml.bzl", "franca2arxml_converter")
 
 def cc_middleware_com_frontend(
         name,
@@ -37,7 +37,7 @@ def cc_middleware_com_frontend(
         name = "{}_mw_artifacts".format(name),
         arxmls = [
             ":{}_arxml".format(name),
-            "//platform/aas/meta/datatypes:stdtypes",
+            "@safe_posix_platform//platform/aas/meta/datatypes:stdtypes",
         ],
         target_compatible_with = target_compatible_with,
     )

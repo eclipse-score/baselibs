@@ -1,0 +1,69 @@
+@startuml
+title Remote Logging High-level Overview
+
+frame "ECU" {
+  node FeatureApplication <<ASIL B>> {
+    component ApplicationLogic
+    component "mw::log lib" as lt1 {
+      component "/dev/shmem/fa_*" as shmem_fa <<memory,shared>>
+    }
+
+    ApplicationLogic --> lt1 : verbose <<mw::log API>>
+    ApplicationLogic --> lt1 : non-verbose <<TRACE API>>
+  }
+
+  node SystemApplication <<ASIL B>> {
+    component SystemApplicationLogic
+    component "mw::log lib" as lt2 {
+      component "/dev/shmem/sa_*" as shmem_sa <<memory,shared>>
+    }
+
+    SystemApplicationLogic --> lt2 : verbose <<mw::log API>>
+  }
+  note top of SystemApplication
+    E.g.: StartupManager, etc.
+  end note
+
+
+  node Datarouter <<ASIL QM>> {
+  }
+  note left of Datarouter
+    Central logging daemon
+  end note
+
+  package "Operating System" {
+    node NetworkStack <<ASIL QM>> {
+
+    }
+  }
+
+  node Subscriber1 {
+
+  }
+
+  note left of Subscriber1
+    Data consumer,
+    e.g., PersistentLogger, etc.
+  end note
+
+}
+
+lt1 ..> shmem_fa : write
+lt2 ..> shmem_sa : write
+
+shmem_fa <.. Datarouter : read
+shmem_sa <.. Datarouter : read
+
+Datarouter <-0)-> Subscriber1
+
+note as n1
+  publish/subscribe
+  interface
+end note
+n1 .. Datarouter
+n1 .. Subscriber1
+
+Datarouter -(0-> [NetworkStack]: socket
+[NetworkStack] -r-> Multicast: sends multicast
+
+@enduml

@@ -1,0 +1,2 @@
+type App1_t;
+allow App1_t self:ability {};

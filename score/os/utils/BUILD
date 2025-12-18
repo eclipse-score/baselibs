@@ -62,7 +62,13 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//platform/aas/mw/lifecycle:__subpackages__",
+        "//platform/aas/pas/crash_reporter:__subpackages__",
+        "//platform/aas/pas/logging:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
+    ],
     deps = [
         ":signal_headers",
         "@score_baselibs//score/language/futurecpp",
@@ -102,7 +108,18 @@ cc_library(
     deprecation = "Deprecated, please use //platform/aas/mw/time/HighPrecisionLocalSteadyClock instead",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//platform/aas/pas/logging:__pkg__",
+        "//platform/aas/sysfunc/SafeCarTime/code/apps/TimeSyncValidationNonFFI/factory/impl:__pkg__",
+        "//platform/aas/sysfunc/SafeCarTime/code/factory/impl:__pkg__",
+        "//platform/aas/test/pas/perf_tests/tools/perf_apps:__pkg__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/details/trace_job_allocator:__pkg__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/test/unit_test:__pkg__",
+        "@score_baselibs//score/analysis/tracing/plugin/ipc_trace_plugin/ipc_trace/utils:__pkg__",
+        "@score_baselibs//score/mw/log/detail:__subpackages__",
+        "@score_baselibs//score/os/utils:__pkg__",
+        "@score_baselibs//score/os/utils/test:__pkg__",
+    ],
 )
 
 cc_library(
@@ -134,7 +151,14 @@ cc_library(
     }),
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//platform/aas/abac/abac/core/DataLogistic:__subpackages__",
+        "//platform/aas/mw/storage:__subpackages__",
+        "//platform/aas/pas/logging:__subpackages__",
+        "//platform/aas/sec/secured:__subpackages__",
+        "@score_baselibs//score/mw/log:__subpackages__",
+        "@score_baselibs//score/os:__subpackages__",
+    ],
     deps = [
         ":path_header",
         "@score_baselibs//score/language/futurecpp",
