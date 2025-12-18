@@ -52,7 +52,7 @@ TEST_F(NeutrinoMockTest, TimerTimeoutRawSigevent)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigevent raw_signal_event;
@@ -65,7 +65,7 @@ TEST_F(NeutrinoMockTest, TimerTimeout)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::unique_ptr<score::os::SigEvent> signal_event{std::make_unique<score::os::SigEventQnxImpl>()};
@@ -80,7 +80,7 @@ TEST_F(NeutrinoMockTest, ClockAdjust)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Adjust");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     _clockadjust adjustment{0, 0};
@@ -94,7 +94,7 @@ TEST_F(NeutrinoMockTest, ThreadCtl)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Thread Ctl");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t cmd = _NTO_TCTL_IO;
@@ -108,7 +108,7 @@ TEST_F(NeutrinoMockTest, InterruptWait_r)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Interrupt Wait R");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t flags = 0;
@@ -122,7 +122,7 @@ TEST_F(NeutrinoMockTest, InterruptAttachEvent)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Interrupt Attach Event");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t intr = _NTO_INTR_CLASS_EXTERNAL;
@@ -137,7 +137,7 @@ TEST_F(NeutrinoMockTest, InterruptDetach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Interrupt Detach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t id = 0;
@@ -151,7 +151,7 @@ TEST_F(NeutrinoMockTest, InterruptUnmask)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Interrupt Unmask");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t intr = _NTO_INTR_CLASS_EXTERNAL;
@@ -166,7 +166,7 @@ TEST_F(NeutrinoMockTest, ChannelCreate)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Create");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto flags{Neutrino::ChannelFlag::kConnectionIdDisconnect};
@@ -180,7 +180,7 @@ TEST_F(NeutrinoMockTest, ChannelDestroy)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Destroy");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
     const auto dummy_channel_id = 0;
     EXPECT_CALL(*neutrino_mock_ptr, ChannelDestroy(dummy_channel_id));

@@ -20,7 +20,7 @@ TEST(JsonTest, ReadWrite)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Create Json object with different attributes, write it to a buffer, then read it successfully.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     score::json::Object json{};

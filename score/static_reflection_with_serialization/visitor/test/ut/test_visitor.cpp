@@ -54,7 +54,7 @@ TEST(visitor, visitable_and_nonvisitable)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the visitability and the non-visitability.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     test_visitable_t v1;
     test_nonvisitable_t nv1;
@@ -135,7 +135,7 @@ TEST(visitor, namespaces)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability equality from different namespaces.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(ns1::test_visitor_t{}, ns1::test_visitable_t{}), 11);
@@ -176,7 +176,7 @@ TEST(visitor, overloads)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the int and float overloads for 'visit' API.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(test_visitor_t{}, 42.0), 42.0);
@@ -202,7 +202,7 @@ TEST(visitor, conversions)
     RecordProperty("ParentRequirement", "SCR-1633893");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the convertible argument passing to 'visit' API.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(test_visitor_derived_t{}, test_int_convertible_t{42}), 6 * 9);

@@ -26,7 +26,7 @@ TEST(MountTest, MountTestMountFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Mount Fail");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ::mkdir("/mnt/home", S_IRWXU | S_IRWXG | S_IRWXO);
@@ -41,7 +41,7 @@ TEST(MountTest, MountTestUmountFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Umount Fail");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* dir = "/mnt/home";
@@ -54,7 +54,7 @@ TEST(MountTest, MountTestConvertFlag)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Convert Flag");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ::mkdir("/mnt/home", S_IWUSR | S_IWGRP | S_IWOTH);

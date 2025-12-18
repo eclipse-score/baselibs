@@ -76,7 +76,7 @@ TEST_F(GlobImplTest, MatchExistingFiles)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Match Existing Files");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = glob_instance_->Match("testfile*.txt", Glob::Flag::kNoSort);
@@ -92,7 +92,7 @@ TEST_F(GlobImplTest, MatchTerminatesOnErrorWithGlobErrFlag)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Match Terminates On Error With Glob Err Flag");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = glob_instance_->Match("restricted_dir/*", Glob::Flag::kErr);
@@ -105,7 +105,7 @@ TEST_F(GlobImplTest, MatchCombiningAppendAndSortFlags)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Match Combining Append And Sort Flags");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto first_result = glob_instance_->Match("*.txt", Glob::Flag::kNoSort);
@@ -126,7 +126,7 @@ TEST_F(GlobImplTest, MatchNoMatchFound)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Match No Match Found");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = glob_instance_->Match("nonexistentfilepattern.*", Glob::Flag::kNoSort);
@@ -139,7 +139,7 @@ TEST_F(GlobImplTest, MoveAssignmentFreesCurrentData)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Move Assignment Frees Current Data");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     GlobImpl glob1{};
@@ -177,7 +177,7 @@ TEST_F(GlobImplTest, MoveAssignmentToNewInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Move Assignment To New Instance");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     GlobImpl glob1{};
@@ -210,7 +210,7 @@ TEST_F(GlobImplTest, MoveConstructor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Move Constructor");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     GlobImpl glob1{};
@@ -250,7 +250,7 @@ TEST_F(GlobImplTest, DefaultWithMemoryResource)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GlobImplTest Default With Memory Resource");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto glob = Glob::Default(score::cpp::pmr::get_default_resource());

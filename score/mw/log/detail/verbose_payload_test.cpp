@@ -45,7 +45,7 @@ TEST_F(VerbosePayloadFixture, SinglePutStoresMemoryCorrect)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function stores data in correct order in the payload (buffer) if called once.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty verbose payload with enough space
@@ -70,7 +70,7 @@ TEST_F(VerbosePayloadFixture, MultiplePutStoresMemoryCorrectly)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Put function stores data in correct order in the payload (buffer) if called multiple times.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an already filled buffer with enough space
@@ -97,7 +97,7 @@ TEST_F(VerbosePayloadFixture, PutZeroSize)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function handles zero size data requests gracefully");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an already filled buffer with enough space
@@ -113,7 +113,7 @@ TEST_F(VerbosePayloadFixture, PutStopsAtMaximumSize)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Put function continues to fill data to maximum size and any additional data will not be filled.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty verbose payload with to few space
@@ -135,7 +135,7 @@ TEST_F(VerbosePayloadFixtureDeathTest, AssertForInvalidPointerKicksIn)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Put function will exit with failure in case of invalid data pointer.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty buffer
@@ -152,7 +152,7 @@ TEST_F(VerbosePayloadFixture, EmptyBufferHasNoWrongBehavior)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Put function will not fill any data in case of empty buffer and will return successfully.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty verbose payload with no space
@@ -171,7 +171,7 @@ TEST_F(VerbosePayloadFixture, SizeFitsInPayload)
     RecordProperty("Requirement", "SCR-861534, SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies size fits in payload.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty verbose payload with enough space
@@ -187,7 +187,7 @@ TEST_F(VerbosePayloadFixture, SizeFitsNotInPayload)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies size does not fit in payload.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given an empty verbose payload with enough space
@@ -206,7 +206,7 @@ TEST_F(VerbosePayloadFixture, SetBufferShallRebindReference)
         "Description",
         "Verifies setting new buffer for VerbosePayload will update the pointer to the new buffer and discards "
         "the old one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // Given VerbosePayload is constructed with a different buffer.

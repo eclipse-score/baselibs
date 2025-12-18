@@ -33,7 +33,7 @@ TEST(vistor_type_traits, is_vector_serializable)
         "Description",
         "Logging library shall provide an annotation mechanism for data structures to support automatic "
         "serialization/deserialization, So, we are checking some data types to be treated for vector serialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     using test::clearable_container;
@@ -58,7 +58,7 @@ TEST(vistor_type_traits, is_not_vector_serializable)
                    "Logging library shall provide an annotation mechanism for data structures to support automatic "
                    "serialization/deserialization. So, we are checking those some data types shouldn't be treated as "
                    "vector serialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     using test::unserializable_container;

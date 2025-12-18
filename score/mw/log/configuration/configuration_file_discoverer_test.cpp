@@ -132,7 +132,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfiguratio
     RecordProperty("Requirement", "SCR-1634075");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall find the global configuration file.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -151,7 +151,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty(
         "Description",
         "Verifies that the discoverer shall find the application specific configuration file under <cwd>/etc.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -172,7 +172,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under <cwd>.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -193,7 +193,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty(
         "Description",
         "Verifies that the discoverer shall find the application specific configuration file under the binary path.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -216,7 +216,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -237,7 +237,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The <cwd>/etc. path should be ignored");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -259,7 +259,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The <cwd> path should be ignored");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -281,7 +281,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The binary path should be ignored");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When ...
@@ -301,7 +301,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfNothingEx
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall return an empty list if no config file exists.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When no file exists then ...
@@ -314,7 +314,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfExecPathF
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall return an empty list if an error occurs.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When...

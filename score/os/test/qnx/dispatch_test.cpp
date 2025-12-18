@@ -73,7 +73,7 @@ TEST_F(DispatchMockTest, name_attach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Attach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, name_attach);
@@ -85,7 +85,7 @@ TEST_F(DispatchMockTest, name_detach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Detach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, name_detach);
@@ -97,7 +97,7 @@ TEST_F(DispatchMockTest, name_open)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Open");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, name_open);
@@ -109,7 +109,7 @@ TEST_F(DispatchMockTest, name_close)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Close");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, name_close);
@@ -121,7 +121,7 @@ TEST_F(DispatchMockTest, dispatch_create)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Create");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_create);
@@ -133,7 +133,7 @@ TEST_F(DispatchMockTest, dispatch_create_channel)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Create Channel");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_create_channel);
@@ -145,7 +145,7 @@ TEST_F(DispatchMockTest, dispatch_destroy)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Destroy");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_destroy);
@@ -157,7 +157,7 @@ TEST_F(DispatchMockTest, dispatch_context_alloc)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Context Alloc");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_context_alloc);
@@ -169,7 +169,7 @@ TEST_F(DispatchMockTest, dispatch_context_free)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Context Free");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_context_free);
@@ -181,7 +181,7 @@ TEST_F(DispatchMockTest, dispatch_block)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Block");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_block);
@@ -193,7 +193,7 @@ TEST_F(DispatchMockTest, dispatch_unblock)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Unblock");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_unblock);
@@ -205,7 +205,7 @@ TEST_F(DispatchMockTest, dispatch_handler)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Handler");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, dispatch_handler);
@@ -217,7 +217,7 @@ TEST_F(DispatchMockTest, resmgr_attach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Attach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, resmgr_attach);
@@ -230,7 +230,7 @@ TEST_F(DispatchMockTest, resmgr_detach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Detach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, resmgr_detach);
@@ -242,7 +242,7 @@ TEST_F(DispatchMockTest, resmgr_msgget)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Msgget");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, resmgr_msgget);
@@ -254,7 +254,7 @@ TEST_F(DispatchMockTest, message_connect)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Connect");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(dispatchmock, message_connect);
@@ -266,7 +266,7 @@ TEST_F(DispatchMockTest, message_attach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Attach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t (*const noHandler)(
@@ -283,7 +283,7 @@ TEST(DispatchTest, name_attach_to_invalid_path_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Attach To Invalid Path Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -296,7 +296,7 @@ TEST(DispatchTest, name_detach_from_invalid_id_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Detach From Invalid Id Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -313,7 +313,7 @@ TEST(DispatchTest, name_open_invalid_path_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Open Invalid Path Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -326,7 +326,7 @@ TEST(DispatchTest, name_close_invalid_id_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Close Invalid Id Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -339,7 +339,7 @@ TEST(DispatchTest, dispatch_handler_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Handler Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -354,7 +354,7 @@ TEST(DispatchTest, CheckServerHappyFlow)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Server Happy Flow");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -621,7 +621,7 @@ TEST_F(DispatchResourceManagerTest, CheckResourceManagerHappyFlow)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Resource Manager Happy Flow");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& dispatch = score::os::Dispatch::instance();
@@ -907,7 +907,7 @@ TEST_F(DispatchClientTest, DispatchClientHappyFlow)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Client Happy Flow");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     // prepare the client setup
@@ -938,7 +938,7 @@ TEST(DispatchTestFinal, resmgr_attach_without_privileges_fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Attach Without Privileges Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto dpp = score::os::Dispatch::instance().dispatch_create();
@@ -958,7 +958,7 @@ TEST(DispatchCreateInstance, PMRDefaultShallReturnImplInstance)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();

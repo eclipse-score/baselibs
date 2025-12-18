@@ -104,7 +104,7 @@ TEST_F(ThreadNameTest, SetNameFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadNameTest Set Name Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const size_t name_length = 200U;
@@ -127,7 +127,7 @@ TEST(ThreadAffinityTest, SetAffinitySucceeds)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadAffinityTest Set Affinity Succeeds");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_TRUE(set_thread_affinity(0));

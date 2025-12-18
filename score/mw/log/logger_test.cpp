@@ -61,7 +61,7 @@ TEST_F(LoggerFixture, CanLogVerboseWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging verbose message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -77,7 +77,7 @@ TEST_F(LoggerFixture, CanLogDebugWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging debug message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -93,7 +93,7 @@ TEST_F(LoggerFixture, CanLogInfoWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging info message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -109,7 +109,7 @@ TEST_F(LoggerFixture, CanLogWarnWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging warning message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -125,7 +125,7 @@ TEST_F(LoggerFixture, CanLogErrorWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging error message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -141,7 +141,7 @@ TEST_F(LoggerFixture, CanLogFatalWithContext)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging fatal message.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -157,7 +157,7 @@ TEST_F(LoggerFixture, CheckThatWithLevelSetsCorrectLogLevel)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging warn message using WithLevel API.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -173,7 +173,7 @@ TEST_F(BasicLoggerFixture, CheckThatIsLogEnabledReturnsCorrectValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify that IsLogEnabled API is returning the correct log level.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::Logger");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -189,7 +189,7 @@ TEST(CreateLoggerGetContext, CreateLoggerWithNeededContext)
     RecordProperty("ParentRequirement", "SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that GetContext shall return the right context.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     Logger unit = CreateLogger(CONTEXT);
     EXPECT_EQ(unit.GetContext(), CONTEXT);
@@ -201,7 +201,7 @@ TEST(CreateLoggerGetContext, WhenCreateLoggerWIthEmptyContextShallReturnDefaultL
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Verifies that creating a logger with empty context it shall return the default logger.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     Logger unit = CreateLogger(std::string_view{});
     EXPECT_EQ(unit.GetContext(), kDefaultContext);
@@ -214,7 +214,7 @@ TEST(CreateLoggerGetContext, CreateLoggerPassingTwoArgs)
     RecordProperty("Description",
                    "Verifies that GetContext shall return the right context when instantiating the CreateLogger with "
                    "two arguments.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     Logger unit = CreateLogger(CONTEXT, CONTEXT_DESCRIPTION);
     EXPECT_EQ(unit.GetContext(), CONTEXT);

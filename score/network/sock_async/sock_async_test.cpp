@@ -98,7 +98,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZero)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read operation is successful");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmsg(_, _, _))
@@ -153,7 +153,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroRaw)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read operation is successful on RAW socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmsg(_, _, _))
@@ -208,7 +208,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroTCP)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read operation is successful on TCP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmsg(_, _, _))
@@ -263,7 +263,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroDefaultSocket)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read operation is successful on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmsg(_, _, _))
@@ -319,7 +319,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroMMsg)
     RecordProperty("Priority", "3");
     RecordProperty("Description",
                    "Verifies that async read of multiple messages operation is successful on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmmsg(_, _, _, _, _))
@@ -380,7 +380,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroMMsgWithEndPoint)
     RecordProperty("Description",
                    "Verifies that async read of multiple messages operation is successful on UDP socket type "
                    "when endpoint is provided");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sock_mock_, recvmmsg(_, _, _, _, _))
@@ -443,7 +443,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataEqualZero)
     RecordProperty("Description",
                    "Verifies that async read of multiple messages operation is successful on UDP socket type "
                    "empty data is provided ");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -478,7 +478,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroReadFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read will fail on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([this](struct pollfd* in_pollfd, nfds_t, int) {
@@ -533,7 +533,7 @@ TEST_F(SocketAsyncTest, ReadAsyncWithDataGreaterThanZeroWithEndpoint)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async read will succeed on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([this](struct pollfd* in_pollfd, nfds_t, int) {
@@ -590,7 +590,7 @@ TEST_F(SocketAsyncTest, WriteAsyncBytes)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write will succeed on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -632,7 +632,7 @@ TEST_F(SocketAsyncTest, WriteAsyncBytesRaw)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write will succeed on RAW socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -674,7 +674,7 @@ TEST_F(SocketAsyncTest, WriteAsyncBytesTCP)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write will succeed on TCP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -716,7 +716,7 @@ TEST_F(SocketAsyncTest, WriteAsyncBytesWithEndPoint)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write will succeed on UDP socket type with endpoint");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -760,7 +760,7 @@ TEST_F(SocketAsyncTest, WriteAsyncWithDataGreaterThanZeroWriteFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write will fail on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -802,7 +802,7 @@ TEST_F(SocketAsyncTest, WriteAsyncBytesNoData)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that async write with empty data on UDP socket type");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(SOCKET_ID));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {

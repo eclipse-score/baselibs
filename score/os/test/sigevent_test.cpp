@@ -34,7 +34,7 @@ TEST_F(SigEventTest, SetNotificationType)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set notification types");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto none_notification = signal_event_->SetNotificationType(SigEvent::NotificationType::kNone);
@@ -65,7 +65,7 @@ TEST_F(SigEventTest, SetSignalNumber)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set signal number");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;
@@ -92,7 +92,7 @@ TEST_F(SigEventTest, SetSignalEventValue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set signal event value");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;
@@ -132,7 +132,7 @@ TEST_F(SigEventTest, SetThreadCallback)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set thread callback");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;
@@ -166,7 +166,7 @@ TEST_F(SigEventTest, SetThreadAttributes)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set thread attributes");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;
@@ -193,7 +193,7 @@ TEST_F(SigEventTest, Reset)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest reset sigevent");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = signal_event_->SetNotificationType(SigEvent::NotificationType::kThread);
@@ -224,7 +224,7 @@ TEST_F(SigEventTest, ModifySigevent)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest modify sigevent positive and negative scenarios");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     constexpr std::int32_t kTestSignalValue = 42;
@@ -246,7 +246,7 @@ TEST_F(SigEventTest, Getter)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest getter sigevent");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto&& const_ref = signal_event_->GetSigevent();
@@ -259,7 +259,7 @@ TEST_F(SigEventTest, DefaultError)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest default error sigevent");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;

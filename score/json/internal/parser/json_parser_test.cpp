@@ -53,7 +53,7 @@ TEST(JsonParserTest, FromBuffer)
     RecordProperty("Verifies", "::score::json::JsonParser::FromBuffer");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Parsing json object using FromBuffer(), cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -70,7 +70,7 @@ TEST(JsonParserTest, ViaLiteral)
     RecordProperty("Description",
                    "Parsing json object using "
                    "_json operator, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -83,7 +83,7 @@ TEST(JsonParserTest, ViaErrorLiteral)
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Parsing invalid json object using _json operator, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     RecordProperty("Priority", "3");
 
@@ -95,7 +95,7 @@ TEST(JsonParserTest, FromFileSuceess)
     RecordProperty("Verifies", "::score::json::JsonParser::FromFile");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Parsing json object from file path, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -118,7 +118,7 @@ TEST(JsonParserTest, FromFileParseError)
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Parsing invalid json object from file path causes failure, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     RecordProperty("Priority", "3");
 

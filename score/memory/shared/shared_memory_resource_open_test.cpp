@@ -45,7 +45,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryReadOnlyByDefault)
     RecordProperty(
         "Description",
         "Can open shared memory segment read-only. Only opens shared memory segment provided in constructor.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -65,7 +65,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningSharedMemoryFreesResourcesOnDestruct
 {
     RecordProperty("Verifies", "SCR-6367126");
     RecordProperty("Description", "SharedMemoryResource shall free resources only on destruction.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -114,7 +114,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryWillWaitUntilLockFileIsGon
 {
     RecordProperty("Verifies", "SCR-5899175");
     RecordProperty("Description", "Can open shared memory segment read-only after a lock was created");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -171,7 +171,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryReadWrite)
     RecordProperty(
         "Description",
         "Can open shared memory segment read-write. Only opens shared memory segment provided in constructor.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -192,7 +192,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceThatDoesNotExistWillReturnEr
     RecordProperty("Verifies", "SCR-32158471");
     RecordProperty("Description",
                    "Checks that Open will return an error when the underlying resource cannot be found.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -220,7 +220,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceWithoutTheRequiredACLsWillRe
     RecordProperty("Description",
                    "Checks that Open will return an error when the process doesn't have the correct permissions to "
                    "open the underlying resource.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

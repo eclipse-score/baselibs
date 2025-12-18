@@ -97,7 +97,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValues)
     RecordProperty("Requirement", "SCR-1633147");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Logging libraries use static configuration based on .json files.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     auto result = NvConfigFactory::CreateAndInit(JSON_PATH());
     ASSERT_TRUE(result.has_value());  // Verify config was created successfully
@@ -128,7 +128,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValuesWithOtherFile)
     RecordProperty("Requirement", "SCR-1633147");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Logging libraries use static configuration based on .json files.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(JSON_PATH_2());
@@ -164,7 +164,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenEmptyFile)
     RecordProperty("Requirement", "SCR-1633147, SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing a general empty file.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(EMPTY_FILE());
@@ -177,7 +177,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenPathToNonExistentFile)
     RecordProperty("Requirement", "SCR-1633147, SCR-7263537");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ara::log shall discard configuration files that are not found.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(WRONG_JSON_PATH());
@@ -190,7 +190,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsOkWhenGivenEmptyJsonFile)
     RecordProperty("Requirement", "SCR-1633147, SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of parsing an empty JSON file.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(EMPTY_JSON());
@@ -203,7 +203,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfEmptyObject)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Verifies the inability of parsing JSON file that has array instead of JSON object as a root node.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(EMPTY_JSON_OBJECT());
@@ -216,7 +216,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfThereIsSomethingElseInstedOf
     RecordProperty("Requirement", "SCR-1633147, SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing a JSON file that does not have object as value.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(ERROR_PARSE_1_PATH());
@@ -231,7 +231,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfCtxidValuePairDoesntExists
     RecordProperty(
         "Description",
         "Verifies the inability of parsing JSON file that misses ctxid key-value pair for one of the objects.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_1_PATH());
@@ -246,7 +246,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfAppidValuePairDoesntExists
     RecordProperty(
         "Description",
         "Verifies the inability of parsing JSON file that misses appid key-value pair for one of the objects.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_2_PATH());
@@ -260,7 +260,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfIdValuePairDoesntExistsFor
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Verifies the inability of parsing JSON file that misses id key-value pair for one of the objects.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_3_PATH());
@@ -273,7 +273,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorIfIdDataTypeIsWrong)
     RecordProperty("Requirement", "SCR-1633147, SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing JSON file that has wrong id value.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto result = NvConfigFactory::CreateAndInit(ERROR_CONTENT_WRONG_ID_VALUE());

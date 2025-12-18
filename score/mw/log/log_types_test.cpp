@@ -35,7 +35,7 @@ TEST(LogStringTest, ConstructFromCharArray)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the detection of null-/non-null-terminated char array");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     // When constructing our LogString type from an empty char[] literal
@@ -85,7 +85,7 @@ TEST(LogStringTest, CanImplicitlyConvertFromStringLikeTypes)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating our LogString type view from string-like types");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     constexpr auto kExpected = "MyString";
@@ -129,7 +129,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromInteger)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from integer");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t value{15};
@@ -147,7 +147,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromIntegerStdArray)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from array of integers.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::array<std::int32_t, 2> values{15, 16};
@@ -165,7 +165,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromSpan)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from score::cpp::span.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t values[]{15, 16};
@@ -184,7 +184,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromVector)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from vector of integers");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::vector<std::int32_t> values{15, 16};

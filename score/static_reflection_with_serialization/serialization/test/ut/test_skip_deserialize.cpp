@@ -71,7 +71,7 @@ TEST(serializer_visitor, skip_deserialize)
     RecordProperty("Description",
                    "Logging library shall provide an annotation mechanism for data structures to support automatic "
                    "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     // S has an "added" std::vector member compared to S3;, it should be detected as incompatible
     EXPECT_FALSE((::score::common::visitor::is_payload_compatible<test::S3s, test::S>()));
@@ -105,7 +105,7 @@ TEST(serializer_visitor, skip_deserialize_test_overflow)
     RecordProperty("ParentRequirement", "SCR-1633893, SCR-861550");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Skip deserialization in case the data to be serialized is bigger than the buffer.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     std::array<char, 4> buffer;

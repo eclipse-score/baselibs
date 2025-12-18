@@ -87,7 +87,7 @@ TEST(Number, FromUint8ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint8 max value to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -109,7 +109,7 @@ TEST(Number, FromUint16ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint16 max value to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -131,7 +131,7 @@ TEST(Number, FromUint32ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint32 max value to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -153,7 +153,7 @@ TEST(Number, FromUint64ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of uint64 max value to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -232,7 +232,7 @@ TEST(Number, FromInt8ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int8 different values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -250,7 +250,7 @@ TEST(Number, FromInt16ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int16 different values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -268,7 +268,7 @@ TEST(Number, FromInt32ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int32 different values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -286,7 +286,7 @@ TEST(Number, FromInt64ToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of int64 different values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -602,7 +602,7 @@ TEST(Number, FromFloatToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of float values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -614,7 +614,7 @@ TEST(Number, FromDoubleToAnyOtherType)
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests conversion of double values to different data types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -632,7 +632,7 @@ TEST(Number, CheckEqualOperator)
     RecordProperty("Verifies", "::score::json::Number::operator==");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests the equal comparator of Number.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
     {

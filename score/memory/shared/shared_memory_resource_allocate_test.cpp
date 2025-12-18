@@ -45,7 +45,7 @@ TEST_F(SharedMemoryResourceAllocateTest, AssociatedMemoryResourceProxyForwardsCa
     RecordProperty("Description",
                    "The SharedMemoryResource shall return an associated proxy and allocate calls will allocate the "
                    "requested memory.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -76,7 +76,7 @@ TEST_F(SharedMemoryResourceAllocateTest, SharedMemoryResourceAllocatesAlignedMem
     RecordProperty(
         "Description",
         "SharedMemoryResource shall allocate memory in accordance to the alignment of that CPU architecture.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -112,7 +112,7 @@ TEST_F(SharedMemoryResourceAllocateTest,
     RecordProperty(
         "Description",
         "SharedMemoryResource shall allocate memory in accordance to the alignment of that CPU architecture.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -206,7 +206,7 @@ TEST_F(SharedMemoryResourceAllocateDeathTest, AllocatingBlockLargerThanAllocated
     RecordProperty("Verifies", "SCR-6240703");
     RecordProperty("Description",
                    "The process shall terminate when the SharedMemoryResource cannot allocate the requested memory.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

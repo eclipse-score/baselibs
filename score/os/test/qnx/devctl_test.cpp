@@ -45,7 +45,7 @@ TEST_F(DevctlTestMock, TestFunction_Devctl)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function Devctl");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::array<std::uint8_t, 3> dev_data{1, 2, 3};
@@ -75,7 +75,7 @@ TEST_F(DevctlTestMock, TestFunction_Devctlv)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function Devctlv");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::array<std::uint8_t, 3> vec_data_1{1, 2, 3};
@@ -124,7 +124,7 @@ TEST_F(DevctlTestQnx, TestDevctl_GetFlags_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Get Flags Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
@@ -148,7 +148,7 @@ TEST_F(DevctlTestQnx, TestDevctlv_GetFlags_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl:v Get Flags Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
@@ -180,7 +180,7 @@ TEST_F(DevctlTestQnx, TestDevctl_SetGetFlags_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Set Get Flags Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
@@ -208,7 +208,7 @@ TEST_F(DevctlTestQnx, TestDevctl_SetFlagsWrongFd_Fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Set Flags Wrong Fd Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t set_flags{O_APPEND | O_LARGEFILE};
@@ -221,7 +221,7 @@ TEST_F(DevctlTestQnx, TestDevctlv_SetFlagsWrongFd_Fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl:v Set Flags Wrong Fd Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto res_devctl = score::os::Devctl::instance().devctlv(-1, DCMD_ALL_SETFLAGS, 0, 0, nullptr, nullptr, nullptr);
@@ -233,7 +233,7 @@ TEST_F(DevctlTestQnx, TestDevctl_GetFlagsNullptr_Fails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Get Flags Nullptr Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};

@@ -28,7 +28,7 @@ TEST(StatvfsTest, StatvfsSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatvfsTest Statvfs Success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     char tmp_dir_template[] = "statvfs_test.XXXXXX";
@@ -59,7 +59,7 @@ TEST(StatvfsTest, StatvfsFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatvfsTest Statvfs Failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct statvfs buf;

@@ -79,7 +79,7 @@ TEST_F(SignalTest, handler_should_be_called)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest handler_should_be_called");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -97,7 +97,7 @@ TEST_F(SignalTest, is_not_a_member_works)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest is_not_a_member_works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -110,7 +110,7 @@ TEST_F(SignalTest, check_if_sig_set_is_empty_works)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest check_if_sig_set_is_empty_works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -127,7 +127,7 @@ TEST_F(SignalTest, get_current_blocked_signals)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest get_current_blocked_signals");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -143,7 +143,7 @@ TEST_F(SignalTest, is_signal_blocked)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest is_signal_blocked");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     block_signal(SIGUSR1);
@@ -157,7 +157,7 @@ TEST_F(SignalTest, pthread_sig_mask)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest pthread_sig_mask");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -185,7 +185,7 @@ TEST_F(SignalTest, send_self_sig_term)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest send_self_sig_term");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -203,7 +203,7 @@ TEST_F(SignalTest, sig_action)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest sig_action");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -232,7 +232,7 @@ TEST_F(SignalTest, kill)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest kill");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -249,7 +249,7 @@ TEST_F(SignalTest, sig_fill_set_works)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest sig_fill_set_works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -264,7 +264,7 @@ TEST_F(SignalTest, add_termination_signal_works)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest add_termination_signal_works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -278,7 +278,7 @@ TEST_F(SignalTest, isNotAMemberWorks)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest is Not AMember Works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -292,7 +292,7 @@ TEST_F(SignalTest, CheckIfSigSetIsEmptyWorks)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Check If Sig Set Is Empty Works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -313,7 +313,7 @@ TEST_F(SignalTest, GetCurrentBlockedSignals)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Get Current Blocked Signals");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     BlockSignal(SIGUSR1);
@@ -332,7 +332,7 @@ TEST_F(SignalTest, IsSignalBlocked)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Is Signal Blocked");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     BlockSignal(SIGUSR1);
@@ -349,7 +349,7 @@ TEST_F(SignalTest, PthreadSigMask)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Pthread Sig Mask");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -384,7 +384,7 @@ TEST_F(SignalTest, PthreadSigMaskReturnsOldSet)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Pthread Sig Mask Returns Old Set");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -421,7 +421,7 @@ TEST_F(SignalTest, SendSelfSigTerm)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Send Self Sig Term");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -439,7 +439,7 @@ TEST_F(SignalTest, SigAction)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Sig Action");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -470,7 +470,7 @@ TEST_F(SignalTest, Kill)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Kill");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     static bool triggered = false;
@@ -487,7 +487,7 @@ TEST_F(SignalTest, SigFillSetWorks)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Sig Fill Set Works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};
@@ -504,7 +504,7 @@ TEST_F(SignalTest, AddTerminationSignalWorks)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Add Termination Signal Works");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     sigset_t sigset{};

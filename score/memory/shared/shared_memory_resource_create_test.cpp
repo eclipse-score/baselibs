@@ -85,7 +85,7 @@ TEST_F(SharedMemoryResourceCreateTest, CreateSharedMemoryFreesResourcesOnDestruc
 {
     RecordProperty("Verifies", "SCR-6367126");
     RecordProperty("Description", "SharedMemoryResource shall free resources only on destruction.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -610,7 +610,7 @@ TEST_F(SharedMemoryResourceCreateDeathTest, UnableToTruncateSharedMemoryCausesTe
 {
     RecordProperty("Verifies", "SCR-6240638");
     RecordProperty("Description", "A process shall terminate, if the truncation of a shared memory segment fails.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

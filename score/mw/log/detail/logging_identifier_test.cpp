@@ -32,7 +32,7 @@ TEST(LoggingIdentifierTestSuite, CheckThatLongIdentifiersShallBeCropped)
     RecordProperty("ParentRequirement", "SCR-1633144, SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "logging identifier has maximum length in which the identifier will be cropped.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     LoggingIdentifier identifier{"12345"};
@@ -44,7 +44,7 @@ TEST(LoggingIdentifierTestSuite, CheckThatHashMatchesIntHasher)
     RecordProperty("ParentRequirement", "SCR-1633144, SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that hash matches int hasher.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     std::string_view ctx{"CTX1"};
@@ -59,7 +59,7 @@ TEST(LoggingIdentifierTestSuite, EqualityOperatorShallReturnTrueForTheSameString
     RecordProperty("ParentRequirement", "SCR-1633144, SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "logging identifiers with the same context name shall be equal.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     std::string_view ctx{"CTX1"};
@@ -73,7 +73,7 @@ TEST(LoggingIdentifierTestSuite, InequalityOperatorShallReturnTrueForDifferentSt
     RecordProperty("ParentRequirement", "SCR-1633144, SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "logging identifiers with the different context name shall not be equal.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     LoggingIdentifier lhs{std::string_view{"CTX1"}};
@@ -85,7 +85,7 @@ TEST(LoggingIdentifierTestSuite, AssignOperatorShallCopyLoggingIdentifier)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the assign operator functionality.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string_view ctx{"CTX1"};

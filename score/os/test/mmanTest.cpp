@@ -29,7 +29,7 @@ TEST(mmap, MapAndUnmap)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Map And Unmap");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     constexpr auto filename{"mmap_file"};
@@ -62,7 +62,7 @@ TEST(mmap, MapFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Map Failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     constexpr auto offset{0};
@@ -84,7 +84,7 @@ TEST(mmap, UnmapFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Unmap Failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     void* invalid_address = reinterpret_cast<void*>(0xDEADBEEF);
@@ -99,7 +99,7 @@ TEST(mmap, OpenAndCloseSharedMemory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Open And Close Shared Memory");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/test_mmap";
@@ -118,7 +118,7 @@ TEST(mmap, ShmOpenNonExistingFile)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Shm Open Non Existing File");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "";
@@ -134,7 +134,7 @@ TEST(mmap, UnlinkNonExistentSharedMemory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Unlink Non Existent Shared Memory");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto result = score::os::Mman::instance().shm_unlink("");
@@ -148,7 +148,7 @@ TEST(mmap, OpenInvalidTypedMemory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Open Invalid Typed Memory");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "";
@@ -167,7 +167,7 @@ TEST(mmap, GetInfoInvalidFD)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Get Info Invalid FD");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::int32_t invalid_fd = -1;
@@ -184,7 +184,7 @@ TEST(mmap, OpenTypedMemory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Open Typed Memory");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/memory";
@@ -208,7 +208,7 @@ TEST(mmap, InfoTypedMemory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Info Typed Memory");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* name = "/memory";
@@ -232,7 +232,7 @@ TEST(mmap, DefaultShallReturnImplInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mmap Default Shall Return Impl Instance");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto default_instance = score::os::Mman::Default();
@@ -245,7 +245,7 @@ TEST(MmanTest, PMRDefaultShallReturnImplInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MmanTest PMRDefault Shall Return Impl Instance");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();

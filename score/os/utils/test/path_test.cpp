@@ -30,7 +30,7 @@ TEST(get_base_name, man_page_examples)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_base_name man_page_examples");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_EQ(Path::instance().get_base_name("usr"), "usr");
@@ -50,7 +50,7 @@ TEST(get_exec_path, returns_non_empty)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_exec_path returns_non_empty");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const score::cpp::expected<std::string, score::os::Error> result{Path::Default()->get_exec_path()};
@@ -64,7 +64,7 @@ TEST(get_exec_path, returns_length_lessthan_zero)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_exec_path returns_length_lessthan_zero");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     UnistdMock mock_instance;
@@ -83,7 +83,7 @@ TEST(get_exec_path, returns_length_equalto_pathmax)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_exec_path returns_length_equalto_pathmax");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     UnistdMock mock_instance;
@@ -102,7 +102,7 @@ TEST(get_exec_path, returns_length_greaterthan_pathmax)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_exec_path returns_length_greaterthan_pathmax");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     UnistdMock mock_instance;
@@ -123,7 +123,7 @@ TEST(get_parent_dir, ManPageExamples)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "get_parent_dir Man Page Examples");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_EQ(Path::instance().get_parent_dir("/foo/bar"), "/foo");
@@ -140,7 +140,7 @@ TEST(PathTest, PMRDefaultShallReturnImplInstance)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PathTest PMRDefault Shall Return Impl Instance");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();

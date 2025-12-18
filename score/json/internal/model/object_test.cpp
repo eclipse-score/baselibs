@@ -67,7 +67,7 @@ TEST_F(AttributeGettersTest, GetBoolUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get bool attribute using Result<> input.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -82,7 +82,7 @@ TEST_F(AttributeGettersTest, GetBoolDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get bool attribute from direct Object reference.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -97,7 +97,7 @@ TEST_F(AttributeGettersTest, GetIntegerUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get signed/unsigned integer attribute using Result<> input.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -115,7 +115,7 @@ TEST_F(AttributeGettersTest, GetIntegerDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get signed/unsigned integer attribute from direct Object reference.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -133,7 +133,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get float attribute using Result<>; double retrieval is forbidden.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -151,7 +151,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get float attribute from direct value; double retrieval is forbidden.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -169,7 +169,7 @@ TEST_F(AttributeGettersTest, GetStringUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get string attribute using Result<> input.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -185,7 +185,7 @@ TEST_F(AttributeGettersTest, GetStringDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get string attribute from direct Object reference.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -201,7 +201,7 @@ TEST_F(AttributeGettersTest, GetListUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get list attribute using Result<> input.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -216,7 +216,7 @@ TEST_F(AttributeGettersTest, GetListDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get list attribute from direct Object reference.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -231,7 +231,7 @@ TEST_F(AttributeGettersTest, GetObjectUsingResult)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get nested object attribute using Result<> input.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -247,7 +247,7 @@ TEST_F(AttributeGettersTest, GetObjectDirectValue)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get nested object attribute from direct Object reference.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -263,7 +263,7 @@ TEST_F(AttributeGettersTest, CascadingAccessSuccessCase)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Traverse nested objects (widget/geometry/size/width) successfully.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -286,7 +286,7 @@ TEST_F(AttributeGettersTest, CascadingAccessErrorCase)
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Fail gracefully when traversing with invalid keys.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 

@@ -11,7 +11,7 @@ namespace test
 
 TEST(Base64Test, EncodeEmptyString)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {};
@@ -21,7 +21,7 @@ TEST(Base64Test, EncodeEmptyString)
 
 TEST(Base64Test, EncodeSingleByte)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'A'};
@@ -31,7 +31,7 @@ TEST(Base64Test, EncodeSingleByte)
 
 TEST(Base64Test, EncodeTwoBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'A', 'B'};
@@ -41,7 +41,7 @@ TEST(Base64Test, EncodeTwoBytes)
 
 TEST(Base64Test, EncodeMultipleBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'S', 'y', 's', 'f', 'c', 'n', 'U', 't', 'i', 'l', 's'};
@@ -51,7 +51,7 @@ TEST(Base64Test, EncodeMultipleBytes)
 
 TEST(Base64Test, DecodeEmptyString)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "";
@@ -61,7 +61,7 @@ TEST(Base64Test, DecodeEmptyString)
 
 TEST(Base64Test, DecodeSingleByte)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "QQ==";
@@ -71,7 +71,7 @@ TEST(Base64Test, DecodeSingleByte)
 
 TEST(Base64Test, DecodeTwoBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "QUI=";
@@ -81,7 +81,7 @@ TEST(Base64Test, DecodeTwoBytes)
 
 TEST(Base64Test, DecodeMultipleBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "Verification of control flow");
+    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");
     ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::vector<std::uint8_t> input(1000, 'A');

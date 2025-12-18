@@ -30,7 +30,7 @@ TEST(Error, CanMakeError)
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Use MakeError() to create Error instance.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -44,7 +44,7 @@ TEST(Error, CanMakeErrorWithUserMessage)
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Use MakeError() with error message to create Error instance.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -59,7 +59,7 @@ TEST(Error, CanGetMessageForWrongType)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from WrongType error.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -75,7 +75,7 @@ TEST(Error, CanGetMessageForKeyNotFound)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from KeyNotFound error.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -91,7 +91,7 @@ TEST(Error, CanGetMessageForParsingError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from ParsingError error.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -107,7 +107,7 @@ TEST(Error, CanGetMessageForInvalidFilePath)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from InvalidFilePath error.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -123,7 +123,7 @@ TEST(Error, CanGetMessageForUnknownError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from UnknownError.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
@@ -139,7 +139,7 @@ TEST(Error, CanGetMessageForUndefinedError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from UndefinedError.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 

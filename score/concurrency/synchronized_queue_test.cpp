@@ -42,7 +42,7 @@ using ::testing::Return;
 TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenMaxQueueLengthReached)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of boundary values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
@@ -76,7 +76,7 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenMaxQueueLengthReached)
 TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenQueueObjectDoesNotExist)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of boundary values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
@@ -106,7 +106,7 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenQueueObjectDoesNotExist)
 TEST(SynchronizedQueue, CallPopForEmptyQueue)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of boundary values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
@@ -134,7 +134,7 @@ TEST(SynchronizedQueue, CallPopForEmptyQueue)
 TEST(SynchronizedQueue, CallPushWhenPopIsWaitingForTimeout)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of boundary values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
@@ -275,7 +275,7 @@ TEST(SynchronizedQueue, MakeStressTestForPushingFromMultipleThreads)
     const std::size_t max_queue_length = num_threads * num_values_per_thread;
 
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of boundary values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",

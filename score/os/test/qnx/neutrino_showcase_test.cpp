@@ -258,7 +258,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageSend)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Send");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -336,7 +336,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageSend_1)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Send");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -483,7 +483,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageReply)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Reply");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -569,7 +569,7 @@ TEST_F(NeutrinoTest, TimerTimeoutOnMessageReceive)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout On Message Receive");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto create_server = CreateNamedServer();
@@ -598,7 +598,7 @@ TEST_F(NeutrinoTest, TimerTimeoutNeverCalledWrongFlag)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Never Called Wrong Flag");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -682,7 +682,7 @@ TEST_F(NeutrinoTest, TimerTimeoutNeverCalledChannelUnblockFlag)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Never Called Channel Unblock Flag");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -776,7 +776,7 @@ TEST_F(NeutrinoTest, TestServerPulseOnClientShutdown)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test Server Pulse On Client Shutdown");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -883,7 +883,7 @@ TEST_F(NeutrinoTest, TestSendErrorOnServerDeath)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test send Error On Server Death");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;
@@ -948,7 +948,7 @@ TEST_F(NeutrinoTest, TestClientPulseOnServerDeath)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test Client Pulse On Server Death");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::mutex client_server_sync_mutex;

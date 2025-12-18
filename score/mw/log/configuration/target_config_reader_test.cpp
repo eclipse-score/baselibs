@@ -155,7 +155,7 @@ TEST_F(TargetConfigReaderFixture, NoConfigFilesShallFail)
     RecordProperty("Requirement", "SCR-7263537, SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall return an error if no configuration files are found");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // For the case that no configuration files exist.
@@ -171,7 +171,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseEcuIdFromEcuConfig)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall parse the DLT ECU ID from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetEcuId(), kEcuConfigEcuId);
@@ -183,7 +183,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppIdFromAppConfig)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall parse the DLT Application ID from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kAppConfigAppId);
@@ -196,7 +196,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelFromAppConfig)
     RecordProperty(
         "Description",
         "TargetConfigReader shall parse the DLT Application log level from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetDefaultLogLevel(), kAppConfigLogLevel);
@@ -208,7 +208,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogModeFromAppConfig)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall parse the logging mode from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetLogMode(), kAppConfigLogMode);
@@ -220,7 +220,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppDescriptionFromAppCon
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall parse the application description from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetAppDescription(), kAppDescription);
@@ -233,7 +233,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseBufferOverwriteOnFullSta
     RecordProperty(
         "Description",
         "TargetConfigReader shall parse the overwrite ring buffer option from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_TRUE(GetReader().ReadConfig()->GetRingBufferOverwriteOnFull());
@@ -246,7 +246,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseStackBufferSizeFromEcuCo
     RecordProperty(
         "Description",
         "TargetConfigReader shall parse the stack buffer size in shared memory from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetStackBufferSize(), kEcuConfigStackBufferSize);
@@ -259,7 +259,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseRingBufferSizeFromEcuCon
     RecordProperty(
         "Description",
         "TargetConfigReader shall parse the ring buffer size in shared memory from the configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetRingBufferSize(), kEcuConfigRingBufferSize);
@@ -272,7 +272,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelConsoleFromEcuCo
     RecordProperty("Description",
                    "TargetConfigReader shall parse the default log level threshold for console logging from the "
                    "configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetDefaultConsoleLogLevel(), kEcuConfigLogLevelConsole);
@@ -285,7 +285,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig
     RecordProperty("Description",
                    "TargetConfigReader shall parse the default log file path for console logging from the "
                    "configuration file correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetLogFilePath(), kAppConfigLogFilePath);
@@ -298,7 +298,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAn
     RecordProperty("Description",
                    "TargetConfigReader shall parse and combine the context log levels from the "
                    "configuration files correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetContextLogLevel(), kCombinedContextLogLevel);
@@ -309,7 +309,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseNumberOfSlots)
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall parse the number of slots for preallocation correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetNumberOfSlots(), kNumberOfSlots);
@@ -320,7 +320,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseSlotSizeBytes)
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall parse the size of the slots for preallocation correctly.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetSlotSizeInBytes(), kSlotSizeBytes);
@@ -332,7 +332,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseDynamicDatarouterIdentif
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall parse if datarouter dyanmic identifiers flag is enabled or not.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetDynamicDatarouterIdentifiers(), kDynamicDatarouterIdentifiers);
@@ -343,7 +343,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseDataRouterUid)
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall parse datarouter user ID.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     EXPECT_EQ(GetReader().ReadConfig()->GetDataRouterUid(), kDatarouterUid);
@@ -356,7 +356,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigSyntaxErrorShallFallbackToEcuConfig)
     RecordProperty(
         "Description",
         "TargetConfigReader fall back to the ECU config file if the application config files contains syntax errors.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains a syntax error.
@@ -373,7 +373,7 @@ TEST_F(TargetConfigReaderFixture, WrongStructureConfigFileShallCauseDefaultAppId
     RecordProperty("Description",
                    "TargetConfigReader fall back to the hard-coded default application id if the configuration file "
                    "does not contain a valid JSON structure");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config has wrong structure.
@@ -390,7 +390,7 @@ TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
     RecordProperty("Description",
                    "TargetConfigReader fall back to the ECU config file if the if the logLevelThresholdConsole "
                    "has wrong value.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config has wrong structure.
@@ -407,7 +407,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
     RecordProperty("Description",
                    "TargetConfigReader fall back to the valid value from the ECU configuration file if the application "
                    "config file contains an invalid log level.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid default log level.
@@ -424,7 +424,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
     RecordProperty("Description",
                    "TargetConfigReader fall back to the valid value from the ECU configuration file if the application "
                    "config file contains an invalid log mode.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid log mode.
@@ -441,7 +441,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidContextConfigFallbackToEcuConf
     RecordProperty("Description",
                    "TargetConfigReader fall back to the valid value from the ECU configuration file if the application "
                    "config file contains an invalid log level for a context.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid context log level entries.
@@ -457,7 +457,7 @@ TEST_F(TargetConfigReaderFixture, WrongEntriesToContextConfigslShallReturnEmptyC
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "TargetConfigReader shall return empty context config log level when providing wrong entries.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid context config entries.
@@ -474,7 +474,7 @@ TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultApp
     RecordProperty("Description",
                    "TargetConfigReader fall back to the hard-coded default application id if the configuration file "
                    "does not exist");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config does not exist
@@ -491,7 +491,7 @@ TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
     RecordProperty("Description",
                    "TargetConfigReader fall back to the hard-coded default application id if the configuration file "
                    "does not contain any value");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config does not exist
@@ -508,7 +508,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallFallBackToContextLogLevelDefa
     RecordProperty("Description",
                    "TargetConfigReader fall back to the hard-coded default context log level values if there is no "
                    "valid value in the configuration files");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     SetConfigurationFiles({kCtxLevelBrokenConfigFile()});

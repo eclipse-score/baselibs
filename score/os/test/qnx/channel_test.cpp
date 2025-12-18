@@ -71,7 +71,7 @@ TEST_F(ChannelMockTest, MsgReceive)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Receive");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgReceive);
@@ -83,7 +83,7 @@ TEST_F(ChannelMockTest, MsgReceivePulse)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message receive Pulse");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgReceivePulse);
@@ -95,7 +95,7 @@ TEST_F(ChannelMockTest, MsgReply)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Reply");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgReply);
@@ -107,7 +107,7 @@ TEST_F(ChannelMockTest, MsgError)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Error");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgError);
@@ -119,7 +119,7 @@ TEST_F(ChannelMockTest, MsgSend)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Send");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgSend);
@@ -131,7 +131,7 @@ TEST_F(ChannelMockTest, MsgSendPulse)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgSendPulse);
@@ -143,7 +143,7 @@ TEST_F(ChannelMockTest, MsgSendPulsePtr)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse Ptr");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgSendPulsePtr);
@@ -155,7 +155,7 @@ TEST_F(ChannelMockTest, MsgDeliverEvent)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Deliver Event");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgDeliverEvent);
@@ -167,7 +167,7 @@ TEST_F(ChannelMockTest, ConnectClientInfo)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Client Info");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, ConnectClientInfo);
@@ -179,7 +179,7 @@ TEST_F(ChannelMockTest, ConnectAttach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Attach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, ConnectAttach);
@@ -191,7 +191,7 @@ TEST_F(ChannelMockTest, ConnectDetach)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Detach");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, ConnectDetach);
@@ -203,7 +203,7 @@ TEST_F(ChannelMockTest, MsgRegisterEvent)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Msg Register Event");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(channelmock, MsgRegisterEvent);
@@ -217,7 +217,7 @@ TEST(ChannelTest, CoverUnhappyPaths)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Cover Unhappy Paths");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& channel = score::os::Channel::instance();
@@ -375,7 +375,7 @@ TEST(ChannelTest, CheckHappyFlow)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Happy Flow");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto& channel = score::os::Channel::instance();
@@ -428,7 +428,7 @@ TEST(ChannelCreateInstance, PMRDefaultShallReturnImplInstance)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();

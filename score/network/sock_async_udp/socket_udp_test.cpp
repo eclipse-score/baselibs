@@ -72,7 +72,7 @@ TEST_F(SocketUDPTest, CreationSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of UDP async socket is successful");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
@@ -91,7 +91,7 @@ TEST_F(SocketUDPTest, CreationFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of UDP async socket fails");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _))
         .Times(Exactly(1))
@@ -112,7 +112,7 @@ TEST_F(SocketUDPTest, ConnectFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that connection on UDP async socket fails");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {

@@ -48,7 +48,7 @@ TEST(ObjectSeamTest, CopyConstructor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Constructor");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MockObject mock("Testing Copy");
@@ -65,7 +65,7 @@ TEST(ObjectSeamTest, MoveConstructor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Constructor");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MockObject mock("Testing Move");
