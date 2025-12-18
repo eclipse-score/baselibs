@@ -16,7 +16,7 @@ cc_library(
     linkopts = [
         "-lfsnotify",
     ],
-    target_compatible_with = ["@platforms//os:qnx"],
+    target_compatible_with = ["@score_bazel_platforms//:qnx8_0"],
     visibility = ["//visibility:public"],
 )
 
