@@ -77,6 +77,55 @@ jobs:
           bazel test --config bl-x86_64-linux //score/... -- \
           -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
           -//score/containers:dynamic_array_test
+      - name: Install lcov
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lcov
+      - name: Bazel coverage baselibs targets
+        run: |
+          # Run every test target
+          for target in $(bazel query 'tests(attr(name, "unit_test_suite_host", //...:*))'); do
+            # Replace leading // with bazel-bin path, and ':' with '/'
+            out="$(bazel info bazel-bin)/${target#//}"
+            out="${out/://}"
+            "$out"
+          done
+          # Collect coverage data
+          lcov --capture \
+            --directory="$(bazel info bazel-bin)/score/" \
+            --output-file=cpp_coverage.info \
+            --gcov-tool="$(bazel info execution_root)/external/score_toolchains_gcc++gcc+gcc_toolchain_gcc/bin/x86_64-unknown-linux-gnu-gcov" \
+            --base-directory="$(bazel info workspace)" \
+            --branch-coverage \
+            --ignore-errors=mismatch \
+            --exclude="*/external/*" \
+            --ignore-errors gcov
+          # Generate HTML report
+          genhtml cpp_coverage.info \
+            -o=cpp_coverage \
+            --show-details \
+            --legend \
+            --function-coverage \
+            --branch-coverage
+        shell: bash
+      - name: Create archive of test report
+        run: |
+          mkdir -p artifacts
+          find bazel-testlogs/score/ -name 'test.xml' -print0 | xargs -0 -I{} cp --parents {} artifacts/
+          cp -r cpp_coverage artifacts/
+          zip -r ${{ github.event.repository.name }}_coverage_report.zip artifacts/
+        shell: bash
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}_coverage_report.zip
+          path: ${{ github.event.repository.name }}_coverage_report.zip
+      - name: Upload release asset (attach ZIP to GitHub Release)
+        uses: softprops/action-gh-release@v2.5.0
+        with:
+          files: ${{ github.event.repository.name }}_coverage_report.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release_verification:
     runs-on: ubuntu-latest
     needs: [build_host, build_target, test_host]
