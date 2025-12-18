@@ -32,5 +32,11 @@ Summary
 
 **Type:** C++ Base Libraries
 
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Modules
+
+   safety_elements/**/index
 
 

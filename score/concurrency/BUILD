@@ -13,6 +13,10 @@
 
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_tooling//bazel/rules/score_module:score_module.bzl", "safety_element_out_of_context")
+
+load("@rules_python//sphinxdocs:sphinx_docs_library.bzl", "sphinx_docs_library")
+
 
 cc_library(
     name = "clock",
@@ -466,4 +470,72 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//visibility:public",
     ],
+)
+
+
+# ############################################################
+# SAFETY ELEMENT OUT OF CONTEXT
+# ############################################################
+sphinx_docs_library(
+    name = "assumptions_of_use",
+    srcs = ["design/assumptions_of_use.md"],
+)
+
+sphinx_docs_library(
+    name = "component_requirements",
+    srcs = ["design/component_requirements.md"],
+)
+
+sphinx_docs_library(
+    name = "architectural_design",
+    srcs = ["design/architectural_design.md"],
+)
+
+sphinx_docs_library(
+    name = "safety_analysis",
+    srcs = ["design/safety_analysis.md"],
+)
+
+safety_element_out_of_context(
+    name = "seooc_concurrency",
+    architectural_design = ":architectural_design",
+    assumptions_of_use = ":assumptions_of_use",
+    component_requirements = ":component_requirements",
+    implementations = [
+        "//score/concurrency:clock",
+        "//score/concurrency:concurrency",
+        "//score/concurrency:condition_variable",
+        "//score/concurrency:delayed_task",
+        "//score/concurrency:destruction_guard",
+        "//score/concurrency:executor",
+        "//score/concurrency:executor_mock",
+        "//score/concurrency/future:future",
+        "//score/concurrency/future:test_types",
+        "//score/concurrency:interruptible_conditional_variable_mock",
+        "//score/concurrency:interruptible_interprocess_condition_variable",
+        "//score/concurrency:interruptible_wait",
+        "//score/concurrency:long_running_threads_container",
+        "//score/concurrency:notification",
+        "//score/concurrency:periodic_task",
+        "//score/concurrency:shared_task_result",
+        "//score/concurrency:synchronized_queue",
+        "//score/concurrency:task_result",
+        "//score/concurrency:task_result_base",
+        "//score/concurrency/thread_load_tracking:thread_load_tracking",
+        "//score/concurrency:thread_pool",
+        "//score/concurrency/timed_executor:concurrent_timed_executor",
+        "//score/concurrency/timed_executor:delayed_task",
+        "//score/concurrency/timed_executor:periodic_task",
+        "//score/concurrency/timed_executor:timed_executor",
+        "//score/concurrency/timed_executor:timed_executor_mock",
+        "//score/concurrency/timed_executor:timed_task",
+    ],
+    safety_analysis = ":safety_analysis",
+    tests = [
+        "//score/concurrency/future:unit_test_suite_host",
+        "//score/concurrency/thread_load_tracking:unit_test_suite_host",
+        "//score/concurrency/timed_executor:unit_test_suite_host",
+        "//score/concurrency:unit_test_suite_host",
+    ],
+    visibility = ["//visibility:public"],
 )
