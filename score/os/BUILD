@@ -140,7 +140,7 @@ cc_library(
         ":object_seam",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ] + select({
-        "//bazel/platforms/qnx_version:qnx8": [
+        "@score_bazel_platforms//:qnx8_0": [
             "//third_party/qnx:libfsnotify",
         ],
         "//conditions:default": [],
