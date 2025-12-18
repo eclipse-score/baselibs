@@ -31,7 +31,7 @@ TEST(TimeImplTest, ClockSettimeFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Failure");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_MONOTONIC, &new_time);
@@ -55,7 +55,7 @@ TEST(TimeImplTest, ClockGetTimeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Time Success");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec get_time{};
 
@@ -74,7 +74,7 @@ TEST(TimeImplTest, GettimeFailsWithInvalidClockId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Gettime Fails With Invalid Clock Id");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec get_time{};
     constexpr auto kInvalidClockId{-1};
@@ -89,7 +89,7 @@ TEST(TimeImplTest, ClockSettimeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Success");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_REALTIME, &new_time);
@@ -115,7 +115,7 @@ TEST(TimeImplTest, ClockGetResSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Success");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec get_res{};
 
@@ -134,7 +134,7 @@ TEST(TimeImplTest, ClockGetResFailsWithInvalidClockId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Fails With Invalid Clock Id");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     struct timespec get_res{};
     constexpr auto kInvalidClockId{-1};
@@ -149,7 +149,7 @@ TEST(TimeImplTest, LocaltimeRSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Localtime RSuccess");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto current_time = std::chrono::system_clock::now();
     const std::time_t current_time_t{std::chrono::system_clock::to_time_t(current_time)};

@@ -27,7 +27,7 @@ TEST(MountTest, MountTestMountFail)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Mount Fail");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ::mkdir("/mnt/home", S_IRWXU | S_IRWXG | S_IRWXO);
 
@@ -42,7 +42,7 @@ TEST(MountTest, MountTestUmountFail)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Umount Fail");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* dir = "/mnt/home";
     score::cpp::expected_blank<Error> result = score::os::Mount::instance().umount(dir);
@@ -55,7 +55,7 @@ TEST(MountTest, MountTestConvertFlag)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MountTest Mount Test Convert Flag");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ::mkdir("/mnt/home", S_IWUSR | S_IWGRP | S_IWOTH);
 

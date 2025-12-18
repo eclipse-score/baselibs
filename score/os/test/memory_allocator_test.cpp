@@ -29,7 +29,7 @@ TEST(SafeMemoryAllocatorTest, MallocFail)
     // ThreadSanitizer (TSAN) is expected to fail in this scenario because its allocator terminates
     // the program on such failures instead of returning null. Therefore, we only run the test outside of TSAN.
 #if !defined(__SANITIZE_THREAD__)
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("ParentRequirement", "SCR-109773");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description",
@@ -50,7 +50,7 @@ TEST(SafeMemoryAllocatorTest, ReallocFail)
     // ThreadSanitizer (TSAN) is expected to fail in this scenario because its allocator terminates
     // the program on such failures instead of returning null. Therefore, we only run the test outside of TSAN.
 #if !defined(__SANITIZE_THREAD__)
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     this->RecordProperty("ParentRequirement", "SCR-109773");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description",

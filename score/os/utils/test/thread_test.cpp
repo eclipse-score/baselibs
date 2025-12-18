@@ -105,7 +105,7 @@ TEST_F(ThreadNameTest, SetNameFails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadNameTest Set Name Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const size_t name_length = 200U;
     std::string thread_name(name_length, 'a');
@@ -128,7 +128,7 @@ TEST(ThreadAffinityTest, SetAffinitySucceeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadAffinityTest Set Affinity Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_TRUE(set_thread_affinity(0));
 }

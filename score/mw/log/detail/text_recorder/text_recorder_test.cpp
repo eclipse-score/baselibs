@@ -68,7 +68,7 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, WillObtainSlotForSufficientLogLevel
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The required slots will be returned in case of insufficent log level");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto slot = recorder_->StartRecord(context_id_, kActiveLogLevel);
     EXPECT_TRUE(slot.has_value());
@@ -80,7 +80,7 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, WillObtainEmptySlotForInsufficentLo
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Empty slots will be returned in case of insufficent log level");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto slot = recorder_->StartRecord(context_id_, kInActiveLogLevel);
     EXPECT_FALSE(slot.has_value());
@@ -92,7 +92,7 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, DisablesOrEnablesLogAccordingToLeve
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of enabling or disabling specific log level");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_TRUE(recorder_->IsLogEnabled(kActiveLogLevel, context_id_));
     EXPECT_FALSE(recorder_->IsLogEnabled(kInActiveLogLevel, context_id_));
@@ -104,7 +104,7 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, WillObtainEmptySlotsWhenNoSlotsRese
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Recorder shall returns zero slots if no slots were reserved.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto backend_mock = std::make_unique<BackendMock>();
     ON_CALL(*backend_mock, ReserveSlot()).WillByDefault(Invoke([]() -> score::cpp::optional<SlotHandle> {
@@ -157,7 +157,7 @@ TEST_F(TextRecorderFixture, TooManyArgumentsWillYieldTruncatedLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The log will be truncated in case of too many arguments");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     constexpr std::size_t byte_size_of_space_seperator = 1;
     const std::string_view message{"byte"};
@@ -179,7 +179,7 @@ TEST_F(TextRecorderFixture, TooLargeSinglePayloadWillYieldTruncatedLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "The logs will be truncated in case of too large single payload");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const std::size_t too_big_data_size = log_record_.getLogEntry().payload.capacity() + 1UL;
     std::vector<char> vec(too_big_data_size);
@@ -197,7 +197,7 @@ TEST_F(TextRecorderFixture, LogUint8_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log uint8_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::uint8_t{});
 }
@@ -208,7 +208,7 @@ TEST_F(TextRecorderFixture, LogBool)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log boolean.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, bool{});
 }
@@ -219,7 +219,7 @@ TEST_F(TextRecorderFixture, LogInt8_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log int8_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::int8_t{});
 }
@@ -230,7 +230,7 @@ TEST_F(TextRecorderFixture, LogUint16_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log uint16_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::uint16_t{});
 }
@@ -241,7 +241,7 @@ TEST_F(TextRecorderFixture, LogInt16_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log int16_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::int16_t{});
 }
@@ -252,7 +252,7 @@ TEST_F(TextRecorderFixture, LogUint32_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log uint32_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::uint32_t{});
 }
@@ -263,7 +263,7 @@ TEST_F(TextRecorderFixture, LogInt32_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log int32_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::int32_t{});
 }
@@ -274,7 +274,7 @@ TEST_F(TextRecorderFixture, LogUint64_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log uint64_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::uint64_t{});
 }
@@ -285,7 +285,7 @@ TEST_F(TextRecorderFixture, LogInt64_t)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log int64_t.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::int64_t{});
 }
@@ -296,7 +296,7 @@ TEST_F(TextRecorderFixture, LogFloat)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log float.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, float{});
 }
@@ -307,7 +307,7 @@ TEST_F(TextRecorderFixture, LogDouble)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log double.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, double{});
 }
@@ -318,7 +318,7 @@ TEST_F(TextRecorderFixture, LogStringView)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log string view.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, std::string_view{"Hello world"});
 }
@@ -329,7 +329,7 @@ TEST_F(TextRecorderFixture, LogHex8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log 8 bits with hex representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, LogHex8{});
 }
@@ -340,7 +340,7 @@ TEST_F(TextRecorderFixture, LogHex16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log 16 bits with hex representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     recorder_->Log(SlotHandle{}, LogHex16{});
 }
@@ -428,7 +428,7 @@ TEST(TextRecorderTests, DefaultLogLevelShallBeUsedIfCheckForConsoleIsDisabled)
     RecordProperty("Description",
                    "Verifies that the default log level will be used in case of disabling the console logging.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto default_log_level = LogLevel::kDebug;
     constexpr auto more_than_default_log_level = LogLevel::kVerbose;
@@ -461,7 +461,7 @@ TEST(TextRecorderTests, TextRecorderShouldClearSlotOnStart)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Recorder should clean slots before reuse.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Test setup is here since we cannot reuse the fixture here because we have a specific construction use case.
     Configuration config{};

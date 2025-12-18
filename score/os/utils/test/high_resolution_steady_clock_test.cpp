@@ -26,7 +26,7 @@ TEST(HighResolutionSteadyClock, UnderlyingClock)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     RecordProperty("Description",
                    "This test ensures that the underlying clock of "
@@ -56,7 +56,7 @@ TEST(HighResolutionSteadyClock, now)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     RecordProperty("Description",
                    "This test ensures that the values returned by HighResolutionSteadyClock's "

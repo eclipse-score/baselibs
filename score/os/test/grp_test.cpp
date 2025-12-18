@@ -27,7 +27,7 @@ TEST(GetGrNam, ReturnsCorrectBuffer)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Correct Buffer");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto group_name{"root"};
     const auto result = Grp::instance().getgrnam(group_name);
@@ -42,7 +42,7 @@ TEST(GetGrNam, SecondCallDoesNotOverwriteBuffer)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Second Call Does Not Overwrite Buffer");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto group_name_root{"root"};
     const auto result_root = Grp::instance().getgrnam(group_name_root);
@@ -75,7 +75,7 @@ TEST(GetGrNam, ReturnsErrorWhenGroupUnknown)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Error When Group Unknown");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto group_name{"invalid"};
     const auto result = Grp::instance().getgrnam(group_name);
@@ -89,7 +89,7 @@ TEST(GetGrNam, ReturnsErrorWhenGroupNameSizeBiggerThanSupported)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetGrNam Returns Error When Group Name Size Bigger Than Supported");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto group_name{"VeryVeryVeryVeryGroup"};
     const auto result = Grp::instance().getgrnam(group_name);

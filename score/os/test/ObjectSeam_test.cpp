@@ -49,7 +49,7 @@ TEST(ObjectSeamTest, CopyConstructor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Constructor");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     MockObject mock("Testing Copy");
     TestableBase<MockObject> b1;
@@ -66,7 +66,7 @@ TEST(ObjectSeamTest, MoveConstructor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Constructor");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     MockObject mock("Testing Move");
     TestableBase<MockObject> b1;

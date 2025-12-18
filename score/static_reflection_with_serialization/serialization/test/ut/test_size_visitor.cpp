@@ -302,7 +302,7 @@ TYPED_TEST_P(SizeVisitorFixture, whenDataSerializedAndThenDeserializedDataShould
                                     "logging library shall provide an annotation mechanism for data structures to "
                                     "support automatic serialization/deserialization.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "Analysis of requirements");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
 
     using s = serializer_t<real_alloc_t>;
     using ssize = serialized_size_t<real_alloc_t>;

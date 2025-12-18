@@ -40,7 +40,7 @@ TEST(Logging, CanSetAndRetrieveDefaultRecorder)
     RecordProperty("Description", "Verify the ability of retrieving the default logger.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::SetLogRecorder");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given a Recorder
     RecorderMock recorder_mock{};
@@ -70,7 +70,7 @@ TEST_F(LoggingFixture, CanLogVerboseWithoutContext)
     RecordProperty("Description", "Verify the ability of logging verbose message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogVerbose");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Given nothing
@@ -87,7 +87,7 @@ TEST_F(LoggingFixture, CanLogDebugWithoutContext)
     RecordProperty("Description", "Verify the ability of logging debug message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogDebug");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level debug
@@ -103,7 +103,7 @@ TEST_F(LoggingFixture, CanLogInfoWithoutContext)
     RecordProperty("Description", "Verify the ability of logging info message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogInfo");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level info
@@ -119,7 +119,7 @@ TEST_F(LoggingFixture, CanLogWarnWithoutContext)
     RecordProperty("Description", "Verify the ability of logging warning message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogWarn");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level warn
@@ -135,7 +135,7 @@ TEST_F(LoggingFixture, CanLogErrorWithoutContext)
     RecordProperty("Description", "Verify the ability of logging error message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogError");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level error
@@ -151,7 +151,7 @@ TEST_F(LoggingFixture, CanLogFatalWithoutContext)
     RecordProperty("Description", "Verify the ability of logging fatal message without context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogFatal");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level fatal
@@ -167,7 +167,7 @@ TEST_F(LoggingFixture, CanLogVerboseWitContext)
     RecordProperty("Description", "Verify the ability of logging verbose message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogVerbose");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level verbose
@@ -183,7 +183,7 @@ TEST_F(LoggingFixture, CanLogDebugWithContext)
     RecordProperty("Description", "Verify the ability of logging debug message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogDebug");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level debug
@@ -199,7 +199,7 @@ TEST_F(LoggingFixture, CanLogInfoWithContext)
     RecordProperty("Description", "Verify the ability of logging info message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogInfo");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level info
@@ -215,7 +215,7 @@ TEST_F(LoggingFixture, CanLogWarnWithContext)
     RecordProperty("Description", "Verify the ability of logging warning message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogWarn");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level warn
@@ -231,7 +231,7 @@ TEST_F(LoggingFixture, CanLogErrorWithContext)
     RecordProperty("Description", "Verify the ability of logging error message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogError");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level error
@@ -247,7 +247,7 @@ TEST_F(LoggingFixture, CanLogFatalWithContext)
     RecordProperty("Description", "Verify the ability of logging fatal message with context provided.");
     RecordProperty("TestType", "Interface test");
     RecordProperty("Verifies", "::score::mw::log::LogFatal");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given nothing
     // Expecting a log record of level fatal

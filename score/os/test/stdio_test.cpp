@@ -28,7 +28,7 @@ TEST(FOpenTest, ReturnsValidFileDescriptor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FOpenTest Returns Valid File Descriptor");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test"};
     const auto mode{"w"};
@@ -43,7 +43,7 @@ TEST(FOpenTest, ReturnsErrorWithWrongMode)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FOpenTest Returns Error With Wrong Mode");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test"};
     const auto mode{"bs"};
@@ -58,7 +58,7 @@ TEST(FCloseTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FCloseTest Returns Blank Value If Successful");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test"};
     const auto mode{"w"};
@@ -75,7 +75,7 @@ TEST(FCloseTest, ReturnsErrorWithInvalidFileDescriptor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FCloseTest Returns Error With Invalid File Descriptor");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
 #if defined(GTEST_OS_LINUX)
     GTEST_SKIP() << "::fclose() is not POSIX compliant with glibc on Linux - any error causes an abort";
@@ -93,7 +93,7 @@ TEST(RemoveTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RemoveTest Returns Blank Value If Successful");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test"};
     const auto mode{"w"};
@@ -113,7 +113,7 @@ TEST(RemoveTest, ReturnsErrorIfFileDoesNotExist)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RemoveTest Returns Error If File Does Not Exist");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test-invalid-file"};
     const auto remove_result = score::os::Stdio::instance().remove(filename);
@@ -127,7 +127,7 @@ TEST(RenameTest, ReturnsBlankValueIfSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RenameTest Returns Blank Value If Successful");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"test"};
     const auto mode{"w"};
@@ -151,7 +151,7 @@ TEST(RenameTest, ReturnsErrorIfNameInvalid)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RenameTest Returns Error If Name Invalid");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto filename{"invalid-test"};
     const auto new_filename{"invalid_test"};
@@ -166,7 +166,7 @@ TEST(POpenTest, ReturnsValidPipe)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "POpenTest Returns Valid Pipe");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto cmd{"echo 1"};
     const auto mode{"r"};
@@ -188,7 +188,7 @@ TEST(POpenTest, ReturnsErrorWithInvalidMode)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "POpenTest Returns Error With Invalid Mode");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto cmd{"echo 1"};
     const auto mode{"x"};
@@ -203,7 +203,7 @@ TEST(PCloseTest, ProvidesReturnCodeOfPipeCommand)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PCloseTest Provides Return Code Of Pipe Command");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto cmd{"exit 1"};
     const auto mode{"r"};
@@ -223,7 +223,7 @@ TEST(FileNoTest, CanTranslateFileDescriptorOfStream)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FileNoTest Can Translate File Descriptor Of Stream");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = score::os::Stdio::instance().fileno(stdin);
     ASSERT_TRUE(result.has_value());
@@ -236,7 +236,7 @@ TEST(FileNoTest, ReturnsErrorForInvalidFileStream)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FileNoTest Returns Error For Invalid File Stream");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
 #if defined(GTEST_OS_LINUX)
     GTEST_SKIP() << "::fileno() is not POSIX compliant with glibc on Linux - any error causes an abort";

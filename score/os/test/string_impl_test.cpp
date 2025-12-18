@@ -29,7 +29,7 @@ TEST(StringImplTest, StrMemcpy)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringImplTest Str Memcpy");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     StringImpl str;
     char str1[] = "mem1";
@@ -44,7 +44,7 @@ TEST(StringImplTest, StrStderr)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringImplTest Str Stderr");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     StringImpl str;
     EXPECT_STREQ(str.strerror(EINVAL), "Invalid argument");
@@ -56,7 +56,7 @@ TEST(StringImplTest, StrMemset)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringImplTest Str Memset");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     StringImpl str;
     char str1[20] = "Sample";

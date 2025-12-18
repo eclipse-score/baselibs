@@ -73,7 +73,7 @@ TEST_F(SocketUDPTest, CreationSuccess)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of UDP async socket is successful");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
         in_pollfd[0].revents = POLLIN;
@@ -92,7 +92,7 @@ TEST_F(SocketUDPTest, CreationFailed)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of UDP async socket fails");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _))
         .Times(Exactly(1))
         .WillOnce(Return(score::cpp::make_unexpected(Error::createFromErrno(0))));
@@ -113,7 +113,7 @@ TEST_F(SocketUDPTest, ConnectFailed)
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that connection on UDP async socket fails");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     EXPECT_CALL(sysPollMock, poll(_, _, _)).WillRepeatedly([](struct pollfd* in_pollfd, nfds_t, int) {
         in_pollfd[0].revents = POLLIN;

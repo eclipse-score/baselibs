@@ -29,7 +29,7 @@ TEST(SecpolTest, InstanceCall)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Instance Call");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // check whether instance() returns injection
     score::os::qnx::details::SecpolImpl mock{};
@@ -61,7 +61,7 @@ TEST_F(SecpolFixture, secpol_openOpenNullPath)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Secpol Open Open Null Path");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* const path{nullptr};
 
@@ -77,7 +77,7 @@ TEST_F(SecpolFixture, secpol_openOpenDoubleCallFails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Secpol Open Open Double Call Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* const path{nullptr};
 
@@ -96,7 +96,7 @@ TEST_F(SecpolFixture, secpol_posix_spawnattr_settypeid)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Secpol Posix Spawnattr Settypeid");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     posix_spawnattr_t attr{};
     secpol_file_t* handle_null{nullptr};
@@ -113,7 +113,7 @@ TEST_F(SecpolFixture, secpol_transition_type)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Secpol Transition Type");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     secpol_file_t* handle{nullptr};
     const char* const name{nullptr};

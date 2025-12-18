@@ -41,7 +41,7 @@ TEST_F(DetectOsTest, IsEmpty)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DetectOsTest Is Empty");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ::score::cpp::optional<SystemInfo> retVal{};
     EXPECT_CALL(unameMock, GetUname()).WillRepeatedly(Return(retVal));
@@ -55,7 +55,7 @@ TEST_F(DetectOsTest, IsLinux)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DetectOsTest Is Linux");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SystemInfo info{};
     info.sysname = "Linux";
@@ -71,7 +71,7 @@ TEST_F(DetectOsTest, IsQnx)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DetectOsTest Is Qnx");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SystemInfo info{};
     info.sysname = "QNX";
@@ -87,7 +87,7 @@ TEST_F(DetectOsTest, IsWindows)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DetectOsTest Is Windows");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SystemInfo info{};
     info.sysname = "Windows";

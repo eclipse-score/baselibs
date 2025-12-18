@@ -21,7 +21,7 @@ TEST(JsonTest, ReadWrite)
     RecordProperty("Description",
                    "Create Json object with different attributes, write it to a buffer, then read it successfully.");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     score::json::Object json{};
     json["string"] = std::string{"foo"};

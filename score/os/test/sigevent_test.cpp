@@ -35,7 +35,7 @@ TEST_F(SigEventTest, SetNotificationType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set notification types");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto none_notification = signal_event_->SetNotificationType(SigEvent::NotificationType::kNone);
     ASSERT_TRUE(none_notification.has_value());
@@ -66,7 +66,7 @@ TEST_F(SigEventTest, SetSignalNumber)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set signal number");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
 
@@ -93,7 +93,7 @@ TEST_F(SigEventTest, SetSignalEventValue)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set signal event value");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
     std::variant<int, void*> signal_event_value;
@@ -133,7 +133,7 @@ TEST_F(SigEventTest, SetThreadCallback)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set thread callback");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
 
@@ -167,7 +167,7 @@ TEST_F(SigEventTest, SetThreadAttributes)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest set thread attributes");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
 
@@ -194,7 +194,7 @@ TEST_F(SigEventTest, Reset)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest reset sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto result = signal_event_->SetNotificationType(SigEvent::NotificationType::kThread);
     EXPECT_TRUE(result.has_value());
@@ -225,7 +225,7 @@ TEST_F(SigEventTest, ModifySigevent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest modify sigevent positive and negative scenarios");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr std::int32_t kTestSignalValue = 42;
 
@@ -247,7 +247,7 @@ TEST_F(SigEventTest, Getter)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest getter sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto&& const_ref = signal_event_->GetSigevent();
 
@@ -260,7 +260,7 @@ TEST_F(SigEventTest, DefaultError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventTest default error sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
     auto error_msg = errorDomain.MessageFor(static_cast<score::result::ErrorCode>(9999));

@@ -47,7 +47,7 @@ TEST_F(SharedMemoryResourceAllocateTest, AssociatedMemoryResourceProxyForwardsCa
                    "requested memory.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -78,7 +78,7 @@ TEST_F(SharedMemoryResourceAllocateTest, SharedMemoryResourceAllocatesAlignedMem
         "SharedMemoryResource shall allocate memory in accordance to the alignment of that CPU architecture.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -114,7 +114,7 @@ TEST_F(SharedMemoryResourceAllocateTest,
         "SharedMemoryResource shall allocate memory in accordance to the alignment of that CPU architecture.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -208,7 +208,7 @@ TEST_F(SharedMemoryResourceAllocateDeathTest, AllocatingBlockLargerThanAllocated
                    "The process shall terminate when the SharedMemoryResource cannot allocate the requested memory.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;

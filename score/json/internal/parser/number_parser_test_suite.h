@@ -100,7 +100,7 @@ TYPED_TEST_P(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAnd
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of bool data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -124,7 +124,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAn
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of uint8 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -148,7 +148,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulA
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of uint16 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -172,7 +172,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulA
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of uint32 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -196,7 +196,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulA
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of uint64 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -220,7 +220,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAnd
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of int8 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -244,7 +244,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAn
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of int16 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -268,7 +268,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAn
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of int32 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -292,7 +292,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAn
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of int64 data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -315,7 +315,7 @@ TYPED_TEST_P(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAn
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of float data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it
@@ -339,7 +339,7 @@ TYPED_TEST_P(NumberTest, WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulA
     this->RecordProperty("Description",
                          "Test the limits, over-limit and under-limit of double data-type, cf. RFC-8259 section 9");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
     this->RecordProperty("Priority", "3");
 
     // Given a simple JSON buffer and parsing it

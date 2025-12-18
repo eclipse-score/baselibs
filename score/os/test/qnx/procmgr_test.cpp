@@ -43,7 +43,7 @@ TEST_F(ProcMgrMockTest, procmgr_ability)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(procmgrmock, procmgr_ability(kCurrentPid, PROCMGR_AID_EOL));
     score::os::ProcMgr::instance().procmgr_ability(kCurrentPid, PROCMGR_AID_EOL);
@@ -55,7 +55,7 @@ TEST(ProcMgrTest, procmgr_subrange_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Subrange Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_FALSE(score::os::ProcMgr::instance().procmgr_ability(kCurrentPid, PROCMGR_AID_EOL | PROCMGR_AOP_SUBRANGE));
 }
@@ -66,7 +66,7 @@ TEST(ProcMgrTest, procmgr_generic_invalid_pid_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Generic Invalid Pid Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_FALSE(score::os::ProcMgr::instance().procmgr_ability(kInvalidPid, PROCMGR_AID_EOL));
 }
@@ -77,7 +77,7 @@ TEST(ProcMgrTest, procmgr_invalid_ability_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Invalid Ability Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_FALSE(score::os::ProcMgr::instance().procmgr_ability(
         kCurrentPid, PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_PUBLIC_CHANNEL | PROCMGR_AID_UNCREATED));
@@ -89,7 +89,7 @@ TEST(ProcMgrTest, procmgr_generic_succeeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Generic Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_TRUE(score::os::ProcMgr::instance().procmgr_ability(kCurrentPid,
                                                              PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_EOL));
@@ -101,7 +101,7 @@ TEST(ProcMgrTest, procmgr_specific_succeeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Specific Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_TRUE(score::os::ProcMgr::instance().procmgr_ability(
         kCurrentPid, PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_PUBLIC_CHANNEL));
@@ -113,7 +113,7 @@ TEST(ProcMgrTest, procmgr_ability_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto result = score::os::ProcMgr::instance().procmgr_ability(
         kCurrentPid,
@@ -131,7 +131,7 @@ TEST(ProcMgrTest, procmgr_ability_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto result =
         score::os::ProcMgr::instance().procmgr_ability(kInvalidPid, PROCMGR_AID_EOL, 0U, 0U, 0U, PROCMGR_AID_EOL);
@@ -145,7 +145,7 @@ TEST(ProcMgrTest, procmgr_daemon_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Daemon Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto result = score::os::ProcMgr::instance().procmgr_daemon(
         kCurrentPid,

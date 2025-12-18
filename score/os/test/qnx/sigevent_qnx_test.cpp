@@ -44,7 +44,7 @@ TEST_F(SigEventQnxTest, SetUnblock)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set unblock");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->SetUnblock();
 
@@ -58,7 +58,7 @@ TEST_F(SigEventQnxTest, SetPulse)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set pulse");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->SetPulse(kConnectionId, kPriority, kCode, kSignalEventValue);
 
@@ -76,7 +76,7 @@ TEST_F(SigEventQnxTest, SetSignalThread)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set signal thread");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->SetSignalThread(kSignalNumber, kSignalEventValue, kThreadId);
 
@@ -92,7 +92,7 @@ TEST_F(SigEventQnxTest, SetSignalCode)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set signal code");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->SetSignalCode(kSignalNumber, kSignalEventValue, kSignalCode);
 
@@ -109,7 +109,7 @@ TEST_F(SigEventQnxTest, SetMemory)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set memory");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     volatile std::uint32_t dummy_mem = 0;
     constexpr std::int32_t kSize = 4;
@@ -127,7 +127,7 @@ TEST_F(SigEventQnxTest, SetInterrupt)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set interrupt");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->SetInterrupt();
 
@@ -141,7 +141,7 @@ TEST_F(SigEventQnxTest, SetSignalEventValue)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest set signal event value");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     SigEventErrorCodeDomain errorDomain;
     std::variant<int, void*> signal_event_value;
@@ -176,7 +176,7 @@ TEST_F(SigEventQnxTest, Reset)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest reset sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto result = signal_event_qnx_->SetNotificationType(SigEvent::NotificationType::kThread);
     EXPECT_TRUE(result.has_value());
@@ -207,7 +207,7 @@ TEST_F(SigEventQnxTest, Getter)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest getters sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto&& const_ref = signal_event_qnx_->GetSigevent();
 
@@ -220,7 +220,7 @@ TEST_F(SigEventQnxTest, ModifySigevent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SigEventQnxTest modify sigevent");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     signal_event_qnx_->ModifySigevent([](sigevent& raw_sigevent) {
         raw_sigevent.sigev_notify = SIGEV_SIGNAL;

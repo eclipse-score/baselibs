@@ -31,7 +31,7 @@ TEST(FsCrypto, CreateObjectSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Create Object Successful");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto fscrypto = score::os::qnx::FsCrypto::createFsCryptoInstance();
     EXPECT_TRUE(fscrypto);
@@ -65,7 +65,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_remove_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_remove Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -83,7 +83,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_remove_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_remove Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -101,7 +101,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_add_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_add Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::size_t bytes_length = 512;
     const char* path = "/persistent";
@@ -123,7 +123,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_add_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_add Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::size_t bytes_length = 1;
     const char* path = "/persistent";
@@ -145,7 +145,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_query_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_query Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -163,7 +163,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_query_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_query Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -181,7 +181,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_unlock_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_unlock Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -201,7 +201,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_domain_unlock_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_domain_unlock Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -221,7 +221,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_file_set_domain_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_file_set_domain Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};
@@ -239,7 +239,7 @@ TEST_F(fsCryptoMockTest, Test_fs_crypto_file_set_domain_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test fs_crypto_file_set_domain Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* path = "/persistent";
     std::int32_t domain{3};

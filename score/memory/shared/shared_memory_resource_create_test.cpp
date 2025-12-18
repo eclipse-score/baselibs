@@ -87,7 +87,7 @@ TEST_F(SharedMemoryResourceCreateTest, CreateSharedMemoryFreesResourcesOnDestruc
     RecordProperty("Description", "SharedMemoryResource shall free resources only on destruction.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
@@ -612,7 +612,7 @@ TEST_F(SharedMemoryResourceCreateDeathTest, UnableToTruncateSharedMemoryCausesTe
     RecordProperty("Description", "A process shall terminate, if the truncation of a shared memory segment fails.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;

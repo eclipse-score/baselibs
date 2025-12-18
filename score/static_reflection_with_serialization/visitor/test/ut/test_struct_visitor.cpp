@@ -180,7 +180,7 @@ TEST(struct_visitor, struct_visitable)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_TRUE(check_visitable<test::S1>("test::S1", 1));
     EXPECT_TRUE(check_visitable<test::S2>("test::S2", 2));
@@ -210,7 +210,7 @@ TEST(struct_visitor, visit_as)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures fields.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S1{}), 1);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S2{}), 2);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S3{}), 3);
@@ -279,7 +279,7 @@ TEST(struct_visitor, namespaces)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability fields.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     using namespace ::score::common::visitor;
     EXPECT_EQ(struct_visitable<S1>::field_name(0), "x1");
     EXPECT_EQ(struct_visitable<test::S1>::field_name(0), "f1");
@@ -306,7 +306,7 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
                    "Verifies that the templated structs shall not contain trailing whaitspace."
                    "serialization/deserialization.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     using namespace ::score::common::visitor;
 
     // GCC inserts a trailing whitespace for templated structs in __PRETTY__FUNCTION__.

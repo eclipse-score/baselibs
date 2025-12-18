@@ -39,7 +39,7 @@ TEST_F(PciTest, pci_device_read_cmd_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Cmd Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     pci_cmd_t cmd;
@@ -54,7 +54,7 @@ TEST_F(PciTest, pci_device_read_cmd_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Cmd Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_cmd_t cmd;
     pci_bdf_t bdf = pci_.pci_bdf(bus_, dev_, func_);
@@ -68,7 +68,7 @@ TEST_F(PciTest, pci_device_attach_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Attach Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     std::memset(&bdf, 0, sizeof(pci_bdf_t));
@@ -82,7 +82,7 @@ TEST_F(PciTest, pci_device_read_ba_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Ba Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_devhdl_t hdl;
     std::memset(&hdl, 0, sizeof(pci_bdf_t));
@@ -96,7 +96,7 @@ TEST_F(PciTest, pci_device_read_ba_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Ba Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf = pci_.pci_bdf(bus_, dev_, func_);
     auto attach_res = pci_.pci_device_attach(bdf, pci_attachFlags_MULTI_OWNER);
@@ -118,7 +118,7 @@ TEST_F(PciTest, pci_device_cfg_rd32_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Cfg Rd Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     std::uint16_t offset{64};
@@ -134,7 +134,7 @@ TEST_F(PciTest, pci_device_cfg_rd32_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Cfg Rd Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::uint16_t offset{64U};
     std::uint32_t val = 0U;
@@ -150,7 +150,7 @@ TEST_F(PciTest, pci_device_read_did_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Did Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     pci_did_t did;
@@ -165,7 +165,7 @@ TEST_F(PciTest, pci_device_read_did_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Did Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_did_t did;
     pci_bdf_t bdf = pci_.pci_bdf(bus_, dev_, func_);
@@ -179,7 +179,7 @@ TEST_F(PciTest, pci_device_read_vid_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Vid Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     pci_vid_t vid;
@@ -194,7 +194,7 @@ TEST_F(PciTest, pci_device_read_vid_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Vid Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_vid_t vid;
     pci_bdf_t bdf = pci_.pci_bdf(bus_, dev_, func_);
@@ -208,7 +208,7 @@ TEST_F(PciTest, pci_device_detach_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Detach Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf = pci_.pci_bdf(bus_, dev_, func_);
     auto attach_res = pci_.pci_device_attach(bdf, pci_attachFlags_MULTI_OWNER);
@@ -224,7 +224,7 @@ TEST_F(PciTest, pci_device_detach_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Detach Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_devhdl_t hdl = static_cast<pci_devhdl_t>(0);  // Invalid handle
     EXPECT_FALSE(pci_.pci_device_detach(hdl).has_value());
@@ -236,7 +236,7 @@ TEST_F(PciTest, pci_device_find_succeed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Find Succeed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_vid_t vid = 0xFFFF;
     pci_did_t did = 0xFFFF;
@@ -250,7 +250,7 @@ TEST_F(PciTest, pci_device_find_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Find Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_vid_t vid = 0x1234;
     pci_did_t did = 0x5678;

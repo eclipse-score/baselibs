@@ -28,7 +28,7 @@ TEST(MachineImpl, instance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MachineImpl instance");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::os::Machine& obj = score::os::Machine::instance();
     ASSERT_TRUE(&obj);
@@ -40,7 +40,7 @@ TEST(MachineImpl, is_qemu)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MachineImpl is_qemu");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
 #ifdef MACHINE_QEMU
     ASSERT_TRUE(score::os::Machine::instance().is_qemu());
@@ -55,7 +55,7 @@ TEST(Machine, is_sctf)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Machine is_sctf");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ASSERT_TRUE(setenv("SCTF", "TRUE", 1) == 0);
     ASSERT_TRUE(is_sctf());
@@ -68,7 +68,7 @@ TEST(Machine, is_sctf_false)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Machine is_sctf_false");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ASSERT_FALSE(is_sctf());
 }

@@ -29,7 +29,7 @@ TEST(DltArgumentCounterShould, IncreaseCounter)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DltArgumentCounter should increase counter when an argument is added");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     uint8_t counter = 0;
     DltArgumentCounter sut{counter};
@@ -45,7 +45,7 @@ TEST(DltArgumentCounterShould, NotIncreaseCounterBecauseArgumentNotAdded)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DltArgumentCounter should not increase counter when no argument is added");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     uint8_t counter = 0;
     DltArgumentCounter sut{counter};
@@ -61,7 +61,7 @@ TEST(DltArgumentCounterShould, NotIncreaseCounterBecauseMaxCounterReached)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "DltArgumentCounter should not increase counter when the counter has maximum value");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     uint8_t counter = 255;
     DltArgumentCounter sut{counter};
@@ -79,7 +79,7 @@ TEST(DltArgumentCounterShould, NotIncreaseCounterBecauseMaxCounterReachedAndNoAr
         "Description",
         "DltArgumentCounter should not increase counter when the counter has maximum value and no argument is added");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     uint8_t counter = 255;
     DltArgumentCounter sut{counter};

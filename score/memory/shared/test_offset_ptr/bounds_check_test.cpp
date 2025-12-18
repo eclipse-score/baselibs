@@ -184,7 +184,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, DereferencingOffsetPtrReturnsCorrectValue)
     RecordProperty("Description", "Checks that dereferencing performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -204,7 +204,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtr)
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -224,7 +224,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtrWithTypedGet)
     RecordProperty("Description", "Checks that calling typed get() performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -244,7 +244,7 @@ TEST_P(OffsetPtrBoundsCheckFixture, GettingOffsetPtrWithSizedGet)
     RecordProperty("Description", "Checks that calling get() that accepts size as argument performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -303,7 +303,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, DereferencingOffsetPtrTerminates)
     RecordProperty("Description", "Checks that dereferencing performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -321,7 +321,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrGetTerminates)
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -339,7 +339,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrTypedGetTerminates)
     RecordProperty("Description", "Checks that calling typed get() performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -357,7 +357,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, OffsetPtrSizedGetTerminates)
     RecordProperty("Description", "Checks that calling get() that takes size as argument performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 
@@ -388,7 +388,7 @@ TEST_P(OffsetPtrBoundsCheckDeathFixture, ArrowOperatorTerminates)
     RecordProperty("Description", "Checks that calling get() performs bounds checking");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     const auto& params = GetParam();
 

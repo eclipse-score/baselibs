@@ -38,7 +38,7 @@ TEST(WaitFreeStack, AtomicOperationFetchAddForWriteIndex)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic fetch_add function for write_index_.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     using AtomicType = std::size_t;
 
@@ -61,7 +61,7 @@ TEST(WaitFreeStack, AtomicShallBeLockFree)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic lock-free.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     ASSERT_TRUE(
         (WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorReal>::AtomicIndex{}.is_always_lock_free));
@@ -77,7 +77,7 @@ TEST(WaitFreeStack, ConcurrentPushingAndReadingShouldReturnExpectedElements)
                    "Ensures that WaitFreeStack shall be capable of performing multiple "
                    "concurrent write operations without endless loops and return the correct data.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     constexpr auto stack_size = 10UL;
     WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorReal> stack{stack_size};

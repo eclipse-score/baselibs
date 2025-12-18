@@ -207,7 +207,7 @@ TEST(JsonSerializerTest, TestFailingDeserialization)
                    "the correct error code");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that does not match the structure of a serializable struct
     auto source = R"(
@@ -366,7 +366,7 @@ TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
         "data for it. In this case, deserialization should fail with the correct error code");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that matches the structure of a serializable struct with a mandatory field and the mandatory field
     // is not set in the JSON
@@ -438,7 +438,7 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a float number inside a field that expects an integer
     auto source = R"({
@@ -467,7 +467,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a float number inside a field that expects an integer
     auto source = R"({
@@ -497,7 +497,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a string inside a field that expects an integer
     auto source = R"({
@@ -527,7 +527,7 @@ TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
                    "for a given key");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that is not a list
     auto source = R"("Not a list")"_json;
@@ -549,7 +549,7 @@ TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON list that contains a string and a number
     auto source = R"(["Not a number", 42])"_json;
@@ -642,7 +642,7 @@ TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch
                    "Verify that deserializing an optional value fails if the enclosed type does not match");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that contains a string where an optional integer is expected
     auto source = R"({"mandatory_val": 42, "optional_val": [43]})"_json;

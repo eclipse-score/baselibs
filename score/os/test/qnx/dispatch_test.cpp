@@ -74,7 +74,7 @@ TEST_F(DispatchMockTest, name_attach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Attach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, name_attach);
     score::os::Dispatch::instance().name_attach(kNoDispatch, "path", kAttachFlags);
@@ -86,7 +86,7 @@ TEST_F(DispatchMockTest, name_detach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Detach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, name_detach);
     score::os::Dispatch::instance().name_detach(kNoAttach, kDetachFlags);
@@ -98,7 +98,7 @@ TEST_F(DispatchMockTest, name_open)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Open");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, name_open);
     score::os::Dispatch::instance().name_open("path", kOpenFlags);
@@ -110,7 +110,7 @@ TEST_F(DispatchMockTest, name_close)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Close");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, name_close);
     score::os::Dispatch::instance().name_close(kInvalidId);
@@ -122,7 +122,7 @@ TEST_F(DispatchMockTest, dispatch_create)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Create");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_create);
     score::os::Dispatch::instance().dispatch_create();
@@ -134,7 +134,7 @@ TEST_F(DispatchMockTest, dispatch_create_channel)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Create Channel");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_create_channel);
     score::os::Dispatch::instance().dispatch_create_channel(kInvalidId, DISPATCH_FLAG_NOLOCK);
@@ -146,7 +146,7 @@ TEST_F(DispatchMockTest, dispatch_destroy)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Destroy");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_destroy);
     score::os::Dispatch::instance().dispatch_destroy(kNoDispatch);
@@ -158,7 +158,7 @@ TEST_F(DispatchMockTest, dispatch_context_alloc)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Context Alloc");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_context_alloc);
     score::os::Dispatch::instance().dispatch_context_alloc(kNoDispatch);
@@ -170,7 +170,7 @@ TEST_F(DispatchMockTest, dispatch_context_free)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Context Free");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_context_free);
     score::os::Dispatch::instance().dispatch_context_free(kNoDispatchContext);
@@ -182,7 +182,7 @@ TEST_F(DispatchMockTest, dispatch_block)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Block");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_block);
     score::os::Dispatch::instance().dispatch_block(kNoDispatchContext);
@@ -194,7 +194,7 @@ TEST_F(DispatchMockTest, dispatch_unblock)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Unblock");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_unblock);
     score::os::Dispatch::instance().dispatch_unblock(kNoDispatchContext);
@@ -206,7 +206,7 @@ TEST_F(DispatchMockTest, dispatch_handler)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Handler");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, dispatch_handler);
     score::os::Dispatch::instance().dispatch_handler(kNoDispatchContext);
@@ -218,7 +218,7 @@ TEST_F(DispatchMockTest, resmgr_attach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Attach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, resmgr_attach);
     score::os::Dispatch::instance().resmgr_attach(
@@ -231,7 +231,7 @@ TEST_F(DispatchMockTest, resmgr_detach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Detach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, resmgr_detach);
     score::os::Dispatch::instance().resmgr_detach(kNoDispatch, kInvalidId, _RESMGR_DETACH_ALL);
@@ -243,7 +243,7 @@ TEST_F(DispatchMockTest, resmgr_msgget)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Msgget");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, resmgr_msgget);
     score::os::Dispatch::instance().resmgr_msgget(kNoResmgrContext, kNoMsg, kNoSize, kNoOffset);
@@ -255,7 +255,7 @@ TEST_F(DispatchMockTest, message_connect)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Connect");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_CALL(dispatchmock, message_connect);
     score::os::Dispatch::instance().message_connect(kNoDispatch, MSG_FLAG_SIDE_CHANNEL);
@@ -267,7 +267,7 @@ TEST_F(DispatchMockTest, message_attach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Attach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::int32_t (*const noHandler)(
         message_context_t* ctp, std::int32_t code, std::uint32_t flags, void* handle) noexcept {nullptr};
@@ -284,7 +284,7 @@ TEST(DispatchTest, name_attach_to_invalid_path_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Attach To Invalid Path Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -297,7 +297,7 @@ TEST(DispatchTest, name_detach_from_invalid_id_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Detach From Invalid Id Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -314,7 +314,7 @@ TEST(DispatchTest, name_open_invalid_path_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Open Invalid Path Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -327,7 +327,7 @@ TEST(DispatchTest, name_close_invalid_id_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Close Invalid Id Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -340,7 +340,7 @@ TEST(DispatchTest, dispatch_handler_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Handler Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -355,7 +355,7 @@ TEST(DispatchTest, CheckServerHappyFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Server Happy Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -622,7 +622,7 @@ TEST_F(DispatchResourceManagerTest, CheckResourceManagerHappyFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Resource Manager Happy Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto& dispatch = score::os::Dispatch::instance();
 
@@ -908,7 +908,7 @@ TEST_F(DispatchClientTest, DispatchClientHappyFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Client Happy Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // prepare the client setup
     CreateDispatchChannel();
@@ -939,7 +939,7 @@ TEST(DispatchTestFinal, resmgr_attach_without_privileges_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Attach Without Privileges Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto dpp = score::os::Dispatch::instance().dispatch_create();
     ASSERT_TRUE(dpp.has_value());
@@ -959,7 +959,7 @@ TEST(DispatchCreateInstance, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Dispatch::Default(memory_resource);
