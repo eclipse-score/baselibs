@@ -42,7 +42,7 @@ test:bl-x86_64-linux --config=bl_common
 # Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-x86_64-qnx --config=bl_stub
 build:bl-x86_64-qnx --config=bl_toolchain_common
-build:bl-x86_64-qnx --platforms=@score_toolchains_qnx//platforms:x86_64-qnx
+build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx8_0
 build:bl-x86_64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_x86_64
 test:bl-x86_64-qnx --config=bl_common
 

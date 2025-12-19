@@ -45,7 +45,7 @@ gcc.warning_flags(
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
 # Configure the target toolchain.
-bazel_dep(name = "score_toolchains_qnx", version = "0.0.5", dev_dependency = True)
+bazel_dep(name = "score_toolchains_qnx", version = "0.0.6", dev_dependency = True)
 
 toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx", dev_dependency = True)
 toolchains_qnx.sdp(
