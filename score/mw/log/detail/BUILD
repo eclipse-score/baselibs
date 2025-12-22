@@ -242,7 +242,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
+        "//visibility:public",
     ],
 )
 
