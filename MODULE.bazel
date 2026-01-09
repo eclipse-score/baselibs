@@ -68,6 +68,12 @@ bazel_dep(name = "score_docs_as_code", version = "2.2.0")
 bazel_dep(name = "score_process", version = "1.4.0")
 bazel_dep(name = "score_tooling", version = "1.0.4")
 
+git_override(
+    module_name = "score_tooling",
+    remote = "https://github.com/eclipse-score/tooling.git",
+    commit = "ae857267a9f2e9f2e6505f8547d86f0eff1fed5b",
+)
+
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.4.1")
