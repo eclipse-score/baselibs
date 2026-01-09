@@ -51,7 +51,7 @@ TEST(SysWaitImplTest, Wait)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Wait");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::SysWaitImpl syswait;
@@ -72,7 +72,7 @@ TEST(SysWaitImplTest, WaitFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Wait Fail");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::SysWait& syswait = score::os::SysWait::instance();
@@ -86,7 +86,7 @@ TEST(SysWaitImplTest, Waitpid)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Waitpid");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::SysWait& syswait = score::os::SysWait::instance();
@@ -107,7 +107,7 @@ TEST(SysWaitImplTest, WaitpidFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Waitpid Fail");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::SysWaitImpl syswait;

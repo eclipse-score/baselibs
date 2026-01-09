@@ -40,7 +40,7 @@ TEST_F(TcpKeepAliveTest, TcpKeepAlive)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TcpKeepAliveTest Tcp Keep Alive");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     int socketfd = 0;

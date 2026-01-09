@@ -40,7 +40,7 @@ TEST(SlotHandle, SlotHandleShallDefaultInitializeToZero)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the default initialization of SlotHandle instance.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -54,7 +54,7 @@ TEST(SlotHandle, GetSlotOfSelectedRecorderShallReturnCorrectSlot)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Set/Get slot method.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -68,7 +68,7 @@ TEST(SlotHandle, GetSlotShallReturnCorrectValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check getting the slot whose Set via constructor.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -81,7 +81,7 @@ TEST(SlotHandle, GetSlotShallReturnZeroOnIncorrectValue)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Check the in-ability of getting the slot in case of invalid recorder identifier value.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -93,7 +93,7 @@ TEST(SlotHandle, SetSlotShallSetCorrectValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the ability of seting slot properly.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -106,7 +106,7 @@ TEST(SlotHandle, SetSlotShallDiscardInvalidRecorder)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the in-ability of setting invalid recorder identifier value.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -119,7 +119,7 @@ TEST(SlotHandle, SetSelectedRecorderShallReturnCorrectValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of setting selected recorder.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -132,7 +132,7 @@ TEST(SlotHandle, SetSelectedRecorderShallIgnoreInvalidValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of SetSelectedRecorder to ignore invalid recorder.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -146,7 +146,7 @@ TEST(SlotHandle, GetSlotAvailableShallReturnTrueOnAssigned)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -158,7 +158,7 @@ TEST(SlotHandle, GetSlotAvailableShallReturnFalseOnInvalidRecorder)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -170,7 +170,7 @@ TEST(SlotHandle, ShallBeEqualIffSelectedRecorderAndSlotsAreEqual)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the equality of SlotHandle instances.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -192,7 +192,7 @@ TEST(SlotHandle, ShallBeUnequalIfSelectedRecorderUnequal)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -208,7 +208,7 @@ TEST(SlotHandle, ShallBeUnequalIfAnySlotUnequal)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
@@ -224,7 +224,7 @@ TEST(SlotHandle, ShallBeUnequalIfAnySlotUnequalAssigned)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 

@@ -45,7 +45,7 @@ TEST_F(MQueueFixture, shouldConfigureNonBlock)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue should configure non block");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite |
@@ -59,7 +59,7 @@ TEST_F(MQueueFixture, shouldConfigureBlock)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue should configure block");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite;
@@ -73,7 +73,7 @@ TEST_F(MQueueFixture, shouldUnlinkDefinedQueue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mqueue should Unlink Defined Queue");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -87,7 +87,7 @@ TEST_F(MQueueFixture, shouldUnlinkUndefinedQueue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mqueue should Unlink Undefined Queue");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -107,7 +107,7 @@ TEST_F(MQueueFixture, shouldFaileToUnlink)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "mqueue should Faile To Unlink");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -125,7 +125,7 @@ TEST(MQueue, PMRDefaultShallReturnImplInstance)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue shall PMR Default Shall Return Impl Instance");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
@@ -139,7 +139,7 @@ TEST_F(MQueueFixture, shouldFailToReceive)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Fail To Receive");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -156,7 +156,7 @@ TEST_F(MQueueFixture, shouldFailToReceiveTwice)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Fail To Receive Twice");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -174,7 +174,7 @@ TEST_F(MQueueFixture, shouldFailToSend)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Fail To Send");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     uint8_t send_arr[9] = {0x00, 0x02, 0x00, 0x02, 0x02, 0x03, 0x04, 0x05, 0x06};
@@ -192,7 +192,7 @@ TEST_F(MQueueFixture, shouldFailToSendDueInteruptSignal)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Fail To Send Due Interupt Signal");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     uint8_t send_arr[9] = {0x00, 0x02, 0x00, 0x02, 0x02, 0x03, 0x04, 0x05, 0x06};
@@ -211,7 +211,7 @@ TEST_F(MQueueFixture, shouldConfigurekExistUseOthCreate)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Configurek Exist Use Oth Create");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite;
@@ -225,7 +225,7 @@ TEST_F(MQueueFixture, shouldCallSend)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Call Send");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite;
@@ -242,7 +242,7 @@ TEST_F(MQueueFixture, shouldCallReceive)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Call Receive");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite;
@@ -259,7 +259,7 @@ TEST_F(MQueueFixture, shouldReturnErrorWhenOpenFailed)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Return Error When Open Failed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::Mqueue::OpenFlag flags = score::os::Mqueue::OpenFlag::kCreate | score::os::Mqueue::OpenFlag::kReadWrite;
@@ -273,7 +273,7 @@ TEST_F(MQueueFixture, shouldReturnErrorWhenSetPermissionsFailed)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture should Return Error When Set Permissions Failed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::StatMock stat_mock;
@@ -289,7 +289,7 @@ TEST_F(MQueueFixture, failOnGetQueuePermissions)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueueFixture fail On Get Queue Permissions");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const score::cpp::expected_blank<Error> error = score::cpp::make_unexpected(Error::createFromErrno(5));
@@ -309,7 +309,7 @@ TEST(Mqueue, shouldOpenReadAndWrite)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mqueue should Open Read And Write");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::MqueueMock mqueue_mock;
@@ -325,7 +325,7 @@ TEST(Mqueue, failOnGetQueueAttributes)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Mqueue fail On Get Queue Attributes");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     score::os::MqueueMock mqueue_mock;

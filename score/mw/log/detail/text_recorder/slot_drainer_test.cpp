@@ -76,7 +76,7 @@ TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes will fail with IO error in case of failure path.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given write file error
@@ -105,7 +105,7 @@ TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlo
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "If write not completed, the Flush API would wait till flushing is complete.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given write file error
@@ -139,7 +139,7 @@ TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes shall succeed in case of proper arguments.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given one slot flushed
@@ -174,7 +174,7 @@ TEST_F(SlotDrainerFixture, TestTooManySlotsForSingleCallShallNotBeAbleToFlushAll
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Fails to flush all slots in case of exceeding the limit of slots to be processed per one call.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t kLimiNumberOfSlotsProcesssedInOneCall = 2UL;

@@ -37,7 +37,7 @@ TEST(detail, extract_type)
     RecordProperty("Description",
                    "Logging library shall provide an annotation mechanism for data structures to support automatic "
                    "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     const auto& likely_format = "static constexpr auto& test::struct_visitable_impl<test::S1>::namedata()";
     const auto type_string = ::score::common::visitor::detail::visitor_extract_type<std::string>(likely_format);
@@ -59,7 +59,7 @@ TEST(detail, skip_trailing_space)
     RecordProperty("Description",
                    "Verifies that 'strip_trailing_spaces' API shall return the value of the last parameter provided if "
                    "it gets a value out of range or a value zero for parameter 'end'.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     constexpr std::size_t expected_out_of_bounds_end_value = 16;
     constexpr std::size_t expected_zero_output_when_zero_input_end_value = 0;

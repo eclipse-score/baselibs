@@ -120,7 +120,7 @@ TEST_F(MemoryResourceManagerDeathTest, ProperHandleNonExistingMemoryResource)
     RecordProperty("Verifies", "SCR-6223631");
     RecordProperty("Description",
                    "The MemoryRessourceProxy shall store its identifier in a way, that it can detect corruptions.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
@@ -184,7 +184,7 @@ TEST_F(BoundCheckedMemoryResourceManagerDeathTest, AllocationTerminatesWhenProxy
     RecordProperty("Verifies", "SCR-6223631");
     RecordProperty("Description",
                    "The MemoryRessourceProxy shall store its identifier in a way, that it can detect corruptions.");
-    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Priority", "1");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 

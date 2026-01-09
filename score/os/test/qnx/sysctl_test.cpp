@@ -49,7 +49,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctl)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t RETURN_LENGTH = 100;
@@ -89,7 +89,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctlbyname)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const std::size_t RETURN_LENGTH = 100;
@@ -126,7 +126,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctl_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::array<std::int32_t, 2> sys_name = {
@@ -146,7 +146,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctl_Failure)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl Failure");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::array<std::int32_t, 6> sys_name = {1, 2, 3, 4, 5, 6};
@@ -161,7 +161,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlbyname_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::size_t sys_len{};
@@ -180,7 +180,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlbyname_Failure)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname Failure");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto res = instance_.sysctlbyname("", nullptr, nullptr, nullptr, 0);
@@ -192,7 +192,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctlnametomib)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* sys_name = "some.dummy.parameter";
@@ -222,7 +222,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Success)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib Success");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     int mib[4] = {0};
@@ -238,7 +238,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Failure)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib Failure");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     int mib[4] = {0};

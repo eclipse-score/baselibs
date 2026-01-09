@@ -30,7 +30,7 @@ TEST(TimeImplTest, ClockSettimeFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Failure");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec new_time;
@@ -54,7 +54,7 @@ TEST(TimeImplTest, ClockGetTimeSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Time Success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec get_time{};
@@ -73,7 +73,7 @@ TEST(TimeImplTest, GettimeFailsWithInvalidClockId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Gettime Fails With Invalid Clock Id");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec get_time{};
@@ -88,7 +88,7 @@ TEST(TimeImplTest, ClockSettimeSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec new_time;
@@ -114,7 +114,7 @@ TEST(TimeImplTest, ClockGetResSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Success");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec get_res{};
@@ -133,7 +133,7 @@ TEST(TimeImplTest, ClockGetResFailsWithInvalidClockId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Fails With Invalid Clock Id");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     struct timespec get_res{};
@@ -148,7 +148,7 @@ TEST(TimeImplTest, LocaltimeRSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Localtime RSuccess");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto current_time = std::chrono::system_clock::now();

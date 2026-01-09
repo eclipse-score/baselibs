@@ -66,7 +66,7 @@ TEST_F(SocketRAWTest, CreationSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of RAW async socket is successful");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     factory = new SocketFactory();
@@ -80,7 +80,7 @@ TEST_F(SocketRAWTest, CreationFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that creation of RAW async socket fails");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _))
         .Times(Exactly(1))
@@ -97,7 +97,7 @@ TEST_F(SocketRAWTest, ConnectFailed)
     RecordProperty("ASIL", "B");
     RecordProperty("Priority", "3");
     RecordProperty("Description", "Verifies that connection on RAW async socket fails");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
     EXPECT_CALL(sock_mock_, socket(_, _, _)).Times(Exactly(1)).WillOnce(Return(kSocketFD));
     factory = new SocketFactory();

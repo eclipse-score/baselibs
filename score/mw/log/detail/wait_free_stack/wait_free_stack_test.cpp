@@ -37,7 +37,7 @@ TEST(WaitFreeStack, AtomicOperationFetchAddForWriteIndex)
     RecordProperty("Requirement", "SCR-861578");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic fetch_add function for write_index_.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     using AtomicType = std::size_t;
@@ -60,7 +60,7 @@ TEST(WaitFreeStack, AtomicShallBeLockFree)
     RecordProperty("Requirement", "SCR-861578");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic lock-free.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     ASSERT_TRUE(
@@ -76,7 +76,7 @@ TEST(WaitFreeStack, ConcurrentPushingAndReadingShouldReturnExpectedElements)
     RecordProperty("Description",
                    "Ensures that WaitFreeStack shall be capable of performing multiple "
                    "concurrent write operations without endless loops and return the correct data.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     constexpr auto stack_size = 10UL;

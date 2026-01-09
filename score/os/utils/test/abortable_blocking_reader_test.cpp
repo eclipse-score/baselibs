@@ -82,7 +82,7 @@ TEST_F(NonBlockingFileDescriptorTest, DefaultConstructionSetsUnderlyingFileDescr
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Default Construction Sets Underlying File Descriptor To Invalid Value");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     NonBlockingFileDescriptor non_blocking_file_descriptor{};
@@ -96,7 +96,7 @@ TEST_F(NonBlockingFileDescriptorTest, ConstructionViaFactoryWhenNonBlockingFlagI
     RecordProperty("Description",
                    "NonBlockingFileDescriptorTest Construction Via Factory When Non Blocking Flag Is Present In File "
                    "Descriptor Flags");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto expected_flags{existing_flags_ | Fcntl::Open::kNonBlocking};
@@ -115,7 +115,7 @@ TEST_F(NonBlockingFileDescriptorTest, ConstructionViaFactoryAddsNonBlockingFlagT
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Construction Via Factory Adds Non Blocking Flag To File Descriptor Flags");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ::testing::InSequence sequence{};
@@ -138,7 +138,7 @@ TEST_F(NonBlockingFileDescriptorTest, ConstructionViaFactoryFailsIfCannotGetFlag
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Construction Via Factory Fails If Cannot Get Flags Of File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ::testing::InSequence sequence{};
@@ -160,7 +160,7 @@ TEST_F(NonBlockingFileDescriptorTest, ConstructionViaFactoryFailsIfCannotSetFlag
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Construction Via Factory Fails If Cannot Set Flags Of File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto expected_flags{existing_flags_ | Fcntl::Open::kNonBlocking};
@@ -177,7 +177,7 @@ TEST_F(NonBlockingFileDescriptorTest, DestructionClosesUnderlyingFileDescriptor)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingFileDescriptorTest Destruction Closes Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto non_blocking_file_descriptor = NonBlockingFileDescriptor::Make(file_descriptor_, fcntl_mock_, unistd_mock_);
@@ -192,7 +192,7 @@ TEST_F(NonBlockingFileDescriptorTest, DestructionTerminatesIfItFailsToCloseUnder
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Destruction Terminates If It Fails To Close Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     ASSERT_DEATH(
@@ -213,7 +213,7 @@ TEST_F(NonBlockingFileDescriptorTest, MoveAssignmentTerminatesIfItFailsToCloseUn
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Move Assignment Terminates If It Fails To Close Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_DEATH(
@@ -237,7 +237,7 @@ TEST_F(NonBlockingFileDescriptorTest, DestructionDoesNotTryToCloseInvalidUnderly
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Destruction Does Not Try To Close Invalid Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto invalid_file_descriptor{-1};
@@ -255,7 +255,7 @@ TEST_F(NonBlockingFileDescriptorTest, MoveConstructedFromInstanceDoesNotCloseMov
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Move Constructed From Instance Does Not Close Moved Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto non_blocking_file_descriptor = NonBlockingFileDescriptor::Make(file_descriptor_, fcntl_mock_, unistd_mock_);
@@ -274,7 +274,7 @@ TEST_F(NonBlockingFileDescriptorTest, MoveAssignedFromInstanceDoesNotCloseMovedU
     RecordProperty(
         "Description",
         "NonBlockingFileDescriptorTest Move Assigned From Instance Does Not Close Moved Underyling File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     constexpr auto other_filepath{"/tmp/non_blocking_file_descriptor_test_other"};
@@ -304,7 +304,7 @@ TEST_F(NonBlockingFileDescriptorTest, GetUnderlyingReturnsUnderlyingFileDescript
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingFileDescriptorTest Get Underlying Returns Underlying File Descriptor");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto non_blocking_file_descriptor = NonBlockingFileDescriptor::Make(file_descriptor_, fcntl_mock_, unistd_mock_);
@@ -317,7 +317,7 @@ TEST_F(NonBlockingFileDescriptorTest, CanImplicitlyCastToInt32T)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingFileDescriptorTest Can Implicitly Cast To Int32T");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto non_blocking_file_descriptor = NonBlockingFileDescriptor::Make(file_descriptor_, fcntl_mock_, unistd_mock_);
@@ -414,7 +414,7 @@ TEST(AbortableBlockingReaderTestDefaultConstructor, CreatesNewPipeWhenConstructe
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTestDefaultConstructor Creates New Pipe When Constructed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     AbortableBlockingReader reader{};
@@ -426,7 +426,7 @@ TEST_F(AbortableBlockingReaderTest, CreatesNewPipeWhenConstructed)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Creates New Pipe When Constructed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*unistd_mock_, pipe(::testing::_));
@@ -441,7 +441,7 @@ TEST_F(AbortableBlockingReaderTest, MarkedInvalidIfPipeCreationFailedDuringConst
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "AbortableBlockingReaderTest Marked Invalid If Pipe Creation Failed During Construction");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*unistd_mock_, pipe(::testing::_))
@@ -459,7 +459,7 @@ TEST_F(AbortableBlockingReaderTest, MarkedInvalidIfFirstPipeFileDescriptorCanNot
     RecordProperty(
         "Description",
         "AbortableBlockingReaderTest Marked Invalid If First Pipe File Descriptor Can Not Be Made Non Blocking");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*fcntl_mock_, fcntl(::testing::_, ::testing::_, ::testing::_))
@@ -477,7 +477,7 @@ TEST_F(AbortableBlockingReaderTest, MarkedInvalidIfSecondPipeFileDescriptorCanNo
     RecordProperty(
         "Description",
         "AbortableBlockingReaderTest Marked Invalid If Second Pipe File Descriptor Can Not Be Made Non Blocking");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*fcntl_mock_, fcntl(::testing::_, ::testing::_, ::testing::_))
@@ -494,7 +494,7 @@ TEST_F(AbortableBlockingReaderTest, ClosesPipeWhenDestructed)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Closes Pipe When Destructed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::int32_t signaled_fd;
@@ -515,7 +515,7 @@ TEST_F(AbortableBlockingReaderTest, CanOnlyCallReadIfMarkedValid)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Can Only Call Read If Marked Valid");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*unistd_mock_, pipe(::testing::_))
@@ -534,7 +534,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsOnceDataBecomesAvailable)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns Once Data Becomes Available");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::promise<void> unblock_promise{};
@@ -568,7 +568,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsErrorIfSelectFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns Error If Select Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*syspoll_mock_, poll(::testing::_, ::testing::_, ::testing::_))
@@ -588,7 +588,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsErrorIfFileDescriptorIsInvalid)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns Error If File Descriptor Is Invalid");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     AbortableBlockingReader reader{fcntl_mock_, syspoll_mock_, unistd_mock_};
@@ -606,7 +606,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsWhenReaderIsDestructed)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns When Reader Is Destructed");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::future<void> read_future{};
@@ -642,7 +642,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsWhenStopCalled)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns When Stop Called");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::promise<void> unblock_promise{};
@@ -677,7 +677,7 @@ TEST_F(AbortableBlockingReaderTest, StopIsInvokedUntilReaderReleasesTheMutex)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Stop Is Invoked Until Reader Releases The Mutex");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::promise<void> unblock_promise{};
@@ -711,7 +711,7 @@ TEST_F(AbortableBlockingReaderTest, DestructorTerminatesOnUnexpectedError)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Destructor Terminates On Unexpected Error");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     auto stop_reader = [this] {
@@ -728,7 +728,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsErrorIfAlreadyStopped)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns Error If Already Stopped");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     AbortableBlockingReader reader{fcntl_mock_, syspoll_mock_, unistd_mock_};
@@ -747,7 +747,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsErrorIfReadFails)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "AbortableBlockingReaderTest Read Returns Error If Read Fails");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     EXPECT_CALL(*unistd_mock_, read(file_descriptor_1_.GetUnderlying(), ::testing::_, ::testing::_))
@@ -771,7 +771,7 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsDataForMultipleFileDescriptorsSim
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "AbortableBlockingReaderTest Read Returns Data For Multiple File Descriptors Simultaneously");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::promise<void> unblock_promise_1{};
@@ -822,7 +822,7 @@ TEST_F(AbortableBlockingReaderTest, WillUnblockReadsForMultipleFileDescriptorsSi
     RecordProperty(
         "Description",
         "AbortableBlockingReaderTest Will Unblock Reads For Multiple File Descriptors Simultaneously On Destruction");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::future<void> read_future_1{};

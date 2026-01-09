@@ -69,7 +69,7 @@ TEST_F(TextMessageBuilderFixture, ShallDepleteAfterHeaderAndPayload)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextMessageBuilder shall deplete after getting header and payload.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     unit_.SetNextMessage(log_record_);
@@ -88,7 +88,7 @@ TEST_F(TextMessageBuilderFixture, HeaderShallHaveSpecificElements)
     RecordProperty("Description",
                    "Header of TextMessageBuilder shall have specific elements like context id, application id, ecu id, "
                    "and number of args.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     unit_.SetNextMessage(log_record_);
@@ -110,7 +110,7 @@ TEST_F(TextMessageBuilderFixture, PayloadShouldHaveSetText)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Payload of TextMessageBuilder shall have the set text.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     unit_.SetNextMessage(log_record_);
@@ -137,7 +137,7 @@ TEST_P(TextMessageBuilderFixture, HeaderShallHaveLevelPrintedForAllParams)
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Header of TextMessageBuilder shall have printed level for all parameters.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto& log_entry = log_record_.getLogEntry();
@@ -156,7 +156,7 @@ TEST_F(TextMessageBuilderFixture, LogLevelToStringShouldReturnUndefinedForInvali
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "LogLevelToString should return 'undefined' for an invalid log level.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestingTechnique", "requirements-based");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     auto& log_entry = log_record_.getLogEntry();

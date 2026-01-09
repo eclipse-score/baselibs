@@ -122,7 +122,7 @@ TEST_F(FixtureMQueueShould, sendACharPointerToOtherProcess)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueShould send AChar Pointer To Other Process");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const char* msg = "020223456"; /* TODO : create tests with different formats of the msg, for better check */
@@ -147,7 +147,7 @@ TEST_F(FixtureMQueueShould, sendAStringToOtherProcess)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueShould send AString To Other Process");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string msg{std::to_string(0x01)};
@@ -167,7 +167,7 @@ TEST_F(FixtureMQueueMaxMsgSizeShould, SendALongStringToOtherProzess)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueMaxMsgSizeShould Send ALong String To Other Prozess");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::thread test_tr([&msg = msg]() {
@@ -187,7 +187,7 @@ TEST_F(FixtureMQueueMaxMsgSizeShould, ReopenOnlyWithId)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueMaxMsgSizeShould Reopen Only With Id");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     size_t id = queue.get_id();
@@ -208,7 +208,7 @@ TEST(MQueue, TryOpenNotExistingMQqueue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue Try Open Not Existing MQqueue");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue test{"blah", AccessMode::kUse};
@@ -221,7 +221,7 @@ TEST(MQueue, shouldReturnId)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue should Return Id");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreate};
@@ -235,7 +235,7 @@ TEST(MQueue, ShouldGetEmtpyMessage)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue Should Get Emtpy Message");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreateNonBlocking};
@@ -249,7 +249,7 @@ TEST_F(FixtureMQueueShould, timedBlockEmptyQueue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueShould timed Block Empty Queue");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::pair<std::string, bool> result = queue.timed_receive(std::chrono::milliseconds(100));
@@ -262,7 +262,7 @@ TEST(MQueue, timedNonBlockEmptyQueue)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MQueue timed Non Block Empty Queue");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     MQueue queue{"some_name", AccessMode::kCreateNonBlocking};
@@ -277,7 +277,7 @@ TEST_F(FixtureMQueueShould, timedBlockSendMessage)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueShould timed Block Send Message");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::string msg{"thunder"};
@@ -296,7 +296,7 @@ TEST_F(FixtureMQueueStringShould, timedBlockCharArrayMessage)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueStringShould timed Block Char Array Message");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::thread test_tr1([]() {
@@ -320,7 +320,7 @@ TEST_F(FixtureMQueueStringShould, timedBlockDeffectedCharArrayMessage)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueStringShould timed Block Deffected Char Array Message");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::thread test_tr1([]() {
@@ -342,7 +342,7 @@ TEST_F(FixtureMQueueStringShould, timedBlockMessage)
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FixtureMQueueStringShould timed Block Message");
-    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("TestingTechnique", "interface-test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     std::thread test_tr1([]() {
