@@ -65,7 +65,7 @@ bazel_dep(name = "download_utils", version = "1.0.1")
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "2.2.0")
-bazel_dep(name = "score_process", version = "1.4.0")
+bazel_dep(name = "score_process", version = "1.4.0", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.0.4")
 
 ## Configure the python toolchain
