@@ -47,7 +47,7 @@ TEST(LogStream, CorrectlyHandleStartStop)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability to start and stop stream.");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecorderMock recorder_mock_{};
     detail::Runtime::SetRecorder(&recorder_mock_);
 
@@ -68,7 +68,7 @@ TEST(LogStream, CanLogRecursive)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that logging recursively calls the normal recorder");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecorderMock recorder_mock_{};
     detail::Runtime::SetRecorder(&recorder_mock_);
 
@@ -119,7 +119,7 @@ TYPED_TEST_P(DurationTest, insertion_operator_chrono_duration)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "ara log shall be able to log chrono duration with unit suffix");
     this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // changing representation to double to prevent amiguity between int*, float and double types
     using d_TypeParam = std::chrono::duration<double, typename TypeParam::period>;
@@ -137,7 +137,7 @@ TEST(LogStream, WhenTryToGetStreamWithEmptyStringViewShallReturnDfltStream)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Getting stream with empty string view shall return the default context id.");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecorderMock recorder_mock_{};
     detail::Runtime::SetRecorder(&recorder_mock_);
 
@@ -153,7 +153,7 @@ TEST(LogStream, TypeSupport)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the support for logging various types.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto ensure_that_log_stream_reports_support_for = [](auto value) {
         using ValueType = decltype(value);
@@ -234,7 +234,7 @@ TEST_F(LogStreamFixture, CanLogBool)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging boolean value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = true;
 
@@ -251,7 +251,7 @@ TEST_F(LogStreamFixture, CanLogUint8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int8 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::uint8_t{5};
 
@@ -268,7 +268,7 @@ TEST_F(LogStreamFixture, CanLogInt8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging int8 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::int8_t{5};
 
@@ -285,7 +285,7 @@ TEST_F(LogStreamFixture, CanLogUint16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int16 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::uint16_t{5};
 
@@ -307,7 +307,7 @@ TEST_F(LogStreamFixture, CanLogSlog2Message)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging int16 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto value = mw::log::LogSlog2Message{0U, std::string_view{"Any string"}};
 
@@ -327,7 +327,7 @@ TEST_F(LogStreamFixture, CanLogInt16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging int16 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::int16_t{5};
 
@@ -344,7 +344,7 @@ TEST_F(LogStreamFixture, CanLogUint32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int32 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::uint32_t{5};
 
@@ -361,7 +361,7 @@ TEST_F(LogStreamFixture, CanLogInt32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging int32 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::int32_t{5};
 
@@ -378,7 +378,7 @@ TEST_F(LogStreamFixture, CanLogUint64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int64 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::uint64_t{5};
 
@@ -395,7 +395,7 @@ TEST_F(LogStreamFixture, CanLogInt64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging int64 value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = std::int64_t{5};
 
@@ -412,7 +412,7 @@ TEST_F(LogStreamFixture, CanLogFloat)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging float value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = float{5.2F};
 
@@ -429,7 +429,7 @@ TEST_F(LogStreamFixture, CanLogDouble)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging double value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto constexpr value = double{5.2};
 
@@ -446,7 +446,7 @@ TEST_F(LogStreamFixture, CanLogAmpStringView)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging std::string_view value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto value = std::string_view{"Foo"};
 
@@ -463,7 +463,7 @@ TEST_F(LogStreamFixture, CanLogStdStringView)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging std::string_view value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto value = std::string_view{"Foo"};
 
@@ -480,7 +480,7 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyAmpStringViewShallNotLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that in case of empty std::string_view we shall expect no logs.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto value = std::string_view{};
 
@@ -497,7 +497,7 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyStdStringViewShallNotLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that in case of empty std::string_view we shall expect no logs.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     auto value = std::string_view{};
 
@@ -514,7 +514,7 @@ TEST_F(LogStreamFixture, CanLogConstStringReference)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging const string reference.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     const auto value = std::string{"Foo"};
 
@@ -531,7 +531,7 @@ TEST_F(LogStreamFixture, CanLogStdArrayOfChar)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging std::array<char> value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Expecting that the expected value will be transferred to the correct log call
     ::testing::InSequence in_sequence{};
@@ -548,7 +548,7 @@ TEST_F(LogStreamFixture, CanLogCharArrayLiteral)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging char[] literal value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Expecting that the expected value will be transferred to the correct log call
     EXPECT_CALL(recorder_mock_, LogStringView(HANDLE, std::string_view{__func__})).Times(2);
@@ -563,7 +563,7 @@ TEST_F(LogStreamFixture, CanLogPtrToNonConstChar)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging pointer to non-const char.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     std::array<char, 4> value{'F', 'o', 'o', '\0'};
 
@@ -580,7 +580,7 @@ TEST_F(LogStreamFixture, CanLogStringLiteral)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging string literal value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     LogString::CharPtr value = "Foo";
 
@@ -597,7 +597,7 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyStringLiteralShallNotLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that in case of empty string literal we shall expect no logs.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a value we want to log
     LogString::CharPtr value = nullptr;
 
@@ -614,7 +614,7 @@ TEST_F(LogStreamFixture, LogStreamMoveConstructorShallDetachMovedFromInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of log value using a moved LogStream instance.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // When logging the value
     auto log_stream_moved_from = Unit();
@@ -636,7 +636,7 @@ TEST_F(LogStreamFixture, CanLogHex8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int8 in hexdecimal representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogHex8 value{0xFF};
@@ -654,7 +654,7 @@ TEST_F(LogStreamFixture, CanLogHex16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int16 in hexdecimal representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogHex16 value{0xFFFF};
@@ -672,7 +672,7 @@ TEST_F(LogStreamFixture, CanLogHex32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int32 in hexdecimal representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogHex32 value{0xFFFFFF};
@@ -690,7 +690,7 @@ TEST_F(LogStreamFixture, CanLogHex64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int64 in hexdecimal representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogHex64 value{0xFFFFFFFF};
@@ -708,7 +708,7 @@ TEST_F(LogStreamFixture, CanLogBin8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int8 in binary representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogBin8 value{0xFF};
@@ -726,7 +726,7 @@ TEST_F(LogStreamFixture, CanLogBin16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int16 in binary representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogBin16 value{0xFFFF};
@@ -744,7 +744,7 @@ TEST_F(LogStreamFixture, CanLogBin32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int32 in binary representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogBin32 value{0xFFFFFF};
@@ -761,7 +761,7 @@ TEST_F(LogStreamFixture, CanLogBin64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging unsigned int64 in binary representation.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogBin64 value{0xFFFFFFFF};
@@ -778,7 +778,7 @@ TEST_F(LogStreamFixture, CanLogRawBuffer)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging LogRawBuffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     char s2[]{"1234"};
@@ -797,7 +797,7 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyRawBufferShallNotLog)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Logging empty LogRawBuffer shall not log.");
     RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     const LogRawBuffer value{nullptr, 1};
@@ -815,7 +815,7 @@ TEST_F(LogStreamFixture, CanLogACustomType)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging custom type (struct).");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     ::testing::InSequence in_sequence{};
 
@@ -846,7 +846,7 @@ TEST(LogStreamFlush, WhenFlushingLogStreamAfterLogUint8ShallBeAbleToLogBoolAgain
                    "Verifies teh ability of flushing LogStream used to log unsigned int8 and then use it again to log "
                    "boolean value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     constexpr auto value_uint8 = std::uint8_t{5};
@@ -881,7 +881,7 @@ TEST(LogStreamFlush, AvoidFormattingCallsWhenSlotIsNotAvailable)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of logging formatting functions if no slots are reserved.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     constexpr auto value_uint8 = std::uint8_t{5};
@@ -918,7 +918,7 @@ TEST(LogStreamFlush, WhenEmptyAppIdStringProvidedExpectDefaultOneReturned)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "When empty app id is provided the default context id shall be returned.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a value we want to log
     constexpr auto value_uint8 = std::uint8_t{5};
@@ -985,7 +985,7 @@ TEST_F(LogStreamFixture, UsesFallbackRecorderWithinOtherRecorder)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the fallback recorder is used, if another recorder also uses logging");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto local_stream_ = Unit();
     // Expecting that we log once via the normal recorder

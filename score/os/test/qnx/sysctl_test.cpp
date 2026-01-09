@@ -50,7 +50,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctl)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::size_t RETURN_LENGTH = 100;
     std::int32_t sys_name[6] = {1, 2, 3, 4, 5, 6};
@@ -90,7 +90,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctlbyname)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::size_t RETURN_LENGTH = 100;
     const char* sys_name = "some.dummy.parameter";
@@ -127,7 +127,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctl_Success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::array<std::int32_t, 2> sys_name = {
         CTL_KERN,
@@ -147,7 +147,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctl_Failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctl Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::array<std::int32_t, 6> sys_name = {1, 2, 3, 4, 5, 6};
     std::array<std::int8_t, 1> buf_small{};
@@ -162,7 +162,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlbyname_Success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::size_t sys_len{};
 
@@ -181,7 +181,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlbyname_Failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function sysctlbyname Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto res = instance_.sysctlbyname("", nullptr, nullptr, nullptr, 0);
     ASSERT_FALSE(res.has_value());
@@ -193,7 +193,7 @@ TEST_F(SysctlTestMock, TestFunction_sysctlnametomib)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const char* sys_name = "some.dummy.parameter";
     int mib[4] = {0};
@@ -223,7 +223,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Success)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     int mib[4] = {0};
     size_t mib_len = 4;
@@ -239,7 +239,7 @@ TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Failure)
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "Test Function sysctlnametomib Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     int mib[4] = {0};
     size_t mib_len = 4;

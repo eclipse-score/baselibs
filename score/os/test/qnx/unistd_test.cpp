@@ -70,7 +70,7 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidReturnsErrorIfPassInvalidParams)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set groups pid returns Error If Pass Invalid Params");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto val = unit_->setgroupspid(-1, nullptr, 0);
     ASSERT_FALSE(val.has_value());
@@ -82,7 +82,7 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidNewGroupAdded)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set groups pid New Group Added");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ForkAndExpectTrue([]() noexcept {
         score::os::qnx::QnxUnistdImpl unistd_inst{};
@@ -136,7 +136,7 @@ TEST_F(QnxUnistdFixture, SetuidChangesUidIfPassValidId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set uid Changes Uid If Pass Valid Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ASSERT_EQ(::getuid(), 0);
 
@@ -155,7 +155,7 @@ TEST_F(QnxUnistdFixture, SetGidSetsGidIfPassValidId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Set Gid Sets Gid If Pass Valid Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     ASSERT_EQ(::getuid(), 0);
 

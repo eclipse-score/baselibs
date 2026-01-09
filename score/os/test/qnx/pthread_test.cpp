@@ -24,7 +24,7 @@ TEST(PthreadNameTest, GetNameFailsWhenBufferSizeTooBig)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get Name Fails When Buffer Size Too Big");
     RecordProperty("TestingTechnique", "T-REQ");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::size_t size_too_big = static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()) + 1;
     char buffer[4096];  // fails to allocate buffer with `size_too_big` amount on stack. Follow up operation which
@@ -42,7 +42,7 @@ TEST(QnxPthreadTest, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Pthread::Default(memory_resource);

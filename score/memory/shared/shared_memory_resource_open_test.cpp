@@ -47,7 +47,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryReadOnlyByDefault)
         "Can open shared memory segment read-only. Only opens shared memory segment provided in constructor.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -67,7 +67,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningSharedMemoryFreesResourcesOnDestruct
     RecordProperty("Description", "SharedMemoryResource shall free resources only on destruction.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
@@ -116,7 +116,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryWillWaitUntilLockFileIsGon
     RecordProperty("Description", "Can open shared memory segment read-only after a lock was created");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -173,7 +173,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryReadWrite)
         "Can open shared memory segment read-write. Only opens shared memory segment provided in constructor.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
@@ -194,7 +194,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceThatDoesNotExistWillReturnEr
                    "Checks that Open will return an error when the underlying resource cannot be found.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     constexpr bool is_read_write = false;
 
@@ -222,7 +222,7 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceWithoutTheRequiredACLsWillRe
                    "open the underlying resource.");
     RecordProperty("TestType", "Requirements-based test");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     constexpr bool is_read_write = false;
 

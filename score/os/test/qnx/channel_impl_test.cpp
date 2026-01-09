@@ -83,7 +83,7 @@ TEST_F(ChannelImplFixture, MsgReceiveReturnsErrorIfInvalidChId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message receive returns Error If Invalid Ch Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = unit_->MsgReceive(kInvalidId, kNoMsg, kNoBytes, kNoInfo);
     EXPECT_FALSE(result.has_value());
@@ -95,7 +95,7 @@ TEST_F(ChannelImplFixture, MsgReceivevReturnsErrorIfInvalidChId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message receivev returns Error If Invalid Ch Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto riov_size = 8;
     iov_t riov[riov_size]{};
@@ -111,7 +111,7 @@ TEST_F(ChannelImplFixture, MsgReceivePulseReturnsErrorIfInvalidChId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message receive Pulse returns Error If Invalid Ch Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = unit_->MsgReceivePulse(kInvalidId, kNoMsg, kNoBytes, kNoInfo);
     EXPECT_FALSE(result.has_value());
@@ -123,7 +123,7 @@ TEST_F(ChannelImplFixture, MsgReplyReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message reply returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto buff_size = 255;
     char buff[buff_size];
@@ -139,7 +139,7 @@ TEST_F(ChannelImplFixture, MsgReplyvReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message reply returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto riov_size = 8;
     iov_t riov[riov_size]{};
@@ -155,7 +155,7 @@ TEST_F(ChannelImplFixture, MsgErrorReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Error returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr std::int32_t error = EOK;
     const auto result = unit_->MsgError(kInvalidId, error);
@@ -168,7 +168,7 @@ TEST_F(ChannelImplFixture, MsgSendReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     MessageData data{};
     const auto result = unit_->MsgSend(kInvalidId, &data, sizeof(data), kNoReply, kNoBytes);
@@ -181,7 +181,7 @@ TEST_F(ChannelImplFixture, MsgSendvReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Sendv returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto iov_size = 8;
     iov_t siov[iov_size]{};
@@ -198,7 +198,7 @@ TEST_F(ChannelImplFixture, SetIovFillsPredefinedMsgData)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Set Iov Fills Predefined Msg Data");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     iov_t msg{};
     MessageData data{};
@@ -216,7 +216,7 @@ TEST_F(ChannelImplFixture, SetIovConstFillsPredefinedMsgData)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Set Iov Const Fills Predefined Msg Data");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     iov_t msg{};
     MessageData data{};
@@ -234,7 +234,7 @@ TEST_F(ChannelImplFixture, MsgSendPulseReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr std::int32_t calling_thread_priority{-1};
     constexpr std::int32_t code{0};
@@ -251,7 +251,7 @@ TEST_F(ChannelImplFixture, MsgSendPulsePtrReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse Ptr returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr std::int32_t calling_thread_priority{-1};
     constexpr std::int32_t code{0};
@@ -268,7 +268,7 @@ TEST_F(ChannelImplFixture, MsgDeliverEventReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Deliver Event returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr sigevent* no_event{nullptr};
     const auto result = unit_->MsgDeliverEvent(kInvalidId, no_event);
@@ -281,7 +281,7 @@ TEST_F(ChannelImplFixture, ConnectClientInfoReturnsErrorIfNonExistingCoid)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Client Info returns Error If Non Existing Coid");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr int32_t non_existing_coid{std::numeric_limits<int32_t>::min()};
     constexpr _client_info* no_client_info{nullptr};
@@ -298,7 +298,7 @@ TEST_F(ChannelImplFixture, ConnectAttachReturnsErrorIfInvalidInput)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Attach returns Error If Invalid Input");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = unit_->ConnectAttach(kAttachId, kInvalidPid, kInvalidId, kAttachIndex, kAttachFlags);
     EXPECT_FALSE(result.has_value());
@@ -310,7 +310,7 @@ TEST_F(ChannelImplFixture, ConnectDetachReturnsErrorIfInvalidRcvId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Detach returns Error If Invalid Rcv Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto result = unit_->ConnectDetach(kInvalidId);
     EXPECT_FALSE(result.has_value());
@@ -322,7 +322,7 @@ TEST_F(ChannelImplFixture, ConnectAttachAndDetatchFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Attach And Detatch Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto chid = ChannelCreate(kOpenFlags);
     const auto coid = this->unit_->ConnectAttach(kAttachId, kAttachId, chid, kAttachIndex, kAttachFlags);
@@ -337,7 +337,7 @@ TEST_F(ChannelImplFixture, ConnectAttachAndMsgRegisterEventFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Attach And Msg Register Event Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const auto chid = ChannelCreate(kOpenFlags);
     const auto coid = this->unit_->ConnectAttach(kAttachId, kAttachId, chid, kAttachIndex, kAttachFlags);
@@ -356,7 +356,7 @@ TEST_F(ChannelImplFixture, MsgRegisterEventReturnsError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "MsgRegisterEvent returns error if called with invalid connection id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr sigevent* no_event{nullptr};
     const auto result = this->unit_->MsgRegisterEvent(no_event, kInvalidId);
@@ -369,7 +369,7 @@ TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Deliver Event Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // This test sends MsgDeliverEvent from main thread to client.
     // Sequence call:
@@ -454,7 +454,7 @@ TEST_F(ChannelImplFixture, MessageFlow_SendReceiveReply)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Flow: Send receive Reply");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     /*
         MsgSendv is called from main thread and gets blocked until client reads the message by MsgReceivev and reply

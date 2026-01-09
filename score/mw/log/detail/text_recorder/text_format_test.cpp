@@ -58,7 +58,7 @@ TYPED_TEST(UnsupportedTypesCoverage, VerifyUnsupportedTypesActionsHex)
     ::testing::Test::RecordProperty(
         "Description", "Verifies Type-Information for integer values with hex representation can not be logged.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "Analysis of requirements");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(this->payload_, this->value_, IntegerRepresentation::kHex);
     EXPECT_EQ(this->buffer_.size(), 0);
@@ -71,7 +71,7 @@ TYPED_TEST(UnsupportedTypesCoverage, VerifyUnsupportedTypesActionsOctal)
     ::testing::Test::RecordProperty(
         "Description", "Verifies Type-Information for integer values with octal representation can not be logged.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "Analysis of requirements");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(this->payload_, this->value_, IntegerRepresentation::kOctal);
     EXPECT_EQ(this->buffer_.size(), 0);
@@ -84,7 +84,7 @@ TYPED_TEST(UnsupportedTypesCoverage, VerifyUnsupportedTypesActionsBin)
     ::testing::Test::RecordProperty(
         "Description", "Verifies Type-Information for integer values with binary representation can not be logged.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "Analysis of requirements");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(this->payload_, this->value_, IntegerRepresentation::kBinary);
     EXPECT_EQ(this->buffer_.size(), 0);
@@ -96,7 +96,7 @@ TEST_F(TextFormatFixture, DepletedBufferPassed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies no log can be set for a zero buffer size.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(depleted_payload_, std::int32_t{123U});
 
@@ -109,7 +109,7 @@ TEST_F(TextFormatFixture, PositiveValueForBool)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with bool in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, bool{true});
 
@@ -127,7 +127,7 @@ TEST_F(TextFormatFixture, NegativeValueForBool)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a negative value with bool in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, bool{false});
 
@@ -146,7 +146,7 @@ TEST_F(TextFormatFixture, PositiveValueOnBufferFull)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with int64 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(capacity_two_payload_, std::string_view{"xxx"});
     TextFormat::Log(capacity_two_payload_, std::int8_t{123U});
@@ -163,7 +163,7 @@ TEST_F(TextFormatFixture, PositiveValueForInt8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with int8 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::int8_t{123U});
 
@@ -180,7 +180,7 @@ TEST_F(TextFormatFixture, NegativeValueInt8)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a negative value with int8 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::int8_t{-123});
 
@@ -198,7 +198,7 @@ TEST_F(TextFormatFixture, PositiveValueForInt16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with int16 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::int16_t{123U});
 
@@ -215,7 +215,7 @@ TEST_F(TextFormatFixture, NegativeValueInt16)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a negative value with int16 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::numeric_limits<int16_t>::min());
     EXPECT_EQ(buffer_.size(), 7);
@@ -228,7 +228,7 @@ TEST_F(TextFormatFixture, PositiveValueInt32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with int32 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::numeric_limits<int32_t>::max());
     EXPECT_EQ(buffer_.size(), 11);
@@ -241,7 +241,7 @@ TEST_F(TextFormatFixture, NegativeValueInt32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a negative value with int32 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::numeric_limits<int32_t>::min());
     EXPECT_EQ(buffer_.at(0), '-');
@@ -266,7 +266,7 @@ TEST_F(TextFormatFixture, PositiveValueInt64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a positive value with int64 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, int64_t{std::numeric_limits<int64_t>::max()});
 
@@ -280,7 +280,7 @@ TEST_F(TextFormatFixture, NegativeValueInt64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for a negative value with int64 size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::numeric_limits<int64_t>::min());
 
@@ -295,7 +295,7 @@ TEST_F(TextFormatFixture, PositiveValueForUint8)
     RecordProperty("Description",
                    "Verifies Type-Information for positive value with uint8 representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint8_t{234U});
 
@@ -313,7 +313,7 @@ TEST_F(TextFormatFixture, HexFormatUint8)
     RecordProperty("Description",
                    "Verifies Type-Information for uint8 value with hex representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogHex8{234U});
 
@@ -330,7 +330,7 @@ TEST_F(TextFormatFixture, BinaryFormatUint8)
     RecordProperty("Description",
                    "Verifies Type-Information for uint8 value with binary representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogBin8{234U});
 
@@ -353,7 +353,7 @@ TEST_F(TextFormatFixture, OctalFormatUint8)
     RecordProperty("Description",
                    "Verifies Type-Information for uint8 value with octal representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint8_t{234U}, IntegerRepresentation::kOctal);
 
@@ -371,7 +371,7 @@ TEST_F(TextFormatFixture, PositiveValueForUint16)
     RecordProperty("Description",
                    "Verifies Type-Information for a positive value with uint16 representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint16_t{43456U});
 
@@ -391,7 +391,7 @@ TEST_F(TextFormatFixture, HexFormatUint16)
     RecordProperty("Description",
                    "Verifies Type-Information for uint16 value with hex representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogHex16{123U});
 
@@ -408,7 +408,7 @@ TEST_F(TextFormatFixture, BinaryFormatUint16)
     RecordProperty("Description",
                    "Verifies Type-Information for uint16 value with binary representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogBin16{43456U});
 
@@ -423,7 +423,7 @@ TEST_F(TextFormatFixture, OctalFormatUint16)
     RecordProperty("Description",
                    "Verifies Type-Information for uint16 value with octal representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint16_t{43456U}, IntegerRepresentation::kOctal);
 
@@ -443,7 +443,7 @@ TEST_F(TextFormatFixture, PositiveValueForUint32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for positive value with uint32_t size in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint32_t{std::numeric_limits<int32_t>::max()} + 1);
 
@@ -457,7 +457,7 @@ TEST_F(TextFormatFixture, HexFormatUint32)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for uint32 with hex representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogHex32{52345U});
 
@@ -476,7 +476,7 @@ TEST_F(TextFormatFixture, BinFormatUint32)
     RecordProperty("Description",
                    "Verifies Type-Information for uint32 with binary representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogBin32{52345U});
 
@@ -491,7 +491,7 @@ TEST_F(TextFormatFixture, OctalFormatUint32)
     RecordProperty("Description",
                    "Verifies Type-Information for uint32 with octal representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint32_t{52349U}, IntegerRepresentation::kOctal);
 
@@ -506,7 +506,7 @@ TEST_F(TextFormatFixture, PositiveValueForUint64)
     RecordProperty("Description",
                    "Verifies Type-Information for positive value with uint64_t size  in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, uint64_t{std::numeric_limits<int64_t>::max()} + 1);
 
@@ -522,7 +522,7 @@ TEST_F(TextFormatFixture, BinaryFormat_InsufficientBuffer)
                    "Verifies Type-Information for binary representation shall be cropped in case of insufficent buffer "
                    "for its bytes.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(capacity_two_payload_, std::uint8_t{234U}, IntegerRepresentation::kBinary);
 
@@ -540,7 +540,7 @@ TEST_F(TextFormatFixture, BinaryFormatWhenBufferFull)
                    "Verifies Type-Information for binary representation shall be cropped in case of insufficent buffer "
                    "for its bytes.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     //  Make the buffer full
     TextFormat::Log(capacity_two_payload_, std::string_view{"xxx"});
@@ -561,7 +561,7 @@ TEST_F(TextFormatFixture, HexFormat_InsufficientBuffer)
                    "Verifies Type-Information for hex representation shall only store bytes of data equal to the "
                    "allocated capacity.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(capacity_two_payload_, std::uint32_t{52345U}, IntegerRepresentation::kHex);
 
@@ -577,7 +577,7 @@ TEST_F(TextFormatFixture, HexFormatUint64)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for uint64 with hex representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogHex64{12379813812177893520U});
 
@@ -592,7 +592,7 @@ TEST_F(TextFormatFixture, BinaryFormatUint64)
     RecordProperty("Description",
                    "Verifies Type-Information for uint64 with binary representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, LogBin64{12379813812177893520U});
 
@@ -609,7 +609,7 @@ TEST_F(TextFormatFixture, OctalFormatUint64)
     RecordProperty("Description",
                    "Verifies Type-Information for uint64 with octal representation is in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::uint64_t{12379813812177893520U}, IntegerRepresentation::kOctal);
 
@@ -623,7 +623,7 @@ TEST_F(TextFormatFixture, LogFloat)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for float in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, 1.23f);
 
@@ -646,7 +646,7 @@ TEST_F(TextFormatFixture, LogDouble)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for double in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, 1.23);
 
@@ -669,7 +669,7 @@ TEST_F(TextFormatFixture, StringValueCorrectlyTransformed)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for string in correct format.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::string_view{"Hello World"});
 
@@ -696,7 +696,7 @@ TEST_F(TextFormatFixture, TerminateShallPutNewLine)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that TerminateLog shall put new line in data buffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::TerminateLog(payload_);
     ASSERT_EQ(buffer_.at(0), '\n');
@@ -709,7 +709,7 @@ TEST_F(TextFormatFixture, StringValueWhenBufferFull)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for string shall be intact in case of using full buffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     //  Make the buffer full
     TextFormat::Log(capacity_two_payload_, std::string_view{"xxx"});
@@ -729,7 +729,7 @@ TEST_F(TextFormatFixture, EmptyString)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Type-Information for empty string will not allocate memory.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     TextFormat::Log(payload_, std::string_view{""});
 
@@ -744,7 +744,7 @@ TEST_F(TextFormatFixture, RawValueSimpleConversionToHex)
         "Description",
         "Verifies Type-Information for raw value will be converted to hex values nibble by nibble before storing.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::vector<char> data{{1, 2, 0x1F}};
     TextFormat::Log(payload_, LogRawBuffer{data.data(), 3});
@@ -769,7 +769,7 @@ TEST_F(TextFormatFixture, RawValueSimpleConversionToHexInsufficientBuffer)
                    "Verifies Type-Information for raw value will be converted to hex values nibble by nibble and will "
                    "be cropped in case of using insufficient buffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::vector<char> data{{1, 2, 0x1F}};
     TextFormat::Log(capacity_two_payload_, LogRawBuffer{data.data(), 3});
@@ -788,7 +788,7 @@ TEST_F(TextFormatFixture, RawValueZeroLengthBuffer)
     RecordProperty("Description",
                    "Verifies Type-Information for raw value with zero size will not allocate any memory for logging.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::vector<char> data{};
     TextFormat::Log(payload_, LogRawBuffer{data.data(), 0});
@@ -804,7 +804,7 @@ TEST_F(TextFormatFixture, RawValueZeroMaxSizeBuffer)
     RecordProperty("Description",
                    "Verifies raw value with zero max size buffer will not allocate any memory for logging.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     ByteVector buffer{};
     LogRawBuffer data{"test data"};
@@ -827,7 +827,7 @@ TEST(FormattingFunction, ShallReturnEmptyIfPayloadMaxSizeEqualToZero)
     RecordProperty("Description",
                    "Verifies getting empty payload in case of the max size for allocated memory is equal to zero.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     ByteVector buffer{};
     VerbosePayload payload{0U, buffer};

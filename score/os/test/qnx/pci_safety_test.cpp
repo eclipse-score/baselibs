@@ -34,7 +34,7 @@ TEST_F(PciSafetylTest, pci_device_cfg_rd32_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Cfg Rd Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     std::uint16_t offset{64};
@@ -50,7 +50,7 @@ TEST_F(PciSafetylTest, pci_device_read_did_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Did Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     pci_did_t did;
@@ -65,7 +65,7 @@ TEST_F(PciSafetylTest, pci_device_read_vid_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pci Device Read Vid Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     pci_bdf_t bdf;
     pci_vid_t vid;

@@ -73,7 +73,7 @@ TEST_F(FileOutputBackendFixture, ReserveSlotShouldTriggerFlushing)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ReserveSlot shall trigger flushing.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
@@ -97,7 +97,7 @@ TEST_F(FileOutputBackendFixture, FlushSlotShouldTriggerFlushing)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FlushSlot shall trigger flushing.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
@@ -125,7 +125,7 @@ TEST_F(FileOutputBackendFixture, DepletedAllocatorShouldCauseEmptyOptionalReturn
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ReserveSlot will return None if all allocator's slots are reserved.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     for (std::size_t i = 0; i < pool_size_; i++)
     {
@@ -156,7 +156,7 @@ TEST_F(FileOutputBackendFixture, GetLogRecordReturnsObjectSameAsAllocatorWould)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetLogRecord can return object same as returned from the allocator.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
@@ -182,7 +182,7 @@ TEST_F(FileOutputBackendFixture, BackendConstructionShallCallNonBlockingFileSetu
                    "File backend construction shall return non blocking file setup. The component shall set the "
                    "FD_CLOEXEC (or O_CLOEXEC) flag on all the file descriptor it owns");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     score::os::Fcntl::Open flags = score::os::Fcntl::Open::kReadWrite;
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
@@ -213,7 +213,7 @@ TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "File backend construction shall not do file setup if there is any missing flag.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);

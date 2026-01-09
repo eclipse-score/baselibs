@@ -46,7 +46,7 @@ TEST_F(DevctlTestMock, TestFunction_Devctl)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function Devctl");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::array<std::uint8_t, 3> dev_data{1, 2, 3};
     std::int32_t dev_info{};
@@ -76,7 +76,7 @@ TEST_F(DevctlTestMock, TestFunction_Devctlv)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Function Devctlv");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::array<std::uint8_t, 3> vec_data_1{1, 2, 3};
     iovec s_vec[1];
@@ -125,7 +125,7 @@ TEST_F(DevctlTestQnx, TestDevctl_GetFlags_Success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Get Flags Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
     const ModeFlag mode_flags{ModeFlag::kReadUser | ModeFlag::kWriteUser};
@@ -149,7 +149,7 @@ TEST_F(DevctlTestQnx, TestDevctlv_GetFlags_Success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl:v Get Flags Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
     const ModeFlag mode_flags{ModeFlag::kReadUser | ModeFlag::kWriteUser};
@@ -181,7 +181,7 @@ TEST_F(DevctlTestQnx, TestDevctl_SetGetFlags_Success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Set Get Flags Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
     const ModeFlag mode_flags{ModeFlag::kReadUser | ModeFlag::kWriteUser};
@@ -209,7 +209,7 @@ TEST_F(DevctlTestQnx, TestDevctl_SetFlagsWrongFd_Fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Set Flags Wrong Fd Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     std::int32_t set_flags{O_APPEND | O_LARGEFILE};
     auto res_devctl = score::os::Devctl::instance().devctl(-1, DCMD_ALL_SETFLAGS, &set_flags, sizeof(set_flags), nullptr);
@@ -222,7 +222,7 @@ TEST_F(DevctlTestQnx, TestDevctlv_SetFlagsWrongFd_Fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl:v Set Flags Wrong Fd Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     auto res_devctl = score::os::Devctl::instance().devctlv(-1, DCMD_ALL_SETFLAGS, 0, 0, nullptr, nullptr, nullptr);
     ASSERT_FALSE(res_devctl.has_value());
@@ -234,7 +234,7 @@ TEST_F(DevctlTestQnx, TestDevctl_GetFlagsNullptr_Fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Devctl: Get Flags Nullptr Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const OpenFlag open_flags{OpenFlag::kReadOnly | OpenFlag::kNonBlocking | OpenFlag::kCreate};
     const ModeFlag mode_flags{ModeFlag::kReadUser | ModeFlag::kWriteUser};

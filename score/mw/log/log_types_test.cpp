@@ -36,7 +36,7 @@ TEST(LogStringTest, ConstructFromCharArray)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the detection of null-/non-null-terminated char array");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // When constructing our LogString type from an empty char[] literal
     const auto empty_log_str = mw::log::LogStr("");
@@ -86,7 +86,7 @@ TEST(LogStringTest, CanImplicitlyConvertFromStringLikeTypes)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating our LogString type view from string-like types");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     constexpr auto kExpected = "MyString";
 
@@ -130,7 +130,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromInteger)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from integer");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::int32_t value{15};
     LogRawBuffer log_raw_buffer{MakeLogRawBuffer(value)};
@@ -148,7 +148,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromIntegerStdArray)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from array of integers.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::array<std::int32_t, 2> values{15, 16};
     LogRawBuffer log_raw_buffer{MakeLogRawBuffer(values)};
@@ -166,7 +166,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromSpan)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from score::cpp::span.");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::int32_t values[]{15, 16};
     const score::cpp::span<const std::int32_t> span{values, 2};
@@ -185,7 +185,7 @@ TEST(MakeLogRawBufferTest, MakeBufferFromVector)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of creating a buffer from vector of integers");
     RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const std::vector<std::int32_t> values{15, 16};
     LogRawBuffer log_raw_buffer{MakeLogRawBuffer(values)};

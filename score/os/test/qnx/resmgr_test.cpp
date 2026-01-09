@@ -23,7 +23,7 @@ TEST(ResMgrTest, ResMgrMsgWriteFails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Res Mgr Msg Write Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     score::os::ResMgrImpl resmgr;
     resmgr_context_t ctp;
