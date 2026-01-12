@@ -224,10 +224,6 @@ cc_test(
         "aborts_upon_exception",
     ],
     tags = ["unit"],
-    target_compatible_with = select({
-        "@platforms//os:qnx": ["//bazel/platforms/qnx_version:qnx7"],  # TODO: Ticket-214211 QNX8 incompatible
-        "//conditions:default": [],
-    }),
     deps = [
         "@googletest//:gtest_main",
     ],
@@ -433,10 +429,6 @@ cc_test(
         "aborts_upon_exception",
     ],
     tags = ["manual"],
-    target_compatible_with = select({
-        "@platforms//os:qnx": ["//bazel/platforms/qnx_version:qnx7"],  # TODO: Ticket-214211 QNX8 incompatible
-        "//conditions:default": [],
-    }),
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:spawn",

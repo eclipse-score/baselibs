@@ -15,9 +15,9 @@
 #include "score/os/unistd.h"
 #include "score/mw/log/detail/empty_recorder.h"
 #include "score/mw/log/detail/error.h"
-#include "score/mw/log/detail/file_logging/file_output_backend.h"
-#include "score/mw/log/detail/file_logging/text_message_builder.h"
-#include "score/mw/log/detail/file_logging/text_recorder.h"
+#include "score/mw/log/detail/text_recorder/file_output_backend.h"
+#include "score/mw/log/detail/text_recorder/text_message_builder.h"
+#include "score/mw/log/detail/text_recorder/text_recorder.h"
 #include "score/mw/log/log_mode.h"
 
 namespace score

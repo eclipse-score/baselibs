@@ -3,6 +3,8 @@
 /// \copyright Copyright (C) 2016-2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
 ///
 
+// IWYU pragma: private
+
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_DIV_ROUND_CLOSEST_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_MATH_DIV_ROUND_CLOSEST_HPP
 

@@ -112,10 +112,11 @@ public:
     ///
     /// \param other The value to be placed into the newly built object.
     template <typename U = std::remove_cv_t<T>,
-              typename = typename std::enable_if<!std::is_same<optional, score::cpp::remove_cvref_t<U>>::value &&
-                                                 !std::is_same<in_place_t, score::cpp::remove_cvref_t<U>>::value &&
-                                                 !is_expected<std::decay_t<U>>::value &&
-                                                 std::is_constructible<T, U>::value>::type>
+              typename = typename std::enable_if<!std::is_same<optional, score::cpp::remove_cvref_t<U>>::value      //
+                                                 && !std::is_same<in_place_t, score::cpp::remove_cvref_t<U>>::value //
+                                                 && !is_expected<std::decay_t<U>>::value                     //
+                                                 && std::is_constructible<T, U>::value                       //
+                                                 >::type>
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     constexpr optional(U&& other) : null_state_{}, has_value_{false}
     {
@@ -212,10 +213,11 @@ public:
     /// \param other The value to be placed into the newly built object.
     template <
         typename U = std::remove_cv_t<T>,
-        typename = typename std::enable_if<!std::is_same<optional, score::cpp::remove_cvref_t<U>>::value &&
-                                           std::is_constructible<T, U>::value && std::is_assignable<T&, U>::value &&
-                                           (!std::is_scalar<T>::value || !std::is_same<std::decay_t<U>, T>::value) &&
-                                           !is_expected<std::decay_t<U>>::value>::type>
+        typename = typename std::enable_if<!std::is_same<optional, score::cpp::remove_cvref_t<U>>::value                     //
+                                           && std::is_constructible<T, U>::value && std::is_assignable<T&, U>::value  //
+                                           && (!std::is_scalar<T>::value || !std::is_same<std::decay_t<U>, T>::value) //
+                                           && !is_expected<std::decay_t<U>>::value                                    //
+                                           >::type>
     optional& operator=(U&& other)
     {
         if (this->has_value())
@@ -240,7 +242,7 @@ public:
         // issue because our code currently always moves construct and doesn't implement the table from
         // https://en.cppreference.com/w/cpp/utility/optional/operator%3D
         // issue: broken_link_g/swh/amp/issues/385
-        static_assert(std::is_copy_constructible<T>::value /*&& std::is_copy_assignable<T>::value*/, "failed");
+        static_assert(std::is_copy_constructible<T>::value && std::is_copy_assignable<T>::value, "failed");
 
         if (other.has_value())
         {

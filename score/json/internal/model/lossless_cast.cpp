@@ -280,11 +280,11 @@ template <typename Output,
 // coverity[autosar_cpp14_a7_1_8_violation: FALSE]  constexpr is in correct order
 constexpr bool IsFloatingPointValueContainedInOutputType(float)
 {
+    SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("Input is float and Output is double - impossible case");
     // Output is double and input is float (impossible case).
     // It is OK to cast a float into a double.
     // Unreachable code exists to prevent a void cast and be specific about the behavior
     // coverity[autosar_cpp14_m0_1_1_violation]
-    SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("Input is float and Output is double - impossible case");
     return true;
 }
 // LCOV_EXCL_STOP

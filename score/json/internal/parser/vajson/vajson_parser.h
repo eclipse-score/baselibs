@@ -40,7 +40,7 @@ class VajsonParser final : private amsr::json::v2::Parser
     /// \brief Constructs a data-tree from a string containing JSON
     /// \param buffer The string_view containing JSON
     /// \return Any as root of the tree, nullptr on error
-    static auto FromBuffer(const score::cpp::string_view buffer) -> score::Result<Any>;
+    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>;
 
   private:
     using amsr::json::v2::Parser::Parser;

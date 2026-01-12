@@ -11,10 +11,12 @@
 #include <score/private/iterator/iterator.hpp> // IWYU pragma: export
 #include <score/private/iterator/size.hpp>     // IWYU pragma: export
 #include <score/private/type_traits/is_span.hpp>
+#include <score/private/type_traits/is_std_array.hpp>
+#include <score/private/type_traits/type_identity.hpp>
 
+#include <array>
 #include <cstddef>
 #include <cstdint>
-#include <limits>
 #include <type_traits>
 #include <score/assert.hpp>
 #include <score/optional.hpp>
@@ -23,6 +25,36 @@
 
 namespace score::cpp
 {
+
+namespace detail
+{
+
+template <typename T, std::size_t Extent>
+class base_span
+{
+public:
+    constexpr base_span(T* const data, const std::size_t size) : data_{data} { SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(Extent == size); }
+    constexpr std::size_t size() const noexcept { return Extent; }
+    constexpr T* data() const noexcept { return data_; }
+
+private:
+    T* data_;
+};
+
+template <typename T>
+class base_span<T, dynamic_extent>
+{
+public:
+    constexpr base_span(T* const data, const std::size_t size) noexcept : data_{data}, size_{size} {}
+    constexpr std::size_t size() const noexcept { return size_; }
+    constexpr T* data() const noexcept { return data_; }
+
+private:
+    T* data_;
+    std::size_t size_;
+};
+
+} // namespace detail
 
 /// \brief Provides a 1d-view of a pointer + size. The benefit is that a one-dimensional span does not decay to T*
 /// (thus looses the size information).
@@ -34,7 +66,7 @@ namespace score::cpp
 /// documentation for a two-dimensional span as both similar except the 1d vs 2d view.
 ///
 /// \tparam T Specifies the value type of a single element of a row.
-template <typename T>
+template <typename T, std::size_t Extent>
 class span
 {
     /// @brief Used to obtain the iterator type of the type Range.
@@ -85,51 +117,161 @@ public:
     /// \brief The type of a const reverse iterator. This is a requirement of STL compliant types.
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
+    /// \brief The number of elements in the sequence, or score::cpp::dynamic_extent if dynamic
+    static constexpr size_type extent{Extent};
+
     /// \brief Constructs an empty span whose `data() == nullptr` and `size() == 0`.
-    span() noexcept : data_{nullptr}, size_{0} {}
+    template <std::size_t Size = 0U, typename = std::enable_if_t<(Extent == dynamic_extent) || (Extent == Size)>>
+    span() noexcept : base_{nullptr, 0U}
+    {
+    }
 
     /// \brief Provides a 1d-view of a pointer + size. The benefit is that a one-dimensional span does not decay to
     /// T* (thus looses the size information).
     ///
     /// \param array Pointer to the array
     /// \param size Number of elements in the one-dimensional span
-    span(T* const array, const size_type size) : data_{array}, size_{size} {}
+    /// \{
+    template <std::size_t Size = Extent, typename std::enable_if_t<Size != dynamic_extent, bool> = true>
+    explicit span(T* const array, const size_type size) : base_{array, size}
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == size));
+    }
+    template <std::size_t Size = Extent, typename std::enable_if_t<Size == dynamic_extent, bool> = true>
+    span(T* const array, const size_type size) : base_{array, size}
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == size));
+    }
+    /// \}
 
     /// \brief Provides a 1d-view of a C-array. The benefit is that a one-dimensional span does not decay to T*
     /// (thus looses the size information).
     ///
     /// \tparam Size Number of elements in the one-dimensional span
     /// \param array Pointer to the array
-    template <std::size_t Size>
-    span(T (&array)[Size]) noexcept : data_{score::cpp::data(array)}, size_{Size}
+    template <std::size_t N, typename = std::enable_if_t<(Extent == dynamic_extent) || (Extent == N)>>
+    span(score::cpp::type_identity_t<T> (&array)[N]) noexcept : base_{std::data(array), N}
     {
-        static_assert(Size >= 0, "Size must be positive.");
     }
 
-    /// \brief Constructs a span that is a view over \p range; the resulting span has size() == range.size() and
-    /// data() == score::cpp::data(range).
+    /// \brief Constructs a span that is a view over the supplied array
+    ///
+    /// The resulting span has size() == N and data() == std::data(arr).
+    ///
+    /// This overload participates in overload resolution only if elements of `arr` are convertible to this span's
+    /// element_type.
+    ///
+    /// \tparam U Type of std::array::value_type
+    /// \tparam N size of std::array.
+    /// \param arr std::array to construct a view for
+    /// \{
+    template <typename U,
+              std::size_t N,
+              typename = std::enable_if_t<((Extent == dynamic_extent) || (Extent == N)) &&
+                                          std::is_convertible_v<U (*)[], element_type (*)[]>>>
+    span(std::array<U, N>& arr) noexcept : base_{std::data(arr), N}
+    {
+    }
+    template <typename U,
+              std::size_t N,
+              typename = std::enable_if_t<((Extent == dynamic_extent) || (Extent == N)) &&
+                                          std::is_convertible_v<const U (*)[], element_type (*)[]>>>
+    span(const std::array<U, N>& arr) noexcept : base_{std::data(arr), N}
+    {
+    }
+    /// \}
+
+    /// \brief Constructs a span that is a view over \p range; the resulting span has size() == std::size(range) and
+    /// data() == std::data(range).
     ///
     /// This overload participates in overload resolution only if Range is iterable, not a span or an array and elements
     /// of the range are convertible to this span's element_type.
     ///
     /// \tparam Range Type of \p range
     /// \param range Range to construct a view for
-    template <
-        typename Range,
-        typename R = score::cpp::remove_cvref_t<Range>,
-        typename = std::enable_if_t<
-            score::cpp::is_iterable<R>::value &&
-            std::is_convertible<std::remove_reference_t<iter_reference_t<iterator_t<Range>>> (*)[], T (*)[]>::value &&
-            !is_span<R>::value && !std::is_array<R>::value>>
-    span(Range&& range) : data_{score::cpp::data(range)}, size_{range.size()}
+    /// \{
+    template <typename Range,
+              std::size_t Size = Extent,
+              typename R = score::cpp::remove_cvref_t<Range>,
+              typename U = std::remove_reference_t<iter_reference_t<iterator_t<Range>>>,
+              typename std::enable_if_t<Size != dynamic_extent                              //
+                                            && score::cpp::is_iterable<R>::value                   //
+                                            && std::is_convertible<U (*)[], T (*)[]>::value //
+                                            && (!is_span<R>::value)                         //
+                                            && (!detail::is_std_array<R>::value)            //
+                                            && (!std::is_array<R>::value)                   //
+                                        ,
+                                        bool> = true>
+    explicit span(Range&& range) : base_{std::data(range), std::size(range)}
     {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == std::size(range)));
     }
+    template <typename Range,
+              std::size_t Size = Extent,
+              typename R = score::cpp::remove_cvref_t<Range>,
+              typename U = std::remove_reference_t<iter_reference_t<iterator_t<Range>>>,
+              typename std::enable_if_t<Size == dynamic_extent                              //
+                                            && score::cpp::is_iterable<R>::value                   //
+                                            && std::is_convertible<U (*)[], T (*)[]>::value //
+                                            && (!is_span<R>::value)                         //
+                                            && (!detail::is_std_array<R>::value)            //
+                                            && (!std::is_array<R>::value)                   //
+                                        ,
+                                        bool> = true>
+    span(Range&& range) : base_{std::data(range), std::size(range)}
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == std::size(range)));
+    }
+    /// \}
+
+    /// \brief Converting constructor from another span `other`
+    ///
+    /// The resulting span has `size() == other.size()` and `data() == other.data()`.
+    ///
+    /// This overload participates in overload resolution only if elements of the other span are convertible to this
+    /// span's element type and the following size requirements are fulfilled
+    /// `(Extent == dynamic_extent) || (N == dynamic_extent) || (Extent == N)`
+    ///
+    /// \pre (Extent == dynamic_extent) || (Extent == other.size())
+    ///
+    /// \tparam U element type of the other span
+    /// \param other other span
+    /// \{
+    template <typename U,
+              std::size_t N,
+              typename std::enable_if_t<(Extent != dynamic_extent) && (N == dynamic_extent)                           //
+                                            && ((Extent == dynamic_extent) || (N == dynamic_extent) || (Extent == N)) //
+                                            && std::is_convertible_v<U (*)[], T (*)[]>                                //
+                                        ,
+                                        bool> = true>
+    explicit span(const span<U, N>& other) : base_{other.data(), other.size()}
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == other.size()));
+    }
+    template <typename U,
+              std::size_t N,
+              typename std::enable_if_t<!((Extent != dynamic_extent) && (N == dynamic_extent))                        //
+                                            && ((Extent == dynamic_extent) || (N == dynamic_extent) || (Extent == N)) //
+                                            && std::is_convertible_v<U (*)[], T (*)[]>                                //
+                                        ,
+                                        bool> = true>
+    span(const span<U, N>& other) : base_{other.data(), other.size()}
+    {
+        // keep the precondition although it can never fail. it is essentially a side effect of our pre-C++20
+        // explicit/non-explicit split while keeping the conditions as defined by the standard.
+        // this ctor covers the following cases:
+        //   1. "dynamic -> dynamic" => precondition will never fail because of first term
+        //   2. "static -> static" => enable_if will fail because of `(Extent == N)`
+        //   3. "static -> dynamic" => precondition will never fail because of first term
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((Extent == dynamic_extent) || (Extent == other.size()));
+    }
+    /// \}
 
     /// \brief Returns the number elements in the row - when combined with a two-dimensional span the number of
     /// columns.
     ///
     /// \return  Number of elements in the row.
-    size_type size() const noexcept { return size_; }
+    size_type size() const noexcept { return base_.size(); }
 
     /// \brief checks if the span is empty
     ///
@@ -139,7 +281,7 @@ public:
     /// \brief Returns a pointer to the underlying array.
     ///
     /// \return Pointer to the first element of the row.
-    pointer data() const noexcept { return data_; }
+    pointer data() const noexcept { return base_.data(); }
 
     ///\{
     /// \brief Returns an iterator to the beginning
@@ -176,6 +318,18 @@ public:
     reverse_iterator rend() const noexcept { return reverse_iterator{begin()}; }
     const_reverse_iterator crend() const noexcept { return const_reverse_iterator{cbegin()}; }
     /// \}
+
+    /// \brief Returns a reference to the `i`th element
+    ///
+    /// \pre i < size()
+    ///
+    /// \param i the index of the element to access
+    /// \return ith element
+    constexpr reference operator[](const size_type i) const
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(i < size());
+        return *(data() + i);
+    }
 
     /// \brief Returns a reference to the first element in the span
     ///
@@ -241,15 +395,7 @@ public:
     }
 
 private:
-    /// \brief The max value of type to hold a size information
-    static constexpr size_type dynamic_extent = std::numeric_limits<size_type>::max();
-
-    /// \brief Pointer to the underlying array. Points to the first element of the row.
-    pointer data_;
-
-    /// \brief Size of the least significant dimension of the array -  when combined with a two-dimensional span
-    /// the number of columns.
-    size_type size_;
+    detail::base_span<T, Extent> base_;
 };
 
 /// \brief Obtains a view to the object representation of the elements of the span<>.

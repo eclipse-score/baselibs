@@ -1,0 +1,29 @@
+@startuml ResourceManager_ActivityDiagram_intialize
+title Resource Manager Activity Diagram
+
+start
+note right: ::Initialize()
+:Configuration and Initialization for ResourceManager;
+:Configure the filename and the resource attributes;
+note right: for all resources
+
+' Decision: Created The Dispatch Structure
+if (Created The Dispatch Structure) then ([SUCCESS])
+  :Initialize and register the IO and connect Handler;
+  note right: for all resources
+  :Initialize IO atrributes;
+  note right: for all resources
+
+  ' Decision: Attach and register the resources to the system
+  if (Attach and register the resources to the system) then ([SUCCESS])
+    :Allocate context Messages Buffer;
+
+  else([FAIL])
+    :Return with error;
+
+  endif
+  else([FAIL])
+    : Return with error;
+  endif
+  stop
+  @enduml

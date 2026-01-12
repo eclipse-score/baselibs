@@ -20,8 +20,6 @@
 #include "score/memory/string_comparison_adaptor.h"
 #include "score/result/result.h"
 
-#include "score/string_view.hpp"
-
 #include <cstdint>
 #include <map>
 #include <memory>

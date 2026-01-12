@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_ARA_COM_PROPERTIES_H
-#define GENERIC_TRACE_API_ARA_COM_PROPERTIES_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_PROPERTIES_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_PROPERTIES_H
 
 #include "service_instance_element.h"
 #include "trace_point_type.h"
@@ -49,4 +49,4 @@ bool operator==(const AraComProperties& lhs, const AraComProperties& rhs) noexce
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_ARA_COM_PROPERTIES_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_PROPERTIES_H

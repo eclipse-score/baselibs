@@ -60,6 +60,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
+        "@score_baselibs//score/language/safecpp/safe_math",
+        "@score_baselibs//score/memory:data_type_size_info",
         "@score_baselibs//score/mw/log:frontend",
     ],
 )
@@ -123,6 +125,9 @@ cc_library(
         "@score_baselibs//score/language/safecpp/string_view:null_termination_check",
     ],
     tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/memory/shared/fake:__subpackages__",
+    ],
     deps = [
         ":i_shared_memory_resource",
         ":lock_file",
@@ -348,6 +353,7 @@ cc_library(
         ":pointer_arithmetic_util",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/safe_math",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 
@@ -531,25 +537,6 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "fake_memory_resources",
-    testonly = True,
-    srcs = [
-        "fake/my_bounded_memory_resource.cpp",
-        "fake/my_memory_resource.cpp",
-    ],
-    hdrs = [
-        "fake/my_bounded_memory_resource.h",
-        "fake/my_memory_resource.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = ["//visibility:public"],
-    deps = [
-        ":types",
-        "@score_baselibs//score/language/futurecpp",
-    ],
-)
-
 cc_unit_test(
     name = "pointer_arithmetic_util_precondition_violation_test",
     srcs = [
@@ -568,6 +555,27 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",  # TODO: Remove when SubtractPointersBytes is no longer noexcept and we remove the last death test.
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+    ],
+)
+
+cc_unit_test(
+    name = "pointer_arithmetic_util_calculate_aligned_size_test",
+    srcs = [
+        "pointer_arithmetic_util_calculate_aligned_size_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
+        "-aborts_upon_exception",
+    ],
+    visibility = [
+        "@score_baselibs//score/memory:__pkg__",
+    ],
+    deps = [
+        ":pointer_arithmetic_util",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -639,9 +647,9 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":managed_memory_resource",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -656,8 +664,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":map",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -689,8 +697,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":memory_resource_proxy",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -738,8 +746,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":polymorphic_offset_ptr_allocator",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -768,9 +776,9 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":pointer_arithmetic_util",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -835,9 +843,10 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":pointer_arithmetic_util",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
+        "@score_baselibs//score/memory/shared/sealedshm/sealedshm_wrapper:sealedshm_mock",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -852,8 +861,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
         "@score_baselibs//score/os/utils/acl:mock",
     ],
@@ -869,8 +878,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":vector",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -888,8 +897,8 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":fake_memory_resources",
         ":string",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -919,6 +928,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":new_delete_delegate_resource_test",
         ":polymorphic_offset_ptr_allocator_test",
         ":pointer_arithmetic_util_precondition_violation_test",
+        ":pointer_arithmetic_util_calculate_aligned_size_test",
         ":shared_memory_error_test",
         ":shared_memory_factory_test",
         ":shared_memory_resource_allocate_test",

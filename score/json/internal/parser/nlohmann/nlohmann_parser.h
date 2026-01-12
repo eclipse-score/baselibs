@@ -17,8 +17,6 @@
 #include "score/json/internal/model/any.h"
 #include "score/result/result.h"
 
-#include "score/string_view.hpp"
-
 namespace score::json
 {
 
@@ -35,7 +33,7 @@ class NlohmannParser
     /// \brief Constructs a data-tree from a string containing JSON
     /// \param buffer The string_view containing JSON
     /// \return Any as root of the tree, nullptr on error
-    static auto FromBuffer(const score::cpp::string_view buffer) -> score::Result<Any>;
+    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>;
 };
 
 }  // namespace score::json

@@ -9,7 +9,6 @@
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_EXECUTION_SET_VALUE_HPP
 
 #include <score/private/execution/receiver_t.hpp>
-#include <score/private/utility/static_const.hpp>
 
 #include <type_traits>
 #include <utility>
@@ -45,18 +44,13 @@ struct set_value_t
 
 using detail::set_value_t_disable_adl::set_value_t;
 
-namespace // NOLINT(google-build-namespaces)
-{
-
 /// \brief Calls the completion function `set_value` on the receiver.
 ///
 /// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2300r7.html#spec-execution.receivers.set_value
 ///
 /// `set_value_t` denotes a customization point. Define the customization point as a member function with `set_value_t`
 /// as the first argument. Follows https://wg21.link/p2855r1.
-constexpr auto& set_value = score::cpp::static_const<set_value_t>::value; // NOLINT(misc-definitions-in-headers)
-
-} // namespace
+inline constexpr set_value_t set_value{};
 
 } // namespace execution
 } // namespace score::cpp

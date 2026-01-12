@@ -508,5 +508,201 @@ TEST(ExpectedTest, ErrorOrRValueReturnsDefaultIfHasValue)
     EXPECT_EQ(result.value_, default_error);
 }
 
+TEST(ExpectedVoidTest, StarOperatorWillNotExitIfValid)
+{
+    // Given an expected with an error
+    const expected<void, ErrorType> unit{};
+
+    // Expect an abort if accessing the value
+    EXPECT_NO_THROW(unit.operator*());
+}
+
+TEST(ExpectedVoidTest, StarOperatorWillExitIfInErrorState)
+{
+    // Given an expected with an error
+    const expected<void, ErrorType> unit{unexpect};
+
+    // Expect an abort if accessing the value
+    EXPECT_EXIT(unit.operator*(), testing::KilledBySignal(SIGABRT), "");
+}
+
+TEST(ExpectedVoidTest, ExplicitConversionToBoolIsTrueIfHasValue)
+{
+    // Given an expected with a value
+    expected<void, ErrorType> unit{};
+
+    // When converting to bool
+    bool value = static_cast<bool>(unit);
+
+    // Then expect it to be true
+    EXPECT_TRUE(value);
+}
+
+TEST(ExpectedVoidTest, ExplicitConversionToBoolIsFalseIfHasNoValue)
+{
+    // Given an expected with an error
+    expected<void, ErrorType> unit{unexpect};
+
+    // When converting to bool
+    bool value = static_cast<bool>(unit);
+
+    // Then expect it to be false
+    EXPECT_FALSE(value);
+}
+
+TEST(ExpectedVoidTest, HasValueReturnsTrueIfHasValue)
+{
+    // Given a valid expected
+    expected<void, ErrorType> unit{};
+
+    // Then expect has_value to return true
+    EXPECT_TRUE(unit.has_value());
+}
+
+TEST(ExpectedVoidTest, HasValueReturnsFalseIfHasNoValue)
+{
+    // Given an expected with an error
+    expected<void, ErrorType> unit{unexpect};
+
+    // Then expect it to be false
+    EXPECT_FALSE(unit.has_value());
+}
+
+TEST(ExpectedVoidTest, NoAbortWhenCallValueFromConstLValueReference)
+{
+    // Given an expected with an error
+    const expected<void, ErrorType> unit{};
+
+    // Expect no exception when calling value
+    EXPECT_NO_THROW(unit.value());
+}
+
+TEST(ExpectedVoidTest, AbortWhenCallValueFromConstLValueReferenceWithoutValue)
+{
+    // Given an expected with an error
+    const expected<void, ErrorType> unit{unexpect};
+
+    // Expect an exception when calling value value
+    EXPECT_THROW(unit.value(), std::exception);
+}
+
+TEST(ExpectedVoidTest, NoAbortWhenCallValueFromRValueReference)
+{
+    // Given an expected with an error
+    expected<void, ErrorType> unit{};
+
+    // Expect no exception when calling value
+    EXPECT_NO_THROW(std::move(unit).value());
+}
+
+TEST(ExpectedVoidTest, AbortWhenCallValueFromRValueReferenceWithoutValue)
+{
+    // Given an expected with an error
+    expected<void, ErrorType> unit{unexpect};
+
+    // Expect an exception when calling value value
+    EXPECT_THROW(std::move(unit).value(), std::exception);
+}
+
+TEST(ExpectedVoidTest, CanRetrieveErrorFromConstLValueReference)
+{
+    // Given an expected with an error
+    std::int32_t error{13};
+    const expected<void, CopyableType> unit{unexpect, CopyableType{error}};
+
+    // When using the expected as const-lvalue-reference the error matches the original error
+    EXPECT_EQ(unit.error().value_, error);
+
+    // Expect to be able to retrieve the error with correct type
+    static_assert(std::is_same_v<decltype(unit.error()), const CopyableType&>);
+}
+
+TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
+{
+    // Given an expected with a value
+    const expected<void, ErrorType> unit{};
+
+    // Expect an abort if accessing the error
+    EXPECT_EXIT(std::ignore = std::move(unit).error(), testing::KilledBySignal(SIGABRT), "");
+}
+
+TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
+{
+    // Given an expected with a value
+    expected<void, ErrorType> unit{};
+
+    // Expect an abort if accessing the error
+    EXPECT_EXIT(std::ignore = std::move(unit).error(), testing::KilledBySignal(SIGABRT), "");
+}
+
+TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsErrorIfHasNoValue)
+{
+    // Given an expected with an error
+    const std::int32_t error{19};
+    const std::int32_t default_error{11};
+    const expected<void, CopyableType> unit{unexpect, error};
+
+    // When retrieving the error via error_or
+    const auto result = unit.error_or(CopyableType{default_error});
+
+    // Expect the result to be the value
+    EXPECT_EQ(result.value_, error);
+}
+
+TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsDefaultIfHasValue)
+{
+    // Given a valid expected
+    const std::int32_t default_error{11};
+    const expected<void, CopyableType> unit{};
+
+    // When retrieving the error via error_or
+    const auto result = unit.error_or(CopyableType{default_error});
+
+    // Expect the result to be the default value
+    EXPECT_EQ(result.value_, default_error);
+}
+
+TEST(ExpectedVoidTest, ErrorOrRValueReturnsErrorIfHasNoValue)
+{
+    // Given an expected with an error
+    const std::int32_t error{19};
+    const std::int32_t default_error{11};
+    expected<void, NothrowMoveOnlyType> unit{unexpect, error};
+
+    // When retrieving the error via error_or
+    const auto result = std::move(unit).error_or(NothrowMoveOnlyType{default_error});
+
+    // Expect the result to be the error
+    EXPECT_EQ(result.value_, error);
+}
+
+TEST(ExpectedVoidTest, ErrorOrRValueReturnsDefaultIfHasValue)
+{
+    // Given a valid expected
+    const std::int32_t default_error{11};
+    expected<void, NothrowMoveOnlyType> unit{};
+
+    // When retrieving the error via error_or
+    const auto result = std::move(unit).error_or(NothrowMoveOnlyType{default_error});
+
+    // Expect the result to be the default error
+    EXPECT_EQ(result.value_, default_error);
+}
+
+TEST(ExpectedVoidTest, CanRetrieveErrorFromRValueReference)
+{
+    // Given an expected with an error
+    std::int32_t error{13};
+    expected<void, NothrowMoveOnlyType> unit{unexpect, NothrowMoveOnlyType{error}};
+
+    // When using the expected as rvalue-reference the error matches the original error
+    EXPECT_EQ(std::move(unit).error().value_, error);
+
+    // Expect to be able to retrieve the error with correct type
+    // Double move fine because the operand of decltype is unevaluated:
+    // https://timsong-cpp.github.io/cppwp/n4659/dcl.spec#dcl.type.simple-4
+    static_assert(std::is_same_v<decltype(std::move(unit).error()), NothrowMoveOnlyType&&>);
+}
+
 }  // namespace
 }  // namespace score::details

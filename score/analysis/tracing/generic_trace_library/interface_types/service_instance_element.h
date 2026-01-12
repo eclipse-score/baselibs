@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_SERVICE_INSTANCE_ELEMENT_H
-#define GENERIC_TRACE_API_SERVICE_INSTANCE_ELEMENT_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_SERVICE_INSTANCE_ELEMENT_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_SERVICE_INSTANCE_ELEMENT_H
 
 #include <score/utility.hpp>
 #include <score/variant.hpp>
@@ -65,4 +65,4 @@ class ServiceInstanceElement
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_SERVICE_INSTANCE_ELEMENT_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_SERVICE_INSTANCE_ELEMENT_H

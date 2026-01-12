@@ -225,53 +225,6 @@ TEST(StatImpl, FchmodFailure)
     EXPECT_FALSE(result.has_value());
 }
 
-TEST(StatImpl, UmaskSuccess)
-{
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "StatImpl Umask Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    using Mode = Stat::Mode;
-    auto current_mode =
-        Mode::kReadUser | Mode::kWriteUser | Mode::kExecUser | Mode::kReadGroup | Mode::kWriteGroup | Mode::kExecGroup;
-    EXPECT_TRUE(score::os::Stat::instance().umask(current_mode).has_value());
-
-    std::vector<Mode> mode_vector = {Mode::kNone,
-                                     Mode::kReadWriteExecGroup,
-                                     Mode::kReadWriteExecOthers,
-                                     Mode::kWriteUser,
-                                     Mode::kExecUser,
-                                     Mode::kReadGroup,
-                                     Mode::kWriteGroup,
-                                     Mode::kExecGroup,
-                                     Mode::kReadOthers,
-                                     Mode::kWriteOthers,
-                                     Mode::kExecOthers};
-
-    for (const auto& mode : mode_vector)
-    {
-        const auto new_mode = current_mode | mode;
-        const auto prev_mode = score::os::Stat::instance().umask(new_mode);
-        EXPECT_TRUE(prev_mode.has_value());
-        EXPECT_EQ(current_mode, prev_mode.value());
-        current_mode = new_mode;
-    }
-}
-
-TEST(StatImpl, UmaskFailure)
-{
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "StatImpl Umask Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    const auto result = score::os::Stat::instance().umask(Stat::Mode::kUnknown);
-    EXPECT_TRUE(result.has_value());
-}
-
 TEST(StatImpl, FchmodatSuccess)
 {
     RecordProperty("Verifies", "SCR-46010294");

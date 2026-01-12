@@ -11,7 +11,6 @@
 #include <score/private/execution/operation_state_t.hpp>
 #include <score/private/execution/receiver_t.hpp>
 #include <score/private/execution/sender_t.hpp>
-#include <score/private/utility/static_const.hpp>
 
 #include <type_traits>
 #include <utility>
@@ -45,9 +44,6 @@ struct connect_t
 
 using detail::connect_t_disable_adl::connect_t;
 
-namespace // NOLINT(google-build-namespaces)
-{
-
 /// \brief Connects senders with receivers.
 ///
 /// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2300r7.html#design-connect
@@ -57,9 +53,7 @@ namespace // NOLINT(google-build-namespaces)
 ///
 /// \return An operation state that will ensure that if start is called that one of the completion operations will be
 /// called on the receiver passed to connect.
-constexpr auto& connect = score::cpp::static_const<connect_t>::value; // NOLINT(misc-definitions-in-headers)
-
-} // namespace
+inline constexpr connect_t connect{};
 
 template <typename S, typename R>
 using connect_result_t = decltype(score::cpp::execution::connect(std::declval<S>(), std::declval<R>()));

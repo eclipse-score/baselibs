@@ -1,0 +1,116 @@
+///
+/// \file
+/// \copyright Copyright (C) 2025, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+///
+/// \brief Score.Futurecpp.Functional Component
+///
+
+// IWYU pragma: private
+
+#ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_FUNCTIONAL_BIND_FRONT_HPP
+#define SCORE_LANGUAGE_FUTURECPP_PRIVATE_FUNCTIONAL_BIND_FRONT_HPP
+
+#include <functional>
+#include <tuple>
+#include <type_traits>
+#include <utility>
+
+namespace score::cpp
+{
+namespace detail
+{
+
+template <typename FD, typename... BoundArgs>
+class bind_front_wrapper
+{
+public:
+    template <typename F, typename... Args>
+    constexpr explicit bind_front_wrapper(F&& f, Args&&... args)
+        : f_(std::forward<F>(f)), args_(std::forward<Args>(args)...)
+    {
+    }
+
+    template <typename... CallArgs>
+    constexpr decltype(auto)
+    operator()(CallArgs&&... call_args) & noexcept(std::is_nothrow_invocable_v<FD&, BoundArgs&..., CallArgs...>)
+    {
+        static_assert(std::is_invocable_v<FD&, BoundArgs&..., CallArgs...>);
+
+        return std::apply(
+            [&](BoundArgs&... bound_args) -> decltype(auto) {
+                return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...);
+            },
+            args_);
+    }
+
+    template <typename... CallArgs>
+    constexpr decltype(auto) operator()(CallArgs&&... call_args) const& noexcept(
+        std::is_nothrow_invocable_v<const FD&, const BoundArgs&..., CallArgs...>)
+    {
+        static_assert(std::is_invocable_v<const FD&, const BoundArgs&..., CallArgs...>);
+
+        return std::apply(
+            [&](const BoundArgs&... bound_args) -> decltype(auto) {
+                return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...);
+            },
+            args_);
+    }
+
+    template <typename... CallArgs>
+    constexpr decltype(auto)
+    operator()(CallArgs&&... call_args) && noexcept(std::is_nothrow_invocable_v<FD, BoundArgs..., CallArgs...>)
+    {
+        static_assert(std::is_invocable_v<FD, BoundArgs..., CallArgs...>);
+
+        return std::apply(
+            [&](BoundArgs&&... bound_args) -> decltype(auto) {
+                return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...);
+            },
+            std::move(args_));
+    }
+
+    template <typename... CallArgs>
+    constexpr decltype(auto) operator()(CallArgs&&... call_args) const&& noexcept(
+        std::is_nothrow_invocable_v<const FD, const BoundArgs..., CallArgs...>)
+    {
+        static_assert(std::is_invocable_v<const FD, const BoundArgs..., CallArgs...>);
+
+        return std::apply(
+            [&](const BoundArgs&&... bound_args) -> decltype(auto) {
+                return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...);
+            },
+            std::move(args_));
+    }
+
+private:
+    FD f_;
+    std::tuple<BoundArgs...> args_;
+};
+
+} // namespace detail
+
+/// \brief Generates a perfect forwarding call wrapper which allows to invoke the callable target `f` with its first
+/// `sizeof...(Args)` parameters bound to `args`
+///
+/// \tparam F the type of the callable object
+/// \tparam Args the types of the arguments to bind to the first `sizeof...(Args)` parameters of the `Callable` object
+/// \param f the `Callable` object that will be bound to some arguments
+/// \param args the list of arguments to bind to the first `sizeof...(Args)` parameters of the `Callable` object
+/// \return A function object of unspecified type, which can be called with the remaining parameters of the `Callable`
+/// object
+template <typename F, typename... Args>
+constexpr auto bind_front(F&& f, Args&&... args)
+{
+    using FD = std::decay_t<F>;
+
+    static_assert(std::is_constructible_v<FD, F>);
+    static_assert(std::is_move_constructible_v<FD>);
+    static_assert((std::is_constructible_v<std::decay_t<Args>, Args> && ...));
+    static_assert((std::is_move_constructible_v<std::decay_t<Args>> && ...));
+
+    return detail::bind_front_wrapper<FD, std::decay_t<Args>...>(std::forward<F>(f), std::forward<Args>(args)...);
+}
+
+} // namespace score::cpp
+
+#endif // SCORE_LANGUAGE_FUTURECPP_PRIVATE_FUNCTIONAL_BIND_FRONT_HPP

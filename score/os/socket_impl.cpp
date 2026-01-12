@@ -187,6 +187,7 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvmsg(const std::int32_t sock
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
+// coverity[misra_cpp_2023_rule_6_9_2_violation]
 score::cpp::expected<ssize_t, Error> SocketImpl::recvmmsg(const std::int32_t sockfd,
                                                    mmsghdr* msgvec,
                                                    const unsigned int vlen,
@@ -201,7 +202,14 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvmmsg(const std::int32_t soc
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__)
+// coverity[autosar_cpp14_a16_0_1_violation]
+#if __QNX__ >= 800
+    const std::int32_t message_flags{messageflag_to_nativeflag(flags)};
+// coverity[autosar_cpp14_a16_0_1_violation]
+#else
     const std::uint32_t message_flags{static_cast<std::uint32_t>(messageflag_to_nativeflag(flags))};
+// coverity[autosar_cpp14_a16_0_1_violation]
+#endif
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #else
     // LCOV_EXCL_START we're collecting coverage for QNX only
@@ -209,7 +217,10 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvmmsg(const std::int32_t soc
     // LCOV_EXCL_STOP
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif
-
+    // Rationale: Conversions are intentional to match syscall interface; safe and required.
+    // coverity[autosar_cpp14_m5_0_3_violation]
+    // coverity[autosar_cpp14_m5_0_4_violation]
+    // coverity[misra_cpp_2023_rule_7_0_6_violation]
     const ssize_t ret = ::recvmmsg(sockfd, msgvec, vlen, message_flags, timeout);
     if (ret == -1)
     {
@@ -254,7 +265,14 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::sendmmsg(const std::int32_
 {
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #if defined(__QNX__)
+// coverity[autosar_cpp14_a16_0_1_violation], see above rationale
+#if __QNX__ >= 800
+    const std::int32_t message_flags{messageflag_to_nativeflag(flags)};
+// coverity[autosar_cpp14_a16_0_1_violation], see above rationale
+#else
     const std::uint32_t message_flags{static_cast<std::uint32_t>(messageflag_to_nativeflag(flags))};
+// coverity[autosar_cpp14_a16_0_1_violation], see above rationale
+#endif
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #else
     // LCOV_EXCL_START we're collecting coverage for QNX only
@@ -266,15 +284,22 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::sendmmsg(const std::int32_
     // qualification from the type of a pointer or reference.
     // Rationale : const_cast is necessary to remove const qualifier in order to adjust constant
     // message to standard API-sendmmsg
-    const std::int32_t ret =
+    // Suppress MISRA/AUTOSAR/CERT warnings related to const_cast and numeric conversions
+    // Rationale: Conversions are intentional to match syscall interface; safe and required.
+    const auto ret =
         // coverity[autosar_cpp14_a5_2_3_violation]
+        // coverity[misra_cpp_2023_rule_8_2_3_violation]
+        // coverity[cert_exp55_cpp_violation]
+        // coverity[autosar_cpp14_m5_0_3_violation]
+        // coverity[autosar_cpp14_m5_0_4_violation]
+        // coverity[misra_cpp_2023_rule_7_0_6_violation]
         ::sendmmsg(sockfd, const_cast<mmsghdr*>(messages_array), message_array_length, message_flags);
 
     if (ret == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
-    return ret;
+    return static_cast<std::int32_t>(ret);
 }
 
 std::int32_t SocketImpl::messageflag_to_nativeflag(const MessageFlag flags) const noexcept

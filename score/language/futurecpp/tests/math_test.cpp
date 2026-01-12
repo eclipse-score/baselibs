@@ -260,8 +260,8 @@ TEST(math_test, fmod_floored_interval_border_double)
 /// @requirement CB-#18288545
 TEST(math_test, fmod_floored_zero_divisor_float)
 {
-    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(std::isnan(score::cpp::fmod_floored(1.0F, 0.0F)));
-    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(std::isnan(score::cpp::fmod_floored(1.0F, -0.0F)));
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = std::isnan(score::cpp::fmod_floored(1.0F, 0.0F)));
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = std::isnan(score::cpp::fmod_floored(1.0F, -0.0F)));
 }
 
 ///

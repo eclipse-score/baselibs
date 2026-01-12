@@ -90,6 +90,12 @@ constexpr auto readWriteAccessForEveryBody =
     readAccessForEveryBody | Stat::Mode::kWriteGroup | Stat::Mode::kWriteOthers;
 
 constexpr auto read_only = ::score::os::Stat::Mode::kReadUser;
+
+// Suppress "AUTOSAR C++14 A2-10-4" rule finding: The identifier name of a non-member object with static storage
+// duration or static function shall not be reused within a namespace.
+// Rationale: This identifier is in an anonymous namespace which ensures that it is not reused between translation
+// units. Within this translation unit it is only defined once.
+// coverity[autosar_cpp14_a2_10_4_violation]
 constexpr score::os::IAccessControlList::UserIdentifier kTypedmemdUid = 3020;
 
 /// \brief Class aggregating info about shm-object read out via stat/fstat from the shm-object file
@@ -181,36 +187,24 @@ bool waitForFreeLockFile(const std::string& lock_file_path)
     return !lockFileExists;  // we want to return true if lock file does no longer exist, otherwise false.
 }
 
-score::os::IAccessControlList::UserIdentifier GetCreatorUidFromAcl(
-    const ISharedMemoryResource::FileDescriptor fd,
-    const ISharedMemoryResource::AccessControlListFactory& acl_factory) noexcept
+score::os::IAccessControlList::UserIdentifier GetCreatorUidFromTypedmemd(
+    std::string_view path,
+    const score::memory::shared::TypedMemory& typed_memory_ptr) noexcept
 {
-    // Suppress "AUTOSAR C++14 A18-5-8" rule finding. This rule states: "Objects that do not outlive a function
-    // shall have automatic storage duration". Rationale: The object is a unique_ptr which is allocated in the heap.
-    // coverity[autosar_cpp14_a18_5_8_violation]
-    auto acl = acl_factory(fd);
-    const auto result = acl->FindUserIdsWithPermission(score::os::Acl::Permission::kExecute);
+    const auto result = typed_memory_ptr.GetCreatorUid(path);
     if (!result.has_value())
     {
         score::mw::log::LogFatal("shm") << "Finding creator_uid of shm-object failed: " << result.error();
         std::terminate();
     }
 
-    const auto& users_with_exec_permission = result.value();
-    // For named-shm in typedmemd, only creator of shm must have execute permission set in eACL.
-    if (1U != users_with_exec_permission.size())
-    {
-        score::mw::log::LogFatal("shm") << "Invalid number of users with execution permission: Expected 1 user, found "
-                                      << users_with_exec_permission.size();
-        std::terminate();
-    }
-
-    return users_with_exec_permission.front();
+    return result.value();
 }
 
 ShmObjectStatInfo GetShmObjectStatInfo(const ISharedMemoryResource::FileDescriptor fd,
-                                       const ISharedMemoryResource::AccessControlListFactory& acl_factory,
-                                       bool is_named_shm)
+                                       bool is_named_shm,
+                                       const std::string* const path,
+                                       const score::memory::shared::TypedMemory* typed_memory_ptr)
 {
     score::os::StatBuffer stat_buffer{};
 
@@ -224,9 +218,15 @@ ShmObjectStatInfo GetShmObjectStatInfo(const ISharedMemoryResource::FileDescript
     bool is_shm_in_typed_memory = false;
     if (is_named_shm && (kTypedmemdUid == owner_uid))
     {
+        // Suppress "AUTOSAR C++14 A0-1-1", The rule states: "A project shall not contain instances of non-volatile
+        // variables being given values that are not subsequently used"
+        // Rationale: There is no variable defined in the following line.
+        // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(path != nullptr, "shm-object file path is not set.");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(typed_memory_ptr != nullptr, "Typed memory is not available.");
         is_shm_in_typed_memory = true;
-        score::mw::log::LogInfo("shm") << "Named-shm is in TypedMemory. Finding creator-uid from from eACL entries.";
-        stat_buffer.st_uid = GetCreatorUidFromAcl(fd, acl_factory);
+        score::mw::log::LogInfo("shm") << "Named-shm is in TypedMemory. Querying typedmemd for shm object creator UID.";
+        stat_buffer.st_uid = GetCreatorUidFromTypedmemd(*path, *typed_memory_ptr);
     }
     // Suppress "AUTOSAR C++14 A0-1-1", The rule states: "A project shall not contain instances of non-volatile
     // variables being given values that are not subsequently used"
@@ -240,6 +240,12 @@ ShmObjectStatInfo GetShmObjectStatInfo(const ISharedMemoryResource::FileDescript
 
 void* CalculateUsableStartAddress(void* const base_address, const std::size_t management_space) noexcept
 {
+    // In our architecture we have a one-to-one mapping between pointers and integral values.
+    // Therefore, casting between the two is well-defined.
+    // Dereferencing the pointer returned by this function is forbidden by MISRA C++:2023 Rule 8.2.6 and AUTOSAR C++14
+    // M5-2-8.
+    // Thus, this operation does not increase the risk.
+    // NOLINTNEXTLINE(score-banned-function) see above
     return AddOffsetToPointer(base_address, management_space);
 }
 
@@ -320,10 +326,26 @@ void SharedMemoryResource::UnlinkFilesystemEntry() const noexcept
     // there's no way for path to equal nullptr using the public interface.)
     if (path != nullptr)
     {
-        // This requirement broken_link_c/issue/57467 directly excludes memory::shared (which is
-        // part of mw::com) from the ban by listing it in the not relevant for field.
-        // NOLINTNEXTLINE(score-banned-function): explanation on lines above.
-        score::cpp::ignore = ::score::os::Mman::instance().shm_unlink(path->c_str());
+        if (!is_shm_in_typed_memory_)
+        {
+            // This requirement broken_link_c/issue/57467 directly excludes memory::shared (which
+            // is part of mw::com) from the ban by listing it in the not relevant for field.
+            // NOLINTNEXTLINE(score-banned-function): explanation on lines above.
+            score::cpp::ignore = ::score::os::Mman::instance().shm_unlink(path->c_str());
+            return;
+        }
+
+        const auto unlink_result = typed_memory_ptr_->Unlink(path->c_str());
+        if (unlink_result.has_value())
+        {
+            score::mw::log::LogDebug("shm") << __func__ << "Shm " << *path << " unlinked";
+        }
+        else
+        {
+            score::mw::log::LogError("shm")
+                << __func__ << __LINE__ << "Unexpected error while trying to unlink shared-memory " << *path
+                << " in typed memory. Reason: " << unlink_result.error();
+        }
     }
     // LCOV_EXCL_BR_STOP
 }
@@ -406,9 +428,8 @@ score::cpp::expected<std::shared_ptr<SharedMemoryResource>, score::os::Error> Sh
     const auto result = resource->OpenImpl(is_read_write);
     if (!result.has_value())
     {
-        score::mw::log::LogError("shm") << "Unexpected error while opening Shared Memory Resource with errno"
-                                      << result.error();
-
+        score::mw::log::LogError("shm") << __func__ << __LINE__ << "Unexpected error while opening shared-memory resource"
+                                      << resource->GetIdentifier() << "with errno" << result.error();
         return score::cpp::make_unexpected(result.error());
     }
     return resource;
@@ -506,7 +527,7 @@ score::cpp::expected_blank<Error> SharedMemoryResource::CreateImpl(const std::si
 
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(file_descriptor_ >= 0, "No valid file descriptor");
 
-    const auto stat_values = GetShmObjectStatInfo(file_descriptor_, acl_factory_, (path != nullptr));
+    const auto stat_values = GetShmObjectStatInfo(file_descriptor_, (path != nullptr), path, typed_memory_ptr_.get());
     file_owner_uid_ = stat_values.owner_uid;
 
     if (!is_shm_in_typed_memory_)
@@ -594,12 +615,12 @@ auto SharedMemoryResource::waitForOtherProcessAndOpen() noexcept -> score::cpp::
     const auto result = ::score::os::Mman::instance().shm_open(path->data(), this->opening_mode_, read_only);
     if (!result.has_value())
     {
-        score::mw::log::LogError("shm") << __func__ << __LINE__ << "Unexpected error while opening Shared Memory Resource"
-                                      << *path << "with errno" << result.error();
+        // Error severity depends on whether the caller considers this to be a true error path (e.g. in Open()) or is an
+        // expected code path (e.g. in CreateOrOpen()) - logging deferred to the caller.
         return score::cpp::make_unexpected(result.error());
     }
     file_descriptor_ = result.value();
-    const auto stat_values = GetShmObjectStatInfo(file_descriptor_, acl_factory_, is_named_shm);
+    const auto stat_values = GetShmObjectStatInfo(file_descriptor_, is_named_shm, path, typed_memory_ptr_.get());
     is_shm_in_typed_memory_ = stat_values.is_shm_in_typed_memory;
     file_owner_uid_ = stat_values.owner_uid;
     virtual_address_space_to_reserve_ = stat_values.size;
@@ -661,19 +682,35 @@ auto SharedMemoryResource::do_allocate(const std::size_t bytes, const std::size_
      * So there is no need for any fancy logic.
      */
     void* const allocation_start_address =
+        // In our architecture we have a one-to-one mapping between pointers and integral values.
+        // Therefore, casting between the two is well-defined.
+        // The base_adress_ points to the start of the memory arena for the allocation and alreadyAllocatedBytes is
+        // ensured by this class to not exceed the size of the memory arena.
+        // Therefore, the resulting pointer will always point into the memory arena.
+        // In C++23 std::start_lifetime_as_array can be used to inform the compiler.
+        // NOLINTNEXTLINE(score-banned-function) see above
         AddOffsetToPointer(this->base_address_, this->control_block_->alreadyAllocatedBytes.load());
+    // In our architecture we have a one-to-one mapping between pointers and integral values.
+    // Therefore, casting between the two is well-defined.
+    // This pointer is not dereferenced.
+    // NOLINTNEXTLINE(score-banned-function) see above
     void* const allocation_end_address = AddOffsetToPointer(this->base_address_, virtual_address_space_to_reserve_);
     void* const new_address_aligned =
         detail::do_allocation_algorithm(allocation_start_address, allocation_end_address, bytes, alignment);
 
     if (new_address_aligned == nullptr)
     {
-        score::mw::log::LogFatal("shm") << "Cannot allocate shared memory block of size" << bytes << " at: ["
-                                      << PointerToLogValue(new_address_aligned) << ":"
-                                      << PointerToLogValue(AddOffsetToPointer(new_address_aligned, bytes))
-                                      << "]. Does not fit within shared memory segment: ["
-                                      << PointerToLogValue(this->base_address_) << ":"
-                                      << PointerToLogValue(this->getEndAddress()) << "]";
+        score::mw::log::LogFatal("shm")
+            << "Cannot allocate shared memory block of size" << bytes << " at: ["
+            << PointerToLogValue(new_address_aligned)
+            << ":"
+            // In our architecture we have a one-to-one mapping between pointers and integral values.
+            // Therefore, casting between the two is well-defined.
+            // The resulting pointer is used for logging and is not dereferenced.
+            // NOLINTNEXTLINE(score-banned-function) see above
+            << PointerToLogValue(AddOffsetToPointer(new_address_aligned, bytes))
+            << "]. Does not fit within shared memory segment: [" << PointerToLogValue(this->base_address_) << ":"
+            << PointerToLogValue(this->getEndAddress()) << "]";
         std::terminate();
     }
     const auto padding = SubtractPointersBytes(new_address_aligned, allocation_start_address);
@@ -732,12 +769,23 @@ auto SharedMemoryResource::GetUserAllocatedBytes() const noexcept -> std::size_t
 
 auto SharedMemoryResource::getEndAddress() const noexcept -> const void*
 {
+    // In our architecture we have a one-to-one mapping between pointers and integral values.
+    // Therefore, casting between the two is well-defined.
+    // Dereferencing the pointer returned by this function is forbidden by MISRA C++:2023 Rule 8.2.6 and AUTOSAR C++14
+    // M5-2-8.
+    // Thus, this operation does not increase the risk.
+    // NOLINTNEXTLINE(score-banned-function) see above
     return AddOffsetToPointer(this->base_address_, this->virtual_address_space_to_reserve_);
 }
 
 auto SharedMemoryResource::getPath() const noexcept -> const std::string*
 {
     return std::get_if<std::string>(&shared_memory_resource_identifier_);
+}
+
+auto SharedMemoryResource::GetIdentifier() const noexcept -> std::string_view
+{
+    return log_identification_;
 }
 
 auto SharedMemoryResource::GetFileDescriptor() const noexcept -> FileDescriptor

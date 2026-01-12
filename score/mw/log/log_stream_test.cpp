@@ -39,7 +39,7 @@ using ::testing::Return;
 using namespace std::chrono_literals;
 using ::testing::Types;
 
-const SlotHandle HANDLE{42};
+const SlotHandle HANDLE{3};
 
 TEST(LogStream, CorrectlyHandleStartStop)
 {
@@ -987,16 +987,17 @@ TEST_F(LogStreamFixture, UsesFallbackRecorderWithinOtherRecorder)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
+    auto local_stream_ = Unit();
     // Expecting that we log once via the normal recorder
-    EXPECT_CALL(recorder_mock_, LogBool(HANDLE, true)).WillOnce([this](auto, auto logged_value) {
+    EXPECT_CALL(recorder_mock_, LogBool(HANDLE, true)).WillOnce([&](auto, auto logged_value) {
         EXPECT_TRUE(logged_value);
 
         // When logging within a recorder
-        Unit() << false;
+        local_stream_ << false;
     });
 
     // When logging a value
-    Unit() << true;
+    local_stream_ << true;
 
     // Then the recorder_mock is only invoked once, not multiple times.
 }

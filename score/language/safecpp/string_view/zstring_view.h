@@ -13,8 +13,9 @@
 #ifndef SCORE_LANGUAGE_SAFECPP_STRING_VIEW_ZSTRING_VIEW_H
 #define SCORE_LANGUAGE_SAFECPP_STRING_VIEW_ZSTRING_VIEW_H
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"
 
+#include <cstddef>
 #include <string_view>
 #include <type_traits>
 #include <utility>
@@ -26,9 +27,14 @@ namespace score::safecpp
 {
 
 ///
-/// @brief non-modifiable view type over null-terminated character sequence
-/// @note This implementation is based on the following C++ standard draft paper:
+/// @brief non-modifiable view type over guaranteed null-terminated contiguous sequence of characters
+/// @note This implementation was originally motivated by the following C++ standard draft paper:
 ///       https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3655r2.html
+///       However, we decided to prioritize safety over following exactly a future standard proposal.
+///       As a result, we do not strictly follow the proposed API but intentionally deviate from it in some parts
+///       e.g. by not providing certain constructors or by performing additional bounds checks upon element access.
+///       Further note: the above-mentioned draft paper got meanwhile superseded by a revised one which itself is also
+///       subject to further changes at any time. The current draft version can be found here: https://wg21.link/p3655.
 ///
 template <typename CharType>
 class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
@@ -54,6 +60,14 @@ class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
     using value_type = typename base::value_type;
     using size_type = typename base::size_type;
 
+    /// @brief Constructs a `basic_zstring_view` as view over character array.
+    /// @details will invoke `std::abort()` in case such character array is not null-terminated at its last element
+    template <std::size_t N>
+    // NOLINTNEXTLINE(google-explicit-constructor, modernize-avoid-c-arrays) allow implicit creation from C-style arrays
+    constexpr basic_zstring_view(const CharType (&str)[N]) noexcept : base(str, typename violation_policies::abort{})
+    {
+    }
+
     /// @brief Constructs a `basic_zstring_view` as view over null-terminated \p StringType;.
     /// @details type \p StringType; is required to guarantee null-termination of its underlying buffer
     template <typename StringType,
@@ -65,12 +79,27 @@ class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
     {
     }
 
+    /// @brief Constructs a `basic_zstring_view` as view over character range pointed to by pointer \p str;.
+    /// @details will invoke `std::abort()` in case such character range is not null-terminated at index \p len; - 1
+    constexpr basic_zstring_view(const CharType* str, size_type len) noexcept
+        : base(str, len, typename violation_policies::abort{})
+    {
+    }
+
+    /// @note Constructor from char ptr w/o length info is omitted since its null-termination cannot be checked safely.
+    /// @details We can also not mark the corresponding constructor as `= delete` since that would lead to ambiguities.
+    ///          Hence, a constructor like the below one is simply not provided at all.
+    // constexpr basic_zstring_view(CharType*) = delete;
+
     /// @brief Constructs a `basic_zstring_view` from base type (i.e. `zspan<const CharType>`)
     // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversions from base type `zspan` (are always safe)
     constexpr basic_zstring_view(base other) noexcept : base(other) {}
 
     /// @brief Prohibits construction of a `basic_zstring_view` from `std::basic_string_view`
     constexpr basic_zstring_view(std::basic_string_view<CharType>) = delete;
+
+    /// @brief Prohibits construction from `std::nullptr_t`
+    constexpr basic_zstring_view(std::nullptr_t) = delete;
 
     /// @brief Default constructs a `basic_zstring_view`.
     constexpr basic_zstring_view() noexcept = default;

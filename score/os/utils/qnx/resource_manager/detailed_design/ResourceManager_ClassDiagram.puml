@@ -1,0 +1,239 @@
+@startuml ResourceManager_ClassDiagram
+skinparam linetype ortho
+
+package "logging" {
+  class mw_log
+}
+
+package "OS" {
+  class IoFuncQnx
+  class DispatchImpl
+  }
+
+package "The QNX Resource Manager Core Skeleton" {
+  class ResourceManager {
+    - dispatch_handle_: dispatch_t*
+    - resmgr_attributes_: resmgr_attr_t
+    - dispatch_context_: dispatch_context_t*
+    - resources_ : vector<Resource>
+    - iofunc_calls_ : std::shared_ptr<score::os::IoFuncQnx>
+    - dispatch_calls_ : std::shared_ptr<score::os::DispatchImpl>
+    - logger_ : Logger
+    --
+    + ResourceManager(
+      IN ResourceManagerConfig,
+      IN vector<Resource>,
+      IN std::shared_ptr<score::os::Dispatch>,
+      IN std::shared_ptr<score::os::IoFunc>
+    )
+    + Initialize(): int
+    + Run(): int
+    - InitializeDispatchInterface(): int
+    - InitializeHandlers(): int
+    - InitializeIofuncParameters(): int
+    - AttachResource(): int
+    - AllocateContextStructure(): int
+    --
+    Responsibilities
+    --
+    Core implementation template for QNX Resource Manager Skeleton
+    Provide an abstraction between QNX system APIs and the user resource manager.
+    provide the the user resource manager the ability for specific configurations.
+    Register the resource pathname in the system.
+    Dispatch the POSIX requests to the template user.
+  }
+
+  class Resource {
+    - resource_path : string
+    - resource_flags : unit32_t
+    - resource_ftype : _file_type
+    - resource_attr : extended_dev_attr_t
+    - connect_funcs : resmgr_connect_funcs_t
+    - io_funcs : resmgr_io_funcs_t
+    --
+    + Resource (): void
+    + Resource(
+      IN resource_path : string,
+      IN resource_flags : unit32_t,
+      IN resource_ftype : _file_type,
+      IN resource_attr : extended_dev_attr_t
+    ) : int
+    + GetResourcePath() : string
+    + SetResourcePath(IN path_name : string): void
+    + GetResourceFlags() : unit32_t
+    + SetResourceFlags( IN flags: unit32_t): void
+    + GetResourceFileType() : _file_type
+    + SetResourceFileType(IN ftype: _file_type): void
+    + GetResourceAttributes() : extended_dev_attr_t
+    + GetResourceConnectFunctions() : resmgr_connect_funcs_t*
+    + GetResourceIoFunctions() : resmgr_io_funcs_t*
+    + AttachRegisteredHandlers ()
+    + SetRequestHandler(read_handler: IReadFunction*): void
+    + SetRequestHandler(write_handler: IWriteFunction*): void
+    + SetRequestHandler(lseek_handler: ISeekFunction*): void
+    + SetRequestHandler(open_handler: IOpenFunction*): void
+    --
+    Responsibilities
+    --
+    Provide the definition of single resource
+    provide the initialization og the I/O and connect handlers
+  }
+
+  class "extended_dev_attr_t" <<struct>> {
+    + attr: iofunc_attr_t
+    + handlers_pointers: ResMgrHandlersSpec
+    --
+    Responsibilities
+    --
+    Link the Handler Interface to the resource definition class
+  }
+
+  class "ResMgrHandlersSpec" <<struct>> {
+    + open_handler  : IopenFunction*
+    + read_handler  : IReadFunction*
+    + write_handler : IWriteFunction*
+    + seek_handler  : ISeekFunction*
+    --
+    Responsibilities
+    --
+    Provide pointers to the abstract classes for the Handlers
+  }
+
+  class "ISeekFunction" {
+    {abstract} + operator() (
+      IN ctp :resmgr_context_t *,
+      INOUT msg : io_lseek_t *,
+      IN ocb: RESMGR_OCB_T *
+    ) : int
+    --
+    Responsibilities
+    --
+    Abstract Class for seek handler
+  }
+
+  class "IWriteFunction" {
+    {abstract} + operator() (
+      IN ctp :resmgr_context_t *,
+      INOUT msg : io_write_t *,
+      IN ocb: RESMGR_OCB_T *
+    ) : int
+    --
+    Responsibilities
+    --
+    Abstract Class for write handler
+  }
+
+  class "IOpenFunction" {
+    {abstract} + virtual operator() (
+      IN ctp :resmgr_context_t *,
+      INOUT msg : io_open_t *,
+      IN ocb: RESMGR_HANDLE_T *,
+      IN __extra : void*
+    ) : int
+    --
+    Responsibilities
+    -- Abstract Class for open handler
+  }
+
+  class "IReadFunction" {
+    {abstract} + operator() (
+      IN ctp :resmgr_context_t *,
+      INOUT msg : io_read_t *,
+      IN ocb: RESMGR_OCB_T *
+    ) : int
+    --
+    Responsibilities
+    --
+    Abstract Class for read handler
+  }
+
+  class "ResourceManagerConfig" <<struct>> {
+    - flags : int
+    - nparts_max : int
+    - msg_max_size : int
+    --
+    Responsibilities
+    --
+    SpecificConfigurationTo the ResourceManager
+  }
+
+  class "score::os::resmgr::c_funcs" <<namespace>> {
+    --
+    + static io_read_handler(
+      IN ctp  resmgr_context_t* ,
+      INOUT msg io_read_t *,
+      IN ocb iofunc_ocb_t*
+    ) : int
+
+    + static io_write_handler(
+      IN ctp  resmgr_context_t* ,
+      INOUT msg io_write_t *,
+      IN ocb iofunc_ocb_t*
+    ) : int
+
+    + static io_lseek_handler(
+      IN ctp  resmgr_context_t* ,
+      INOUT msg io_lseek_t *,
+      IN ocb iofunc_ocb_t*
+    ) : int
+
+    + static connect_open_handler(
+      IN ctp  resmgr_context_t* ,
+      INOUT msg io_open_t *,
+      IN extended_dev_attr_t*,
+      IN void* extra
+    ) : int
+  }
+
+  class SimpleReadFunction {
+    - resmgr_: ResMgr&
+    - iofunc_: IoFunc&
+    --
+    + SimpleReadFunction(
+      IN resmgr: ResMgr&,
+      IN iofunc: IoFunc&
+    )
+    + operator()(
+      IN ctp: resmgr_context_t*,
+      IN msg: io_read_t*,
+      IN ocb: RESMGR_OCB_T*
+    ):int
+    + static getOffset(
+      IN msg: const io_read_t*,
+      IN ocb: const RESMGR_OCB_T*
+    ): score::Result<off_t>
+    --
+    - read(
+      IN offset: const off_t,
+      IN nbytes: const size_t,
+      OUT result: std::uint64_t&
+    ):  score::Result<std::size_t>
+    - preRead(
+      IN offset: off_t,
+      IN size: std::size_t
+    ): score::ResultBlank
+    - postRead():score::ResultBlank
+  }
+}
+
+' Relations
+
+ResMgrHandlersSpec --> IReadFunction
+ResMgrHandlersSpec --> IOpenFunction
+ResMgrHandlersSpec --> ISeekFunction
+ResMgrHandlersSpec --> IWriteFunction
+
+
+
+ResourceManager "1" *--> "1..n" Resource
+ResourceManagerConfig <.. ResourceManager
+ResourceManager "\n\n\n\n\nuse" o--- IoFuncQnx
+ResourceManager "\n\n\n\n\nuse" o--- DispatchImpl
+ResourceManager "\n\n\n\n\nuse" o--- mw_log
+ResMgrHandlersSpec <-- extended_dev_attr_t
+extended_dev_attr_t --* Resource
+
+SimpleReadFunction -|> IReadFunction
+score::os::resmgr::c_funcs <.. "<<use>>\n <<extern c>>" Resource
+
+@enduml

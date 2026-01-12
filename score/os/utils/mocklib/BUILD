@@ -24,19 +24,6 @@ cc_library(
 )
 
 cc_library(
-    name = "semaphore",
-    testonly = True,
-    srcs = ["semaphoremock.cpp"],
-    hdrs = ["semaphoremock.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/os:errno",
-        "@score_baselibs//score/os/utils:semaphore_headers",
-    ],
-)
-
-cc_library(
     name = "signal_mock",
     testonly = True,
     srcs = ["signalmock.cpp"],

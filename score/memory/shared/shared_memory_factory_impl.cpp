@@ -28,6 +28,27 @@ namespace score::memory::shared
 
 namespace
 {
+// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+// Need to limit this functionality to QNX only.
+// coverity[autosar_cpp14_a16_0_1_violation]
+#if defined(__QNXNTO__)
+constexpr auto kTypedSharedMemoryPathPrefix = "/dev/shmem";
+// coverity[autosar_cpp14_a16_0_1_violation]  Different implementation required for linux.
+#else
+constexpr auto kTypedSharedMemoryPathPrefix = "/tmp";
+// coverity[autosar_cpp14_a16_0_1_violation]
+#endif
+
+// TODO: Ticket-201663 remove the hardcoded kTypedmemdUid value
+// Suppress "AUTOSAR C++14 A2-10-4" rule finding: The identifier name of a non-member object with static storage
+// duration or static function shall not be reused within a namespace.
+// Justification: Using unnamed namespaces for internal linkage ensures that the identifiers within the unnamed
+// namespace are unique to their translation unit and are not accessible or reusable within other translation units
+// or namespaces.
+// coverity[autosar_cpp14_a2_10_4_violation]
+constexpr score::os::IAccessControlList::UserIdentifier kTypedmemdUid{3020};
 
 std::unique_ptr<score::os::IAccessControlList> CreateAccessControlList(
     ISharedMemoryResource::FileDescriptor file_descriptor)
@@ -73,12 +94,21 @@ auto GetResourceIfAlreadyOpened(
     {
         return nullptr;
     }
-    const std::shared_ptr<SharedMemoryResource> resource = iterator->second.lock();
+    const auto resource = iterator->second.lock();
     if (resource == nullptr)
     {
         score::cpp::ignore = resource_map.erase(iterator);
     }
     return resource;
+}
+
+bool IsShmInTypedMemory(const std::string& path)
+{
+    const auto file_path = std::string{kTypedSharedMemoryPathPrefix} + path;
+    score::os::StatBuffer stat_buffer{};
+
+    const auto stat_result = score::os::Stat::instance().stat(file_path.c_str(), stat_buffer);
+    return (stat_result.has_value() && (stat_buffer.st_uid == kTypedmemdUid));
 }
 
 }  // namespace
@@ -95,10 +125,11 @@ auto SharedMemoryFactoryImpl::Open(const std::string& path,
     -> std::shared_ptr<ISharedMemoryResource>
 {
     std::lock_guard<std::mutex> lock{mutex_};
-    std::shared_ptr<SharedMemoryResource> resource = GetResourceIfAlreadyOpened(path, resources_);
+    auto resource = GetResourceIfAlreadyOpened(path, resources_);
     if (resource == nullptr)
     {
-        const auto result = SharedMemoryResource::Open(path, is_read_write, &CreateAccessControlList, nullptr);
+        const auto result =
+            SharedMemoryResource::Open(path, is_read_write, &CreateAccessControlList, typed_memory_ptr_);
         if (!result.has_value())
         {
             score::mw::log::LogWarn("shm") << "Could not open Shared Memory " << path << ":" << result.error();
@@ -202,7 +233,7 @@ auto score::memory::shared::SharedMemoryFactoryImpl::CreateOrOpen(
     const bool prefer_typed_memory) noexcept -> std::shared_ptr<ISharedMemoryResource>
 {
     std::lock_guard<std::mutex> lock{mutex_};
-    std::shared_ptr<SharedMemoryResource> resource = GetResourceIfAlreadyOpened(path, resources_);
+    auto resource = GetResourceIfAlreadyOpened(path, resources_);
     if (resource == nullptr)
     {
         if ((prefer_typed_memory) && (typed_memory_ptr_ == nullptr))
@@ -248,7 +279,7 @@ auto score::memory::shared::SharedMemoryFactoryImpl::CreateOrOpen(
 auto SharedMemoryFactoryImpl::Remove(const std::string& path) noexcept -> void
 {
     std::lock_guard<std::mutex> lock{mutex_};
-    std::shared_ptr<SharedMemoryResource> resource = GetResourceIfAlreadyOpened(path, resources_);
+    auto resource = GetResourceIfAlreadyOpened(path, resources_);
     if (resource != nullptr)
     {
         const auto number_resources_removed = resources_.erase(path);
@@ -268,10 +299,31 @@ auto SharedMemoryFactoryImpl::RemoveStaleArtefacts(const std::string& path) noex
     const auto lock_file_path = SharedMemoryResource::GetLockFilePath(path);
     score::cpp::ignore = ::score::os::Unistd::instance().unlink(lock_file_path.data());
 
-    // This requirement broken_link_c/issue/57467 directly excludes memory::shared (which is
-    // part of mw::com) from the ban by listing it in the not relevant for field.
-    // NOLINTNEXTLINE(score-banned-function): explanation on lines above.
-    score::cpp::ignore = ::score::os::Mman::instance().shm_unlink(path.c_str());
+    const bool is_shm_in_typed_memory = IsShmInTypedMemory(path);
+    if (!is_shm_in_typed_memory || (typed_memory_ptr_ == nullptr))
+    {
+        // This requirement broken_link_c/issue/57467 directly excludes memory::shared (which is
+        // part of mw::com) from the ban by listing it in the not relevant for field.
+        // NOLINTNEXTLINE(score-banned-function): explanation on lines above.
+        score::cpp::ignore = ::score::os::Mman::instance().shm_unlink(path.c_str());
+        return;
+    }
+
+    const auto unlink_result = typed_memory_ptr_->Unlink(path);
+    if (unlink_result.has_value())
+    {
+        score::mw::log::LogDebug("shm") << "Shm typed memory unlinked for: " << path;
+    }
+    else
+    {
+        // Suppress "AUTOSAR C++14 A0-1-1", The rule states: "A project shall not contain instances of non-volatile
+        // variables being given values that are not subsequently used"
+        // Rationale: There is no variable defined in the following line.
+        score::mw::log::LogError("shm")
+            // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+            << __func__ << __LINE__ << "Unexpected error while trying to unlink shared-memory in typed memory"
+            << "Reason: " << unlink_result.error();
+    }
 }
 
 auto SharedMemoryFactoryImpl::SetTypedMemoryProvider(std::shared_ptr<TypedMemory> typed_memory_ptr) noexcept -> void

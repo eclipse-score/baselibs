@@ -18,7 +18,6 @@ cc_library(
     name = "json_builder",
     srcs = ["json_builder.cpp"],
     hdrs = ["json_builder.h"],
-    tags = ["FFI"],
     deps = [
         "@nlohmann_json//:json",
         "@score_baselibs//score/json/internal/model",
@@ -32,7 +31,6 @@ cc_library(
     srcs = ["nlohmann_parser.cpp"],
     hdrs = ["nlohmann_parser.h"],
     features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":json_builder",

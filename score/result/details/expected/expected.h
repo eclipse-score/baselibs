@@ -20,8 +20,22 @@
 
 namespace score::details
 {
+
+template <typename T, typename E>
+class expected;
+
 namespace impl
 {
+
+template <typename T>
+struct is_expected : std::false_type
+{
+};
+
+template <typename T, typename E>
+struct is_expected<expected<T, E>> : std::true_type
+{
+};
 
 template <class T, class W>
 using converts_from_any_cvref = std::disjunction<std::is_constructible<T, W&>,
@@ -141,6 +155,7 @@ class unexpected : impl::base_unexpected
     // Inequality operators are automatically generated from C++20 onwards.
     template <typename E2>
     // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    // coverity[autosar_cpp14_a13_5_5_violation]
     friend constexpr bool operator!=(const unexpected& lhs, const unexpected<E2>& rhs)
     {
         return lhs.error() != rhs.error();
@@ -223,7 +238,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
                   std::negation<std::is_constructible<unexpected<E>, const expected<U, G>>>>>>
     // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
     // feature. Anyway, only available if T can be implicitly constructed from UF,
-    // or E can be implicitly constructed form GF.
+    // or E can be implicitly constructed from GF.
     // NOLINTNEXTLINE(google-explicit-constructor) see justification above
     constexpr expected(const expected<U, G>& rhs)
         : impl::base_expected{},
@@ -246,7 +261,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
                   std::negation<std::is_constructible<unexpected<E>, const expected<U, G>>>>>>
     // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
     // feature. Anyway, only available if T can be implicitly constructed from UF,
-    // or E can be implicitly constructed form GF.
+    // or E can be implicitly constructed from GF.
     // NOLINTNEXTLINE(google-explicit-constructor) see justification above
     constexpr expected(expected<U, G>&& rhs)
         : impl::base_expected{},
@@ -257,12 +272,15 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
 
     template <typename U = T,
               typename = std::enable_if_t<std::conjunction_v<
-                  // NOLINTBEGIN(modernize-avoid-c-arrays): false-positive no c-arrays used
+                  // NOLINTBEGIN(modernize-avoid-c-arrays) false positives. known clang-tidy issue:
+                  // https://github.com/llvm/llvm-project/pull/132924
                   std::negation<std::is_same<std::remove_cv_t<std::remove_reference_t<U>>, std::in_place_t>>,
                   std::negation<std::is_same<expected, std::remove_cv_t<std::remove_reference_t<U>>>>,
                   std::negation<std::is_base_of<impl::base_unexpected, std::remove_cv_t<std::remove_reference_t<U>>>>,
                   std::is_constructible<T, U>,
+                  // NOLINTEND(modernize-avoid-c-arrays)
                   std::disjunction<
+                      // NOLINTBEGIN(modernize-avoid-c-arrays) false positives. see info above
                       // coverity[autosar_cpp14_a2_11_1_violation] Used intentionally in compliance with the standard
                       std::negation<std::is_same<const volatile bool, std::remove_cv_t<std::remove_reference_t<U>>>>,
                       std::is_base_of<base_expected, std::remove_cv_t<std::remove_reference_t<U>>>>>>>
@@ -322,6 +340,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     {
     }
 
+    // DIVERGENCE FROM STANDARD: constexpr missing due to c++17 limitations
     ~expected() noexcept = default;
 
     constexpr expected& operator=(const expected&) = default;
@@ -347,7 +366,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     // coverity[autosar_cpp14_a13_3_1_violation]
     constexpr expected& operator=(U&& v)
     {
-        // Suppress "AUTOSAR C++14 A0-1-2" rule violatoin. The rule states "The value returned by a function having a
+        // Suppress "AUTOSAR C++14 A0-1-2" rule violation. The rule states "The value returned by a function having a
         // non-void return type that is not an overloaded operator shall be used." We are not interested in the return
         // and hence suppressed.
         // coverity[autosar_cpp14_a0_1_2_violation]
@@ -365,7 +384,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     // coverity[autosar_cpp14_a13_3_1_violation]
     constexpr expected& operator=(const unexpected<G>& other)
     {
-        // Suppress "AUTOSAR C++14 A0-1-2" rule violatoin. The rule states "The value returned by a function having a
+        // Suppress "AUTOSAR C++14 A0-1-2" rule violation. The rule states "The value returned by a function having a
         // non-void return type that is not an overloaded operator shall be used." We are not interested in the return
         // and hence suppressed.
         // coverity[autosar_cpp14_a0_1_2_violation]
@@ -418,6 +437,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
                                                                      std::is_nothrow_swappable<E>>)
     {
         storage_.swap(other.storage_);
+    }
+
+    // coverity[autosar_cpp14_a11_3_1_violation] friend is required for std::swap to work
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr void swap(expected& x, expected& y) noexcept(noexcept(x.swap(y)))
+    {
+        x.swap(y);
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
@@ -585,10 +611,12 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&>>>
     [[nodiscard]] constexpr auto and_then(F&& fun) &
     {
         using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(value())>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
 
         if (has_value())
         {
@@ -601,11 +629,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto and_then(F&& fun) const&
     {
         using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(value())>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
 
         if (has_value())
         {
@@ -618,11 +648,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto and_then(F&& fun) &&
     {
         using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(value()))>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
 
         if (has_value())
         {
@@ -630,16 +662,18 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
         }
         else
         {
-            return U{unexpect, error()};
+            return U{unexpect, std::move(error())};
         }
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto and_then(F&& fun) const&&
     {
         using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(value()))>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
 
         if (has_value())
         {
@@ -649,15 +683,19 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
         }
         else
         {
-            return U{unexpect, error()};
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return U{unexpect, std::move(error())};
         }
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, U&>>>
     [[nodiscard]] constexpr auto or_else(F&& fun) &
     {
         using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(error())>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_same<typename G::value_type, T>::value, "Value types must match");
 
         if (!has_value())
         {
@@ -670,11 +708,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, const U&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto or_else(F&& fun) const&
     {
         using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(error())>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_same<typename G::value_type, T>::value, "Value types must match");
 
         if (!has_value())
         {
@@ -687,11 +727,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, U&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto or_else(F&& fun) &&
     {
         using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(error()))>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_same<typename G::value_type, T>::value, "Value types must match");
 
         if (!has_value())
         {
@@ -704,11 +746,13 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, const U&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto or_else(F&& fun) const&&
     {
         using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(error()))>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_same<typename G::value_type, T>::value, "Value types must match");
 
         if (!has_value())
         {
@@ -725,10 +769,10 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&>>>
     [[nodiscard]] constexpr auto transform(F&& fun) &
     {
-        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(value())>>>;
+        using U = std::remove_cv_t<std::invoke_result_t<F, decltype(value())>>;
 
         if (has_value())
         {
@@ -753,11 +797,11 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform(F&& fun) const&
     {
-        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(value())>>>;
+        using U = std::remove_cv_t<std::invoke_result_t<F, decltype(value())>>;
 
         if (has_value())
         {
@@ -779,11 +823,11 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform(F&& fun) &&
     {
-        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(value()))>>>;
+        using U = std::remove_cv_t<std::invoke_result_t<F, decltype(std::move(value()))>>;
 
         if (has_value())
         {
@@ -805,11 +849,11 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform(F&& fun) const&&
     {
-        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(value()))>>>;
+        using U = std::remove_cv_t<std::invoke_result_t<F, decltype(std::move(value()))>>;
 
         if (has_value())
         {
@@ -835,7 +879,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, U&>>>
     [[nodiscard]] constexpr auto transform_error(F&& fun) &
     {
         using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(error())>>>;
@@ -851,7 +895,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, const U&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform_error(F&& fun) const&
     {
@@ -868,7 +912,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, U&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform_error(F&& fun) &&
     {
@@ -885,7 +929,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     }
 
     // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
-    template <typename F>
+    template <typename U = T, typename F, typename = std::enable_if_t<std::is_constructible_v<T, const U&&>>>
     // coverity[autosar_cpp14_a13_3_1_violation]
     [[nodiscard]] constexpr auto transform_error(F&& fun) const&&
     {
@@ -979,8 +1023,639 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
     StorageType storage_;
 };
 
-// DIVERGENCE FROM STANDARD
-// Missing template specialization for template <typename E> expected<void, E>
+template <typename E>
+class SPP_EXPECTED_NODISCARD expected<void, E> : impl::base_expected
+{
+    // Suppress "AUTOSAR C++14 A5-1-7" rule finding. This rule states: "A lambda shall not be an operand to decltype or
+    // typeid". False-positive, at this point "decltype" is not used with lambda.
+    // coverity[autosar_cpp14_a5_1_7_violation : FALSE]
+    using StorageType = std::variant<std::monostate, E>;
+
+  public:
+    // coverity[autosar_cpp14_a5_1_7_violation : FALSE]
+    using value_type = void;
+    using error_type = E;
+    using unexpected_type = unexpected<E>;
+
+    template <class U>
+    using rebind = expected<U, error_type>;
+
+    constexpr expected() noexcept = default;
+
+    constexpr expected(const expected&) = default;
+    // NOLINTBEGIN(performance-noexcept-move-constructor) Noexcept defined according to standard
+    constexpr expected(expected&&) noexcept(std::is_nothrow_move_constructible_v<E>) = default;
+    // NOLINTEND(performance-noexcept-move-constructor)
+
+    template <typename U,
+              typename G,
+              typename = std::enable_if_t<
+                  std::conjunction_v<std::is_void<U>,
+                                     std::is_constructible<E, const G&>,
+                                     std::negation<std::is_constructible<unexpected<E>, expected<U, G>&>>,
+                                     std::negation<std::is_constructible<unexpected<E>, expected<U, G>>>,
+                                     std::negation<std::is_constructible<unexpected<E>, const expected<U, G>&>>,
+                                     std::negation<std::is_constructible<unexpected<E>, const expected<U, G>>>>>>
+    // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
+    // feature. Anyway, only available if E can be implicitly constructed from GF.
+    // NOLINTNEXTLINE(google-explicit-constructor) see justification above
+    constexpr expected(const expected<U, G>& rhs)
+        : impl::base_expected{},
+          storage_{rhs.has_value() ? StorageType{}
+                                   : StorageType{std::in_place_index<1>, std::forward<const G&>(rhs.error())}}
+    {
+    }
+
+    template <typename U,
+              typename G,
+              typename = std::enable_if_t<
+                  std::conjunction_v<std::is_void<U>,
+                                     std::is_constructible<E, G>,
+                                     std::negation<std::is_constructible<unexpected<E>, expected<U, G>&>>,
+                                     std::negation<std::is_constructible<unexpected<E>, expected<U, G>>>,
+                                     std::negation<std::is_constructible<unexpected<E>, const expected<U, G>&>>,
+                                     std::negation<std::is_constructible<unexpected<E>, const expected<U, G>>>>>>
+    // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
+    // feature. Anyway, only available if E can be implicitly constructed from GF.
+    // NOLINTNEXTLINE(google-explicit-constructor) see justification above
+    constexpr expected(expected<U, G>&& rhs)
+        : impl::base_expected{},
+          storage_{rhs.has_value() ? StorageType{} : StorageType{std::in_place_index<1>, std::forward<G>(rhs.error())}}
+    {
+    }
+
+    template <typename G, typename = std::enable_if_t<std::is_constructible_v<E, const G&>>>
+    // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
+    // feature. Anyway, only available if E can be implicitly constructed from G.
+    // NOLINTNEXTLINE(google-explicit-constructor) see justification above
+    constexpr expected(const unexpected<G>& error)
+        : impl::base_expected{}, storage_{std::in_place_index<1>, std::forward<const G&>(error.error())}
+    {
+    }
+
+    template <typename G, typename = std::enable_if_t<std::is_constructible_v<E, G>>>
+    // DIVERGENCE FROM STANDARD: Explicitness cannot be specified according to standard, since this requires a C++20
+    // feature. Anyway, only available if E can be implicitly constructed from G.
+    // NOLINTNEXTLINE(google-explicit-constructor) see justification above
+    constexpr expected(unexpected<G>&& error)
+        : impl::base_expected{}, storage_{std::in_place_index<1>, std::forward<G>(error.error())}
+    {
+    }
+
+    constexpr explicit expected(std::in_place_t) noexcept : impl::base_expected{}, storage_{} {}
+
+    template <typename... Args, typename = std::enable_if_t<std::is_constructible_v<E, Args...>>>
+    constexpr explicit expected(unexpect_t, Args&&... args)
+        : impl::base_expected{}, storage_{std::in_place_index<1>, std::forward<Args>(args)...}
+    {
+    }
+
+    template <typename U,
+              typename... Args,
+              typename = std::enable_if_t<std::is_constructible_v<E, std::initializer_list<U>&, Args...>>>
+    constexpr explicit expected(unexpect_t, std::initializer_list<U> il, Args&&... args)
+        : impl::base_expected{}, storage_{std::in_place_index<1>, il, std::forward<Args>(args)...}
+    {
+    }
+
+    // DIVERGENCE FROM STANDARD: constexpr missing due to c++17 limitations
+    ~expected() noexcept = default;
+
+    constexpr expected& operator=(const expected&) = default;
+    // NOLINTBEGIN(performance-noexcept-move-constructor) Noexcept defined according to standard
+    constexpr expected& operator=(expected&& other) noexcept(
+        std::conjunction_v<std::is_nothrow_move_assignable<E>, std::is_nothrow_move_constructible<E>>) = default;
+    // NOLINTEND(performance-noexcept-move-constructor)
+
+    template <typename G,
+              typename = std::enable_if_t<
+                  std::conjunction_v<std::is_constructible<E, const G&>, std::is_assignable<E&, const G&>>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    // Suppress "AUTOSAR C++14 A7-1-8" rule finding. This rule states: "A non-type specifier shall be placed before a
+    // type specifier in a declaration". This is a false positive because constexpr as the only non-type specifier in
+    // this expresion is indeed placed before type specifiers.
+    // coverity[autosar_cpp14_a7_1_8_violation : FALSE]
+    constexpr expected& operator=(const unexpected<G>& other)
+    {
+        // Suppress "AUTOSAR C++14 A0-1-2" rule violation. The rule states "The value returned by a function having a
+        // non-void return type that is not an overloaded operator shall be used." We are not interested in the return
+        // and hence suppressed.
+        // coverity[autosar_cpp14_a0_1_2_violation]
+        storage_.template emplace<1>(other.error());
+        return *this;
+    }
+
+    template <typename G,
+              typename = std::enable_if_t<std::conjunction_v<std::is_constructible<E, G>, std::is_assignable<E&, G>>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    constexpr expected& operator=(unexpected<G>&& other)
+    {
+        storage_ = StorageType{std::in_place_index<1>, std::move(other).error()};
+        return *this;
+    }
+
+    constexpr void emplace() noexcept
+    {
+        // Refer on top for suppression justification.
+        // coverity[autosar_cpp14_a0_1_2_violation]
+        storage_.template emplace<0>();
+    }
+
+    constexpr void swap(expected& other) noexcept(
+        std::conjunction_v<std::is_nothrow_move_constructible<E>, std::is_nothrow_swappable<E>>)
+    {
+        storage_.swap(other.storage_);
+    }
+
+    // coverity[autosar_cpp14_a11_3_1_violation] friend is required for std::swap to work
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr void swap(expected& x, expected& y) noexcept(noexcept(x.swap(y)))
+    {
+        x.swap(y);
+    }
+
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a15_5_3_violation]
+    constexpr void operator*() const noexcept
+    {
+        value();
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    [[nodiscard]] constexpr bool has_value() const noexcept
+    {
+        return storage_.index() == 0U;
+    }
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    [[nodiscard]] constexpr explicit operator bool() const noexcept
+    {
+        return has_value();
+    }
+
+    constexpr void value() const&
+    {
+        // Suppress "AUTOSAR C++14 A0-1-2" rule violation. The rule states "The value returned by a function having a
+        // non-void return type that is not an overloaded operator shall be used." We are not interested in the return
+        // and hence suppressed.
+        // coverity[autosar_cpp14_a0_1_2_violation]
+        std::get<0>(storage_);
+    }
+
+    constexpr void value() &&
+    {
+        // Suppress "AUTOSAR C++14 A0-1-2" rule violation. The rule states "The value returned by a function having a
+        // non-void return type that is not an overloaded operator shall be used." We are not interested in the return
+        // and hence suppressed.
+        // coverity[autosar_cpp14_a0_1_2_violation]
+        std::get<0>(std::move(storage_));
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a15_5_3_violation]
+    [[nodiscard]] constexpr E& error() & noexcept
+    {
+        return std::get<1>(storage_);
+    }
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a15_5_3_violation]
+    [[nodiscard]] constexpr E&& error() && noexcept
+    {
+        return std::get<1>(std::move(storage_));
+    }
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a15_5_3_violation]
+    [[nodiscard]] constexpr const E& error() const& noexcept
+    {
+        return std::get<1>(storage_);
+    }
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a15_5_3_violation]
+    [[nodiscard]] constexpr const E&& error() const&& noexcept
+    {
+        // Refer on top for suppression justification.
+        // coverity[autosar_cpp14_a18_9_3_violation]
+        return std::get<1>(std::move(storage_));
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E>
+    [[nodiscard]] constexpr E error_or(G&& default_err) const&
+    {
+        if (!has_value())
+        {
+            return error();
+        }
+        else
+        {
+            return std::forward<G>(default_err);
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr E error_or(G&& default_err) &&
+    {
+        if (!has_value())
+        {
+            return std::move(error());
+        }
+        else
+        {
+            return std::forward<G>(default_err);
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&>>>
+    [[nodiscard]] constexpr auto and_then(F&& fun) &
+    {
+        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
+
+        if (has_value())
+        {
+            return std::invoke(std::forward<F>(fun));
+        }
+        else
+        {
+            return U{unexpect, error()};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto and_then(F&& fun) const&
+    {
+        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
+
+        if (has_value())
+        {
+            return std::invoke(std::forward<F>(fun));
+        }
+        else
+        {
+            return U{unexpect, error()};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto and_then(F&& fun) &&
+    {
+        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
+
+        if (has_value())
+        {
+            return std::invoke(std::forward<F>(fun));
+        }
+        else
+        {
+            return U{unexpect, std::move(error())};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto and_then(F&& fun) const&&
+    {
+        using U = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F>>>;
+        static_assert(impl::is_expected<U>::value, "F must return an expected type");
+        static_assert(std::is_same<typename U::error_type, E>::value, "Error types must match");
+
+        if (has_value())
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return std::invoke(std::forward<F>(fun));
+        }
+        else
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return U{unexpect, std::move(error())};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    [[nodiscard]] constexpr auto or_else(F&& fun) &
+    {
+        using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(error())>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_void<typename G::value_type>::value, "Value type must be void for expected<void, E>");
+
+        if (!has_value())
+        {
+            return std::invoke(std::forward<F>(fun), error());
+        }
+        else
+        {
+            return G{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto or_else(F&& fun) const&
+    {
+        using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(error())>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_void<typename G::value_type>::value, "Value type must be void for expected<void, E>");
+
+        if (!has_value())
+        {
+            return std::invoke(std::forward<F>(fun), error());
+        }
+        else
+        {
+            return G{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto or_else(F&& fun) &&
+    {
+        using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(error()))>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_void<typename G::value_type>::value, "Value type must be void for expected<void, E>");
+
+        if (!has_value())
+        {
+            return std::invoke(std::forward<F>(fun), std::move(error()));
+        }
+        else
+        {
+            return G{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto or_else(F&& fun) const&&
+    {
+        using G = std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<F, decltype(std::move(error()))>>>;
+        static_assert(impl::is_expected<G>::value, "F must return an expected type");
+        static_assert(std::is_void<typename G::value_type>::value, "Value type must be void for expected<void, E>");
+
+        if (!has_value())
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return std::invoke(std::forward<F>(fun), std::move(error()));
+        }
+        else
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return G{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&>>>
+    [[nodiscard]] constexpr auto transform(F&& fun) &
+    {
+        using U = std::remove_cv_t<std::invoke_result_t<F>>;
+
+        if (has_value())
+        {
+            // Suppress "AUTOSAR C++14 A7-1-8" rule finding. This rule states: "A class, structure, or enumeration shall
+            // not be declared in the definition of its type". This is a false positive because "if constexpr" is a
+            // valid statement since C++17.
+            // coverity[autosar_cpp14_a7_1_8_violation : FALSE]
+            if constexpr (!std::is_void_v<U>)
+            {
+                return expected<U, E>{std::in_place, std::invoke(std::forward<F>(fun))};
+            }
+            else
+            {
+                std::invoke(std::forward<F>(fun));
+                return expected<U, E>{};
+            }
+        }
+        else
+        {
+            return expected<U, E>{unexpect, error()};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform(F&& fun) const&
+    {
+        using U = std::remove_cv_t<std::invoke_result_t<F>>;
+
+        if (has_value())
+        {
+            // coverity[autosar_cpp14_a7_1_8_violation : FALSE]
+            if constexpr (!std::is_void_v<U>)
+            {
+                return expected<U, E>{std::in_place, std::invoke(std::forward<F>(fun))};
+            }
+            else
+            {
+                std::invoke(std::forward<F>(fun));
+                return expected<U, E>{};
+            }
+        }
+        else
+        {
+            return expected<U, E>{unexpect, error()};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, G&&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform(F&& fun) &&
+    {
+        using U = std::remove_cv_t<std::invoke_result_t<F>>;
+
+        if (has_value())
+        {
+            // coverity[autosar_cpp14_a7_1_8_violation : FALSE]
+            if constexpr (!std::is_void_v<U>)
+            {
+                return expected<U, E>{std::in_place, std::invoke(std::forward<F>(fun))};
+            }
+            else
+            {
+                std::invoke(std::forward<F>(fun));
+                return expected<U, E>{};
+            }
+        }
+        else
+        {
+            return expected<U, E>{unexpect, std::move(error())};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename G = E, typename F, typename = std::enable_if_t<std::is_constructible_v<E, const G&&>>>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform(F&& fun) const&&
+    {
+        using U = std::remove_cv_t<std::invoke_result_t<F>>;
+
+        if (has_value())
+        {
+            // coverity[autosar_cpp14_a7_1_8_violation : FALSE]
+            if constexpr (!std::is_void_v<U>)
+            {
+                // Refer on top for suppression justification.
+                // coverity[autosar_cpp14_a18_9_3_violation]
+                return expected<U, E>{std::in_place, std::invoke(std::forward<F>(fun))};
+            }
+            else
+            {
+                std::invoke(std::forward<F>(fun));
+                return expected<U, E>{};
+            }
+        }
+        else
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return expected<U, E>{unexpect, std::move(error())};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    [[nodiscard]] constexpr auto transform_error(F&& fun) &
+    {
+        using G = std::remove_cv_t<std::invoke_result_t<F, decltype(error())>>;
+
+        if (!has_value())
+        {
+            return expected<void, G>{unexpect, std::invoke(std::forward<F>(fun), error())};
+        }
+        else
+        {
+            return expected<void, G>{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform_error(F&& fun) const&
+    {
+        using G = std::remove_cv_t<std::invoke_result_t<F, decltype(error())>>;
+
+        if (!has_value())
+        {
+            return expected<void, G>{unexpect, std::invoke(std::forward<F>(fun), error())};
+        }
+        else
+        {
+            return expected<void, G>{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform_error(F&& fun) &&
+    {
+        using G = std::remove_cv_t<std::invoke_result_t<F, decltype(std::move(error()))>>;
+
+        if (!has_value())
+        {
+            return expected<void, G>{unexpect, std::invoke(std::forward<F>(fun), std::move(error()))};
+        }
+        else
+        {
+            return expected<void, G>{};
+        }
+    }
+
+    // DIVERGENCE FROM STANDARD: Added [[nodiscard]] for better safety
+    template <typename F>
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    [[nodiscard]] constexpr auto transform_error(F&& fun) const&&
+    {
+        using G = std::remove_cv_t<std::invoke_result_t<F, decltype(std::move(error()))>>;
+
+        if (!has_value())
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return expected<void, G>{unexpect, std::invoke(std::forward<F>(fun), std::move(error()))};
+        }
+        else
+        {
+            // Refer on top for suppression justification.
+            // coverity[autosar_cpp14_a18_9_3_violation]
+            return expected<void, G>{};
+        }
+    }
+
+    template <typename T2, typename E2, typename = std::enable_if_t<std::is_void_v<T2>>>
+    // Suppress "AUTOSAR C++14 A13-5-5", The rule states: "Comparison operators shall be non-member functions
+    // with identical parameter types and noexcept.". There is no functional reason behind, we require
+    // comparing `expected` and `expected<T2, E2>`. Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a13_5_5_violation]
+    // coverity[autosar_cpp14_a13_5_5_violation]
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr bool operator==(const expected& lhs, const expected<T2, E2>& rhs)
+    {
+        return (lhs.has_value() && rhs.has_value()) ||
+               ((!lhs.has_value() && !rhs.has_value()) && (lhs.error() == rhs.error()));
+    }
+
+    template <typename E2>
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a13_5_5_violation]
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr bool operator==(const expected& lhs, const unexpected<E2>& rhs)
+    {
+        return (!lhs.has_value()) && static_cast<bool>(lhs.error() == rhs.error());
+    }
+
+    // DIVERGENCE FROM STANDARD
+    // Inequality operators are automatically generated from C++20 onwards.
+
+    template <typename T2, typename E2, typename = std::enable_if_t<std::is_void_v<T2>>>
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a13_5_5_violation]
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr bool operator!=(const expected& lhs, const expected<T2, E2>& rhs)
+    {
+        return !operator==(lhs, rhs);
+    }
+
+    template <typename E2>
+    // Refer on top for suppression justification.
+    // coverity[autosar_cpp14_a13_5_5_violation]
+    // coverity[autosar_cpp14_a3_3_1_violation : FALSE]
+    friend constexpr bool operator!=(const expected& lhs, const unexpected<E2>& rhs)
+    {
+        return !operator==(lhs, rhs);
+    }
+
+  private:
+    // coverity[autosar_cpp14_a5_1_7_violation : FALSE]
+    StorageType storage_;
+};
 
 }  // namespace score::details
 

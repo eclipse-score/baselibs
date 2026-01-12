@@ -994,6 +994,22 @@ TEST(PathIterator, MoveOperator_SelfAssignment)
     ASSERT_EQ(iterator, path.begin());
 }
 
+TEST(PathIterator, MoveOperator_Assignment)
+{
+    // Given two iterators on paths
+    Path path{"foo/bar.txt"};
+    Path path_2{"baz/fooz.txt"};
+    Path::iterator iterator = path.begin();
+    Path::iterator iterator_2 = path_2.begin();
+
+    // When assigning one to the other by moving
+    Path::iterator& iterator_2_ref{iterator_2};  // we use ref to avoid clang build error
+    iterator = std::move(iterator_2_ref);
+
+    // Then the target iterator is updated with the source iterator
+    ASSERT_EQ(iterator, path_2.begin());
+}
+
 }  // namespace
 }  // namespace filesystem
 }  // namespace score

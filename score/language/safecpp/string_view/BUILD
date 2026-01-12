@@ -49,8 +49,8 @@ cc_library(
     ],
     deps = [
         ":null_termination_violation_policies",
-        ":zspan",
         ":zstring_view",
+        "@score_baselibs//score/language/safecpp/string_view/details:zspan",
     ],
 )
 
@@ -69,32 +69,6 @@ cc_gtest_unit_test(
 )
 
 cc_library(
-    name = "zspan",
-    srcs = ["zspan.cpp"],
-    hdrs = ["zspan.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    deps = [
-        ":null_termination_violation_policies",
-    ],
-)
-
-cc_gtest_unit_test(
-    name = "zspan_test",
-    srcs = [
-        "zspan_test.cpp",
-    ],
-    features = COMPILER_WARNING_FEATURES + [
-        "throws_upon_exception",
-    ],
-    deps = [
-        ":zspan",
-        ":zstring_view",
-        "@score_baselibs//score/language/futurecpp",
-    ],
-)
-
-cc_library(
     name = "zstring_view",
     srcs = ["zstring_view.cpp"],
     hdrs = ["zstring_view.h"],
@@ -104,7 +78,7 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
-        ":zspan",
+        "@score_baselibs//score/language/safecpp/string_view/details:zspan",
     ],
 )
 
@@ -117,17 +91,18 @@ cc_gtest_unit_test(
     deps = [
         ":zstring_view",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/mw/log",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+        "@score_baselibs//score/mw/log:frontend",
     ],
 )
 
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
-        ":zspan_test",
         ":zstring_view_test",
         ":null_termination_check_test",
         ":null_termination_violation_policies_test",
+        "@score_baselibs//score/language/safecpp/string_view/details:zspan_test",
     ],
     visibility = ["@score_baselibs//score/language/safecpp:__pkg__"],
 )

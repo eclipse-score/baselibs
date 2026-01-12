@@ -46,6 +46,12 @@ class FileUtils final : public IFileUtils
 
   private:
     Result<bool> FilesExist(const Path& path1, const Path& path2) const noexcept;
+    ResultBlank CreatePath(const Path& final_path,
+                           const Path& cur_path,
+                           const score::os::Stat::Mode perms,
+                           const std::int64_t creation_delay_ns,
+                           const std::int64_t creation_retry_factor,
+                           std::uint32_t creation_retry_counter) const noexcept;
 
     mutable std::mutex groupname_mutex_;
 

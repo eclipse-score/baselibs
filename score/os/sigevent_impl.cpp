@@ -22,12 +22,13 @@ namespace score::os
 SigEventImpl::~SigEventImpl()
 {
     mw::log::LogDebug() << __func__ << "called";
-    Reset();
+    raw_sigevent_ = sigevent{};
 }
 
 ResultBlank SigEventImpl::SetNotificationType(const SigEvent::NotificationType notification_type)
 {
     mw::log::LogDebug() << __func__ << "called";
+    ResultBlank result{};
     switch (notification_type)
     {
         case SigEvent::NotificationType::kNone:
@@ -38,12 +39,20 @@ ResultBlank SigEventImpl::SetNotificationType(const SigEvent::NotificationType n
 
         case SigEvent::NotificationType::kSignal:
         {
+            // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
+            // applied to operands of unsigned underlying type."
+            // SIGEV_THREAD is part of the QNX standard and can not be changed.
+            // coverity[autosar_cpp14_m5_0_21_violation]
             raw_sigevent_.sigev_notify = SIGEV_SIGNAL;
             break;
         }
 
         case SigEvent::NotificationType::kThread:
         {
+            // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
+            // applied to operands of unsigned underlying type."
+            // SIGEV_THREAD is part of the QNX standard and can not be changed.
+            // coverity[autosar_cpp14_m5_0_21_violation]
             raw_sigevent_.sigev_notify = SIGEV_THREAD;
             break;
         }
@@ -51,16 +60,21 @@ ResultBlank SigEventImpl::SetNotificationType(const SigEvent::NotificationType n
         default:
         {
             mw::log::LogError() << __func__ << "Unexpected notification type";
-            return MakeUnexpected(SigEventErrorCode::kInvalidNotificationType);
+            result = MakeUnexpected(SigEventErrorCode::kInvalidNotificationType);
+            break;
         }
     }
-    return {};
+    // Suppress "AUTOSAR C++14 A8-5-0" rule findings. This rule declares: "All memory shall be initialized
+    // before it is read."
+    // False positive, result is initialized at the beginning of the method.
+    // coverity[autosar_cpp14_a8_5_0_violation: FALSE]
+    return result;
 }
 
 ResultBlank SigEventImpl::SetSignalNumber(const std::int32_t signal_number)
 {
     mw::log::LogDebug() << __func__ << "called";
-    if (signal_number <= 0 || signal_number >= NSIG)
+    if ((signal_number <= 0) || (signal_number >= NSIG))
     {
         mw::log::LogError() << __func__ << "Unexpected signal number";
         return MakeUnexpected(SigEventErrorCode::kInvalidSignalNumber);
@@ -80,6 +94,8 @@ ResultBlank SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*>
 
     if (std::holds_alternative<int>(signal_event_value))
     {
+        // Use of C API, from which the union comes. Union access is unavoidable.
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access) POSIX Standard union
         raw_sigevent_.sigev_value.sival_int = std::get<int>(signal_event_value);
     }
     else
@@ -89,6 +105,8 @@ ResultBlank SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*>
         {
             return MakeUnexpected(SigEventErrorCode::kInvalidSignalEventValue);
         }
+        // Use of C API, from which the union comes. Union access is unavoidable.
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access) POSIX Standard union
         raw_sigevent_.sigev_value.sival_ptr = ptr;
     }
     return {};
@@ -97,6 +115,10 @@ ResultBlank SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*>
 ResultBlank SigEventImpl::SetThreadCallback(const SigValCallback callback)
 {
     mw::log::LogDebug() << __func__ << "called";
+    // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
+    // applied to operands of unsigned underlying type."
+    // SIGEV_THREAD is part of the QNX standard and can not be changed.
+    // coverity[autosar_cpp14_m5_0_21_violation]
     if (raw_sigevent_.sigev_notify != SIGEV_THREAD)
     {
         // notification type MUST be SIGEV_THREAD
@@ -116,6 +138,10 @@ ResultBlank SigEventImpl::SetThreadCallback(const SigValCallback callback)
 ResultBlank SigEventImpl::SetThreadAttributes(pthread_attr_t& attr)
 {
     mw::log::LogDebug() << __func__ << "called";
+    // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
+    // applied to operands of unsigned underlying type."
+    // SIGEV_THREAD is part of the QNX standard and can not be changed.
+    // coverity[autosar_cpp14_m5_0_21_violation]
     if (raw_sigevent_.sigev_notify != SIGEV_THREAD)
     {
         // notification type MUST be SIGEV_THREAD
@@ -132,16 +158,16 @@ const sigevent& SigEventImpl::GetSigevent() const
     return raw_sigevent_;
 }
 
-sigevent& SigEventImpl::GetSigevent()
+void SigEventImpl::ModifySigevent(const SigeventModifier& modifier)
 {
     mw::log::LogDebug() << __func__ << "called";
-    return raw_sigevent_;
+    modifier(raw_sigevent_);
 }
 
 void SigEventImpl::Reset()
 {
     mw::log::LogDebug() << __func__ << "called";
-    std::memset(&raw_sigevent_, 0, sizeof(raw_sigevent_));
+    raw_sigevent_ = sigevent{};
 }
 
 }  // namespace score::os

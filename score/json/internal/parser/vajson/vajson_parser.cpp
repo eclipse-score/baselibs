@@ -28,7 +28,7 @@ auto score::json::VajsonParser::FromFile(const std::string_view file_path) -> sc
     return result;
 }
 
-auto score::json::VajsonParser::FromBuffer(const score::cpp::string_view buffer) -> score::Result<score::json::Any>
+auto score::json::VajsonParser::FromBuffer(const std::string_view buffer) -> score::Result<score::json::Any>
 {
     score::Result<score::json::Any> result = MakeUnexpected(Error::kParsingError);
     auto json_data = amsr::json::JsonData::FromBuffer(ara::core::StringView{buffer.data(), buffer.size()});

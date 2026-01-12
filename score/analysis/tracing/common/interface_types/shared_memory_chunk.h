@@ -22,7 +22,6 @@ namespace analysis
 {
 namespace tracing
 {
-
 /// @brief SharedMemoryChunk class
 ///
 /// class used to store chunks of data residing in shared-memory.
@@ -30,12 +29,31 @@ namespace tracing
 class SharedMemoryChunk
 {
   public:
+    std::uint32_t canary_start_;
     SharedMemoryLocation start_;  ///< Object that stores locators to the data that needs to be traced
     std::size_t size_;            ///< Size of the data that needs to be traced
+    std::uint32_t canary_end_;
+    static constexpr std::uint32_t kCanaryStart = 0xDEADBEEF;
+    static constexpr std::uint32_t kCanaryEnd = 0xCAFEBABE;
+
+    SharedMemoryChunk() noexcept : canary_start_(kCanaryStart), start_{}, size_(0), canary_end_(kCanaryEnd) {}
+
+    SharedMemoryChunk(const SharedMemoryLocation& start, std::size_t size) noexcept
+
+        : canary_start_(kCanaryStart), start_(start), size_(size), canary_end_(kCanaryEnd)
+    {
+    }
+
+  public:
+    /// @brief Check if the chunk memory is corrupted
+    /// @return true if corrupted, false otherwise
+    bool IsCorrupted() const noexcept
+    {
+        return (canary_start_ != kCanaryStart) || (canary_end_ != kCanaryEnd);
+    }
+
     friend bool operator==(const SharedMemoryChunk& lhs, const SharedMemoryChunk& rhs) noexcept;
 };
-
-static_assert(std::is_trivial<SharedMemoryChunk>::value == true, "SharedMemoryChunk is not trivial");
 
 }  // namespace tracing
 }  // namespace analysis

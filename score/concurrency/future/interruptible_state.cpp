@@ -80,8 +80,3 @@ void score::concurrency::InterruptibleState<void>::TriggerContinuations()
     }
     continuation_callbacks_.clear();
 }
-
-const score::safecpp::Scope<>& score::concurrency::InterruptibleState<void>::GetScope() const noexcept
-{
-    return scope_;
-}

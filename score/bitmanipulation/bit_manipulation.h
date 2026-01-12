@@ -234,13 +234,13 @@ constexpr std::uint8_t GetByte(const T raw_bytes) noexcept
     constexpr auto NUMBER_OF_BIT_IN_BYTE = 8U;
     static_assert(position < sizeof(T), "Position is not included within raw_bytes");
     static_assert(std::is_integral<T>::value == true, "T must be native integer arithmetic type");
-    static_assert(sizeof(T) <= sizeof(std::uintmax_t), "T must not exceed std::uintmax_t");
+    static_assert(sizeof(T) <= sizeof(std::uint64_t), "T must not exceed std::uint64_t");
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
     // loss." In this context, data loss is intentional because the goal of this function is to extract only a specific
-    // byte from "raw_bytes". The value is promoted to std::uintmax_t for the bitwise operation and then cast to
+    // byte from "raw_bytes". The value is promoted to std::uint64_t for the bitwise operation and then cast to
     // std::uint8_t to provide the desired byte.
     // coverity[autosar_cpp14_a4_7_1_violation]
-    return static_cast<std::uint8_t>(static_cast<std::uintmax_t>(raw_bytes) >> (NUMBER_OF_BIT_IN_BYTE * position)) &
+    return static_cast<std::uint8_t>(static_cast<std::uint64_t>(raw_bytes) >> (NUMBER_OF_BIT_IN_BYTE * position)) &
            0xFFU;
 }
 

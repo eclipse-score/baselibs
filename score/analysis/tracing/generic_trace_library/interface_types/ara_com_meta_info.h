@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_ARA_COM_META_INFO_H
-#define GENERIC_TRACE_API_ARA_COM_META_INFO_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_META_INFO_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_META_INFO_H
 
 #include "ara_com_properties.h"
 #include "meta_info.h"
@@ -29,4 +29,4 @@ using AraComMetaInfo = MetaInfo<AraComProperties>;
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_ARA_COM_META_INFO_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ARA_COM_META_INFO_H

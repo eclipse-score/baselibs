@@ -36,7 +36,6 @@ class INvConfig
     };
 
     // Pure virtual functions
-    virtual ReadResult parseFromJson() noexcept = 0;
     virtual const config::NvMsgDescriptor* getDltMsgDesc(const std::string& typeName) const noexcept = 0;
 
   protected:

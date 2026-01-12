@@ -198,6 +198,18 @@ TEST_F(ChannelMockTest, ConnectDetach)
     score::os::Channel::instance().ConnectDetach(invalid_id);
 }
 
+TEST_F(ChannelMockTest, MsgRegisterEvent)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Msg Register Event");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    EXPECT_CALL(channelmock, MsgRegisterEvent);
+    score::os::Channel::instance().MsgRegisterEvent(no_event, invalid_id);
+}
+
 // Tests of the real stuff
 
 TEST(ChannelTest, CoverUnhappyPaths)

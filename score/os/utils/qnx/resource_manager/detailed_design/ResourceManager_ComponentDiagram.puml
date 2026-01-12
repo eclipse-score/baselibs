@@ -1,0 +1,45 @@
+@startuml
+skinparam linetype ortho
+!define RECTANGLE class
+!define COMPONENT component
+
+title Component diagram - Resource Manager
+
+package "UseCase Application"{
+}
+
+package "xPAD platform"{
+    component "mw::log" as log #Yellow
+    package "OS Abstraction Layer"{
+        component "ResourceManager" as RM #Orange
+    }
+}
+
+package "QNX Compiler" {
+    skinparam nodesep 10
+    skinparam ranksep 20
+    component "resmgr_lib\n(file operations:\ndispatch,iofunc,)" as resmgr #Yellow
+    component "libc\n(file operations:\nopen, read, write)" as libc #Yellow
+    component "libstdc++" as libstdcpp #Yellow
+    resmgr -[hidden]down-> libc
+    libc -[hidden]down-> libstdcpp
+}
+
+package "QNX OS"{
+    component "Kernel" as kernel #Yellow
+    component "Process Manager" as procmgr #Yellow
+}
+
+' Connections
+
+"QNX Compiler" -[hidden]right-> "xPAD platform"
+"QNX OS" -[hidden]left-> "xPAD platform"
+
+"UseCase Application" -> RM
+log --> RM
+RM <--- resmgr
+RM <-- libc
+RM <-- libstdcpp
+RM <-- kernel
+RM <---- procmgr
+@enduml

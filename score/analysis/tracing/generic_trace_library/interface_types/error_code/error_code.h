@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_ERROR_CODE_H
-#define GENERIC_TRACE_API_ERROR_CODE_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ERROR_CODE_ERROR_CODE_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ERROR_CODE_ERROR_CODE_H
 
 #include "score/result/error.h"
 #include <score/string_view.hpp>
@@ -36,6 +36,7 @@ enum class ErrorCode : score::result::ErrorCode
     kNotEnoughMemoryRecoverable,             ///< Not enough memory for allocation (Recoverable)
     kNoMetaInfoProvidedRecoverable,          ///< No meta info were provided (Recoverable)
     kNotEnoughMemoryInContainerRecoverable,  ///< Not enough memory in trace job container (Recoverable)
+    kOffsetCalculationFailedRecoverable,     ///< Offset calculation failed (Recoverable)
 
     kAtomicRingBufferFullRecoverable,        ///< Atomic ring buffer full (Recoverable)
     kAtomicRingBufferEmptyRecoverable,       ///< Atomic ring buffer empty (Recoverable)
@@ -49,8 +50,15 @@ enum class ErrorCode : score::result::ErrorCode
     kRingBufferNotInitializedRecoverable,  ///< Ring buffer not initialized (Recoverable)
     kRingBufferInitializedRecoverable,     ///< Ring buffer already initialized (Recoverable)
     kRingBufferInvalidStateRecoverable,    ///< Invalid buffer state (Recoverable)
-    kRingBufferTooLargeRecoverable,        ///< Buffer size too large (Recoverable)
     kRingBufferInvalidMemoryResourceRecoverable,  ///< Buffer size too small (Recoverable)
+    kRingBufferSharedMemoryCreationFatal,         ///< Failed to create shm object for shared memory ring buffer
+    kRingBufferSharedMemoryHandleCreationFatal,   ///< Failed to create handle for shared memory ring buffer
+    kRingBufferSharedMemorySealFatal,             ///< Failed to seal shared memory for shared memory ring buffer
+    kRingBufferSharedMemoryHandleOpenFatal,       ///< Failed to open handle for shared memory ring buffer
+    kRingBufferSharedMemoryFstatFatal,            ///< Failed to perform fstat on shared memory ring buffer
+    kRingBufferSharedMemoryMapFatal,              ///< Failed to map memory region of shared memory ring buffer
+    kRingBufferSharedMemorySizeCalculationFatal,  ///< Calculated shared memory size doesn't match the size of the
+                                                  ///< original created shared memory
 
     kDaemonConnectionFailedFatal,             ///< Daemon connection failed (Fatal)
     kDaemonCommunicatorNotSupportedFatal,     ///< Daemon connection is not supported
@@ -87,6 +95,7 @@ enum class ErrorCode : score::result::ErrorCode
 
     kNoSpaceLeftForAllocationRecoverable,      ///< No space to allocate in TMD shared memory
     kIndexOutOfBoundsInSharedListRecoverable,  ///< Element os not found to retrieve or deallocate
+    kMemoryCorruptionDetectedFatal,            ///< Memory corruption detected via canary values (Fatal)
 
     kDaemonNotAvailableFatal,              ///< LTPM Daemon not available (Fatal)
     kFailedRegisterCachedClientsFatal,     ///< Failed to register the cached client registration requests (Fatal)
@@ -117,4 +126,4 @@ bool IsErrorRecoverable(const score::analysis::tracing::ErrorCode code) noexcept
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_ERROR_CODE_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ERROR_CODE_ERROR_CODE_H

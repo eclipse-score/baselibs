@@ -10,8 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 package(default_visibility = [
@@ -57,6 +56,16 @@ cc_library(
         ":string_literal",
         "@score_baselibs//score/language/futurecpp",
     ],
+)
+
+cc_library(
+    name = "data_type_size_info",
+    srcs = ["data_type_size_info.cpp"],
+    hdrs = ["data_type_size_info.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+    deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
 cc_test(
@@ -163,12 +172,28 @@ cc_test(
     ],
 )
 
+cc_unit_test(
+    name = "data_type_size_info_test",
+    srcs = ["data_type_size_info_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
+        "-aborts_upon_exception",
+    ],
+    deps = [
+        ":data_type_size_info",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":endianness_unit_test",
         ":pmr_ring_buffer_unit_test",
         ":split_string_view_unit_test",
+        ":data_type_size_info_test",
         ":string_comparison_adaptor_unit_test",
     ],
     test_suites_from_sub_packages = [

@@ -27,3 +27,30 @@ config_setting(
         "@score_baselibs//score/mw/log:__subpackages__",
     ],
 )
+
+bool_flag(
+    name = "KCustom_Logging",
+    build_setting_default = False,
+)
+
+config_setting(
+    name = "Custom_Logging",
+    flag_values = {
+        ":KCustom_Logging": "True",
+    },
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)
+
+cc_library(
+    name = "unfilled",
+)
+
+label_flag(
+    name = "custom_recorder_impl",
+    build_setting_default = ":unfilled",
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)

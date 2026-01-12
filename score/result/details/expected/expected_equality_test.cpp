@@ -127,5 +127,51 @@ TEST(ExpectedTest, EqualityBetweenExpectedAndUnexpected)
     EXPECT_TRUE(lhs_value != rhs_same);
 }
 
+TEST(ExpectedVoidTest, EqualityBetweenExpectedBothWithErrors)
+{
+    // Given three expected with different but comparable types where the first two shall compare equal and the third
+    // not
+    std::int32_t same{46};
+    expected<void, B1> lhs{unexpect, B1{same}};
+    expected<void, B2> rhs_same{unexpect, B2{same}};
+    expected<void, B2> rhs_different{unexpect, B2{same + 1}};
+
+    // Then expect equality operator to behave correctly
+    EXPECT_TRUE(lhs == rhs_same);
+    EXPECT_FALSE(lhs != rhs_same);
+    EXPECT_FALSE(lhs == rhs_different);
+    EXPECT_TRUE(lhs != rhs_different);
+}
+
+TEST(ExpectedVoidTest, EqualityBetweenExpectedWithValueAndError)
+{
+    // Given two expected with different but comparable types where one has a value and the other an error
+    std::int32_t error{46};
+    expected<void, B1> lhs{};
+    expected<void, B2> rhs_same{unexpect, B2{error}};
+
+    // Then expect equality operator to behave correctly
+    EXPECT_FALSE(lhs == rhs_same);
+    EXPECT_TRUE(lhs != rhs_same);
+}
+
+TEST(ExpectedVoidTest, EqualityBetweenExpectedAndUnexpected)
+{
+    // Given two expected and two values where only lhs_value and rhs_same shall be equal
+    std::int32_t same{46};
+    expected<void, B1> lhs_value{};
+    expected<void, B1> lhs_error{unexpect, B1{same}};
+    unexpected<B2> rhs_same{B2{same}};
+    unexpected<B2> rhs_different{B2{same + 1}};
+
+    // Then expect equality operator to behave correctly
+    EXPECT_TRUE(lhs_error == rhs_same);
+    EXPECT_FALSE(lhs_error != rhs_same);
+    EXPECT_FALSE(lhs_error == rhs_different);
+    EXPECT_TRUE(lhs_error != rhs_different);
+    EXPECT_FALSE(lhs_value == rhs_same);
+    EXPECT_TRUE(lhs_value != rhs_same);
+}
+
 }  // namespace
 }  // namespace score::details

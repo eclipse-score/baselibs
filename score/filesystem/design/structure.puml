@@ -107,11 +107,14 @@ class "os::ObjectSeam" as ObjectSeam1 #yellow
 interface "filesystem::IFileFactory" as IFileFactory {
   + Open(Path, std::ios_base::openmode = ios_base::in|ios_base::out):
   Result<std::unique_ptr<std::iostream>>
+  + AtomicUpdate(Path, openmode, flags): Result<unique_ptr<FileStream>>
   --
 }
 
 class "filesystem::FileFactory" as FileFactory{
   Note: A small wrapper around std::filestream
+  + Open(Path, openmode): Result<unique_ptr<iostream>>
+  + AtomicUpdate(Path, openmode, flags): Result<unique_ptr<FileStream>>
 }
 
 class "filesystem::FileFactoryMock" as FileFactoryMock #yellow
@@ -119,6 +122,24 @@ class "filesystem::FileFactoryMock" as FileFactoryMock #yellow
 class "filesystem::FileFactoryFake" as FileFactoryFake #yellow {
   - collection_:std::reference_wrapper<IStringStreamCollection>
   Note: Fake class
+}
+
+class "filesystem::FileStream" as FileStream {
+  + Close(): ResultBlank
+}
+
+class "filesystem::details::FileStreamImpl" as FileStreamImpl
+
+class "filesystem::details::StdioFileBuf" as StdioFileBuf {
+  + Close(): ResultBlank
+}
+
+class "filesystem::details::AtomicFileBuf" as AtomicFileBuf {
+  + Close(): ResultBlank
+}
+
+class "filesystem::details::StdioFilebufBase" as StdioFilebufBase {
+  + fd(): int
 }
 
 interface "filesystem::IStringStreamCollection" as IStringStreamCollection #Yellow{
@@ -131,6 +152,8 @@ interface "filesystem::IStringStreamCollection" as IStringStreamCollection #Yell
 class "filesystem::SimpleStringStreamCollection" as SimpleStringStreamCollection #yellow {
   Note: Helper class (map: Path->stream)
 }
+
+class "filesystem::BadStringStreamCollection" as BadStringStreamCollection #yellow
 
 class "os::ObjectSeam" as ObjectSeam2 #yellow
 
@@ -187,6 +210,13 @@ FileFactory --u--|> IFileFactory
 FileFactoryFake -u-|> FileFactoryMock
 IStringStreamCollection -r-|> FileFactoryFake
 SimpleStringStreamCollection -u-|> IStringStreamCollection
+BadStringStreamCollection -u-|> IStringStreamCollection
+
+FileFactory ..> FileStream
+FileStreamImpl -u-|> FileStream
+FileStreamImpl o-- StdioFileBuf : "uses Buf"
+AtomicFileBuf -u-|> StdioFileBuf
+StdioFileBuf -u-|> StdioFilebufBase
 
 StandardFileSystemFake --|> IStringStreamCollection
 

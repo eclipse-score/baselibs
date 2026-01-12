@@ -18,42 +18,6 @@
 namespace helper
 {
 using testing::Types;
-TEST(SumTest, SumNoOverflow)
-{
-    std::numeric_limits<std::size_t>::max();
-    const std::size_t expected_value = 6U;
-    std::size_t result = Sum<uint8_t>(1U, 2U, 3U);
-    EXPECT_EQ(result, expected_value);
-}
-
-TEST(SumTest, SumOverflow)
-{
-    std::size_t v1 = std::numeric_limits<std::size_t>::max() - 1U;
-    std::size_t v2 = 2U;
-    std::size_t v3 = 3U;
-
-    const std::size_t expected_value = std::numeric_limits<std::size_t>::max();
-    std::size_t result1 = Sum<std::size_t>(v1, v2);
-    EXPECT_EQ(result1, expected_value);
-    std::size_t result2 = Sum<std::size_t>(v1, v2, v3);
-    EXPECT_EQ(result2, expected_value);
-}
-
-TEST(ClampAddNullTerminatorTest, ClampAddNullTerminatorNoOverFlow)
-{
-    std::uint16_t v1 = 1U;
-    constexpr std::uint16_t expected_value = 2U;
-    std::size_t result1 = ClampAddNullTerminator(v1);
-    EXPECT_EQ(result1, expected_value);
-}
-
-TEST(ClampAddNullTerminatorTest, ClampAddNullTerminatorOverFlow)
-{
-    std::uint16_t v1 = std::numeric_limits<std::uint16_t>::max();
-    constexpr std::uint16_t expected_value = std::numeric_limits<std::uint16_t>::max();
-    std::size_t result1 = ClampAddNullTerminator(v1);
-    EXPECT_EQ(result1, expected_value);
-}
 
 template <typename TypeTuple>
 class ClampToTestFixture : public ::testing::Test

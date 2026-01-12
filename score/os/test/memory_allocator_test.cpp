@@ -64,7 +64,8 @@ TEST(SafeMemoryAllocatorTest, ReallocFail)
 
     ASSERT_EQ(realloc_result, nullptr);
 
-    ::free(ptr);
+    if (!realloc_result)
+        ::free(ptr);
 #else
     GTEST_SKIP() << "Not supported in TSAN due to allocator limitations causing termination on allocation failure.";
 #endif

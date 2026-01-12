@@ -31,18 +31,18 @@ class SigEventQnxMock : public SigEventQnx
     MOCK_METHOD(ResultBlank, SetThreadCallback, (const SigValCallback), (override));
     MOCK_METHOD(ResultBlank, SetThreadAttributes, (pthread_attr_t&), (override));
     MOCK_METHOD((const sigevent&), GetSigevent, (), (const, override));
-    MOCK_METHOD((sigevent&), GetSigevent, (), (override));
+    MOCK_METHOD(void, ModifySigevent, (const SigeventModifier&), (override));
     MOCK_METHOD(void, Reset, (), (override));
 
     // Mock QNX-specific functionality
     MOCK_METHOD(void, SetUnblock, (), (override));
     MOCK_METHOD(void,
                 SetPulse,
-                (const std::int32_t, const std::int32_t, const std::int32_t, const std::int32_t),
+                (const std::int32_t, const std::int16_t, const std::int16_t, const std::uintptr_t),
                 (override));
-    MOCK_METHOD(void, SetSignalThread, (const std::int32_t, const std::int32_t, const pid_t), (override));
-    MOCK_METHOD(void, SetSignalCode, (const std::int32_t, const std::int32_t, const std::int32_t), (override));
-    MOCK_METHOD(void, SetMemory, (volatile std::uint32_t*, std::size_t, std::size_t), (override));
+    MOCK_METHOD(void, SetSignalThread, (const std::int32_t, const std::int32_t, const std::int16_t), (override));
+    MOCK_METHOD(void, SetSignalCode, (const std::int32_t, const std::intptr_t, const std::int16_t), (override));
+    MOCK_METHOD(void, SetMemory, (volatile std::uint32_t*, std::int32_t, std::int32_t), (override));
     MOCK_METHOD(void, SetInterrupt, (), (override));
 };
 

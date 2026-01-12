@@ -43,18 +43,18 @@ TEST(ExpectedTest, IsCopyAssignableWithValue)
 TEST(ExpectedTest, IsCopyAssignableWithError)
 {
     // Given two expected with different errors
-    std::int32_t value{14};
-    expected<ValueType, CopyableType> e1{unexpected{value}};
-    expected<ValueType, CopyableType> e2{unexpected{value + 1}};
+    std::int32_t error{14};
+    expected<ValueType, CopyableType> e1{unexpected{error}};
+    expected<ValueType, CopyableType> e2{unexpected{error + 1}};
 
     // When copy assigning the first to the second
     e2 = e1;
 
     // Then both expected have the error of the first
     ASSERT_FALSE(e1.has_value());
-    EXPECT_EQ(e1.error().value_, value);
+    EXPECT_EQ(e1.error().value_, error);
     ASSERT_FALSE(e2.has_value());
-    EXPECT_EQ(e2.error().value_, value);
+    EXPECT_EQ(e2.error().value_, error);
 }
 
 TEST(ExpectedTest, IsMoveAssignableWithValue)
@@ -75,16 +75,16 @@ TEST(ExpectedTest, IsMoveAssignableWithValue)
 TEST(ExpectedTest, IsMoveAssignableWithError)
 {
     // Given two expected with different errors
-    std::int32_t value{14};
-    expected<ValueType, NothrowMoveOnlyType> e1{unexpected{value}};
-    expected<ValueType, NothrowMoveOnlyType> e2{unexpected{value + 1}};
+    std::int32_t error{14};
+    expected<ValueType, NothrowMoveOnlyType> e1{unexpected{error}};
+    expected<ValueType, NothrowMoveOnlyType> e2{unexpected{error + 1}};
 
     // When move assigning the first to the second
     e2 = std::move(e1);
 
     // Then the second expected has the error of the first
     ASSERT_FALSE(e2.has_value());
-    EXPECT_EQ(e2.error().value_, value);
+    EXPECT_EQ(e2.error().value_, error);
 }
 
 TEST(ExpectedTest, MoveAssignmentHasCorrectNoexcept)
@@ -133,8 +133,8 @@ TEST(ExpectedTest, CanMoveAssignFromCompatibleType)
 TEST(ExpectedTest, CanCopyAssignFromUnexpected)
 {
     // Given a copyable unexpected and an expected
-    std::int32_t value{14};
-    unexpected<CopyableType> wrapped{14};
+    std::int32_t error{14};
+    unexpected<CopyableType> wrapped{error};
     expected<ValueType, CompatibleCopyableType> unit{};
 
     // When assigning the error to an expected
@@ -142,7 +142,7 @@ TEST(ExpectedTest, CanCopyAssignFromUnexpected)
 
     // Then expect the expected to hold the error
     ASSERT_FALSE(unit.has_value());
-    EXPECT_EQ(unit.error().inner_.value_, value);
+    EXPECT_EQ(unit.error().inner_.value_, error);
 
     // And the return value of the assignment is a reference to the expected
     EXPECT_EQ(&result, &unit);
@@ -151,8 +151,8 @@ TEST(ExpectedTest, CanCopyAssignFromUnexpected)
 TEST(ExpectedTest, CanMoveAssignFromUnexpected)
 {
     // Given a copyable unexpected and an expected
-    std::int32_t value{14};
-    unexpected<NothrowMoveOnlyType> wrapped{14};
+    std::int32_t error{14};
+    unexpected<NothrowMoveOnlyType> wrapped{error};
     expected<ValueType, CompatibleNothrowMoveOnlyType> unit{};
 
     // When assigning the error to an expected
@@ -160,7 +160,7 @@ TEST(ExpectedTest, CanMoveAssignFromUnexpected)
 
     // Then expect the expected to hold the error
     ASSERT_FALSE(unit.has_value());
-    EXPECT_EQ(unit.error().inner_.value_, value);
+    EXPECT_EQ(unit.error().inner_.value_, error);
 
     // And the return value of the assignment is a reference to the expected
     EXPECT_EQ(&result, &unit);
@@ -247,6 +247,130 @@ TEST(ExpectedTest, CanSwapWithStdSwap)
     EXPECT_EQ(e1.error().value_, v2);
     ASSERT_TRUE(e2.has_value());
     EXPECT_EQ(e2->value_, v1);
+}
+
+TEST(ExpectedVoidTest, IsCopyAssignableWithError)
+{
+    // Given two expected with different errors
+    std::int32_t error{14};
+    expected<void, CopyableType> e1{unexpected{error}};
+    expected<void, CopyableType> e2{};
+
+    // When copy assigning the first to the second
+    e2 = e1;
+
+    // Then both expected have the error of the first
+    ASSERT_FALSE(e1.has_value());
+    EXPECT_EQ(e1.error().value_, error);
+    ASSERT_FALSE(e2.has_value());
+    EXPECT_EQ(e2.error().value_, error);
+}
+
+TEST(ExpectedVoidTest, IsMoveAssignableWithError)
+{
+    // Given two expected with different errors
+    std::int32_t error{14};
+    expected<void, NothrowMoveOnlyType> e1{unexpected{error}};
+    expected<void, NothrowMoveOnlyType> e2{};
+
+    // When move assigning the first to the second
+    e2 = std::move(e1);
+
+    // Then the second expected has the error of the first
+    ASSERT_FALSE(e2.has_value());
+    EXPECT_EQ(e2.error().value_, error);
+}
+
+TEST(ExpectedVoidTest, MoveAssignmentHasCorrectNoexcept)
+{
+    static_assert(std::is_nothrow_move_assignable_v<expected<void, NothrowMoveOnlyType>>);
+    static_assert(!std::is_nothrow_move_assignable_v<expected<void, ThrowMoveOnlyType>>);
+}
+
+TEST(ExpectedVoidTest, CanCopyAssignFromUnexpected)
+{
+    // Given a copyable unexpected and an expected
+    std::int32_t error{14};
+    unexpected<CopyableType> wrapped{error};
+    expected<void, CompatibleCopyableType> unit{};
+
+    // When assigning the error to an expected
+    const auto& result = (unit = wrapped);
+
+    // Then expect the expected to hold the error
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error().inner_.value_, error);
+
+    // And the return value of the assignment is a reference to the expected
+    EXPECT_EQ(&result, &unit);
+}
+
+TEST(ExpectedVoidTest, CanMoveAssignFromUnexpected)
+{
+    // Given a copyable unexpected and an expected
+    std::int32_t error{14};
+    unexpected<NothrowMoveOnlyType> wrapped{error};
+    expected<void, CompatibleNothrowMoveOnlyType> unit{};
+
+    // When assigning the error to an expected
+    const auto& result = (unit = std::move(wrapped));
+
+    // Then expect the expected to hold the error
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error().inner_.value_, error);
+
+    // And the return value of the assignment is a reference to the expected
+    EXPECT_EQ(&result, &unit);
+}
+
+TEST(ExpectedVoidTest, CanEmplace)
+{
+    // Given an expected with error
+    expected<void, ErrorType> unit{unexpect};
+
+    // When emplacing
+    unit.emplace();
+
+    // Then expect the expected to be valid
+    ASSERT_TRUE(unit.has_value());
+}
+
+TEST(ExpectedVoidTest, CanSwapWithMemberSwap)
+{
+    // Given two expected with different values
+    expected<void, NothrowMoveOnlyType> e1{};
+    std::int32_t error{30};
+    expected<void, NothrowMoveOnlyType> e2{unexpect, error};
+
+    // When swapping the two with the member swap
+    e1.swap(e2);
+
+    // Then the value and error are swapped
+    ASSERT_FALSE(e1.has_value());
+    EXPECT_EQ(e1.error().value_, error);
+    ASSERT_TRUE(e2.has_value());
+}
+
+TEST(ExpectedVoidTest, SwapHasCorrectNoexceptSpecification)
+{
+    static_assert(std::is_nothrow_swappable_v<expected<void, NothrowMoveOnlyType>>);
+    static_assert(!std::is_nothrow_swappable_v<expected<void, ThrowMoveOnlyType>>);
+}
+
+TEST(ExpectedVoidTest, CanSwapWithStdSwap)
+{
+    // Given two expected with different values
+    expected<void, NothrowMoveOnlyType> e1{};
+    std::int32_t error{30};
+    expected<void, NothrowMoveOnlyType> e2{unexpect, error};
+
+    // When swapping the two with the member swap
+    std::swap(e1, e2);
+
+    // Then the value and error are swapped
+    ASSERT_FALSE(e1.has_value());
+    EXPECT_EQ(e1.error().value_, error);
+    ASSERT_TRUE(e2.has_value());
 }
 
 }  // namespace

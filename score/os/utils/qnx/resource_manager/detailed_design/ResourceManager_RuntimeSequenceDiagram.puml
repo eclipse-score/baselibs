@@ -1,0 +1,92 @@
+@startuml ResourceManager_RuntimeSequenceDiagram
+
+title Resource Manager Runtime Sequence Diagram
+
+
+
+participant ResourceManagerClient
+participant QNX_System
+participant QNX_ProcessManager
+participant ":QNX_resmgrlib" as QNX_resmgrlib
+participant ":ResourceManager" as ResourceManager
+participant ":Resource" as Resource
+
+
+
+
+' Frame for context
+'box "The Run() method of the resource manager"
+'end box
+
+' Notes
+note over ResourceManagerClient: Application\n component handling\n (e.g. sysmon)
+note over ResourceManager: lib/os handling
+note over QNX_System, QNX_resmgrlib: QNX OS handling
+note over Resource: lib/os dependent code\n handling (e.g. msr_reader,\n mmr_reader)
+note over QNX_ProcessManager: Create internal Communication\n channel with the process manager to\n check if the file name is registered before
+
+
+' Sequence of messages
+
+ResourceManagerClient -> QNX_System: open("filePath")
+activate ResourceManagerClient
+activate QNX_System
+
+note over QNX_resmgrlib, Resource: These steps are part of the  Run() Method of the resource manager
+
+
+ResourceManager -> QNX_resmgrlib: dispatch_context_t* ctp = dispatch_block()
+
+activate QNX_resmgrlib
+activate ResourceManager
+
+note right of QNX_resmgrlib: Send resource manager process to\n ReceiverBlocked state,till receive\n message over msg_send to handle
+
+
+QNX_System -> QNX_System: ConnectAttach()
+QNX_System -> QNX_ProcessManager: MsgSend()
+activate QNX_ProcessManager
+note right: The Process manager\n search for the file\n and return with\n handle id in msg_reply
+QNX_ProcessManager -> QNX_System: MsgReply()
+deactivate QNX_ProcessManager
+note over QNX_ProcessManager: Create internal Communication\n channel with the resource manager to\n validate the file flags
+QNX_System -> QNX_System: ConnectAttach()
+QNX_System ->  QNX_resmgrlib: MsgSend()
+
+
+QNX_resmgrlib --> ResourceManager: dispatch_block() return
+ResourceManager -> QNX_resmgrlib: dispatch_handler(dispatch_context_t* ctp)
+QNX_resmgrlib -> ResourceManager: REGISTERED_IO_CONNECT_HANDLER()
+ResourceManager -> Resource: OpenFunction()
+activate Resource
+note right of Resource: Verify File flags and permissions
+note right of QNX_resmgrlib: Resource manager library route the\n request to the registered handler\nex : open function handler
+Resource --> ResourceManager
+deactivate Resource
+ResourceManager --> QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager: dispatch_handler() return
+
+
+QNX_resmgrlib -> QNX_System: MsgReply()
+deactivate QNX_resmgrlib
+QNX_System --> ResourceManagerClient: file descriptor
+deactivate QNX_System
+deactivate ResourceManagerClient
+ResourceManager -> QNX_resmgrlib: dispatch_context_t* ctp = dispatch_block()
+activate QNX_resmgrlib
+note right of QNX_resmgrlib: Send resource manager process to\n ReceiverBlocked state,till receive\n message over msg_send to handle
+ResourceManagerClient -> QNX_resmgrlib: read/write("filePath")
+activate ResourceManagerClient
+QNX_resmgrlib --> ResourceManager: dispatch_block() return
+ResourceManager -> QNX_resmgrlib: dispatch_handler(dispatch_context_t* ctp)
+QNX_resmgrlib -> ResourceManager: REGISTERED_IO_MESSAGE_HANDLER()
+note right of QNX_resmgrlib: Resource manager library route the\n request to the registered handler\n x : read function handler
+ResourceManager -> Resource: Read/WriteFunction()
+activate Resource
+note right of Resource: I/O Handler to access the resource\n itself and serving the reading or writing\n request
+Resource --> ResourceManager
+deactivate Resource
+ResourceManager --> QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager: dispatch_handler() return
+QNX_resmgrlib --> ResourceManagerClient
+@enduml

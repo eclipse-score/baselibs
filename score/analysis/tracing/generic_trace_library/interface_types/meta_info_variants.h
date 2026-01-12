@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_META_INFO_VARIANTS_H
-#define GENERIC_TRACE_API_META_INFO_VARIANTS_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_META_INFO_VARIANTS_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_META_INFO_VARIANTS_H
 
 #include "ara_com_meta_info.h"
 #include "dlt_meta_info.h"
@@ -36,4 +36,4 @@ class MetaInfoVariants
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_META_INFO_VARIANTS_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_META_INFO_VARIANTS_H

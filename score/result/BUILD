@@ -28,10 +28,7 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "//platform/aas/ara/log:__pkg__",
-        "@score_baselibs//score/mw/log:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(

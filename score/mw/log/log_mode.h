@@ -33,6 +33,7 @@ enum class LogMode : uint8_t
     kFile = 0x02,     ///< Save to file
     kConsole = 0x04,  ///< Forward to console,
     kSystem = 0x08,   ///< QNX: forward to slog,
+    kCustom = 0x10,   ///< Custom log mode,
     kInvalid = 0xff   ///< Invalid log mode,
 };
 

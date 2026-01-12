@@ -24,10 +24,23 @@
 #include <unistd.h>
 #include <cstdlib>
 
+#ifndef __RCVID_T_SIZE
+using rcvid_t = int;
+#endif
+
 namespace score
 {
 namespace os
 {
+
+// From migration guide from QNX7 to QNX8
+// https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.migration/topic/kernel.html#rcvid_t
+// Cross-version compatibility for QNX 7 and QNX 8.
+// In QNX 8, rcvid_t is a native type (int64_t).
+// QNX 7 doesn't have a distinct type for receive id, but expects it to be int.
+#ifndef __RCVID_T_SIZE
+typedef int rcvid_t;
+#endif
 
 class Channel : public ObjectSeam<Channel>
 {
@@ -39,7 +52,7 @@ class Channel : public ObjectSeam<Channel>
     static score::cpp::pmr::unique_ptr<Channel> Default(score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> MsgReceive(
+    virtual score::cpp::expected<rcvid_t, score::os::Error> MsgReceive(
         const std::int32_t chid,
         void* const msg,
         const std::size_t bytes,
@@ -49,7 +62,7 @@ class Channel : public ObjectSeam<Channel>
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> MsgReceivev(
+    virtual score::cpp::expected<rcvid_t, score::os::Error> MsgReceivev(
         const std::int32_t chid,
         const iov_t* const riov,
         const std::size_t rparts,
@@ -68,21 +81,21 @@ class Channel : public ObjectSeam<Channel>
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<score::os::Error> MsgReply(const std::int32_t rcvid,
+    virtual score::cpp::expected_blank<score::os::Error> MsgReply(const rcvid_t rcvid,
                                                          const std::int64_t status,
                                                          const void* const msg,
                                                          const std::size_t bytes) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<score::os::Error> MsgReplyv(const std::int32_t rcvid,
+    virtual score::cpp::expected_blank<score::os::Error> MsgReplyv(const rcvid_t rcvid,
                                                           const std::int64_t status,
                                                           const iov_t* const riov,
                                                           const std::size_t rparts) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<score::os::Error> MsgError(const std::int32_t rcvid,
+    virtual score::cpp::expected_blank<score::os::Error> MsgError(const rcvid_t rcvid,
                                                          const std::int32_t err) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -121,7 +134,7 @@ class Channel : public ObjectSeam<Channel>
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<score::os::Error> MsgDeliverEvent(const std::int32_t rcvid,
+    virtual score::cpp::expected_blank<score::os::Error> MsgDeliverEvent(const rcvid_t rcvid,
                                                                 const struct sigevent* const event) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -142,6 +155,8 @@ class Channel : public ObjectSeam<Channel>
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> ConnectDetach(const std::int32_t coid) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
+
+    virtual score::cpp::expected<std::int32_t, score::os::Error> MsgRegisterEvent(sigevent* ev, std::int32_t coid) noexcept = 0;
 
     Channel() = default;
     virtual ~Channel() = default;

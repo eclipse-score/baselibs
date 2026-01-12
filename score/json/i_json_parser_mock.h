@@ -26,7 +26,7 @@ class IJsonParserMock : public IJsonParser
 {
   public:
     MOCK_METHOD(score::Result<Any>, FromFile, (const std::string_view file_path), (const, noexcept, override));
-    MOCK_METHOD(score::Result<Any>, FromBuffer, (const score::cpp::string_view buffer), (const, noexcept, override));
+    MOCK_METHOD(score::Result<Any>, FromBuffer, (const std::string_view buffer), (const, noexcept, override));
 };
 
 }  // namespace json

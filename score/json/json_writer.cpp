@@ -21,6 +21,12 @@
 #include <array>
 #include <iterator>
 #include <limits>
+// std::locale provides functionalities (e.g. facets) to customize parts of iostream implementation. In this case it is
+// used for serializing integers efficiently. An implementation without std::locale might require (massive) amounts of
+// code duplication. Furthermore, this header is allowed to be used for character conversion purposes if and it must be
+// ensured that libcatalog is not linked using the target toolchain, which is the case for libjson.
+// Reference: broken_link_c/issue/4600528
+// NOLINTNEXTLINE(score-banned-include): see rationale above
 #include <locale>
 #include <sstream>
 #include <string_view>
@@ -31,7 +37,7 @@ namespace
 
 template <typename T>
 score::ResultBlank ToFileInternal(const T& json_data,
-                                const score::cpp::string_view& file_path,
+                                const std::string_view& file_path,
                                 score::filesystem::IFileFactory& file_factory)
 {
     const std::string file_path_string{file_path.data(), file_path.size()};
@@ -47,6 +53,8 @@ score::ResultBlank ToFileInternal(const T& json_data,
 }
 
 template <class U>
+// Coverity thinks this function is unused, but it is used in for calculating kIntBufLen.
+// coverity[autosar_cpp14_a0_1_3_violation]
 constexpr std::size_t max_dec_digits() noexcept
 {
     U v = std::numeric_limits<U>::max();
@@ -54,6 +62,8 @@ constexpr std::size_t max_dec_digits() noexcept
     while (v >= 10U)
     {
         v /= 10U;
+        // There is no known type that could represent enough digits to overflow std::size_t
+        // coverity[autosar_cpp14_a4_7_1_violation]
         ++n;
     }
     return n;
@@ -62,7 +72,12 @@ constexpr std::size_t max_dec_digits() noexcept
 template <typename T>
 inline constexpr std::size_t kIntBufLen = max_dec_digits<std::make_unsigned_t<std::remove_cv_t<T>>>() + 1U;
 
+// Rationale: noexcept safe magnitude conversion; uses safe_math assertions;
+// COVERITY: autosar_cpp14_a15_5_3_violation, uncaught_exception
+// policy requires terminate on failure; no exceptions thrown.
 template <typename T>
+// coverity[autosar_cpp14_a15_5_3_violation]
+// coverity[uncaught_exception]
 inline auto abs_magnitude_unsigned(T val) noexcept
 {
     using U = std::make_unsigned_t<std::remove_cv_t<T>>;
@@ -71,6 +86,8 @@ inline auto abs_magnitude_unsigned(T val) noexcept
     static_assert(std::numeric_limits<U>::digits >= std::numeric_limits<std::remove_cv_t<T>>::digits,
                   "U must represent full magnitude of T");
 
+    // Coverity doesn't know constexpr if statements
+    // coverity[autosar_cpp14_a7_1_8_violation]
     if constexpr (std::is_signed_v<T>)
     {
         const auto abs_val = score::safe_math::Abs(val);
@@ -86,71 +103,90 @@ inline auto abs_magnitude_unsigned(T val) noexcept
     }
 }
 
-template <typename T, typename C>
-[[nodiscard]] std::string_view integer_to_chars(C& buffer, const T val) noexcept
+template <typename T>
+[[nodiscard]] std::string_view integer_to_chars(std::array<char, kIntBufLen<T>>& buffer, const T val) noexcept
 {
     using U = std::make_unsigned_t<std::remove_cv_t<T>>;
     static_assert(std::is_integral_v<T> && std::is_integral_v<U>, "integral only");
     static_assert(!std::is_same_v<std::remove_cv_t<T>, bool>, "bool not supported");
-    static_assert(std::is_same_v<typename C::value_type, char>, "container must hold char");
-    static_assert(std::is_base_of_v<std::bidirectional_iterator_tag,
-                                    typename std::iterator_traits<typename C::iterator>::iterator_category>,
-                  "iterator must be bidirectional");
     static_assert(std::numeric_limits<U>::digits >= std::numeric_limits<std::remove_cv_t<T>>::digits,
                   "U must represent full magnitude of T");
 
-    const bool is_negative = (std::is_signed_v<T> && (val < 0));
+    const bool is_negative = (std::is_signed_v<T> && (val < static_cast<T>(0)));
     U x = abs_magnitude_unsigned(val);
 
+    // no range checks on it because the function declaration ensures enough buffer space for the given type
     auto it = buffer.end();
     do
     {
-        const auto digit = static_cast<U>(x % static_cast<U>(10U));
-        *(--it) = static_cast<char>('0' + digit);
+        // Rationale: Converting unsigned digit (x % 10U) to signed int8_t is safe because
+        // the modulo operation guarantees the value is in range [0, 9], which fits in both
+        // uint8_t and int8_t. The signed type is needed for consistent char arithmetic with '0'.
+        // coverity[autosar_cpp14_m5_0_9_violation]
+        const auto digit = static_cast<std::int8_t>(x % static_cast<U>(10U));
+        it = std::prev(it);
+        // coverity[autosar_cpp14_m5_0_9_violation]
+        *it = static_cast<char>(static_cast<std::int8_t>('0') + digit);
         x /= 10U;
     } while (x > static_cast<U>(0U));
     if (is_negative)
-        *(--it) = '-';
+    {
+        it = std::prev(it);
+        *it = '-';
+    }
 
     return std::string_view(&*it, static_cast<std::size_t>(std::distance(it, buffer.end())));
 }
 
+// This specialization of std::num_put<char> ignores parameter widths (see std::setw) as this feature is neither useful
+// nor used for serializing JSON.
 class OptimizedNumPut : public std::num_put<char>
 {
   public:
+    // Coverity thinks this function is unused, wheras it is used for std::locale
+    // coverity[autosar_cpp14_a0_1_3_violation]
     using std::num_put<char>::num_put;
 
   protected:
     using std::num_put<char>::do_put;
 
+    // Coverity thinks this function is unused, wheras it is used for std::locale
+    // coverity[autosar_cpp14_a0_1_3_violation]
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, long v) const override
     {
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // Coverity thinks this function is unused, wheras it is used for std::locale
+    // coverity[autosar_cpp14_a0_1_3_violation]
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, unsigned long v) const override
     {
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // Coverity thinks this function is unused, wheras it is used for std::locale
+    // coverity[autosar_cpp14_a0_1_3_violation]
+    // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, long long v) const override
     {
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // LCOV_EXCL_STOP
+    // Coverity thinks this function is unused, wheras it is used for std::locale
+    // coverity[autosar_cpp14_a0_1_3_violation]
+    // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, unsigned long long v) const override
     {
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
+    // LCOV_EXCL_STOP
 
   private:
     template <typename T>
-    iter_type OptimizedPutForInts(iter_type out, std::ios_base& str, char_type fill, T val) const
+    iter_type OptimizedPutForInts(iter_type out, std::ios_base&, char_type, T val) const
     {
         std::array<char, kIntBufLen<T>> buf{};
         const auto sv = integer_to_chars<T>(buf, val);
-
-        const auto width = static_cast<std::size_t>(str.width());
-        const auto n = sv.size();
-        if (width > n)
-            out = std::fill_n(out, width - n, fill);
         return std::copy(sv.begin(), sv.end(), out);
     }
 };
@@ -181,8 +217,13 @@ score::Result<std::string> ToBufferInternal(const T& json_data)
     // This line must be hit when the function is called. Since other parts of this function show line coverage,
     // this line must also be hit. Missing coverage is due to a bug in the coverage tool
     std::ostringstream string_stream{};  // LCOV_EXCL_LINE
-    std::locale loc(std::locale(), new OptimizedNumPut());
-    string_stream.imbue(loc);
+    // Rationale: Static locale with custom facet requires runtime initialization.
+    // std::locale constructor with facet cannot be constexpr. Thread-safe due to
+    // function-local static initialization guarantee (C++11 §6.7 [stmt.dcl]/4).
+    // NOLINTNEXTLINE(score-no-dynamic-raw-memory) std::num_put is reference counted and std::locale does manage it.
+    // coverity[autosar_cpp14_a3_3_2_violation]
+    const static std::locale loc(std::locale(), new OptimizedNumPut());
+    score::cpp::ignore = string_stream.imbue(loc);
 
     score::json::JsonSerialize serializer{string_stream};
     serializer << json_data;
@@ -192,13 +233,13 @@ score::Result<std::string> ToBufferInternal(const T& json_data)
 }  // namespace
 
 score::json::JsonWriter::JsonWriter(FileSyncMode file_sync_mode,
-                                  score::filesystem::AtomicUpdateOwnershipFlags ownership) noexcept
-    : file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}
+                                  const score::filesystem::AtomicUpdateOwnershipFlags ownership) noexcept
+    : IJsonWriter{}, file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}
 {
 }
 
 score::ResultBlank score::json::JsonWriter::ToFile(const score::json::Object& json_data,
-                                               const score::cpp::string_view& file_path,
+                                               const std::string_view& file_path,
                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)
@@ -208,7 +249,7 @@ score::ResultBlank score::json::JsonWriter::ToFile(const score::json::Object& js
 }
 
 score::ResultBlank score::json::JsonWriter::ToFile(const score::json::List& json_data,
-                                               const score::cpp::string_view& file_path,
+                                               const std::string_view& file_path,
                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)
@@ -218,7 +259,7 @@ score::ResultBlank score::json::JsonWriter::ToFile(const score::json::List& json
 }
 
 score::ResultBlank score::json::JsonWriter::ToFile(const score::json::Any& json_data,
-                                               const score::cpp::string_view& file_path,
+                                               const std::string_view& file_path,
                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)

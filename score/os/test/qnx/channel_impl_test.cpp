@@ -331,6 +331,38 @@ TEST_F(ChannelImplFixture, ConnectAttachAndDetatchFlow)
     EXPECT_TRUE(result.has_value());
 }
 
+TEST_F(ChannelImplFixture, ConnectAttachAndMsgRegisterEventFlow)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Connect Attach And Msg Register Event Flow");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    const auto chid = ChannelCreate(kOpenFlags);
+    const auto coid = this->unit_->ConnectAttach(kAttachId, kAttachId, chid, kAttachIndex, kAttachFlags);
+    EXPECT_TRUE(coid.has_value());
+    struct sigevent event;
+    event.sigev_notify = SIGEV_SIGNAL;
+    event.sigev_signo = SIGUSR1;
+    event.sigev_value.sival_ptr = NULL;
+    const auto result = this->unit_->MsgRegisterEvent(&event, coid.value());
+    EXPECT_TRUE(result.has_value());
+}
+
+TEST_F(ChannelImplFixture, MsgRegisterEventReturnsError)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "MsgRegisterEvent returns error if called with invalid connection id");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr sigevent* no_event{nullptr};
+    const auto result = this->unit_->MsgRegisterEvent(no_event, kInvalidId);
+    EXPECT_FALSE(result.has_value());
+}
+
 TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");

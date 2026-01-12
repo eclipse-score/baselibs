@@ -36,6 +36,8 @@ using wstring = basic_string<wchar_t>;
 
 string to_string(const std::int32_t value, memory_resource* const resource);
 string to_string(const std::int64_t value, memory_resource* const resource);
+string to_string(const std::uint32_t value, memory_resource* const resource);
+string to_string(const std::uint64_t value, memory_resource* const resource);
 string to_string(const double value, memory_resource* const resource);
 
 } // namespace pmr

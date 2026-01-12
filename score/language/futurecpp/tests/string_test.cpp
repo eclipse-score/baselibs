@@ -114,6 +114,54 @@ TEST_P(int64_to_string_fixture, CorrectConversionTest)
     EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
+class uint64_to_string_fixture : public testing::TestWithParam<std::uint64_t>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(UInt64ToStringCases,
+                         uint64_to_string_fixture,
+                         ::testing::Values(0U,
+                                           1U,
+                                           2U,
+                                           10U,
+                                           100U,
+                                           std::numeric_limits<std::uint64_t>::lowest(),
+                                           std::numeric_limits<std::uint64_t>::max(),
+                                           999'999'999'999'999'999));
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18679980
+TEST_P(uint64_to_string_fixture, CorrectConversionTest)
+{
+    auto result = to_string(GetParam(), score::cpp::pmr::new_delete_resource());
+    std::string expected{std::to_string(GetParam())};
+    EXPECT_STREQ(result.c_str(), expected.c_str());
+}
+
+class uint32_to_string_fixture : public testing::TestWithParam<std::uint32_t>
+{
+};
+
+INSTANTIATE_TEST_SUITE_P(UInt32ToStringCases,
+                         uint32_to_string_fixture,
+                         ::testing::Values(0U,
+                                           1U,
+                                           2U,
+                                           10U,
+                                           100U,
+                                           std::numeric_limits<std::uint32_t>::lowest(),
+                                           std::numeric_limits<std::uint32_t>::max(),
+                                           999'999'999));
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18679980
+TEST_P(uint32_to_string_fixture, CorrectConversionTest)
+{
+    auto result = to_string(GetParam(), score::cpp::pmr::new_delete_resource());
+    std::string expected{std::to_string(GetParam())};
+    EXPECT_STREQ(result.c_str(), expected.c_str());
+}
+
 class double_to_string_fixture : public testing::TestWithParam<double>
 {
 };

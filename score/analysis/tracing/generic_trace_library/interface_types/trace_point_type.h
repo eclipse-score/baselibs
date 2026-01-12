@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_TRACE_POINT_TYPE_H
-#define GENERIC_TRACE_API_TRACE_POINT_TYPE_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_TRACE_POINT_TYPE_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_TRACE_POINT_TYPE_H
 
 #include <cstdint>
 
@@ -76,4 +76,4 @@ enum class TracePointType : std::uint8_t
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_TRACE_POINT_TYPE_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_TRACE_POINT_TYPE_H

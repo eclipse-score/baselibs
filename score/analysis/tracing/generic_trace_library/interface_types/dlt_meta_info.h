@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_DLT_META_INFO_H
-#define GENERIC_TRACE_API_DLT_META_INFO_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_DLT_META_INFO_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_DLT_META_INFO_H
 
 #include "dlt_properties.h"
 
@@ -28,4 +28,4 @@ using DltMetaInfo = MetaInfo<DltProperties>;
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_DLT_META_INFO_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_DLT_META_INFO_H

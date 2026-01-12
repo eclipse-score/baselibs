@@ -15,7 +15,7 @@
 
 #include "score/os/sigevent.h"
 
-#include <signal.h>
+#include <csignal>
 
 namespace score::os
 {
@@ -23,7 +23,13 @@ namespace score::os
 class SigEventImpl final : public SigEvent
 {
   public:
+    SigEventImpl() = default;
     ~SigEventImpl() override;
+    SigEventImpl(const SigEventImpl&) = delete;
+    SigEventImpl& operator=(const SigEventImpl&) = delete;
+    SigEventImpl(SigEventImpl&&) = delete;
+    SigEventImpl& operator=(SigEventImpl&&) = delete;
+
     ResultBlank SetNotificationType(const SigEvent::NotificationType notification_type) override;
     ResultBlank SetSignalNumber(const std::int32_t signal_number) override;
     ResultBlank SetSignalEventValue(const std::variant<int32_t, void*> signal_event_value) override;
@@ -33,7 +39,9 @@ class SigEventImpl final : public SigEvent
     void Reset() override;
 
   protected:
-    sigevent& GetSigevent() override;
+    void ModifySigevent(const SigeventModifier& modifier) override;
+
+  private:
     sigevent raw_sigevent_{};
 };
 

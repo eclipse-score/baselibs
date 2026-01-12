@@ -19,8 +19,6 @@
 #include "score/json/internal/model/error.h"
 #include "score/result/result.h"
 
-#include "score/string_view.hpp"
-
 #include <string_view>
 
 namespace score
@@ -39,7 +37,7 @@ class JsonParser : public IJsonParser
     /// \brief Parses the underlying buffer and creates a tree of JSON data
     /// \param buffer The string_view that shall be parsed
     /// \return root to the tree of JSON data, error on error
-    score::Result<Any> FromBuffer(const score::cpp::string_view buffer) const noexcept override;
+    score::Result<Any> FromBuffer(const std::string_view buffer) const noexcept override;
 };
 
 /// \brief Parses the underlying buffer and creates a tree of JSON data

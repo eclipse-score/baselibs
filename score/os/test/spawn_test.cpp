@@ -1041,6 +1041,8 @@ TEST(SpawnImpl, posix_spawnattr_getstackmax_failure)
     ASSERT_FALSE(get_result.has_value());
 }
 
+// posix_spawnattr_getnode and posix_spawnattr_setnode is deprecated for QNX8 and there is no replacment for it
+#if (_NTO_VERSION <= 710)
 TEST_F(SpawnTest, posix_spawnattr_setnode_success)
 {
     RecordProperty("Verifies", "SCR-46010294");
@@ -1076,7 +1078,7 @@ TEST_F(SpawnTest, posix_spawnattr_getnode_success)
     EXPECT_EQ(get_result.value(), 0);
     EXPECT_EQ(get_node, set_node);
 }
-
+#endif
 TEST(SpawnImpl, posix_spawnattr_setnode_failure)
 {
     RecordProperty("Verifies", "SCR-46010294");

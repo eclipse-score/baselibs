@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_GENERIC_TRACE_API_H
-#define GENERIC_TRACE_API_GENERIC_TRACE_API_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_GENERIC_TRACE_API_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_GENERIC_TRACE_API_H
 
 #include "meta_info_variants.h"
 #include "score/analysis/tracing/common/interface_types/types.h"
@@ -189,4 +189,4 @@ class GenericTraceAPI
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_GENERIC_TRACE_API_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_GENERIC_TRACE_API_H

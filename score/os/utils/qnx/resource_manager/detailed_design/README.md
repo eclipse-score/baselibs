@@ -24,9 +24,9 @@ Note: There is a reason to not inherit the `Application class` in the lifecycle 
 ## Static Architecture
 The below component diagrams show the interaction between the user of the base template class and the resource manager skeleton:
 
-![Resource Manager Core template class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ClassDiagram.uxf?ref=b2ce85bc75f64c80e66d84f1b4cb2fa9eef63ae8)
+![Resource Manager Core template class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ClassDiagram.puml)
 
-![Resource Manager Core component diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ComponentDiagram.uxf?ref=625310cf30c6614b4bfeb26ab2df812618179c03)
+![Resource Manager Core component diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ComponentDiagram.puml)
 
 ### Functional interfacing
 
@@ -55,18 +55,20 @@ The core implementation of the resource manager has the following dependencies w
    - score/os/qnx:dispatch
    - platform/aas/lib/os:errno
    - platform/aas/lib/result
-- BMW::Middleware Logging library to monitor and notify the system with a proper state for the resource manager.      
+- BMW::Middleware Logging library to monitor and notify the system with a proper state for the resource manager.
     - platform/aas/ara/log
 - QNX Standard Libraries for c/c++.
 
 ## Dynamic Architecture
 The following diagram represents behavior of the resource manager during the Runtime:
 
-![Resource Manager Core startup sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_StartupSequenceDiagram.uxf?ref=625310cf30c6614b4bfeb26ab2df812618179c03)
+![Resource Manager Core startup sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_StartupSequenceDiagram.puml)
 
-![Resource Manager Core runtime sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_RuntimeSequenceDiagram.uxf?ref=625310cf30c6614b4bfeb26ab2df812618179c03)
+![Resource Manager Core runtime sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/blob/master/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_RuntimeSequenceDiagram.puml)
 
-![Resource Manager Core activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram.uxf?ref=625310cf30c6614b4bfeb26ab2df812618179c03)
+![Resource Manager Core activity diagram - Initialize](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Initialize.puml)
+
+![Resource Manager Core activity diagram - Run](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Run.puml)
 
 ## Performance
 ### Limitations and Constraints

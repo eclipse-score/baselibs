@@ -95,7 +95,7 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type, OpenArgs&&... open_args)
     {
         score::json::JsonWriter writer{type};
-        score::cpp::string_view path_view{path.data(), path.size()};
+        std::string_view path_view{path};
         auto result = writer.ToFile(json, path_view, file_factory_fake, std::forward<OpenArgs>(open_args)...);
 
         EXPECT_EQ(result.has_value(), true);
@@ -194,7 +194,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
     score::json::JsonWriter writer{FileSyncMode::kUnsynced};
-    score::cpp::string_view path_view{"/foo/foo.json"};
+    std::string_view path_view{"/foo/foo.json"};
     auto result = writer.ToFile(json, path_view, this->file_factory_fake);
 
     EXPECT_FALSE(result.has_value());
@@ -216,7 +216,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
     score::json::JsonWriter writer{FileSyncMode::kSynced};
-    score::cpp::string_view path_view{"/foo/foo.json"};
+    std::string_view path_view{"/foo/foo.json"};
     auto result = writer.ToFile(json, path_view, this->file_factory_fake);
 
     EXPECT_FALSE(result.has_value());
@@ -229,11 +229,12 @@ class JsonWriterIntegerTest : public ::testing::Test
 };
 
 // NOTE: Only types supported by score::json::Any/Number are included here.
-// The Number variant currently supports: int, unsigned int, long, unsigned long.
-// Types such as long long and unsigned long long are NOT supported and cannot be tested.
-// This test suite covers all integral types exercised by our num_put overrides and accepted by the production JSON
-// implementation.
-using IntegralTypes = ::testing::Types<long, unsigned long>;
+// The Number variant currently supports std::int{8,16,32,64}_t and std::uint{8,16,32,64}_t.
+// Types such as long long and unsigned long long can only be tested on platforms where the above typedefs resolve to
+// them (usually <64-bit platforms).
+// This test suite covers all integral types not causing a -Wsign-promo error exercised by our num_put overrides and
+// accepted by the production JSON implementation.
+using IntegralTypes = ::testing::Types<std::int32_t, std::int64_t, std::uint32_t, std::uint64_t>;
 TYPED_TEST_SUITE(JsonWriterIntegerTest, IntegralTypes, );
 
 TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)

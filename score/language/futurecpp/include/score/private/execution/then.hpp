@@ -12,7 +12,6 @@
 #include <score/private/execution/sender_t.hpp>
 #include <score/private/execution/then_sender.hpp>
 #include <score/private/type_traits/remove_cvref.hpp>
-#include <score/private/utility/static_const.hpp>
 
 #include <utility>
 
@@ -48,9 +47,6 @@ struct then_t
 
 using detail::then_t_disable_adl::then_t;
 
-namespace // NOLINT(google-build-namespaces)
-{
-
 /// \brief Attaches an invocable as a continuation for an input sender’s value completion operation
 ///
 /// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p2300r7.html#design-sender-adaptor-then
@@ -64,9 +60,7 @@ namespace // NOLINT(google-build-namespaces)
 /// ```
 ///     ... | then([](){});
 /// ```
-constexpr auto& then = score::cpp::static_const<then_t>::value; // NOLINT(misc-definitions-in-headers)
-
-} // namespace
+inline constexpr then_t then{};
 
 } // namespace execution
 } // namespace score::cpp

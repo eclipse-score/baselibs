@@ -1,0 +1,96 @@
+@startuml ResourceManager_StartupSequenceDiagram
+
+title Resource Manager Startup Sequence Diagram
+
+participant "ResourceManagerProcess_EntryMain()(e.g. mmr_reader, msr_reader)" as ResourceManagerProcess_EntryMain
+participant ":Resource" as Resource
+participant ":ResourceManager" as ResourceManager
+participant ":QNX_resmgrlib" as QNX_resmgrlib
+
+' Create ResourceManager Instance
+group Create N Resource Instance(s)
+ResourceManagerProcess_EntryMain -> Resource: ::Resource()
+activate Resource
+note right: Create n number of resources\n should be managed by\n one resource manager
+note right of ResourceManager: Initialize the resource\n class with the right\n resource-based\n configuration including\n the statically linked\n handler of I/O\n Functions
+Resource --> ResourceManagerProcess_EntryMain
+deactivate Resource
+end group
+
+
+
+' Create N Resource Instance(s)
+group Create ResourceManager Instance
+ResourceManagerProcess_EntryMain -> ResourceManager: ::ResourceManager(N Resources)
+activate ResourceManagerProcess_EntryMain
+activate ResourceManager
+note right: Instantiate\n ResourceManager\n object with the right\n Resourcemanager-\nbased\n configuration\n.Also taking\n the created resource(s)\n as an argument to\n the constructor
+ResourceManager --> ResourceManagerProcess_EntryMain
+deactivate ResourceManager
+end group
+
+' Setup Resource Manager
+group Setup Resource Manager
+ResourceManagerProcess_EntryMain -> ResourceManager: ::Initialize()
+activate ResourceManager
+ResourceManager -> ResourceManager: ::InitializeDispatchInterface()
+activate ResourceManager
+note right: creates and returns the dispatch structure. This structure\n contains the channel ID
+ResourceManager -> QNX_resmgrlib: dispatch_create_channel()
+activate QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager
+deactivate QNX_resmgrlib
+deactivate ResourceManager
+
+'another group
+group Loop On Number Of Resources
+ResourceManager -> ResourceManager: ::InitializeHandlers()
+activate ResourceManager
+ResourceManager -> QNX_resmgrlib: iofunc_func_init()
+note right: Instead of filling in the POSIX Interfaces manually, we call iofunc_func_init() to place the\niofunc_*_default() handler functions into the appropriate spots
+activate QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager
+note right: For the interface that is needed to be handled specifically,\n we should register those special handlers for IO and Connect functions.
+deactivate QNX_resmgrlib
+ResourceManager -> Resource: Resource::AttachRegisteredHandlers()
+activate Resource
+
+'another group
+group For each I/O function
+note right of Resource: Check that the handler is provided
+note right of Resource: Only if a handler for this I/O\n function is provided,io_func\n should be assigned with the C \nstatic function.
+end group
+
+Resource --> ResourceManager
+deactivate Resource
+deactivate ResourceManager
+
+ResourceManager -> ResourceManager: ::InitializeIofuncParameters()
+activate ResourceManager
+ResourceManager -> QNX_resmgrlib: iofunc_attr_init()
+note right: initializing attribute structure for each resource, then\n registering each resource onto the process manager.
+activate QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager
+deactivate QNX_resmgrlib
+deactivate ResourceManager
+
+ResourceManager -> ResourceManager: ::AttachResource()
+activate ResourceManager
+ResourceManager -> QNX_resmgrlib: resmgr_attach()
+activate QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager
+deactivate QNX_resmgrlib
+deactivate ResourceManager
+end group
+
+ResourceManager -> ResourceManager: ::AllocateContextStructure()
+activate ResourceManager
+ResourceManager -> QNX_resmgrlib: dispatch_context_alloc()
+note right: Allocating the context structure contains a buffer where messages will be received.
+activate QNX_resmgrlib
+QNX_resmgrlib --> ResourceManager
+deactivate QNX_resmgrlib
+deactivate ResourceManager
+end
+
+@enduml

@@ -16,8 +16,6 @@
 
 #include "score/json/internal/model/any.h"
 
-#include "score/string_view.hpp"
-
 #include <cstdint>
 #include <memory>
 #include <string>

@@ -89,11 +89,11 @@ constexpr ::details::IsEnabledEnum<T> operator|(const T& lhs, const T& rhs)
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A7-2-1" rule finding. The rule states: "An expression with enum underlying type shall
     // only have values corresponding to the enumerators of the enumeration.".
-    // This finding occurs because the underlying value, which is a smaller type, is cast to uintmax_t and then back
+    // This finding occurs because the underlying value, which is a smaller type, is cast to uint64_t and then back
     // after applying the bitwise operation. This can potentially cause data loss, but this fulfills the result type.
     // coverity[autosar_cpp14_a7_2_1_violation]
-    return static_cast<T>(static_cast<std::uintmax_t>(static_cast<U>(lhs)) |
-                          static_cast<std::uintmax_t>(static_cast<U>(rhs)));
+    return static_cast<T>(static_cast<std::uint64_t>(static_cast<U>(lhs)) |
+                          static_cast<std::uint64_t>(static_cast<U>(rhs)));
 }
 
 /// @brief Provides the bitwise AND operator for scoped enums so that individual bits can be read from a bitmask.
@@ -122,10 +122,10 @@ operator&(const T& lhs, const T& rhs)
 {
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
-    // loss." In this context, there is no data loss because lhs/rhs is promoted to std::uintmax_t for the bitwise
+    // loss." In this context, there is no data loss because lhs/rhs is promoted to std::uint64_t for the bitwise
     // operation. The result is then checked for non-zero, ensuring the integrity of the original data.
     // coverity[autosar_cpp14_a4_7_1_violation]
-    return (static_cast<std::uintmax_t>(static_cast<U>(lhs)) & static_cast<std::uintmax_t>(static_cast<U>(rhs))) != 0U;
+    return (static_cast<std::uint64_t>(static_cast<U>(lhs)) & static_cast<std::uint64_t>(static_cast<U>(rhs))) != 0U;
 }
 
 /// @brief Provides the bitwise XOR operator for scoped enums.
@@ -138,8 +138,8 @@ template <typename T>
 constexpr ::details::IsEnabledEnum<T> operator^(const T& lhs, const T& rhs)
 {
     using U = std::underlying_type_t<T>;
-    return static_cast<T>(static_cast<std::uintmax_t>(static_cast<U>(lhs)) ^
-                          static_cast<std::uintmax_t>(static_cast<U>(rhs)));
+    return static_cast<T>(static_cast<std::uint64_t>(static_cast<U>(lhs)) ^
+                          static_cast<std::uint64_t>(static_cast<U>(rhs)));
 }
 
 /// @brief Provides the bitwise NOT operator for scoped enums.
@@ -154,10 +154,10 @@ constexpr ::details::IsEnabledEnum<T> operator~(const T& other)
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A7-2-1" rule finding. The rule states: "An expression with enum underlying type shall
     // only have values corresponding to the enumerators of the enumeration.".
-    // This finding occurs because the underlying value, which is a smaller type, is cast to uintmax_t and then back
+    // This finding occurs because the underlying value, which is a smaller type, is cast to uint64_t and then back
     // after applying the bitwise operation. This can potentially cause data loss, but this fulfills the result type.
     // coverity[autosar_cpp14_a7_2_1_violation]
-    return static_cast<T>(~static_cast<std::uintmax_t>(static_cast<U>(other)));
+    return static_cast<T>(~static_cast<std::uint64_t>(static_cast<U>(other)));
 }
 
 /// @brief Provides the bitwise AND assign operator for scoped enums.
@@ -172,11 +172,11 @@ constexpr ::details::IsEnabledEnum<T> operator&=(T& lhs, const T& rhs)
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A7-2-1" rule finding. The rule states: "An expression with enum underlying type shall
     // only have values corresponding to the enumerators of the enumeration.".
-    // This finding occurs because the underlying value, which is a smaller type, is cast to uintmax_t and then back
+    // This finding occurs because the underlying value, which is a smaller type, is cast to uint64_t and then back
     // after applying the bitwise operation. This can potentially cause data loss, but this fulfills the result type.
     // coverity[autosar_cpp14_a7_2_1_violation]
-    lhs = static_cast<T>(static_cast<std::uintmax_t>(static_cast<U>(lhs)) &
-                         static_cast<std::uintmax_t>(static_cast<U>(rhs)));
+    lhs = static_cast<T>(static_cast<std::uint64_t>(static_cast<U>(lhs)) &
+                         static_cast<std::uint64_t>(static_cast<U>(rhs)));
 
     return lhs;
 }
@@ -193,11 +193,11 @@ constexpr ::details::IsEnabledEnum<T> operator|=(T& lhs, const T& rhs)
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A7-2-1" rule finding. The rule states: "An expression with enum underlying type shall
     // only have values corresponding to the enumerators of the enumeration.".
-    // This finding occurs because the underlying value, which is a smaller type, is cast to uintmax_t and then back
+    // This finding occurs because the underlying value, which is a smaller type, is cast to uint64_t and then back
     // after applying the bitwise operation. This can potentially cause data loss, but this fulfills the result type.
     // coverity[autosar_cpp14_a7_2_1_violation]
-    lhs = static_cast<T>(static_cast<std::uintmax_t>(static_cast<U>(lhs)) |
-                         static_cast<std::uintmax_t>(static_cast<U>(rhs)));
+    lhs = static_cast<T>(static_cast<std::uint64_t>(static_cast<U>(lhs)) |
+                         static_cast<std::uint64_t>(static_cast<U>(rhs)));
     return lhs;
 }
 
@@ -211,8 +211,8 @@ template <typename T>
 constexpr ::details::IsEnabledEnum<T> operator^=(T& lhs, const T& rhs)
 {
     using U = std::underlying_type_t<T>;
-    lhs = static_cast<T>(static_cast<std::uintmax_t>(static_cast<U>(lhs)) ^
-                         static_cast<std::uintmax_t>(static_cast<U>(rhs)));
+    lhs = static_cast<T>(static_cast<std::uint64_t>(static_cast<U>(lhs)) ^
+                         static_cast<std::uint64_t>(static_cast<U>(rhs)));
     return lhs;
 }
 

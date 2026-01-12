@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_FILESYSTEM_RECURSIVE_DIRECTORY_ITERATOR_H
-#define SCORE_LIB_FILESYSTEM_RECURSIVE_DIRECTORY_ITERATOR_H
+#ifndef SCORE_LIB_FILESYSTEM_ITERATOR_RECURSIVE_DIRECTORY_ITERATOR_H
+#define SCORE_LIB_FILESYSTEM_ITERATOR_RECURSIVE_DIRECTORY_ITERATOR_H
 
 #include "score/filesystem/iterator/directory_entry.h"
 #include "score/filesystem/iterator/directory_iterator.h"
@@ -106,4 +106,4 @@ bool operator!=(const RecursiveDirectoryIterator& l, const RecursiveDirectoryIte
 }  // namespace filesystem
 }  // namespace score
 
-#endif  // SCORE_LIB_FILESYSTEM_RECURSIVE_DIRECTORY_ITERATOR_H
+#endif  // SCORE_LIB_FILESYSTEM_ITERATOR_RECURSIVE_DIRECTORY_ITERATOR_H

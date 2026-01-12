@@ -27,7 +27,7 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
     return NlohmannParser::FromFile(file_path);
 }
 
-auto JsonParser::FromBuffer(const score::cpp::string_view buffer) const noexcept -> score::Result<Any>
+auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> score::Result<Any>
 {
     return NlohmannParser::FromBuffer(buffer);
 }
@@ -37,7 +37,7 @@ auto JsonParser::FromBuffer(const score::cpp::string_view buffer) const noexcept
 auto operator"" _json(const char* const data, const size_t size) -> Any
 {
     const JsonParser json_parser_obj;
-    auto result = json_parser_obj.FromBuffer(score::cpp::string_view{data, size});
+    auto result = json_parser_obj.FromBuffer(std::string_view{data, size});
     if (!result.has_value())
     {
         // False positive, no function call.

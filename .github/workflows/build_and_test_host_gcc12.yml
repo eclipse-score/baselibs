@@ -18,6 +18,9 @@ name: Bazel Build & Test baselibs (with host toolchain GCC12.2)
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - main
   merge_group:
     types: [checks_requested]
 jobs:

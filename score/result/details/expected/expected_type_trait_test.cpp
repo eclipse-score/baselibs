@@ -64,5 +64,43 @@ TEST(ExpectedTest, HasRebindTypeTrait)
     static_assert(std::is_same_v<rebound::error_type, ErrorType>);
 }
 
+TEST(ExpectedVoidTest, HasValueTypeTypeTrait)
+{
+    // When wrapping the void type with an expected
+    using unit = expected<void, ErrorType>;
+
+    // Expect the expected to have a type trait value_type equal to void
+    static_assert(std::is_same_v<unit::value_type, void>);
+}
+
+TEST(ExpectedVoidTest, HasErrorTypeTypeTrait)
+{
+    // When wrapping the type as error_type with an expected
+    using unit = expected<void, ErrorType>;
+
+    // Expect the expected to have a type trait error_type matching above type
+    static_assert(std::is_same_v<unit::error_type, ErrorType>);
+}
+
+TEST(ExpectedVoidTest, HasUnexpectedTypeTypeTrait)
+{
+    // When wrapping the type as error_type with an expected
+    using unit = expected<void, ErrorType>;
+
+    // Expect the expected to have a type trait unexpected_type matching above type wrapped by unexpected
+    static_assert(std::is_same_v<unit::unexpected_type, unexpected<ErrorType>>);
+}
+
+TEST(ExpectedVoidTest, HasRebindTypeTrait)
+{
+    // When wrapping the type as error_type with an expected
+    using unit = expected<void, ErrorType>;
+    using rebound = unit::rebind<ValueType>;
+
+    // Expect the expected to have a type trait rebind that preserves the error_type while exchanging the value_type
+    static_assert(std::is_same_v<rebound::value_type, ValueType>);
+    static_assert(std::is_same_v<rebound::error_type, ErrorType>);
+}
+
 }  // namespace
 }  // namespace score::details

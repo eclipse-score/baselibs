@@ -67,7 +67,7 @@ std::int32_t SignalImpl::get_current_blocked_signals(sigset_t& signals) const
 
 std::int32_t SignalImpl::is_signal_block(const std::int32_t signal_id)
 {
-    sigset_t signals;
+    sigset_t signals{};
     /* Branching is due to hidden exception handling */
     std::int32_t result(SignalImpl::sigemptyset(&signals)); /* LCOV_EXCL_BR_LINE */
     if (result == -1) /* LCOV_EXCL_BR_LINE: It is not possible to make sigempty return -1 through unit test.*/
@@ -266,7 +266,7 @@ score::cpp::expected<std::int32_t, Error> SignalImpl::GetCurrentBlockedSignals(s
 
 score::cpp::expected<std::int32_t, Error> SignalImpl::IsSignalBlocked(const std::int32_t signal_id) const noexcept
 {
-    sigset_t signals;
+    sigset_t signals{};
     auto result(SignalImpl::SigEmptySet(signals));
     if (result.has_value() == false) /* LCOV_EXCL_BR_LINE */
     {

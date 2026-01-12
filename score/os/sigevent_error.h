@@ -22,9 +22,7 @@ enum class SigEventErrorCode : result::ErrorCode
 {
     kInvalidArgument,
     kInvalidNotificationType,
-    kInvalidConnectionIdNotificationType,
     kInvalidThreadAttributesNotificationType,
-    kInvalidThreadIdNotificationType,
     kInvalidThreadCallbackNotificationType,
     kInvalidSignalEventNotificationType,
     kInvalidSignalEventValue,

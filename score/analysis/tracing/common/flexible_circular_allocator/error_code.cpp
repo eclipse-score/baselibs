@@ -22,8 +22,17 @@ std::string_view score::analysis::tracing::FlexibleAllocatorErrorDomain::Message
     //  coverity[autosar_cpp14_m6_4_3_violation]
     switch (static_cast<score::analysis::tracing::FlexibleAllocatorErrorCode>(code))
     {
+        case FlexibleAllocatorErrorCode::kNoError:
+            error_message = "No error";
+            break;
         case FlexibleAllocatorErrorCode::kBaseAddressVoid:
             error_message = "Base address is nullptr";
+            break;
+        case FlexibleAllocatorErrorCode::kCorruptedBufferBlock:
+            error_message = "Corrupted buffer block detected, integrity check failed";
+            break;
+        case FlexibleAllocatorErrorCode::kInvalidListEntryOffset:
+            error_message = "Invalid list entry offset, out of bounds access prevented";
             break;
         case FlexibleAllocatorErrorCode::kSizeIsZero:
             error_message = "Size is zero";

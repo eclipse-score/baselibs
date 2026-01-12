@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/qnx/neutrino_impl.h"
-
+#include "score/os/qnx/sigevent_qnx_impl.h"
 #include <gtest/gtest.h>
 #include <sys/neutrino.h>
 #include <iostream>
@@ -228,10 +228,25 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedSuccess)
     const std::uint64_t ntime{1000000U};
     std::uint64_t otime{0U};
 
-    const auto result = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
+    const auto result1 = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
+    ASSERT_TRUE(result1.has_value());
+    EXPECT_EQ(result1.value(), 0);
 
-    ASSERT_TRUE(result.has_value());
-    EXPECT_EQ(result.value(), 0);
+    std::chrono::milliseconds min_sleep{2};
+    auto result2 =
+        neutrino_.TimerTimeout(Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
+    ASSERT_TRUE(result2.has_value());
+    result2 =
+        neutrino_.TimerTimeout(Neutrino::ClockType::kMonotonic, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
+    ASSERT_TRUE(result2.has_value());
+    result2 =
+        neutrino_.TimerTimeout(Neutrino::ClockType::kSoftTime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
+    ASSERT_TRUE(result2.has_value());
+
+    std::chrono::milliseconds sleep_left{0};
+    const auto result3 = neutrino_.TimerTimeout(
+        Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kTimerTolerance, nullptr, sleep_left);
+    ASSERT_TRUE(result3.has_value());
 }
 
 TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedFailure)
@@ -248,10 +263,15 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedFailure)
     const std::uint64_t ntime{1000000U};
     std::uint64_t otime{0U};
 
-    const auto result = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
+    const auto result1 = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
+    ASSERT_FALSE(result1.has_value());
+    EXPECT_EQ(result1.error(), score::os::Error::Code::kInvalidArgument);
 
-    ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::os::Error::Code::kInvalidArgument);
+    std::chrono::milliseconds min_sleep{2};
+    const auto result2 = neutrino_.TimerTimeout(
+        static_cast<Neutrino::ClockType>(-1), Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
+    ASSERT_FALSE(result2.has_value());
+    EXPECT_EQ(result2.error(), score::os::Error::Code::kInvalidArgument);
 }
 
 TEST_F(NeutrinoImplFixture, TimerTimeoutSuccess)
@@ -262,31 +282,38 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutSuccess)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
+    std::unique_ptr<score::os::SigEvent> signal_event1 = std::make_unique<score::os::SigEventQnxImpl>();
     std::chrono::milliseconds min_sleep{2};
-    auto result =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result.has_value());
-    result =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kMonotonic, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result.has_value());
-    result =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kSoftTime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result.has_value());
-}
 
-TEST_F(NeutrinoImplFixture, TimerTimeoutOtimeSuccess)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test TimerTimeout Otime Success");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    auto* signal_event_qnx_ptr = dynamic_cast<score::os::SigEventQnxImpl*>(signal_event1.get());
+    ASSERT_NE(signal_event_qnx_ptr, nullptr);
 
-    std::chrono::milliseconds min_sleep{2};
-    std::chrono::milliseconds sleep_left{0};
-    const auto result = neutrino_.TimerTimeout(
-        Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kTimerTolerance, nullptr, sleep_left);
+    // Proceed only if cast succeeded
+    signal_event_qnx_ptr->SetUnblock();
+
+    auto result = neutrino_.TimerTimeout(
+        Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kSend, std::move(signal_event1), min_sleep);
+
     ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), 0);
+
+    std::optional<std::chrono::nanoseconds> otime = std::chrono::nanoseconds{0};
+    std::unique_ptr<score::os::SigEvent> signal_event2 = std::make_unique<score::os::SigEventQnxImpl>();
+
+    signal_event_qnx_ptr = dynamic_cast<score::os::SigEventQnxImpl*>(signal_event2.get());
+    ASSERT_NE(signal_event_qnx_ptr, nullptr);
+
+    // Proceed only if cast succeeded
+    signal_event_qnx_ptr->SetUnblock();
+
+    result = neutrino_.TimerTimeout(Neutrino::ClockType::kMonotonic,
+                                    Neutrino::TimerTimeoutFlag::kNanoSleep,
+                                    std::move(signal_event2),
+                                    min_sleep,
+                                    otime);
+
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), 0);
 }
 
 TEST_F(NeutrinoImplFixture, TimerTimeoutFailure)
@@ -297,12 +324,17 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutFailure)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    std::chrono::milliseconds min_sleep{2};
-    const auto result = neutrino_.TimerTimeout(
-        static_cast<Neutrino::ClockType>(-1), Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
+    std::unique_ptr<score::os::SigEvent> signal_event = nullptr;
+    std::chrono::milliseconds ntime{2};
 
+    auto result = neutrino_.TimerTimeout(
+        Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kSend, std::move(signal_event), ntime);
     ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::os::Error::Code::kInvalidArgument);
+
+    signal_event = std::make_unique<score::os::SigEventQnxImpl>();
+    result = neutrino_.TimerTimeout(
+        static_cast<Neutrino::ClockType>(-1), Neutrino::TimerTimeoutFlag::kSend, std::move(signal_event), ntime);
+    ASSERT_FALSE(result.has_value());
 }
 
 TEST_F(NeutrinoImplFixture, ClockCyclesMonotonicity)
@@ -331,4 +363,19 @@ TEST_F(NeutrinoImplFixture, ClockCyclesElapsedTime)
         ;
     const auto end = neutrino_.ClockCycles();
     ASSERT_GT(end, start);
+}
+
+TEST_F(NeutrinoImplFixture, ClockIdSuccess)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    pid_t pid = ::getpid();
+    int32_t tid = ::gettid();
+
+    const auto clock_id = neutrino_.ClockId(pid, tid);
+    ASSERT_TRUE(clock_id.has_value());
+    ASSERT_GE(clock_id.value(), 0);
 }

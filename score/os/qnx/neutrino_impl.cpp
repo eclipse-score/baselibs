@@ -96,12 +96,14 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockAdjust(clockid_t id
 }
 
 score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(clockid_t id,
-                                                              std::int32_t flags,
+                                                              TimerFlagsType flags,
                                                               const sigevent* notify,
                                                               const std::uint64_t* ntime,
                                                               std::uint64_t* otime) const noexcept
 {
+
     const std::int32_t ret{::TimerTimeout(id, flags, notify, ntime, otime)};
+
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -112,6 +114,16 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(clockid_t i
 std::uint64_t NeutrinoImpl::ClockCycles() const noexcept
 {
     return ::ClockCycles();
+}
+
+score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockId(pid_t pid, std::int32_t tid) const noexcept
+{
+    const std::int32_t result = ::ClockId(pid, tid);
+    if (result == -1)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return result;
 }
 
 // This is intented, we don't force users to fill the otime parameter unless needed
@@ -126,13 +138,15 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
     const auto nano_in = static_cast<std::uint64_t>(ntime.count());
     std::uint64_t nano_out{};
     std::uint64_t* nano_time = otime.has_value() ? &nano_out : nullptr;
+
     const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
                                           // As clarified in Ticket-145671, TimerTimeout flags in bitmask are unsigned
                                           // NOLINTNEXTLINE(cppcoreguidelines-narrowing-conversions): See above
-                                          static_cast<std::int32_t>(TimerTimeoutFlagToNativeFlag(flags)),
+                                          static_cast<TimerFlagsType>(TimerTimeoutFlagToNativeFlag(flags)),
                                           notify,
                                           &nano_in,
                                           nano_time)};
+
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -166,13 +180,15 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
     std::uint64_t nano_out{};
     auto nano_time = otime.has_value() ? &nano_out : nullptr;
     const auto& raw_signal_event = signal_event->GetSigevent();
+
     const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
                                           // As clarified in Ticket-145671, TimerTimeout flags in bitmask are unsigned
                                           // NOLINTNEXTLINE(cppcoreguidelines-narrowing-conversions): See above
-                                          static_cast<std::int32_t>(TimerTimeoutFlagToNativeFlag(flags)),
+                                          static_cast<TimerFlagsType>(TimerTimeoutFlagToNativeFlag(flags)),
                                           &raw_signal_event,
                                           &nano_in,
                                           nano_time)};
+
     if (ret == -1)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());

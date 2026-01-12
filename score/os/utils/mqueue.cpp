@@ -16,8 +16,6 @@
 #include "score/datetime_converter/time_conversion.h"
 #include "score/os/mqueue.h"
 #include "score/os/stat.h"
-#include "score/utils/string_hash.h"
-
 #include <cassert>
 #include <chrono>
 #include <cstring>
@@ -26,6 +24,14 @@
 #include <utility>
 namespace score
 {
+namespace common
+{
+std::size_t get_string_as_hash(const std::string& name)
+{
+    std::hash<std::string> hash_fn;
+    return hash_fn(name);
+}
+}  // namespace common
 namespace os
 {
 

@@ -12,15 +12,19 @@
  ********************************************************************************/
 #include "score/containers/dynamic_array.h"
 
+#include "score/containers/test/allocator_test_type_helpers.h"
+#include "score/containers/test/container_test_types.h"
+#include "score/containers/test/custom_allocator_mock.h"
+
 #include "score/memory/shared/fake/my_memory_resource.h"
 #include "score/memory/shared/polymorphic_offset_ptr_allocator.h"
+
+#include <score/assert_support.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <cstddef>
-#include <cstdint>
-#include <limits>
 #include <memory>
 
 using namespace score::containers;
@@ -29,134 +33,20 @@ using namespace score::memory::shared;
 constexpr std::size_t kNonEmptyArraySize{10U};
 constexpr std::size_t kEmptyArraySize{0U};
 
-class NonTrivialType
-{
-  public:
-    NonTrivialType() : member_1_{42U}, member_2_{1.0f} {}
-    NonTrivialType(std::uint32_t member_1, float member_2) : member_1_{member_1}, member_2_{member_2} {}
-
-    std::uint32_t member_1_;
-    float member_2_;
-};
-
-using TrivialType = std::uint32_t;
-
-/// \brief A more elaborated/complex trivial type compared to the TrivialType above.
-struct TriviallyConstructibleDestructibleType
-{
-    char i;
-    std::uint64_t j;
-};
-
-auto operator==(const TriviallyConstructibleDestructibleType& lhs,
-                const TriviallyConstructibleDestructibleType& rhs) noexcept -> bool
-{
-    return (lhs.i == rhs.i && lhs.j == rhs.j);
-}
-
-std::size_t non_moveable_element_dtor_count{0};
-
-struct NonMoveableAndCopyableElementType
-{
-    NonMoveableAndCopyableElementType() = default;
-    ~NonMoveableAndCopyableElementType()
-    {
-        non_moveable_element_dtor_count++;
-    }
-
-    NonMoveableAndCopyableElementType(const NonMoveableAndCopyableElementType&) = delete;
-    NonMoveableAndCopyableElementType& operator=(const NonMoveableAndCopyableElementType&) = delete;
-    NonMoveableAndCopyableElementType(NonMoveableAndCopyableElementType&&) = delete;
-    NonMoveableAndCopyableElementType& operator=(NonMoveableAndCopyableElementType&&) = delete;
-
-    int i_;
-};
-
-/// \brief Mock for a CustomAllocatorMock needed for specific tests
-/// \details Beware: We currently expect from custom allocators, that they deal with pointer types (like our
-///          PolymorphicOffsetPtrAllocator does), which provide a get() method, to obtain the raw-pointer (which our
-///          OffsetPtr supports). See also the detailed comment in DynamicArray::DynamicArrayDeleter::to_address()!
-/// \tparam T element type to be allocated
-template <typename T>
-class CustomAllocatorMock
-{
-  public:
-    using value_type = T;
-    using size_type = std::size_t;
-    using pointer = OffsetPtr<T>;
-
-    MOCK_METHOD(T*, allocate, (size_type), (noexcept));
-    MOCK_METHOD(void, deallocate, (T*, size_type), (noexcept));
-    MOCK_METHOD(void, construct, (T*), (noexcept));
-    MOCK_METHOD(void, destroy, (T*), (noexcept));
-};
-
-/// \brief We need this wrapper as allocators need to be copyable, but a google mock isn't!
-/// \tparam T element type to be allocated
-template <typename T>
-class CustomAllocatorMockWrapper
-{
-  public:
-    using value_type = typename CustomAllocatorMock<T>::value_type;
-    using size_type = typename CustomAllocatorMock<T>::size_type;
-    using pointer = typename CustomAllocatorMock<T>::pointer;
-
-    explicit CustomAllocatorMockWrapper(CustomAllocatorMock<T>* mock) : mock_{mock} {}
-
-    T* allocate(size_type num_of_elements)
-    {
-        return mock_->allocate(num_of_elements);
-    }
-
-    void deallocate(T* ptr, size_type num_of_elements)
-    {
-        mock_->deallocate(ptr, num_of_elements);
-    }
-
-    void construct(T* ptr)
-    {
-        mock_->construct(ptr);
-    }
-
-    void destroy(T* ptr)
-    {
-        mock_->destroy(ptr);
-    }
-
-  private:
-    CustomAllocatorMock<T>* mock_;
-};
-
 template <typename Allocator>
 class DynamicArrayTestFixture : public ::testing::Test
 {
     void SetUp() override {}
     void TearDown() override
     {
-        non_moveable_element_dtor_count = 0U;
+        NonMoveableAndCopyableElementType::ResetDestructorCount();
     }
 
   protected:
-    template <typename Alloc = Allocator,
-              typename std::enable_if<!std::is_same<Alloc, PolymorphicOffsetPtrAllocator<TrivialType>>::value,
-                                      bool>::type = true>
-    Allocator getAllocator()
-    {
-        return Alloc();
-    }
-
-    template <typename Alloc = Allocator,
-              typename std::enable_if<std::is_same<Alloc, PolymorphicOffsetPtrAllocator<TrivialType>>::value,
-                                      bool>::type = true>
-    Allocator getAllocator()
-    {
-        return PolymorphicOffsetPtrAllocator<TrivialType>{memory_resource_.getMemoryResourceProxy()};
-    }
-
     template <typename T, typename Alloc = Allocator>
     auto getTypeSpecificAllocator() -> typename std::allocator_traits<Alloc>::template rebind_alloc<T>
     {
-        auto trivial_type_alloc = this->getAllocator();
+        auto trivial_type_alloc = GetAllocator<T, Alloc>(memory_resource_);
         using traits_alloc = std::allocator_traits<decltype(trivial_type_alloc)>;
         using rebind_allocator_type = typename traits_alloc::template rebind_alloc<T>;
         rebind_allocator_type specific_type_alloc = trivial_type_alloc;
@@ -169,9 +59,10 @@ class DynamicArrayTestFixture : public ::testing::Test
 using AllocatorTypes = ::testing::Types<std::allocator<TrivialType>, PolymorphicOffsetPtrAllocator<TrivialType>>;
 TYPED_TEST_SUITE(DynamicArrayTestFixture, AllocatorTypes, );
 
-TYPED_TEST(DynamicArrayTestFixture, ConstructTrivial)
+TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTrivialType)
 {
-    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     EXPECT_EQ(unit.size(), 10);
 
     for (auto i = 0U; i < unit.size(); ++i)
@@ -182,7 +73,8 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstructTrivialEmpty)
 {
-    DynamicArray<TrivialType, TypeParam> unit{kEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     EXPECT_EQ(unit.size(), kEmptyArraySize);
 }
 TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivial)
@@ -201,7 +93,8 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, CopyConstructTrivial)
 {
-    DynamicArray<TrivialType, TypeParam> source_unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> source_unit{kNonEmptyArraySize,
+                                                     GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     for (auto i = 0U; i < source_unit.size(); ++i)
     {
@@ -259,7 +152,8 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivialWithDefaultValue)
 
 TYPED_TEST(DynamicArrayTestFixture, MoveConstructTrivial)
 {
-    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     // set element values specifically
     for (std::size_t i = 0; i < kNonEmptyArraySize; ++i)
@@ -301,15 +195,17 @@ TYPED_TEST(DynamicArrayTestFixture, MoveConstructNonTrivial)
     }
 
     // and expect that no elements have been destructed during move-construction
-    EXPECT_EQ(non_moveable_element_dtor_count, 0);
+    EXPECT_EQ(NonMoveableAndCopyableElementType::GetDestructorCount(), 0);
 }
 
 TYPED_TEST(DynamicArrayTestFixture, MoveAssignTrivial)
 {
     const std::size_t array_size1{10U};
     const std::size_t array_size2{20U};
-    DynamicArray<TrivialType, TypeParam> unit{array_size1, this->getAllocator()};
-    DynamicArray<TrivialType, TypeParam> unit2{array_size2, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{array_size1,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
+    DynamicArray<TrivialType, TypeParam> unit2{array_size2,
+                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     // set element values specifically
     for (std::size_t i = 0; i < array_size1; ++i)
@@ -350,7 +246,7 @@ TYPED_TEST(DynamicArrayTestFixture, MoveAssignNonTrivial)
         // expect, that the size of the 2nd unit equals the size from the 1st unit
         EXPECT_EQ(unit2.size(), array_size1);
         // and expect that no elements have been destructed during move-assignment
-        EXPECT_EQ(non_moveable_element_dtor_count, 0);
+        EXPECT_EQ(NonMoveableAndCopyableElementType::GetDestructorCount(), 0);
         // and expect, that the element values are correct
         for (std::size_t i = 0; i < array_size1; ++i)
         {
@@ -358,13 +254,14 @@ TYPED_TEST(DynamicArrayTestFixture, MoveAssignNonTrivial)
         }
     }
     // EXPECT, that after both units are out of scope, dtors have been called for all elements
-    EXPECT_EQ(non_moveable_element_dtor_count, array_size1 + array_size2);
+    EXPECT_EQ(NonMoveableAndCopyableElementType::GetDestructorCount(), array_size1 + array_size2);
 }
 
 TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
 {
     // given a DynamicArray of trivial type
-    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     // when doing a self-move-assign
     unit = std::move(unit);
@@ -381,7 +278,8 @@ TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
 
 TYPED_TEST(DynamicArrayTestFixture, CanSetValueOfArrayElements)
 {
-    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     for (TrivialType i = 0; i < kNonEmptyArraySize; ++i)
     {
@@ -414,44 +312,22 @@ TYPED_TEST(DynamicArrayTestFixture, DestructorOfNonTrivialTypesCalled)
                                                                                                non_trivial_type_alloc};
     }
     // expect, that the dtor of non trivial type gets called for each element.
-    EXPECT_EQ(non_moveable_element_dtor_count, kNonEmptyArraySize);
+    EXPECT_EQ(NonMoveableAndCopyableElementType::GetDestructorCount(), kNonEmptyArraySize);
 }
 
-TEST(DynamicArrayTestCustomAllocator, CanConstructWithTriviallyConstructableDestructibleElements)
+TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTriviallyConstructableDestructibleElements)
 {
-    using testing::_;
-    using testing::Return;
+    auto trivially_constructible_destructible_alloc =
+        this->template getTypeSpecificAllocator<TriviallyConstructibleDestructibleType>();
 
-    TriviallyConstructibleDestructibleType buffer[10];
-    ASSERT_TRUE(std::is_trivially_destructible_v<TriviallyConstructibleDestructibleType>);
-    ASSERT_TRUE(std::is_trivially_constructible_v<TriviallyConstructibleDestructibleType>);
+    DynamicArray<TriviallyConstructibleDestructibleType, decltype(trivially_constructible_destructible_alloc)> unit{
+        kNonEmptyArraySize, trivially_constructible_destructible_alloc};
+    EXPECT_EQ(unit.size(), 10);
 
+    for (auto i = 0U; i < unit.size(); ++i)
     {
-        CustomAllocatorMock<TriviallyConstructibleDestructibleType> custom_allocator_mock{};
-        CustomAllocatorMockWrapper<TriviallyConstructibleDestructibleType> mock_wrapper{&custom_allocator_mock};
-
-        // expect, that allocate being called on the custom allocator for kNonEmptyArraySize elements.
-        EXPECT_CALL(custom_allocator_mock, allocate(kNonEmptyArraySize)).WillOnce(Return(buffer));
-        // expect, NO calls to construct() at the custom allocator as we have a trivially constructible element type.
-        EXPECT_CALL(custom_allocator_mock, construct(_)).Times(0);
-        // when creating a DynamicArray of trivially constructible and destructible element type with a custom allocator
-        DynamicArray<TriviallyConstructibleDestructibleType,
-                     CustomAllocatorMockWrapper<TriviallyConstructibleDestructibleType>>
-            test_array{kNonEmptyArraySize, mock_wrapper};
-
-        // and expect, that the elements in the array are correctly default-constructed
-        TriviallyConstructibleDestructibleType default_constructed_element{};
-        for (std::size_t i = 0; i < kNonEmptyArraySize; i++)
-        {
-            TriviallyConstructibleDestructibleType& element = test_array.at(i);
-            EXPECT_EQ(element, default_constructed_element);
-        }
-
-        // expect, that deallocate being called on the custom allocator for array_size elements on destruction
-        EXPECT_CALL(custom_allocator_mock, deallocate(buffer, kNonEmptyArraySize)).Times(1);
-        // expect, NO calls to destroy() at the custom allocator as we have a trivially constructible element type on
-        // destruction
-        EXPECT_CALL(custom_allocator_mock, destroy(_)).Times(0);
+        EXPECT_EQ(unit.at(i).i, 0U);
+        EXPECT_EQ(unit.at(i).j, 0U);
     }
 }
 
@@ -460,9 +336,13 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithT
     constexpr std::size_t array_size_exceeding_limit{std::numeric_limits<std::size_t>::max()};
 
     const auto initialise_dynamic_array = [this] {
-        DynamicArray<TrivialType, TypeParam> unit{array_size_exceeding_limit, this->getAllocator()};
+        DynamicArray<TrivialType, TypeParam> unit{array_size_exceeding_limit,
+                                                  GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     };
-    EXPECT_DEATH(initialise_dynamic_array(), ".*");
+
+    // Since a std::exception is thrown by std::allocator_traits<Allocator>::allocate(), rather than by an AMP
+    // assertion / precondition, we capture this using the gtest framework instead of SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED.
+    EXPECT_THROW(initialise_dynamic_array(), std::exception);
 }
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingConstRefArrayOutOfBoundsTerminates)
@@ -474,12 +354,13 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingConstRefArrayOutOfBoundsTerminates)
         (void)element;
     };
 
-    EXPECT_DEATH(access_const_ref_out_of_bounds(), ".*");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED(access_const_ref_out_of_bounds());
 }
 
 TYPED_TEST(DynamicArrayTestFixture, IteratingTrivialType)
 {
-    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize, this->getAllocator()};
+    DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
+                                              GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     TrivialType value{0};
     for (auto it = unit.begin(); it != unit.end(); it++)
@@ -673,7 +554,7 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithAtWhenArrayIsEmptyTermin
 
     // When accessing an element with at
     // Then the program terminates
-    EXPECT_DEATH(score::cpp::ignore = unit.at(0), ".*");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED(score::cpp::ignore = unit.at(0));
 }
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates)
@@ -683,7 +564,7 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithIndexOperatorWhenArrayIs
 
     // When accessing an element with operator[]
     // Then the program terminates
-    EXPECT_DEATH(score::cpp::ignore = unit[0], ".*");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED(score::cpp::ignore = unit[0]);
 }
 
 TYPED_TEST(DynamicArrayTestFixture, IteratingOverEmptyArrayIteratesZeroTimes)
@@ -717,8 +598,8 @@ TEST(EmptyDynamicArrayOfTrivialElementTypeMemoryTest, TestNeverFailsButMemcheckD
     EXPECT_TRUE(true);
 }
 
-// This test is to validates the fix for the memory leak issue where copying zero-size arrays would call allocate() but
-// leave dynamic_array_ as nullptr
+// This test is to validates the fix for the memory leak issue where copying zero-size arrays would call allocate()
+// but leave dynamic_array_ as nullptr
 TEST(DynamicArrayCopyConstructorMemoryTest, CopyConstructorWithZeroSizeArrayDoesNotLeakMemory)
 {
     // Given an empty source array

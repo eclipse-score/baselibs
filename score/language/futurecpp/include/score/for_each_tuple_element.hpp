@@ -22,8 +22,7 @@ namespace detail
 template <typename Function, typename Tuple, std::size_t... Is>
 void for_each_tuple_element_impl(Function&& f, Tuple&& tuple, std::index_sequence<Is...>)
 {
-    auto variadic_function_calls_helper = {0, (f(std::get<Is>(std::forward<Tuple>(tuple))), 0)...};
-    static_cast<void>(variadic_function_calls_helper);
+    (..., f(std::get<Is>(std::forward<Tuple>(tuple))));
 }
 
 } // namespace detail

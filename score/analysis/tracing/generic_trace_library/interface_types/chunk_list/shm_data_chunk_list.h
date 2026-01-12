@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_SHM_DATA_CHUNK_LIST_H
-#define GENERIC_TRACE_API_SHM_DATA_CHUNK_LIST_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_SHM_DATA_CHUNK_LIST_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_SHM_DATA_CHUNK_LIST_H
 
 #include "score/analysis/tracing/common/flexible_circular_allocator/custom_polymorphic_offset_ptr_allocator.h"
 #include "score/analysis/tracing/common/interface_types/shared_memory_chunk.h"
@@ -112,4 +112,4 @@ bool operator==(const ShmDataChunkList& lhs, const ShmDataChunkList& rhs) noexce
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_SHM_DATA_CHUNK_LIST_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_SHM_DATA_CHUNK_LIST_H

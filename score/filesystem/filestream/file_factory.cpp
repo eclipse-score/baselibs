@@ -105,6 +105,15 @@ std::string ComposeTempFilename(std::string original_filename) noexcept
     return details::ComposeTempFilename(original_filename, tid, ticks);
 }
 
+[[nodiscard]] os::Stat::Mode ExtractMode(const score::Result<details::IdentityMetadata>& metadata)
+{
+    if (!metadata.has_value())
+    {
+        return kDefaultMode;
+    }
+    return metadata.value().mode;
+}
+
 // Supression: -1 is a value to indicate to the system that we don't intend to change the user id (Linux and QNX
 // compatible). Since -1 is equal to max value for unsigned type of variable we defined as cast -1U to uid_t.
 // coverity[autosar_cpp14_m5_3_2_violation]
@@ -116,6 +125,28 @@ inline constexpr uid_t kDoNotChangeUID{static_cast<uid_t>(-1U)};
 // coverity[autosar_cpp14_m5_3_2_violation]
 // coverity[autosar_cpp14_m5_19_1_violation]
 inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
+
+[[nodiscard]] uid_t ExtractUid(const details::IdentityMetadata& metadata,
+                               const AtomicUpdateOwnershipFlags ownership_flag)
+{
+    const uid_t uid = metadata.uid;
+    if (((ownership_flag & kUseCurrentProcessUID) == kUseCurrentProcessUID) || (uid == ::getuid()))
+    {
+        return score::filesystem::kDoNotChangeUID;
+    }
+    return uid;
+}
+
+[[nodiscard]] gid_t ExtractGid(const details::IdentityMetadata& metadata,
+                               const AtomicUpdateOwnershipFlags ownership_flag)
+{
+    const gid_t gid = metadata.gid;
+    if (((ownership_flag & kUseCurrentProcessGID) == kUseCurrentProcessGID) || (gid == ::getgid()))
+    {
+        return score::filesystem::kDoNotChangeGID;
+    }
+    return gid;
+}
 
 }  // namespace
 
@@ -139,7 +170,7 @@ Result<int> OpenFileHandle(const Path& path,
     }
 }
 
-Result<std::tuple<os::Stat::Mode, uid_t, gid_t>> GetIdentityMetadata(const Path& path)
+Result<IdentityMetadata> GetIdentityMetadata(const Path& path)
 {
     os::StatBuffer buffer{};
     const auto result = os::Stat::instance().stat(path.CStr(), buffer, true);
@@ -176,7 +207,7 @@ Result<std::tuple<os::Stat::Mode, uid_t, gid_t>> GetIdentityMetadata(const Path&
         // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
         const auto gid = static_cast<gid_t>(buffer.st_gid);
 
-        return std::make_tuple(mode, uid, gid);
+        return IdentityMetadata{mode, uid, gid};
     }
     else
     {
@@ -216,28 +247,15 @@ Result<std::unique_ptr<FileStream>> FileFactory::AtomicUpdate(const Path& path,
     auto temp_path = path.ParentPath();
     temp_path /= rand_filename;
 
-    auto create_mode = kDefaultMode;
-    auto metadata = details::GetIdentityMetadata(path);
-    if (metadata.has_value())
-    {
-        create_mode = std::get<0>(metadata.value());
-    }
+    const auto metadata = details::GetIdentityMetadata(path);
+    const auto create_mode = ExtractMode(metadata);
 
     if (auto file_handle = details::OpenFileHandle(temp_path, mode, create_mode); file_handle.has_value())
     {
         if (metadata.has_value())
         {
-            uid_t uid = std::get<1>(metadata.value());
-            if (((ownership_flag & kUseCurrentProcessUID) == kUseCurrentProcessUID) || (uid == getuid()))
-            {
-                uid = kDoNotChangeUID;
-            }
-
-            gid_t gid = std::get<2>(metadata.value());
-            if (((ownership_flag & kUseCurrentProcessGID) == kUseCurrentProcessGID) || (gid == getgid()))
-            {
-                gid = kDoNotChangeGID;
-            }
+            const uid_t uid = ExtractUid(metadata.value(), ownership_flag);
+            const gid_t gid = ExtractGid(metadata.value(), ownership_flag);
 
             if ((uid != kDoNotChangeUID) || (gid != kDoNotChangeGID))
             {

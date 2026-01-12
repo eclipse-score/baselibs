@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_ANALYSIS_TRACING_LIBRARY_MOCK
-#define SCORE_ANALYSIS_TRACING_LIBRARY_MOCK
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_MOCK_TRACE_LIBRARY_MOCK_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_MOCK_TRACE_LIBRARY_MOCK_H
 
 #include "gmock/gmock.h"
 #include "score/analysis/tracing/generic_trace_library/interface_types/generic_trace_api.h"
@@ -68,4 +68,4 @@ class TraceLibraryMock : public ITraceLibrary
 }  // namespace tracing
 }  // namespace analysis
 }  // namespace score
-#endif  // SCORE_ANALYSIS_TRACING_LIBRARY_MOCK
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_MOCK_TRACE_LIBRARY_MOCK_H

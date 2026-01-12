@@ -290,7 +290,7 @@ class JsonSerializer<
     {
         if (auto obj = any.As<Object>())
         {
-            T result;
+            T result{};
             detail::deserializer::DeserializeAsJson deserialize_as_json{*obj, std::nullopt};
             common::visitor::visit(deserialize_as_json, result);
             if (!deserialize_as_json.error.has_value())

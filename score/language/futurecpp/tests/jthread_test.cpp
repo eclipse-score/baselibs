@@ -72,7 +72,7 @@ bool tracker::op_run = false;
 
 std::string get_this_thread_name()
 {
-    std::array<char, score::cpp::detail::thread_name_hint::get_max_thread_name_length()> n;
+    std::array<char, score::cpp::detail::thread_name_hint::get_max_thread_name_length()> n{};
     EXPECT_EQ(::pthread_getname_np(::pthread_self(), n.data(), n.size()), 0);
     return std::string(n.data());
 }

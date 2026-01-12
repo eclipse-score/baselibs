@@ -5,9 +5,9 @@ any C++ callable type in a parallel context. How this parallel context
 looks like shall be then implementation specific. Meaning, we want to support
 a runtime decision for the user which parallel context shall be used.
 
-The following prose text describes the [Structural View](./structural_view.uxf).
+The following prose text describes the [Structural View](./structural_view.puml).
 
-![Structural View](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/concurrency/design/structural_view.uxf)
+![Structural View](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/concurrency/design/structural_view.puml)
 
 ## Tasks
 

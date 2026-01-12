@@ -19,22 +19,7 @@ COMPILER_WARNING_FEATURES = [
     "strict_warnings",
 ]
 
-cc_library(
-    name = "log",
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":frontend",
-    ] + select({
-        "@score_baselibs//score/mw/log/detail/flags:config_KUse_Stub_Implementation_Only": [
-            "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
-        ],
-        "//conditions:default": [
-            "@score_baselibs//score/mw/log/detail:recorder_factory",
-        ],
-    }),
-)
+# mw/log target with all available backends is now available in @score_logging
 
 cc_library(
     name = "frontend",
@@ -60,13 +45,13 @@ cc_library(
         "@score_baselibs//score/mw/log/detail:circular_allocator",
         "@score_baselibs//score/mw/log/detail:empty_recorder",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
-        "@score_baselibs//score/mw/log/detail/wait_free_stack",
         "@score_baselibs//score/result",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
         ":log_stream",
+        "@score_baselibs//score/mw/log/detail/wait_free_stack",  #Ticket-222244
     ],
 )
 
@@ -84,8 +69,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/mw/log:__pkg__",
-        "@score_baselibs//score/mw/log/detail:__subpackages__",
+        "//visibility:public",
     ],
     deps = [":recorder"],
 )
@@ -107,13 +91,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "//platform/aas/ara/log:__subpackages__",
-        "//platform/aas/test/pas/logging/utils:__pkg__",
-        "@score_baselibs//score/mw/log/configuration:__pkg__",
-        "@score_baselibs//score/mw/log/detail:__pkg__",
-        "@score_baselibs//score/mw/log/detail/data_router:__pkg__",
-        "@score_baselibs//score/mw/log/detail/file_logging:__pkg__",
-        "@score_baselibs//score/mw/log/detail/slog:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
@@ -127,10 +105,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/mw/log/detail:__pkg__",
-        "@score_baselibs//score/mw/log/detail/data_router:__pkg__",
-        "@score_baselibs//score/mw/log/detail/file_logging:__pkg__",
-        "@score_baselibs//score/mw/log/detail/slog:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":shared_types",
@@ -167,21 +142,7 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "//platform/aas/lib/hash/code/common:__pkg__",
-        "//platform/aas/sysfunc/BasicSecurity/code/secure_feature_activation:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/auto_sync/error:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/bank_information:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/common_programming_attributes/check_programming_dependencies_flag:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/common_programming_attributes/last_preprocessing_state_flag:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/data_provider/read_programming_counter/details:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/minion_data/error:__pkg__",
-        "//platform/aas/sysfunc/SoftwareUpdate/code/mirror_protocol/01_preprocessing/preprocessing_step:__pkg__",
-        "//platform/aas/sysfunc/common/logistics/error:__pkg__",
-        "@score_baselibs//score/mw/log/detail:__pkg__",
-        "@score_baselibs//score/mw/log/log_ext:__pkg__",
-        "@score_baselibs//score/mw/log/test/my_custom_lib:__pkg__",
-        "@score_baselibs//score/mw/log/test/sample_ara_core_logging:__pkg__",
-        "@score_baselibs//score/os:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":recorder",
@@ -215,7 +176,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
     ],
@@ -231,7 +193,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -248,7 +211,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
     ],
@@ -264,7 +228,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -272,7 +237,7 @@ cc_test(
 )
 
 cc_test(
-    name = "runtime_test",  # leave
+    name = "runtime_test",
     srcs = [
         ":runtime_test.cpp",
     ],
@@ -281,11 +246,10 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":frontend",
-        ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:recorder_factory",
-        "@score_baselibs//score/mw/log/detail/wait_free_stack",
+        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log:recorder_mock",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
     ],
 )
 
@@ -299,7 +263,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -316,7 +281,8 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":log",
+        ":backend_stub_testutil",
+        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -351,10 +317,41 @@ cc_test(
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:recorder_factory",
-        "@score_baselibs//score/mw/log/detail/wait_free_stack",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
         "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
     ],
+)
+
+# Allows unit testing with production code running with the recorder_factory
+# that includes all the backends supporting coverage and qualification.
+exports_files(
+    ["log_stream_test.cpp"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "log_stream_factory_test",
+    srcs = [
+        "log_stream_factory_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":frontend",
+        ":recorder_mock",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
+        "@score_baselibs//score/mw/log/detail:thread_local_guard",
+    ],
+)
+
+# Allows unit testing with production code running with the recorder_factory
+# that includes all the backends supporting coverage and qualification.
+exports_files(
+    ["log_stream_factory_test.cpp"],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -379,6 +376,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":log_types_test",
         ":log_level_test",
         ":log_stream_error_test",
+        ":log_stream_factory_test",
         ":logger_container_test",
         ":logger_test",
         ":logging_test",
@@ -391,7 +389,7 @@ cc_unit_test_suites_for_host_and_qnx(
         "@score_baselibs//score/mw/log/configuration:unit_tests",
         "@score_baselibs//score/mw/log/detail:unit_tests",
         #"@score_baselibs//score/mw/log/legacy_non_verbose_api:unit_tests",
-        "@score_baselibs//score/mw/log/test:unit_test_suite",
+        #"@score_baselibs//score/mw/log/test:unit_test_suite",
     ],
     visibility = [
         "//platform/aas/mw:__pkg__",

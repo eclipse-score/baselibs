@@ -56,7 +56,7 @@ auto score::json::NlohmannParser::FromFile(const std::string_view file_path) -> 
     return json_builder.GetData();
 }
 
-auto score::json::NlohmannParser::FromBuffer(const score::cpp::string_view buffer) -> score::Result<score::json::Any>
+auto score::json::NlohmannParser::FromBuffer(const std::string_view buffer) -> score::Result<score::json::Any>
 {
     score::json::JsonBuilder json_builder{};
     auto JsonParserCallBack = [&json_builder](
@@ -64,7 +64,7 @@ auto score::json::NlohmannParser::FromBuffer(const score::cpp::string_view buffe
         return json_builder.HandleEvent(event, parsed);
     };
 
-    auto json_data = nlohmann::json::parse(buffer.to_string(), JsonParserCallBack, false);
+    auto json_data = nlohmann::json::parse(buffer, JsonParserCallBack, false);
     if (json_data.is_discarded())
     {
         return MakeUnexpected(Error::kParsingError, "Invalid json encountered");

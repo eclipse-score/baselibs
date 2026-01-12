@@ -12,9 +12,6 @@
  ********************************************************************************/
 #include "score/mw/log/configuration/configuration_file_discoverer.h"
 
-#include "score/language/safecpp/string_view/null_termination_check.h"
-#include "score/language/safecpp/string_view/zstring_view.h"
-
 #include "score/span.hpp"
 
 #include <algorithm>
@@ -33,9 +30,9 @@ namespace
 {
 using safecpp::literals::operator""_zsv;
 
-static constexpr const std::string_view kGlobalConfigPath{"/etc/ecu_logging_config.json"};
-static constexpr const std::string_view kLocalEtcConfigPath{"etc/logging.json"};
-static constexpr const std::string_view kCwdConfigPath{"logging.json"};
+static constexpr const safecpp::zstring_view kGlobalConfigPath{"/etc/ecu_logging_config.json"};
+static constexpr const safecpp::zstring_view kLocalEtcConfigPath{"etc/logging.json"};
+static constexpr const safecpp::zstring_view kCwdConfigPath{"logging.json"};
 static constexpr const auto kEnvironmentVariableConfig = "MW_LOG_CONFIG_FILE"_zsv;
 
 }  // namespace
@@ -74,7 +71,7 @@ std::vector<std::string> ConfigurationFileDiscoverer::FindConfigurationFiles() c
     return existing_config_files;
 }
 
-score::cpp::optional<std::string_view> ConfigurationFileDiscoverer::GetGlobalConfigFile() const noexcept
+score::cpp::optional<safecpp::zstring_view> ConfigurationFileDiscoverer::GetGlobalConfigFile() const noexcept
 {
     if (FileExists(kGlobalConfigPath))
     {
@@ -86,15 +83,9 @@ score::cpp::optional<std::string_view> ConfigurationFileDiscoverer::GetGlobalCon
 /// \brief Return true if the file with the given path exists.
 /// Yes, a similar utility already exists in lib/filesystem, but we cannot use it here since lib/filesystem is using
 /// logging.
-bool ConfigurationFileDiscoverer::FileExists(const std::string_view& path) const noexcept
+bool ConfigurationFileDiscoverer::FileExists(const safecpp::zstring_view& path) const noexcept
 {
-    // NOTE: Below use of `safecpp::GetPtrToNullTerminatedUnderlyingBufferOf()` will emit a deprecation warning here
-    //       since it is used in conjunction with `std::string_view`. Thus, it must get fixed appropriately instead!
-    //       For examples about how to achieve that, see
-    //       broken_link_g/swh/safe-posix-platform/blob/master/score/language/safecpp/string_view/README.md
-    return unistd_
-        ->access(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(path), score::os::Unistd::AccessMode::kExists)
-        .has_value();
+    return unistd_->access(path.c_str(), score::os::Unistd::AccessMode::kExists).has_value();
 }
 
 score::cpp::optional<std::string> ConfigurationFileDiscoverer::FindLocalConfigFile() const noexcept
@@ -119,7 +110,7 @@ score::cpp::optional<std::string> ConfigurationFileDiscoverer::FindEnvironmentCo
     const auto environmental_config_path = stdlib_->getenv(kEnvironmentVariableConfig.data());
     if (environmental_config_path != nullptr)
     {
-        if (FileExists(environmental_config_path) == true)
+        if (FileExists(std::string{environmental_config_path}) == true)
         {
             return environmental_config_path;
         }

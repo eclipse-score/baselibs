@@ -280,6 +280,27 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnStat)
     ASSERT_TRUE(result.has_value());
 }
 
+TEST_F(FileFactoryTestWithStatMock, OpenForAtomicUpdateWithOwnershipChange)
+{
+    static constexpr auto kTestFileName = "not_existing_yet";
+    Path test_filename = test_tmpdir_ / kTestFileName;
+
+    auto set_mode = [](auto, auto& buffer, auto) {
+        buffer.st_mode = mode_t{S_IFREG};
+        buffer.st_uid = 1234;
+        buffer.st_gid = 5678;
+        return score::cpp::expected_blank<os::Error>{};
+    };
+    ON_CALL(*stat_, stat(_, _, _)).WillByDefault(Invoke(set_mode));
+
+    // Expecting a call to chown
+    EXPECT_CALL(*unistd_, chown(_, _, _)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
+
+    // When updating the file with the atomic update with ownership change
+    const auto file_result = unit_.AtomicUpdate(test_filename, std::ios::out);
+    ASSERT_TRUE(file_result.has_value());
+}
+
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnChown)
 {
     auto set_mode = [](auto, auto& buffer, auto) {

@@ -14,8 +14,11 @@
 common --registry=https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/
 common --registry=https://bcr.bazel.build
 
-# use mw/log stub implementation by default
-build:bl_stub --//score/mw/log/detail/flags:KUse_Stub_Implementation_Only=False
+build --java_language_version=17
+build --tool_java_language_version=17
+build --java_runtime_version=remotejdk_17
+build --tool_java_runtime_version=remotejdk_17
+
 build:bl_stub --//score/mw/log/flags:KRemote_Logging=False
 build:bl_stub --//score/json:base_library=nlohmann
 build:bl_stub --//score/memory/shared/flags:use_typedshmd=False
@@ -39,6 +42,14 @@ test:bl-x86_64-linux --config=bl_common
 # Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-x86_64-qnx --config=bl_stub
 build:bl-x86_64-qnx --config=bl_toolchain_common
-build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx
+build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx8_0
 build:bl-x86_64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_x86_64
 test:bl-x86_64-qnx --config=bl_common
+
+# Target configuration for CPU:aarch64|OS:QNX build (do not use it in case of system toolchains!)
+build:bl-aarch64-qnx --config=bl_stub
+build:bl-aarch64-qnx --config=bl_toolchain_common
+build:bl-aarch64-qnx --incompatible_strict_action_env
+build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:arm64-qnx8_0
+build:bl-aarch64-qnx --extra_toolchains=@toolchains_qnx_qcc//:qcc_aarch64
+test:bl-aarch64-qnx --config=bl_common

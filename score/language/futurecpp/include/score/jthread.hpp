@@ -232,8 +232,7 @@ public:
     ///
     /// No two std::jthread objects may represent the same thread of execution.
     jthread(const jthread&) = delete;
-
-    jthread& operator=(jthread& other) = delete;
+    jthread& operator=(const jthread& other) = delete;
 
     /// \brief Destroys the jthread object.
     ///

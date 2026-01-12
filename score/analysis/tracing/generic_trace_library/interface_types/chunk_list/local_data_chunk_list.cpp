@@ -261,7 +261,7 @@ void LocalDataChunkList::CopyDataToSharedMemory(const LocalDataChunk& element, v
 // coverity[autosar_cpp14_a8_4_13_violation] passing shared pointer is intended.
 void LocalDataChunkList::CleanupAllocatedData(
     std::array<std::pair<void*, std::size_t>, kMaxChunksPerOneTraceRequest>& allocated_data,
-    const std::shared_ptr<IFlexibleCircularAllocator>& flexible_allocator,
+    const std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator,
     // No harm to pass vector by addresss here
     // coverity[autosar_cpp14_a8_4_10_violation]
     ShmChunkVector* vector,

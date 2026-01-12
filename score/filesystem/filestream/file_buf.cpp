@@ -56,8 +56,8 @@ ResultBlank AtomicFileBuf::Close()
         {
             // If closing fails, do not try to rename since we might replace a working
             // file with a corrupted one.
-            return MakeUnexpected(ErrorCode::kCloseFailed,
-                                  "Unable to close file descriptor file buffer during atomic update");
+            constexpr std::string_view user_message{"Unable to close file descriptor file buffer during atomic update"};
+            return MakeUnexpected(ErrorCode::kCloseFailed, user_message);
         }
 
         if (auto rename_result = os::Stdio::instance().rename(from_path_.CStr(), to_path_.CStr());

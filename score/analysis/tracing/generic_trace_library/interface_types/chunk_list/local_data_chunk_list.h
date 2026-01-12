@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef GENERIC_TRACE_API_LOCAL_DATA_CHUNK_LIST_H
-#define GENERIC_TRACE_API_LOCAL_DATA_CHUNK_LIST_H
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_LOCAL_DATA_CHUNK_LIST_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_LOCAL_DATA_CHUNK_LIST_H
 
 #include "score/analysis/tracing/common/flexible_circular_allocator/custom_polymorphic_offset_ptr_allocator.h"
 #include "score/analysis/tracing/common/interface_types/shared_memory_location.h"
@@ -120,7 +120,7 @@ class LocalDataChunkList
     void CopyDataToSharedMemory(const LocalDataChunk& element, void* shm_pointer) const;
     // do some cleaning in the memory
     void CleanupAllocatedData(std::array<std::pair<void*, std::size_t>, kMaxChunksPerOneTraceRequest>& allocated_data,
-                              const std::shared_ptr<IFlexibleCircularAllocator>& flexible_allocator,
+                              const std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator,
                               ShmChunkVector* vector,
                               void* vector_shm_raw_pointer) const;
     // create an object to refer to the location in shared memory where the vector is stored.
@@ -148,4 +148,4 @@ bool operator==(const LocalDataChunkList& lhs, const LocalDataChunkList& rhs) no
 }  // namespace analysis
 }  // namespace score
 
-#endif  // GENERIC_TRACE_API_LOCAL_DATA_CHUNK_LIST_H
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_LOCAL_DATA_CHUNK_LIST_H

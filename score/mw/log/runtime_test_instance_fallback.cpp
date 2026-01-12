@@ -15,7 +15,7 @@
 #include "score/mw/log/detail/empty_recorder.h"
 
 #if defined(KUSE_STUB_IMPLEMENTATION_ONLY)
-#include "score/mw/log/detail/file_logging/text_recorder.h"
+#include "score/mw/log/detail/text_recorder/text_recorder.h"
 #endif
 
 #include "score/mw/log/recorder_mock.h"

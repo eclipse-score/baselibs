@@ -29,6 +29,7 @@ class SigEventMock : public SigEvent
     MOCK_METHOD(ResultBlank, SetThreadCallback, (const SigValCallback), (override));
     MOCK_METHOD(ResultBlank, SetThreadAttributes, (pthread_attr_t&), (override));
     MOCK_METHOD((const sigevent&), GetSigevent, (), (const, override));
+    MOCK_METHOD(void, ModifySigevent, (const SigeventModifier&), (override));
     MOCK_METHOD(void, Reset, (), (override));
 };
 

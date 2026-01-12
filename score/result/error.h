@@ -63,8 +63,6 @@ class Error final
     /// needs to construct the Error class using the also the user-defined ErrorDomain. For an example please see
     /// related unit-tests. \param code The error code this error shall represent. It must be an enum class that is of
     /// type ErrorCode. \param user_message The user-message (optional) that shall give additional information
-    /* KW_SUPPRESS_START:CWARN.MEMBER.INIT.ORDER,UNINIT.CTOR.MUST: Initialized via Copy-Constructor, */
-    /* no need to initialize the members */
     template <typename Code, std::enable_if_t<details::IsValidErrorCodeEnum<Code>(), bool> = true>
     // Constructor intentionally provides implicit conversion from Code type to take advantage of ADL of MakeError().
     // Intentional delegation to copy constructor by MakeError() design and to comply with AUTOSAR A12-1-5.
@@ -72,18 +70,15 @@ class Error final
     constexpr Error(Code code, std::string_view user_message = "") : Error(MakeError(code, user_message))
     {
     }
-    /* KW_SUPPRESS_END:CWARN.MEMBER.INIT.ORDER,UNINIT.CTOR.MUST */
 
     /// \brief Constructs an Error
     /// \param code The error code this error shall represent
     /// \param domain The error domain the respective error code is used
     /// \param user_message The user-message (optional) that shall give additional information
-    /* KW_SUPPRESS_START:UNINIT.CTOR.MUST: All members are initialized */
     constexpr Error(const ErrorCode code, const ErrorDomain& domain, const std::string_view user_message)
         : code_{code}, domain_{&domain}, user_messages_{user_message}
     {
     }
-    /* KW_SUPPRESS_END:UNINIT.CTOR.MUST */
 
     /// \brief Dereferences the Error class to its underlying code (e.g. usage within switch-statement)
     /// \return The underlying error code as integral type
@@ -109,11 +104,9 @@ class Error final
     }
 
   private:
-    /* KW_SUPPRESS_START:MISRA.MEMB.NOT_PRIVATE: Members are private */
     score::result::ErrorCode code_;
     const score::result::ErrorDomain* domain_;
     std::string_view user_messages_;
-    /* KW_SUPPRESS_END:MISRA.MEMB.NOT_PRIVATE */
 
     friend bool operator==(const score::result::Error&, const score::result::Error&) noexcept;
     friend bool operator!=(const score::result::Error&, const score::result::Error&) noexcept;

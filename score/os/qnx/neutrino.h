@@ -18,6 +18,7 @@
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
 #include "score/os/sigevent.h"
+#include "score/os/version.h"
 #include <score/expected.hpp>
 
 #include <sys/neutrino.h>
@@ -33,6 +34,19 @@ namespace qnx
 class Neutrino : public ObjectSeam<Neutrino>
 {
   public:
+// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+// Rationale: Pre-processor commands are used to allow different datatypes for TimerFlagsType with QNX7 and QNX8 to
+// exist in the same file. It also prevents compiler errors in QNX8 code when compiling for QNX and vice versa.
+// coverity[autosar_cpp14_a16_0_1_violation]
+#ifdef SPP_OS_QNX8  // QNX 8.x: TimerTimeout uses uint32_t flags
+    using TimerFlagsType = std::uint32_t;
+// coverity[autosar_cpp14_a16_0_1_violation], see above rationale
+#else  // QNX 7.x: TimerTimeout uses uint32_t flags
+    using TimerFlagsType = std::int32_t;
+// coverity[autosar_cpp14_a16_0_1_violation], see above rationale
+#endif
     enum class TCtlCommands : int
     {
         kTCtlIoPriv = 1,
@@ -115,11 +129,13 @@ class Neutrino : public ObjectSeam<Neutrino>
 
     virtual std::uint64_t ClockCycles() const noexcept = 0;
 
+    virtual score::cpp::expected<std::int32_t, Error> ClockId(pid_t pid, std::int32_t tid) const noexcept = 0;
+
     [[deprecated(
         "SPP_DEPRECATION: Please use other overloads of the \'TimerTimeout\'")]] virtual score::cpp::expected<std::int32_t,
                                                                                                        Error>
     TimerTimeout(clockid_t id,
-                 std::int32_t flags,
+                 TimerFlagsType flags,
                  const sigevent* notify,
                  const std::uint64_t* ntime,
                  std::uint64_t* otime) const noexcept = 0;

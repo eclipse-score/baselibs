@@ -12,54 +12,59 @@
  ********************************************************************************/
 #include "score/os/sigevent_error.h"
 
+#include <string_view>
+
 namespace score::os
 {
 
 std::string_view SigEventErrorCodeDomain::MessageFor(const score::result::ErrorCode& code) const noexcept
 {
-    switch (static_cast<SigEventErrorCode>(code))
+    std::string_view message;
+
+    switch (code)
     {
-        case SigEventErrorCode::kInvalidArgument:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidArgument):
         {
-            return "Invalid argument";
+            message = "Invalid argument";
+            break;
         }
-        case SigEventErrorCode::kInvalidNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidNotificationType):
         {
-            return "Invalid notification type";
+            message = "Invalid notification type";
+            break;
         }
-        case SigEventErrorCode::kInvalidConnectionIdNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidThreadAttributesNotificationType):
         {
-            return "Invalid notification type for the connection id";
+            message = "Invalid notification type for the thread attributes";
+            break;
         }
-        case SigEventErrorCode::kInvalidThreadAttributesNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidThreadCallbackNotificationType):
         {
-            return "Invalid notification type for the thread attributes";
+            message = "Invalid notification type for the thread callback";
+            break;
         }
-        case SigEventErrorCode::kInvalidThreadIdNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidSignalEventNotificationType):
         {
-            return "Invalid notification type for the thread id";
+            message = "Invalid signal event notification type";
+            break;
         }
-        case SigEventErrorCode::kInvalidThreadCallbackNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidSignalEventValue):
         {
-            return "Invalid notification type for the thread callback";
+            message = "Invalid signal event value";
+            break;
         }
-        case SigEventErrorCode::kInvalidSignalEventNotificationType:
+        case static_cast<score::result::ErrorCode>(SigEventErrorCode::kInvalidSignalNumber):
         {
-            return "Invalid signal event notification type";
-        }
-        case SigEventErrorCode::kInvalidSignalEventValue:
-        {
-            return "Invalid signal event value";
-        }
-        case SigEventErrorCode::kInvalidSignalNumber:
-        {
-            return "Invalid signal number";
+            message = "Invalid signal number";
+            break;
         }
         default:
         {
-            return "Unknown error";
+            message = "Unknown error";
+            break;
         }
     }
+    return message;
 }
 
 namespace

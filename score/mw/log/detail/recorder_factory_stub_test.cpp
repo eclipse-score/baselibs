@@ -12,7 +12,7 @@
  ********************************************************************************/
 #include "score/mw/log/detail/recorder_factory_stub.h"
 #include "score/mw/log/detail/empty_recorder.h"
-#include "score/mw/log/detail/file_logging/text_recorder.h"
+#include "score/mw/log/detail/text_recorder/text_recorder.h"
 
 #include "gtest/gtest.h"
 

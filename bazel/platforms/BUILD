@@ -13,12 +13,10 @@
 
 load(
     "//bazel/platforms:variables.bzl",
+    "host_gcc12_constraints",
     "host_gcc8_constraints",
     "host_gcc9_constraints",
-    "linux_constraints",
-    "osx_constraints",
     "wasm32_constraints",
-    "windows_constraints",
     "xpad_constraints",
     "xpad_dnv_constraints",
 )
@@ -57,33 +55,8 @@ constraint_value(
 )
 
 platform(
-    name = "linux_host",
-    constraint_values = linux_constraints,
-)
-
-platform(
-    name = "windows_host",
-    constraint_values = windows_constraints,
-)
-
-platform(
     name = "wasm32",
     constraint_values = wasm32_constraints,
-)
-
-config_setting(
-    name = "config_linux_host",
-    constraint_values = linux_constraints,
-)
-
-config_setting(
-    name = "config_windows_host",
-    constraint_values = windows_constraints,
-)
-
-config_setting(
-    name = "config_macos_host",
-    constraint_values = osx_constraints,
 )
 
 config_setting(
@@ -114,6 +87,16 @@ platform(
 config_setting(
     name = "config_host_gcc9",
     constraint_values = host_gcc9_constraints,
+)
+
+platform(
+    name = "host_gcc12",
+    constraint_values = host_gcc12_constraints,
+)
+
+config_setting(
+    name = "config_host_gcc12",
+    constraint_values = host_gcc12_constraints,
 )
 
 platform(
@@ -174,7 +157,18 @@ platform(
 platform(
     name = "x86_64-qnx8",
     constraint_values = [
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
+    ],
+    parents = [
+        "@swf_platforms//:x86_64-qnx-adaptive",
+    ],
+)
+
+platform(
+    name = "x86_64-qnx8-qemu",
+    constraint_values = [
+        "//bazel/platforms/environment:qemu",
+        "@score_bazel_platforms//:qnx8_0",
     ],
     parents = [
         "@swf_platforms//:x86_64-qnx-adaptive",
@@ -196,7 +190,7 @@ platform(
     name = "arm64-qnx8-hardware",
     constraint_values = [
         "//bazel/platforms/environment:hardware",
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -240,7 +234,7 @@ platform(
     name = "arm64-qnx8-qqvp",
     constraint_values = [
         "//bazel/platforms/environment:qqvp",
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -262,7 +256,7 @@ platform(
     name = "arm64-qnx8-qemu",
     constraint_values = [
         "//bazel/platforms/environment:qemu",
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",

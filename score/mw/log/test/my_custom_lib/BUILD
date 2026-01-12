@@ -25,8 +25,7 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "//platform/aas/test/pas/logging/utils:__pkg__",
-        "@score_baselibs//score/mw/log:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         "@score_baselibs//score/mw/log:log_stream",

@@ -12,17 +12,18 @@
 # *******************************************************************************
 module(
     name = "score_baselibs",
-    version = "0.2.0",
+    version = "0.2.3",
     compatibility_level = 0,
 )
 
 # Configure the host toolchain.
-bazel_dep(name = "score_toolchains_gcc", version = "0.5", dev_dependency=True)
-gcc = use_extension("@score_toolchains_gcc//extentions:gcc.bzl", "gcc", dev_dependency=True)
+bazel_dep(name = "score_toolchains_gcc", version = "0.5", dev_dependency = True)
+
+gcc = use_extension("@score_toolchains_gcc//extentions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
-    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/0.0.1/x86_64-unknown-linux-gnu_gcc12.tar.gz",
-    sha256 = "457f5f20f57528033cb840d708b507050d711ae93e009388847e113b11bf3600",
+    sha256 = "8fa85c2a93a6bef1cf866fa658495a2416dfeec692e4246063b791abf18da083",
     strip_prefix = "x86_64-unknown-linux-gnu",
+    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.3/x86_64-unknown-linux-gnu_gcc12.tar.gz",
 )
 gcc.extra_features(
     features = [
@@ -31,14 +32,22 @@ gcc.extra_features(
     ],
 )
 gcc.warning_flags(
-    minimal_warnings = ["-Wall", "-Wno-error=deprecated-declarations", "-Wno-error=narrowing"],
-    strict_warnings = ["-Wextra", "-Wpedantic"],
+    minimal_warnings = [
+        "-Wall",
+        "-Wno-error=deprecated-declarations",
+        "-Wno-error=narrowing",
+    ],
+    strict_warnings = [
+        "-Wextra",
+        "-Wpedantic",
+    ],
 )
 use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
 # Configure the target toolchain.
-bazel_dep(name = "score_toolchains_qnx", version = "0.0.2", dev_dependency=True)
-toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx", dev_dependency=True)
+bazel_dep(name = "score_toolchains_qnx", version = "0.0.6", dev_dependency = True)
+
+toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx", dev_dependency = True)
 toolchains_qnx.sdp(
     sha256 = "f2e0cb21c6baddbcb65f6a70610ce498e7685de8ea2e0f1648f01b327f6bac63",
     strip_prefix = "installation",
@@ -49,11 +58,31 @@ use_repo(toolchains_qnx, "toolchains_qnx_qcc")
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
 bazel_dep(name = "google_benchmark", version = "1.9.4")
-
 bazel_dep(name = "boost.container", version = "1.87.0")
 bazel_dep(name = "boost.interprocess", version = "1.87.0")
-
 bazel_dep(name = "download_utils", version = "1.0.1")
+
+## Custom Module Loading
+
+bazel_dep(name = "score_docs_as_code", version = "2.3.0")
+bazel_dep(name = "score_process", version = "1.4.0")
+bazel_dep(name = "score_tooling", version = "1.0.4")
+
+## Configure the python toolchain
+
+bazel_dep(name = "rules_python", version = "1.4.1")
+
+PYTHON_VERSION = "3.12"
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python", dev_dependency = True)
+python.toolchain(
+    #configure_coverage_tool = True,
+    is_default = True,
+    python_version = PYTHON_VERSION,
+)
+
+bazel_dep(name = "aspect_rules_py", version = "1.4.0", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
@@ -92,15 +121,14 @@ deb(
 
 deb(
     name = "libseccomp2-dev-deb",
-       build = "//third_party/libseccomp2:libseccomp2.BUILD",
+    build = "//third_party/libseccomp2:libseccomp2.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_i386.deb"],
     visibility = ["//visibility:public"],
 )
 
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.8.1")
-
-bazel_dep(name = "score_crates", version = "0.0.3")
+bazel_dep(name = "score_crates", version = "0.0.6")
 
 #############################################################
 #
@@ -108,4 +136,4 @@ bazel_dep(name = "score_crates", version = "0.0.3")
 #
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "0.0.2")
+bazel_dep(name = "score_bazel_platforms", version = "0.0.3")

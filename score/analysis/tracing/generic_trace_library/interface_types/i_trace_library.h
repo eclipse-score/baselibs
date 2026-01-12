@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_ANALYSIS_TRACING_LIBRARY_I_TRACE_LIBRARY
-#define SCORE_ANALYSIS_TRACING_LIBRARY_I_TRACE_LIBRARY
+#ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_I_TRACE_LIBRARY_H
+#define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_I_TRACE_LIBRARY_H
 
 #include "meta_info_variants.h"
 #include "score/analysis/tracing/common/interface_types/types.h"
@@ -52,4 +52,4 @@ class ITraceLibrary
 }  // namespace tracing
 }  // namespace analysis
 }  // namespace score
-#endif  // SCORE_ANALYSIS_TRACING_LIBRARY_I_TRACE_LIBRARY
+#endif  // SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_I_TRACE_LIBRARY_H

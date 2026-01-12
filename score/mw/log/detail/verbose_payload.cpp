@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/mw/log/detail/verbose_payload.h"
-#include "helper_functions.h"
+#include "score/mw/log/detail/helper_functions.h"
 
 #include "score/assert.hpp"
 

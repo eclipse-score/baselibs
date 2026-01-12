@@ -566,7 +566,9 @@ void Path::Parse(const string_type& path) noexcept
 
     const auto is_multipart = (parts_.size() > 1U);
     const auto ends_with_separator = (path.back() == preferred_separator);
+    // LCOV_EXCL_BR_START Tooling issue. Line coverage proofs that both branches and therefore all decisions are covered
     if (ends_with_separator && (is_multipart || !starts_with_separator))
+    // LCOV_EXCL_BR_STOP
     {
         score::cpp::ignore = parts_.emplace_back(Path{"", false});
     }

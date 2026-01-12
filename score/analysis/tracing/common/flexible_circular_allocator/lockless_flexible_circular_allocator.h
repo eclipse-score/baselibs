@@ -12,6 +12,7 @@
  ********************************************************************************/
 #ifndef SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_H
 #define SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_H
+#include "score/analysis/tracing/common/flexible_circular_allocator/error_code.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator_types.h"
 #include "score/memory/shared/atomic_indirector.h"
@@ -26,6 +27,7 @@ namespace analysis
 {
 namespace tracing
 {
+
 template <template <class> class AtomicIndirectorType = score::memory::shared::AtomicIndirectorReal>
 class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
 {
@@ -38,6 +40,8 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     void* GetBaseAddress() const noexcept override;
     std::size_t GetSize() const noexcept override;
     bool IsInBounds(const void* const address, const std::size_t size) const noexcept override;
+    score::result::Error GetLastError() const noexcept;
+    void ClearError() noexcept;
 
   private:
     std::uint32_t BufferQueueSize();
@@ -45,11 +49,15 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     std::uint32_t GetListQueueNextHead();
     uint8_t* AllocateWithWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
     uint8_t* AllocateWithNoWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
-    bool ValidateListEntryIndex(const std::uint32_t& index);
+    bool ValidateListEntryIndex(const std::uint32_t& index) const;
     void ResetBufferQueuTail();
     void MarkListEntryAsFree(const BufferBlock* meta);
     bool IsRequestedBlockAtBufferQueueTail(const BufferBlock* meta) const;
     void IterateBlocksToDeallocate();
+    void SetError(FlexibleAllocatorErrorCode error_code) const noexcept;
+    template <typename OffsetT>
+    uint8_t* GetBufferPositionAt(OffsetT offset) const noexcept;
+
     void* base_address_;
     std::uint32_t total_size_;
     std::atomic<std::uint32_t> gap_address_;
@@ -65,6 +73,7 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     std::atomic<std::uint32_t> alloc_cntr_;
     std::atomic<std::uint32_t> dealloc_cntr_;
     std::atomic<bool> tmd_stats_enabled_;
+    mutable std::atomic<score::result::ErrorCode> last_error_code_;
 };
 
 }  // namespace tracing

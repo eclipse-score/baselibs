@@ -9,6 +9,7 @@
 #include <gtest/gtest.h>
 
 #include <cstdint>
+#include <type_traits>
 
 namespace
 {
@@ -874,4 +875,16 @@ TEST(ExpectedDeathTest, InitMixedNonMoveNonCopyableExpectedFromOtherNonMovableUn
     EXPECT_EQ(val.error(), 42);
     EXPECT_DEATH(val.value(), "");
     EXPECT_DEATH(val->num(), "");
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, ValueTypeAndErrorType)
+{
+    using type_1 = score::cpp::expected<int, bool>;
+    ASSERT_TRUE((std::is_same_v<type_1::value_type, int>));
+    ASSERT_TRUE((std::is_same_v<type_1::error_type, bool>));
+    using type_2 = score::cpp::expected<char, float>;
+    ASSERT_TRUE((std::is_same_v<type_2::value_type, char>));
+    ASSERT_TRUE((std::is_same_v<type_2::error_type, float>));
 }

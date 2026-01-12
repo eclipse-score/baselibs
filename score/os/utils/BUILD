@@ -29,7 +29,6 @@ cc_library(
     name = "mqueue",
     srcs = ["mqueue.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
         ":mqueue_headers",
@@ -37,30 +36,6 @@ cc_library(
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/os:mqueue",
         "@score_baselibs//score/os:stat",
-        "@score_baselibs//score/utils:string_hash",
-    ],
-)
-
-cc_library(
-    name = "semaphore_headers",
-    hdrs = ["semaphore.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/os/utils/mocklib:__subpackages__"],
-    deps = [
-        "@score_baselibs//score/utils:pimpl_ptr",
-    ],
-)
-
-cc_library(
-    name = "semaphore",
-    srcs = ["semaphore.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = ["//visibility:public"],
-    deps = [
-        ":semaphore_headers",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/os:semaphore",
-        "@score_baselibs//score/os:socket",
     ],
 )
 
@@ -87,13 +62,7 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "//platform/aas/mw/lifecycle:__subpackages__",
-        "//platform/aas/pas/crash_reporter:__subpackages__",
-        "//platform/aas/pas/logging:__subpackages__",
-        "@score_baselibs//score/mw/log:__subpackages__",
-        "@score_baselibs//score/os:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":signal_headers",
         "@score_baselibs//score/language/futurecpp",
@@ -133,19 +102,7 @@ cc_library(
     deprecation = "Deprecated, please use //platform/aas/mw/time/HighPrecisionLocalSteadyClock instead",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "//platform/aas/pas/logging:__pkg__",
-        "//platform/aas/sysfunc/SafeCarTime/code/apps/TimeSyncValidationNonFFI/factory/impl:__pkg__",
-        "//platform/aas/sysfunc/SafeCarTime/code/factory/impl:__pkg__",
-        "//platform/aas/test/pas/perf_tests/tools/perf_apps:__pkg__",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/details/trace_job_allocator:__pkg__",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/test/unit_test:__pkg__",
-        "@score_baselibs//score/analysis/tracing/plugin/ipc_trace_plugin/ipc_trace/utils:__pkg__",
-        "@score_baselibs//score/mw/log/detail/data_router/shared_memory:__pkg__",
-        "@score_baselibs//score/mw/log/detail/file_logging:__pkg__",
-        "@score_baselibs//score/os/utils:__pkg__",
-        "@score_baselibs//score/os/utils/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -177,14 +134,7 @@ cc_library(
     }),
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "//platform/aas/abac/abac/core/DataLogistic:__subpackages__",
-        "//platform/aas/mw/storage:__subpackages__",
-        "//platform/aas/pas/logging:__subpackages__",
-        "//platform/aas/sec/secured:__subpackages__",
-        "@score_baselibs//score/mw/log:__subpackages__",
-        "@score_baselibs//score/os:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":path_header",
         "@score_baselibs//score/language/futurecpp",
@@ -247,7 +197,7 @@ cc_library(
     hdrs = ["tcp_keep_alive.h"],
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = select({
-        "@platforms//os:qnx": ["//bazel/platforms/qnx_version:qnx7"],  # TODO: Ticket-214211 QNX8 incompatible
+        "@platforms//os:qnx": ["//bazel/platforms/qnx_version:qnx7"],  # TODO: Ticket-213412 QNX8 TCP statistics are not supported yet
         "//conditions:default": [],
     }),
     visibility = ["//visibility:public"],

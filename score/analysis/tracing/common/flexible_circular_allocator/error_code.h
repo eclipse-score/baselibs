@@ -26,7 +26,10 @@ namespace tracing
 /// @brief Error code that method can return
 enum class FlexibleAllocatorErrorCode : score::result::ErrorCode
 {
+    kNoError = 0,
     kBaseAddressVoid,
+    kCorruptedBufferBlock,
+    kInvalidListEntryOffset,
     kSizeIsZero,
 };
 

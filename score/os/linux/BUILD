@@ -74,7 +74,7 @@ cc_library(
         "//platform/aas/ara/tsync:__subpackages__",
         "//platform/aas/pas/crash_handler:__pkg__",
         "//platform/aas/pas/sysmon:__pkg__",
-        "//platform/aas/pas/sysmon/library:__subpackages__",
+        "//platform/aas/pas/sysmon/application:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = select({

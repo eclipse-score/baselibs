@@ -13,7 +13,7 @@
 #include "score/mw/log/runtime.h"
 
 #include "score/mw/log/detail/empty_recorder.h"
-#include "score/mw/log/detail/recorder_config.h"
+#include "score/mw/log/detail/text_recorder/text_recorder.h"
 #include "score/mw/log/recorder_mock.h"
 
 #include "gtest/gtest.h"
@@ -103,13 +103,10 @@ TEST_F(RuntimeFixture, DefaultRecorderShallBeReturned)
     auto& recorder = Runtime::GetRecorder();
     Runtime::SetRecorder(nullptr);
 
-// When trying to read the current recorder
-// It shall be of type TextRecorder if KConsole enabled, otherwise empty recorder
-#if !defined(KUSE_STUB_IMPLEMENTATION_ONLY)
-    EXPECT_TRUE(IsRecorderOfType<ConsoleRecorderType>(Runtime::GetRecorder()));
-#else
+    // When trying to read the current recorder
+    // It shall be of type TextRecorder if KConsole enabled, otherwise empty recorder
     EXPECT_TRUE(IsRecorderOfType<TextRecorder>(Runtime::GetRecorder()));
-#endif
+
     // Revert previously stored recorder:
     Runtime::SetRecorder(&recorder);
 }

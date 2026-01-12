@@ -19,3 +19,12 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],
 )
+
+cc_library(
+    name = "libsecpolev",
+    linkopts = [
+        "-lsecpolev",
+    ],
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+)

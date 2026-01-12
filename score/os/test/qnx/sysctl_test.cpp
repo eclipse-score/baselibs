@@ -187,5 +187,66 @@ TEST_F(SysctlImplTest, TestFunction_sysctlbyname_Failure)
     ASSERT_FALSE(res.has_value());
 }
 
+TEST_F(SysctlTestMock, TestFunction_sysctlnametomib)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Description", "Test Function sysctlnametomib");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    const char* sys_name = "some.dummy.parameter";
+    int mib[4] = {0};
+    size_t mib_len = 4;
+
+    auto& expect_sysctl = EXPECT_CALL(mock_sysctl, sysctlnametomib(Eq(sys_name), _, Pointee(mib_len)));
+    expect_sysctl.WillOnce([](const char*, int* mibp, size_t* sizep) {
+        mibp[0] = 1;
+        *sizep = 4;
+        return score::cpp::expected_blank<score::os::Error>{};
+    });
+
+    expect_sysctl.WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL))));
+
+    auto res = score::os::Sysctl::instance().sysctlnametomib(sys_name, mib, &mib_len);
+    ASSERT_TRUE(res.has_value());
+    ASSERT_EQ(mib_len, 4);
+    ASSERT_EQ(mib[0], 1);
+
+    res = score::os::Sysctl::instance().sysctlnametomib(sys_name, mib, &mib_len);
+    ASSERT_FALSE(res.has_value());
+}
+
+TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Success)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Description", "Test Function sysctlnametomib Success");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    int mib[4] = {0};
+    size_t mib_len = 4;
+
+    auto res = instance_.sysctlnametomib(kSysName.data(), mib, &mib_len);
+    ASSERT_TRUE(res.has_value());
+    ASSERT_GT(mib_len, 0);
+}
+
+TEST_F(SysctlImplTest, TestFunction_sysctlnametomib_Failure)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Description", "Test Function sysctlnametomib Failure");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    int mib[4] = {0};
+    size_t mib_len = 4;
+
+    auto res = instance_.sysctlnametomib("", mib, &mib_len);
+    ASSERT_FALSE(res.has_value());
+}
+
 }  // namespace
 }  // namespace score::os::qnx

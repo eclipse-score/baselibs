@@ -30,7 +30,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         "@score_baselibs//score/mw/log:shared_types",
@@ -70,17 +70,15 @@ cc_library(
         "target_config_reader.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    implementation_deps = [
-        "@score_baselibs//score/language/safecpp/string_view:null_termination_check",
-    ],
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/mw/log/detail:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":configuration",
         ":configuration_interface",
         "@score_baselibs//score/json",
+        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/memory:split_string_view",
         "@score_baselibs//score/mw/log/detail:initialization_reporter",
         "@score_baselibs//score/mw/log/detail:types_and_errors",
@@ -97,10 +95,7 @@ cc_library(
     hdrs = ["target_config_reader_mock.h"],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "@score_baselibs//score/mw/log:__pkg__",
-        "@score_baselibs//score/mw/log/detail:__pkg__",
-        "@score_baselibs//score/mw/log/detail/data_router:__pkg__",
-        "@score_baselibs//score/mw/log/detail/slog:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":configuration_interface",
@@ -119,6 +114,21 @@ cc_library(
     ],
     deps = [
         ":configuration_interface",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_library(
+    name = "nvconfig_mock",
+    testonly = True,
+    srcs = ["invconfig_mock.cpp"],
+    hdrs = ["invconfig_mock.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        ":nvconfig_interface",
         "@googletest//:gtest",
     ],
 )
@@ -157,12 +167,12 @@ cc_test(
         ":configuration_file_discoverer_mock",
         ":configuration_parser",
         ":target_config_reader_mock",
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/test/console_logging_environment",
         "@score_baselibs//score/os/mocklib:fcntl_mock",
         "@score_baselibs//score/os/mocklib:stdlib_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/os/utils/mocklib:path_mock",
+        #"@score_baselibs//score/mw/log/test/console_logging_environment",
+        "@googletest//:gtest_main",
     ],
 )
 
@@ -178,8 +188,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "//platform/aas/pas/logging:__subpackages__",
-        "@score_baselibs//score/mw/log:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
@@ -203,14 +212,37 @@ cc_library(
     ],
     tags = ["FFI"],
     visibility = [
-        "//platform/aas/pas/logging:__subpackages__",
-        "@score_baselibs//score/mw/log:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         ":nvconfig_interface",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/mw/log:shared_types",
         "@score_baselibs//score/mw/log/detail:logging_identifier",
+    ],
+)
+
+cc_library(
+    name = "nvconfigfactory",
+    srcs = [
+        "nvconfigfactory.cpp",
+    ],
+    hdrs = [
+        "nvconfigfactory.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        ":nvconfig",
+        ":nvconfig_interface",
+        "@score_baselibs//score/json:json_parser",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/mw/log:shared_types",
+        "@score_baselibs//score/mw/log/detail:logging_identifier",
+        "@score_baselibs//score/result",
     ],
 )
 
@@ -237,6 +269,7 @@ cc_test(
     tags = ["unit"],
     deps = [
         ":nvconfig",
+        ":nvconfigfactory",
         "@googletest//:gtest_main",
     ],
 )

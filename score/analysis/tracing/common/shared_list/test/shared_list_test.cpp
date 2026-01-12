@@ -64,6 +64,8 @@ TEST_F(SharedListFixture, PushBackSingleElement)
         return allocated_memory;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
         return true;
@@ -107,6 +109,8 @@ TEST_F(SharedListFixture, PushBackMultipleElementsAndClear)
             return allocated_memory;
         });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _))
         .Times(number_of_elements)
         .WillRepeatedly([](void* const address, const std::size_t) {
@@ -137,6 +141,8 @@ TEST_F(SharedListFixture, EmplaceBack)
         return allocated_memory;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
         return true;
@@ -159,6 +165,8 @@ TEST_F(SharedListFixture, AtIndex)
             auto allocated_memory = malloc(size);
             return allocated_memory;
         });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
 
     EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillRepeatedly([](void* const address, const std::size_t) {
         free(address);  // Simulate deallocation
@@ -195,6 +203,8 @@ TEST_F(SharedListFixture, Iterators)
         return true;
     });
 
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
+
     shared::List<std::uint8_t> list(flexible_allocator_mock_);
 
     list.push_back(1);
@@ -222,6 +232,8 @@ TEST_F(SharedListFixture, ArrowOperatorAccessesMember)
         free(address);  // Simulate deallocation
         return true;
     });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillRepeatedly(Return(true));
 
     struct TestData
     {
@@ -353,4 +365,204 @@ TEST_F(SharedListFixture, SharedMemoryChunk)
     flexible_allocator.reset();
 
     ASSERT_EQ(true, true);
+}
+
+// Test cases for canary checks
+TEST_F(SharedListFixture, SharedMemoryChunkIsCorruptedMethod)
+{
+    SharedMemoryChunk valid_chunk{SharedMemoryLocation{1, 1}, 100};
+    EXPECT_FALSE(valid_chunk.IsCorrupted());
+
+    SharedMemoryChunk corrupted_start{SharedMemoryLocation{1, 1}, 100};
+    corrupted_start.canary_start_ = 0xBADBAD;
+    EXPECT_TRUE(corrupted_start.IsCorrupted());
+
+    SharedMemoryChunk corrupted_end{SharedMemoryLocation{1, 1}, 100};
+    corrupted_end.canary_end_ = 0xBADBAD;
+    EXPECT_TRUE(corrupted_end.IsCorrupted());
+
+    SharedMemoryChunk corrupted_both{SharedMemoryLocation{1, 1}, 100};
+    corrupted_both.canary_start_ = 0xBADBAD;
+    corrupted_both.canary_end_ = 0xBADBAD;
+    EXPECT_TRUE(corrupted_both.IsCorrupted());
+}
+
+TEST_F(SharedListFixture, ListMagicNumberCorruptionSimulated)
+{
+    using ShmChunkVector = shared::List<SharedMemoryChunk>;
+    static constexpr std::size_t kFlexibleAllocatorSize = 10000U;
+    std::shared_ptr<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>> flexible_allocator;
+    std::unique_ptr<std::uint8_t[]> memory_pointer_;
+
+    memory_pointer_ = std::make_unique<std::uint8_t[]>(2 * kFlexibleAllocatorSize);
+    flexible_allocator = std::make_shared<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>>(
+        memory_pointer_.get(), kFlexibleAllocatorSize);
+
+    void* const vector_shm_raw_pointer =
+        flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
+    ASSERT_NE(nullptr, vector_shm_raw_pointer);
+
+    auto vector = new (vector_shm_raw_pointer) ShmChunkVector(flexible_allocator);
+
+    auto emplace_result = vector->emplace_back(SharedMemoryChunk{SharedMemoryLocation{1, 1}, 100});
+    ASSERT_TRUE(emplace_result.has_value());
+
+    std::uint64_t* start_canary_ptr = reinterpret_cast<std::uint64_t*>(vector);
+    const std::uint64_t original_start = *start_canary_ptr;
+    *start_canary_ptr = 0xBADBADBADBADBAD;
+
+    auto result = vector->at(0);
+    EXPECT_FALSE(result.has_value());
+    EXPECT_EQ(result, score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal));
+
+    *start_canary_ptr = original_start;
+    vector->clear();
+    flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+}
+
+TEST_F(SharedListFixture, SharedMemoryChunkCanaryDetection)
+{
+    using ShmChunkVector = shared::List<SharedMemoryChunk>;
+    static constexpr std::size_t kFlexibleAllocatorSize = 10000U;
+    std::shared_ptr<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>> flexible_allocator;
+    std::unique_ptr<std::uint8_t[]> memory_pointer_;
+
+    memory_pointer_ = std::make_unique<std::uint8_t[]>(2 * kFlexibleAllocatorSize);
+    flexible_allocator = std::make_shared<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>>(
+        memory_pointer_.get(), kFlexibleAllocatorSize);
+
+    void* const vector_shm_raw_pointer =
+        flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
+    ASSERT_NE(nullptr, vector_shm_raw_pointer);
+
+    auto vector = new (vector_shm_raw_pointer) ShmChunkVector(flexible_allocator);
+    auto emplace_result = vector->emplace_back(SharedMemoryChunk{SharedMemoryLocation{1, 1}, 100});
+    ASSERT_TRUE(emplace_result.has_value());
+
+    auto result_valid = vector->at(0);
+    EXPECT_TRUE(result_valid.has_value());
+    EXPECT_EQ(result_valid.value().start_.offset_, 1);
+
+    SharedMemoryChunk corrupted_chunk{SharedMemoryLocation{2, 2}, 200};
+    corrupted_chunk.canary_start_ = 0xBADBEEF;  // Corrupt it
+
+    EXPECT_TRUE(corrupted_chunk.IsCorrupted());
+
+    vector->clear();
+    flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+}
+
+TEST_F(SharedListFixture, ListEndCanaryCorruption)
+{
+    using ShmChunkVector = shared::List<SharedMemoryChunk>;
+    static constexpr std::size_t kFlexibleAllocatorSize = 10000U;
+    std::shared_ptr<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>> flexible_allocator;
+    std::unique_ptr<std::uint8_t[]> memory_pointer_;
+
+    memory_pointer_ = std::make_unique<std::uint8_t[]>(2 * kFlexibleAllocatorSize);
+    flexible_allocator = std::make_shared<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>>(
+        memory_pointer_.get(), kFlexibleAllocatorSize);
+
+    void* const vector_shm_raw_pointer =
+        flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
+    ASSERT_NE(nullptr, vector_shm_raw_pointer);
+
+    auto vector = new (vector_shm_raw_pointer) ShmChunkVector(flexible_allocator);
+
+    // Add an element
+    auto emplace_result = vector->emplace_back(SharedMemoryChunk{SharedMemoryLocation{1, 1}, 100});
+    ASSERT_TRUE(emplace_result.has_value());
+
+    // The List structure in memory order is:
+    // canary_start_ (8 bytes)
+    // flexible_allocator_ (std::shared_ptr - 16 bytes)
+    // head_offset_ (std::atomic<std::ptrdiff_t> - 8 bytes)
+    // tail_offset_ (std::atomic<std::ptrdiff_t> - 8 bytes)
+    // size_ (std::atomic_size_t - 8 bytes)
+    // canary_end_ (8 bytes)
+    // Total: 56 bytes, but aligned to std::max_align_t
+
+    constexpr std::size_t canary_size = sizeof(std::uint64_t);
+    constexpr std::size_t atomic_size = sizeof(std::atomic_size_t);
+    constexpr std::size_t shared_ptr_size = sizeof(std::shared_ptr<IFlexibleCircularAllocator>);
+    constexpr std::size_t ptrdiff_size = sizeof(std::atomic<std::ptrdiff_t>);
+
+    // Calculate offset to canary_end_: skip start canary, shared_ptr, two ptrdiff_t, and size_t
+    const std::size_t end_canary_offset = canary_size + shared_ptr_size + (2 * ptrdiff_size) + atomic_size;
+
+    std::uint64_t* end_canary_ptr =
+        reinterpret_cast<std::uint64_t*>(reinterpret_cast<std::uint8_t*>(vector) + end_canary_offset);
+    const std::uint64_t original_end = *end_canary_ptr;
+    *end_canary_ptr = 0xDEADDEADDEADDEAD;
+
+    // Try to access element - should detect end canary corruption (line 170)
+    auto result = vector->at(0);
+    EXPECT_FALSE(result.has_value());
+    EXPECT_EQ(result, score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal));
+
+    // Restore canary for cleanup
+    *end_canary_ptr = original_end;
+    vector->clear();
+    flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+}
+
+TEST_F(SharedListFixture, SharedMemoryChunkCorruptionInList)
+{
+    // Test to cover line 478 and 481: return error when SharedMemoryChunk.IsCorrupted() is true
+    using ShmChunkVector = shared::List<SharedMemoryChunk>;
+    static constexpr std::size_t kFlexibleAllocatorSize = 10000U;
+    std::shared_ptr<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>> flexible_allocator;
+    std::unique_ptr<std::uint8_t[]> memory_pointer_;
+
+    memory_pointer_ = std::make_unique<std::uint8_t[]>(2 * kFlexibleAllocatorSize);
+    flexible_allocator = std::make_shared<LocklessFlexibleCircularAllocator<AtomicIndirectorReal>>(
+        memory_pointer_.get(), kFlexibleAllocatorSize);
+
+    void* const vector_shm_raw_pointer =
+        flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
+    ASSERT_NE(nullptr, vector_shm_raw_pointer);
+
+    auto vector = new (vector_shm_raw_pointer) ShmChunkVector(flexible_allocator);
+
+    // Add an element
+    auto emplace_result = vector->emplace_back(SharedMemoryChunk{SharedMemoryLocation{5, 5}, 500});
+    ASSERT_TRUE(emplace_result.has_value());
+
+    // Verify we can access it normally first
+    auto result_before = vector->at(0);
+    EXPECT_TRUE(result_before.has_value());
+    EXPECT_EQ(result_before.value().start_.offset_, 5);
+
+    bool found_and_corrupted = false;
+    std::uint8_t* base_memory = memory_pointer_.get();
+
+    constexpr std::size_t alignment = alignof(SharedMemoryChunk);
+
+    for (std::size_t offset = 0; offset < kFlexibleAllocatorSize; offset += alignment)
+    {
+        SharedMemoryChunk* potential_chunk = reinterpret_cast<SharedMemoryChunk*>(base_memory + offset);
+
+        if (potential_chunk->canary_start_ == SharedMemoryChunk::kCanaryStart &&
+            potential_chunk->canary_end_ == SharedMemoryChunk::kCanaryEnd && potential_chunk->start_.offset_ == 5 &&
+            potential_chunk->start_.shm_object_handle_ == 5 && potential_chunk->size_ == 500)
+        {
+            potential_chunk->canary_start_ = 0xBADC0DE;
+            found_and_corrupted = true;
+            break;
+        }
+    }
+
+    // The test should find and corrupt the chunk
+    ASSERT_TRUE(found_and_corrupted) << "Failed to find SharedMemoryChunk in memory to corrupt it";
+
+    if (found_and_corrupted)
+    {
+        // Try to access element - should detect corruption (line 478 and 481)
+        auto result_after = vector->at(0);
+        EXPECT_FALSE(result_after.has_value()) << "Expected corrupted chunk to be detected";
+        EXPECT_EQ(result_after, score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal));
+    }
+
+    vector->clear();
+    flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
 }

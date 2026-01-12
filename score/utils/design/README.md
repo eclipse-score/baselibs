@@ -8,18 +8,9 @@ behind. But there will be always the need for a "last resort" collection facilit
 That's why the detailed design does not really cover a static or dynamic design that illustrates the dependency between
 the single classes of `lib/utils`, but rather how single classes operate.
 
-## PimplPtr
-
-Not yet decided if deprecated or not, since it is only used at one location in our code base and its unclear if a big
-benefit exists from it.
-
 ## PayloadValidation
 
 Only one function that is standalone as such.
-
-## StringHash
-
-Helper to calculate string hash.
 
 ## ScopedOperation
 

@@ -98,7 +98,7 @@ config_setting(
         "@platforms//cpu:arm64",
         "@platforms//os:qnx",
         "//bazel/platforms/environment:hardware",
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
     ],
 )
 
@@ -109,7 +109,7 @@ config_setting(
         "@platforms//cpu:arm64",
         "@platforms//os:qnx",
         "//bazel/platforms/environment:virtual",
-        "//bazel/platforms/qnx_version:qnx8",
+        "@score_bazel_platforms//:qnx8_0",
     ],
 )
 
@@ -126,5 +126,26 @@ config_setting(
     constraint_values = [
         "@platforms//cpu:x86_64",
         "@platforms//os:qnx",
+    ],
+)
+
+config_setting(
+    name = "x86_64-qnx8-qemu",
+    constraint_values = [
+        "@swf_platforms//autosar:adaptive",
+        "@platforms//cpu:x86_64",
+        "@platforms//os:qnx",
+        "//bazel/platforms/environment:qemu",
+        "@score_bazel_platforms//:qnx8_0",
+    ],
+    visibility = [
+        "//ecu/ipnext/tests:__subpackages__",
+        "//ecu/reference/qnx_qemu/test:__subpackages__",
+        "//ecu/xpad/xpad-shared/platform_tests:__subpackages__",
+        "//ecu/xpad/xpad-shared/vendor_tests:__subpackages__",
+        "//visibility:public",  # platform_only
+        # "@ddad//ecu/ipnext/tests:__subpackages__",
+        # "@ddad//ecu/xpad/xpad-shared/platform_tests:__subpackages__",
+        # "@ddad//ecu/xpad/xpad-shared/vendor_tests:__subpackages__",
     ],
 )

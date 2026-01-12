@@ -299,8 +299,6 @@ class InterruptibleState<void> final : public score::concurrency::detail::TypedB
 
     void AddContinuationCallback(ScopedContinuationCallback callback);
 
-    const safecpp::Scope<>& GetScope() const noexcept;
-
   private:
     void TriggerContinuations();
 

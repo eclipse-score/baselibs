@@ -126,12 +126,6 @@ cc_test(
     tags = [
         "unit",
     ],
-    target_compatible_with = select({
-        "@platforms//os:qnx": [
-            "//bazel/platforms/qnx_version:qnx7",  # TODO: Ticket-214211 QNX8 incompatible
-        ],
-        "//conditions:default": [],
-    }),
     visibility = [
         "@score_baselibs//score/os/utils/test:__pkg__",
     ],

@@ -8,12 +8,15 @@
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_TYPE_TRAITS_IS_SPAN_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_TYPE_TRAITS_IS_SPAN_HPP
 
+#include <limits>
 #include <type_traits>
 
 namespace score::cpp
 {
 
-template <typename T>
+inline constexpr std::size_t dynamic_extent{std::numeric_limits<std::size_t>::max()};
+
+template <typename T, std::size_t = dynamic_extent>
 class span;
 
 /// \brief Check whether the type is a span type
@@ -25,8 +28,8 @@ struct is_span : std::false_type
 
 /// \brief Check whether the type is a span type
 /// \tparam T: type to be checked
-template <typename T>
-struct is_span<span<T>> : std::true_type
+template <typename T, std::size_t Extent>
+struct is_span<span<T, Extent>> : std::true_type
 {
 };
 

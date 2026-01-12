@@ -13,6 +13,8 @@
 #ifndef SCORE_LIB_MEMORY_SHARED_POINTER_ARITHMETIC_UTIL_H
 #define SCORE_LIB_MEMORY_SHARED_POINTER_ARITHMETIC_UTIL_H
 
+#include "score/memory/data_type_size_info.h"
+
 #include "score/mw/log/log_types.h"
 #include "score/mw/log/logging.h"
 
@@ -23,15 +25,13 @@
 #include <cstdlib>
 #include <limits>
 #include <type_traits>
+#include <vector>
 
 namespace score::memory::shared
 {
 
 namespace detail
 {
-
-std::uintptr_t AddOffsetToPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset);
-std::uintptr_t SubtractOffsetFromPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset);
 
 template <typename T>
 constexpr bool is_signed_integer_v = std::conjunction_v<std::is_integral<T>, std::is_signed<T>>;
@@ -40,6 +40,10 @@ template <typename T>
 constexpr bool is_unsigned_integer_v = std::conjunction_v<std::is_integral<T>, std::is_unsigned<T>>;
 
 }  // namespace detail
+
+std::uintptr_t AddOffsetToPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset);
+std::uintptr_t AddSignedOffsetToPointerAsInteger(const std::uintptr_t ptr_as_integer, const std::ptrdiff_t offset);
+std::uintptr_t SubtractOffsetFromPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset);
 
 /// \brief Calculates the needed size to store an object of given size, so it shall end at an address with the given
 ///        alignment.
@@ -67,6 +71,18 @@ constexpr std::size_t CalculateAlignedSize(const std::size_t size, const std::si
     return alignment;
 }
 
+/// \brief Calculates the needed size to store a sequence of objects of given size contiguously in memory.
+///
+/// \details Effectively this function calculates the value of size + eventually needed minimal padding between each
+/// element. Assumes that the allocation starts at a location that has worst case alignment. E.g. if you were to
+/// allocate memory for the first DataTypeSizeInfo, it would be allocated without any padding before the element. Note.
+/// Does not calculate any padding after the last element, as this would require knowledge of the alignment of the next
+/// object in memory.
+///
+/// \param data_type_infos vector of DataTypeSizeInfos which contains size and alignment of each element
+/// \return Required memory to allocate all objects (i.e. size of each object plus padding in between elements).
+std::size_t CalculateAlignedSizeOfSequence(const std::vector<DataTypeSizeInfo>& data_type_infos);
+
 /// \brief Casts a pointer to an integer.
 ///
 /// According to https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast#4, this is implementation defined.
@@ -75,13 +91,22 @@ std::uintptr_t CastPointerToInteger(const void* const pointer) noexcept;
 /// \brief Casts an integer to a pointer.
 ///
 /// According to https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast#5, this is implementation defined.
-/// Explicitly instantiates two versions of this function for: void* and const void*.
 // Suppress "AUTOSAR C++14 M3-2-3" rule finding: A type, object or function that is used in multiple translation units
 // shall be declared in one and only one file.
 // Rationale: False positive CastIntegerToPointer is declared only once.
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
 template <typename PointerType>
-auto CastIntegerToPointer(std::uintptr_t integer) noexcept -> PointerType;
+auto CastIntegerToPointer(std::uintptr_t integer) noexcept -> PointerType
+{
+    // Suppress "AUTOSAR C++14 A5-2-4" rule finding: reinterpret_cast shall not be used.
+    // Rationale : According to https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast#5, casting an integer to
+    // a pointer is implementation-defined. We rely on sufficient testing to ensure that the implementation defined
+    // behaviour performs as expected (i.e. the address of the resulting pointer is the same as the integer value).
+    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): see rationale above.
+    // coverity[autosar_cpp14_a5_2_4_violation]
+    return reinterpret_cast<PointerType>(integer);
+    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
+}
 
 /// \brief Calculates the pointer resulting from adding an offset to a pointer
 ///
@@ -95,7 +120,8 @@ template <typename PointerType>
 auto AddOffsetToPointer(const PointerType* pointer, const std::size_t offset) -> PointerType*
 {
     const auto pointer_as_integer = CastPointerToInteger(pointer);
-    const auto result_as_integer = detail::AddOffsetToPointerAsInteger(pointer_as_integer, offset);
+    const auto result_as_integer = AddOffsetToPointerAsInteger(pointer_as_integer, offset);
+    // NOLINTNEXTLINE(score-banned-function): This function is banned for calling CastIntegerToPointer
     return CastIntegerToPointer<PointerType*>(result_as_integer);
 }
 
@@ -103,24 +129,8 @@ template <typename PointerType>
 auto AddOffsetToPointer(const PointerType* pointer, const std::ptrdiff_t offset) -> PointerType*
 {
     const auto pointer_as_integer = CastPointerToInteger(pointer);
-
-    if (offset >= 0)
-    {
-        static_assert(sizeof(decltype(offset)) <= sizeof(std::size_t),
-                      "Casting offset to size_t will only avoid data loss if the max possible value of offet fits "
-                      "within a size_t.");
-        return CastIntegerToPointer<PointerType*>(
-            detail::AddOffsetToPointerAsInteger(pointer_as_integer, static_cast<std::size_t>(offset)));
-    }
-
-    // offset is negative
-
-    // If the offset is std::numeric_limits<std::ptrdiff_t>::min(), e.g for a char, the min value is -128 so the
-    // absolute value 128 would not fit into a char.
-    const auto positive_offset = (offset == std::numeric_limits<std::ptrdiff_t>::min())
-                                     ? static_cast<std::uintptr_t>(std::numeric_limits<std::ptrdiff_t>::max()) + 1U
-                                     : static_cast<std::uintptr_t>(std::abs(offset));
-    const auto result_as_integer = detail::SubtractOffsetFromPointerAsInteger(pointer_as_integer, positive_offset);
+    const auto result_as_integer = AddSignedOffsetToPointerAsInteger(pointer_as_integer, offset);
+    // NOLINTNEXTLINE(score-banned-function): This function is banned for calling CastIntegerToPointer
     return CastIntegerToPointer<PointerType*>(result_as_integer);
 }
 

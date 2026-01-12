@@ -1,0 +1,17 @@
+@startuml ResourceManager_ActivityDiagram_run
+
+start
+note right : ::Run()
+repeat: ReceiverBlocked State;
+-[hidden]->
+
+:Dispatch the request to the handler;
+note right : receive Client request;
+
+:Handle The request;
+
+ repeat while (SIGTERM received?) is (no)
+->yes;
+  :Perform cleanup operations then call exit();
+stop
+@enduml

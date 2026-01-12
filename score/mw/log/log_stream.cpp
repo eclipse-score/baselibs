@@ -195,6 +195,14 @@ LogStream& LogStream::Log(const LogBin64& value) noexcept
     return LogWithRecorder(value);
 }
 
+/*
+Deviation from Rule A0-1-3:
+- Every function defined in an anonymous namespace, or static function with internal linkage,
+    or private member function shall be used.
+Justification:
+- The function is used.
+*/
+// coverity[autosar_cpp14_a0_1_3_violation : FALSE] see above
 LogStream& LogStream::Log(const LogSlog2Message& value) noexcept
 {
     return LogWithRecorder(value);

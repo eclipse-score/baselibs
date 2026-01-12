@@ -626,6 +626,16 @@ TEST(circular_buffer_test, reverse_iterator)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#17014595
+TEST(circular_buffer_test, difference_type_matches_with_iterator)
+{
+    using type = score::cpp::circular_buffer<std::int32_t, test_max_size>;
+
+    static_assert(std::is_same_v<type::difference_type, std::iterator_traits<type::iterator>::difference_type>);
+    static_assert(std::is_same_v<type::difference_type, std::iterator_traits<type::const_iterator>::difference_type>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17014595
 TEST(circular_buffer_test, const_correctness_when_non_const_container)
 {
     circular_buffer<std::int32_t, test_max_size> buffer;

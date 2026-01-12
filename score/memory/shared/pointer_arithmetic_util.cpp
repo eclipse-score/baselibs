@@ -12,8 +12,12 @@
  ********************************************************************************/
 #include "score/memory/shared/pointer_arithmetic_util.h"
 
+#include "score/memory/data_type_size_info.h"
+
 #include "score/mw/log/log_types.h"
 #include "score/mw/log/logging.h"
+
+#include "score/language/safecpp/safe_math/safe_math.h"
 
 #include <score/assert.hpp>
 
@@ -22,11 +26,9 @@
 #include <cstdlib>
 #include <exception>
 #include <limits>
+#include <vector>
 
 namespace score::memory::shared
-{
-
-namespace detail
 {
 
 std::uintptr_t AddOffsetToPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset)
@@ -40,6 +42,19 @@ std::uintptr_t AddOffsetToPointerAsInteger(const std::uintptr_t pointer_as_integ
     return pointer_as_integer + offset;
 }
 
+std::uintptr_t AddSignedOffsetToPointerAsInteger(const std::uintptr_t ptr_as_integer, const std::ptrdiff_t offset)
+{
+    static_assert(sizeof(decltype(offset)) <= sizeof(std::size_t),
+                  "Casting offset to size_t will only avoid data loss if the max possible value of offet fits "
+                  "within a size_t.");
+    if (offset < 0)
+    {
+        const auto abs_offset = safe_math::Abs(offset);
+        return SubtractOffsetFromPointerAsInteger(ptr_as_integer, abs_offset);
+    }
+    return AddOffsetToPointerAsInteger(ptr_as_integer, static_cast<std::size_t>(offset));
+}
+
 std::uintptr_t SubtractOffsetFromPointerAsInteger(const std::uintptr_t pointer_as_integer, const std::size_t offset)
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(pointer_as_integer >= offset,
@@ -47,7 +62,31 @@ std::uintptr_t SubtractOffsetFromPointerAsInteger(const std::uintptr_t pointer_a
     return pointer_as_integer - offset;
 }
 
-}  // namespace detail
+std::size_t CalculateAlignedSizeOfSequence(const std::vector<DataTypeSizeInfo>& data_type_infos)
+{
+    std::size_t total_size{0U};
+    for (std::size_t i = 0; i < data_type_infos.size(); ++i)
+    {
+        const auto& current_element = data_type_infos[i];
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(current_element.Alignment() != 0);
+        total_size += current_element.Size();
+
+        // If there is still a remaining next element, we need to calculate the padding between the current element and
+        // the next element.
+        const auto is_last_element = i == (data_type_infos.size() - 1U);
+        if (!is_last_element)
+        {
+            const auto next_element = data_type_infos[i + 1U];
+            SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(next_element.Alignment() != 0);
+
+            // The start location (represented as a distance from the first allocation of the sequence) of the next
+            // element can be calculated by calculating the aligned size of the currently allocated memory (i.e. up to
+            // and including the current element) using the alignment of the next element.
+            total_size = CalculateAlignedSize(total_size, next_element.Alignment());
+        }
+    }
+    return total_size;
+}
 
 std::uintptr_t CastPointerToInteger(const void* const pointer) noexcept
 {
@@ -64,22 +103,6 @@ std::uintptr_t CastPointerToInteger(const void* const pointer) noexcept
     return reinterpret_cast<std::uintptr_t>(pointer);
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
 }
-
-template <typename PointerType>
-auto CastIntegerToPointer(std::uintptr_t integer) noexcept -> PointerType
-{
-    // Suppress "AUTOSAR C++14 A5-2-4" rule finding: reinterpret_cast shall not be used.
-    // Rationale : According to https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast#5, casting an integer to
-    // a pointer is implementation-defined. We rely on sufficient testing to ensure that the implementation defined
-    // behaviour performs as expected (i.e. the address of the resulting pointer is the same as the integer value).
-    // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): see rationale above.
-    // coverity[autosar_cpp14_a5_2_4_violation]
-    return reinterpret_cast<PointerType>(integer);
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
-}
-template void* CastIntegerToPointer<void*>(std::uintptr_t) noexcept;
-template const void* CastIntegerToPointer<const void*>(std::uintptr_t) noexcept;
-template std::byte* CastIntegerToPointer<std::byte*>(std::uintptr_t) noexcept;
 
 score::mw::log::LogHex64 PointerToLogValue(const void* const pointer)
 {
@@ -107,7 +130,7 @@ std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const 
     if (first_address_as_integer > second_address_as_integer)
     {
         const auto result_as_integer =
-            detail::SubtractOffsetFromPointerAsInteger(first_address_as_integer, second_address_as_integer);
+            SubtractOffsetFromPointerAsInteger(first_address_as_integer, second_address_as_integer);
         if (result_as_integer > static_cast<std::uintptr_t>(ptr_diff_max))
         {
             score::mw::log::LogFatal("shm")
@@ -121,7 +144,7 @@ std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const 
     // Calculate the absolute value of the subtraction by reversing the order (since we know that the second value is >=
     // the first).
     const auto absolute_value_result_as_integer =
-        detail::SubtractOffsetFromPointerAsInteger(second_address_as_integer, first_address_as_integer);
+        SubtractOffsetFromPointerAsInteger(second_address_as_integer, first_address_as_integer);
 
     // Since we need to cast positive_result_as_integer to a std::ptrdiff_t, we have to handle the special case in which
     // the actual result is equal to ptr_diff_min. In such a case, the absolute value of the result will be ptr_diff_max

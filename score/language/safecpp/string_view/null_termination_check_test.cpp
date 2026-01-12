@@ -13,7 +13,7 @@
 #include "score/language/safecpp/string_view/null_termination_check.h"
 #include "score/language/safecpp/string_view/null_termination_violation_policies.h"
 
-#include "score/language/safecpp/string_view/zspan.h"
+#include "score/language/safecpp/string_view/details/zspan.h"
 #include "score/language/safecpp/string_view/zstring_view.h"
 
 #include <score/span.hpp>
@@ -211,49 +211,60 @@ TEST(NullTerminationCheck, ForNonEmptyZSpan)
 
 TEST(NullTerminationCheck, ViolationPolicies)
 {
-    auto perform_test = [](auto violating_span) {
+    auto perform_test = [](auto violating_view) {
         // When used in conjunction with `abort` policy, immediate termination is expected
         EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(
-                        violating_span, safecpp::null_termination_violation_policies::abort{}),
+                        violating_view, safecpp::null_termination_violation_policies::abort{}),
                     ::testing::KilledBySignal{SIGABRT},
                     "");
 
         // When used in conjunction with `set_empty` policy, nullptr is expected as result
         EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(
-                      violating_span, safecpp::null_termination_violation_policies::set_empty{}),
+                      violating_view, safecpp::null_termination_violation_policies::set_empty{}),
                   nullptr);
 
         // When used in conjunction with `throw_exception` policy, the specified exception type must get thrown
         EXPECT_THROW(
             score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(
-                violating_span, safecpp::null_termination_violation_policies::throw_exception<std::invalid_argument>{}),
+                violating_view, safecpp::null_termination_violation_policies::throw_exception<std::invalid_argument>{}),
             std::invalid_argument);
 
         // When used in conjunction with `throw_exception` policy, the specified exception type must get thrown
         EXPECT_THROW(
             score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(
-                violating_span, safecpp::null_termination_violation_policies::throw_exception<std::out_of_range>{}),
+                violating_view, safecpp::null_termination_violation_policies::throw_exception<std::out_of_range>{}),
             std::out_of_range);
     };
 
-    auto test_with = [&perform_test](auto violating_span) {
-        decltype(violating_span) empty_span{};
-        perform_test(violating_span);
-        perform_test(empty_span);
+    auto test_with = [&perform_test](auto view_type_instance) {
+        char buffer[] = {'h', 'e', 'l', 'l', 'o'};  // not null-terminated
+
+        decltype(view_type_instance) violating_view{buffer, sizeof(buffer)};
+        ASSERT_NE(nullptr, violating_view.data());
+        ASSERT_FALSE(violating_view.empty());
+        perform_test(violating_view);
+
+        decltype(view_type_instance) empty_view{buffer, 0U};
+        ASSERT_NE(nullptr, empty_view.data());
+        ASSERT_TRUE(empty_view.empty());
+        perform_test(empty_view);
+
+        decltype(view_type_instance) null_view{};
+        ASSERT_EQ(nullptr, null_view.data());
+        perform_test(null_view);
     };
 
-    char buffer[] = {'h', 'e', 'l', 'l', 'o'};  // not null-terminated
-    score::cpp::span<char> span{buffer, sizeof(buffer)};
-    test_with(span);
+    test_with(score::cpp::span<char>{});
+    test_with(score::cpp::span<const char>{});
+    test_with(std::add_const_t<score::cpp::span<char>>{});
+    test_with(std::add_const_t<score::cpp::span<const char>>{});
 
-    score::cpp::span<const char> span_const{buffer, sizeof(buffer)};
-    test_with(span_const);
-
-    const score::cpp::span<char> const_span{buffer, sizeof(buffer)};
-    test_with(const_span);
-
-    const score::cpp::span<const char> const_span_const{buffer, sizeof(buffer)};
-    test_with(const_span_const);
+#if defined(__cpp_lib_span)
+    test_with(std::span<char>{});
+    test_with(std::span<const char>{});
+    test_with(std::add_const_t<std::span<char>>{});
+    test_with(std::add_const_t<std::span<const char>>{});
+#endif
 }
 
 ///
