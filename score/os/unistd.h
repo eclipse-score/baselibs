@@ -21,6 +21,7 @@
 #include "score/expected.hpp"
 #include "score/memory.hpp"
 
+#include <pwd.h>
 #include <sys/types.h>
 #include <unistd.h>  // remove after transition
 #include <cstdint>
@@ -120,6 +121,12 @@ class Unistd : public ObjectSeam<Unistd>
 
     virtual score::cpp::expected_blank<score::os::Error> sync() const noexcept = 0;
 
+    virtual score::cpp::expected_blank<score::os::Error> getpwnam_r(const char* name,
+                                                           struct passwd* pwd,
+                                                           char* buffer,
+                                                           size_t bufsize,
+                                                           struct passwd** result) const noexcept = 0;
+
     virtual ~Unistd() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Unistd(const Unistd&) = delete;
@@ -214,6 +221,12 @@ class UnistdImpl final : public Unistd
     std::uint32_t alarm(const std::uint32_t seconds) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> sync() const noexcept override;
+
+    score::cpp::expected_blank<score::os::Error> getpwnam_r(const char* name,
+                                                   struct passwd* pwd,
+                                                   char* buffer,
+                                                   size_t bufsize,
+                                                   struct passwd** result) const noexcept override;
 };
 
 }  // namespace internal
@@ -221,10 +234,10 @@ class UnistdImpl final : public Unistd
 // Suppress "AUTOSAR C++14 A3-1-1", The rule states: "It shall be possible to include any header file
 // in multiple translation units without violating the One Definition Rule."
 // This is false positive. he static variable "nifty_counter" ensures ODR because of include guard of the header file
-// coverity[autosar_cpp14_a3_1_1_violation]
 // Suppress "AUTOSAR C++14 A2-10-4", The rule states: "The identifier name of a non-member object with
 // static storage duration or static function shall not be reused within a namespace."
 // nifty_counter is unique and not reused elsewhere in score::os
+// coverity[autosar_cpp14_a3_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
 static StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
 

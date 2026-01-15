@@ -361,6 +361,19 @@ std::uint32_t score::os::internal::UnistdImpl::alarm(const std::uint32_t seconds
     return ::alarm(seconds);
 }
 
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::getpwnam_r(const char* name,
+                                                                              struct passwd* pwd,
+                                                                              char* buffer,
+                                                                              size_t bufsize,
+                                                                              struct passwd** result) const noexcept
+{
+    if (0 != ::getpwnam_r(name, pwd, buffer, bufsize, result))
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return {};
+}
+
 score::os::Unistd& score::os::Unistd::instance() noexcept
 {
     return select_instance(

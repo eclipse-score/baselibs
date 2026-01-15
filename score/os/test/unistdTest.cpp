@@ -1147,6 +1147,64 @@ TEST(Unistd, PMRDefaultShallReturnImplInstance)
     EXPECT_NO_THROW(std::ignore = dynamic_cast<score::os::internal::UnistdImpl*>(default_instance.get()));
 }
 
+TEST_F(UnistdFixture, GetpwnamReturnsNoErrorIfPassValidUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam Returns No Error If Pass Valid User");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "root";
+    constexpr std::uint32_t kMaxBufferSize = 16384U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+    constexpr auto kUserUid = 0;
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_TRUE(val.has_value());
+    EXPECT_NE(result, nullptr);
+    EXPECT_EQ(result->pw_uid, kUserUid);
+}
+
+TEST_F(UnistdFixture, GetpwnamReturnsErrorIfBufferIsToSmall)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r Returns Error If Buffer Is To Small");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "root";
+    constexpr std::uint32_t kMaxBufferSize = 1U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_FALSE(val.has_value());
+    EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(UnistdFixture, GetpwnamReturnsErrorIfPassInvalidUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r Returns Nullptr Result If Pass Invalid User");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "not_existing_user";
+    constexpr std::uint32_t kMaxBufferSize = 16384U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_EQ(result, nullptr);
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace os
