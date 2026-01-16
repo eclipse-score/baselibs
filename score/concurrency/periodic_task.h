@@ -308,7 +308,7 @@ class PeriodicTaskFactory
     template <typename Clock,
               typename CallableType,
               typename std::enable_if_t<
-                  std::is_same<std::result_of_t<CallableType(const score::cpp::stop_token&, const typename Clock::time_point)>,
+                  std::is_same<std::invoke_result_t<CallableType(const score::cpp::stop_token&, const typename Clock::time_point)>,
                                bool>::value,
                   bool> = true>
     static auto WrapReturnValue(CallableType&& callable)
@@ -325,7 +325,7 @@ class PeriodicTaskFactory
         typename Clock,
         typename CallableType,
         typename std::enable_if_t<
-            !std::is_same<std::result_of_t<CallableType(const score::cpp::stop_token&, const typename Clock::time_point)>,
+            !std::is_same<std::invoke_result_t<CallableType(const score::cpp::stop_token&, const typename Clock::time_point)>,
                           bool>::value,
             bool> = true>
     // overload resolution is unambiguous due to sfinae
