@@ -40,7 +40,7 @@ class FloatingPointEnvironment
     /// \tparam F Type of calculation
     /// \param calculation The calculation to perform
     /// \return The result or error
-    template <class F, class T = std::result_of_t<F()>>
+    template <class F, class T = std::invoke_result_t<F()>>
     static score::Result<T> CalculateAndVerify(const F& calculation) noexcept
     {
         FloatingPointEnvironment floating_point_environment{};

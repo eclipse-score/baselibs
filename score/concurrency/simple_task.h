@@ -163,7 +163,7 @@ class SimpleTaskFactory final
 {
   private:
     template <typename CallableType, typename... ArgumentTypes>
-    using result_type = std::result_of_t<CallableType && (score::cpp::stop_token, ArgumentTypes&&...)>;
+    using result_type = std::invoke_result_t<CallableType && (score::cpp::stop_token, ArgumentTypes&&...)>;
 
   public:
     /**
