@@ -69,13 +69,13 @@ Starting from this basic idea, the static design is divided into four main parts
 This design allows that any content streamed by the user into a `LogStream`, will directly end up in the respective slot
 implementation.
 
-![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/verbose_logging_static.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/verbose_logging_static.puml)
 
-![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/verbose_logging_sequence.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/verbose_logging_sequence.puml)
 
-![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/non_verbose_logging_static.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/non_verbose_logging_static.puml)
 
-![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/error_domain.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/error_domain.puml)
 
 ### Types of recorders
 
@@ -88,17 +88,17 @@ Following recorders are supported:
 5. EmptyRecoder - used when logging is off.
 Because of the similarity between TextRecorder and FileRecorder it is decided to use the common Backend for both.
 
-![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_recorders.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/mw_log_recorders.puml)
 
 ### High Level Component Diagram - Remote Logging
 
-![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/remote_logging.puml)
+![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/remote_logging.puml)
 
 ### Activity diagrams
 
-![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.puml)
+![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.puml)
 
-![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/score/mw/log/design/wait_free_stack_trypush.puml)
+![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/wait_free_stack_trypush.puml)
 
 ### User-Facing APIs
 
