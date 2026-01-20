@@ -48,7 +48,7 @@ While the idea of lock-free data structures is not new, the specific rules for t
 Starting from this basic idea, the static design is divided into four main parts:
 
 1. `Formatter`
-   Support different kind of logging formats. The most major one is the [DLT format](<broken_link_g/swh/ddad_platform/blob/master/aas/mw/log/README.md#dlt-formatted-payload>).
+   Support different kind of logging formats. The most major one is the [DLT format](../README.md#dlt-formatted-payload).
    Another one is the raw format (no special formatting applied). A future extension with other formats will be easy,
    separating this concern from the others mentioned below.
 2. `Backend`
@@ -91,13 +91,14 @@ Because of the similarity between TextRecorder and FileRecorder it is decided to
 ![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_recorders.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
 
 ### High Level Component Diagram - Remote Logging
-![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/remote_logging.plantuml?ref=ee9a3256f470e6e22e2b9dfddf9533f8c2b79aad)
+
+![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/remote_logging.puml)
 
 ### Activity diagrams
 
-![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/circular_buffer_allocator_acquireslottowrite.uxf?ref=7eb439030d5c699c020186618c251cc897150bcd)
+![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.puml)
 
-![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/wait_free_stack_trypush.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
+![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/score/mw/log/design/wait_free_stack_trypush.puml)
 
 ### User-Facing APIs
 
