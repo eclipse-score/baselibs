@@ -90,20 +90,12 @@ Because of the similarity between TextRecorder and FileRecorder it is decided to
 
 ![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_recorders.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
 
-![DataRouterRecorder class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_datarouter_recorder.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
-
 ### High Level Component Diagram - Remote Logging
 ![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/remote_logging.plantuml?ref=ee9a3256f470e6e22e2b9dfddf9533f8c2b79aad)
 
 ### Activity diagrams
 
 ![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/circular_buffer_allocator_acquireslottowrite.uxf?ref=7eb439030d5c699c020186618c251cc897150bcd)
-
-![DatarouterMessageClientImpl::ConnectToDatarouter Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/datarouter_message_client_impl_connecttodatarouter.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
-
-![SharedMemoryReader::Read Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/shared_memory_reader_read.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
-
-![SharedMemoryReader::AllocAndWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/shared_memory_writer_allocandwrite.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
 
 ![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/wait_free_stack_trypush.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
 
