@@ -78,11 +78,18 @@ bazel build --config=bl-x86_64-linux //...
 bazel test --config=bl-x86_64-linux //...
 ```
 
+#### Building for AArch64 Linux
+
+Use the same command as for x86_64 Linux, but replace `--config=bl-x86_64-linux` with `--config=bl-aarch64-linux`.
+
+> [!NOTE]
+> AArch64 Linux support is currently experimental. Some targets may not build successfully.
+
 #### Building for x86_64 QNX 8.0 SDP
 
 ```bash
-# Build all targets (with a few exceptions)
-bazel build --credential_helper="*.qnx.com=$(pwd)/.git/tools/qnx_credential_helper.py" --config=bl-x86_64-qnx -- //score/... -//score/mw/log/rust:log
+# Build all targets (with the exception of rust:log)
+bazel build --config=bl-x86_64-qnx -- //score/... -//score/mw/log/rust:log
 ```
 
 > [!NOTE]

@@ -16,45 +16,52 @@ module(
     compatibility_level = 0,
 )
 
-# Configure the host toolchain.
-bazel_dep(name = "score_toolchains_gcc", version = "0.5", dev_dependency = True)
+## Configure the C++ toolchain
 
-gcc = use_extension("@score_toolchains_gcc//extentions:gcc.bzl", "gcc", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.2.0", dev_dependency = True)
+gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
+
 gcc.toolchain(
-    sha256 = "8fa85c2a93a6bef1cf866fa658495a2416dfeec692e4246063b791abf18da083",
-    strip_prefix = "x86_64-unknown-linux-gnu",
-    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.3/x86_64-unknown-linux-gnu_gcc12.tar.gz",
+    name = "score_gcc_x86_64_toolchain",
+    target_cpu = "x86_64",
+    target_os = "linux",
+    version = "12.2.0",
+    use_default_package = True,
 )
-gcc.extra_features(
-    features = [
-        "minimal_warnings",
-        "treat_warnings_as_errors",
-    ],
-)
-gcc.warning_flags(
-    minimal_warnings = [
-        "-Wall",
-        "-Wno-error=deprecated-declarations",
-        "-Wno-error=narrowing",
-    ],
-    strict_warnings = [
-        "-Wextra",
-        "-Wpedantic",
-    ],
-)
-use_repo(gcc, "gcc_toolchain", "gcc_toolchain_gcc")
 
-# Configure the target toolchain.
-bazel_dep(name = "score_toolchains_qnx", version = "0.0.6", dev_dependency = True)
-
-toolchains_qnx = use_extension("@score_toolchains_qnx//:extensions.bzl", "toolchains_qnx", dev_dependency = True)
-toolchains_qnx.sdp(
-    sha256 = "f2e0cb21c6baddbcb65f6a70610ce498e7685de8ea2e0f1648f01b327f6bac63",
-    strip_prefix = "installation",
-    url = "https://www.qnx.com/download/download/79858/installation.tgz",
+gcc.toolchain(
+    name = "score_gcc_aarch64_toolchain",
+    target_cpu = "aarch64",
+    target_os = "linux",
+    version = "12.2.0",
+    use_default_package = True,
 )
-use_repo(toolchains_qnx, "toolchains_qnx_sdp")
-use_repo(toolchains_qnx, "toolchains_qnx_qcc")
+
+gcc.toolchain(
+    name = "score_qcc_x86_64_toolchain",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    sdp_version = "8.0.0",
+    version = "12.2.0",
+    use_default_package = True,
+)
+
+gcc.toolchain(
+    name = "score_qcc_aarch64_toolchain",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    sdp_version = "8.0.0",
+    version = "12.2.0",
+    use_default_package = True,
+)
+
+use_repo(
+    gcc,
+    "score_gcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain",
+    "score_gcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain",
+)
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
 bazel_dep(name = "google_benchmark", version = "1.9.4")
@@ -136,4 +143,4 @@ bazel_dep(name = "score_crates", version = "0.0.6")
 #
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "0.0.3")
+bazel_dep(name = "score_bazel_platforms", version = "0.0.4")
