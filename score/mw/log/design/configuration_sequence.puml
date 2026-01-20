@@ -1,0 +1,108 @@
+@startuml configuration_sequence
+title Configuration Sequence
+
+participant "App" as App
+participant "Logger" as LOG
+participant "LogStreamFactory" as LSF
+participant "Runtime" as RT
+participant "RecorderFactory" as RF
+participant "TargetConfigReader" as TCR
+participant "ConfigurationFileDiscoverer" as CFD
+participant "JSON" as JSON
+participant "OS" as OS
+
+activate App
+
+App -> LOG **: CreateLogger(...)
+note right of LOG
+The initialization of the runtime is triggered by the first log call.
+endnote
+
+activate LOG
+
+App -> LOG: LogError()
+
+LOG -> LSF: GetStream(LogLevel)
+
+LSF -> RT: GetRecorder()
+
+alt Runtime instance has not been created
+    RT -> RT: Constructor
+    activate RT
+end
+
+RT -> RF **: CreateRecorderFactory()
+
+activate RF
+
+RT -> RF: CreateFromConfiguration()
+
+
+RF -> CFD **: make_unique<ConfigurationFileDiscoverer>(...)
+activate CFD
+
+RF -> TCR **: make_unique<TargetConfigReader>(ConfigurationFileDiscoverer)
+activate TCR
+
+
+RF -> TCR: ReadConfig()
+
+TCR -> CFD: FindConfigurationFiles()
+
+note right of CFD
+  Find and return the existing
+  config files.
+end note
+
+CFD -> OS: access(/etc/ecu_logging_config.json)
+alt MW_LOG_CONFIG_FILE is defined
+  CFD -> OS: access(MW_LOG_CONFIG_FILE)
+else MW_LOG_CONFIG_FILE is undefined
+  CFD -> OS: access(<cwd>/etc/logging.json)
+  CFD -> OS: access(<cwd>/logging.json)
+  CFD -> OS: access(<binary path>/../etc/logging.json)
+end
+
+CFD -> TCR: Return global and environmental or application config file paths.
+
+TCR -> JSON: FromFile(global_file_path)
+JSON -> TCR: 
+
+alt MW_LOG_CONFIG_FILE is defined
+  TCR -> JSON: FromFile(<environmental file path>)
+  JSON -> TCR: 
+else MW_LOG_CONFIG_FILE is undefined
+  TCR -> JSON: FromFile(<app_file_path>)
+  JSON -> TCR: 
+end
+
+note right of TCR
+  Overwrite global configiuration
+  with environmental or application config file paths.
+end note
+
+TCR -> RF: Return Configuration instance
+
+alt "Console only recorder (compile option)"
+
+Create "TextRecorder" as TR
+RF -> TR: Create instance with configuration
+
+RF -> ER: if logmode other than KConsole is provided.
+
+else "Datarouter (compile option)"
+
+Create "CompositeRecorder" as CR
+
+RF -> CR
+note left of CR
+  Recorder setup depends on the datarouter configuration.
+endnote
+end
+
+RF -> RT: Store returned instance
+
+RT -> LSF: Return Recorder reference
+LSF -> LOG: LogStream with Recorder
+
+@enduml

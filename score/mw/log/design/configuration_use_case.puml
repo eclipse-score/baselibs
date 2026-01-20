@@ -1,0 +1,26 @@
+@startuml configuration_use_cases
+left to right direction
+title Configuration Use Cases
+
+actor "Developer\nDebug application\ndeployed on target" as Dev1
+
+actor "Developer,\nUnit testing" as Dev2  
+actor "Performance\nEngineer" as PerfEng
+
+usecase "ECU wide configuration\n--\nECUID = MPP1\nLogLevel = kError" as UC1_ECU
+usecase "Application configuration\n--\nAPPID = Para\nLogMode = kRemote | kConsole\nLogLevel = kDebug" as UC1_App
+
+usecase "Print the logs on the console for\nanalysis of unit test failures." as UC2_Console
+usecase "No logging.json files" as UC2_Default
+
+usecase "Disable logging completely\nMeasure performance impact of logging" as UC3_Performance
+
+Dev1 --> UC1_ECU : "Use case 1"
+Dev1 --> UC1_App : "Use case 1"
+
+Dev2 --> UC2_Console : "Use case 2"
+Dev2 --> UC2_Default : "Use case 2"
+
+PerfEng --> UC3_Performance : "Use case 3"
+
+@enduml

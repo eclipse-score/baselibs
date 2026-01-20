@@ -1,0 +1,56 @@
+@startuml frontend_dependency_graph
+title Frontend Dependency Graph
+
+package "mw::log frontend" as frontend {
+  class score::mw::log::Logger {
+    +Includes classes and free functions
+  }
+  class score::mw::log::detail::LogStreamFactory
+  class score::mw::log::LogStream
+  class score::mw::log::detail::Runtime
+  class score::mw::log::LoggerContainer
+  class score::mw::log::LogTypes
+  abstract score::mw::log::Recorder
+  abstract score::mw::log::IRecorderFactory
+}
+
+package "mw::log implementation details" as details {
+  class score::mw::log::detail::Configuration {}
+  class score::mw::log::detail::TargetConfigReader {}
+
+  class score::mw::log::detail::ConsoleRecorder {}
+  class score::mw::log::detail::ConsoleRecorderFactory {}
+  class score::mw::log::detail::EmptyRecorder {}
+
+  class score::mw::log::detail::RecorderFactory {}
+}
+
+
+note top of frontend
+  Frontend contains the public user API,
+  and the necessary classes to interface
+  with the recorder interface.
+end note
+
+note bottom of details
+  Instable components shall
+  depend on stable classes.
+end note
+
+score::mw::log::detail::LogStreamFactory ..> score::mw::log::LogStream
+score::mw::log::detail::Runtime o-- score::mw::log::LoggerContainer
+score::mw::log::detail::Runtime --> score::mw::log::Recorder
+score::mw::log::detail::Runtime o-- score::mw::log::Recorder
+score::mw::log::detail::Runtime --> score::mw::log::detail::Configuration
+score::mw::log::detail::Configuration --> score::mw::log::detail::TargetConfigReader
+score::mw::log::Recorder <|-- score::mw::log::detail::EmptyRecorder
+
+score::mw::log::Recorder <|-- score::mw::log::detail::ConsoleRecorder
+score::mw::log::IRecorderFactory <|-- score::mw::log::detail::ConsoleRecorderFactory
+score::mw::log::detail::ConsoleRecorderFactory ..> score::mw::log::detail::ConsoleRecorder
+
+score::mw::log::LogStream --> score::mw::log::Recorder
+score::mw::log::Logger ..> score::mw::log::LogStream
+score::mw::log::LoggerContainer o-- score::mw::log::Logger
+
+@enduml
