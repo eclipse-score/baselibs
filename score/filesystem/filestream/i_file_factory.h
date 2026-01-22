@@ -29,10 +29,15 @@ namespace filesystem
 {
 
 using AtomicUpdateOwnershipFlags = std::uint32_t;
-const AtomicUpdateOwnershipFlags kUseTargetFileUID = 1U << 0U;
-const AtomicUpdateOwnershipFlags kUseTargetFileGID = 1U << 1U;
-const AtomicUpdateOwnershipFlags kUseCurrentProcessUID = 1U << 2U;
-const AtomicUpdateOwnershipFlags kUseCurrentProcessGID = 1U << 3U;
+
+inline constexpr AtomicUpdateOwnershipFlags kUseTargetFileUID =
+    static_cast<AtomicUpdateOwnershipFlags>(static_cast<AtomicUpdateOwnershipFlags>(1U) << 0U);
+inline constexpr AtomicUpdateOwnershipFlags kUseTargetFileGID =
+    static_cast<AtomicUpdateOwnershipFlags>(static_cast<AtomicUpdateOwnershipFlags>(1U) << 1U);
+inline constexpr AtomicUpdateOwnershipFlags kUseCurrentProcessUID =
+    static_cast<AtomicUpdateOwnershipFlags>(static_cast<AtomicUpdateOwnershipFlags>(1U) << 2U);
+inline constexpr AtomicUpdateOwnershipFlags kUseCurrentProcessGID =
+    static_cast<AtomicUpdateOwnershipFlags>(static_cast<AtomicUpdateOwnershipFlags>(1U) << 3U);
 
 /// @brief Abstracts the way of how to create input / out operations towards files
 ///

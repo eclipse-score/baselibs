@@ -772,6 +772,8 @@ Path::iterator::pointer Path::iterator::operator->() const noexcept
     return &operator*();
 }
 
+// false-positive: can't create delegate due to defaulted constructors and can't mix init list with in-class init
+// coverity[autosar_cpp14_a12_1_5_violation]
 Path::iterator::iterator(const Path& path, const std::vector<Path>::const_iterator cur) noexcept
     : path_{path}, cur_{cur}, is_at_end_{}
 {
@@ -804,6 +806,8 @@ Path::iterator& Path::iterator::operator=(Path::iterator&& it) & noexcept
     return *this;
 }
 
+// false-positive: can't create delegate due to defaulted constructors and can't mix init list with in-class init
+// coverity[autosar_cpp14_a12_1_5_violation]
 Path::iterator::iterator(const Path& path, const bool is_at_end) noexcept : path_{path}, cur_{}, is_at_end_{is_at_end}
 {
 }
