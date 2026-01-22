@@ -24,11 +24,6 @@
 #include <unistd.h>
 #include <cstdlib>
 
-namespace score
-{
-namespace os
-{
-
 // From migration guide from QNX7 to QNX8
 // https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.migration/topic/kernel.html#rcvid_t
 // Cross-version compatibility for QNX 7 and QNX 8.
@@ -37,6 +32,11 @@ namespace os
 #ifndef __RCVID_T_SIZE
 using rcvid_t = int;
 #endif
+
+namespace score
+{
+namespace os
+{
 
 class Channel : public ObjectSeam<Channel>
 {
