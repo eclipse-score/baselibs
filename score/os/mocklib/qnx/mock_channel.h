@@ -92,6 +92,11 @@ class MockChannel : public Channel
                 (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+                ConnectServerInfo,
+                (const pid_t pid, const std::int32_t coid, _server_info* const inf),
+                (const, noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 ConnectAttach,
                 (const std::uint32_t reserved,
                  const pid_t pid,
@@ -102,10 +107,12 @@ class MockChannel : public Channel
 
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), ConnectDetach, (std::int32_t coid), (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 MsgRegisterEvent,
-                (sigevent * ev, std::int32_t coid),
+                (sigevent* const ev, const std::int32_t coid),
                 (noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), MsgUnregisterEvent, (sigevent* const ev), (noexcept, override));
 };
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
