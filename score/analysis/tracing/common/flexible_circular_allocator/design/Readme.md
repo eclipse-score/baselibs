@@ -104,7 +104,7 @@ std::atomic<std::uint32_t> gap_address_;
 
 The following diagram shows how data is managed by the above data structures:
 
-![QOS Lockless Allocator Data Structures](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/analysis/tracing/score/static_reflection_with_serialization/flexible_circular_allocator/design/structural_view.uxf?ref=b0bbf8e033d85bba90b533030bb4d9d84b1ac780)
+![QOS Lockless Allocator Data Structures](./structural_view.drawio.svg)
 
 It is important that these data structures can be atomically updated and are ensured to be lock-free by using `is_lock_free()` to make sure each data structure is atomically updated and lock-free.
 
