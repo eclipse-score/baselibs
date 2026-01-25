@@ -249,14 +249,14 @@ void Configuration::SetNoOfLogFiles(const std::size_t no_of_log_files) noexcept
     no_of_log_files_ = no_of_log_files;
 }
 
-bool Configuration::IsDeleteOldLogFiles() const noexcept
+bool Configuration::IsTruncateOnRotation() const noexcept
 {
-    return delete_old_log_files_;
+    return truncate_on_rotation_;
 }
 
-void Configuration::SetDeleteOldLogFiles(const bool delete_old_log_files) noexcept
+void Configuration::SetTruncateOnRotation(const bool truncate_on_rotation) noexcept
 {
-    delete_old_log_files_ = delete_old_log_files;
+    truncate_on_rotation_ = truncate_on_rotation;
 }
 
 }  // namespace detail

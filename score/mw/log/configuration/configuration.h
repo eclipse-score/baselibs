@@ -96,8 +96,8 @@ class Configuration final
     std::size_t GetNoOfLogFiles() const noexcept;
     void SetNoOfLogFiles(const std::size_t) noexcept;
 
-    bool IsDeleteOldLogFiles() const noexcept;
-    void SetDeleteOldLogFiles(const bool) noexcept;
+    bool IsTruncateOnRotation() const noexcept;
+    void SetTruncateOnRotation(const bool) noexcept;
 
     /// \brief Returns true if the log level is enabled for the context.
     /// \param use_console_default_level Set to true if threshold for console logging should be considered as default
@@ -166,8 +166,8 @@ class Configuration final
     /// \brief Number of log files to keep.
     std::size_t no_of_log_files_{1};
 
-    /// \brief Delete old log files when the maximum number of files is reached.
-    bool delete_old_log_files_{false};
+    /// \brief Truncate on rotation.
+    bool truncate_on_rotation_{false};
 };
 
 }  // namespace detail

@@ -507,7 +507,7 @@ score::ResultBlank ParseNoOfLogFiles(const score::json::Object& root, Configurat
     // clang-format on
 }
 
-score::ResultBlank ParseDeleteOldLogFiles(const score::json::Object& root, Configuration& config) noexcept
+score::ResultBlank ParseTruncateOnRotation(const score::json::Object& root, Configuration& config) noexcept
 {
     const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
     if (!file_rotation_obj_result.has_value())
@@ -520,7 +520,7 @@ score::ResultBlank ParseDeleteOldLogFiles(const score::json::Object& root, Confi
     return GetElementAndThen<bool>(
         file_rotation_obj_result.value().get(),
         kTruncateOnRotationKey,
-        [&config](auto value) noexcept { config.SetDeleteOldLogFiles(value); }
+        [&config](auto value) noexcept { config.SetTruncateOnRotation(value); }
     );
     // clang-format on
 }
@@ -546,7 +546,7 @@ void ParseConfigurationElements(const score::json::Object& root, const std::stri
     ReportOnError(ParseMaxLogFileSizeBytes(root, config), path);
     ReportOnError(ParseOverwriteLogOnFull(root, config), path);
     ReportOnError(ParseNoOfLogFiles(root, config), path);
-    ReportOnError(ParseDeleteOldLogFiles(root, config), path);
+    ReportOnError(ParseTruncateOnRotation(root, config), path);
 }
 
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".

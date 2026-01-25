@@ -550,7 +550,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseFileRotationStructure)
     EXPECT_EQ(config.GetMaxLogFileSizeBytes(), 12345);
     EXPECT_EQ(config.GetNoOfLogFiles(), 5);
     EXPECT_TRUE(config.IsOverwriteLogOnFull());
-    EXPECT_TRUE(config.IsDeleteOldLogFiles());
+    EXPECT_TRUE(config.IsTruncateOnRotation());
 
     // Clean up the temporary file
     std::remove(temp_file_path.c_str());
