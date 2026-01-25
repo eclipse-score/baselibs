@@ -39,22 +39,24 @@ namespace os
 namespace
 {
 
+using safecpp::literals::operator""_zsv;
+
 class InotifyInstanceImplTest : public ::testing::Test
 {
   protected:
 #ifdef __QNX__
     // On QNX /tmp filesystem does not support inotify. (Ticket-114097)
-    static constexpr auto test_directory{"/persistent/inotify_watch_test/"};
+    static constexpr auto test_directory = "/persistent/inotify_watch_test/"_zsv;
 #else
-    static constexpr auto test_directory{"/tmp/inotify_watch_test/"};
+    static constexpr auto test_directory = "/tmp/inotify_watch_test/"_zsv;
 #endif
     static constexpr auto test_filename{"file"};
     static constexpr auto test_moved_filename{"moved_file"};
 
     void SetUp() override
     {
-        internal::UnistdImpl{}.unlink(test_directory);
-        ::mkdir(test_directory, S_IRWXU | S_IRWXG | S_IRWXO);
+        internal::UnistdImpl{}.unlink(test_directory.c_str());
+        ::mkdir(test_directory.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
 
         fcntl_ = std::make_shared<FcntlImpl>();
 
@@ -101,7 +103,7 @@ class InotifyInstanceImplTest : public ::testing::Test
         // Remove all potentially created files and directories to make sure the tests get the expected events
         internal::UnistdImpl{}.unlink(test_filepath.c_str());
         internal::UnistdImpl{}.unlink(test_moved_filepath.c_str());
-        internal::UnistdImpl{}.unlink(test_directory);
+        internal::UnistdImpl{}.unlink(test_directory.c_str());
     }
 
     void CreateFile()

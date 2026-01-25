@@ -13,8 +13,8 @@
 #include "score/os/stat_impl.h"
 
 #include <sys/stat.h>
+#include <array>
 #include <cstdint>
-#include <unordered_map>
 
 namespace score
 {
@@ -22,8 +22,9 @@ namespace os
 {
 namespace
 {
+constexpr std::uint32_t map_mode_size = 12U;
 
-const std::unordered_map<Stat::Mode, std::int32_t>& GetStatModesMap() noexcept
+const std::array<std::pair<Stat::Mode, std::int32_t>, map_mode_size>& GetStatModesMap() noexcept
 {
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: macros unveil bit value */
     /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: false positive, no bitwise operations */
@@ -32,19 +33,19 @@ const std::unordered_map<Stat::Mode, std::int32_t>& GetStatModesMap() noexcept
     // Justification: std::map objects generally cannot be constexpr, as any dynamically allocated
     // storage must be released in the same evaluation of constant expression
     // coverity[autosar_cpp14_a3_3_2_violation]
-    static const std::unordered_map<Stat::Mode, std::int32_t> mapped_modes{
-        {Stat::Mode::kReadUser, S_IRUSR},
-        {Stat::Mode::kWriteUser, S_IWUSR},
-        {Stat::Mode::kExecUser, S_IXUSR},
-        {Stat::Mode::kReadGroup, S_IRGRP},
-        {Stat::Mode::kWriteGroup, S_IWGRP},
-        {Stat::Mode::kExecGroup, S_IXGRP},
-        {Stat::Mode::kReadOthers, S_IROTH},
-        {Stat::Mode::kWriteOthers, S_IWOTH},
-        {Stat::Mode::kExecOthers, S_IXOTH},
-        {Stat::Mode::kSticky, S_ISVTX},
-        {Stat::Mode::kSetGroupId, S_ISGID},
-        {Stat::Mode::kSetUserId, S_ISUID}}; /* LCOV_EXCL_BR_LINE: Not all enumerators are mapped */
+    static constexpr std::array<std::pair<Stat::Mode, std::int32_t>, map_mode_size> mapped_modes{
+        {{Stat::Mode::kReadUser, S_IRUSR},
+         {Stat::Mode::kWriteUser, S_IWUSR},
+         {Stat::Mode::kExecUser, S_IXUSR},
+         {Stat::Mode::kReadGroup, S_IRGRP},
+         {Stat::Mode::kWriteGroup, S_IWGRP},
+         {Stat::Mode::kExecGroup, S_IXGRP},
+         {Stat::Mode::kReadOthers, S_IROTH},
+         {Stat::Mode::kWriteOthers, S_IWOTH},
+         {Stat::Mode::kExecOthers, S_IXOTH},
+         {Stat::Mode::kSticky, S_ISVTX},
+         {Stat::Mode::kSetGroupId, S_ISGID},
+         {Stat::Mode::kSetUserId, S_ISUID}}}; /* LCOV_EXCL_BR_LINE: Not all enumerators are mapped */
 
     /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED */
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION */
@@ -91,9 +92,6 @@ Stat::Mode IntegerToMode(const mode_t mode) noexcept
     return stat_mode_result;
 }
 
-}  // namespace os
-}  // namespace score
-
 score::os::Stat& score::os::Stat::instance() noexcept
 {
     static score::os::StatImpl instance; /* LCOV_EXCL_BR_LINE */
@@ -113,3 +111,6 @@ std::unique_ptr<score::os::Stat> score::os::Stat::Default() noexcept
 {
     return std::make_unique<score::os::StatImpl>();
 }
+
+}  // namespace os
+}  // namespace score

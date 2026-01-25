@@ -104,6 +104,7 @@ cc_gtest_unit_test(
         "@score_baselibs//score/language/safecpp/scoped_function/details:instrumented_memory_resource",
         "@score_baselibs//score/language/safecpp/scoped_function/details:parametrization_helper",
         "@score_baselibs//score/language/safecpp/scoped_function/details:testing_allocator",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 

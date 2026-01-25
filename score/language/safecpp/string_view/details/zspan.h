@@ -118,16 +118,29 @@ class zspan
     ///          trailing null-terminator of the underyling sequence from getting overwritten.
     ///
     template <bool is_read_only>
+    // For class `basic_element_accessor`, move-assignment operator does explicitly not get defined for below reason.
+    // NOLINTNEXTLINE(cppcoreguidelines-special-member-functions) intentional, move-assign shall default to copy-assign
     class basic_element_accessor
     {
       public:
-        /// @brief constructs an `basic_element_accessor` for provided \p data; at position \p index;
+        /// @brief destructor
+        ~basic_element_accessor() noexcept = default;
+
+        /// @brief move construction is prohibited
+        constexpr basic_element_accessor(basic_element_accessor&&) noexcept = delete;
+
+        /// @brief copy construction is prohibited
+        constexpr basic_element_accessor(const basic_element_accessor&) noexcept = delete;
+
+        /// @brief constructs a `basic_element_accessor` for provided \p data; at position \p index;
+        /// @note assumes that \p data; is a valid pointer and \p index; is in bounds
+        /// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic) see above note as justification
         constexpr basic_element_accessor(pointer data, size_type index) noexcept : element_{&data[index]} {}
 
         /// @brief given that assigments are permitted and value types are assignable, assigns provided \p value;
-        template <typename ValueType>
-        constexpr std::enable_if_t<std::is_assignable_v<reference, ValueType>, basic_element_accessor&> operator=(
-            ValueType value) noexcept(std::is_nothrow_assignable_v<reference, ValueType>)
+        template <typename ValueType, std::enable_if_t<std::is_assignable_v<reference, ValueType>, bool> = true>
+        constexpr basic_element_accessor& operator=(ValueType value) noexcept(
+            std::is_nothrow_assignable_v<reference, ValueType>)
         {
             static_assert(not(is_read_only),
                           "safecpp::details::zspan::basic_element_accessor: assignments "
@@ -137,18 +150,23 @@ class zspan
         }
 
         /// @brief given that assigments are permitted, performs assignment of the underlying element
-        constexpr basic_element_accessor& operator=(const basic_element_accessor& other) noexcept
+        constexpr basic_element_accessor& operator=(const basic_element_accessor& other) noexcept(
+            std::is_nothrow_assignable_v<reference, reference>)
         {
             static_assert(not(is_read_only),
                           "safecpp::details::zspan::basic_element_accessor: assignments "
                           "are not permitted for this readonly element accessor type");
-            *element_ = *other.element_;
+            if (this != &other)
+            {
+                *element_ = *other.element_;
+            }
             return *this;
         }
 
         /// @brief swap operator for `basic_element_accessor`
         /// @details swaps the _underlying_ elements being referenced by \p lhs; and \p rhs;
-        friend constexpr void swap(basic_element_accessor lhs, basic_element_accessor rhs) noexcept
+        friend constexpr void swap(basic_element_accessor lhs, basic_element_accessor rhs) noexcept(
+            std::is_nothrow_assignable_v<reference, reference>)
         {
             static_assert(not(is_read_only),
                           "safecpp::details::zspan::basic_element_accessor: swapping "
@@ -164,6 +182,15 @@ class zspan
         constexpr operator const_reference() const noexcept
         {
             return *element_;
+        }
+
+      private:
+        /// @brief operator for taking the address of `basic_element_accessor` is marked private
+        /// @details Rationale is to prevent exposing any (non-const) pointer to the underlying sequence
+        ///          which can potentially be used to overwrite the trailing null-terminator.
+        const basic_element_accessor* operator&() const noexcept
+        {
+            return this;
         }
 
       private:

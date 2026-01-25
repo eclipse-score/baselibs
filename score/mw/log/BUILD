@@ -19,7 +19,12 @@ COMPILER_WARNING_FEATURES = [
     "strict_warnings",
 ]
 
-# mw/log target with all available backends is now available in @score_logging
+alias(
+    name = "log",
+    actual = ":frontend",
+    deprecation = "DEPRECATED: use @score_baselibs//score/mw/log:frontend instead. Refer usage in mw/log/README.md",
+    visibility = ["//visibility:public"],
+)
 
 cc_library(
     name = "frontend",

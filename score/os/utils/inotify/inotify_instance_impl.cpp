@@ -16,13 +16,16 @@
 #include "score/os/sys_poll_impl.h"
 #include "score/os/unistd.h"
 
-#include "score/language/safecpp/string_view/null_termination_check.h"
-
 namespace score
 {
 namespace os
 {
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Rationale: Constructor is intentionally noexcept and performs mandatory
+// dependency creation using std::make_shared. Exception propagation is not
+// allowed, unrecoverable construction failure may terminate.
+// coverity[autosar_cpp14_a15_5_3_violation]
 InotifyInstanceImpl::InotifyInstanceImpl() noexcept
     : InotifyInstanceImpl{std::make_shared<InotifyImpl>(),
                           std::make_shared<FcntlImpl>(),
@@ -50,6 +53,10 @@ InotifyInstanceImpl::InotifyInstanceImpl(const std::shared_ptr<Inotify>& inotify
     }
     inotify_file_descriptor_ = std::move(expected_inotify_file_descriptor.value());
 
+    // Suppress "AUTOSAR C++14 A8-5-0", The rule states: "All memory shall be initialized before it is read."
+    // Rationale: IsValid() returns construction_error_, which is explicitly
+    // value-initialized in the constructor. No uninitialized memory is read.
+    // coverity[autosar_cpp14_a8_5_0_violation]
     const auto valid_reader = reader_.IsValid();
     if (!(valid_reader.has_value()))
     {
@@ -82,7 +89,7 @@ void InotifyInstanceImpl::InternalClose() noexcept
     }
 }
 
-score::cpp::expected<InotifyWatchDescriptor, Error> InotifyInstanceImpl::AddWatch(std::string_view pathname,
+score::cpp::expected<InotifyWatchDescriptor, Error> InotifyInstanceImpl::AddWatch(safecpp::zstring_view pathname,
                                                                            Inotify::EventMask event_mask) noexcept
 {
     if (!(IsValid().has_value()))
@@ -92,12 +99,8 @@ score::cpp::expected<InotifyWatchDescriptor, Error> InotifyInstanceImpl::AddWatc
 
     {
         std::shared_lock<std::shared_timed_mutex> lock{inotify_file_descriptor_mutex_};
-        // NOTE: Below use of `safecpp::GetPtrToNullTerminatedUnderlyingBufferOf()` will emit a deprecation warning here
-        //       since it is used in conjunction with `std::string_view`. Thus, it must get fixed appropriately instead!
-        //       For examples about how to achieve that, see
-        //       broken_link_g/swh/safe-posix-platform/blob/master/score/language/safecpp/string_view/README.md
-        const auto expected_watch_descriptor = inotify_->inotify_add_watch(
-            inotify_file_descriptor_, safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(pathname), event_mask);
+        const auto expected_watch_descriptor =
+            inotify_->inotify_add_watch(inotify_file_descriptor_, pathname.c_str(), event_mask);
         if (!expected_watch_descriptor.has_value())
         {
             return score::cpp::make_unexpected(expected_watch_descriptor.error());
@@ -127,6 +130,7 @@ score::cpp::expected_blank<Error> InotifyInstanceImpl::RemoveWatch(InotifyWatchD
 }
 
 score::cpp::expected<score::cpp::static_vector<InotifyEvent, InotifyInstanceImpl::max_events>, Error>
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: function implementation inside a namespace (Ticket-234468)
 InotifyInstanceImpl::Read() noexcept
 {
     if (!(IsValid().has_value()))
@@ -162,9 +166,9 @@ InotifyInstanceImpl::Read() noexcept
         // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
         // Rationale: Reinterpret_cast required to access the raw data from a span as a structured inotify_event.
         // Correct alignment and sufficient space for storing inotify_event objects is provided.
-        // coverity[autosar_cpp14_a5_2_4_violation]
         // Suppress “AUTOSAR_Cpp14_A4_7_1” rule finding: “An integer expression shall not lead to data loss..”
         // Rationale: Overflow / underflow is not possible here
+        // coverity[autosar_cpp14_a5_2_4_violation]
         // coverity[autosar_cpp14_a4_7_1_violation]
         const auto event = reinterpret_cast<const struct inotify_event*>(it.current());
         // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)

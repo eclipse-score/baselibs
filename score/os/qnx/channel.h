@@ -24,10 +24,6 @@
 #include <unistd.h>
 #include <cstdlib>
 
-#ifndef __RCVID_T_SIZE
-using rcvid_t = int;
-#endif
-
 namespace score
 {
 namespace os
@@ -39,7 +35,7 @@ namespace os
 // In QNX 8, rcvid_t is a native type (int64_t).
 // QNX 7 doesn't have a distinct type for receive id, but expects it to be int.
 #ifndef __RCVID_T_SIZE
-typedef int rcvid_t;
+using rcvid_t = int;
 #endif
 
 class Channel : public ObjectSeam<Channel>

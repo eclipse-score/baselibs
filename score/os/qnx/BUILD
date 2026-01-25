@@ -216,28 +216,7 @@ cc_library(
     ],
 )
 
-cc_library(
-    name = "pci_safety",
-    srcs = [
-        "pci_safety.cpp",
-        "pci_safety_impl.cpp",
-    ],
-    hdrs = [
-        "pci_safety.h",
-        "pci_safety_impl.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    target_compatible_with = ["@platforms//os:qnx"],
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        "//third_party/libpci_safety",
-        "@score_baselibs//score/os:errno",
-        "@score_baselibs//score/os:object_seam",
-    ],
-)
+# safety target removed
 
 cc_library(
     name = "resmgr",
@@ -473,8 +452,7 @@ cc_library(
         "//third_party/fscrypto",
         "@score_baselibs//score/os:errno",
     ] + select({
-        # qnx_version:qnx8
-        "@platforms//os:qnx": [
+        "@score_bazel_platforms//:qnx8_0": [
             "//third_party/qcrypto",
         ],
         "//conditions:default": [],

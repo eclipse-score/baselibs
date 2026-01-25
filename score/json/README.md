@@ -179,10 +179,10 @@ if (str.has_value())
 }
 ```
 
-The alternative is getting it directly as `score::cpp::string_view`:
+The alternative is getting it directly as `std::string_view`:
 
 ```C++
-score::cpp::string_view str = element.As<score::cpp::string_view>();
+std::string_view str = element.As<std::string_view>();
 ```
 
 **Note** that the lifetime of any returned `reference_wrapper` and `string_view`

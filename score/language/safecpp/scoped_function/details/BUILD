@@ -32,6 +32,7 @@ cc_gtest_unit_test(
         ":allocator_wrapper",
         ":testing_allocator",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 

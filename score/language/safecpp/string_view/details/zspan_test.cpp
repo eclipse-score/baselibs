@@ -75,10 +75,16 @@ TEST(ZSpan, CanAssignElements)
     // Then the `zspan`'s underlying buffer must have gotten modified
     EXPECT_STREQ(buffer, "fello folks");
 
-    // When modifying one the `zspan`'s elements with another one
+    // When modifying one of the `zspan`'s elements with another one
     span[0] = span[9];
 
     // Then the `zspan`'s underlying buffer must have gotten modified accordingly
+    EXPECT_STREQ(buffer, "kello folks");
+
+    // When modifying one of the `zspan`'s elements with itself (self assignment)
+    span[1] = span[1];
+
+    // Then the `zspan`'s underlying buffer must remain unchanged
     EXPECT_STREQ(buffer, "kello folks");
 
     // When swapping two of the `zspan`'s elements

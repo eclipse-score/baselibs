@@ -1,6 +1,19 @@
+/********************************************************************************
+ * Copyright (c) 2016 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
 ///
 /// \file
-/// \copyright Copyright (C) 2016-2018, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2016 Contributors to the Eclipse Foundation
 ///
 
 #include <score/range_pair.hpp>
@@ -118,7 +131,6 @@ TEST(range_pair, range_pair_in_range_based_for_loop)
     std::int32_t const a[5] = {0, 1, 2, 3, 4};
     auto const rp = score::cpp::make_range_pair(a, a + 5U);
 
-#if __cplusplus >= 201103L
     // the actual reason for this class
     std::int32_t i = 0;
     for (auto k : rp)
@@ -127,7 +139,5 @@ TEST(range_pair, range_pair_in_range_based_for_loop)
         ++i;
     }
     EXPECT_EQ(i, 5U);
-#endif
-
     EXPECT_EQ(std::accumulate(rp.begin(), rp.end(), 0), 10U);
 }

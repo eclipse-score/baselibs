@@ -12,6 +12,7 @@
  ********************************************************************************/
 #include "score/memory/shared/shared_memory_resource.h"
 #include "score/language/safecpp/safe_math/details/addition_subtraction/addition_subtraction.h"
+#include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/memory/shared/memory_resource_proxy.h"
 #include "score/memory/shared/memory_resource_registry.h"
 #include "score/memory/shared/pointer_arithmetic_util.h"
@@ -86,9 +87,11 @@ constexpr auto kTmpPathPrefix = "/tmp";
 
 constexpr auto readWriteAccessForUser = Stat::Mode::kReadUser | Stat::Mode::kWriteUser;
 constexpr auto readAccessForEveryBody = readWriteAccessForUser | Stat::Mode::kReadGroup | Stat::Mode::kReadOthers;
+// coverity[autosar_cpp14_a0_1_1_violation] false-positive: used in mask compensation
 constexpr auto readWriteAccessForEveryBody =
     readAccessForEveryBody | Stat::Mode::kWriteGroup | Stat::Mode::kWriteOthers;
 
+// coverity[autosar_cpp14_a0_1_1_violation] false-positive: used in waitForOtherProcessAndOpen
 constexpr auto read_only = ::score::os::Stat::Mode::kReadUser;
 
 // Suppress "AUTOSAR C++14 A2-10-4" rule finding: The identifier name of a non-member object with static storage
@@ -137,7 +140,7 @@ static std::shared_ptr<SharedMemoryResource> CreateInstance(Args&&... args)
     return std::make_shared<MakeSharedEnabler>(std::forward<Args>(args)...);
 }
 
-bool doesFileExist(const score::cpp::string_view filePath)
+bool doesFileExist(const safecpp::zstring_view filePath)
 {
     ::score::os::StatBuffer buffer{};
     // NOTE: Below uses of `safecpp::GetPtrToNullTerminatedUnderlyingBufferOf()` will emit a deprecation warning here
@@ -162,6 +165,7 @@ bool doesFileExist(const score::cpp::string_view filePath)
     return result.has_value();
 }
 
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in waitUntilInitializedByOtherProcess
 bool waitForFreeLockFile(const std::string& lock_file_path)
 {
     constexpr std::chrono::milliseconds timeout{500};
@@ -172,14 +176,14 @@ bool waitForFreeLockFile(const std::string& lock_file_path)
     static_assert(maxRetryCount <= std::numeric_limits<decltype(retryCount)>::max(),
                   "Counter `retryCount` cannot hold maxRetryCount.");
 
-    bool lockFileExists = doesFileExist(lock_file_path.c_str());
+    bool lockFileExists = doesFileExist(lock_file_path);
     // LCOV_EXCL_BR_START (Tool false positive: We check check all decisions i.e. that lock file does not exist, lock
     // file exists and retry count is less than max retry count and lock file exists and retry count is equal to max
     // retry count. It's impossible that the retry count check will fail when entering the loop which may be what the
     // tool wants us to check.)
     while (lockFileExists && (retryCount < maxRetryCount))
     {
-        lockFileExists = doesFileExist(lock_file_path.c_str());
+        lockFileExists = doesFileExist(lock_file_path);
         retryCount++;
         std::this_thread::sleep_for(retryAfter);
     }
@@ -187,6 +191,7 @@ bool waitForFreeLockFile(const std::string& lock_file_path)
     return !lockFileExists;  // we want to return true if lock file does no longer exist, otherwise false.
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 score::os::IAccessControlList::UserIdentifier GetCreatorUidFromTypedmemd(
     std::string_view path,
     const score::memory::shared::TypedMemory& typed_memory_ptr) noexcept
@@ -272,6 +277,7 @@ void* do_allocation_algorithm(const void* const alloc_start,
 
 }  // namespace detail
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 Stat::Mode SharedMemoryResource::calcStatModeForPermissions(const UserPermissions& permissions) noexcept
 {
     if (std::holds_alternative<WorldWritable>(permissions))
@@ -297,6 +303,7 @@ Stat::Mode SharedMemoryResource::calcStatModeForPermissions(const UserPermission
     }
 }
 
+// coverity[autosar_cpp14_a12_4_1_violation] only std::enable_shared_from_this has non-virtual destructor
 SharedMemoryResource::~SharedMemoryResource()
 {
     MemoryResourceRegistry::getInstance().remove_resource(memory_identifier_);
@@ -438,38 +445,33 @@ score::cpp::expected<std::shared_ptr<SharedMemoryResource>, score::os::Error> Sh
 SharedMemoryResource::SharedMemoryResource(std::string input_path,
                                            AccessControlListFactory acl_factory,
                                            std::shared_ptr<TypedMemory> typed_memory_ptr) noexcept
-    : ISharedMemoryResource{},
-      std::enable_shared_from_this<SharedMemoryResource>{},
-      file_descriptor_{-1},
-      file_owner_uid_{static_cast<uid_t>(-1)},
-      lock_file_path_{GetLockFilePath(input_path)},
-      virtual_address_space_to_reserve_{},
-      typed_memory_ptr_{typed_memory_ptr},
-      opening_mode_{::score::os::Fcntl::Open::kReadOnly},
-      map_mode_{::score::os::Mman::Protection::kRead},
-      base_address_{nullptr},
-      control_block_{nullptr},
-      acl_factory_{std::move(acl_factory)},
-      is_shm_in_typed_memory_{false},
-      log_identification_{"file: " + input_path},
-      memory_identifier_{score::cpp::hash_bytes(input_path.data(), input_path.size())},
-      shared_memory_resource_identifier_{input_path},
-      start_{nullptr}
+    : SharedMemoryResource(std::variant<std::string, std::uint64_t>{std::move(input_path)},
+                           std::move(acl_factory),
+                           std::move(typed_memory_ptr))
 {
-    // We use memory_identifier_ == 0 as a sentinel value in OffsetPtr to indicate that the OffsetPtr doesn't belong to
-    // a MemoryResource. Therefore, memory_identifier_ can never be 0U. With the current implementation of
-    // score::cpp::hash_bytes, can not be 0 as long as input_path.size() is not 0.
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(memory_identifier_ != 0U, "");
 }
 
 SharedMemoryResource::SharedMemoryResource(std::uint64_t shared_memory_resource_id,
+                                           AccessControlListFactory acl_factory,
+                                           std::shared_ptr<TypedMemory> typed_memory_ptr) noexcept
+    : SharedMemoryResource(std::variant<std::string, std::uint64_t>{shared_memory_resource_id},
+                           std::move(acl_factory),
+                           std::move(typed_memory_ptr))
+{
+}
+// SCORE_LANGUAGE_FUTURECPP_ASSERT_PROD intentionally calls std::abort() on assertion failure, which is
+// not marked noexcept by design to allow proper termination handling
+// coverity[autosar_cpp14_a15_5_3_violation]
+SharedMemoryResource::SharedMemoryResource(std::variant<std::string, std::uint64_t> identifier,
                                            AccessControlListFactory acl_factory,
                                            std::shared_ptr<TypedMemory> typed_memory_ptr) noexcept
     : ISharedMemoryResource{},
       std::enable_shared_from_this<SharedMemoryResource>{},
       file_descriptor_{-1},
       file_owner_uid_{static_cast<uid_t>(-1)},
-      lock_file_path_{std::nullopt},
+      lock_file_path_{std::holds_alternative<std::string>(identifier)
+                          ? std::optional{GetLockFilePath(std::get<std::string>(identifier))}
+                          : std::nullopt},
       virtual_address_space_to_reserve_{},
       typed_memory_ptr_{typed_memory_ptr},
       opening_mode_{::score::os::Fcntl::Open::kReadOnly},
@@ -478,11 +480,19 @@ SharedMemoryResource::SharedMemoryResource(std::uint64_t shared_memory_resource_
       control_block_{nullptr},
       acl_factory_{std::move(acl_factory)},
       is_shm_in_typed_memory_{false},
-      log_identification_{"id: " + std::to_string(shared_memory_resource_id)},
-      memory_identifier_{shared_memory_resource_id},
-      shared_memory_resource_identifier_{shared_memory_resource_id},
+      log_identification_{std::holds_alternative<std::string>(identifier)
+                              ? "file: " + std::get<std::string>(identifier)
+                              : "id: " + std::to_string(std::get<std::uint64_t>(identifier))},
+      memory_identifier_{
+          std::holds_alternative<std::string>(identifier)
+              ? score::cpp::hash_bytes(std::get<std::string>(identifier).data(), std::get<std::string>(identifier).size())
+              : std::get<std::uint64_t>(identifier)},
+      shared_memory_resource_identifier_{identifier},
       start_{nullptr}
 {
+    // We use memory_identifier_ == 0 as a sentinel value in OffsetPtr to indicate that the OffsetPtr doesn't belong to
+    // a MemoryResource. Therefore, memory_identifier_ can never be 0U. With the current implementation of
+    // score::cpp::hash_bytes, can not be 0 as long as input_path.size() is not 0.
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(memory_identifier_ != 0U, "");
 }
 
@@ -641,11 +651,13 @@ auto SharedMemoryResource::loadInternalsFromSharedMemory() noexcept -> void
     this->start_ = CalculateUsableStartAddress(this->base_address_, GetNeededManagementSpace());
 }
 
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in CreateImpl
 auto SharedMemoryResource::initializeInternalsInSharedMemory() noexcept -> void
 {
     this->initializeControlBlock();
 }
 
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in destructor
 auto SharedMemoryResource::deinitalizeInternalsInSharedMemory() noexcept -> void
 {
     // We do not de-initialize our memory part. This would cause problems
@@ -661,11 +673,17 @@ auto SharedMemoryResource::getOwnerUid() const noexcept -> uid_t
     return this->file_owner_uid_;
 }
 
+// bad_alloc may be raised due to allocation failure.
+// and termination is the appropriate safe response as it provides no-run state, and
+// without it safe execution cannot continued
+// coverity[autosar_cpp14_a15_5_3_violation] see above
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in constructor
 auto SharedMemoryResource::GetLockFilePath(const std::string& input_path) noexcept -> std::string
 {
     return std::string{kTmpPathPrefix} + input_path + "_lock";
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 auto SharedMemoryResource::getMemoryResourceProxy() noexcept -> const MemoryResourceProxy*
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(this->control_block_ != nullptr,
@@ -788,6 +806,7 @@ auto SharedMemoryResource::GetIdentifier() const noexcept -> std::string_view
     return log_identification_;
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 auto SharedMemoryResource::GetFileDescriptor() const noexcept -> FileDescriptor
 {
     return file_descriptor_;
@@ -798,6 +817,7 @@ auto SharedMemoryResource::IsShmInTypedMemory() const noexcept -> bool
     return is_shm_in_typed_memory_;
 }
 
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: part of the public API
 auto SharedMemoryResource::do_deallocate(void*, std::size_t, std::size_t) -> void
 {
     std::lock_guard<score::os::InterprocessMutex> lock(this->control_block_->mutex);
@@ -807,6 +827,7 @@ auto SharedMemoryResource::do_deallocate(void*, std::size_t, std::size_t) -> voi
      */
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 auto SharedMemoryResource::do_is_equal(const memory_resource& other) const noexcept -> bool
 {
     const auto* const otherCasted = dynamic_cast<const SharedMemoryResource*>(&other);
@@ -830,6 +851,7 @@ void SharedMemoryResource::CompensateUmask(const os::Stat::Mode target_rights) c
     }
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 auto SharedMemoryResource::ApplyPermissions(const UserPermissions& permissions) noexcept -> void
 {
     if (std::holds_alternative<UserPermissionsMap>(permissions))
@@ -953,6 +975,7 @@ score::cpp::expected_blank<score::os::Error> SharedMemoryResource::CreateLockFil
     return {};
 }
 
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
 void SharedMemoryResource::AllocateInTypedMemory(const UserPermissions& permissions, Fcntl::Open& flags) noexcept
 {
     const auto* const path = std::get_if<std::string>(&shared_memory_resource_identifier_);

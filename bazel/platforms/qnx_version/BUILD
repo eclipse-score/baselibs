@@ -12,18 +12,12 @@
 # *******************************************************************************
 package(default_visibility = ["//visibility:public"])
 
-constraint_setting(name = "qnx_version")
-
-constraint_value(
+alias(
     name = "qnx7",
-    constraint_setting = ":qnx_version",
+    actual = "@score_bazel_platforms//:qnx7_1",
 )
 
-constraint_value(
+alias(
     name = "qnx8",
-    constraint_setting = ":qnx_version",
+    actual = "@score_bazel_platforms//:qnx8_0",
 )
-
-exports_files([
-    "BUILD",
-])

@@ -67,5 +67,50 @@ struct tm* TimeImpl::localtime_r(const time_t* timer, struct tm* tm_local_time) 
     return local_time;
 }
 
+score::cpp::expected<std::int32_t, Error> TimeImpl::timer_create(const clockid_t clock_id,
+                                                          sigevent* const evp,
+                                                          timer_t* const timerid) const noexcept
+{
+    const std::int32_t ret{::timer_create(clock_id, evp, timerid)};
+    if (ret < 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return ret;
+}
+
+score::cpp::expected<std::int32_t, Error> TimeImpl::timer_delete(const timer_t timerid) const noexcept
+{
+    const std::int32_t ret{::timer_delete(timerid)};
+    if (ret < 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return ret;
+}
+
+score::cpp::expected<std::int32_t, Error> TimeImpl::timer_settime(const timer_t timerid,
+                                                           const int32_t flags,
+                                                           const itimerspec* const value,
+                                                           itimerspec* const ovalue) const noexcept
+{
+    const std::int32_t ret{::timer_settime(timerid, flags, value, ovalue)};
+    if (ret < 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return ret;
+}
+
+score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getcpuclockid(const pid_t pid, clockid_t& clock_id) const noexcept
+{
+    const std::int32_t ret{::clock_getcpuclockid(pid, &clock_id)};
+    if (ret != 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return ret;
+}
+
 }  // namespace os
 }  // namespace score

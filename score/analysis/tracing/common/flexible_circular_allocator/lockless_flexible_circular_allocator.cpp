@@ -120,6 +120,8 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetTmdMemUsage(Tmd
     tmd_stats.tmd_average = cumulative_usage_.exchange(0U) / number_of_allocations;
     tmd_stats.tmd_alloc_rate =
         static_cast<float>(dealloc_cntr_.exchange(0U)) / static_cast<float>(number_of_allocations);
+    tmd_stats.tmd_allocate_retry_cntr = allocate_retry_cntr_.exchange(0);
+    tmd_stats.tmd_allocate_call_cntr = allocate_call_cntr_.exchange(0);
 }
 
 template <template <class> class AtomicIndirectorType>
@@ -129,6 +131,9 @@ template <template <class> class AtomicIndirectorType>
 void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const std::size_t size,
                                                                         const std::size_t alignment_size) noexcept
 {
+    allocate_call_cntr_++;
+
+    // Clear any previous error state
     ClearError();
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
     // not lead to data loss.".
@@ -148,10 +153,14 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
 
         return nullptr;
     }
+    // this condition is not testable because of previous available memory check.
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (aligned_size > std::numeric_limits<std::uint32_t>::max())
     {
         return nullptr;
     }
+    // LCOV_EXCL_STOP
     std::ignore = available_size_.fetch_sub(static_cast<std::uint32_t>(aligned_size), std::memory_order_seq_cst);
 
     std::uint32_t list_entry_element_index = 0U;
@@ -164,6 +173,10 @@ void* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Allocate(const st
         {
             list_entry_element_index = new_list_queue_head;
             break;
+        }
+        else
+        {
+            allocate_retry_cntr_++;
         }
 
         if (retries == kMaxRetries - 1U)
@@ -285,11 +298,16 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsRequestedBlockAt
     const BufferBlock* meta) const
 {
     // Validate list_entry_offset before using it to prevent out-of-bounds access
+    // this line is a defensive check that's only reachable
+    // if memory corruption occurs between two validation points in the same Deallocate.
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (!ValidateListEntryIndex(meta->list_entry_offset))
     {
         SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
         return false;  // For invalid offset
     }
+    // LCOV_EXCL_STOP
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
     // not lead to data loss.".
     // Rationale: All operands and operations are performed using std::uint32_t. Since both
@@ -313,26 +331,35 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDea
     while (init_tail != buffer_queue_head_.load())
     {
         uint8_t* block_ptr = GetBufferPositionAt(init_tail);
+        // broken_link_j/Ticket-230467 investagation_ticket
+        // LCOV_EXCL_START
         if (block_ptr == nullptr)
         {
             SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
             break;  // Out-of-bounds offset detected
         }
+        // LCOV_EXCL_STOP
         BufferBlock* current_block = cast_to_buffer_block(block_ptr);
+        // broken_link_j/Ticket-230467 investagation_ticket
+        // LCOV_EXCL_START
         if (current_block == nullptr)
         {
             SetError(FlexibleAllocatorErrorCode::kCorruptedBufferBlock);
             break;  // Alignment validation failed, stop iteration
         }
+        // LCOV_EXCL_STOP
         if (init_tail == 0U)
         {
             MarkListEntryAsFree(current_block);
             // Check if MarkListEntryAsFree encountered an error
             auto error = GetLastError();
+            // broken_link_j/Ticket-230467 investagation_ticket
+            // LCOV_EXCL_START
             if (*error != 0)
             {
                 break;  // break the loop to avoid further corruption
             }
+            // LCOV_EXCL_STOP
         }
         // list_entry_offset is always set internally via controlled allocation paths, making invalid
         // indices impossible during normal operation.
@@ -347,10 +374,13 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDea
                 FreeBlock(*current_block);
                 // Check if FreeBlock encountered an error
                 auto error = GetLastError();
+                // broken_link_j/Ticket-230467 investagation_ticket
+                // LCOV_EXCL_START
                 if (*error != 0)
                 {
                     break;  // break the loop to avoid further corruption
                 }
+                // LCOV_EXCL_STOP
 
                 init_tail += current_block->block_length;
 
@@ -467,11 +497,14 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(BufferBl
     }
 
     // Validate list_entry_offset before using it to prevent out-of-bounds access
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (!ValidateListEntryIndex(current_block.list_entry_offset))
     {
         SetError(FlexibleAllocatorErrorCode::kInvalidListEntryOffset);
         return;  // Early return to prevent crash
     }
+    // LCOV_EXCL_STOP
 
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
@@ -530,10 +563,13 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsInBounds(const v
     }
     // NOLINTBEGIN(score-no-pointer-comparison): Needed pointer comparisons for validating memory ranges safely
     uint8_t* end_ptr = GetBufferPositionAt(GetSize() - size);
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (end_ptr == nullptr)
     {
         return false;  // Invalid offset, out of bounds
     }
+    // LCOV_EXCL_STOP
     if ((address >= GetBaseAddress()) && (address <= static_cast<void*>(end_ptr)))
     {
         return true;
@@ -563,28 +599,40 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithWr
             break;
         }
     }
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (new_buffer_queue_head < aligned_size)
     {
         return nullptr;
     }
+    // LCOV_EXCL_STOP
     uint8_t* block_ptr = GetBufferPositionAt(static_cast<std::uint32_t>(new_buffer_queue_head) - aligned_size);
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (block_ptr == nullptr)
     {
         return nullptr;  // Out-of-bounds offset detected
     }
+    // LCOV_EXCL_STOP
     auto block_meta_data = cast_to_buffer_block(block_ptr);
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (block_meta_data == nullptr)
     {
         return nullptr;  // Alignment validation failed in cast_to_buffer_block
     }
+    // LCOV_EXCL_STOP
     block_meta_data->list_entry_offset = list_entry_element_index;
     block_meta_data->block_length = static_cast<uint32_t>(aligned_size);
     allocated_address = GetBufferPositionAt(static_cast<std::size_t>(new_buffer_queue_head) -
                                             static_cast<std::size_t>(aligned_size) + sizeof(BufferBlock));
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (allocated_address == nullptr)
     {
         return nullptr;  // Out-of-bounds offset detected
     }
+    // LCOV_EXCL_STOP
     if (aligned_size > std::numeric_limits<std::uint16_t>::max())
     {
         // Return early if aligned_size exceeds the maximum value representable by std::uint32_t,
@@ -593,11 +641,14 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithWr
     }
 
     // Validate list_entry_element_index before using it to prevent out-of-bounds access
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (!ValidateListEntryIndex(list_entry_element_index))
     {
         SetError(FlexibleAllocatorErrorCode::kInvalidListEntryOffset);
         return nullptr;
     }
+    // LCOV_EXCL_STOP
 
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
@@ -633,31 +684,43 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithNo
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
         {
+            // broken_link_j/Ticket-230467 investagation_ticket
+            // LCOV_EXCL_START
             if (new_buffer_queue_head < static_cast<unsigned int>(aligned_size))
             {
                 return nullptr;
             }
+            // LCOV_EXCL_STOP
             offset = new_buffer_queue_head - aligned_size;
             break;
         }
     }
     uint8_t* block_ptr = GetBufferPositionAt(offset);
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (block_ptr == nullptr)
     {
         return nullptr;  // Out-of-bounds offset detected
     }
+    // LCOV_EXCL_STOP
     auto block_meta_data = cast_to_buffer_block(block_ptr);
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (block_meta_data == nullptr)
     {
         return nullptr;  // Alignment validation failed in cast_to_buffer_block
     }
+    // LCOV_EXCL_STOP
     block_meta_data->list_entry_offset = list_entry_element_index;
     block_meta_data->block_length = static_cast<std::uint32_t>(aligned_size);
     allocated_address = GetBufferPositionAt(static_cast<std::size_t>(offset) + sizeof(BufferBlock));
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (allocated_address == nullptr)
     {
         return nullptr;  // Out-of-bounds offset detected
     }
+    // LCOV_EXCL_STOP
     if (aligned_size > std::numeric_limits<std::uint16_t>::max())
     {
         // Return early if aligned_size exceeds the maximum value representable by std::uint32_t,
@@ -666,11 +729,14 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::AllocateWithNo
     }
 
     // Validate list_entry_element_index before using it to prevent out-of-bounds access
+    // broken_link_j/Ticket-230467 investagation_ticket
+    // LCOV_EXCL_START
     if (!ValidateListEntryIndex(list_entry_element_index))
     {
         SetError(FlexibleAllocatorErrorCode::kInvalidListEntryOffset);
         return nullptr;
     }
+    // LCOV_EXCL_STOP
 
     // The retries loop is designed to secure successful completion well within the set limit. kMaxRetries
     // is intentionally set high to ensure operations reliably complete without reaching it, aligning with
@@ -756,7 +822,9 @@ uint8_t* LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetBufferPosit
     }
     if (static_cast<std::size_t>(offset) > static_cast<std::size_t>(total_size_))
     {
-        return nullptr;  // Out-of-bounds offset
+        // Out-of-bounds offset
+        // broken_link_j/Ticket-230467 investagation_ticket
+        return nullptr;  // LCOV_EXCL_LINE : see comment above.
     }
     // Suppress "AUTOSAR C++14 M5-2-8" rule finding. This rule states:
     // "An object with integer type or pointer to void type shall not be

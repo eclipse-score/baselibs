@@ -348,10 +348,12 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnp(
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__)
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getxflags(const posix_spawnattr_t* attrp,
-                                                                        std::uint32_t* flags_p) const noexcept
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#if __QNX__ >= 800
+score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_getrunmask_np(const posix_spawnattr_t* attrp,
+                                                                              std::uint64_t* runmask_p) const noexcept
 {
-    const std::int32_t result = ::posix_spawnattr_getxflags(attrp, flags_p);
+    const std::int32_t result = ::pthread_spawnattr_getrunmask_np(attrp, runmask_p);
     if (result != 0)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -359,17 +361,18 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getxflags(c
     return result;
 }
 
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setxflags(posix_spawnattr_t* attrp,
-                                                                        std::uint32_t flags) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_setrunmask_np(posix_spawnattr_t* attrp,
+                                                                              std::uint64_t runmask) const noexcept
 {
-    const std::int32_t result = ::posix_spawnattr_setxflags(attrp, flags);
+    const std::int32_t result = ::pthread_spawnattr_setrunmask_np(attrp, runmask);
     if (result != 0)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
     return result;
 }
-
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#else
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getrunmask(const posix_spawnattr_t* attrp,
                                                                          std::uint32_t* runmask_p) const noexcept
 {
@@ -385,6 +388,29 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setrunmask(
                                                                          std::uint32_t runmask) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setrunmask(attrp, runmask);
+    if (result != 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return result;
+}
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#endif
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getxflags(const posix_spawnattr_t* attrp,
+                                                                        std::uint32_t* flags_p) const noexcept
+{
+    const std::int32_t result = ::posix_spawnattr_getxflags(attrp, flags_p);
+    if (result != 0)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno());
+    }
+    return result;
+}
+
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setxflags(posix_spawnattr_t* attrp,
+                                                                        std::uint32_t flags) const noexcept
+{
+    const std::int32_t result = ::posix_spawnattr_setxflags(attrp, flags);
     if (result != 0)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
@@ -439,6 +465,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setstackmax
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getnode(const posix_spawnattr_t* attrp,
                                                                       std::uint32_t* node_p) const noexcept
 {
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if (_NTO_VERSION <= 710)
     const std::int32_t result = ::posix_spawnattr_getnode(attrp, node_p);
     if (result != 0)
@@ -446,16 +473,19 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getnode(con
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
     return result;
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #else
     (void)attrp;
     (void)node_p;
     return score::cpp::make_unexpected(Error::createFromErrno(ENOTSUP));
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #endif
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setnode(posix_spawnattr_t* attrp,
                                                                       std::uint32_t node) const noexcept
 {
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if (_NTO_VERSION <= 710)
     const std::int32_t result = ::posix_spawnattr_setnode(attrp, node);
     if (result != 0)
@@ -463,10 +493,12 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setnode(pos
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
     return result;
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #else
     (void)attrp;
     (void)node;
     return score::cpp::make_unexpected(Error::createFromErrno(ENOTSUP));
+    // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #endif
 }
 

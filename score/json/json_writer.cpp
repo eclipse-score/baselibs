@@ -217,12 +217,15 @@ score::Result<std::string> ToBufferInternal(const T& json_data)
     // This line must be hit when the function is called. Since other parts of this function show line coverage,
     // this line must also be hit. Missing coverage is due to a bug in the coverage tool
     std::ostringstream string_stream{};  // LCOV_EXCL_LINE
-    // Rationale: Static locale with custom facet requires runtime initialization.
-    // std::locale constructor with facet cannot be constexpr. Thread-safe due to
-    // function-local static initialization guarantee (C++11 §6.7 [stmt.dcl]/4).
-    // NOLINTNEXTLINE(score-no-dynamic-raw-memory) std::num_put is reference counted and std::locale does manage it.
-    // coverity[autosar_cpp14_a3_3_2_violation]
+
+    // NOLINTBEGIN(score-no-dynamic-raw-memory) See rationale below
+    //  Rationale:  std::num_put is reference counted and std::locale does manage it.
+    //  Explanation for Coverity Suppression for AUTOSAR A3-3-2: Static locale with custom facet requires runtime
+    //  initialization. std::locale constructor with facet cannot be constexpr. Thread-safe due to function-local static
+    //  initialization guarantee (C++11 §6.7 [stmt.dcl]/4). coverity[autosar_cpp14_a3_3_2_violation]
     const static std::locale loc(std::locale(), new OptimizedNumPut());
+    // NOLINTEND(score-no-dynamic-raw-memory) See rationale above
+
     score::cpp::ignore = string_stream.imbue(loc);
 
     score::json::JsonSerialize serializer{string_stream};

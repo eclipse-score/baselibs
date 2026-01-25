@@ -1,6 +1,19 @@
+/********************************************************************************
+ * Copyright (c) 2020 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
 ///
 /// \file
-/// \copyright Copyright (C) 2020-2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2020 Contributors to the Eclipse Foundation
 ///
 
 // IWYU pragma: private
@@ -60,7 +73,7 @@ struct mask_backend<std::int32_t>
             static_cast<std::uint32_t>(gen(std::integral_constant<std::size_t, I2>{})),
             static_cast<std::uint32_t>(gen(std::integral_constant<std::size_t, I3>{})),
         };
-        return vsubq_u32(vdupq_n_u32(0), r);
+        return vsubq_u32(vdupq_n_u32(0U), r);
     }
 
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_AARCH64_NEON_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept
@@ -115,7 +128,7 @@ struct mask_backend<float>
             static_cast<std::uint32_t>(gen(std::integral_constant<std::size_t, I2>{})),
             static_cast<std::uint32_t>(gen(std::integral_constant<std::size_t, I3>{})),
         };
-        return vsubq_u32(vdupq_n_u32(0), r);
+        return vsubq_u32(vdupq_n_u32(0U), r);
     }
 
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_AARCH64_NEON_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept
@@ -167,7 +180,7 @@ struct mask_backend<double>
             static_cast<std::uint64_t>(gen(std::integral_constant<std::size_t, I0>{})),
             static_cast<std::uint64_t>(gen(std::integral_constant<std::size_t, I1>{})),
         };
-        return vsubq_u64(vdupq_n_u64(0), r);
+        return vsubq_u64(vdupq_n_u64(0U), r);
     }
 
     static bool SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_AARCH64_NEON_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept

@@ -192,7 +192,9 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
 {
     const auto field_name = common::visitor::struct_visitable<T>::field_name(FieldIndex);
     auto& obj = visitor.object.get();
+    // LCOV_EXCL_BR_START (False positive due to the tooling defect: "Decision couldn't be analyzed")
     if (obj.count(field_name) > 0U)
+    // LCOV_EXCL_BR_STOP
     {
         if (auto field_content = JsonSerializer<score::cpp::remove_cvref_t<Field>>::FromAny(std::move(obj[field_name])))
         {

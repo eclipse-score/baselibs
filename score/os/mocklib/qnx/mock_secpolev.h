@@ -32,7 +32,10 @@ class MockSecpolEv : public SecpolEv
                 init,
                 (const unsigned flags, const unsigned buffer_count, const unsigned flush_interval),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), shutdown, (), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                shutdown,
+                (secpolev_shutdown_type_t type),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<secpolev_event_type_t, score::os::Error>),
                 wait_event,
                 (unsigned* flags),

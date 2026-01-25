@@ -36,6 +36,7 @@ namespace
 // maintain. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__) && defined(USE_TYPEDSHMD)
+// coverity[autosar_cpp14_m7_3_1_violation] false-positive: defined in anon namespace within a namespace
 score::tmd::UserPermissions GetUserPermissions(const permission::UserPermissions& permissions) noexcept
 {
     if (std::holds_alternative<permission::WorldWritable>(permissions))
@@ -147,6 +148,10 @@ score::cpp::expected<uid_t, score::os::Error> TypedMemoryImpl::GetCreatorUid(std
 
 }  // namespace internal
 
+// bad_alloc may be raised due to allocation failure.
+// and termination is the appropriate safe response as it provides no-run state, and
+// without it safe execution cannot continued
+// coverity[autosar_cpp14_a15_5_3_violation] see above
 std::shared_ptr<score::memory::shared::TypedMemory> score::memory::shared::TypedMemory::Default() noexcept
 {
     return std::make_shared<internal::TypedMemoryImpl>();

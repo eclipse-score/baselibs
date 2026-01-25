@@ -120,15 +120,21 @@ class SpawnMock : public Spawn
                  char* const argv[],
                  char* const envp[]),
                 (override, const, noexcept));
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if defined(__QNX__)
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#if __QNX__ >= 800
+    // QNX 8 ONLY APIs (native pthread runmask API)
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
-                posix_spawnattr_getxflags,
-                (const posix_spawnattr_t* attrp, std::uint32_t* flags_p),
+                pthread_spawnattr_getrunmask_np,
+                (const posix_spawnattr_t* attrp, std::uint64_t* runmask_p),
                 (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
-                posix_spawnattr_setxflags,
-                (posix_spawnattr_t * attrp, std::uint32_t flags),
+                pthread_spawnattr_setrunmask_np,
+                (posix_spawnattr_t * attrp, std::uint64_t runmask),
                 (override, const, noexcept));
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#else
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_getrunmask,
                 (const posix_spawnattr_t* attrp, std::uint32_t* runmask_p),
@@ -136,6 +142,16 @@ class SpawnMock : public Spawn
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_setrunmask,
                 (posix_spawnattr_t * attrp, std::uint32_t runmask),
+                (override, const, noexcept));
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#endif  // __QNX__ >= 800
+    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+                posix_spawnattr_getxflags,
+                (const posix_spawnattr_t* attrp, std::uint32_t* flags_p),
+                (override, const, noexcept));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+                posix_spawnattr_setxflags,
+                (posix_spawnattr_t * attrp, std::uint32_t flags),
                 (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_getsigignore,
@@ -211,6 +227,7 @@ class SpawnMock : public Spawn
                  char* const argv[],
                  char* const envp[]),
                 (override, const, noexcept));
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #endif  //__QNX__
 };
 

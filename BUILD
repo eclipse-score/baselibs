@@ -12,10 +12,26 @@
 # *******************************************************************************
 
 load("@score_docs_as_code//:docs.bzl", "docs")
+load("@score_tooling//:defs.bzl", "copyright_checker")
 
 docs(
     data = [
        "@score_process//:needs_json",
     ],
     source_dir = "docs",
+)
+
+copyright_checker(
+    name = "copyright",
+    srcs = [
+        ".github",
+        "bazel",
+        "docs",
+        "score",
+        "//:BUILD",
+        "//:MODULE.bazel",
+    ],
+    config = "@score_tooling//cr_checker/resources:config",
+    template = "@score_tooling//cr_checker/resources:templates",
+    visibility = ["//visibility:public"],
 )

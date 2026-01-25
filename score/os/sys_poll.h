@@ -38,6 +38,9 @@ class SysPoll : public ObjectSeam<SysPoll>
     static score::cpp::pmr::unique_ptr<SysPoll> Default(score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
+    // Justification: The global namespace shall only contain main, namespace declarations and extern ""C""
+    // declarations. This is a wrapper function over system API inside local namespace
+    // coverity[autosar_cpp14_m7_3_1_violation]
     virtual score::cpp::expected<std::int32_t, Error> poll(struct pollfd* fds,
                                                     const nfds_t nfds,
                                                     const std::int32_t timeout) const noexcept = 0;

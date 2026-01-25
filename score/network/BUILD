@@ -50,11 +50,7 @@ cc_library(
     ],
     # The visibility is not public because it is still work in progress and
     # not ready to be used.
-    visibility = [
-        "//platform/aas/network/tunneling:__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
-        "@score_baselibs//score/network:__subpackages__",
-    ],
+    visibility = [":__subpackages__"],
     deps = [
         ":ipv4_address",
         "@score_baselibs//score/language/futurecpp",

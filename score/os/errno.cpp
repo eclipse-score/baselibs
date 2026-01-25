@@ -231,6 +231,11 @@ std::int32_t score::os::Error::GetOsDependentErrorCode() const noexcept
     return os_dependent_error_code_;
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings. This rule states: "The std::terminate() function shall not be called
+// Rationale: some of the std functions involving string, maps may throw bad_alloc, but it is rare scenario
+// Exception thrown from noexcept lib will result in terminate.
+// Such exception can not be handled by any other means, hence suppressed here to avoid try..catch
+// coverity[autosar_cpp14_a15_5_3_violation]
 std::string score::os::Error::ToString() const noexcept
 {
     std::stringstream ss;  // LCOV_EXCL_BR_LINE: Hidden exception handling.

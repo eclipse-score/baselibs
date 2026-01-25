@@ -70,6 +70,8 @@ struct TmdStatistics
     std::size_t tmd_total;
     std::size_t tmd_max;
     std::size_t tmd_average;
+    std::size_t tmd_allocate_retry_cntr;
+    std::size_t tmd_allocate_call_cntr;
     // Suppress "AUTOSAR C++14 A9-6-1" rule finding. This rule states: "Data types used for interfacing with
     // hardware or conforming to communication protocols shall be trivial, standard-layout and only contain members
     // of types with defined sizes.".

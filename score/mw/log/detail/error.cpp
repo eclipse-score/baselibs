@@ -73,6 +73,9 @@ std::string_view score::mw::log::detail::ErrorDomain::MessageFor(const score::re
         case Error::kMemoryResourceError:
             error_msg = "Failed to get memory resource.";
             break;
+        case Error::kFailedToCreateMessagePassingClient:
+            error_msg = "Failed to create message passing client.";
+            break;
         case Error::kUnknownError:
             error_msg = "Unknown Error";
             break;

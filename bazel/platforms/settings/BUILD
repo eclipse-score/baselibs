@@ -76,7 +76,7 @@ config_setting(
         "@platforms//cpu:arm64",
         "@platforms//os:qnx",
         "//bazel/platforms/environment:hardware",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
 )
 
@@ -87,7 +87,7 @@ config_setting(
         "@platforms//cpu:arm64",
         "@platforms//os:qnx",
         "//bazel/platforms/environment:virtual",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
 )
 

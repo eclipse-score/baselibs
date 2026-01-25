@@ -443,9 +443,16 @@ TEST_F(SharedListFixture, SharedMemoryChunkCanaryDetection)
     EXPECT_TRUE(result_valid.has_value());
     EXPECT_EQ(result_valid.value().start_.offset_, 1);
 
-    SharedMemoryChunk corrupted_chunk{SharedMemoryLocation{2, 2}, 200};
-    corrupted_chunk.canary_start_ = 0xBADBEEF;  // Corrupt it
+    std::uint64_t* list_start_canary_ptr = reinterpret_cast<std::uint64_t*>(vector);
+    const std::uint64_t original_list_canary = *list_start_canary_ptr;
+    *list_start_canary_ptr = 0xBADBADBADBADBAD;
 
+    vector->clear();
+
+    *list_start_canary_ptr = original_list_canary;
+
+    SharedMemoryChunk corrupted_chunk{SharedMemoryLocation{2, 2}, 200};
+    corrupted_chunk.canary_start_ = 0xBADBEEF;
     EXPECT_TRUE(corrupted_chunk.IsCorrupted());
 
     vector->clear();
@@ -565,4 +572,71 @@ TEST_F(SharedListFixture, SharedMemoryChunkCorruptionInList)
 
     vector->clear();
     flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+}
+
+TEST_F(SharedListFixture, AtMethodOutOfBoundsDetection)
+{
+    EXPECT_CALL(*flexible_allocator_mock_, Allocate(_, _)).WillOnce([](const std::size_t size, const std::size_t) {
+        auto allocated_memory = malloc(size);
+        return allocated_memory;
+    });
+
+    EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
+        free(address);
+        return true;
+    });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillOnce(Return(false));
+    shared::List<std::uint8_t> list(flexible_allocator_mock_);
+
+    auto push_result = list.push_back(42);
+    EXPECT_TRUE(push_result.has_value());
+    EXPECT_EQ(list.size(), 1);
+
+    auto at_result = list.at(0);
+    EXPECT_FALSE(at_result.has_value());
+    EXPECT_EQ(at_result, score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal));
+
+    list.clear();
+}
+
+TEST_F(SharedListFixture, AtMethodNullCurrentAfterTraversal)
+{
+    EXPECT_CALL(*flexible_allocator_mock_, Allocate(_, _)).WillOnce([](const std::size_t size, const std::size_t) {
+        auto allocated_memory = malloc(size);
+        return allocated_memory;
+    });
+
+    EXPECT_CALL(*flexible_allocator_mock_, Deallocate(_, _)).WillOnce([](void* const address, const std::size_t) {
+        free(address);
+        return true;
+    });
+
+    EXPECT_CALL(*flexible_allocator_mock_, IsInBounds(_, _)).WillOnce(Return(true));
+
+    shared::List<std::uint8_t> list(flexible_allocator_mock_);
+
+    auto push_result = list.push_back(42);
+    EXPECT_TRUE(push_result.has_value());
+    EXPECT_EQ(list.size(), 1);
+
+    // This test intentionally uses fragile memory layout assumptions to artificially corrupt size_ for testing edge
+    // cases While brittle, it's necessary to test the nullptr safety check that protects against memory corruption
+    constexpr std::size_t canary_size = sizeof(std::uint64_t);
+    constexpr std::size_t shared_ptr_size = sizeof(std::shared_ptr<IFlexibleCircularAllocator>);
+    constexpr std::size_t ptrdiff_size = sizeof(std::atomic<std::ptrdiff_t>);
+
+    const std::size_t size_offset = canary_size + shared_ptr_size + (2 * ptrdiff_size);
+
+    std::atomic<std::size_t>* size_ptr =
+        reinterpret_cast<std::atomic<std::size_t>*>(reinterpret_cast<std::uint8_t*>(&list) + size_offset);
+
+    size_ptr->store(2);
+
+    auto at_result = list.at(1);
+    EXPECT_FALSE(at_result.has_value());
+    EXPECT_EQ(at_result, score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal));
+
+    size_ptr->store(1);
+    list.clear();
 }

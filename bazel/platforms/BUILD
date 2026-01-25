@@ -147,7 +147,8 @@ platform(
 platform(
     name = "x86_64-qnx7",
     constraint_values = [
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
+        "@rules_rust//rust/platform:qnx7",
     ],
     parents = [
         "@swf_platforms//:x86_64-qnx-adaptive",
@@ -158,6 +159,7 @@ platform(
     name = "x86_64-qnx8",
     constraint_values = [
         "@score_bazel_platforms//:qnx8_0",
+        "@rules_rust//rust/platform:qnx8",
     ],
     parents = [
         "@swf_platforms//:x86_64-qnx-adaptive",
@@ -179,7 +181,8 @@ platform(
     name = "arm64-qnx7-hardware",
     constraint_values = [
         "//bazel/platforms/environment:hardware",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
+        "@rules_rust//rust/platform:qnx7",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -191,6 +194,7 @@ platform(
     constraint_values = [
         "//bazel/platforms/environment:hardware",
         "@score_bazel_platforms//:qnx8_0",
+        "@rules_rust//rust/platform:qnx8",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -201,7 +205,7 @@ platform(
     name = "arm64-qnx-hardware",
     constraint_values = [
         "//bazel/platforms/environment:hardware",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -212,7 +216,8 @@ platform(
     name = "arm64-qnx7-qqvp",
     constraint_values = [
         "//bazel/platforms/environment:qqvp",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
+        "@rules_rust//rust/platform:qnx7",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -223,7 +228,7 @@ platform(
     name = "arm64-qnx-virtual",
     constraint_values = [
         "//bazel/platforms/environment:virtual",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -235,6 +240,7 @@ platform(
     constraint_values = [
         "//bazel/platforms/environment:qqvp",
         "@score_bazel_platforms//:qnx8_0",
+        "@rules_rust//rust/platform:qnx8",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -245,7 +251,8 @@ platform(
     name = "arm64-qnx7-qemu",
     constraint_values = [
         "//bazel/platforms/environment:qemu",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
+        "@rules_rust//rust/platform:qnx7",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",
@@ -257,6 +264,7 @@ platform(
     constraint_values = [
         "//bazel/platforms/environment:qemu",
         "@score_bazel_platforms//:qnx8_0",
+        "@rules_rust//rust/platform:qnx8",
     ],
     parents = [
         "@swf_platforms//:arm64-qnx-adaptive",

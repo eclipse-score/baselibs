@@ -227,8 +227,13 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgSendPulse(const std
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
-    // NOLINTNEXTLINE(score-banned-function) see comment above
+    // NOLINTBEGIN(score-banned-function) see comment above
+    // Suppress AUTOSAR C++14 M5-0-3 rule findings: "A cvalue expression shall not be implicitly converted to a
+    // different underlying type." Rationale: MsgSendPulse is a C system API that signals failure by returning -1 The
+    // comparison follows the API definition and is safe.
+    // coverity[autosar_cpp14_m5_0_3_violation]
     if (::MsgSendPulse(coid, priority, code, value) == -1)
+    // NOLINTEND(score-banned-function) see comment above
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }

@@ -182,18 +182,32 @@ class Spawn : public ObjectSeam<Spawn>
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__)
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#if __QNX__ >= 800
+    virtual score::cpp::expected<std::int32_t, score::os::Error> pthread_spawnattr_getrunmask_np(
+        const posix_spawnattr_t* attrp,
+        std::uint64_t* runmask_p) const noexcept = 0;
+
+    virtual score::cpp::expected<std::int32_t, score::os::Error> pthread_spawnattr_setrunmask_np(
+        posix_spawnattr_t* attrp,
+        std::uint64_t runmask) const noexcept = 0;
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#else
+    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getrunmask(
+        const posix_spawnattr_t* attrp,
+        std::uint32_t* runmask_p) const noexcept = 0;
+
+    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setrunmask(
+        posix_spawnattr_t* attrp,
+        std::uint32_t runmask) const noexcept = 0;
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#endif
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getxflags(
         const posix_spawnattr_t* attrp,
         std::uint32_t* flags_p) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setxflags(
         posix_spawnattr_t* attrp,
         std::uint32_t flags) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getrunmask(
-        const posix_spawnattr_t* attrp,
-        std::uint32_t* runmask_p) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setrunmask(
-        posix_spawnattr_t* attrp,
-        std::uint32_t runmask) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getsigignore(
         const posix_spawnattr_t* attrp,
         sigset_t* sigset_p) const noexcept = 0;

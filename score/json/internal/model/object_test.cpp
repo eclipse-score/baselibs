@@ -173,10 +173,10 @@ TEST_F(AttributeGettersTest, GetStringUsingResult)
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
-    Result<score::cpp::string_view> str_result = GetAttribute<score::cpp::string_view>(test_data_result_, "string");
+    Result<std::string_view> str_result = GetAttribute<std::string_view>(test_data_result_, "string");
     ASSERT_TRUE(str_result.has_value());
 
-    const score::cpp::string_view str_value = str_result.value();
+    const std::string_view str_value = str_result.value();
     EXPECT_EQ(std::string(str_value.data()), "Lorem ipsum dolor sit amet");
 }
 
@@ -189,10 +189,10 @@ TEST_F(AttributeGettersTest, GetStringDirectValue)
     RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
     RecordProperty("Priority", "3");
 
-    Result<score::cpp::string_view> str_result = GetAttribute<score::cpp::string_view>(test_data_value_, "string");
+    Result<std::string_view> str_result = GetAttribute<std::string_view>(test_data_value_, "string");
     ASSERT_TRUE(str_result.has_value());
 
-    const score::cpp::string_view str_value = str_result.value();
+    const std::string_view str_value = str_result.value();
     EXPECT_EQ(std::string(str_value.data()), "Lorem ipsum dolor sit amet");
 }
 
@@ -238,7 +238,7 @@ TEST_F(AttributeGettersTest, GetObjectUsingResult)
     auto sub_object_result = GetAttribute<json::Object>(test_data_result_, "widget");
     ASSERT_TRUE(sub_object_result.has_value());
     const auto sub_object = sub_object_result.value();
-    const score::cpp::string_view color = GetAttribute<score::cpp::string_view>(sub_object, "color").value();
+    const std::string_view color = GetAttribute<std::string_view>(sub_object, "color").value();
     EXPECT_EQ(std::string(color.data()), "blue");
 }
 
@@ -254,7 +254,7 @@ TEST_F(AttributeGettersTest, GetObjectDirectValue)
     auto sub_object_result = GetAttribute<json::Object>(test_data_value_, "widget");
     ASSERT_TRUE(sub_object_result.has_value());
     const auto sub_object = sub_object_result.value();
-    const score::cpp::string_view color = GetAttribute<score::cpp::string_view>(sub_object, "color").value();
+    const std::string_view color = GetAttribute<std::string_view>(sub_object, "color").value();
     EXPECT_EQ(std::string(color.data()), "blue");
 }
 

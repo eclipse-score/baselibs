@@ -148,6 +148,7 @@ void SocketAsync::Write(std::shared_ptr<std::vector<score::cpp::span<std::uint8_
 
         struct msghdr msg;
         memset(&msg, 0, sizeof(msg));
+        struct sockaddr_in server_addr = this->GetEndpoint().ToSockaddr();
         if (this->GetEndpoint().IsAnyAddress())
         {
             msg.msg_name = nullptr;
@@ -155,7 +156,6 @@ void SocketAsync::Write(std::shared_ptr<std::vector<score::cpp::span<std::uint8_
         }
         else
         {
-            struct sockaddr_in server_addr = this->GetEndpoint().ToSockaddr();
             msg.msg_name = &server_addr;
             msg.msg_namelen = sizeof(server_addr);
         }

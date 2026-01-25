@@ -58,21 +58,23 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     template <typename OffsetT>
     uint8_t* GetBufferPositionAt(OffsetT offset) const noexcept;
 
-    void* base_address_;
-    std::uint32_t total_size_;
-    std::atomic<std::uint32_t> gap_address_;
-    std::atomic<std::uint32_t> buffer_queue_head_;
-    std::atomic<std::uint32_t> buffer_queue_tail_;
+    void* base_address_{nullptr};
+    std::uint32_t total_size_{0};
+    std::atomic<std::uint32_t> gap_address_{0};
+    std::atomic<std::uint32_t> buffer_queue_head_{0};
+    std::atomic<std::uint32_t> buffer_queue_tail_{0};
     std::array<std::atomic<ListEntry>, kListEntryArraySize> list_array_;
-    std::atomic<std::uint32_t> list_queue_head_;
-    std::atomic<std::uint32_t> list_queue_tail_;
-    std::atomic<std::uint32_t> available_size_;
-    std::atomic<bool> wrap_around_;
-    std::atomic<std::uint64_t> cumulative_usage_;
-    std::atomic<std::uint32_t> lowest_size_;
-    std::atomic<std::uint32_t> alloc_cntr_;
-    std::atomic<std::uint32_t> dealloc_cntr_;
-    std::atomic<bool> tmd_stats_enabled_;
+    std::atomic<std::uint32_t> list_queue_head_{0};
+    std::atomic<std::uint32_t> list_queue_tail_{0};
+    std::atomic<std::uint32_t> available_size_{0};
+    std::atomic<bool> wrap_around_{false};
+    std::atomic<std::uint64_t> cumulative_usage_{0};
+    std::atomic<std::uint32_t> lowest_size_{0};
+    std::atomic<std::uint32_t> alloc_cntr_{0};
+    std::atomic<std::uint32_t> dealloc_cntr_{0};
+    std::atomic<std::uint64_t> allocate_retry_cntr_{0};
+    std::atomic<std::uint64_t> allocate_call_cntr_{0};
+    std::atomic<bool> tmd_stats_enabled_{false};
     mutable std::atomic<score::result::ErrorCode> last_error_code_;
 };
 

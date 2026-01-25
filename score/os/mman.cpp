@@ -278,9 +278,6 @@ std::int32_t MmanImpl::PosixTypedMemFlagsToInteger(PosixTypedMem flags) const no
 
 }  // namespace internal
 
-}  // namespace os
-}  // namespace score
-
 std::unique_ptr<score::os::Mman> score::os::Mman::Default() noexcept
 {
     return std::make_unique<internal::MmanImpl>();
@@ -288,6 +285,10 @@ std::unique_ptr<score::os::Mman> score::os::Mman::Default() noexcept
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
+// Justification: The identifier name of a non-member object with static storage duration or
+// static function shall not be reused within a namespace.
+// static function here is overloaded and used as a wrapper.
+// coverity[autosar_cpp14_a2_10_4_violation]
 score::cpp::pmr::unique_ptr<score::os::Mman> score::os::Mman::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
@@ -310,3 +311,6 @@ score::os::Mman& score::os::Mman::instance() noexcept
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Char is used in respect to the wrapped function's signature */
+
+}  // namespace os
+}  // namespace score

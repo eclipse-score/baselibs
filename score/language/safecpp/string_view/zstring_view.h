@@ -26,6 +26,46 @@
 namespace score::safecpp
 {
 
+namespace details
+{
+
+template <typename T, typename V = void, typename = void>
+class is_null_terminated_string_type : public std::false_type
+{
+};
+template <typename T, typename V>
+class is_null_terminated_string_type<
+    T,
+    V,
+    std::void_t<decltype(std::declval<T>().c_str()), decltype(std::declval<T>().size())>>
+    : public std::is_convertible<decltype(*std::declval<T>().c_str()), V>
+{
+};
+template <typename T>
+class is_null_terminated_string_type<
+    T,
+    void,
+    std::void_t<decltype(std::declval<T>().c_str()), decltype(std::declval<T>().size())>> : public std::true_type
+{
+};
+
+template <typename CharType>
+struct char_traits
+{
+    static_assert(std::disjunction_v<std::is_same<CharType, char>,
+                                     std::is_same<CharType, wchar_t>,
+#ifdef __cpp_char8_t
+                                     std::is_same<CharType, char8_t>,
+#endif
+                                     std::is_same<CharType, char16_t>,
+                                     std::is_same<CharType, char32_t>>,
+                  "Instantiating the class template `safecpp::details::char_traits` with a character type other "
+                  "than char, wchar_t, char8_t, char16_t or char32_t is non-standard and therefore not permitted.");
+    using traits_type = std::char_traits<CharType>;
+};
+
+}  // namespace details
+
 ///
 /// @brief non-modifiable view type over guaranteed null-terminated contiguous sequence of characters
 /// @note This implementation was originally motivated by the following C++ standard draft paper:
@@ -36,23 +76,10 @@ namespace score::safecpp
 ///       Further note: the above-mentioned draft paper got meanwhile superseded by a revised one which itself is also
 ///       subject to further changes at any time. The current draft version can be found here: https://wg21.link/p3655.
 ///
-template <typename CharType>
+template <typename CharType, typename CharTraits = typename safecpp::details::char_traits<CharType>::traits_type>
 class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
 {
     using base = const details::zspan<std::add_const_t<CharType>>;
-
-    template <typename T, typename S, typename = void>
-    class is_null_terminated_string_type : public std::false_type
-    {
-    };
-    template <typename T, typename S>
-    class is_null_terminated_string_type<
-        T,
-        S,
-        std::void_t<decltype(std::declval<T>().c_str()), decltype(std::declval<T>().size())>>
-        : public std::is_convertible<decltype(*std::declval<T>().c_str()), S>
-    {
-    };
 
   public:
     using violation_policies = typename base::violation_policies;
@@ -71,7 +98,7 @@ class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
     /// @brief Constructs a `basic_zstring_view` as view over null-terminated \p StringType;.
     /// @details type \p StringType; is required to guarantee null-termination of its underlying buffer
     template <typename StringType,
-              std::enable_if_t<is_null_terminated_string_type<StringType, CharType>::value, bool> = true>
+              std::enable_if_t<details::is_null_terminated_string_type<StringType, CharType>::value, bool> = true>
     // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversions from `StringType` which is null-terminated
     constexpr basic_zstring_view(const StringType& str) noexcept
         // `StringType` guarantees null-termination of `c_str()` and hence we use `set_empty` as dummy policy here
@@ -95,8 +122,9 @@ class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
     // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversions from base type `zspan` (are always safe)
     constexpr basic_zstring_view(base other) noexcept : base(other) {}
 
-    /// @brief Prohibits construction of a `basic_zstring_view` from `std::basic_string_view`
-    constexpr basic_zstring_view(std::basic_string_view<CharType>) = delete;
+    /// @brief Prohibits construction of a `safecpp::basic_zstring_view` from `std::basic_string_view`
+    template <typename SomeCharType, typename SomeCharTraits>
+    constexpr basic_zstring_view(std::basic_string_view<SomeCharType, SomeCharTraits>) = delete;
 
     /// @brief Prohibits construction from `std::nullptr_t`
     constexpr basic_zstring_view(std::nullptr_t) = delete;
@@ -130,25 +158,25 @@ class basic_zstring_view : private details::zspan<std::add_const_t<CharType>>
     /// @brief implicit conversion operator from `safecpp::basic_zstring_view` to `std::basic_string_view`
     ///
     // NOLINTNEXTLINE(google-explicit-constructor) allow impl. conversions to `std::basic_string_view` (const view type)
-    [[nodiscard]] constexpr operator std::basic_string_view<CharType>() const noexcept
+    [[nodiscard]] constexpr operator std::basic_string_view<CharType, CharTraits>() const noexcept
     {
-        return std::basic_string_view<CharType>{data(), size()};
+        return std::basic_string_view<CharType, CharTraits>{data(), size()};
     }
 
     ///
     /// @brief `std::ostream` output operator for `safecpp::basic_zstring_view`
     ///
-    friend std::basic_ostream<CharType>& operator<<(std::basic_ostream<CharType>& os,
-                                                    safecpp::basic_zstring_view<CharType> sv)
+    friend std::basic_ostream<CharType, CharTraits>& operator<<(std::basic_ostream<CharType, CharTraits>& os,
+                                                                safecpp::basic_zstring_view<CharType, CharTraits> sv)
     {
-        return os << std::basic_string_view<CharType>{sv};
+        return os << std::basic_string_view<CharType, CharTraits>{sv};
     }
 
     ///
     /// @brief swap operator for `safecpp::basic_zstring_view`
     ///
-    friend constexpr void swap(safecpp::basic_zstring_view<CharType>& lhs,
-                               safecpp::basic_zstring_view<CharType>& rhs) noexcept
+    friend constexpr void swap(safecpp::basic_zstring_view<CharType, CharTraits>& lhs,
+                               safecpp::basic_zstring_view<CharType, CharTraits>& rhs) noexcept
     {
         auto tmp = lhs;
         lhs = rhs;
@@ -171,6 +199,168 @@ namespace literals
     return details::zspan<const char>{str, len + 1U, null_termination_violation_policies::set_empty{}};
 }
 }  // namespace literals
+
+// #################################################################################################################
+// # equality comparison operators for `safecpp::basic_zstring_view` (also incorporating `std::basic_string_view`) #
+// #################################################################################################################
+/// @brief Performs equality comparison of the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator==(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} == std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs equality comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator==(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} == rhs;
+}
+
+/// @brief Performs equality comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator==(std::basic_string_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs == std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+// ###################################################################################################################
+// # inequality comparison operators for `safecpp::basic_zstring_view` (also incorporating `std::basic_string_view`) #
+// ###################################################################################################################
+/// @brief Performs inequality comparison of the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator!=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} != std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs inequality comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator!=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} != rhs;
+}
+
+/// @brief Performs inequality comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator!=(std::basic_string_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs != std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+// ##################################################################################################################
+// # less-than comparison operators for `safecpp::basic_zstring_view` (also incorporating `std::basic_string_view`) #
+// ##################################################################################################################
+/// @brief Performs less-than comparison for the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                       safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} < std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs less-than comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                       std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} < rhs;
+}
+
+/// @brief Performs less-than comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<(std::basic_string_view<CharType, CharTraits> lhs,
+                                       safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs < std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+// ################################################################################################################
+// # less-or-equal comparison operators for `safecpp::basic_zstring_view` (also incorp. `std::basic_string_view`) #
+// ################################################################################################################
+/// @brief Performs less-or-equal comparison for the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} <= std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs less-or-equal comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} <= rhs;
+}
+
+/// @brief Performs less-or-equal comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator<=(std::basic_string_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs <= std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+// #####################################################################################################################
+// # greater-than comparison operators for `safecpp::basic_zstring_view` (also incorporating `std::basic_string_view`) #
+// #####################################################################################################################
+/// @brief Performs greater-than comparison for the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                       safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} > std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs greater-than comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                       std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} > rhs;
+}
+
+/// @brief Performs greater-than comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>(std::basic_string_view<CharType, CharTraits> lhs,
+                                       safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs > std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+// ###################################################################################################################
+// # greater-or-equal comparison operators for `safecpp::basic_zstring_view` (also incorp. `std::basic_string_view`) #
+// ###################################################################################################################
+/// @brief Performs greater-or-equal comparison for the underlying character sequences.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} >= std::basic_string_view<CharType, CharTraits>{rhs};
+}
+
+/// @brief Performs greater-or-equal comparison with `std::basic_string_view`.
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>=(safecpp::basic_zstring_view<CharType, CharTraits> lhs,
+                                        std::basic_string_view<CharType, CharTraits> rhs) noexcept
+{
+    return std::basic_string_view<CharType, CharTraits>{lhs} >= rhs;
+}
+
+/// @brief Performs greater-or-equal comparison with `std::basic_string_view` (reversed operands).
+template <typename CharType, typename CharTraits>
+[[nodiscard]] constexpr bool operator>=(std::basic_string_view<CharType, CharTraits> lhs,
+                                        safecpp::basic_zstring_view<CharType, CharTraits> rhs) noexcept
+{
+    return lhs >= std::basic_string_view<CharType, CharTraits>{rhs};
+}
 
 }  // namespace score::safecpp
 

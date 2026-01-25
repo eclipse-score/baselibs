@@ -89,7 +89,7 @@ cc_test(
     ],
     target_compatible_with = select({
         "@platforms//os:qnx": [
-            "//bazel/platforms/qnx_version:qnx7",  # TODO: locally For QNX8 Filter needs to be expliclity added otherwise no packets are recived, on CI this is not working at all even with this filtering it needs to be investigated why in Ticket-221732
+            "@score_bazel_platforms//:qnx7_1",  # TODO: locally For QNX8 Filter needs to be expliclity added otherwise no packets are recived, on CI this is not working at all even with this filtering it needs to be investigated why in Ticket-221732
         ],
         "//conditions:default": [
             "@platforms//os:qnx",
@@ -282,7 +282,7 @@ cc_test(
     #TODO: Ticket-216047: Fix disabled tests which failed on qnx8
     target_compatible_with = [
         "@platforms//os:qnx",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
     deps = [
         "@googletest//:gtest_main",
@@ -314,7 +314,7 @@ cc_test(
     #TODO: Ticket-215992: Fix disabled tests which failed on qnx8
     target_compatible_with = [
         "@platforms//os:qnx",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
     deps = [
         "//third_party/libsocket",
@@ -397,7 +397,7 @@ cc_test(
     #TODO: Ticket-215992: Fix disabled tests which failed on qnx8
     target_compatible_with = [
         "@platforms//os:qnx",
-        "//bazel/platforms/qnx_version:qnx7",
+        "@score_bazel_platforms//:qnx7_1",
     ],
     deps = [
         "@googletest//:gtest_main",

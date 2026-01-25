@@ -42,6 +42,7 @@ cc_library(
         ":inotify_event",
         ":inotify_watch_descriptor",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
     ],
 )
 
@@ -50,9 +51,6 @@ cc_library(
     srcs = ["inotify_instance_impl.cpp"],
     hdrs = ["inotify_instance_impl.h"],
     features = COMPILER_WARNING_FEATURES,
-    implementation_deps = [
-        "@score_baselibs//score/language/safecpp/string_view:null_termination_check",
-    ],
     tags = ["FFI"],
     visibility = [
         "//visibility:public",  # platform_only
@@ -62,6 +60,7 @@ cc_library(
         ":inotify_instance",
         ":inotify_watch_descriptor",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:fcntl",
         "@score_baselibs//score/os:inotify",

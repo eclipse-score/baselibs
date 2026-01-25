@@ -15,6 +15,7 @@
 #include "score/language/safecpp/scoped_function/details/instrumented_memory_resource.h"
 #include "score/language/safecpp/scoped_function/details/testing_allocator.h"
 #include "score/language/safecpp/scoped_function/scope.h"
+#include "score/quality/compiler_warnings/warnings.h"
 
 #include <score/memory.hpp>
 
@@ -87,16 +88,12 @@ TEST_F(CopyabilityScopedFunctionTest, CanCopyAssignToItself)
                                                 called = true;
                                             }};
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wself-assign-overloaded"
-#endif
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_SELF_ASSIGN_OVERLOADED
 
     function = function;
 
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
+    DISABLE_WARNING_POP
 
     function();
 
