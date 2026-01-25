@@ -231,11 +231,11 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
         // If the file size is limited and the next write would exceed it, rotate the file.
         if (max_log_file_size_bytes_ > 0 && (current_file_position_ + size_to_flush > max_log_file_size_bytes_))
         {
+            RotateLogFile();
             if (rotation_failed_)
             {
-                return 0; // A rotation attempt already failed, do nothing.
+                return 0; // A rotation attempt just failed, do nothing.
             }
-            RotateLogFile();
         }
 
         // After potential rotation, we write to the current file.
