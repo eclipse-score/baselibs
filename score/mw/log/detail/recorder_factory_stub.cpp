@@ -42,6 +42,7 @@ std::unique_ptr<Backend> CreateConsoleLoggingBackend(const Configuration& config
                                                                     LogRecord{config.GetSlotSizeInBytes()});
     return std::make_unique<FileOutputBackend>(std::move(message_builder),
                                                STDOUT_FILENO,
+                                               std::string{},
                                                std::move(allocator),
                                                score::os::FcntlImpl::Default(memory_resource),
                                                score::os::Unistd::Default(memory_resource),

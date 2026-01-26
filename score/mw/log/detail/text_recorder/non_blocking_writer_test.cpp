@@ -13,7 +13,7 @@
 #include "score/mw/log/detail/text_recorder/non_blocking_writer.h"
 
 #include "score/os/mocklib/unistdmock.h"
-#include "score/os/mocklib/fcntlmock.h"
+#include "score/os/mocklib/fcntl_mock.h"
 
 #include "gtest/gtest.h"
 #include <fcntl.h>

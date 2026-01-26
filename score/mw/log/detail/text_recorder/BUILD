@@ -215,6 +215,7 @@ cc_test(
     deps = [
         ":non_blocking_writer",
         "@score_baselibs//score/os/mocklib:unistd_mock",
+        "@score_baselibs//score/os/mocklib:fcntl_mock",
         #"@score_baselibs//score/mw/log/test/console_logging_environment",
         "@googletest//:gtest_main",
     ],

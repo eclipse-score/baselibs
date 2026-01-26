@@ -79,6 +79,7 @@ TEST_F(FileOutputBackendFixture, ReserveSlotShouldTriggerFlushing)
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
@@ -110,6 +111,7 @@ TEST_F(FileOutputBackendFixture, FlushSlotShouldTriggerFlushing)
     const auto& slot_index = allocator_->AcquireSlotToWrite();
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
@@ -148,6 +150,7 @@ TEST_F(FileOutputBackendFixture, DepletedAllocatorShouldCauseEmptyOptionalReturn
 
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
@@ -177,6 +180,7 @@ TEST_F(FileOutputBackendFixture, GetLogRecordReturnsObjectSameAsAllocatorWould)
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
@@ -222,6 +226,7 @@ TEST_F(FileOutputBackendFixture, BackendConstructionShallCallNonBlockingFileSetu
     //  Given construction
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
@@ -254,6 +259,7 @@ TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
     //  Given construction
     FileOutputBackend unit(std::move(message_builder),
                            file_descriptor_,
+                           std::string{},
                            std::move(allocator_),
                            std::move(fcntl_mock),
                            std::move(unistd_mock),
