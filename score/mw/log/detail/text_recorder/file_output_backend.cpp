@@ -33,7 +33,7 @@ FileOutputBackend::FileOutputBackend(std::unique_ptr<IMessageBuilder> message_bu
                                      const bool overwrite_log_on_full,
                                      const std::size_t max_log_file_size_bytes,
                                      const std::size_t no_of_log_files,
-                                     const bool delete_old_log_files) noexcept
+                                     const bool truncate_on_rotation) noexcept
     : Backend(),
       buffer_allocator_(std::move(allocator)),
       slot_drainer_(std::move(message_builder),
@@ -46,7 +46,7 @@ FileOutputBackend::FileOutputBackend(std::unique_ptr<IMessageBuilder> message_bu
                     overwrite_log_on_full,
                     max_log_file_size_bytes,
                     no_of_log_files,
-                    delete_old_log_files)
+                    truncate_on_rotation)
 
 {
 }

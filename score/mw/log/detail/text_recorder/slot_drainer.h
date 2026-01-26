@@ -53,7 +53,7 @@ class SlotDrainer
                 const bool overwrite_log_on_full,
                 const std::size_t max_log_file_size_bytes,
                 const std::size_t no_of_log_files,
-                const bool delete_old_log_files,
+                const bool truncate_on_rotation,
                 const std::size_t limit_slots_in_one_cycle = 32UL);
 
     SlotDrainer(SlotDrainer&&) noexcept = delete;

@@ -41,7 +41,7 @@ class FileOutputBackend final : public Backend
                       const bool overwrite_log_on_full,
                       const std::size_t max_log_file_size_bytes,
                       const std::size_t no_of_log_files,
-                      const bool delete_old_log_files) noexcept;
+                      const bool truncate_on_rotation) noexcept;
     /// \brief Before a producer can store data in our buffer, he has to reserve a slot.
     ///
     /// \return SlotHandle if a slot was able to be reserved, empty otherwise.

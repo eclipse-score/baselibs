@@ -55,7 +55,7 @@ NonBlockingWriter::NonBlockingWriter(const std::string& file_path,
                                      const bool overwrite_log_on_full,
                                      const std::size_t max_log_file_size_bytes,
                                      const std::size_t no_of_log_files,
-                                     const bool delete_old_log_files) noexcept
+                                     const bool truncate_on_rotation) noexcept
     : unistd_{std::move(unistd)},
       fcntl_{std::move(fcntl)},
       number_of_flushed_bytes_{0U},
@@ -67,7 +67,7 @@ NonBlockingWriter::NonBlockingWriter(const std::string& file_path,
       max_log_file_size_bytes_(max_log_file_size_bytes),
       current_file_position_{0U},
       no_of_log_files_(no_of_log_files),
-      delete_old_log_files_(delete_old_log_files),
+      truncate_on_rotation_(truncate_on_rotation),
       current_log_file_index_{1}
 {
     const score::filesystem::Path path(file_path);
@@ -124,7 +124,7 @@ NonBlockingWriter::NonBlockingWriter(const std::string& file_path,
                                      const bool overwrite_log_on_full,
                                      const std::size_t max_log_file_size_bytes,
                                      const std::size_t no_of_log_files,
-                                     const bool delete_old_log_files) noexcept
+                                     const bool truncate_on_rotation) noexcept
     : unistd_{std::move(unistd)},
       fcntl_{std::move(fcntl)},
       file_handle_{file_descriptor},
@@ -137,7 +137,7 @@ NonBlockingWriter::NonBlockingWriter(const std::string& file_path,
       max_log_file_size_bytes_(max_log_file_size_bytes),
       current_file_position_{0U},
       no_of_log_files_(no_of_log_files),
-      delete_old_log_files_(delete_old_log_files),
+      truncate_on_rotation_(truncate_on_rotation),
       current_log_file_index_{1}
 {
     const score::filesystem::Path path(file_path);
@@ -407,7 +407,7 @@ void NonBlockingWriter::RotateLogFile() noexcept
         score::os::Fcntl::Open::kWriteOnly | score::os::Fcntl::Open::kCreate | score::os::Fcntl::Open::kCloseOnExec;
 
     // Only truncate if both overwrite and delete are enabled, matching user's expectation.
-    if (overwrite_log_on_full_ && delete_old_log_files_)
+    if (overwrite_log_on_full_ && truncate_on_rotation_)
     {
         open_flags |= score::os::Fcntl::Open::kTruncate;
     }
@@ -449,7 +449,7 @@ void NonBlockingWriter::RotateLogFile() noexcept
         }
 
 
-        if (file_exists && overwrite_log_on_full_ && !delete_old_log_files_)
+        if (file_exists && overwrite_log_on_full_ && !truncate_on_rotation_)
         {
             const auto seek_result = unistd_->lseek(file_handle_, 0, SEEK_SET);
             if (!seek_result.has_value())

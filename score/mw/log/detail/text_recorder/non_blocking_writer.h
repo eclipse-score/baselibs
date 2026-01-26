@@ -56,7 +56,7 @@ class NonBlockingWriter final
                                const bool overwrite_log_on_full,
                                const std::size_t max_log_file_size_bytes,
                                const std::size_t no_of_log_files,
-                               const bool delete_old_log_files) noexcept;
+                               const bool truncate_on_rotation) noexcept;
 
     explicit NonBlockingWriter(const std::string& file_path,
                                std::int32_t file_descriptor,
@@ -67,7 +67,7 @@ class NonBlockingWriter final
                                const bool overwrite_log_on_full,
                                const std::size_t max_log_file_size_bytes,
                                const std::size_t no_of_log_files,
-                               const bool delete_old_log_files) noexcept;
+                               const bool truncate_on_rotation) noexcept;
 
     /// \brief method to write buffer contents to the given file handle in non blocking manner with SSIZE_MAX.
     /// Returns Result::kDone when all the data has been written
@@ -96,7 +96,7 @@ class NonBlockingWriter final
     std::size_t max_log_file_size_bytes_;
     uint64_t current_file_position_;
     std::size_t no_of_log_files_;
-    bool delete_old_log_files_;
+    bool truncate_on_rotation_;
     std::size_t current_log_file_index_{0};
     std::string file_path_;
     std::string file_name_;

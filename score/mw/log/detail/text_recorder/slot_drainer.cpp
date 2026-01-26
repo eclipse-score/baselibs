@@ -33,7 +33,7 @@ SlotDrainer::SlotDrainer(std::unique_ptr<IMessageBuilder> message_builder,
                          const bool overwrite_log_on_full,
                          const std::size_t max_log_file_size_bytes,
                          const std::size_t no_of_log_files,
-                         const bool delete_old_log_files,
+                         const bool truncate_on_rotation,
                          const std::size_t limit_slots_in_one_cycle)
     : allocator_(allocator),
       message_builder_(std::move(message_builder)),
@@ -46,7 +46,7 @@ SlotDrainer::SlotDrainer(std::unique_ptr<IMessageBuilder> message_builder,
                            overwrite_log_on_full,
                            max_log_file_size_bytes,
                            no_of_log_files,
-                           delete_old_log_files),
+                           truncate_on_rotation),
       limit_slots_in_one_cycle_(limit_slots_in_one_cycle)
 {
 }
