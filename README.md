@@ -88,12 +88,9 @@ Use the same command as for x86_64 Linux, but replace `--config=bl-x86_64-linux`
 #### Building for x86_64 QNX 8.0 SDP
 
 ```bash
-# Build all targets (with the exception of rust:log)
-bazel build --config=bl-x86_64-qnx -- //score/... -//score/mw/log/rust:log
+# Build all targets
+bazel build --config=bl-x86_64-qnx -- //score/...
 ```
-
-> [!NOTE]
-> The `//score/mw/log/rust:log` target does not currently compile on QNX and is therefore excluded with the `-//` prefix in the target list.
 
 #### Building for AArch64 QNX 8.0 SDP
 
