@@ -11,16 +11,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/mw/log/detail/text_recorder/non_blocking_writer.h"
-
 #include "score/filesystem/path.h"
 #include "score/os/fcntl.h"
 #include "score/os/stat.h"
-
-// #include "score/concurrency/clock.h"
-// #include "score/mw/log/logging.h"
-
 #include <string>
-#include <vector>
 
 #if defined(__QNXNTO__)
 #include <sys/iomsg.h>
