@@ -71,6 +71,12 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenCircularLoggingExceeds
     unistd_ = unistd.get();
     auto fcntl = score::cpp::pmr::make_unique<score::os::FcntlMock>(score::cpp::pmr::get_default_resource());
     fcntl_ = fcntl.get();
+
+    EXPECT_CALL(*fcntl_, open(_, _, _)).WillOnce(Return(kFileDescriptor));
+    EXPECT_CALL(*fcntl_, fcntl(kFileDescriptor, score::os::Fcntl::Command::kFileGetStatusFlags)).WillOnce(Return(score::os::Fcntl::Open{}));
+    EXPECT_CALL(*fcntl_, fcntl(kFileDescriptor, score::os::Fcntl::Command::kFileSetStatusFlags, _)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>()));
+    EXPECT_CALL(*unistd_, lseek(kFileDescriptor, 0, SEEK_END)).WillOnce(Return(0));
+
     writer_ = std::make_unique<NonBlockingWriter>("", max_chunk_size, std::move(unistd), std::move(fcntl), true, true, max_chunk_size * 2, 1, false);
 
     std::array<uint8_t, 3 * max_chunk_size> payload{};
@@ -79,8 +85,6 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenCircularLoggingExceeds
 
     writer_->SetSpan(buffer);
 
-    EXPECT_CALL(*fcntl_, open(_,_,_)).WillOnce(Return(kFileDescriptor));
-    EXPECT_CALL(*unistd_, lseek(kFileDescriptor, 0, SEEK_END)).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
@@ -88,6 +92,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenCircularLoggingExceeds
         .WillOnce(Return(max_chunk_size));
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
+    EXPECT_CALL(*unistd_, write(STDERR_FILENO, _, _)).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, lseek(kFileDescriptor, 0, SEEK_SET)).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, write(kFileDescriptor, &(buffer.data()[2*max_chunk_size]), max_chunk_size))
         .WillOnce(Return(max_chunk_size));
@@ -106,6 +111,11 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenNonCircularLoggingExce
     unistd_ = unistd.get();
     auto fcntl = score::cpp::pmr::make_unique<score::os::FcntlMock>(score::cpp::pmr::get_default_resource());
     fcntl_ = fcntl.get();
+
+    EXPECT_CALL(*fcntl_, open(_, _, _)).WillOnce(Return(kFileDescriptor));
+    EXPECT_CALL(*fcntl_, fcntl(kFileDescriptor, score::os::Fcntl::Command::kFileGetStatusFlags)).WillOnce(Return(score::os::Fcntl::Open{}));
+    EXPECT_CALL(*fcntl_, fcntl(kFileDescriptor, score::os::Fcntl::Command::kFileSetStatusFlags, _)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>()));
+
     writer_ = std::make_unique<NonBlockingWriter>("", max_chunk_size, std::move(unistd), std::move(fcntl), false, false, max_chunk_size * 2, 1, false);
 
     std::array<uint8_t, 3 * max_chunk_size> payload{};
@@ -114,7 +124,6 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenNonCircularLoggingExce
 
     writer_->SetSpan(buffer);
 
-    EXPECT_CALL(*fcntl_, open(_,_,_)).WillOnce(Return(kFileDescriptor));
     EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
