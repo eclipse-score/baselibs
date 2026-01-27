@@ -499,17 +499,9 @@ cc_library(
     ],
     defines = ["ALLOW_QM"],
     features = COMPILER_WARNING_FEATURES,
-    linkopts = select({
-        "//bazel/platforms:config_xpad_dnv": [
-            "-lcap",
-        ],
-        "//conditions:default": [],
-    }) + [],
     visibility = ["//visibility:public"],
-    #if QNX or DNV-GCC Toolchain dont link with explicit TP/libpcap,
     #if its a host build for linux do link with TP/libpcap
     deps = select({
-        "//bazel/platforms:config_xpad_dnv": [],
         "@platforms//os:qnx": [],
         "//conditions:default": [
             "//third_party/libcap2",

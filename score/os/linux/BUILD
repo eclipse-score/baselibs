@@ -59,30 +59,20 @@ cc_library(
         "unistd.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
-    linkopts = select({
-        "//bazel/platforms:config_xpad_dnv": [
-            "-lcap",
-        ],
-        "//conditions:default": [],
-    }) + [
+    linkopts = [
         "-lrt",
         "-lpthread",
     ],
     target_compatible_with = ["@platforms//os:linux"],
     visibility = [
-        "//ecu/xpad/xpad-shared/config/mpad/pp/taf_plus/pas/logging/test:__pkg__",
         "//platform/aas/ara/tsync:__subpackages__",
         "//platform/aas/pas/crash_handler:__pkg__",
         "//platform/aas/pas/sysmon:__pkg__",
         "//platform/aas/pas/sysmon/application:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
-    deps = select({
-        "//bazel/platforms:config_xpad_dnv": [],
-        "//conditions:default": [
-            "//third_party/libcap2",
-        ],
-    }) + [
+    deps = [
         ":linux_header",
+        "//third_party/libcap2",
     ],
 )
