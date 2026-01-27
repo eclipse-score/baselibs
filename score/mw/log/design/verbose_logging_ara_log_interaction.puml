@@ -1,0 +1,43 @@
+@startuml verbose_logging_ara_log_interaction
+title "Score Logging ARA Log Interaction"
+
+package "ara::log API" {
+  class "Free Functions" as AraLogFunctions {
+    + ara::log::LogError(): ara::log::LogStream
+    + ara::log::LogWarn(): ara::log::LogStream
+    + ara::log::LogInfo(): ara::log::LogStream
+    + ara::log::LogDebug(): ara::log::LogStream
+  }
+}
+
+package "score::mw Log Implementation" {
+  class "Free Functions" as ScoreMwLogFunctions {
+    + score::mw::LogError(): score::mw::LogStream
+    + score::mw::LogWarn(): score::mw::LogStream
+    + score::mw::LogInfo(): score::mw::LogStream
+    + score::mw::LogDebug(): score::mw::LogStream
+  }
+}
+
+AraLogFunctions --> ScoreMwLogFunctions : facade
+
+note top of AraLogFunctions
+  AUTOSAR Adaptive Platform
+  Logging API - standardized
+  interface for automotive
+  applications
+end note
+
+note bottom of ScoreMwLogFunctions
+  Score Middleware logging
+  implementation providing
+  the actual logging functionality
+end note
+
+note on link
+  ara::log functions act as
+  a facade that delegates to
+  score::mw logging implementation
+end note
+
+@enduml
