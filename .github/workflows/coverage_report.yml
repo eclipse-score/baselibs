@@ -35,9 +35,9 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.18.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}
+          disk-cache: ${{ github.job }}
           repository-cache: true
-          cache-save: ${{ github.event_name != 'pull_request' }}
+          cache-save: ${{ github.event_name == 'push' }}
       - name: Run Bazel Coverage
         run: |
           bazel coverage --config=bl-x86_64-linux -- //score/... \
