@@ -12,11 +12,11 @@
 # *******************************************************************************
 
 load("@score_docs_as_code//:docs.bzl", "docs")
-load("@score_tooling//:defs.bzl", "copyright_checker")
+load("@score_tooling//:defs.bzl", "copyright_checker", "use_format_targets")
 
 docs(
     data = [
-       "@score_process//:needs_json",
+        "@score_process//:needs_json",
     ],
     source_dir = "docs",
 )
@@ -32,6 +32,9 @@ copyright_checker(
         "//:MODULE.bazel",
     ],
     config = "@score_tooling//cr_checker/resources:config",
+    exclusion = "//:cr_checker_exclusion",
     template = "@score_tooling//cr_checker/resources:templates",
     visibility = ["//visibility:public"],
 )
+
+use_format_targets()

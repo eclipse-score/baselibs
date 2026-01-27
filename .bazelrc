@@ -63,3 +63,8 @@ build:bl-aarch64-qnx --incompatible_strict_action_env
 build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
 build:bl-aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0-posix
 test:bl-aarch64-qnx --config=bl_common
+
+# Coverage configuration for C++
+coverage --features=coverage
+coverage --combined_report=lcov
+coverage --cache_test_results=no

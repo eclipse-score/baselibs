@@ -10,15 +10,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
 name: Tests, Verify and Build Docs
-
 permissions:
   contents: write
   pages: write
   pull-requests: write
   id-token: write
-
 on:
   pull_request_target:
     types: [opened, reopened, synchronize] # Allows forks to trigger the docs build
@@ -27,7 +24,6 @@ on:
       - main
   merge_group:
     types: [checks_requested]
-
 jobs:
   docs-verify:
     uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@main
@@ -36,9 +32,7 @@ jobs:
       contents: read
     with:
       bazel-docs-verify-target: "//:docs_check"
-
   # TODO skipping tests as we don't integrate test results in docs anyways
-
   docs-build:
     needs: [docs-verify]
     uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@main

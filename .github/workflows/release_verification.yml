@@ -10,20 +10,16 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
 # Workflow configuration for S-CORE CI - Release Check
 # This workflow runs Bazel build and test when triggered by tag creation.
-
 name: Bazel Build & Test baselibs (with host toolchain GCC12.2)
 on:
   push:
     tags:
       - 'v*' # Triggers on version tags like v1.0.0
       - 'release-*' # Triggers on release tags like release-1.0.0
-
 permissions:
   contents: write
-
 jobs:
   build_host:
     runs-on: ubuntu-latest

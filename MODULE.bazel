@@ -19,48 +19,44 @@ module(
 ## Configure the C++ toolchain
 
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.2.0", dev_dependency = True)
-gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 
+gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
     target_cpu = "x86_64",
     target_os = "linux",
-    version = "12.2.0",
     use_default_package = True,
+    version = "12.2.0",
 )
-
 gcc.toolchain(
     name = "score_gcc_aarch64_toolchain",
     target_cpu = "aarch64",
     target_os = "linux",
-    version = "12.2.0",
     use_default_package = True,
+    version = "12.2.0",
 )
-
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
+    sdp_version = "8.0.0",
     target_cpu = "x86_64",
     target_os = "qnx",
-    sdp_version = "8.0.0",
-    version = "12.2.0",
     use_default_package = True,
+    version = "12.2.0",
 )
-
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
+    sdp_version = "8.0.0",
     target_cpu = "aarch64",
     target_os = "qnx",
-    sdp_version = "8.0.0",
-    version = "12.2.0",
     use_default_package = True,
+    version = "12.2.0",
 )
-
 use_repo(
     gcc,
-    "score_gcc_x86_64_toolchain",
-    "score_qcc_x86_64_toolchain",
     "score_gcc_aarch64_toolchain",
+    "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
+    "score_qcc_x86_64_toolchain",
 )
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
@@ -74,6 +70,13 @@ bazel_dep(name = "download_utils", version = "1.0.1")
 bazel_dep(name = "score_docs_as_code", version = "2.3.0")
 bazel_dep(name = "score_process", version = "1.4.0")
 bazel_dep(name = "score_tooling", version = "1.0.4")
+
+# We need the copyright exclusion feature
+git_override(
+    module_name = "score_tooling",
+    commit = "8894fe5440436a8c6d9e214c97b18d619c7f7eac",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
 
 ## Configure the python toolchain
 
@@ -90,6 +93,8 @@ python.toolchain(
 
 bazel_dep(name = "aspect_rules_py", version = "1.4.0", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
+
+bazel_dep(name = "aspect_rules_lint", version = "1.0.3")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 

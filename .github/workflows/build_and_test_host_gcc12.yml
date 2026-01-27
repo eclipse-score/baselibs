@@ -10,10 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
 # Workflow configuration for S-CORE CI - Bazel Build & Test baselibs
 # This workflow runs Bazel build and test when triggered by specific pull request events.
-
 name: Bazel Build & Test baselibs (with host toolchain GCC12.2)
 on:
   pull_request:
@@ -24,18 +22,18 @@ on:
   merge_group:
     types: [checks_requested]
 jobs:
-    build_and_test_gcc_host_gcc12:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v4.2.2
-        - name: Setup Bazel
-          uses: bazel-contrib/setup-bazel@0.9.1
-        - name: Bazel build baselibs targets
-          run: |
-            bazel build --config bl-x86_64-linux -- //score/...
-        - name: Bazel test baselibs targets
-          run: |
-            bazel test --config bl-x86_64-linux -- //score/... \
-            -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
-            -//score/containers:dynamic_array_test
+  build_and_test_gcc_host_gcc12:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.9.1
+      - name: Bazel build baselibs targets
+        run: |
+          bazel build --config bl-x86_64-linux -- //score/...
+      - name: Bazel test baselibs targets
+        run: |
+          bazel test --config bl-x86_64-linux -- //score/... \
+          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
+          -//score/containers:dynamic_array_test

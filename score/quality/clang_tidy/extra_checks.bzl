@@ -22,4 +22,3 @@ def clang_tidy_extra_checks(name, tags = [], extra_features = [], tidy_config_fi
         tags = ["manual"] + tags,
         outs = [name + ".result"],
     )
-
