@@ -21,4 +21,4 @@ on:
     types: [checks_requested]
 jobs:
   copyright-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/copyright.yml@main
+    uses: eclipse-score/cicd-workflows/.github/workflows/copyright.yml@bazel-cache-cleanup

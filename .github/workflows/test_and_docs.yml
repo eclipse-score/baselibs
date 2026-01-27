@@ -26,7 +26,7 @@ on:
     types: [checks_requested]
 jobs:
   docs-verify:
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@main
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@bazel-cache-cleanup
     permissions:
       pull-requests: write
       contents: read
@@ -35,7 +35,7 @@ jobs:
   # TODO skipping tests as we don't integrate test results in docs anyways
   docs-build:
     needs: [docs-verify]
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@main
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@bazel-cache-cleanup
     permissions:
       contents: write
       pages: write
