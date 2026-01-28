@@ -34,7 +34,7 @@ auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> sco
 
 // False positive, user defined literal operator is used to perform conversion.
 // coverity[autosar_cpp14_a13_1_3_violation : FALSE]
-auto operator"" _json(const char* const data, const size_t size) -> Any
+auto operator""_json(const char* const data, const size_t size) -> Any
 {
     const JsonParser json_parser_obj;
     auto result = json_parser_obj.FromBuffer(std::string_view{data, size});

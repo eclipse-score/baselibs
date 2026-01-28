@@ -42,7 +42,7 @@ class JsonParser : public IJsonParser
 
 /// \brief Parses the underlying buffer and creates a tree of JSON data
 /// \return root to the tree of JSON data, on error will terminate
-Any operator"" _json(const char* const data, const size_t size);
+Any operator""_json(const char* const data, const size_t size);
 
 }  // namespace json
 }  // namespace score
