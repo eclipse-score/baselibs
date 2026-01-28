@@ -1,0 +1,115 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+#
+# This workflow automates the release process for the baselibs repository.
+# It is triggered manually to build, test, and validate release artifacts.
+# The workflow creates a draft release with a filled-out description for
+# maintainers to approve and publish.
+name: Release
+run-name: Release ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v1.0.0)'
+        required: true
+        type: string
+concurrency:
+  group: release
+jobs:
+  validate-preconditions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.18.0
+        with:
+          bazelisk-cache: true
+          disk-cache: false
+          repository-cache: false
+          cache-save: false
+      - name: Validate Module Version Matches Tag
+        env:
+          EXPECTED_VERSION: ${{ inputs.tag }}
+        run: |
+          MODULE_VERSION=$(bazel mod graph --depth 1 --output json | jq -r '.version')
+          if [ "v$MODULE_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "::error::Module version ($MODULE_VERSION) does not match release tag ($EXPECTED_VERSION)"
+            exit 1
+          fi
+          echo "✓ Module version matches release tag"
+  build-linux:
+    needs: validate-preconditions
+    uses: ./.github/workflows/build_linux.yml
+  build-qnx:
+    needs: validate-preconditions
+    uses: ./.github/workflows/build_qnx.yml
+    permissions:
+      contents: read
+      pull-requests: read
+    secrets: inherit
+  coverage-report:
+    needs: validate-preconditions
+    uses: ./.github/workflows/coverage_report.yml
+  create-release:
+    needs: [validate-preconditions, build-linux, build-qnx, coverage-report]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      COVERAGE_ARCHIVE: ${{ github.event.repository.name }}-${{ inputs.tag }}-cpp-coverage
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Get Current Date and Previous Release Tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PREVIOUS_TAG=$(gh release view --json tagName --jq '.tagName' 2>/dev/null || echo "N/A")
+          echo "RELEASE_DATE=$(date --rfc-3339=date)" >> $GITHUB_ENV
+          echo "PREVIOUS_RELEASE_TAG=$PREVIOUS_TAG" >> $GITHUB_ENV
+      - name: Generate Release Body
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          COMMIT_SHA: ${{ github.sha }}
+          ACTION_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          envsubst '$RELEASE_TAG $PREVIOUS_RELEASE_TAG $COMMIT_SHA $RELEASE_DATE $ACTION_RUN_URL' < .github/RELEASE_TEMPLATE.md > release_body.md
+      - name: Download Coverage Report Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ github.event.repository.name }}_cpp_coverage_report
+          path: ${{ env.COVERAGE_ARCHIVE }}
+      - name: Create Coverage Report Archive
+        run: |
+          tar --sort=name --owner=0 --group=0 --numeric-owner \
+            -cJf "$COVERAGE_ARCHIVE.tar.xz" "$COVERAGE_ARCHIVE"
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v2
+        id: draft_release
+        with:
+          tag_name: ${{ inputs.tag }}
+          body_path: release_body.md
+          draft: true
+          generate_release_notes: true
+          target_commitish: ${{ github.sha }}
+          files: |
+            ${{ env.COVERAGE_ARCHIVE }}.tar.xz
+      - name: Summary
+        run: |
+          echo "### Draft Release Created :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "Tag: **${{ inputs.tag }}**" >> $GITHUB_STEP_SUMMARY
+          echo "Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "Maintainers can review at: ${{ steps.draft_release.outputs.url }}" >> $GITHUB_STEP_SUMMARY

@@ -19,6 +19,7 @@ on:
       - main
   merge_group:
     types: [checks_requested]
+  workflow_call:
 jobs:
   coverage-report:
     runs-on: ubuntu-22.04
@@ -54,6 +55,6 @@ jobs:
       - name: Upload Coverage Artifacts
         uses: actions/upload-artifact@v6
         with:
-          name: ${{ github.event.repository.name }}_coverage_report
+          name: ${{ github.event.repository.name }}_cpp_coverage_report
           path: cpp_coverage/
-          retention-days: 30
+          retention-days: 10
