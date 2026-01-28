@@ -1,0 +1,64 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Release
+run-name: Release ${{ inputs.tag }}
+on:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v1.0.0)'
+        required: true
+        type: string
+concurrency:
+  group: release
+jobs:
+  build-linux:
+    uses: ./.github/workflows/build_linux.yml
+  build-qnx:
+    uses: ./.github/workflows/build_qnx.yml
+    permissions:
+      contents: read
+      pull-requests: read
+  coverage-report:
+    uses: ./.github/workflows/coverage_report.yml
+  create-release:
+    needs: [build-linux, build-qnx, coverage-report]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Get Current Date and Previous Release Tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PREVIOUS_TAG=$(gh release view --json tagName --jq '.tagName' 2>/dev/null || echo "N/A")
+          echo "RELEASE_DATE=$(date --rfc-3339=date)" >> $GITHUB_ENV
+          echo "PREVIOUS_RELEASE_TAG=$PREVIOUS_TAG" >> $GITHUB_ENV
+      - name: Generate Release Body
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          COMMIT_SHA: ${{ github.sha }}
+          ACTION_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          envsubst < .github/RELEASE_TEMPLATE.md > release_body.md
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v0.0.0" # ${{ inputs.tag }}
+          body_path: release_body.md
+          draft: true
+          generate_release_notes: true
+          target_commitish: ${{ github.sha }}

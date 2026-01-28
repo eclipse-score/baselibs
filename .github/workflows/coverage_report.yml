@@ -19,6 +19,7 @@ on:
       - main
   merge_group:
     types: [checks_requested]
+  workflow_call:
 jobs:
   coverage-report:
     runs-on: ubuntu-22.04
