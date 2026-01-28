@@ -13,6 +13,7 @@
 #include "score/mw/log/detail/text_recorder/slot_drainer.h"
 
 #include "score/os/mocklib/unistdmock.h"
+#include "score/os/mocklib/fcntl_mock.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/text_recorder/mock/message_builder_mock.h"
 
@@ -48,6 +49,9 @@ class SlotDrainerFixture : public ::testing::Test
         unistd_ptr_ = score::cpp::pmr::make_unique<score::os::UnistdMock>(score::cpp::pmr::get_default_resource());
         unistd_mock_ = unistd_ptr_.get();
 
+        fcntl_ptr_ = score::cpp::pmr::make_unique<score::os::FcntlMock>(score::cpp::pmr::get_default_resource());
+        fcntl_mock_ = fcntl_ptr_.get();
+
         allocator_ = std::make_unique<CircularAllocator<LogRecord>>(pool_size_);
 
         message_builder_mock_ = std::make_unique<mock::MessageBuilderMock>();
@@ -65,6 +69,8 @@ class SlotDrainerFixture : public ::testing::Test
 
     score::cpp::pmr::unique_ptr<::score::os::UnistdMock> unistd_ptr_{};
     ::score::os::UnistdMock* unistd_mock_{};
+    score::cpp::pmr::unique_ptr<::score::os::FcntlMock> fcntl_ptr_{};
+    ::score::os::FcntlMock* fcntl_mock_{};
     std::unique_ptr<IMessageBuilder> message_builder = nullptr;
     std::shared_ptr<CircularAllocator<LogRecord>> allocator_ = nullptr;
     std::int32_t file_descriptor_ = 23;  //  random number file descriptor
@@ -80,8 +86,18 @@ TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given write file error
-    SlotDrainer unit(
-        std::move(message_builder), allocator_, file_descriptor_, std::move(unistd_ptr_), kLimitSlotsInOneCycle);
+    SlotDrainer unit(std::move(message_builder),
+                 allocator_,
+                 file_descriptor_,
+                 std::string{},
+                 std::move(unistd_ptr_),
+                 std::move(fcntl_ptr_),
+                 false,
+                 false,
+                 0,
+                 1,
+                 false,
+                 kLimitSlotsInOneCycle);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
@@ -109,8 +125,18 @@ TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlo
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given write file error
-    SlotDrainer unit(
-        std::move(message_builder), allocator_, file_descriptor_, std::move(unistd_ptr_), kLimitSlotsInOneCycle);
+    SlotDrainer unit(std::move(message_builder),
+                 allocator_,
+                 file_descriptor_,
+                 std::string{},
+                 std::move(unistd_ptr_),
+                 std::move(fcntl_ptr_),
+                 false,
+                 false,
+                 0,
+                 1,
+                 false,
+                 kLimitSlotsInOneCycle);
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
@@ -143,8 +169,18 @@ TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     //  Given one slot flushed
-    SlotDrainer unit(
-        std::move(message_builder), allocator_, file_descriptor_, std::move(unistd_ptr_), kLimitSlotsInOneCycle);
+    SlotDrainer unit(std::move(message_builder),
+                 allocator_,
+                 file_descriptor_,
+                 std::string{},
+                 std::move(unistd_ptr_),
+                 std::move(fcntl_ptr_),
+                 false,
+                 false,
+                 0,
+                 1,
+                 false,
+                 kLimitSlotsInOneCycle);
 
     //  Expect sequence of calls to check if any spans from possible previous slots are remaining:
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
@@ -183,10 +219,17 @@ TEST_F(SlotDrainerFixture, TestTooManySlotsForSingleCallShallNotBeAbleToFlushAll
 
     //  Given SlotDrainer set to limit number of slots processed in one call to:
     SlotDrainer unit(std::move(message_builder),
-                     allocator_,
-                     file_descriptor_,
-                     std::move(unistd_ptr_),
-                     kLimiNumberOfSlotsProcesssedInOneCall);
+                 allocator_,
+                 file_descriptor_,
+                 std::string{},
+                 std::move(unistd_ptr_),
+                 std::move(fcntl_ptr_),
+                 false,
+                 false,
+                 0,
+                 1,
+                 false,
+                 kLimiNumberOfSlotsProcesssedInOneCall);
 
     //  Given 3 slots queued due to 'would block' returns:
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)

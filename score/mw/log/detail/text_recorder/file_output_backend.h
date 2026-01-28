@@ -33,9 +33,15 @@ class FileOutputBackend final : public Backend
   public:
     FileOutputBackend(std::unique_ptr<IMessageBuilder> message_builder,
                       const std::int32_t file_descriptor,
+                      const std::string& file_path,
                       std::unique_ptr<CircularAllocator<LogRecord>> allocator,
-                      score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl_instance,
-                      score::cpp::pmr::unique_ptr<score::os::Unistd> unistd) noexcept;
+                      score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl,
+                      score::cpp::pmr::unique_ptr<score::os::Unistd> unistd,
+                      const bool circular_file_logging,
+                      const bool overwrite_log_on_full,
+                      const std::size_t max_log_file_size_bytes,
+                      const std::size_t no_of_log_files,
+                      const bool truncate_on_rotation) noexcept;
     /// \brief Before a producer can store data in our buffer, he has to reserve a slot.
     ///
     /// \return SlotHandle if a slot was able to be reserved, empty otherwise.

@@ -102,6 +102,12 @@ in parallel
 * **logFilePath** -- used for file logging, if ```logMode``` includes
 ```kFile```, this is the directory, where the logfile ```appId.dlt``` will be
 put
+* **logFileSizePolicy** -- an object that defines the rules for log file rotation.
+    * **enabled** (`true`/`false`): Enables or disables the file rotation/sizing feature.
+    * **maxFileSizeInBytes** (integer): The maximum size in bytes that a single log file can reach before rotation is triggered.
+    * **numberOfFiles** (integer): The total number of log files to use in the rotation cycle (e.g., `appId_1.dlt`, `appId_2.dlt`).
+    * **overwriteExistingFiles** (`true`/`false`): If `true`, allows the logger to overwrite an existing log file when it rotates back to it. If `false`, rotation will stop if the next file in the cycle already exists.
+    * **truncateOnRotation** (`true`/`false`): If `true`, the contents of the next log file in the cycle will be deleted (truncated) before new logs are written to it.
 * **logLevel** -- default value: LogLevel::kWarn, global log level threshold
 for the application
 * **logLevelThresholdConsole** -- if ```logMode``` includes ```kConsole```,

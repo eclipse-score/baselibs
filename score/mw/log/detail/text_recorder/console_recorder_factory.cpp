@@ -40,9 +40,15 @@ std::unique_ptr<Backend> ConsoleRecorderFactory::CreateConsoleLoggingBackend(
 
     return std::make_unique<FileOutputBackend>(std::move(message_builder),
                                                STDOUT_FILENO,
+                                               "",
                                                std::move(allocator),
                                                score::os::FcntlImpl::Default(memory_resource),
-                                               score::os::Unistd::Default(memory_resource));
+                                               score::os::Unistd::Default(memory_resource),
+                                               false,
+                                               false,
+                                               0,
+                                               1,
+                                               false);
 }
 
 }  // namespace detail

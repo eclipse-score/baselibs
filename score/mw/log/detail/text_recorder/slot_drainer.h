@@ -46,7 +46,14 @@ class SlotDrainer
     SlotDrainer(std::unique_ptr<IMessageBuilder> message_builder,
                 std::shared_ptr<CircularAllocator<LogRecord>> allocator,
                 const std::int32_t file_descriptor,
+                const std::string& file_path,
                 score::cpp::pmr::unique_ptr<score::os::Unistd> unistd,
+                score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl,
+                const bool circular_file_logging,
+                const bool overwrite_log_on_full,
+                const std::size_t max_log_file_size_bytes,
+                const std::size_t no_of_log_files,
+                const bool truncate_on_rotation,
                 const std::size_t limit_slots_in_one_cycle = 32UL);
 
     SlotDrainer(SlotDrainer&&) noexcept = delete;

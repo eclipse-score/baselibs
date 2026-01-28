@@ -26,11 +26,27 @@ namespace detail
 SlotDrainer::SlotDrainer(std::unique_ptr<IMessageBuilder> message_builder,
                          std::shared_ptr<CircularAllocator<LogRecord>> allocator,
                          const std::int32_t file_descriptor,
+                         const std::string& file_path,
                          score::cpp::pmr::unique_ptr<score::os::Unistd> unistd,
+                         score::cpp::pmr::unique_ptr<score::os::Fcntl> fcntl,
+                         const bool circular_file_logging,
+                         const bool overwrite_log_on_full,
+                         const std::size_t max_log_file_size_bytes,
+                         const std::size_t no_of_log_files,
+                         const bool truncate_on_rotation,
                          const std::size_t limit_slots_in_one_cycle)
     : allocator_(allocator),
       message_builder_(std::move(message_builder)),
-      non_blocking_writer_(file_descriptor, NonBlockingWriter::GetMaxChunkSize(), std::move(unistd)),
+      non_blocking_writer_(file_path,
+                           file_descriptor,
+                           NonBlockingWriter::GetMaxChunkSize(),
+                           std::move(unistd),
+                           std::move(fcntl),
+                           circular_file_logging,
+                           overwrite_log_on_full,
+                           max_log_file_size_bytes,
+                           no_of_log_files,
+                           truncate_on_rotation),
       limit_slots_in_one_cycle_(limit_slots_in_one_cycle)
 {
 }

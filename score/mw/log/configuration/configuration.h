@@ -84,6 +84,21 @@ class Configuration final
     bool GetDynamicDatarouterIdentifiers() const noexcept;
     void SetDynamicDatarouterIdentifiers(const bool enable_dynamic_identifiers) noexcept;
 
+    bool IsCircularFileLogging() const noexcept;
+    void SetCircularFileLogging(const bool) noexcept;
+
+    std::size_t GetMaxLogFileSizeBytes() const noexcept;
+    void SetMaxLogFileSizeBytes(const std::size_t) noexcept;
+
+    bool IsOverwriteLogOnFull() const noexcept;
+    void SetOverwriteLogOnFull(const bool) noexcept;
+
+    std::size_t GetNoOfLogFiles() const noexcept;
+    void SetNoOfLogFiles(const std::size_t) noexcept;
+
+    bool IsTruncateOnRotation() const noexcept;
+    void SetTruncateOnRotation(const bool) noexcept;
+
     /// \brief Returns true if the log level is enabled for the context.
     /// \param use_console_default_level Set to true if threshold for console logging should be considered as default
     /// log level. Otherwise default_log_level_ will be used instead.
@@ -138,6 +153,21 @@ class Configuration final
 
     /// \brief Toggle between dynamic datarouter identifiers.
     bool dynamic_datarouter_identifiers_{false};
+
+    /// \brief Enable circular file logging.
+    bool circular_file_logging_{false};
+
+    /// \brief Maximum log file size in bytes for circular file logging.
+    std::size_t max_log_file_size_bytes_{10485760};  // 10 MB default
+
+    /// \brief Overwrite log file on full.
+    bool overwrite_log_on_full_{false};
+    
+    /// \brief Number of log files to keep.
+    std::size_t no_of_log_files_{1};
+
+    /// \brief Truncate on rotation.
+    bool truncate_on_rotation_{false};
 };
 
 }  // namespace detail
