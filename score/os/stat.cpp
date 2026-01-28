@@ -22,6 +22,7 @@ namespace os
 {
 namespace
 {
+// coverity[autosar_cpp14_a0_1_1_violation] false positive, variable used in std::array variable
 constexpr std::uint32_t map_mode_size = 12U;
 
 const std::array<std::pair<Stat::Mode, std::int32_t>, map_mode_size>& GetStatModesMap() noexcept
