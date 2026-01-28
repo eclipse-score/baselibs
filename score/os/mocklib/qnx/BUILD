@@ -182,7 +182,7 @@ cc_test(
     target_compatible_with = ["@platforms//os:qnx"],
     deps = [
         ":secpolev_mock",
-        "@googletest//:gtest",
+        "@googletest//:gtest_main",
     ],
 )
 
