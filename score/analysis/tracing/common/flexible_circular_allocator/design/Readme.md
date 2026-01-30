@@ -112,7 +112,7 @@ It is important that these data structures can be atomically updated and are ens
 
 As the design shows, the shared memory allocated buffer is managed by head and tail. We could run into a case where there's wrap-around (tail > head), so we need to handle both cases: with wrap-around and without wrap-around. The following diagram shows how BufferQueue looks in both cases:
 
-![Buffer Block Wrap Around vs No Wrap Around](./BufferBLock_wrap_around_no_wrap_around.png)
+![Buffer Block Wrap Around vs No Wrap Around](./BufferBlock_wrap_around_no_wrap_around.drawio.svg)
 
 ### Allocation
 
