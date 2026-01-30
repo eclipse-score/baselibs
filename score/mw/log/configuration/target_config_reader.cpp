@@ -49,6 +49,13 @@ constexpr StringLiteral kSlotSizeBytesKey{"slotSizeBytes"};
 constexpr StringLiteral kDatarouterUidKey{"datarouterUid"};
 constexpr StringLiteral kDynamicDatarouterIdentifiersKey{"dynamicDatarouterIdentifiers"};
 
+constexpr StringLiteral kLogFileSizePolicyKey{"logFileSizePolicy"};
+constexpr StringLiteral kEnabledKey{"enabled"};
+constexpr StringLiteral kMaxFileSizeInBytesKey{"maxFileSizeInBytes"};
+constexpr StringLiteral kNumberOfFilesKey{"numberOfFiles"};
+constexpr StringLiteral kOverwriteExistingFilesKey{"overwriteExistingFiles"};
+constexpr StringLiteral kTruncateOnRotationKey{"truncateOnRotation"};
+
 // Suppress Coverity warning because:
 // 1. 'constexpr' cannot be used with std::unordered_map.
 // 2. Defining it as a local variable does not resolve the Coverity warning.
@@ -429,6 +436,95 @@ score::ResultBlank ParseDynamicDatarouterIdentifiers(const score::json::Object& 
     // clang-format on
 }
 
+score::ResultBlank ParseCircularFileLogging(const score::json::Object& root, Configuration& config) noexcept
+{
+    const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
+    if (!file_rotation_obj_result.has_value())
+    {
+        return {}; // The whole fileRotation object is optional.
+    }
+
+    // clang-format off
+    return GetElementAndThen<bool>(
+        file_rotation_obj_result.value().get(),
+        kEnabledKey,
+        [&config](auto value) noexcept { config.SetCircularFileLogging(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseMaxLogFileSizeBytes(const score::json::Object& root, Configuration& config) noexcept
+{
+    const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
+    if (!file_rotation_obj_result.has_value())
+    {
+        return {}; // The whole fileRotation object is optional.
+    }
+
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<std::size_t>(
+        file_rotation_obj_result.value().get(),
+        kMaxFileSizeInBytesKey,
+        [&config](auto value) noexcept { config.SetMaxLogFileSizeBytes(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseOverwriteLogOnFull(const score::json::Object& root, Configuration& config) noexcept
+{
+    const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
+    if (!file_rotation_obj_result.has_value())
+    {
+        return {}; // The whole fileRotation object is optional.
+    }
+
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<bool>(
+        file_rotation_obj_result.value().get(),
+        kOverwriteExistingFilesKey,
+        [&config](auto value) noexcept { config.SetOverwriteLogOnFull(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseNoOfLogFiles(const score::json::Object& root, Configuration& config) noexcept
+{
+    const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
+    if (!file_rotation_obj_result.has_value())
+    {
+        return {}; // The whole fileRotation object is optional.
+    }
+
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<std::size_t>(
+        file_rotation_obj_result.value().get(),
+        kNumberOfFilesKey,
+        [&config](auto value) noexcept { config.SetNoOfLogFiles(value); }
+    );
+    // clang-format on
+}
+
+score::ResultBlank ParseTruncateOnRotation(const score::json::Object& root, Configuration& config) noexcept
+{
+    const auto file_rotation_obj_result = GetElementAsRef<score::json::Object>(root, kLogFileSizePolicyKey);
+    if (!file_rotation_obj_result.has_value())
+    {
+        return {}; // The whole fileRotation object is optional.
+    }
+
+    // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
+    // clang-format off
+    return GetElementAndThen<bool>(
+        file_rotation_obj_result.value().get(),
+        kTruncateOnRotationKey,
+        [&config](auto value) noexcept { config.SetTruncateOnRotation(value); }
+    );
+    // clang-format on
+}
+
 void ParseConfigurationElements(const score::json::Object& root, const std::string& path, Configuration& config) noexcept
 {
     ReportOnError(ParseEcuId(root, config), path);
@@ -446,6 +542,11 @@ void ParseConfigurationElements(const score::json::Object& root, const std::stri
     ReportOnError(ParseSlotSizeBytes(root, config), path);
     ReportOnError(ParseDatarouterUid(root, config), path);
     ReportOnError(ParseDynamicDatarouterIdentifiers(root, config), path);
+    ReportOnError(ParseCircularFileLogging(root, config), path);
+    ReportOnError(ParseMaxLogFileSizeBytes(root, config), path);
+    ReportOnError(ParseOverwriteLogOnFull(root, config), path);
+    ReportOnError(ParseNoOfLogFiles(root, config), path);
+    ReportOnError(ParseTruncateOnRotation(root, config), path);
 }
 
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".

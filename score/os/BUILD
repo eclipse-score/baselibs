@@ -900,6 +900,12 @@ cc_library(
 )
 
 cc_library(
+    name = "os",
+    hdrs = glob(["*.h"]),
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "version",
     hdrs = [
         "version.h",

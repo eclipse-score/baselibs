@@ -98,8 +98,11 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
+        "@score_baselibs//score/filesystem",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/mw/log/detail:types_and_errors",
+        "@score_baselibs//score/os",
+        "@score_baselibs//score/os:fcntl",
         "@score_baselibs//score/os:unistd",
     ],
 )
@@ -212,6 +215,7 @@ cc_test(
     deps = [
         ":non_blocking_writer",
         "@score_baselibs//score/os/mocklib:unistd_mock",
+        "@score_baselibs//score/os/mocklib:fcntl_mock",
         #"@score_baselibs//score/mw/log/test/console_logging_environment",
         "@googletest//:gtest_main",
     ],
