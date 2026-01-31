@@ -144,3 +144,17 @@ bazel_dep(name = "score_crates", version = "0.0.6")
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "score_bazel_platforms", version = "0.0.4")
+
+# ============================================================================
+# SBOM Metadata - Third-party dependencies for supply chain transparency
+# ============================================================================
+# Usage: Add license info for bazel_dep modules. Version auto-extracted.
+
+sbom = use_extension("@score_tooling//sbom:extensions.bzl", "sbom_metadata")
+
+# License info for bazel_dep modules (version auto-extracted from bazel_dep)
+sbom.license(name = "boost.container", license = "BSL-1.0", supplier = "Boost.org")
+sbom.license(name = "boost.interprocess", license = "BSL-1.0", supplier = "Boost.org")
+sbom.license(name = "nlohmann_json", license = "MIT", supplier = "Niels Lohmann")
+sbom.license(name = "googletest", license = "BSD-3-Clause", supplier = "Google LLC")
+sbom.license(name = "google_benchmark", license = "Apache-2.0", supplier = "Google LLC")
