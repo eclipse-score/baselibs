@@ -22,3 +22,18 @@ on:
 jobs:
   formatting-check:
     uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@main
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.18.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.job }}
+          repository-cache: true
+          cache-save: ${{ github.event_name == 'push' }}
+      - name: Bazel Build with clang-format
+        run: |
+          bazel build --config clang_format -- //... || true
