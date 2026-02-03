@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@score_bazel_tools_cc//quality:defs.bzl", "clang_format_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "use_format_targets")
 load(":qemu.bzl", "qemu_aarch64")
@@ -38,6 +39,17 @@ copyright_checker(
     visibility = ["//visibility:public"],
 )
 
+qemu_aarch64()
+
 use_format_targets()
 
-qemu_aarch64()
+clang_format_config(
+    name = "clang_format_config",
+    config_file = "//:.clang-format",
+    target_types = [
+        "cc_binary",
+        "cc_library",
+        "cc_test",
+    ],
+    visibility = ["//visibility:public"],
+)
