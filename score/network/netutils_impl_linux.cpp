@@ -24,6 +24,7 @@
 #include <net/if.h>
 #include <netinet/in.h>
 #include <sys/ioctl.h>
+#include <climits>
 
 /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
 /* KW_SUPPRESS_START:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
@@ -143,7 +144,8 @@ score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() cons
     {
         std::uint8_t* pRtAttrByte =
             reinterpret_cast<std::uint8_t*>(RTM_RTA(NLMSG_DATA(reinterpret_cast<nlmsghdr*>(pNlByte))));
-        int rt_attribute_len = RTM_PAYLOAD(reinterpret_cast<nlmsghdr*>(pNlByte));
+        auto payload_size = RTM_PAYLOAD(reinterpret_cast<nlmsghdr*>(pNlByte));
+        int rt_attribute_len = static_cast<int>(std::min(payload_size, static_cast<size_t>(INT_MAX)));
 
         for (; RTA_OK(reinterpret_cast<rtattr*>(pRtAttrByte), rt_attribute_len);
              pRtAttrByte =

@@ -508,11 +508,11 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(B
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
         auto old_buffer_queue_tail = buffer_queue_tail_.load();
-        auto new_buffer_queue_tail = old_buffer_queue_tail + static_cast<uint32_t>(current_block.block_length);
+        auto new_buffer_queue_tail = old_buffer_queue_tail + current_block.block_length;
         if (AtomicIndirectorType<decltype(buffer_queue_tail_.load())>::compare_exchange_strong(
                 buffer_queue_tail_, old_buffer_queue_tail, new_buffer_queue_tail, std::memory_order_seq_cst) == true)
         {
-            std::ignore = available_size_.fetch_add(static_cast<std::uint32_t>(current_block.block_length),
+            std::ignore = available_size_.fetch_add(current_block.block_length,
                                                     std::memory_order_seq_cst);
             break;
         }
@@ -621,7 +621,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
         auto old_buffer_queue_head = buffer_queue_head_.load();
-        new_buffer_queue_head = static_cast<uint32_t>(aligned_size);
+        new_buffer_queue_head = aligned_size;
 
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
@@ -636,7 +636,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
         return nullptr;
     }
     // LCOV_EXCL_STOP
-    auto block_ptr = GetBufferPositionAt(static_cast<std::uint32_t>(new_buffer_queue_head) - aligned_size);
+    auto block_ptr = GetBufferPositionAt(new_buffer_queue_head - aligned_size);
     // TODO: Ticket-230467
     // LCOV_EXCL_START
     if ((!block_ptr.has_value()) || (block_ptr.value() == nullptr))
@@ -655,7 +655,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
     // LCOV_EXCL_STOP
     auto block_meta_data = block_meta_data_result.value();
     block_meta_data->list_entry_offset = list_entry_element_index;
-    block_meta_data->block_length = static_cast<uint32_t>(aligned_size);
+    block_meta_data->block_length = aligned_size;
     allocated_address = GetBufferPositionAt(static_cast<std::size_t>(new_buffer_queue_head) -
                                             static_cast<std::size_t>(aligned_size) + sizeof(BufferBlock));
 
@@ -689,7 +689,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
         auto list_entry_new = list_entry_old;
         list_entry_new.flags = static_cast<std::uint8_t>(ListEntryFlag::kInUse);
         list_entry_new.length = static_cast<std::uint16_t>(aligned_size);
-        list_entry_new.offset = (static_cast<std::uint32_t>(aligned_size) + new_buffer_queue_head - aligned_size);
+        list_entry_new.offset = (aligned_size + new_buffer_queue_head - aligned_size);
         if (AtomicIndirectorType<ListEntry>::compare_exchange_strong(
                 list_array_.at(static_cast<size_t>(list_entry_element_index)),
                 list_entry_old,
@@ -729,13 +729,13 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
             return MakeUnexpected<uint8_t*>(LocklessFlexibleAllocatorErrorCode::kNotEnoughMemory);
         }
         // LCOV_EXCL_STOP
-        auto new_buffer_queue_head = old_buffer_queue_head + static_cast<std::uint32_t>(aligned_size);
+        auto new_buffer_queue_head = old_buffer_queue_head + aligned_size;
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
         {
             // TODO: Ticket-230467
             // LCOV_EXCL_START
-            if (new_buffer_queue_head < static_cast<unsigned int>(aligned_size))
+            if (new_buffer_queue_head < aligned_size)
             {
                 return nullptr;
             }
@@ -764,7 +764,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
     // LCOV_EXCL_STOP
     auto block_meta_data = block_meta_data_result.value();
     block_meta_data->list_entry_offset = list_entry_element_index;
-    block_meta_data->block_length = static_cast<std::uint32_t>(aligned_size);
+    block_meta_data->block_length = aligned_size;
     allocated_address = GetBufferPositionAt(static_cast<std::size_t>(offset) + sizeof(BufferBlock));
     // TODO: Ticket-230467
     // LCOV_EXCL_START
@@ -799,7 +799,7 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
         auto list_entry_new = list_entry_old;
         list_entry_new.flags = static_cast<std::uint8_t>(ListEntryFlag::kInUse);
         list_entry_new.length = static_cast<std::uint16_t>(aligned_size);
-        list_entry_new.offset = (static_cast<std::uint32_t>(aligned_size) + offset);
+        list_entry_new.offset = (aligned_size + offset);
         if (AtomicIndirectorType<ListEntry>::compare_exchange_strong(
                 list_array_.at(static_cast<size_t>(list_entry_element_index)),
                 list_entry_old,

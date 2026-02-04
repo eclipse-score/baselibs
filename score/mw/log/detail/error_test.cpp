@@ -74,7 +74,7 @@ TEST(LgDetailErrorUnknown, TestUnknownError)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     const auto error_code_out_of_range =
-        LogDetailErrorFixture::ReturnError(static_cast<Error>(std::numeric_limits<std::size_t>::max()));
+        LogDetailErrorFixture::ReturnError(static_cast<Error>(std::numeric_limits<std::int32_t>::max()));
     EXPECT_GT(error_code_out_of_range.Message().size(), 0);
 }
 

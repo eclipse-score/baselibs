@@ -785,7 +785,7 @@ TEST_F(LogStreamFixture, CanLogRawBuffer)
     const LogRawBuffer value{s2, sizeof(s2)};
 
     // Expecting that this value will be transferred to the correct log call
-    EXPECT_CALL(recorder_mock_, Log_LogRawBuffer(HANDLE, value.data(), static_cast<uint64_t>(value.size()))).Times(1);
+    EXPECT_CALL(recorder_mock_, Log_LogRawBuffer(HANDLE, value.data(), value.size())).Times(1);
 
     // When logging the value
     Unit() << value;
@@ -803,7 +803,7 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyRawBufferShallNotLog)
     const LogRawBuffer value{nullptr, 1};
 
     // Expecting that this value will be transferred to the correct log call
-    EXPECT_CALL(recorder_mock_, Log_LogRawBuffer(HANDLE, value.data(), static_cast<uint64_t>(value.size()))).Times(0);
+    EXPECT_CALL(recorder_mock_, Log_LogRawBuffer(HANDLE, value.data(), value.size())).Times(0);
 
     // When logging the value
     Unit() << value;

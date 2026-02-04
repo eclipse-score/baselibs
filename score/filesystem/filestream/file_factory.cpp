@@ -118,13 +118,13 @@ std::string ComposeTempFilename(std::string original_filename) noexcept
 // compatible). Since -1 is equal to max value for unsigned type of variable we defined as cast -1U to uid_t.
 // coverity[autosar_cpp14_m5_3_2_violation]
 // coverity[autosar_cpp14_m5_19_1_violation]
-inline constexpr uid_t kDoNotChangeUID{static_cast<uid_t>(-1U)};
+inline constexpr uid_t kDoNotChangeUID{-1U};
 
 // Supression: -1 is a value to indicate to the system that we don't intend to change the group id (Linux and QNX
 // compatible). Since -1 is equal to max value for unsigned type of variable we defined as cast -1U to gid_t.
 // coverity[autosar_cpp14_m5_3_2_violation]
 // coverity[autosar_cpp14_m5_19_1_violation]
-inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
+inline constexpr gid_t kDoNotChangeGID{-1U};
 
 [[nodiscard]] uid_t ExtractUid(const details::IdentityMetadata& metadata,
                                const AtomicUpdateOwnershipFlags ownership_flag)

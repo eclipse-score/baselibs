@@ -95,7 +95,7 @@ TEST_F(TextMessageBuilderFixture, HeaderShallHaveSpecificElements)
 
     const auto header_span = unit_.GetNextSpan().value();
     const auto string_content =
-        std::string(reinterpret_cast<const char*>(header_span.data()), static_cast<std::size_t>(header_span.size()));
+        std::string(reinterpret_cast<const char*>(header_span.data()), header_span.size());
     EXPECT_THAT(string_content, HasSubstr(" TMB "));
     EXPECT_THAT(string_content, HasSubstr(" CTX "));
     EXPECT_THAT(string_content, HasSubstr(" 000 XECU "));
@@ -118,7 +118,7 @@ TEST_F(TextMessageBuilderFixture, PayloadShouldHaveSetText)
     std::ignore = unit_.GetNextSpan();
     const auto payload_span = unit_.GetNextSpan().value();
     const auto string_content =
-        std::string(reinterpret_cast<const char*>(payload_span.data()), static_cast<std::size_t>(payload_span.size()));
+        std::string(reinterpret_cast<const char*>(payload_span.data()), payload_span.size());
     EXPECT_THAT(string_content, StrEq("payload"));
 }
 
@@ -147,7 +147,7 @@ TEST_P(TextMessageBuilderFixture, HeaderShallHaveLevelPrintedForAllParams)
 
     const auto header_span = unit_.GetNextSpan().value();
     const auto string_content =
-        std::string(reinterpret_cast<const char*>(header_span.data()), static_cast<std::size_t>(header_span.size()));
+        std::string(reinterpret_cast<const char*>(header_span.data()), header_span.size());
     EXPECT_THAT(string_content, HasSubstr(level_string));
 }
 
@@ -169,7 +169,7 @@ TEST_F(TextMessageBuilderFixture, LogLevelToStringShouldReturnUndefinedForInvali
 
     const auto header_span = unit_.GetNextSpan().value();
     const auto string_content =
-        std::string(reinterpret_cast<const char*>(header_span.data()), static_cast<std::size_t>(header_span.size()));
+        std::string(reinterpret_cast<const char*>(header_span.data()), header_span.size());
 
     EXPECT_THAT(string_content, HasSubstr(kLevelStringUndefined));
 }

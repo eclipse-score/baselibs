@@ -263,7 +263,7 @@ TEST_F(SigEventTest, DefaultError)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     SigEventErrorCodeDomain errorDomain;
-    auto error_msg = errorDomain.MessageFor(static_cast<score::result::ErrorCode>(9999));
+    auto error_msg = errorDomain.MessageFor(9999);
     EXPECT_EQ(error_msg, "Unknown error");
 }
 }  // namespace score::os

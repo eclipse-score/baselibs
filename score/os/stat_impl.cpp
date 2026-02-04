@@ -137,8 +137,7 @@ score::cpp::expected_blank<Error> StatImpl::fchmodat(const std::int32_t fd,
 {
     const mode_t native_mode{ModeToInteger(mode)};
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
-    const std::int32_t flags =
-        resolve_symlinks ? static_cast<std::int32_t>(0) : static_cast<std::int32_t>(AT_SYMLINK_NOFOLLOW);
+    const std::int32_t flags = resolve_symlinks ? 0 : AT_SYMLINK_NOFOLLOW;
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     if (::fchmodat(fd, path, native_mode, flags) == -1)
     {

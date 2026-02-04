@@ -23,7 +23,10 @@ build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_he
 build:bl_stub --//score/json:base_library=nlohmann
 build:bl_stub --//score/memory/shared/flags:use_typedshmd=False
 
-build:bl_stub --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
+build:bl_stub --features=minimal_warnings --features=strict_warnings --features=warnings_as_errors
+
+# Exclude external dependencies from strict warnings to avoid third-party library issues
+build:bl_stub --per_file_copt=external/.*@-Wno-error
 
 # Common baselibs flags for test
 test:bl_common --build_tests_only
@@ -46,6 +49,7 @@ build:bl-aarch64-linux --config=bl_stub
 build:bl-aarch64-linux --config=bl_toolchain_common
 build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
 build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0-posix
+build:bl-aarch64-linux --build_tag_filters=-rust,-rustfmt
 test:bl-aarch64-linux --config=bl_common
 
 

@@ -182,7 +182,7 @@ INSTANTIATE_TEST_SUITE_P(
 
         std::make_tuple(reinterpret_cast<const void*>(std::uintptr_t{0}),
                         std::numeric_limits<std::size_t>::max(),
-                        reinterpret_cast<void*>(static_cast<std::uintptr_t>(std::numeric_limits<std::size_t>::max()))),
+                        reinterpret_cast<void*>(std::numeric_limits<std::size_t>::max())),
 
         std::make_tuple(reinterpret_cast<const void*>(std::uintptr_t{std::numeric_limits<std::uintptr_t>::max() - 10}),
                         std::size_t{10},
@@ -191,7 +191,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple(
             reinterpret_cast<const void*>(std::uintptr_t{10}),
             std::numeric_limits<std::size_t>::max() - 10,
-            reinterpret_cast<const void*>(static_cast<std::uintptr_t>(std::numeric_limits<std::size_t>::max())))));
+            reinterpret_cast<const void*>(std::numeric_limits<std::size_t>::max()))));
 
 class PointerArithmeticAddOffsetToPointerOverflowFixture
     : public ::testing::TestWithParam<std::pair<const void*, std::size_t>>

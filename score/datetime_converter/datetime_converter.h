@@ -62,7 +62,7 @@ struct DateTimeType
     std::int8_t m_second{0};
 };
 
-int16_t leapYearsSince1970(const int16_t year);
+int32_t leapYearsSince1970(const int16_t year);
 bool yearIsLeap(const int16_t year);
 bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime);
 

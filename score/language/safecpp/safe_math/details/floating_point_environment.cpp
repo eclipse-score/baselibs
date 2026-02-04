@@ -56,7 +56,7 @@ score::ResultBlank score::safe_math::details::FloatingPointEnvironment::Test() c
         // According to the C++ standard, FE_INEXACT is guaranteed to be a power of 2
         // (https://en.cppreference.com/w/cpp/numeric/math/math_errhandling), even if their
         // underlying type is signed.
-        constexpr auto exceptions = FE_ALL_EXCEPT & static_cast<std::uint32_t>(~static_cast<std::uint32_t>(FE_INEXACT));
+        constexpr auto exceptions = FE_ALL_EXCEPT & static_cast<std::uint32_t>(~FE_INEXACT);
 // coverity[autosar_cpp14_a16_0_1_violation]
 #else
         constexpr auto exceptions = FE_ALL_EXCEPT;
@@ -90,7 +90,7 @@ void score::safe_math::details::FloatingPointEnvironment::Clear() noexcept
     // they can still terminate or go to a safe state. Additionally the user could also check  and react on the
     // exception when the command fails. It is worth to mention that this is not an expected scenario, if as a user can
     // proof that clearing the exception failed, a bug can be reported.
-    score::cpp::ignore = std::feclearexcept(static_cast<int>(FE_ALL_EXCEPT));
+    score::cpp::ignore = std::feclearexcept(FE_ALL_EXCEPT);
 
     // Interaction with errno unavoidable since this class is the fallback that catches errors for operations
     // where inputs could not be checked in advance. Setting errno to zero is required since some floating point

@@ -89,7 +89,7 @@ constexpr std::uint64_t GetMaximumFloatingPointInteger()
 {
     static_assert(std::numeric_limits<float>::radix == 2, "only supported binary float radix");
     static_assert(std::numeric_limits<float>::digits < 64, "Shift count exceeds the width of uint64_t");
-    return static_cast<uint64_t>(static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<float>::digits));
+    return static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<float>::digits);
 }
 
 template <typename FloatingPoint, typename = std::enable_if_t<std::is_same<FloatingPoint, float>::value, bool>>
@@ -112,7 +112,7 @@ constexpr std::uint64_t GetMaximumFloatingPointInteger()
 {
     static_assert(std::numeric_limits<float>::radix == 2, "only supported binary float radix");
     static_assert(std::numeric_limits<float>::digits < 64, "Shift count exceeds the width of uint64_t");
-    return static_cast<uint64_t>(static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<double>::digits));
+    return static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<double>::digits);
 }
 
 template <typename FloatingPoint,
@@ -125,7 +125,7 @@ constexpr std::int64_t GetMinimumFloatingPointInteger()
     static_assert(std::numeric_limits<float>::radix == 2, "only supported binary float radix");
     static_assert(std::numeric_limits<float>::digits < 64, "Shift count exceeds the width of uint64_t");
     return -(static_cast<int64_t>(
-        static_cast<uint64_t>(static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<double>::digits))));
+        static_cast<uint64_t>(1) << static_cast<uint8_t>(std::numeric_limits<double>::digits)));
 }
 
 template <typename Output,

@@ -272,7 +272,7 @@ inline LogRawBuffer MakeLogRawBuffer(const T& value) noexcept
     // coverity[autosar_cpp14_a5_2_4_violation]
     return {reinterpret_cast<const char*>(  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast) COMMON_ARGUMENTATION
                 &value),
-            static_cast<LogRawBuffer::size_type>(sizeof(T))};
+            sizeof(T)};
 }
 
 /// \brief Create a LogRawBuffer from an score::cpp::span referencing an array of scalars.
@@ -299,7 +299,7 @@ inline LogRawBuffer MakeLogRawBuffer(const score::cpp::span<T> values)
     // the cast is acceptable.
     // -------------------------------
 
-    const auto buffer_size = values.size() * static_cast<LogRawBuffer::size_type>(sizeof(T));
+    const auto buffer_size = values.size() * sizeof(T);
     // COMMON_ARGUMENTATION.
     // coverity[autosar_cpp14_a5_2_4_violation]
     return {reinterpret_cast<const char*>(  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast) COMMON_ARGUMENTATION

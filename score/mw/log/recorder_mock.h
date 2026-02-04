@@ -142,7 +142,7 @@ class RecorderMock : public Recorder
     MOCK_METHOD(void, Log_LogRawBuffer, (const SlotHandle&, const void*, const uint64_t), (noexcept));
     void Log(const SlotHandle& handle, LogRawBuffer value) noexcept override
     {
-        Log_LogRawBuffer(handle, value.data(), static_cast<uint64_t>(value.size()));
+        Log_LogRawBuffer(handle, value.data(), value.size());
     }
 
     MOCK_METHOD(void, Log_LogSlog2Message, (const SlotHandle&, const uint16_t, const LogString), (noexcept));

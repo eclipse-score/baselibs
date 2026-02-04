@@ -139,7 +139,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
 
     Result<float> float_result = GetAttribute<float>(test_data_result_, "float");
     ASSERT_TRUE(float_result.has_value());
-    EXPECT_TRUE(abs(float_result.value() - 3.14159265359) < 1e-3);
+    EXPECT_TRUE(abs(float_result.value() - 3.14159265359f) < 1e-3f);
 
     // Floating-point numbers are always stored as double. Having input as a float
     // and trying to get it as a double throws assertion since this should be unreachable case.
@@ -157,7 +157,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
 
     Result<float> float_result = GetAttribute<float>(test_data_value_, "float");
     ASSERT_TRUE(float_result.has_value());
-    EXPECT_TRUE(abs(float_result.value() - 3.14159265359) < 1e-3);
+    EXPECT_TRUE(abs(float_result.value() - 3.14159265359f) < 1e-3f);
 
     // Floating-point numbers are always stored as double. Having input as a float
     // and trying to get it as a double throws assertion since this should be unreachable case.

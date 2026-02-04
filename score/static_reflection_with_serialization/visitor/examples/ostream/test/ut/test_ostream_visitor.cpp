@@ -46,7 +46,7 @@ TEST(ostream_visitor, basic)
     RecordProperty("Description", "Test the basic types.");
     RecordProperty("TestType", "Interface test");
 
-    EXPECT_EQ(test_to_string(char('A')), "A");
+    EXPECT_EQ(test_to_string('A'), "A");
     EXPECT_EQ(test_to_string(5), "5");
     EXPECT_EQ(test_to_string(0.5), "0.5");
     std::string str("qwerty");
@@ -60,8 +60,8 @@ TEST(ostream_visitor, basic)
     std::vector<int> vec = {21, 22, 23};
     EXPECT_EQ(test_to_string(vec), "[21;22;23]");
     EXPECT_EQ(test_to_string(std::make_pair(5, 0.5)), "(5,0.5)");
-    EXPECT_EQ(test_to_string(std::make_tuple(2, 0.25, char('q'))), "(2;0.25;q)");
-    EXPECT_EQ(test_to_string(std::make_tuple(2, 0.25, char('q'))), "(2;0.25;q)");
+    EXPECT_EQ(test_to_string(std::make_tuple(2, 0.25, 'q')), "(2;0.25;q)");
+    EXPECT_EQ(test_to_string(std::make_tuple(2, 0.25, 'q')), "(2;0.25;q)");
     EXPECT_EQ(test_to_string(test::S2{21, 22}), "struct test::S2{f1=21;f2=22;}");
 }
 
@@ -97,9 +97,9 @@ TEST(ostream_visitor, compound)
     vector<vector<int>> vec = {{21, 22, 23}, {24, 25, 26}};
     EXPECT_EQ(test_to_string(vec), "[[21;22;23];[24;25;26]]");
 
-    EXPECT_EQ(test_to_string(make_pair(make_pair(5, 0.5), char('A'))), "((5,0.5),A)");
+    EXPECT_EQ(test_to_string(make_pair(make_pair(5, 0.5), 'A')), "((5,0.5),A)");
 
-    EXPECT_EQ(test_to_string(make_tuple(2, make_tuple(0.25, char('q')))), "(2;(0.25;q))");
+    EXPECT_EQ(test_to_string(make_tuple(2, make_tuple(0.25, 'q'))), "(2;(0.25;q))");
 
     SS2S3 s = {{21, 22}, {31, 32, 33}};
     EXPECT_EQ(test_to_string(s),
