@@ -17,9 +17,9 @@ namespace score
 namespace common
 {
 
-int16_t leapYearsSince1970(const int16_t year)
+int32_t leapYearsSince1970(const int16_t year)
 {
-    int16_t numOfLeapYears = (((year - 1969) / 4) - ((year - 1901) / 100)) + ((year - 1601) / 400);
+    int32_t numOfLeapYears = (((year - 1969) / 4) - ((year - 1901) / 100)) + ((year - 1601) / 400);
     if (year < 1970)
     {
         if (year % 4 == 2 || year % 4 == 3)

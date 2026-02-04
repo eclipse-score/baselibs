@@ -37,7 +37,7 @@ RegisterSharedMemoryObjectResult GenericTraceAPI::RegisterShmObject(const TraceC
     {
         return gMock->RegisterShmObject(client, shm_object_path);
     }
-    return static_cast<ShmObjectHandle>(0);
+    return 0;
 }
 
 RegisterSharedMemoryObjectResult GenericTraceAPI::RegisterShmObject(const TraceClientId client,
@@ -47,7 +47,8 @@ RegisterSharedMemoryObjectResult GenericTraceAPI::RegisterShmObject(const TraceC
     {
         return gMock->RegisterShmObject(client, shm_object_fd);
     }
-    return static_cast<ShmObjectHandle>(0);
+    //return static_cast<ShmObjectHandle>(0);
+    return 0;
 }
 
 ResultBlank GenericTraceAPI::UnregisterShmObject(const TraceClientId client, const ShmObjectHandle handle)

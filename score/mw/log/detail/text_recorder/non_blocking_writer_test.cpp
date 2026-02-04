@@ -65,8 +65,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenFlushingTwiceMaxChunkS
 
     std::array<uint8_t, 2 * max_chunk_size> payload{};
 
-    const score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                               static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    const score::cpp::span<const std::uint8_t> buffer{payload.data(), payload.size()};
 
     writer_->SetSpan(buffer);
 
@@ -92,7 +91,7 @@ TEST_F(NonBlockingWriterTestFixture,
     std::array<uint8_t, (2 * max_chunk_size) + 3> first_payload{};
 
     score::cpp::span<const std::uint8_t> first_span{
-        first_payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(first_payload.size())};
+        first_payload.data(), first_payload.size()};
 
     writer_->SetSpan(first_span);
 
@@ -112,7 +111,7 @@ TEST_F(NonBlockingWriterTestFixture,
     std::vector<uint8_t> second_payload(max_chunk_size, 0);
 
     score::cpp::span<const std::uint8_t> second_span{
-        second_payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(second_payload.size())};
+        second_payload.data(), second_payload.size()};
 
     writer_->SetSpan(second_span);
 
@@ -130,8 +129,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterShallReturnFalseWhenWriteS
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     std::array<uint8_t, max_chunk_size> payload{};
-    score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                         static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    score::cpp::span<const std::uint8_t> buffer{payload.data(), payload.size()};
 
     writer_->SetSpan(buffer);
 
@@ -154,8 +152,7 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     std::array<uint8_t, 2 * max_chunk_size> payload{};
-    score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                         static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    score::cpp::span<const std::uint8_t> buffer{payload.data(), payload.size()};
 
     writer_->SetSpan(buffer);
 
@@ -182,8 +179,7 @@ TEST_F(NonBlockingWriterTestFixture,
 
     std::array<uint8_t, max_chunk_size> payload{};
 
-    const score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                               static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    const score::cpp::span<const std::uint8_t> buffer{payload.data(), payload.size()};
 
     writer_->SetSpan(buffer);
 

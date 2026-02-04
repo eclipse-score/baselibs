@@ -74,7 +74,7 @@ score::cpp::expected<Glob::MatchResult, Error> GlobImpl::Match(const std::string
         return score::cpp::make_unexpected(Error::createFromGlobError(glob_result));
     }
 
-    const auto paths_count = static_cast<score::cpp::span<char*>::size_type>(buffer_.gl_pathc);
+    const auto paths_count = buffer_.gl_pathc;
     score::cpp::span<char*> paths(buffer_.gl_pathv, paths_count);
 
     for (const char* path : paths)

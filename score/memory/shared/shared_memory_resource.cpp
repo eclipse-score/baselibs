@@ -693,7 +693,7 @@ auto SharedMemoryResource::AcquireTypedMemoryDemonUid() noexcept -> std::optiona
             return std::nullopt;
         }
         score::mw::log::LogInfo("shm") << "AcquireTypedMemoryDaemonUid: typed_memory_daemon uid: " << pwd.pw_uid;
-        return static_cast<uid_t>(pwd.pw_uid);
+        return pwd.pw_uid;
     }
     score::mw::log::LogError("shm") << "AcquireTypedMemoryDaemonUid failed: " << pw.error();
     return std::nullopt;

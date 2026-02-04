@@ -13,7 +13,7 @@
 #include "score/os/utils/mocklib/tcp_keep_alivemock.h"
 #include "score/os/utils/tcp_keep_alive.h"
 
-bool score::os::TcpKeepAlive(int sockfd)
+bool score::os::TcpKeepAlive([[maybe_unused]] int sockfd)
 {
     return true;
 }

@@ -503,7 +503,7 @@ TEST(JsonSerializeAnyTest, SerializeAny)
     // integer
     v.emplace_back(std::make_pair("5", score::json::Any{5}));
     // float
-    v.emplace_back(std::make_pair("5.5", score::json::Any{float(5.5f)}));
+    v.emplace_back(std::make_pair("5.5", score::json::Any{5.5f}));
     // double
     v.emplace_back(std::make_pair("5.5", score::json::Any{double(5.5f)}));
     // null

@@ -183,7 +183,13 @@ static void PutFormattedNumber(PT& payload, const T data) noexcept
             constexpr score::StringLiteral format = GetFormatSpecifier<const T, I>::value;
             const auto written =
                 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg) safe to use std::snprintf
-                FormattingFunctionReturnCast(std::snprintf(buffer.data(), buffer.size(), format, data));
+                [&]() {
+                    if constexpr (std::is_same_v<T, float>) {
+                        return FormattingFunctionReturnCast(std::snprintf(buffer.data(), buffer.size(), format, static_cast<double>(data)));
+                    } else {
+                        return FormattingFunctionReturnCast(std::snprintf(buffer.data(), buffer.size(), format, data));
+                    }
+                }();
 
             const std::size_t num_written = std::min(written, buffer.size() - std::size_t{1});
             buffer.first(num_written + 1U).back() = ' ';

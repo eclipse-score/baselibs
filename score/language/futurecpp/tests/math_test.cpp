@@ -321,9 +321,9 @@ TEST(math_test, constants)
     EXPECT_DOUBLE_EQ(1.570796326794896619231321691639751442E+00, score::cpp::math::constants::half_pi<double>());
     EXPECT_DOUBLE_EQ(0.785398163397448309615660845819875721E+00, score::cpp::math::constants::quarter_pi<double>());
 
-    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 0.5F * score::cpp::math::constants::two_pi<double>());
-    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 2.0F * score::cpp::math::constants::half_pi<double>());
-    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 4.0F * score::cpp::math::constants::quarter_pi<double>());
+    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 0.5 * score::cpp::math::constants::two_pi<double>());
+    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 2.0 * score::cpp::math::constants::half_pi<double>());
+    EXPECT_DOUBLE_EQ(score::cpp::math::constants::pi<double>(), 4.0 * score::cpp::math::constants::quarter_pi<double>());
 
     EXPECT_DOUBLE_EQ(1.772453850905516027298167483341145182E+00, score::cpp::math::constants::root_pi<double>());
     EXPECT_DOUBLE_EQ(1.253314137315500251207882642405522626E+00, score::cpp::math::constants::root_half_pi<double>());
@@ -501,7 +501,7 @@ TEST(math_test, wrap_to_two_pi)
 
         const float plus_inf = std::numeric_limits<float>::infinity();
         const float minus_inf = -plus_inf;
-        const float two_pi = 2.0 * pi;
+        const float two_pi = 2.0F * pi;
         const float two_pi_less = std::nextafter(two_pi, minus_inf);
         const float two_pi_more = std::nextafter(two_pi, plus_inf);
         EXPECT_FLOAT_EQ(two_pi_less, score::cpp::math::wrap_to_two_pi(two_pi_less));

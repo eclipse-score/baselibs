@@ -76,7 +76,7 @@ void SocketAsync::Read(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t
     {
         struct iovec iov;
         iov.iov_base = messages->at(0).data();
-        iov.iov_len = static_cast<size_t>(messages->at(0).size());
+        iov.iov_len = messages->at(0).size();
 
         struct msghdr msg;
         memset(&msg, 0, sizeof(msg));
@@ -104,7 +104,7 @@ void SocketAsync::Read(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t
         for (size_t i = 0; i < msg_count; ++i)
         {
             iovs[i].iov_base = messages->at(i).data();
-            iovs[i].iov_len = static_cast<size_t>(messages->at(i).size());
+            iovs[i].iov_len = messages->at(i).size();
 
             memset(&msgs[i], 0, sizeof(msgs[i]));
             if (this->GetEndpoint().IsAnyAddress())
@@ -144,7 +144,7 @@ void SocketAsync::Write(std::shared_ptr<std::vector<score::cpp::span<std::uint8_
     {
         struct iovec iov;
         iov.iov_base = messages->at(0).data();
-        iov.iov_len = static_cast<size_t>(messages->at(0).size());
+        iov.iov_len = messages->at(0).size();
 
         struct msghdr msg;
         memset(&msg, 0, sizeof(msg));

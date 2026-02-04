@@ -164,7 +164,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Sw
     {
         auto& element = this->unit_->emplace_back();
         element.i = static_cast<char>(i);
-        element.j = static_cast<std::uint64_t>(i);
+        element.j = i;
     }
 
     // and a second NonRelocatableVector which has been filled with elements
@@ -177,7 +177,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Sw
     {
         auto& element = new_vector.emplace_back();
         element.i = static_cast<char>(2 * i);
-        element.j = static_cast<std::uint64_t>(2 * i);
+        element.j = 2 * i;
     }
 
     // When swapping the two vectors
@@ -188,14 +188,14 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Sw
     {
         auto& element = new_vector.at(i);
         EXPECT_EQ(element.i, static_cast<char>(i));
-        EXPECT_EQ(element.j, static_cast<std::uint64_t>(i));
+        EXPECT_EQ(element.j, i);
     }
 
     for (std::size_t i = 0; i < second_vector_capacity; ++i)
     {
         auto& element = this->unit_->at(i);
         EXPECT_EQ(element.i, static_cast<char>(2 * i));
-        EXPECT_EQ(element.j, static_cast<std::uint64_t>(2 * i));
+        EXPECT_EQ(element.j, 2 * i);
     }
 }
 

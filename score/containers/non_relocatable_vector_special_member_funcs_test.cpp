@@ -255,7 +255,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Co
     {
         auto& element = this->unit_->emplace_back();
         element.i = static_cast<char>(i);
-        element.j = static_cast<std::uint64_t>(i);
+        element.j = i;
     }
 
     // When copy constructing a new NonRelocatableVector
@@ -269,7 +269,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Co
     {
         auto& element = new_vector.at(i);
         EXPECT_EQ(element.i, static_cast<char>(i));
-        EXPECT_EQ(element.j, static_cast<std::uint64_t>(i));
+        EXPECT_EQ(element.j, i);
     }
 }
 
@@ -382,7 +382,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Mo
     {
         auto& element = this->unit_->emplace_back();
         element.i = static_cast<char>(i);
-        element.j = static_cast<std::uint64_t>(i);
+        element.j = i;
     }
 
     // When copy constructing a new NonRelocatableVector
@@ -396,7 +396,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Mo
     {
         auto& element = new_vector.at(i);
         EXPECT_EQ(element.i, static_cast<char>(i));
-        EXPECT_EQ(element.j, static_cast<std::uint64_t>(i));
+        EXPECT_EQ(element.j, i);
     }
 }
 
@@ -519,7 +519,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Mo
     {
         auto& element = this->unit_->emplace_back();
         element.i = static_cast<char>(i);
-        element.j = static_cast<std::uint64_t>(i);
+        element.j = i;
     }
 
     // and a second NonRelocatableVector which has been filled with different elements
@@ -532,7 +532,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Mo
     {
         auto& element = new_vector.emplace_back();
         element.i = static_cast<char>(2 * i);
-        element.j = static_cast<std::uint64_t>(2 * i);
+        element.j = 2 * i;
     }
 
     // When move assigning the first vector to the second
@@ -543,7 +543,7 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Mo
     {
         auto& element = new_vector.at(i);
         EXPECT_EQ(element.i, static_cast<char>(i));
-        EXPECT_EQ(element.j, static_cast<std::uint64_t>(i));
+        EXPECT_EQ(element.j, i);
     }
 }
 

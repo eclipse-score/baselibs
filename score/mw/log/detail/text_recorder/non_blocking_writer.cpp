@@ -64,7 +64,7 @@ void NonBlockingWriter::SetSpan(const score::cpp::span<const std::uint8_t>& buff
 
 score::cpp::expected<NonBlockingWriter::Result, score::mw::log::detail::Error> NonBlockingWriter::FlushIntoFile() noexcept
 {
-    const auto buffer_size = static_cast<uint64_t>(buffer_.size());
+    const auto buffer_size = buffer_.size();
 
     const uint64_t left_over = buffer_size - number_of_flushed_bytes_;
 
@@ -87,7 +87,7 @@ score::cpp::expected<NonBlockingWriter::Result, score::mw::log::detail::Error> N
 
 score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush(const uint64_t size_to_flush) noexcept
 {
-    const auto buffer_size = static_cast<uint64_t>(buffer_.size());
+    const auto buffer_size = buffer_.size();
     if (number_of_flushed_bytes_ < buffer_size)
     {
         score::cpp::expected<ssize_t, score::os::Error> num_of_bytes_written{};
