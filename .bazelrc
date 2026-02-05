@@ -83,3 +83,12 @@ build:clang_format --config=_bl_stub
 build:clang_format --output_groups=clang_format_output
 build:clang_format --aspects=@score_bazel_tools_cc//quality:defs.bzl%clang_format_aspect
 build:clang_format --@score_bazel_tools_cc//quality:clang_format_config=//:clang_format_config
+
+build:clang_tidy --config=_bl_stub
+build:clang_tidy --@score_bazel_tools_cc//quality:quality_clang_tidy_config=//:clang_tidy_config
+build:clang_tidy --aspects=@score_bazel_tools_cc//quality:defs.bzl%quality_clang_tidy_aspect
+build:clang_tidy --build_tag_filters="-tidy_suite"
+build:clang_tidy --force_pic
+build:clang_tidy --incompatible_enable_cc_toolchain_resolution
+build:clang_tidy --output_groups=clang_tidy_output
+build:clang_tidy --verbose_failures

@@ -98,6 +98,16 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = Tr
 bazel_dep(name = "aspect_rules_lint", version = "1.5.3", dev_dependency = True)
 
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0")
+bazel_dep(name = "toolchains_llvm", version = "1.4.0")
+
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+llvm.toolchain(
+    llvm_version = "19.1.1",
+    stdlib = {"linux-x86_64": "stdc++"},
+)
+use_repo(llvm, "llvm_toolchain")
+
+register_toolchains("@llvm_toolchain//:all")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 

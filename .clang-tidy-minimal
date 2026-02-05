@@ -1,0 +1,60 @@
+---
+Checks: >
+  -*,
+  misc-confusable-identifiers,
+  misc-misleading-bidirectional,
+  misc-misleading-identifier,
+  misc-uniqueptr-reset-release,
+  misc-unused-alias-decls,
+  readability-avoid-nested-conditional-operator,
+  readability-const-return-type,
+  readability-delete-null-pointer,
+  readability-enum-initial-value,
+  readability-identifier-naming,
+  readability-misleading-indentation,
+  readability-redundant-string-init,
+  readability-reference-to-constructed-temporary,
+  readability-simplify-subscript-expr,
+  readability-string-compare,
+  readability-uniqueptr-delete-release,
+
+CheckOptions:
+  - key: misc-uniqueptr-reset-release.IncludeStyle
+    value: "llvm"
+
+  - key: readability-avoid-return-with-void-value.StrictMode
+    value: true
+
+  - key: readability-enum-initial-value.AllowExplicitZeroFirstInitialValue
+    value: true
+  - key: readability-enum-initial-value.AllowExplicitSequentialInitialValues
+    value: true
+
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+
+  - key: readability-simplify-subscript-expr.Types
+    value: >
+      ::score::futurecpp::basic_string_view;
+      ::score::futurecpp::pmr::basic_string;
+      ::score::futurecpp::pmr::vector;
+      ::score::futurecpp::span;
+      ::score::safecpp::basic_zstring_view;
+      ::std::array;
+      ::std::basic_string_view;
+      ::std::basic_string;
+      ::std::vector;
+      ::std::span
+
+  - key: readability-string-compare.StringLikeClasses
+    value: >
+      ::score::futurecpp::basic_string_view;
+      ::score::futurecpp::pmr::basic_string;
+      ::score::safecpp::basic_zstring_view;
+      ::std::basic_string_view;
+      ::std::basic_string
+
+  - key: readability-uniqueptr-delete-release.PreferResetCall
+    value: true
