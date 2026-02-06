@@ -20,49 +20,49 @@ build --java_runtime_version=remotejdk_17
 build --tool_java_runtime_version=remotejdk_17
 build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_helper.py"
 
-build:bl_stub --//score/json:base_library=nlohmann
-build:bl_stub --//score/memory/shared/flags:use_typedshmd=False
+build:_bl_stub --//score/json:base_library=nlohmann
+build:_bl_stub --//score/memory/shared/flags:use_typedshmd=False
 
-build:bl_stub --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
+build:_bl_stub --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
 
 # Common baselibs flags for test
-test:bl_common --build_tests_only
-test:bl_common --test_tag_filters=-manual
-test:bl_common --test_output=errors
+test:_bl_common --build_tests_only
+test:_bl_common --test_tag_filters=-manual
+test:_bl_common --test_output=errors
 
 # Common BaseLibs Toolchain flags for build (do not use it in case of system toolchains!)
-build:bl_toolchain_common --incompatible_strict_action_env
-build:bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux
+build:_bl_toolchain_common --incompatible_strict_action_env
+build:_bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux
 
 # Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
-build:bl-x86_64-linux --config=bl_stub
-build:bl-x86_64-linux --config=bl_toolchain_common
+build:bl-x86_64-linux --config=_bl_stub
+build:bl-x86_64-linux --config=_bl_toolchain_common
 build:bl-x86_64-linux --platforms=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 build:bl-x86_64-linux --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0-posix
-test:bl-x86_64-linux --config=bl_common
+test:bl-x86_64-linux --config=_bl_common
 
 # Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
-build:bl-aarch64-linux --config=bl_stub
-build:bl-aarch64-linux --config=bl_toolchain_common
+build:bl-aarch64-linux --config=_bl_stub
+build:bl-aarch64-linux --config=_bl_toolchain_common
 build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
 build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0-posix
-test:bl-aarch64-linux --config=bl_common
+test:bl-aarch64-linux --config=_bl_common
 
 
 # Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
-build:bl-x86_64-qnx --config=bl_stub
-build:bl-x86_64-qnx --config=bl_toolchain_common
+build:bl-x86_64-qnx --config=_bl_stub
+build:bl-x86_64-qnx --config=_bl_toolchain_common
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
 build:bl-x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0-posix
-test:bl-x86_64-qnx --config=bl_common
+test:bl-x86_64-qnx --config=_bl_common
 
 # Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
-build:bl-aarch64-qnx --config=bl_stub
-build:bl-aarch64-qnx --config=bl_toolchain_common
+build:bl-aarch64-qnx --config=_bl_stub
+build:bl-aarch64-qnx --config=_bl_toolchain_common
 build:bl-aarch64-qnx --incompatible_strict_action_env
 build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
 build:bl-aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0-posix
-test:bl-aarch64-qnx --config=bl_common
+test:bl-aarch64-qnx --config=_bl_common
 
 # Coverage configuration for C++
 coverage --features=coverage
