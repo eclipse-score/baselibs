@@ -12,13 +12,13 @@
 # *******************************************************************************
 module(
     name = "score_baselibs",
-    version = "0.2.3",
+    version = "0.2.4",
     compatibility_level = 0,
 )
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.2.0", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.2.2", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -59,17 +59,17 @@ use_repo(
     "score_qcc_x86_64_toolchain",
 )
 
-bazel_dep(name = "googletest", version = "1.17.0.bcr.1")
-bazel_dep(name = "google_benchmark", version = "1.9.4")
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
+bazel_dep(name = "google_benchmark", version = "1.9.5")
 bazel_dep(name = "boost.container", version = "1.87.0")
 bazel_dep(name = "boost.interprocess", version = "1.87.0")
-bazel_dep(name = "download_utils", version = "1.0.1")
+bazel_dep(name = "download_utils", version = "1.2.2")
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "2.3.0")
-bazel_dep(name = "score_process", version = "1.4.0")
-bazel_dep(name = "score_tooling", version = "1.0.4")
+bazel_dep(name = "score_docs_as_code", version = "3.0.0")
+bazel_dep(name = "score_process", version = "1.4.3")
+bazel_dep(name = "score_tooling", version = "1.1.1")
 
 # We need the copyright exclusion feature
 git_override(
@@ -80,7 +80,7 @@ git_override(
 
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.4.1")
+bazel_dep(name = "rules_python", version = "1.8.3")
 
 PYTHON_VERSION = "3.12"
 
@@ -91,10 +91,9 @@ python.toolchain(
     python_version = PYTHON_VERSION,
 )
 
-bazel_dep(name = "aspect_rules_py", version = "1.4.0", dev_dependency = True)
+bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
-
-bazel_dep(name = "aspect_rules_lint", version = "1.0.3")
+bazel_dep(name = "aspect_rules_lint", version = "1.5.3", dev_dependency = True)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
@@ -139,7 +138,7 @@ deb(
 )
 
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
-bazel_dep(name = "bazel_skylib", version = "1.8.1")
+bazel_dep(name = "bazel_skylib", version = "1.8.2")
 
 #############################################################
 #
