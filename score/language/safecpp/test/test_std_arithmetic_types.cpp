@@ -55,8 +55,15 @@ TEST(StdIntegralTypes, signess_and_bytes_number)
     // static_assert(std::numeric_limits<char>::is_signed == false,
     //               "it is expected a 'char' to be unsigned in a QNX environment");
 #else
+    // Note: char signedness is implementation-defined and varies by architecture
+    // x86_64 Linux: signed char, aarch64 Linux: unsigned char
+#if defined(__x86_64__)
     static_assert(std::numeric_limits<char>::is_signed == true,
-                  "it is expected a 'char' to be signed in a linux environment");
+                  "it is expected a 'char' to be signed in a x86_64 linux environment");
+#elif defined(__aarch64__)
+    static_assert(std::numeric_limits<char>::is_signed == false,
+                  "it is expected a 'char' to be unsigned in a aarch64 linux environment");
+#endif
 #endif
     // Test identifies number of bytes
     static_assert(sizeof(char) == 1, "it is expected a char bytes' number to be 1");
