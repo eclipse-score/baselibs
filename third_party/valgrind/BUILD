@@ -1,5 +1,5 @@
 alias(
     name = "valgrind",
-    actual = "@valgrind-deb//:valgrind",
+    actual = "//:valgrind",
     visibility = ["//visibility:public"],
 )

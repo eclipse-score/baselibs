@@ -91,43 +91,91 @@ bazel_dep(name = "aspect_rules_lint", version = "1.5.3", dev_dependency = True)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
+# ACL library for different architectures
 deb(
-    name = "acl-deb",
-    build = "//third_party/acl:acl.BUILD",
+    name = "acl-deb-amd64",
+    build = "//third_party/acl:acl-amd64.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.2.52-3build1_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
-    name = "valgrind-deb",
+    name = "acl-deb-arm64",
+    build = "//third_party/acl:acl-arm64.BUILD",
+    urls = ["https://launchpadlibrarian.net/581258948/libacl1-dev_2.3.1-1_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+# Valgrind for different architectures
+deb(
+    name = "valgrind-deb-amd64",
     build = "//third_party/valgrind:valgrind.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
-    name = "libcap2-deb",
+    name = "valgrind-deb-arm64",
+    build = "//third_party/valgrind:valgrind.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+# libcap2 library for different architectures
+deb(
+    name = "libcap2-deb-amd64",
+    build = "//third_party/libcap2:libcap2-amd64.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap2_2.25-1.2_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
-    name = "libcap2-dev-deb",
-    build = "//third_party/libcap2:libcap2.BUILD",
+    name = "libcap2-deb-arm64",
+    urls = ["https://ports.ubuntu.com/pool/main/libc/libcap2/libcap2_2.25-1.2_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+# libcap2-dev library for different architectures
+deb(
+    name = "libcap2-dev-deb-amd64",
+    build = "//third_party/libcap2:libcap2-amd64-dev.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap-dev_2.25-1.2_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
-    name = "libseccomp2-deb",
+    name = "libcap2-dev-deb-arm64",
+    build = "//third_party/libcap2:libcap2-arm64.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/libc/libcap2/libcap-dev_2.25-1.2_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+# libseccomp2 for different architectures
+deb(
+    name = "libseccomp2-deb-amd64",
+    build = "//third_party/libseccomp2:libseccomp2-amd64.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp2_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
-    name = "libseccomp2-dev-deb",
-    build = "//third_party/libseccomp2:libseccomp2.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_i386.deb"],
+    name = "libseccomp2-deb-arm64",
+    urls = ["https://ports.ubuntu.com/pool/main/libs/libseccomp/libseccomp2_2.5.1-1ubuntu1~18.04.2_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+# libseccomp2-dev for different architectures
+deb(
+    name = "libseccomp2-dev-deb-amd64",
+    build = "//third_party/libseccomp2:libseccomp2-amd64-dev.BUILD",
+    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
+    name = "libseccomp2-dev-deb-arm64",
+    build = "//third_party/libseccomp2:libseccomp2-arm64.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_arm64.deb"],
     visibility = ["//visibility:public"],
 )
 
