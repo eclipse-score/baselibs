@@ -1,2 +1,8 @@
-# This BUILD file is used by the deb() rule to build the ACL library from .deb package contents
-# The actual target selection happens in the root BUILD file at //:acl
+alias(
+    name = "acl",
+    actual = select({
+        "@platforms//cpu:aarch64": "@acl-deb-aarch64//:acl",
+        "//conditions:default": "@acl-deb//:acl",
+    }),
+    visibility = ["//visibility:public"],
+)
