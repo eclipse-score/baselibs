@@ -99,6 +99,13 @@ deb(
 )
 
 deb(
+    name = "acl-deb-aarch64",
+    build = "//third_party/acl:acl.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/a/acl/libacl1-dev_2.3.1-1_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
     name = "valgrind-deb",
     build = "//third_party/valgrind:valgrind.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_amd64.deb"],
@@ -106,8 +113,21 @@ deb(
 )
 
 deb(
+    name = "valgrind-deb-aarch64",
+    build = "//third_party/valgrind:valgrind.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
     name = "libcap2-deb",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libc/libcap2/libcap2_2.25-1.2_amd64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
+    name = "libcap2-deb-aarch64",
+    urls = ["https://ports.ubuntu.com/pool/main/libc/libcap2/libcap2_2.25-1.2_arm64.deb"],
     visibility = ["//visibility:public"],
 )
 
@@ -119,15 +139,35 @@ deb(
 )
 
 deb(
+    name = "libcap2-dev-deb-aarch64",
+    build = "//third_party/libcap2:libcap2.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/libc/libcap2/libcap-dev_2.25-1.2_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
     name = "libseccomp2-deb",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp2_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
+    name = "libseccomp2-deb-aarch64",
+    urls = ["https://ports.ubuntu.com/pool/main/libs/libseccomp/libseccomp2_2.5.3-2ubuntu2_arm64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
     name = "libseccomp2-dev-deb",
     build = "//third_party/libseccomp2:libseccomp2.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_i386.deb"],
+    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/libs/libseccomp/libseccomp-dev_2.5.1-1ubuntu1~18.04.2_amd64.deb"],
+    visibility = ["//visibility:public"],
+)
+
+deb(
+    name = "libseccomp2-dev-deb-aarch64",
+    build = "//third_party/libseccomp2:libseccomp2.BUILD",
+    urls = ["https://ports.ubuntu.com/pool/main/libs/libseccomp/libseccomp-dev_2.5.3-2ubuntu2_arm64.deb"],
     visibility = ["//visibility:public"],
 )
 
