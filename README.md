@@ -96,6 +96,21 @@ bazel build --config=bl-x86_64-qnx -- //score/...
 
 Use the same command as for x86_64 QNX, but replace `--config=bl-x86_64-qnx` with `--config=bl-aarch64-qnx`.
 
+### Sanitizers
+
+To detect memory errors, undefined behavior, and memory leaks, run tests with sanitizers enabled:
+
+```bash
+bazel test --config=bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...
+```
+
+This configuration enables:
+- **AddressSanitizer (ASan)**: Fast memory error detector.
+- **UndefinedBehaviorSanitizer (UBSan)**: Detects undefined behavior at runtime.
+- **LeakSanitizer (LSan)**: Memory leak detector.
+
+The sanitizers are configured with verbose output and will halt on the first error detected.
+
 ### Generating Documentation
 
 To generate the documentation locally:
