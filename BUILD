@@ -37,4 +37,42 @@ copyright_checker(
     visibility = ["//visibility:public"],
 )
 
+# Format targets - Rust targets may not work on aarch64 due to toolchain availability
 use_format_targets()
+
+# Platform-aware library aliases for backward compatibility
+alias(
+    name = "acl",
+    actual = "//third_party/acl:acl",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "libcap2",
+    actual = "//third_party/libcap2:libcap2", 
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "libcap2-dev",
+    actual = "//third_party/libcap2:libcap2",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "libseccomp2",
+    actual = "//third_party/libseccomp2:libseccomp2",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "libseccomp2-dev", 
+    actual = "//third_party/libseccomp2:libseccomp2",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "valgrind",
+    actual = "//third_party/valgrind:valgrind",
+    visibility = ["//visibility:public"],
+)

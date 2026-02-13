@@ -34,7 +34,7 @@ cc_library(
     ] + select(
         {
             "@platforms//os:linux": [
-                "//third_party/acl",
+                "//:acl",
             ],
             "//conditions:default": [],
         },
@@ -504,7 +504,7 @@ cc_library(
     deps = select({
         "@platforms//os:qnx": [],
         "//conditions:default": [
-            "//third_party/libcap2",
+            "//:libcap2-dev",
         ],
     }) + [
         ":errno_logging",
