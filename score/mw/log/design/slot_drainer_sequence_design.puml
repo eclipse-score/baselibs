@@ -1,0 +1,71 @@
+@startuml slot_drainer_sequence_design
+title "SlotDrainer Sequence Design"
+
+participant "Backend" as Backend
+participant "SlotDrainer" as SlotDrainer
+participant "NonBlockingWriter" as NonBlockingWriter
+participant "CircularBuffer" as CircularBuffer
+participant "MessageBuilder" as MessageBuilder
+participant "SlotAllocator<LogRecord>" as SlotAllocator
+
+note over SlotDrainer : Slot Drainer Flush Sequence
+
+activate SlotDrainer
+activate Backend
+activate NonBlockingWriter
+activate CircularBuffer
+activate SlotAllocator
+activate MessageBuilder
+
+group "First Slot"
+Backend -> SlotDrainer : Flush()
+
+SlotDrainer -> MessageBuilder : GetNextSpan(log_record)
+
+SlotDrainer -> CircularBuffer : empty()
+CircularBuffer -> SlotDrainer: false
+
+SlotDrainer -> CircularBuffer : front()
+SlotDrainer -> CircularBuffer : pop_front()
+
+SlotDrainer -> CircularBuffer : empty()
+CircularBuffer -> SlotDrainer: false
+SlotDrainer -> CircularBuffer : front()
+
+SlotDrainer -> SlotAllocator : GetUnderlyingBufferFor(slot)
+SlotDrainer -> MessageBuilder : SetNextMessage(log_record)
+
+SlotDrainer -> NonBlockingWriter : FlushIntoFile()
+NonBlockingWriter -> SlotDrainer: kDone
+SlotDrainer -> SlotAllocator: ReleaseSlot(slot) 
+
+
+SlotDrainer -> MessageBuilder : GetNextSpan()
+end
+
+group "Last Slot"
+
+SlotDrainer -> MessageBuilder : GetNextSpan()
+
+SlotDrainer -> NonBlockingWriter : FlushIntoFile()
+NonBlockingWriter -> SlotDrainer: kDone
+
+SlotDrainer -> MessageBuilder : GetNextSpan()
+
+SlotDrainer -> CircularBuffer : empty()
+CircularBuffer -> SlotDrainer: true
+
+Backend <-- SlotDrainer
+end
+
+group "Error Case"
+
+Backend -> SlotDrainer : Flush()
+SlotDrainer -> NonBlockingWriter : FlushIntoFile()
+NonBlockingWriter -> SlotDrainer: kWouldBlock
+note left of SlotDrainer : SlotDrainer ignores errors
+Backend <--- SlotDrainer
+
+end
+
+@enduml

@@ -48,7 +48,7 @@ While the idea of lock-free data structures is not new, the specific rules for t
 Starting from this basic idea, the static design is divided into four main parts:
 
 1. `Formatter`
-   Support different kind of logging formats. The most major one is the [DLT format](<broken_link_g/swh/safe-posix-platform/blob/master/score/mw/log/README.md#dlt-formatted-payload>).
+   Support different kind of logging formats. The most major one is the [DLT format](../README.md#dlt-formatted-payload).
    Another one is the raw format (no special formatting applied). A future extension with other formats will be easy,
    separating this concern from the others mentioned below.
 2. `Backend`
@@ -69,13 +69,13 @@ Starting from this basic idea, the static design is divided into four main parts
 This design allows that any content streamed by the user into a `LogStream`, will directly end up in the respective slot
 implementation.
 
-![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/verbose_logging_static.uxf)
+![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/verbose_logging_static.puml)
 
-![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/verbose_logging_sequence.uxf)
+![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/verbose_logging_sequence.puml)
 
-![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/non_verbose_logging_static.uxf)
+![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/non_verbose_logging_static.puml)
 
-![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/error_domain.uxf)
+![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/error_domain.puml)
 
 ### Types of recorders
 
@@ -88,28 +88,17 @@ Following recorders are supported:
 5. EmptyRecoder - used when logging is off.
 Because of the similarity between TextRecorder and FileRecorder it is decided to use the common Backend for both.
 
-![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/mw_log_recorders.uxf)
-
-![DataRouterRecorder class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/mw_log_datarouter_recorder.uxf)
-
-### WriterFactory Design
-
-![WriterFactory Design](./write_factory_design.puml)
+![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/mw_log_recorders.puml)
 
 ### High Level Component Diagram - Remote Logging
-![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/remote_logging.plantuml)
+
+![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/remote_logging.puml)
 
 ### Activity diagrams
 
-![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.uxf)
+![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.puml)
 
-![DatarouterMessageClientImpl::ConnectToDatarouter Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/datarouter_message_client_impl_connecttodatarouter.uxf)
-
-![SharedMemoryReader::Read Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/shared_memory_reader_read.uxf)
-
-![SharedMemoryReader::AllocAndWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/shared_memory_writer_allocandwrite.uxf)
-
-![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/wait_free_stack_trypush.uxf)
+![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/mw/log/design/wait_free_stack_trypush.puml)
 
 ### User-Facing APIs
 
