@@ -1,13 +1,7 @@
-# GitHub CODEOWNERS file is a simple way to automate review system on github,
-# by automatically assigning owners to a pull request based on which files
-# were modified. All directories should have a proper codeowner
-# Syntax: https://help.github.com/articles/about-codeowners/
-
-
 # #################################################################
-# Lead: @4og                                                        
+# BAS-Lead: @4og                                                        
 # -----------------------------------------------------------------
-# Team: @castler @hoe-jo @LittleHuba @ramceb @nradakovic
+# BAS-Team: @castler @hoe-jo @LittleHuba @ramceb @nradakovic @4og
 # #################################################################
 
 * @castler @hoe-jo @LittleHuba @ramceb @nradakovic @4og
