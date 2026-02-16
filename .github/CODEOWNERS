@@ -3,6 +3,8 @@
 # were modified. All directories should have a proper codeowner
 # Syntax: https://help.github.com/articles/about-codeowners/
 
-# default owners
+# Lead: @4og
+# Committer Team: @castler @hoe-jo @LittleHuba @ramceb @nradakovic
+
 * @castler @hoe-jo @LittleHuba @ramceb @nradakovic @4og
 
