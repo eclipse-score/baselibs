@@ -94,5 +94,9 @@
   {
     "version": "pr-102",
     "url": "https://eclipse-score.github.io/baselibs/pr-102/"
+  },
+  {
+    "version": "pr-105",
+    "url": "https://eclipse-score.github.io/baselibs/pr-105/"
   }
 ]
