@@ -55,7 +55,7 @@ class ScopeState final
 
     void Expire() noexcept;
 
-    template <class Callable, class ReturnType = std::result_of_t<Callable()>>
+    template <class Callable, class ReturnType = std::invoke_result_t<Callable>>
     [[nodiscard]] score::cpp::optional<ReturnType> InvokeIfNotExpired(Callable& callable)
     {
         // Suppress "AUTOSAR C++14 M0-1-9" rule finding. This rule states: "There shall be no dead code.".

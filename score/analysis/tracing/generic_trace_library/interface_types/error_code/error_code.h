@@ -36,6 +36,7 @@ enum class ErrorCode : score::result::ErrorCode
     kNotEnoughMemoryRecoverable,             ///< Not enough memory for allocation (Recoverable)
     kNoMetaInfoProvidedRecoverable,          ///< No meta info were provided (Recoverable)
     kNotEnoughMemoryInContainerRecoverable,  ///< Not enough memory in trace job container (Recoverable)
+    kOffsetCalculationFailedRecoverable,     ///< Offset calculation failed (Recoverable)
 
     kAtomicRingBufferFullRecoverable,        ///< Atomic ring buffer full (Recoverable)
     kAtomicRingBufferEmptyRecoverable,       ///< Atomic ring buffer empty (Recoverable)
@@ -49,8 +50,15 @@ enum class ErrorCode : score::result::ErrorCode
     kRingBufferNotInitializedRecoverable,  ///< Ring buffer not initialized (Recoverable)
     kRingBufferInitializedRecoverable,     ///< Ring buffer already initialized (Recoverable)
     kRingBufferInvalidStateRecoverable,    ///< Invalid buffer state (Recoverable)
-    kRingBufferTooLargeRecoverable,        ///< Buffer size too large (Recoverable)
     kRingBufferInvalidMemoryResourceRecoverable,  ///< Buffer size too small (Recoverable)
+    kRingBufferSharedMemoryCreationFatal,         ///< Failed to create shm object for shared memory ring buffer
+    kRingBufferSharedMemoryHandleCreationFatal,   ///< Failed to create handle for shared memory ring buffer
+    kRingBufferSharedMemorySealFatal,             ///< Failed to seal shared memory for shared memory ring buffer
+    kRingBufferSharedMemoryHandleOpenFatal,       ///< Failed to open handle for shared memory ring buffer
+    kRingBufferSharedMemoryFstatFatal,            ///< Failed to perform fstat on shared memory ring buffer
+    kRingBufferSharedMemoryMapFatal,              ///< Failed to map memory region of shared memory ring buffer
+    kRingBufferSharedMemorySizeCalculationFatal,  ///< Calculated shared memory size doesn't match the size of the
+                                                  ///< original created shared memory
 
     kDaemonConnectionFailedFatal,             ///< Daemon connection failed (Fatal)
     kDaemonCommunicatorNotSupportedFatal,     ///< Daemon connection is not supported

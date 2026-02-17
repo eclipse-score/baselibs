@@ -38,6 +38,19 @@ class TimeMock : public Time
                 (const clockid_t, struct timespec*),
                 (const, noexcept, override));
     MOCK_METHOD(struct tm*, localtime_r, (const time_t*, struct tm*), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                timer_create,
+                (const clockid_t, sigevent*, timer_t*),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), timer_delete, (const timer_t), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                timer_settime,
+                (const timer_t, const int32_t, const itimerspec*, itimerspec*),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                clock_getcpuclockid,
+                (const pid_t, clockid_t&),
+                (const, noexcept, override));
 };
 
 }  // namespace os

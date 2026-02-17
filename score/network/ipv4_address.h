@@ -10,12 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file ipv4_address.h
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Header for IPv4Address class
-///
 
 #ifndef SCORE_LIB_OS_UTILS_IPV4_ADDRESS_H
 #define SCORE_LIB_OS_UTILS_IPV4_ADDRESS_H

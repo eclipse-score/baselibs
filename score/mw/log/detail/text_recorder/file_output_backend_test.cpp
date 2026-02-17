@@ -49,7 +49,7 @@ class FileOutputBackendFixture : public ::testing::Test
 
         message_builder_mock_ = std::make_unique<mock::MessageBuilderMock>();
         raw_message_builder_mock_ = message_builder_mock_.get();
-        message_builder = std::move(message_builder_mock_);
+        message_builder_ = std::move(message_builder_mock_);
         memory_resource_ = score::cpp::pmr::get_default_resource();
     }
     void TearDown() override {}
@@ -60,7 +60,7 @@ class FileOutputBackendFixture : public ::testing::Test
     const std::uint8_t data_table_[4] = {};
     std::unique_ptr<CircularAllocator<LogRecord>> allocator_ = nullptr;
     CircularAllocator<LogRecord>* raw_allocator_ptr_ = nullptr;
-    std::unique_ptr<IMessageBuilder> message_builder = nullptr;
+    std::unique_ptr<IMessageBuilder> message_builder_ = nullptr;
     std::unique_ptr<mock::MessageBuilderMock> message_builder_mock_ = nullptr;
     mock::MessageBuilderMock* raw_message_builder_mock_ = nullptr;
     std::int32_t file_descriptor_ = 23;
@@ -77,7 +77,7 @@ TEST_F(FileOutputBackendFixture, ReserveSlotShouldTriggerFlushing)
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
@@ -103,7 +103,7 @@ TEST_F(FileOutputBackendFixture, FlushSlotShouldTriggerFlushing)
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
 
     const auto& slot_index = allocator_->AcquireSlotToWrite();
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
@@ -136,7 +136,7 @@ TEST_F(FileOutputBackendFixture, DepletedAllocatorShouldCauseEmptyOptionalReturn
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
 
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
@@ -160,7 +160,7 @@ TEST_F(FileOutputBackendFixture, GetLogRecordReturnsObjectSameAsAllocatorWould)
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
@@ -187,7 +187,7 @@ TEST_F(FileOutputBackendFixture, BackendConstructionShallCallNonBlockingFileSetu
     score::os::Fcntl::Open flags = score::os::Fcntl::Open::kReadWrite;
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
-    auto fcntl_mock_raw_ptr = fcntl_mock.get();
+    auto* fcntl_mock_raw_ptr = fcntl_mock.get();
 
     //  Expect call to Fcntl setting Non-Blocking properties of a file:
     EXPECT_CALL(*fcntl_mock_raw_ptr, fcntl(_, score::os::Fcntl::Command::kFileGetStatusFlags))
@@ -200,7 +200,7 @@ TEST_F(FileOutputBackendFixture, BackendConstructionShallCallNonBlockingFileSetu
         .Times(1);
 
     //  Given construction
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),
@@ -217,7 +217,7 @@ TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
 
     auto fcntl_mock = score::cpp::pmr::make_unique<score::os::FcntlMock>(memory_resource_);
     auto unistd_mock = score::cpp::pmr::make_unique<score::os::UnistdMock>(memory_resource_);
-    auto fcntl_mock_raw_ptr = fcntl_mock.get();
+    auto* fcntl_mock_raw_ptr = fcntl_mock.get();
 
     //  Expect call to Fcntl setting Non-Blocking properties of a file:
     EXPECT_CALL(*fcntl_mock_raw_ptr, fcntl(_, score::os::Fcntl::Command::kFileGetStatusFlags))
@@ -227,7 +227,7 @@ TEST_F(FileOutputBackendFixture, MissingFlagsShallSkipCallToSetupFile)
     EXPECT_CALL(*fcntl_mock_raw_ptr, fcntl(_, _, _)).Times(0);
 
     //  Given construction
-    FileOutputBackend unit(std::move(message_builder),
+    FileOutputBackend unit(std::move(message_builder_),
                            file_descriptor_,
                            std::move(allocator_),
                            std::move(fcntl_mock),

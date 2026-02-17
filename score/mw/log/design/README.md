@@ -48,7 +48,7 @@ While the idea of lock-free data structures is not new, the specific rules for t
 Starting from this basic idea, the static design is divided into four main parts:
 
 1. `Formatter`
-   Support different kind of logging formats. The most major one is the [DLT format](<broken_link_g/swh/ddad_platform/blob/master/aas/mw/log/README.md#dlt-formatted-payload>).
+   Support different kind of logging formats. The most major one is the [DLT format](<broken_link_g/swh/safe-posix-platform/blob/master/score/mw/log/README.md#dlt-formatted-payload>).
    Another one is the raw format (no special formatting applied). A future extension with other formats will be easy,
    separating this concern from the others mentioned below.
 2. `Backend`
@@ -69,13 +69,13 @@ Starting from this basic idea, the static design is divided into four main parts
 This design allows that any content streamed by the user into a `LogStream`, will directly end up in the respective slot
 implementation.
 
-![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/verbose_logging_static.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/verbose_logging_static.uxf)
 
-![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/verbose_logging_sequence.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![Verbose Logging sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/verbose_logging_sequence.uxf)
 
-![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/non_verbose_logging_static.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![Non-Verbose Logging class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/non_verbose_logging_static.uxf)
 
-![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/error_domain.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![ErrorDomain class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/error_domain.uxf)
 
 ### Types of recorders
 
@@ -88,24 +88,28 @@ Following recorders are supported:
 5. EmptyRecoder - used when logging is off.
 Because of the similarity between TextRecorder and FileRecorder it is decided to use the common Backend for both.
 
-![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_recorders.uxf?ref=2abe1e60f3585f2181807bdbcdf0075a274ba321)
+![Recorders class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/mw_log_recorders.uxf)
 
-![DataRouterRecorder class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_datarouter_recorder.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![DataRouterRecorder class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/mw_log_datarouter_recorder.uxf)
+
+### WriterFactory Design
+
+![WriterFactory Design](./write_factory_design.puml)
 
 ### High Level Component Diagram - Remote Logging
-![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/remote_logging.plantuml?ref=ee9a3256f470e6e22e2b9dfddf9533f8c2b79aad)
+![Remote logging](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/remote_logging.plantuml)
 
 ### Activity diagrams
 
-![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/circular_buffer_allocator_acquireslottowrite.uxf?ref=7eb439030d5c699c020186618c251cc897150bcd)
+![CircularAllocator::AcquireSlotToWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/circular_buffer_allocator_acquireslottowrite.uxf)
 
-![DatarouterMessageClientImpl::ConnectToDatarouter Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/datarouter_message_client_impl_connecttodatarouter.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
+![DatarouterMessageClientImpl::ConnectToDatarouter Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/datarouter_message_client_impl_connecttodatarouter.uxf)
 
-![SharedMemoryReader::Read Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/shared_memory_reader_read.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
+![SharedMemoryReader::Read Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/shared_memory_reader_read.uxf)
 
-![SharedMemoryReader::AllocAndWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/shared_memory_writer_allocandwrite.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
+![SharedMemoryReader::AllocAndWrite Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/shared_memory_writer_allocandwrite.uxf)
 
-![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/wait_free_stack_trypush.uxf?ref=bf407faf781174023c3d921cbdf176dd5ef718c3)
+![WaitFreeStack::TryPush Activity diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/wait_free_stack_trypush.uxf)
 
 ### User-Facing APIs
 

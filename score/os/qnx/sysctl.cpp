@@ -10,14 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file sysctl.cpp
-/// @copyright Copyright (C) 2023, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Socket manager control functions OSAL class
-/// [QNX sysctl
-/// documentation](https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sysctl.html)
-///
 #include "score/os/qnx/sysctl_impl.h"
 
 score::os::Sysctl& score::os::Sysctl::instance() noexcept

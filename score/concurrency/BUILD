@@ -414,7 +414,6 @@ cc_gtest_unit_test(
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
-    flaky = True,  # TODO: Remove flakiness (Ticket-178835)
     deps = [
         ":synchronized_queue",
         ":valgrind_on_host",

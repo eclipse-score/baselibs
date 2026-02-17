@@ -28,6 +28,7 @@ py_unittest_qnx_test(
         ":ipv4_address_test",
         ":netutils_qnx_test",
         ":udp_socket_test",
+        ":vlan_test",
     ],
     visibility = ["//visibility:public"],
 )
@@ -74,7 +75,7 @@ cc_test(
         "strict_warnings",
     ],
     tags = ["unit"],
-    target_compatible_with = ["@platforms//os:linux"],
+    target_compatible_with = ["@platforms//os:qnx"],
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/network:vlan",

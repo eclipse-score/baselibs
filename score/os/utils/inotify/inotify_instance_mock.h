@@ -36,7 +36,7 @@ class InotifyInstanceMock : public InotifyInstance
     MOCK_METHOD(void, Close, (), (noexcept, override));
     MOCK_METHOD((score::cpp::expected<InotifyWatchDescriptor, Error>),
                 AddWatch,
-                (std::string_view, Inotify::EventMask),
+                (safecpp::zstring_view, Inotify::EventMask),
                 (noexcept, override));
     MOCK_METHOD(score::cpp::expected_blank<Error>, RemoveWatch, (InotifyWatchDescriptor), (noexcept, override));
     MOCK_METHOD((score::cpp::expected<score::cpp::static_vector<InotifyEvent, max_events>, Error>), Read, (), (noexcept, override));

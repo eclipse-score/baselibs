@@ -203,10 +203,10 @@ inline void visit_as(size_helper<SizeType>& v, const T& t)
 }
 
 //  optimized version of size serialization for integral types
-template <typename SizeType, typename T, std::enable_if_t<std::is_integral<T>::value, std::int32_t> = 0>
+template <typename SizeType, typename T, typename Alloc, std::enable_if_t<std::is_integral<T>::value, std::int32_t> = 0>
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
-inline void visit_as(size_helper<SizeType>& v, const std::vector<T>& t)
+inline void visit_as(size_helper<SizeType>& v, const std::vector<T, Alloc>& t)
 {
     auto new_size = v.out + v.vector_offset;
     SCORE_LANGUAGE_FUTURECPP_ASSERT(new_size <= (std::numeric_limits<SizeType>::max() - static_cast<SizeType>(sizeof(uint16_t))));

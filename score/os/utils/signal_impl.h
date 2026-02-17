@@ -23,35 +23,6 @@ namespace os
 class SignalImpl : public Signal
 {
   public:
-    std::int32_t pthread_sigmask(sigset_t& signals) const override;
-
-    std::int32_t pthread_sigmask(const std::int32_t how, const sigset_t* set, sigset_t* oldset) const override;
-
-    std::int32_t sigfillset(sigset_t* set) override;
-
-    std::int32_t sigemptyset(sigset_t* set) const override;
-
-    std::int32_t sigwait(const sigset_t* set, std::int32_t* sig) override;
-
-    std::int32_t sigaddset(sigset_t* set, const std::int32_t signo) override;
-
-    std::int32_t kill(const pid_t pid, const std::int32_t sig) override;
-
-    Sighandler* signal(const std::int32_t sig, Sighandler handler) override;
-
-    std::int32_t sigaction(const std::int32_t sig, const struct sigaction* act, struct sigaction* oact) override;
-
-    std::int32_t add_termination_signal(sigset_t& add_signal) override;
-
-    void send_self_sigterm() override;
-
-    std::int32_t get_current_blocked_signals(sigset_t& signals) const override;
-
-    // returns 1 for is blocked 0 for non blocking, -1 on error
-    std::int32_t is_signal_block(const std::int32_t signal_id) override;
-
-    std::int32_t is_member(const std::int32_t signal_id, sigset_t& signals) override;
-
     SignalImpl() = default;
 
     score::cpp::expected<std::int32_t, Error> SendSelfSigterm() const noexcept override;

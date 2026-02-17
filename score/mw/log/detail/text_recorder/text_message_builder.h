@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_TEXT_MESSAGE_BUILDER_H_
-#define SCORE_MW_LOG_TEXT_MESSAGE_BUILDER_H_
+#ifndef SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_MESSAGE_BUILDER_H
+#define SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_MESSAGE_BUILDER_H
 
 #include "score/mw/log/detail/text_recorder/imessage_builder.h"
 
@@ -52,4 +52,4 @@ class TextMessageBuilder : public IMessageBuilder
 }  // namespace mw
 }  // namespace score
 
-#endif  //  SCORE_MW_LOG_TEXT_MESSAGE_BUILDER_H_
+#endif  // SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_MESSAGE_BUILDER_H

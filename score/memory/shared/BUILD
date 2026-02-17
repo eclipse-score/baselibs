@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
@@ -122,7 +123,7 @@ cc_library(
     hdrs = ["shared_memory_resource.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
-        "@score_baselibs//score/language/safecpp/string_view:null_termination_check",
+        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
     ],
     tags = ["FFI"],
     visibility = [
@@ -237,6 +238,7 @@ cc_library(
     hdrs = ["lock_file.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
+        "@score_baselibs//score/mw/log:frontend",
         "@score_baselibs//score/os:fcntl",
         "@score_baselibs//score/os:stat",
         "@score_baselibs//score/os:unistd",
@@ -428,6 +430,7 @@ cc_library(
     ],
     deps = [
         ":polymorphic_offset_ptr_allocator",
+        "@score_baselibs//score/language/safecpp/string_view:char_traits_wrapper",
     ],
 )
 

@@ -58,6 +58,11 @@ GlobImpl& GlobImpl::operator=(GlobImpl&& other) noexcept
     return *this;
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings. This rule states: "The std::terminate() function shall not be called
+// Rationale: some of the std functions involving string, stl structures may throw bad_alloc, but it is rare scenario
+// Exception thrown from noexcept lib will result in terminate.
+// Such exception can not be handled by any other means, hence suppressed here to avoid try..catch
+// coverity[autosar_cpp14_a15_5_3_violation]
 score::cpp::expected<Glob::MatchResult, Error> GlobImpl::Match(const std::string& pattern, const Glob::Flag flags) noexcept
 {
     MatchResult match_result{};

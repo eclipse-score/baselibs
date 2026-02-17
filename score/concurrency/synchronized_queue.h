@@ -24,44 +24,57 @@
 
 namespace score::concurrency
 {
+namespace details
+{
+/// \brief The SharedState class contains shared data between SynchronizedQueue and QueueSender
+template <typename T, typename Notification>
+class SharedState
+{
+  public:
+    explicit SharedState(std::size_t max_length,
+                         score::cpp::pmr::memory_resource* const memory_resource = score::cpp::pmr::new_delete_resource()) noexcept
+        : max_queue_length_{max_length}, mutex_{}, queue_{memory_resource}, notification_{}
+    {
+    }
+
+    ~SharedState() = default;
+
+    // Autosar c++14 M11-0-1 states that "Classes, structs and unions shall not be defined inside functions."
+    // this class acts as container to gather a set of internals that are related.
+    // coverity[autosar_cpp14_m11_0_1_violation]
+    const std::size_t max_queue_length_;
+    // coverity[autosar_cpp14_m11_0_1_violation]
+    std::mutex mutex_;
+    // coverity[autosar_cpp14_m11_0_1_violation]
+    score::cpp::pmr::deque<T> queue_;
+    // coverity[autosar_cpp14_m11_0_1_violation]
+    Notification notification_;
+};
+}  // namespace details
 
 /// \brief The SynchronizedQueue provides a mechanism of synchronized queue
 /// to be abble to write and read queue from one or from different threads
 ///
 /// \details This class provides possibility to create one reader and multiple senders.
 /// Reader could be only one. And senders can be pocied or assigned.
-/// Class contains SharedState that is shared between reader and senders
-/// that helps to synchronize read-write operations with the queue.
 /// Queue can be any type specified by parameter <T>
 ///
+/// Class contains SharedState that is shared between reader and senders
+/// that helps to synchronize read-write operations with the queue.
 /// \tparam T The type which the class is supposed to use as queue type
-template <typename T>
+template <typename T, typename Notification = score::concurrency::Notification>
 class SynchronizedQueue final
 {
-  private:
-    class SharedState
-    {
-      public:
-        explicit SharedState(std::size_t max_length, score::cpp::pmr::memory_resource* const memory_resource) noexcept
-            : max_queue_length_{max_length}, mutex_{}, queue_{memory_resource}, notification_{}
-        {
-        }
-
-        // coverity[autosar_cpp14_m11_0_1_violation]
-        const std::size_t max_queue_length_;
-        // coverity[autosar_cpp14_m11_0_1_violation]
-        std::mutex mutex_;
-        // coverity[autosar_cpp14_m11_0_1_violation]
-        score::cpp::pmr::deque<T> queue_;
-        // coverity[autosar_cpp14_m11_0_1_violation]
-        Notification notification_;
-    };
-
   public:
     explicit SynchronizedQueue(
         std::size_t max_length,
         score::cpp::pmr::memory_resource* const memory_resource = score::cpp::pmr::new_delete_resource()) noexcept
-        : queue_shared_state_(std::make_shared<SharedState>(max_length, memory_resource))
+        : queue_shared_state_(std::make_shared<details::SharedState<T, Notification>>(max_length, memory_resource))
+    {
+    }
+
+    explicit SynchronizedQueue(std::shared_ptr<details::SharedState<T, Notification>> shared_state) noexcept
+        : queue_shared_state_(std::move(shared_state))
     {
     }
 
@@ -108,7 +121,8 @@ class SynchronizedQueue final
     class QueueSender
     {
       protected:
-        explicit QueueSender(std::shared_ptr<SharedState> queue) noexcept : sync_queue_{std::move(queue)} {};
+        explicit QueueSender(std::shared_ptr<details::SharedState<T, Notification>> queue) noexcept
+            : sync_queue_{std::move(queue)} {};
 
       public:
         ~QueueSender() noexcept = default;
@@ -173,7 +187,7 @@ class SynchronizedQueue final
         }
 
       private:
-        std::weak_ptr<SharedState> sync_queue_;
+        std::weak_ptr<details::SharedState<T, Notification>> sync_queue_;
     };
 
     QueueSender CreateSender() const noexcept
@@ -182,7 +196,7 @@ class SynchronizedQueue final
     }
 
   private:
-    std::shared_ptr<SharedState> queue_shared_state_;
+    std::shared_ptr<details::SharedState<T, Notification>> queue_shared_state_;
 };
 
 }  // namespace score::concurrency

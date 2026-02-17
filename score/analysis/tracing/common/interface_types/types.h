@@ -31,32 +31,50 @@ namespace tracing
 namespace alignment
 {
 // False positive, value is used as a default argument in Allocate()
-// coverity[autosar_cpp14_a0_1_1_violation]
-constexpr auto kBlockSize = 64U;
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_a0_1_1_violation: FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr auto kBlockSize = 64U;
 }  // namespace alignment
 
 // False positive, value is used as a the size for chunk lists
-// coverity[autosar_cpp14_a0_1_1_violation]
-constexpr std::uint8_t kMaxChunksPerOneTraceRequest = 10U;
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_a0_1_1_violation: FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::uint8_t kMaxChunksPerOneTraceRequest = 10U;
 
-// Suppress "AUTOSAR C++14 A0-1-1" rule finding. This rule states: "A project shall not contain
-// instances of non-volatile variables being given values that are not subsequently used."
-// The variable kRingBufferSharedMemoryPath is declared and given value that is used in multiple files
-// like object_factory.cpp, shm_ring_buffer.cpp, trace_job_processor_factory.cpp (false positive)
-// coverity[autosar_cpp14_a0_1_1_violation: False]
-constexpr std::string_view kRingBufferSharedMemoryPath = "/dev_shmem";
 // Suppress "AUTOSAR C++14 A0-1-1" rule finding. This rule states: "A project shall not contain
 // instances of non-volatile variables being given values that are not subsequently used."
 // The variable kNumberOfElements is declared and given value that is used in multiple files
 // like object_factory.cpp and trace_job_processor_factory.cpp (false positive)
-// coverity[autosar_cpp14_a0_1_1_violation: False]
-constexpr std::uint16_t kNumberOfElements = 500U;
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_a0_1_1_violation: FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::uint16_t kNumberOfElements = 500U;
 // Suppress "AUTOSAR C++14 A0-1-1" rule finding. This rule states: "A project shall not contain
 // instances of non-volatile variables being given values that are not subsequently used."
 // The variable kRingBufferSharedMemorySize is declared and given value that is used in multiple files
 // like shm_ring_buffer.cpp (false positive)
-// coverity[autosar_cpp14_a0_1_1_violation: False]
-constexpr std::size_t kRingBufferSharedMemorySize = 102400U;
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_a0_1_1_violation: FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::size_t kRingBufferSharedMemorySize = 102400U;
 
 /// @brief Type used to store Trace client Id
 using TraceClientId = std::uint8_t;
@@ -76,6 +94,8 @@ struct TmdStatistics
     std::size_t tmd_total;
     std::size_t tmd_max;
     std::size_t tmd_average;
+    std::size_t tmd_allocate_retry_cntr;
+    std::size_t tmd_allocate_call_cntr;
     // Suppress "AUTOSAR C++14 A9-6-1" rule finding. This rule states: "Data types used for interfacing with
     // hardware or conforming to communication protocols shall be trivial, standard-layout and only contain members
     // of types with defined sizes.".
@@ -130,13 +150,25 @@ using ClientPid = std::uint32_t;
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 static constexpr ShmObjectHandle kInvalidSharedObjectIndex{-1};
 
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 static constexpr std::size_t kApplicationIdentifierLength{255U};
 /// Type used to store the max size for application identifier it's choosen based on
 /// max allowed file name in QNX which is 255 chars.
@@ -145,7 +177,13 @@ using AppIdType = std::array<char, kApplicationIdentifierLength>;
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 static constexpr std::size_t kIpcProtocolMetaInfoApplicationIdentifierLength{8U};
 /// Type used to store the max size for application identifier it's choosen based on
 /// "ad_make_40ms_asil_b_low_level_perception" which is 40 chars + 10 chars if a new client would have a newername
@@ -172,16 +210,62 @@ using TraceResult = score::Result<Blank>;
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
-//  coverity[autosar_cpp14_m5_0_21_violation]
+// coverity[autosar_cpp14_m5_0_21_violation]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 static constexpr std::int32_t kSharedMemoryObjectOpenModes{S_IRUSR | S_IRGRP};
 
 /// @brief Flags to be used when opening client-side SHM objects
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 static constexpr std::int32_t kSharedMemoryObjectOpenFlags{O_RDONLY};
+
+/// @brief Flags to be used when opening client-side SHM for ShmRingBuffer
+// Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
+// being given values that are not subsequently used"
+// False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::int32_t kSharedMemoryRingBufferObjectOpenFlags{O_RDWR};
+
+/// @brief Flags to be used when opening client-side SHM for ShmRingBuffer
+// No harm to do bitwise operations on these values m5_0_21
+// Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
+// being given values that are not subsequently used"
+// False positive, variable is used.
+// Suppress "autosar_cpp14_m5_0_21_violation" rule finding. This rule states: "Bitwise operators
+// shall only be applied to operands of unsigned underlying type."
+// QNX mode permission macros (S_IRUSR, S_IWUSR, etc.) are defined as signed integers by the standard.
+// Only bitwise OR operations are performed - no right shifts that could cause implementation-defined behavior.
+// clang-format off
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
+// coverity[autosar_cpp14_m5_0_21_violation]
+// coverity[autosar_cpp14_a0_1_1_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::uint32_t kSharedMemoryRingBufferObjectOpenModes{static_cast<std::uint32_t>(S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)};
+// clang-format on
 
 }  // namespace tracing
 }  // namespace analysis

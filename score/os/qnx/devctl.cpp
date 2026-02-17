@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file devctl.cpp
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Device control functions OSAL class
-/// [QNX devctl documentation](http://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/d/devctl.html)
-///
 #include "score/os/qnx/devctl_impl.h"
 
 score::os::Devctl& score::os::Devctl::instance() noexcept

@@ -84,66 +84,6 @@ TEST(IsNullTerminatedViewType, CheckTypes)
     EXPECT_FALSE(safecpp::IsNullTerminatedViewType<const score::cpp::string_view>());
 }
 
-TEST(NullTerminationCheck, ForDefaultAmpStringView)
-{
-    score::cpp::string_view view{};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
-}
-
-TEST(NullTerminationCheck, ForEmptyAmpStringView)
-{
-    score::cpp::string_view view{""};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
-TEST(NullTerminationCheck, ForNonEmptyAmpStringView)
-{
-    score::cpp::string_view view{"hello"};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
-TEST(NullTerminationCheck, ForNonNullTerminatedAmpStringView)
-{
-    char buffer[] = {'h', 'e', 'l', 'l', 'o'};  // not null-terminated
-    score::cpp::string_view view{buffer, sizeof(buffer)};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
-TEST(NullTerminationCheck, ForDefaultStdStringView)
-{
-    std::string_view view{};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
-}
-
-TEST(NullTerminationCheck, ForEmptyStdStringView)
-{
-    std::string_view view{""};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
-TEST(NullTerminationCheck, ForNonEmptyStdStringView)
-{
-    std::string_view view{"hello"};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
-TEST(NullTerminationCheck, ForNonNullTerminatedStdStringView)
-{
-    char buffer[] = {'h', 'e', 'l', 'l', 'o'};  // not null-terminated
-    std::string_view view{buffer, sizeof(buffer)};
-    // works just for now, is expected to report a violation once Ticket-214240 got resolved
-    EXPECT_EQ(safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), view.data());
-}
-
 TEST(NullTerminationCheck, ForDefaultStdString)
 {
     std::string str{};

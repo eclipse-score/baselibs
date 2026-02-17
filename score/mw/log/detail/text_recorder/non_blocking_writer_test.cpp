@@ -18,7 +18,6 @@
 #include <fcntl.h>
 #include <array>
 
-using ::testing::_;
 using ::testing::Return;
 
 namespace score
@@ -30,7 +29,7 @@ namespace log
 namespace detail
 {
 
-constexpr std::size_t max_chunk_size = 2048;
+constexpr std::size_t kMaxChunkSize = 2048;
 
 struct NonBlockingWriterTestFixture : ::testing::Test
 {
@@ -38,7 +37,7 @@ struct NonBlockingWriterTestFixture : ::testing::Test
     {
         auto unistd = score::cpp::pmr::make_unique<score::os::UnistdMock>(score::cpp::pmr::get_default_resource());
         unistd_ = unistd.get();
-        writer_ = std::make_unique<NonBlockingWriter>(kFileDescriptor, max_chunk_size, std::move(unistd));
+        writer_ = std::make_unique<NonBlockingWriter>(k_file_descriptor_, kMaxChunkSize, std::move(unistd));
         // score::os::Unistd::set_testing_instance(unistd_);
     }
 
@@ -52,7 +51,7 @@ struct NonBlockingWriterTestFixture : ::testing::Test
     std::unique_ptr<NonBlockingWriter> writer_;
     score::os::UnistdMock* unistd_{};
 
-    std::int32_t kFileDescriptor{};
+    std::int32_t k_file_descriptor_{};
 };
 
 TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenFlushingTwiceMaxChunkSizeShallReturnTrue)
@@ -63,19 +62,19 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenFlushingTwiceMaxChunkS
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    std::array<uint8_t, 2 * max_chunk_size> payload{};
+    std::array<uint8_t, 2 * kMaxChunkSize> payload{};
 
     const score::cpp::span<const std::uint8_t> buffer{payload.data(),
                                                static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, buffer.data(), kMaxChunkSize)).WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, &(buffer.data()[max_chunk_size]), max_chunk_size))
-        .WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, &(buffer[kMaxChunkSize]), kMaxChunkSize))
+        .WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kDone, writer_->FlushIntoFile().value());
 }
@@ -89,34 +88,34 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    std::array<uint8_t, (2 * max_chunk_size) + 3> first_payload{};
+    std::array<uint8_t, (2 * kMaxChunkSize) + 3> first_payload{};
 
     score::cpp::span<const std::uint8_t> first_span{
         first_payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(first_payload.size())};
 
     writer_->SetSpan(first_span);
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, first_span.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, first_span.data(), kMaxChunkSize)).WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, &(first_span.data()[max_chunk_size]), max_chunk_size))
-        .WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, &(first_span[kMaxChunkSize]), kMaxChunkSize))
+        .WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, &(first_span.data()[2 * max_chunk_size]), 3)).WillOnce(Return(3));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, &(first_span[2 * kMaxChunkSize]), 3)).WillOnce(Return(3));
 
     ASSERT_EQ(NonBlockingWriter::Result::kDone, writer_->FlushIntoFile().value());
 
-    std::vector<uint8_t> second_payload(max_chunk_size, 0);
+    std::vector<uint8_t> second_payload(kMaxChunkSize, 0);
 
     score::cpp::span<const std::uint8_t> second_span{
         second_payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(second_payload.size())};
 
     writer_->SetSpan(second_span);
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, second_span.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, second_span.data(), kMaxChunkSize)).WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kDone, writer_->FlushIntoFile().value());
 }
@@ -129,7 +128,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterShallReturnFalseWhenWriteS
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    std::array<uint8_t, max_chunk_size> payload{};
+    std::array<uint8_t, kMaxChunkSize> payload{};
     score::cpp::span<const std::uint8_t> buffer{payload.data(),
                                          static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
@@ -137,7 +136,7 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterShallReturnFalseWhenWriteS
 
     auto error = score::cpp::make_unexpected(score::os::Error::createFromErrno(EBADF));
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(error));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, buffer.data(), kMaxChunkSize)).WillOnce(Return(error));
 
     ASSERT_EQ(writer_->FlushIntoFile().error(), score::mw::log::detail::Error::kUnknownError);
 }
@@ -153,18 +152,18 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    std::array<uint8_t, 2 * max_chunk_size> payload{};
+    std::array<uint8_t, 2 * kMaxChunkSize> payload{};
     score::cpp::span<const std::uint8_t> buffer{payload.data(),
                                          static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, buffer.data(), kMaxChunkSize)).WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, &(buffer.data()[max_chunk_size]), max_chunk_size))
-        .WillOnce(Return(max_chunk_size));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, &(buffer[kMaxChunkSize]), kMaxChunkSize))
+        .WillOnce(Return(kMaxChunkSize));
 
     ASSERT_EQ(NonBlockingWriter::Result::kDone, writer_->FlushIntoFile().value());
 }
@@ -180,19 +179,19 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    std::array<uint8_t, max_chunk_size> payload{};
+    std::array<uint8_t, kMaxChunkSize> payload{};
 
     const score::cpp::span<const std::uint8_t> buffer{payload.data(),
                                                static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, buffer.data(), max_chunk_size)).WillOnce(Return(max_chunk_size / 2));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, buffer.data(), kMaxChunkSize)).WillOnce(Return(kMaxChunkSize / 2));
 
     ASSERT_EQ(NonBlockingWriter::Result::kWouldBlock, writer_->FlushIntoFile().value());
 
-    EXPECT_CALL(*unistd_, write(kFileDescriptor, &(buffer.data()[max_chunk_size / 2]), max_chunk_size / 2))
-        .WillOnce(Return(max_chunk_size / 2));
+    EXPECT_CALL(*unistd_, write(k_file_descriptor_, &(buffer[kMaxChunkSize / 2]), kMaxChunkSize / 2))
+        .WillOnce(Return(kMaxChunkSize / 2));
 
     ASSERT_EQ(NonBlockingWriter::Result::kDone, writer_->FlushIntoFile().value());
 }

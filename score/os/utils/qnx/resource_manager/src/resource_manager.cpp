@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief the definition of the main/base class of the resourse manager, the skeleton of
-/// the resource manager setup and operation as per QNX recommendation.
-///
 
 #include "score/os/utils/qnx/resource_manager/include/resource_manager.h"
 #include "score/os/errno.h"

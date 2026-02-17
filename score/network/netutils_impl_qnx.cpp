@@ -38,7 +38,7 @@ namespace
 static constexpr auto kLogContext = "osnu";
 }
 
-score::cpp::expected<score::os::MacAdress, score::os::Error> NetutilsImpl::get_mac_address(
+score::cpp::expected<score::os::MacAddress, score::os::Error> NetutilsImpl::get_mac_address(
     const std::string& ifc_name) const noexcept
 {
     auto ifaphead = score::os::Ifaddrs::instance().getifaddrs();
@@ -60,18 +60,18 @@ score::cpp::expected<score::os::MacAdress, score::os::Error> NetutilsImpl::get_m
             // coverity[autosar_cpp14_a5_2_4_violation] : see justification above
             const auto sdl = reinterpret_cast<struct sockaddr_dl*>(ifap->ifa_addr);
             // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
-            score::os::MacAdress if_mac{};
+            score::os::MacAddress if_mac{};
             // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic): safe use of pointer arithmetic
             // coverity[autosar_cpp14_m5_0_15_violation] : safe use of pointer arithmetic
             std::copy(LLADDR(sdl), LLADDR(sdl) + sdl->sdl_alen, std::begin(if_mac));
             // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
             score::os::Ifaddrs::instance().freeifaddrs(ifa_list);
-            return score::os::MacAdress{static_cast<std::uint8_t>(if_mac[0]),
-                                      static_cast<std::uint8_t>(if_mac[1]),
-                                      static_cast<std::uint8_t>(if_mac[2]),
-                                      static_cast<std::uint8_t>(if_mac[3]),
-                                      static_cast<std::uint8_t>(if_mac[4]),
-                                      static_cast<std::uint8_t>(if_mac[5])};
+            return score::os::MacAddress{static_cast<std::uint8_t>(if_mac[0]),
+                                       static_cast<std::uint8_t>(if_mac[1]),
+                                       static_cast<std::uint8_t>(if_mac[2]),
+                                       static_cast<std::uint8_t>(if_mac[3]),
+                                       static_cast<std::uint8_t>(if_mac[4]),
+                                       static_cast<std::uint8_t>(if_mac[5])};
         }
     }
 

@@ -313,7 +313,7 @@ TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
     std::string buffer{R"(
 {
   "binary": b)"};
-    buffer += std::string{reinterpret_cast<score::StringLiteral>(binary), 12};
+    buffer += std::string{std::begin(binary), std::end(binary)};
     buffer += R"(
 }
 )";

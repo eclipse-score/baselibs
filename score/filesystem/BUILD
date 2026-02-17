@@ -172,11 +172,13 @@ cc_test(
         "file_status_test.cpp",
         "iterator/directory_entry_test.cpp",
         "iterator/directory_iterator_test.cpp",
-        "iterator/dirent_fake_test.cpp",
         "iterator/recursive_directory_iterator_test.cpp",
         "path_test.cpp",
         "standard_filesystem_fake_test.cpp",
-    ],
+    ] + select({
+        "@score_bazel_platforms//:qnx8_0": [],  #to be fixed in Ticket-242122
+        "//conditions:default": ["iterator/dirent_fake_test.cpp"],
+    }),
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     deps = [

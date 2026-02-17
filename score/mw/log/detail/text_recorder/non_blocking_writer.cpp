@@ -42,11 +42,11 @@ std::size_t NonBlockingWriter::GetMaxChunkSize() noexcept
     return kMaxChunkSizeSupportedByOs;
 }
 
-NonBlockingWriter::NonBlockingWriter(const int32_t fileHandle,
+NonBlockingWriter::NonBlockingWriter(const int32_t file_handle,
                                      std::size_t max_chunk_size,
                                      score::cpp::pmr::unique_ptr<score::os::Unistd> unistd) noexcept
     : unistd_{std::move(unistd)},
-      file_handle_(fileHandle),
+      file_handle_(file_handle),
       number_of_flushed_bytes_{0U},
       buffer_{nullptr, 0UL},
       buffer_flushed_{Result::kWouldBlock},
@@ -95,7 +95,7 @@ score::cpp::expected<ssize_t, score::os::Error> NonBlockingWriter::InternalFlush
         // NOLINTBEGIN(score-banned-function) it is among safety headers.
         // Needs ptr to access score::cpp::span elements
         // coverity[autosar_cpp14_m5_0_15_violation]
-        num_of_bytes_written = unistd_->write(file_handle_, &(buffer_.data()[number_of_flushed_bytes_]), size_to_flush);
+        num_of_bytes_written = unistd_->write(file_handle_, &(buffer_[number_of_flushed_bytes_]), size_to_flush);
         // NOLINTEND(score-banned-function) it is among safety headers.
         // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic) used on span which is an array
         if (!num_of_bytes_written.has_value())

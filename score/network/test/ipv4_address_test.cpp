@@ -10,12 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file test_ip_address.cpp
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Unit tests for the ip address class
-///
 
 #include "gmock/gmock.h"
 #include <gtest/gtest.h>

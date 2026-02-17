@@ -10,12 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file net_endpoint.h
-/// @copyright Copyright (C) 2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief NetEndpoint class incapsulates IP address for socket
-///
 
 #ifndef SCORE_LIB_NETWORK_NET_ENDPOINT_H
 #define SCORE_LIB_NETWORK_NET_ENDPOINT_H
@@ -27,6 +21,9 @@ namespace score
 {
 namespace os
 {
+///
+/// @brief NetEndpoint class encapsulates IP address for socket
+///
 class NetEndpoint
 {
   public:

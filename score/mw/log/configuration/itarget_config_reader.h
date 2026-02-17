@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_ITARGET_CONFIG_READER_H
-#define SCORE_MW_LOG_DETAIL_ITARGET_CONFIG_READER_H
+#ifndef SCORE_MW_LOG_CONFIGURATION_ITARGET_CONFIG_READER_H
+#define SCORE_MW_LOG_CONFIGURATION_ITARGET_CONFIG_READER_H
 
 #include "score/result/result.h"
 #include "score/mw/log/configuration/configuration.h"
@@ -43,4 +43,4 @@ class ITargetConfigReader
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_DETAIL_ITARGET_CONFIG_READER_H
+#endif  // SCORE_MW_LOG_CONFIGURATION_ITARGET_CONFIG_READER_H

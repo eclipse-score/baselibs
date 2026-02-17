@@ -44,6 +44,7 @@ enum class Error : score::result::ErrorCode
     kLogFileCreationFailed,
     kBlockingTerminationSignalFailed,
     kMemoryResourceError,
+    kFailedToCreateMessagePassingClient,
 };
 
 class ErrorDomain final : public score::result::ErrorDomain

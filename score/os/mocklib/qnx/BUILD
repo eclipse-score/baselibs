@@ -175,6 +175,17 @@ cc_library(
     ],
 )
 
+cc_test(
+    name = "mock_secpolev_test",
+    size = "small",
+    srcs = ["mock_secpolev_test.cpp"],
+    target_compatible_with = ["@platforms//os:qnx"],
+    deps = [
+        ":secpolev_mock",
+        "@googletest//:gtest_main",
+    ],
+)
+
 cc_library(
     name = "sysctl_mock",
     testonly = True,

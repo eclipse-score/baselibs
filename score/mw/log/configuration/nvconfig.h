@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_NVCONFIG_H_
-#define SCORE_MW_LOG_NVCONFIG_H_
+#ifndef SCORE_MW_LOG_CONFIGURATION_NVCONFIG_H
+#define SCORE_MW_LOG_CONFIGURATION_NVCONFIG_H
 
 #include "invconfig.h"
 
@@ -28,7 +28,7 @@ namespace log
 class NvConfig : public INvConfig
 {
   public:
-    using typemap_t = std::unordered_map<std::string, config::NvMsgDescriptor>;
+    using TypemapT = std::unordered_map<std::string, config::NvMsgDescriptor>;
 
     explicit NvConfig(std::unordered_map<std::string, config::NvMsgDescriptor> map);
 
@@ -57,14 +57,14 @@ class NvConfig : public INvConfig
         return *this;
     }
 
-    const config::NvMsgDescriptor* getDltMsgDesc(const std::string& typeName) const noexcept override;
+    const config::NvMsgDescriptor* GetDltMsgDesc(const std::string& type_name) const noexcept override;
 
   private:
-    typemap_t typemap_;
+    TypemapT typemap_;
 };
 
 }  // namespace log
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_NVCONFIG_H_
+#endif  // SCORE_MW_LOG_CONFIGURATION_NVCONFIG_H

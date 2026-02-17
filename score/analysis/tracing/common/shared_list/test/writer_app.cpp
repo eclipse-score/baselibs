@@ -51,7 +51,7 @@ int main()
     std::cout << " Available Memory Before List Allocation "
               << std::to_string(flexible_allocator_->GetAvailableMemory()) << std::endl;
     auto* list = static_cast<score::analysis::tracing::shared::List<int>*>(
-        flexible_allocator_->Allocate(sizeof(score::analysis::tracing::shared::List<int>)));
+        flexible_allocator_->Allocate(sizeof(score::analysis::tracing::shared::List<int>)).value());
 
     const auto my_list = new (list) score::analysis::tracing::shared::List<int>(flexible_allocator_);
 
@@ -61,7 +61,7 @@ int main()
         if (!emplace_result.has_value())
         {
             my_list->clear();
-            flexible_allocator_->Deallocate(my_list, sizeof(my_list));
+            std::ignore = flexible_allocator_->Deallocate(my_list, sizeof(my_list));
         }
     }
 

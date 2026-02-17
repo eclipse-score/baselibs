@@ -30,7 +30,7 @@ class NetutilsImpl final : public Netutils
     score::cpp::expected<std::uint32_t, score::os::Error> get_ifcip_address(const std::string& ifc_name) const noexcept override;
     score::cpp::expected<Ipv4Address, score::os::Error> get_ifc_ip_address_net_mask(
         const std::string& ifc_name) const noexcept override;
-    score::cpp::expected<MacAdress, score::os::Error> get_mac_address(const std::string& ifc_name) const noexcept override;
+    score::cpp::expected<MacAddress, score::os::Error> get_mac_address(const std::string& ifc_name) const noexcept override;
     score::cpp::optional<std::uint32_t> get_default_gateway_ip4() const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> set_ip_address(const std::string& ifc_name,

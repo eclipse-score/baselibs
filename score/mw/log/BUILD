@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 
 COMPILER_WARNING_FEATURES = [
@@ -19,7 +20,12 @@ COMPILER_WARNING_FEATURES = [
     "strict_warnings",
 ]
 
-# mw/log target with all available backends is now available in @score_logging
+alias(
+    name = "log",
+    actual = ":frontend",
+    deprecation = "DEPRECATED: use @score_baselibs//score/mw/log:frontend instead. Refer usage in mw/log/README.md",
+    visibility = ["//visibility:public"],
+)
 
 cc_library(
     name = "frontend",
@@ -56,9 +62,15 @@ cc_library(
 )
 
 alias(
+    name = "console_only_backend",
+    actual = "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "backend_stub_testutil",
     testonly = True,
-    actual = "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
+    actual = "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
     visibility = ["//visibility:public"],
 )
 
@@ -249,7 +261,7 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log:frontend",
         "@score_baselibs//score/mw/log:recorder_mock",
-        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
+        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
     ],
 )
 
@@ -261,12 +273,13 @@ cc_test(
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
+    local_defines = ["KCONSOLE_LOGGING"],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
     ],
 )
@@ -317,7 +330,7 @@ cc_test(
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
+        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
         "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
     ],
 )
@@ -342,7 +355,7 @@ cc_test(
         ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:recorder_factory_stub",
+        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
     ],
 )

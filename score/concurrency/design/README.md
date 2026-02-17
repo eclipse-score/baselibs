@@ -7,7 +7,7 @@ a runtime decision for the user which parallel context shall be used.
 
 The following prose text describes the [Structural View](./structural_view.puml).
 
-![Structural View](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/concurrency/design/structural_view.puml)
+<img alt="Structural View" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/concurrency/design/structural_view.puml">
 
 ## Tasks
 

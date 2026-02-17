@@ -13,6 +13,7 @@
 #ifndef SCORE_ANALYSIS_TRACING_COMMON_FLEXIBLE_CIRCULAR_ALLOCATOR_H
 #define SCORE_ANALYSIS_TRACING_COMMON_FLEXIBLE_CIRCULAR_ALLOCATOR_H
 
+#include "score/analysis/tracing/common/flexible_circular_allocator/error_codes/flexible_circular_allocator/error_code.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
 #include "score/analysis/tracing/common/interface_types/types.h"
 #include "score/result/result.h"
@@ -36,8 +37,8 @@ class FlexibleCircularAllocator : public IFlexibleCircularAllocator
     FlexibleCircularAllocator(void* base_address, std::size_t size);
     // This is intented, we don't enforce users to specify align unless needed
     // NOLINTNEXTLINE(google-default-arguments) see comment above
-    void* Allocate(const std::size_t size, const std::size_t alignment = alignment::kBlockSize) override;
-    bool Deallocate(void* const pointer, const std::size_t) override;
+    score::Result<void*> Allocate(const std::size_t size, const std::size_t alignment = alignment::kBlockSize) override;
+    ResultBlank Deallocate(void* const pointer, const std::size_t) override;
 
     std::size_t GetAvailableMemory() noexcept override;
 

@@ -1,0 +1,46 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Bazel Sanitizers (Linux)
+permissions:
+  contents: read
+  actions: write
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - main
+  merge_group:
+    types: [checks_requested]
+  workflow_call:
+jobs:
+  linux-sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.18.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.job }}
+          repository-cache: true
+          cache-save: ${{ github.event_name == 'push' }}
+      - name: Bazel Test with Sanitizers
+        run: |
+          bazel test --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/... \
+          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
+          -//score/containers:dynamic_array_test \
+          -//score/containers:non_relocatable_vector_emplace_back_test \
+          -//score/containers:non_relocatable_vector_special_member_funcs_test \
+          -//score/containers:non_relocatable_vector_test

@@ -14,5 +14,7 @@
 project = "S-CORE Baselibs"
 project_url = "https://eclipse-score.github.io/baselibs"
 version = "0.1"
-extensions = ["sphinxcontrib.plantuml",
-              "score_sphinx_bundle",]
+extensions = [
+    "sphinxcontrib.plantuml",
+    "score_sphinx_bundle",
+]

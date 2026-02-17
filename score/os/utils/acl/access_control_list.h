@@ -27,7 +27,7 @@ class AccessControlList : public IAccessControlList
 {
   public:
     explicit AccessControlList(const score::os::Acl::FileDescriptor);
-    explicit AccessControlList(const std::string);
+    explicit AccessControlList(const std::string&);
     ~AccessControlList() override;
 
     AccessControlList(AccessControlList&&) noexcept = delete;
@@ -42,6 +42,8 @@ class AccessControlList : public IAccessControlList
         const Acl::Permission permission) const noexcept override;
 
   private:
+    AccessControlList(const score::os::Acl::FileDescriptor, const std::string&);
+    void InitializeAcl(const score::cpp::expected<::score::os::Acl::AclCollection, ::score::os::Error> result);
     static score::cpp::expected_blank<score::os::Error> SetUser(const UserIdentifier, ::score::os::Acl::Entry&);
     static score::cpp::expected_blank<score::os::Error> AddPermission(const Acl::Permission, ::score::os::Acl::Entry&);
     template <typename F>

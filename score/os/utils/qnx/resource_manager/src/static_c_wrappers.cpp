@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief the c signature function fitting QNX c handler pointers, also wrap the handling
-/// to configurable handler if registered
-///
 
 #include "score/os/utils/qnx/resource_manager/include/static_c_wrappers.h"
 

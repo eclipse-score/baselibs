@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_ASCII_FORMAT_H_
-#define SCORE_MW_LOG_DETAIL_ASCII_FORMAT_H_
+#ifndef SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_FORMAT_H
+#define SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_FORMAT_H
 
 #include "score/mw/log/detail/integer_representation.h"
 #include "score/mw/log/log_types.h"
@@ -58,7 +58,7 @@ std::size_t GetBufferSizeCasted(T buffer_size) noexcept
     return static_cast<std::size_t>(buffer_size);
 }
 
-template <typename T, IntegerRepresentation I>
+template <typename T, IntegerRepresentation i>
 struct GetFormatSpecifier
 {
 };
@@ -68,122 +68,122 @@ struct GetFormatSpecifier
 template <>
 struct GetFormatSpecifier<const float, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%f ";
+    static constexpr score::StringLiteral kValue = "%f ";
 };
 
 template <>
 struct GetFormatSpecifier<const double, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%f ";
+    static constexpr score::StringLiteral kValue = "%f ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral value = "%hhx ";
+    static constexpr score::StringLiteral kValue = "%hhx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral value = "%hho ";
+    static constexpr score::StringLiteral kValue = "%hho ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%hhu ";
+    static constexpr score::StringLiteral kValue = "%hhu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%hu ";
+    static constexpr score::StringLiteral kValue = "%hu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral value = "%hx ";
+    static constexpr score::StringLiteral kValue = "%hx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral value = "%ho ";
+    static constexpr score::StringLiteral kValue = "%ho ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%u ";
+    static constexpr score::StringLiteral kValue = "%u ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral value = "%x ";
+    static constexpr score::StringLiteral kValue = "%x ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral value = "%o ";
+    static constexpr score::StringLiteral kValue = "%o ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%lu ";
+    static constexpr score::StringLiteral kValue = "%lu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral value = "%lx ";
+    static constexpr score::StringLiteral kValue = "%lx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral value = "%lo ";
+    static constexpr score::StringLiteral kValue = "%lo ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int8_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%hhi ";
+    static constexpr score::StringLiteral kValue = "%hhi ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int16_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%hi ";
+    static constexpr score::StringLiteral kValue = "%hi ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int32_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%i ";
+    static constexpr score::StringLiteral kValue = "%i ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int64_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral value = "%li ";
+    static constexpr score::StringLiteral kValue = "%li ";
 };
 
-template <IntegerRepresentation I, typename T, typename PT>
+template <IntegerRepresentation i, typename T, typename PT>
 static void PutFormattedNumber(PT& payload, const T data) noexcept
 {
     std::ignore = payload.Put([&data](score::cpp::span<Byte> buffer) noexcept {
         if (!buffer.empty())  // LCOV_EXCL_BR_LINE: lcov complains about lots of uncovered branches here, it is not
                               // convenient/related to this condition.
         {
-            constexpr score::StringLiteral format = GetFormatSpecifier<const T, I>::value;
+            constexpr score::StringLiteral kFormat = GetFormatSpecifier<const T, i>::kValue;
             const auto written =
                 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg) safe to use std::snprintf
-                FormattingFunctionReturnCast(std::snprintf(buffer.data(), buffer.size(), format, data));
+                FormattingFunctionReturnCast(std::snprintf(buffer.data(), buffer.size(), kFormat, data));
 
             const std::size_t num_written = std::min(written, buffer.size() - std::size_t{1});
             buffer.first(num_written + 1U).back() = ' ';
@@ -197,9 +197,9 @@ static void PutFormattedNumber(PT& payload, const T data) noexcept
 }
 
 template <typename T>
-using is_formatting_supported = std::is_unsigned<T>;
+using IsFormattingSupported = std::is_unsigned<T>;
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value == false, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value == false, bool> = true>
 // PutBinaryFormattedNumber is not static storage. function is used to log different types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutBinaryFormattedNumber(PT&, const T) noexcept
@@ -208,20 +208,20 @@ void PutBinaryFormattedNumber(PT&, const T) noexcept
     // no actions are expected here
 }
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value, bool> = true>
 // PutBinaryFormattedNumber is not static storage. function is used to log different types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutBinaryFormattedNumber(PT& payload, const T data) noexcept
 {
-    constexpr auto characters_used = kNumberOfBitsInByte * sizeof(T) + kReserveSpaceForSpace;
+    constexpr auto kCharactersUsed = kNumberOfBitsInByte * sizeof(T) + kReserveSpaceForSpace;
     std::ignore = payload.Put(
         [data](const score::cpp::span<Byte> buffer) noexcept {
             const auto buffer_space = GetSpanSizeCasted(buffer);
             if (buffer_space > 1U)  // LCOV_EXCL_BR_LINE: lcov complains about lots of uncovered branches here, it is
                                     // not convenient/related to this condition.
             {
-                constexpr auto number_of_bits = kNumberOfBitsInByte * sizeof(T);
-                const auto max_possible = std::min(number_of_bits, buffer_space);
+                constexpr auto kNumberOfBits = kNumberOfBitsInByte * sizeof(T);
+                const auto max_possible = std::min(kNumberOfBits, buffer_space);
                 std::size_t buffer_index = 0U;
                 // LCOV_EXCL_BR_START: The loop condition is always true because buffer_index starts at 0 and
                 // max_possible is always greater than 1 under this condition if (buffer_space > 1U). And there is no
@@ -229,7 +229,7 @@ void PutBinaryFormattedNumber(PT& payload, const T data) noexcept
                 while (buffer_index < max_possible)  //  only MSB bits will be filled in case of insufficient memory
                 // LCOV_EXCL_BR_STOP
                 {
-                    const auto bits = std::bitset<number_of_bits>(data);
+                    const auto bits = std::bitset<kNumberOfBits>(data);
                     // bit [] access can only have 0 or 1 return value and even if offset by value of '0'
                     // is not able to overflow char
                     // static_cast<std::int32_t> is needed to perform addition '0' char value to bool value from
@@ -246,7 +246,7 @@ void PutBinaryFormattedNumber(PT& payload, const T data) noexcept
                     // coverity[autosar_cpp14_m4_5_1_violation]
                     // coverity[autosar_cpp14_m5_0_8_violation]
                     // coverity[autosar_cpp14_m4_5_3_violation]
-                    buffer.data()[buffer_index] = static_cast<std::string::value_type>(
+                    buffer[buffer_index] = static_cast<std::string::value_type>(
                         // static_cast<std::int32_t> is needed to perform addition '0' char value to bool
                         // buffer_index is limited to maximum amount of bits in data (checked in while condition)
                         // coverity[autosar_cpp14_a4_7_1_violation]
@@ -261,7 +261,7 @@ void PutBinaryFormattedNumber(PT& payload, const T data) noexcept
                 // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic) used on span which is an array
                 // False positive: Pointer arithmetic is used on span which is an array
                 // coverity[autosar_cpp14_m5_0_15_violation]
-                buffer.data()[last_index] = ' ';
+                buffer[last_index] = ' ';
                 // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic) used on span which is an array
                 return buffer_index + kReserveSpaceForSpace;
             }
@@ -270,10 +270,10 @@ void PutBinaryFormattedNumber(PT& payload, const T data) noexcept
                 return 0UL;
             }
         },
-        characters_used);
+        kCharactersUsed);
 }
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value == false, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value == false, bool> = true>
 // PutOctalFormattedNumber is not static storage. function is used to split supported/unsupported types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutOctalFormattedNumber(PT&, const T) noexcept
@@ -282,7 +282,7 @@ void PutOctalFormattedNumber(PT&, const T) noexcept
     // no actions are expected here
 }
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value, bool> = true>
 // PutOctalFormattedNumber is not static storage. function is used to split supported/unsupported types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutOctalFormattedNumber(PT& payload, const T data) noexcept
@@ -290,7 +290,7 @@ void PutOctalFormattedNumber(PT& payload, const T data) noexcept
     PutFormattedNumber<IntegerRepresentation::kOctal>(payload, data);
 }
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value == false, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value == false, bool> = true>
 // PutHexFormattedNumber is not static storage. function is used to split supported/unsupported types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutHexFormattedNumber(PT&, const T) noexcept
@@ -299,7 +299,7 @@ void PutHexFormattedNumber(PT&, const T) noexcept
     // no actions are expected here
 }
 
-template <typename T, typename PT, typename std::enable_if_t<is_formatting_supported<T>::value, bool> = true>
+template <typename T, typename PT, typename std::enable_if_t<IsFormattingSupported<T>::value, bool> = true>
 // PutHexFormattedNumber is not static storage. function is used to split supported/unsupported types
 // coverity[autosar_cpp14_a2_10_4_violation]
 void PutHexFormattedNumber(PT& payload, const T data) noexcept
@@ -341,10 +341,10 @@ class TextFormat
     template <typename PT>
     static void Log(PT& payload, const bool data) noexcept
     {
-        constexpr auto positive_value = std::string_view{"True"};
-        constexpr auto negative_value = std::string_view{"False"};
+        constexpr auto kPositiveValue = std::string_view{"True"};
+        constexpr auto kNegativeValue = std::string_view{"False"};
 
-        const auto data_value = data ? positive_value : negative_value;
+        const auto data_value = data ? kPositiveValue : kNegativeValue;
         score::mw::log::detail::TextFormat::Log(payload, data_value);
     }
 
@@ -483,7 +483,7 @@ class TextFormat
     //  static void Log(PT&, const std::string_view) noexcept;
     static void Log(PT& payload, const std::string_view data) noexcept
     {
-        if (data.size() > 0U)
+        if (!data.empty())
         {
             const std::size_t data_length = data.size() + kReserveSpaceForSpace;
 
@@ -546,4 +546,4 @@ class TextFormat
 }  // namespace mw
 }  // namespace score
 
-#endif  //  SCORE_MW_LOG_DETAIL_ASCII_FORMAT_H_
+#endif  // SCORE_MW_LOG_DETAIL_TEXT_RECORDER_TEXT_FORMAT_H

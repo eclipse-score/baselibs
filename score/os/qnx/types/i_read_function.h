@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief The pure virtual interfaces definitions for the read handler interface to be configured
-/// by the user.
-///
 
 #ifndef SCORE_LIB_OS_QNX_RESOURCE_READ_HANDLER_INTERFACE_H
 #define SCORE_LIB_OS_QNX_RESOURCE_READ_HANDLER_INTERFACE_H

@@ -143,7 +143,6 @@ class Any
     template <typename T,
               typename = std::enable_if_t<!std::is_same<T, Object>::value, bool>,
               typename = std::enable_if_t<!std::is_same<T, List>::value, bool>,
-              typename = std::enable_if_t<!std::is_same<T, score::cpp::string_view>::value, bool>,
               typename = std::enable_if_t<!std::is_same<T, std::string_view>::value, bool>,
               typename = std::enable_if_t<!std::is_arithmetic<T>::value>>
     score::Result<std::reference_wrapper<T>> As() noexcept
@@ -163,7 +162,6 @@ class Any
               typename = std::enable_if_t<!std::is_same<T, Object>::value, bool>,
               typename = std::enable_if_t<!std::is_same<T, List>::value, bool>,
               typename = std::enable_if_t<!std::is_arithmetic<T>::value>,
-              typename = std::enable_if_t<!std::is_same<T, score::cpp::string_view>::value, bool>,
               typename = std::enable_if_t<!std::is_same<T, std::string_view>::value, bool>>
     score::Result<std::reference_wrapper<const T>> As() const noexcept
     {
@@ -222,19 +220,6 @@ class Any
         {
             // The cast from a bool to every arithmetic type is well-defined.
             return static_cast<T>(*boolean);
-        }
-
-        return score::MakeUnexpected(score::json::Error::kWrongType);
-    }
-
-    /// \brief Convenience method to get a string_view to a JSON string element.
-    template <typename T, typename = std::enable_if_t<std::is_same<T, score::cpp::string_view>::value, bool>>
-    score::Result<score::cpp::string_view> As() const noexcept
-    {
-        const auto* const value_string = std::get_if<std::string>(&value_);
-        if (value_string != nullptr)
-        {
-            return score::cpp::string_view{value_string->c_str(), value_string->size()};
         }
 
         return score::MakeUnexpected(score::json::Error::kWrongType);

@@ -8,10 +8,10 @@
 
 ///
 /// \file
-/// \copyright Copyright (C) 2021-2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2021 Contributors to the Eclipse Foundation
 ///
 /// The implementation is based on \c std::thread from https://github.com/llvm/llvm-project/tree/main/libcxx with
-/// modifications listed in \c LICENSE.txt.
+/// modifications listed in \c NOTICE.
 ///
 
 // IWYU pragma: private

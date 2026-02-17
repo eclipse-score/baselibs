@@ -1,0 +1,2 @@
+exclude:
+  - score/language/futurecpp/.clang-format

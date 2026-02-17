@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/utils/src/scoped_operation.h"
 
+#include "score/language/safecpp/scoped_function/move_only_scoped_function.h"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -24,13 +26,39 @@ namespace ifwi
 namespace
 {
 
-TEST(ScopedOperationTest, callFunctionOnDestruction)
+TEST(ScopedOperationTest, CallDefaultFunctionOnDestruction)
 {
     bool functionCalled = false;
     {
         utils::ScopedOperation<> scopedOperation{[&functionCalled]() noexcept {
             functionCalled = true;
         }};
+        functionCalled = false;
+    }
+    ASSERT_TRUE(functionCalled);
+}
+
+TEST(ScopedOperationTest, CallAmpCallbackOnDestruction)
+{
+    bool functionCalled = false;
+    {
+        utils::ScopedOperation<score::cpp::callback<void()>> scopedOperation{[&functionCalled]() noexcept {
+            functionCalled = true;
+        }};
+        functionCalled = false;
+    }
+    ASSERT_TRUE(functionCalled);
+}
+
+TEST(ScopedOperationTest, CallScopedFunctionOnDestruction)
+{
+    safecpp::Scope<> scope{};
+    bool functionCalled = false;
+    {
+        utils::ScopedOperation<safecpp::MoveOnlyScopedFunction<void()>> scopedOperation{
+            {scope, [&functionCalled]() noexcept {
+                 functionCalled = true;
+             }}};
         functionCalled = false;
     }
     ASSERT_TRUE(functionCalled);

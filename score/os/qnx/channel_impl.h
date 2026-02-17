@@ -113,6 +113,10 @@ class ChannelImpl final : public Channel
                                                           const std::int32_t ngroups) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
+    score::cpp::expected<std::int32_t, score::os::Error> ConnectServerInfo(const pid_t pid,
+                                                                  const std::int32_t coid,
+                                                                  _server_info* const info) const noexcept override;
+
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, score::os::Error> ConnectAttach(const std::uint32_t reserved,
                                                               const pid_t pid,
@@ -125,7 +129,9 @@ class ChannelImpl final : public Channel
     score::cpp::expected_blank<score::os::Error> ConnectDetach(const std::int32_t coid) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    score::cpp::expected<std::int32_t, score::os::Error> MsgRegisterEvent(sigevent* ev, std::int32_t coid) noexcept override;
+    score::cpp::expected_blank<score::os::Error> MsgRegisterEvent(sigevent* const ev, const std::int32_t coid) noexcept override;
+
+    score::cpp::expected_blank<score::os::Error> MsgUnregisterEvent(sigevent* const ev) noexcept override;
 };
 
 }  // namespace os

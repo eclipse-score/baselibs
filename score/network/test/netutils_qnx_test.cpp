@@ -78,20 +78,20 @@ struct NetUtilsQnxTestFixture : ::testing::Test
     score::os::IfaddrsMock ifaddrs_mock_;
 };
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_GetifaddrsFail)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_GetifaddrsFail)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(kEAcessUnExpectedError));
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_GetifaddrsReturnNull)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_GetifaddrsReturnNull)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(nullptr));
     EXPECT_CALL(ifaddrs_mock_, freeifaddrs(_)).Times(0);
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_NoEthernetInterfaceExitsOnTheMachine)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_NoEthernetInterfaceExitsOnTheMachine)
 {
     struct ifaddrs ifa1 = {};
 
@@ -104,7 +104,7 @@ TEST_F(NetUtilsQnxTestFixture, GetMacAdress_NoEthernetInterfaceExitsOnTheMachine
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_AddressFamilyIsNotLinkLayerAddresses)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_AddressFamilyIsNotLinkLayerAddresses)
 {
     struct ifaddrs ifa1 = {0};
     struct ifaddrs ifa2 = {0};
@@ -126,7 +126,7 @@ TEST_F(NetUtilsQnxTestFixture, GetMacAdress_AddressFamilyIsNotLinkLayerAddresses
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_CouldNotFindTheSpecificEthernetInterface)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_CouldNotFindTheSpecificEthernetInterface)
 {
     struct ifaddrs ifa1 = {0};
     struct sockaddr_dl eth1_addr = {0};
@@ -149,7 +149,7 @@ TEST_F(NetUtilsQnxTestFixture, GetMacAdress_CouldNotFindTheSpecificEthernetInter
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsQnxTestFixture, GetMacAdress_ReturnsCorrectMacAddress)
+TEST_F(NetUtilsQnxTestFixture, GetMacAddress_ReturnsCorrectMacAddress)
 {
     struct ifaddrs ifa1 = {0};
     struct ifaddrs ifa2 = {0};

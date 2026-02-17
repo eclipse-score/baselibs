@@ -13,6 +13,7 @@
 #include "score/network/vlan.h"
 
 #include "score/os/mocklib/socketmock.h"
+#include "score/os/version.h"
 
 #include <score/expected.hpp>
 
@@ -33,9 +34,13 @@ using ::testing::NiceMock;
 using ::testing::Return;
 using ::testing::Test;
 
-#if defined(__QNXNTO__)
-constexpr auto kVlanPrioOption = SO_VLANPRIO;
+#if defined(SPP_OS_QNX_VERSION) && SPP_OS_QNX_VERSION
+#if SPP_OS_VERSION_GTE(SPP_OS_QNX_VERSION, 8, 0)
+constexpr auto kVlanPrioOption = -1;  // SO_VLANPRIO is not available in QNX 8.0
 #else
+constexpr auto kVlanPrioOption = SO_VLANPRIO;
+#endif
+#else  // defined(SPP_OS_QNX_VERSION) && SPP_OS_QNX_VERSION
 constexpr auto kVlanPrioOption = SO_PRIORITY;
 #endif
 

@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/spawn_impl.h"
+#include "score/os/version.h"
 
 #include "gtest/gtest.h"
 
@@ -813,7 +814,80 @@ TEST(SpawnImpl, posix_spawnattr_getxflags_failure)
     const auto get_result = score::os::Spawn::instance().posix_spawnattr_getxflags(&attr, &get_flags);
     ASSERT_FALSE(get_result.has_value());
 }
+#ifdef SPP_OS_QNX8
 
+TEST_F(SpawnTest, pthread_spawnattr_getrunmask_success)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SpawnTest posix_spawnattr_getrunmask_success");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    const std::uint64_t set_runmask{1};
+    ASSERT_EQ(::pthread_spawnattr_setrunmask_np(&attr, set_runmask), 0);
+
+    std::uint64_t runmask{};
+    const auto get_result = score::os::Spawn::instance().pthread_spawnattr_getrunmask_np(&attr, &runmask);
+    ASSERT_TRUE(get_result.has_value());
+    EXPECT_EQ(get_result.value(), 0);
+    EXPECT_EQ(runmask, set_runmask);
+}
+
+TEST_F(SpawnTest, pthread_spawnattr_setrunmask_success)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SpawnTest posix_spawnattr_setrunmask_success");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    const std::uint64_t set_runmask{1};
+    const auto set_result = score::os::Spawn::instance().pthread_spawnattr_setrunmask_np(&attr, set_runmask);
+    ASSERT_TRUE(set_result.has_value());
+    EXPECT_EQ(set_result.value(), 0);
+
+    std::uint64_t runmask{};
+    ASSERT_EQ(::pthread_spawnattr_getrunmask_np(&attr, &runmask), 0);
+    EXPECT_EQ(runmask, set_runmask);
+}
+
+TEST(SpawnImpl, pthread_spawnattr_setrunmask_failure)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SpawnImpl posix_spawnattr_setrunmask_failure");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    const std::uint64_t set_runmask{1};
+
+    posix_spawnattr_t attr;
+    ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
+    ASSERT_EQ(::posix_spawnattr_destroy(&attr), 0);
+
+    const auto set_result = score::os::Spawn::instance().pthread_spawnattr_setrunmask_np(&attr, set_runmask);
+    ASSERT_FALSE(set_result.has_value());
+}
+
+TEST(SpawnImpl, pthread_spawnattr_getrunmask_failure)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SpawnImpl posix_spawnattr_getrunmask_failure");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    posix_spawnattr_t attr;
+    ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
+    ASSERT_EQ(::posix_spawnattr_destroy(&attr), 0);
+
+    std::uint64_t runmask{};
+    const auto get_result = score::os::Spawn::instance().pthread_spawnattr_getrunmask_np(&attr, &runmask);
+    ASSERT_FALSE(get_result.has_value());
+}
+
+#else   // QNX_7 code below
 TEST_F(SpawnTest, posix_spawnattr_getrunmask_success)
 {
     RecordProperty("Verifies", "SCR-46010294");
@@ -884,6 +958,7 @@ TEST(SpawnImpl, posix_spawnattr_getrunmask_failure)
     const auto get_result = score::os::Spawn::instance().posix_spawnattr_getrunmask(&attr, &runmask);
     ASSERT_FALSE(get_result.has_value());
 }
+#endif  // SPP_OS_QNX8
 
 TEST_F(SpawnTest, posix_spawnattr_setsigignore_success)
 {

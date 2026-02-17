@@ -8,10 +8,10 @@
 
 ///
 /// \file
-/// \copyright Copyright (C) 2021-2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2021 Contributors to the Eclipse Foundation
 ///
 /// The implementation is based on \c std::thread from https://github.com/llvm/llvm-project/tree/main/libcxx with
-/// modifications listed in \c LICENSE.txt.
+/// modifications listed in \c NOTICE.
 ///
 
 #include <score/jthread.hpp>
@@ -72,7 +72,7 @@ bool tracker::op_run = false;
 
 std::string get_this_thread_name()
 {
-    std::array<char, score::cpp::detail::thread_name_hint::get_max_thread_name_length()> n;
+    std::array<char, score::cpp::detail::thread_name_hint::get_max_thread_name_length()> n{};
     EXPECT_EQ(::pthread_getname_np(::pthread_self(), n.data(), n.size()), 0);
     return std::string(n.data());
 }

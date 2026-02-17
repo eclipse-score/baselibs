@@ -600,10 +600,14 @@ inline void serialize(const T& t, serializer_helper<A>& a, vector_serialized<A, 
     }
 }
 
-template <typename A, typename S, typename T, std::enable_if_t<(std::is_integral<T>::value), std::int32_t> = 0>
+template <typename A,
+          typename S,
+          typename T,
+          typename Alloc,
+          std::enable_if_t<(std::is_integral<T>::value), std::int32_t> = 0>
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
-inline void serialize(const std::vector<T>& t, serializer_helper<A>& a, vector_serialized<A, S>& serial)
+inline void serialize(const std::vector<T, Alloc>& t, serializer_helper<A>& a, vector_serialized<A, S>& serial)
 {
     static_assert(sizeof(S) <= std::numeric_limits<std::size_t>::max(), "S is too large");
     using subsize_s_t = subsize_serialized<A>;
@@ -693,7 +697,11 @@ inline void deserialize(const vector_serialized<A, S>& serial, deserializer_help
 }
 
 // Vector specialization to optimize for integral types
-template <typename A, typename S, typename T, std::enable_if_t<(std::is_integral<T>::value), std::int32_t> = 0>
+template <typename A,
+          typename S,
+          typename T,
+          typename Alloc,
+          std::enable_if_t<(std::is_integral<T>::value), std::int32_t> = 0>
 /*
         Deviation from Rule M3-2-2:
         - The One Definition Rule shall not be violated
@@ -701,7 +709,7 @@ template <typename A, typename S, typename T, std::enable_if_t<(std::is_integral
         - This is false positive, Overload signatures are different.
 */
 // coverity[autosar_cpp14_m3_2_2_violation: FALSE]
-inline void deserialize(const vector_serialized<A, S>& serial, deserializer_helper<A>& a, std::vector<T>& t)
+inline void deserialize(const vector_serialized<A, S>& serial, deserializer_helper<A>& a, std::vector<T, Alloc>& t)
 {
     using subsize_s_t = const subsize_serialized<A>;
     typename A::offset_t offset;
@@ -1125,7 +1133,7 @@ template <typename A, typename T, size_t N>
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
-inline auto visit_as(serialized_visitor<A>& /*unused*/, const T (&/*unused*/)[N])
+inline auto visit_as(serialized_visitor<A>& /*unused*/, const T (& /*unused*/)[N])
 {  // NOLINT(modernize-avoid-c-arrays) intentionally
     return array_serialized_descriptor<A, T, N>();
 }
@@ -1311,8 +1319,8 @@ class optional_pack_desc
         }
 
         return result;
-    }  // namespace visitor
-};     // namespace common
+    }
+};
 
 template <typename A, typename T1, typename T2>
 // This is false positive, Overload signatures are different.

@@ -33,6 +33,8 @@ RecursiveDirectoryIterator& RecursiveDirectoryIterator::operator=(const Recursiv
 RecursiveDirectoryIterator& RecursiveDirectoryIterator::operator=(RecursiveDirectoryIterator&&) noexcept = default;
 RecursiveDirectoryIterator::~RecursiveDirectoryIterator() noexcept = default;
 
+// false-positive: can't create delegate due to defaulted constructors and can't mix init list with in-class init
+// coverity[autosar_cpp14_a12_1_5_violation]
 RecursiveDirectoryIterator::RecursiveDirectoryIterator(const Path& path,
                                                        const DirectoryOptions directory_options) noexcept
 {

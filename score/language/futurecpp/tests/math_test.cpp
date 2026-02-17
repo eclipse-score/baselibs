@@ -1,6 +1,19 @@
+/********************************************************************************
+ * Copyright (c) 2016 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
 ///
 /// \file
-/// \copyright Copyright (C) 2016-2018, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2016 Contributors to the Eclipse Foundation
 ///
 
 #include <score/float.hpp>
@@ -260,8 +273,8 @@ TEST(math_test, fmod_floored_interval_border_double)
 /// @requirement CB-#18288545
 TEST(math_test, fmod_floored_zero_divisor_float)
 {
-    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(std::isnan(score::cpp::fmod_floored(1.0F, 0.0F)));
-    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(std::isnan(score::cpp::fmod_floored(1.0F, -0.0F)));
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = std::isnan(score::cpp::fmod_floored(1.0F, 0.0F)));
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = std::isnan(score::cpp::fmod_floored(1.0F, -0.0F)));
 }
 
 ///

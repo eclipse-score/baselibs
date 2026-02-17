@@ -27,13 +27,25 @@ namespace tracing
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
-constexpr std::size_t kStlContainerStorageNeeds = 1024U;
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::size_t kStlContainerStorageNeeds = 1024U;
 // Suppress "AUTOSAR C++14 A0-1-1" rule finds: "A project shall not contain instances of non-volatile variables
 // being given values that are not subsequently used"
 // False positive, variable is used.
+// Suppress "AUTOSAR C++14 A2-10-4". The rule states: "The identifier name of a
+// non-member object with static storage duration or static function shall not be
+// reused within a namespace"
+// This is a single declaration using constexpr.
+// The identifier is not reused; it's declared once and referenced elsewhere.
 // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
-constexpr std::size_t kStlContainerElementStorageNeeds = sizeof(void*);
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+static constexpr std::size_t kStlContainerElementStorageNeeds = sizeof(void*);
 
 template <typename T>
 auto GetPointerFromLocation(SharedMemoryLocation memory_location, ResourcePointer resource_ptr) -> T*

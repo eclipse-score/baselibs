@@ -14,7 +14,7 @@
 
 #include "score/mw/log/detail/empty_recorder.h"
 
-#if defined(KUSE_STUB_IMPLEMENTATION_ONLY)
+#if defined(KCONSOLE_LOGGING)
 #include "score/mw/log/detail/text_recorder/text_recorder.h"
 #endif
 
@@ -55,7 +55,7 @@ TEST(RuntimeTest, RuntimeInitializationWithoutPointer)
     // Do not add additional tests here, but in runtime_test.cpp.
     auto& recorder = Runtime::GetRecorder();
 
-#if defined(KUSE_STUB_IMPLEMENTATION_ONLY)
+#if defined(KCONSOLE_LOGGING)
     EXPECT_TRUE(IsRecorderOfType<TextRecorder>(recorder));
 #else
     EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));

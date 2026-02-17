@@ -72,7 +72,12 @@ constexpr std::size_t max_dec_digits() noexcept
 template <typename T>
 inline constexpr std::size_t kIntBufLen = max_dec_digits<std::make_unsigned_t<std::remove_cv_t<T>>>() + 1U;
 
+// Rationale: noexcept safe magnitude conversion; uses safe_math assertions;
+// COVERITY: autosar_cpp14_a15_5_3_violation, uncaught_exception
+// policy requires terminate on failure; no exceptions thrown.
 template <typename T>
+// coverity[autosar_cpp14_a15_5_3_violation]
+// coverity[uncaught_exception]
 inline auto abs_magnitude_unsigned(T val) noexcept
 {
     using U = std::make_unsigned_t<std::remove_cv_t<T>>;
@@ -107,15 +112,20 @@ template <typename T>
     static_assert(std::numeric_limits<U>::digits >= std::numeric_limits<std::remove_cv_t<T>>::digits,
                   "U must represent full magnitude of T");
 
-    const bool is_negative = (std::is_signed_v<T> && (val < 0));
+    const bool is_negative = (std::is_signed_v<T> && (val < static_cast<T>(0)));
     U x = abs_magnitude_unsigned(val);
 
     // no range checks on it because the function declaration ensures enough buffer space for the given type
     auto it = buffer.end();
     do
     {
+        // Rationale: Converting unsigned digit (x % 10U) to signed int8_t is safe because
+        // the modulo operation guarantees the value is in range [0, 9], which fits in both
+        // uint8_t and int8_t. The signed type is needed for consistent char arithmetic with '0'.
+        // coverity[autosar_cpp14_m5_0_9_violation]
         const auto digit = static_cast<std::int8_t>(x % static_cast<U>(10U));
         it = std::prev(it);
+        // coverity[autosar_cpp14_m5_0_9_violation]
         *it = static_cast<char>(static_cast<std::int8_t>('0') + digit);
         x /= 10U;
     } while (x > static_cast<U>(0U));
@@ -207,8 +217,15 @@ score::Result<std::string> ToBufferInternal(const T& json_data)
     // This line must be hit when the function is called. Since other parts of this function show line coverage,
     // this line must also be hit. Missing coverage is due to a bug in the coverage tool
     std::ostringstream string_stream{};  // LCOV_EXCL_LINE
-    // NOLINTNEXTLINE(score-no-dynamic-raw-memory) std::num_put is reference counted and std::locale does manage it.
+
+    // NOLINTBEGIN(score-no-dynamic-raw-memory) See rationale below
+    //  Rationale:  std::num_put is reference counted and std::locale does manage it.
+    //  Explanation for Coverity Suppression for AUTOSAR A3-3-2: Static locale with custom facet requires runtime
+    //  initialization. std::locale constructor with facet cannot be constexpr. Thread-safe due to function-local static
+    //  initialization guarantee (C++11 §6.7 [stmt.dcl]/4). coverity[autosar_cpp14_a3_3_2_violation]
     const static std::locale loc(std::locale(), new OptimizedNumPut());
+    // NOLINTEND(score-no-dynamic-raw-memory) See rationale above
+
     score::cpp::ignore = string_stream.imbue(loc);
 
     score::json::JsonSerialize serializer{string_stream};

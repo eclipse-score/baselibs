@@ -24,6 +24,11 @@
 #include <unistd.h>
 #include <cstdlib>
 
+// From migration guide from QNX7 to QNX8
+// https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.migration/topic/kernel.html#rcvid_t
+// Cross-version compatibility for QNX 7 and QNX 8.
+// In QNX 8, rcvid_t is a native type (int64_t).
+// QNX 7 doesn't have a distinct type for receive id, but expects it to be int.
 #ifndef __RCVID_T_SIZE
 using rcvid_t = int;
 #endif
@@ -32,15 +37,6 @@ namespace score
 {
 namespace os
 {
-
-// From migration guide from QNX7 to QNX8
-// https://www.qnx.com/developers/docs/8.0/com.qnx.doc.qnxsdp.migration/topic/kernel.html#rcvid_t
-// Cross-version compatibility for QNX 7 and QNX 8.
-// In QNX 8, rcvid_t is a native type (int64_t).
-// QNX 7 doesn't have a distinct type for receive id, but expects it to be int.
-#ifndef __RCVID_T_SIZE
-typedef int rcvid_t;
-#endif
 
 class Channel : public ObjectSeam<Channel>
 {
@@ -144,6 +140,10 @@ class Channel : public ObjectSeam<Channel>
                                                                   const std::int32_t ngroups) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
+    virtual score::cpp::expected<std::int32_t, score::os::Error> ConnectServerInfo(const pid_t pid,
+                                                                          const std::int32_t coid,
+                                                                          _server_info* const info) const noexcept = 0;
+
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> ConnectAttach(const std::uint32_t reserved,
                                                                       const pid_t pid,
@@ -156,7 +156,10 @@ class Channel : public ObjectSeam<Channel>
     virtual score::cpp::expected_blank<score::os::Error> ConnectDetach(const std::int32_t coid) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    virtual score::cpp::expected<std::int32_t, score::os::Error> MsgRegisterEvent(sigevent* ev, std::int32_t coid) noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> MsgRegisterEvent(sigevent* const ev,
+                                                                 const std::int32_t coid) noexcept = 0;
+
+    virtual score::cpp::expected_blank<score::os::Error> MsgUnregisterEvent(sigevent* const ev) noexcept = 0;
 
     Channel() = default;
     virtual ~Channel() = default;

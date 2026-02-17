@@ -25,29 +25,6 @@ namespace os
 class SignalMock : public Signal
 {
   public:
-    MOCK_METHOD(std::int32_t, add_termination_signal, (sigset_t&), (override));
-    MOCK_METHOD(std::int32_t, pthread_sigmask, (sigset_t&), (const, override));
-    MOCK_METHOD(std::int32_t,
-                pthread_sigmask,
-                (const std::int32_t, const sigset_t* set, sigset_t* oldset),
-                (const, override));
-    MOCK_METHOD(void, send_self_sigterm, (), (override));
-
-    MOCK_METHOD(Sighandler*, signal, (const std::int32_t sig, Sighandler handler), (override));
-    MOCK_METHOD(std::int32_t, kill, (const pid_t pid, const std::int32_t sig), (override));
-    MOCK_METHOD(std::int32_t, is_signal_block, (const std::int32_t signal_id), (override));
-    MOCK_METHOD(std::int32_t,
-                sigaction,
-                (const std::int32_t sig, const struct sigaction* act, struct sigaction* oact),
-                (override));
-    MOCK_METHOD(std::int32_t, get_current_blocked_signals, (sigset_t & signals), (const, override));
-
-    MOCK_METHOD(std::int32_t, sigfillset, (sigset_t * set), (override));
-    MOCK_METHOD(std::int32_t, sigemptyset, (sigset_t * set), (const, override));
-    MOCK_METHOD(std::int32_t, sigwait, (const sigset_t* set, std::int32_t* sig), (override));
-    MOCK_METHOD(std::int32_t, sigaddset, (sigset_t * set, std::int32_t signo), (override));
-    MOCK_METHOD(std::int32_t, is_member, (const std::int32_t signal_id, sigset_t& signals), (override));
-
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), SigEmptySet, (sigset_t & set), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 SigAddSet,

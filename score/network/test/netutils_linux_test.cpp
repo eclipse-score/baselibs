@@ -62,14 +62,14 @@ struct NetUtilsLinuxTestFixture : ::testing::Test
     score::os::IfaddrsMock ifaddrs_mock_;
 };
 
-TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_SocketFail)
+TEST_F(NetUtilsLinuxTestFixture, GetMacAddress_SocketFail)
 {
     EXPECT_CALL(socket_mock_, socket(_, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_IoctlFail)
+TEST_F(NetUtilsLinuxTestFixture, GetMacAddress_IoctlFail)
 {
     EXPECT_CALL(socket_mock_, socket(_, _, _)).WillOnce(Return(0));
     EXPECT_CALL(ioctl_mock_, ioctl(_, _, Matcher<void*>(_)))
@@ -78,7 +78,7 @@ TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_IoctlFail)
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_CloseFail)
+TEST_F(NetUtilsLinuxTestFixture, GetMacAddress_CloseFail)
 {
     EXPECT_CALL(socket_mock_, socket(_, _, _)).WillOnce(Return(1));
     EXPECT_CALL(ioctl_mock_, ioctl(_, _, Matcher<void*>(_))).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
@@ -86,7 +86,7 @@ TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_CloseFail)
     EXPECT_FALSE(score::os::Netutils::instance().get_mac_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsLinuxTestFixture, GetMacAdress_success)
+TEST_F(NetUtilsLinuxTestFixture, GetMacAddress_success)
 {
     EXPECT_CALL(socket_mock_, socket(_, _, _)).WillOnce(Return(1));
     EXPECT_CALL(ioctl_mock_, ioctl(_, _, Matcher<void*>(_))).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));

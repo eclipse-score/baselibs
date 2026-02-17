@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_INVCONFIG_H_
-#define SCORE_MW_LOG_INVCONFIG_H_
+#ifndef SCORE_MW_LOG_CONFIGURATION_INVCONFIG_H
+#define SCORE_MW_LOG_CONFIGURATION_INVCONFIG_H
 
 #include "nvmsgdescriptor.h"
 
@@ -31,12 +31,12 @@ class INvConfig
     enum class ReadResult : std::uint8_t
     {
         kOK = 0,
-        kERROR_PARSE,
-        kERROR_CONTENT
+        kErrorParse,
+        kErrorContent
     };
 
     // Pure virtual functions
-    virtual const config::NvMsgDescriptor* getDltMsgDesc(const std::string& typeName) const noexcept = 0;
+    virtual const config::NvMsgDescriptor* GetDltMsgDesc(const std::string& type_name) const noexcept = 0;
 
   protected:
     INvConfig() noexcept = default;
@@ -50,4 +50,4 @@ class INvConfig
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_NVCONFIG_H_
+#endif  // SCORE_MW_LOG_CONFIGURATION_INVCONFIG_H

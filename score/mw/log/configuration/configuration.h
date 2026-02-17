@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_CONFIGURATION_H
-#define SCORE_MW_LOG_DETAIL_CONFIGURATION_H
+#ifndef SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_H
+#define SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_H
 
 #include "score/mw/log/detail/logging_identifier.h"
 #include "score/mw/log/log_level.h"
@@ -101,7 +101,7 @@ class Configuration final
     LoggingIdentifier app_id_{"NONE"};
 
     /// \brief Short description of the application.
-    std::string app_description_{""};
+    std::string app_description_;
 
     /// \brief Active logging backends/sinks.
     std::unordered_set<LogMode> log_mode_{LogMode::kRemote};
@@ -145,4 +145,4 @@ class Configuration final
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_DETAIL_DLT_FORMAT_H
+#endif  // SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_H

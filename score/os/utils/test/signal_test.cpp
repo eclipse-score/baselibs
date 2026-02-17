@@ -31,22 +31,27 @@ using ::testing::Test;
 class SignalTest : public ::testing::Test
 {
   protected:
-    void block_signal(int32_t signo)
+    void TearDown() override
     {
-        sigset_t sigset{};
-        auto val = unit_->sigaddset(&sigset, signo);
-        EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-        val = unit_->pthread_sigmask(SIG_BLOCK, &sigset, nullptr);
-        EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
+        // Reset signal handler to default
+        struct sigaction dummy;
+        auto val = unit_->SigAction(SIGTERM, old_sigaction_, dummy);
+        EXPECT_TRUE(val.has_value());
+        triggered_ = false;
     }
 
-    void unblock_signal(int32_t signo)
+    void SetUp() override
     {
-        sigset_t sigset{};
-        auto val = unit_->sigaddset(&sigset, signo);
-        EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-        val = unit_->pthread_sigmask(SIG_UNBLOCK, &sigset, nullptr);
-        EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
+        sigset_t sig_set{};
+        auto val = unit_->SigEmptySet(sig_set);
+        EXPECT_TRUE(val.has_value());
+        // Need to fully initialize otherwise memchecker complains
+        sig_handler_.sa_flags = 0;
+        sig_handler_.sa_mask = sig_set;
+        sig_handler_.sa_handler = SIG_DFL;
+        old_sigaction_.sa_flags = 0;
+        old_sigaction_.sa_mask = sig_set;
+        old_sigaction_.sa_handler = SIG_DFL;
     }
 
     void BlockSignal(int32_t signo)
@@ -72,208 +77,25 @@ class SignalTest : public ::testing::Test
     }
 
     std::unique_ptr<Signal> unit_{std::make_unique<SignalImpl>()};
+
+    static bool triggered_;
+    struct sigaction sig_handler_;
+    struct sigaction old_sigaction_;
+
+    void MakeSignalTriggerBool(const int signal)
+    {
+        sig_handler_.sa_flags = SA_SIGINFO;
+        sig_handler_.sa_handler = [](int) {
+            triggered_ = true;
+        };
+        auto val = unit_->SigAction(signal, sig_handler_, old_sigaction_);
+        EXPECT_TRUE(val.has_value());
+    }
 };
 
-TEST_F(SignalTest, handler_should_be_called)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest handler_should_be_called");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+bool SignalTest::triggered_ = false;
 
-    static bool triggered = false;
-    unit_->signal(SIGUSR1, [](int) {
-        triggered = true;
-    });
-
-    raise(SIGUSR1);
-    EXPECT_TRUE(triggered);
-    unit_->signal(SIGUSR1, SIG_DFL);
-}
-
-TEST_F(SignalTest, is_not_a_member_works)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest is_not_a_member_works");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    sigset_t sigset{};
-    const auto val = unit_->is_member(SIGUSR1, sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, check_if_sig_set_is_empty_works)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest check_if_sig_set_is_empty_works");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    sigset_t sigset{};
-    auto val = unit_->sigaddset(&sigset, SIGUSR1);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    val = unit_->sigemptyset(&sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    val = unit_->is_member(SIGUSR1, sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, get_current_blocked_signals)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest get_current_blocked_signals");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    sigset_t sigset{};
-    block_signal(SIGUSR1);
-    auto val = unit_->get_current_blocked_signals(sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    EXPECT_EQ(::sigismember(&sigset, SIGUSR1), 1) << "Error: " << strerror(errno);
-    unblock_signal(SIGUSR1);
-}
-
-TEST_F(SignalTest, is_signal_blocked)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest is_signal_blocked");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    block_signal(SIGUSR1);
-    auto val = unit_->is_signal_block(SIGUSR1);
-    EXPECT_EQ(val, 1) << "Error: " << strerror(errno);
-    unblock_signal(SIGUSR1);
-}
-
-TEST_F(SignalTest, pthread_sig_mask)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest pthread_sig_mask");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    static bool triggered = false;
-    unit_->signal(SIGUSR1, [](int) {
-        triggered = true;
-    });
-    sigset_t sigset{};
-    auto val = unit_->sigaddset(&sigset, SIGUSR1);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    val = unit_->pthread_sigmask(sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    raise(SIGUSR1);
-    // As mask is set. triggered should not be updated
-    EXPECT_FALSE(triggered);
-
-    // cleanup
-    val = unit_->sigemptyset(&sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    val = unit_->pthread_sigmask(sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, send_self_sig_term)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest send_self_sig_term");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    static bool triggered = false;
-    unit_->signal(SIGTERM, [](int) {
-        triggered = true;
-    });
-
-    unit_->send_self_sigterm();
-    EXPECT_TRUE(triggered);
-    unit_->signal(SIGTERM, SIG_DFL);
-}
-
-TEST_F(SignalTest, sig_action)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest sig_action");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    static bool triggered = false;
-    struct sigaction sig_handler;
-    struct sigaction old_sig_handler;
-    memset(static_cast<void*>(&sig_handler), 0, sizeof(sig_handler));
-    memset(static_cast<void*>(&old_sig_handler), 0, sizeof(old_sig_handler));
-
-    sig_handler.sa_flags = SA_SIGINFO;
-    sig_handler.sa_handler = [](int) {
-        triggered = true;
-    };
-
-    auto val = unit_->sigaction(SIGUSR1, &sig_handler, &old_sig_handler);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    raise(SIGUSR1);
-    EXPECT_TRUE(triggered);
-
-    // cleanup
-    val = unit_->sigaction(SIGUSR1, &old_sig_handler, nullptr);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, kill)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest kill");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    static bool triggered = false;
-    unit_->signal(SIGTERM, [](int) {
-        triggered = true;
-    });
-    unit_->kill(getpid(), SIGTERM);
-    EXPECT_TRUE(triggered);
-    unit_->signal(SIGTERM, SIG_DFL);
-}
-
-TEST_F(SignalTest, sig_fill_set_works)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest sig_fill_set_works");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    sigset_t sigset{};
-    auto val = unit_->sigfillset(&sigset);
-    EXPECT_EQ(val, 0) << "Error: " << strerror(errno);
-    val = unit_->is_member(SIGUSR1, sigset);
-    EXPECT_EQ(val, 1) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, add_termination_signal_works)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "SignalTest add_termination_signal_works");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
-
-    sigset_t sigset{};
-    auto val = unit_->add_termination_signal(sigset);
-    val = unit_->is_member(SIGTERM, sigset);
-    EXPECT_EQ(val, 1) << "Error: " << strerror(errno);
-}
-
-TEST_F(SignalTest, isNotAMemberWorks)
+TEST_F(SignalTest, IsNotAMemberWorks)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
@@ -352,10 +174,7 @@ TEST_F(SignalTest, PthreadSigMask)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    static bool triggered = false;
-    unit_->signal(SIGUSR1, [](int) {
-        triggered = true;
-    });
+    MakeSignalTriggerBool(SIGUSR1);
 
     sigset_t sigset{};
     auto val = unit_->SigAddSet(sigset, SIGUSR1);
@@ -367,7 +186,7 @@ TEST_F(SignalTest, PthreadSigMask)
     EXPECT_EQ(val.value(), 0) << "Error: " << strerror(errno);
     raise(SIGUSR1);
     // As mask is set. triggered should not be updated
-    EXPECT_FALSE(triggered);
+    EXPECT_FALSE(triggered_);
 
     // cleanup
     val = unit_->SigEmptySet(sigset);
@@ -387,10 +206,7 @@ TEST_F(SignalTest, PthreadSigMaskReturnsOldSet)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    static bool triggered = false;
-    unit_->signal(SIGUSR1, [](int) {
-        triggered = true;
-    });
+    MakeSignalTriggerBool(SIGUSR1);
 
     sigset_t sigset{};
     auto val = unit_->SigAddSet(sigset, SIGUSR1);
@@ -402,7 +218,7 @@ TEST_F(SignalTest, PthreadSigMaskReturnsOldSet)
     EXPECT_EQ(val.value(), 0) << "Error: " << strerror(errno);
     raise(SIGUSR1);
     // As mask is set. triggered should not be updated
-    EXPECT_FALSE(triggered);
+    EXPECT_FALSE(triggered_);
 
     // Unblock signal
     sigset_t oldsigset{};
@@ -424,14 +240,10 @@ TEST_F(SignalTest, SendSelfSigTerm)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    static bool triggered = false;
-    unit_->signal(SIGTERM, [](int) {
-        triggered = true;
-    });
+    MakeSignalTriggerBool(SIGTERM);
 
     unit_->SendSelfSigterm();
-    EXPECT_TRUE(triggered);
-    unit_->signal(SIGTERM, SIG_DFL);
+    EXPECT_TRUE(triggered_);
 }
 
 TEST_F(SignalTest, SigAction)
@@ -473,13 +285,10 @@ TEST_F(SignalTest, Kill)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    static bool triggered = false;
-    unit_->signal(SIGTERM, [](int) {
-        triggered = true;
-    });
+    MakeSignalTriggerBool(SIGTERM);
+
     unit_->Kill(getpid(), SIGTERM);
-    EXPECT_TRUE(triggered);
-    unit_->signal(SIGTERM, SIG_DFL);
+    EXPECT_TRUE(triggered_);
 }
 
 TEST_F(SignalTest, SigFillSetWorks)

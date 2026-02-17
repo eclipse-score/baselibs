@@ -12,7 +12,7 @@
  ********************************************************************************/
 #ifndef SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_H
 #define SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_H
-#include "score/analysis/tracing/common/flexible_circular_allocator/error_code.h"
+#include "score/analysis/tracing/common/flexible_circular_allocator/error_codes/lockless_flexible_circular_allocator/error_code.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator_types.h"
 #include "score/memory/shared/atomic_indirector.h"
@@ -33,30 +33,40 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
 {
   public:
     LocklessFlexibleCircularAllocator(void* base_address, std::size_t size);
-    void* Allocate(const std::size_t size, const std::size_t alignment_size) noexcept override;
-    bool Deallocate(void* const addr, const std::size_t) noexcept override;
+    score::Result<void*> Allocate(const std::size_t size, const std::size_t alignment_size) noexcept override;
+    ResultBlank Deallocate(void* const addr, const std::size_t) noexcept override;
     std::size_t GetAvailableMemory() noexcept override;
     void GetTmdMemUsage(TmdStatistics& tmd_stats) noexcept override;
     void* GetBaseAddress() const noexcept override;
     std::size_t GetSize() const noexcept override;
     bool IsInBounds(const void* const address, const std::size_t size) const noexcept override;
-    score::result::Error GetLastError() const noexcept;
-    void ClearError() noexcept;
 
   private:
+// Suppress "autosar_cpp14_a16_0_1_violation" rule finding. This rule states: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef, (2)
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include."
+// No harm in using this preprocessor.
+// Test-only access: internal helper branches are unreachable via the public API because
+// bounds/alignment checks prevent corrupted pointers and metadata tampering.
+// and this friend keyword will be removed after working on this ticket broken_link_j/Ticket-228578.
+// coverity[autosar_cpp14_a16_0_1_violation]
+#ifdef UNIT_TEST_BUILD
+    friend class LocklessFlexibleCircularAllocatorTestAccessor;
+// coverity[autosar_cpp14_a16_0_1_violation]
+#endif
     std::uint32_t BufferQueueSize();
-    void FreeBlock(BufferBlock& current_block);
+    ResultBlank FreeBlock(BufferBlock& current_block);
     std::uint32_t GetListQueueNextHead();
-    uint8_t* AllocateWithWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
-    uint8_t* AllocateWithNoWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
+    score::Result<uint8_t*> AllocateWithWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
+    score::Result<uint8_t*> AllocateWithNoWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
     bool ValidateListEntryIndex(const std::uint32_t& index) const;
     void ResetBufferQueuTail();
-    void MarkListEntryAsFree(const BufferBlock* meta);
-    bool IsRequestedBlockAtBufferQueueTail(const BufferBlock* meta) const;
-    void IterateBlocksToDeallocate();
-    void SetError(FlexibleAllocatorErrorCode error_code) const noexcept;
+    ResultBlank MarkListEntryAsFree(const BufferBlock* meta);
+    score::Result<bool> IsRequestedBlockAtBufferQueueTail(const BufferBlock* meta) const;
+    ResultBlank IterateBlocksToDeallocate();
     template <typename OffsetT>
-    uint8_t* GetBufferPositionAt(OffsetT offset) const noexcept;
+    score::Result<uint8_t*> GetBufferPositionAt(OffsetT offset) const noexcept;
+    void IncrementAvailableSize(std::uint32_t delta) noexcept;
 
     void* base_address_;
     std::uint32_t total_size_;
@@ -72,6 +82,8 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     std::atomic<std::uint32_t> lowest_size_;
     std::atomic<std::uint32_t> alloc_cntr_;
     std::atomic<std::uint32_t> dealloc_cntr_;
+    std::atomic<std::uint64_t> allocate_retry_cntr_;
+    std::atomic<std::uint64_t> allocate_call_cntr_;
     std::atomic<bool> tmd_stats_enabled_;
     mutable std::atomic<score::result::ErrorCode> last_error_code_;
 };

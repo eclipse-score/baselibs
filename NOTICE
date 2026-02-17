@@ -30,3 +30,27 @@ another country, of encryption software. BEFORE using any encryption software,
 please check the country's laws, regulations and policies concerning the import,
 possession, or use, and re-export of encryption software, to see if this is
 permitted.
+
+## score::cpp::jthread
+
+The implementation of score:cpp:jthread is based on std::thread from LLVM libc++ [1]
+with the following modifications:
+
+  * Removed the LLVM Threading Support API to simplify the implementation.
+    https://libcxx.llvm.org/DesignDocs/ThreadingSupportAPI.html
+  * Refactored the code according to S-CORE coding guidelines
+  * Added a constructor to let clients configure the stack size
+  * Implemented additional tests
+
+LLVM libc++ is provided under the Apache License v2.0 with LLVM Exceptions.
+The license text can be found in licenses/llvm-libcxx.txt.
+
+//===----------------------------------------------------------------------===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
+
+[1] https://github.com/llvm/llvm-project/tree/main/libcxx

@@ -10,12 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief the declaration of ResourceManager class.
-///
 
 #ifndef SCORE_LIB_OS_QNX_RESOURCE_MANAGER_H
 #define SCORE_LIB_OS_QNX_RESOURCE_MANAGER_H

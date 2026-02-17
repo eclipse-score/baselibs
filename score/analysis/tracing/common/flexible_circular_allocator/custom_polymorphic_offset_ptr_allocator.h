@@ -42,13 +42,16 @@ class CustomPolymorphicOffsetPtrAllocator
 
     pointer allocate(const size_type size, const size_type alignment = alignof(T))
     {
-        void* allocated_memory{nullptr};
         // No possibility for data loss (a4-7-1)
         //  coverity[autosar_cpp14_a4_7_1_violation]
-        allocated_memory = flexible_allocator_->Allocate(size * sizeof(T), alignment);
+        auto allocated_memory_result = flexible_allocator_->Allocate(size * sizeof(T), alignment);
+        if (!allocated_memory_result.has_value())
+        {
+            return nullptr;
+        }
         // Aware of  casting void pointer "allocated_memory" to object pointer of struct
         //  coverity[autosar_cpp14_m5_2_8_violation]
-        return pointer{static_cast<value_type*>(allocated_memory)};
+        return pointer{static_cast<value_type*>(allocated_memory_result.value())};
     }
     // False positive here as the justification itself not correct : The One Definition Rule shall not be violated.
     //  coverity[autosar_cpp14_m3_2_2_violation]

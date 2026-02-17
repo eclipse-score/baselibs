@@ -11,8 +11,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator.h"
-#include "score/analysis/tracing/generic_trace_library/interface_types/error_code/error_code.h"
-
 #include <numeric>
 namespace score
 {
@@ -97,12 +95,12 @@ score::Result<std::list<FlexibleCircularAllocator::MemoryBlock>::iterator> Flexi
         }
         it++;
     }
-    return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
+    return score::MakeUnexpected(FlexibleAllocatorErrorCode::kNotEnoughMemory);
 }
 // clang-format off
 // This is intented, we don't enforce users to specify align unless needed
 // NOLINTNEXTLINE(google-default-arguments) see comment above
-void* FlexibleCircularAllocator::Allocate(const std::size_t size, const std::size_t alignment)
+score::Result<void*> FlexibleCircularAllocator::Allocate(const std::size_t size, const std::size_t alignment)
 {
     std::lock_guard<std::mutex> guard(mutex_);
     // No harm from declaring void pointer
@@ -113,7 +111,7 @@ void* FlexibleCircularAllocator::Allocate(const std::size_t size, const std::siz
     // if no free blocks avilable return nullptr
     if ((free_blocks_.empty()) || (aligned_size >= total_size_))
     {
-        return nullptr;
+        return score::MakeUnexpected(FlexibleAllocatorErrorCode::kNotEnoughMemory);
     }
     // Find the first free block with sufficient size.
     std::list<FlexibleCircularAllocator::MemoryBlock>::iterator next_address_to_use;
@@ -121,7 +119,7 @@ void* FlexibleCircularAllocator::Allocate(const std::size_t size, const std::siz
     auto result = GetNextAddressToUse(aligned_size);
     if (!result.has_value())
     {
-        return nullptr;
+        return MakeUnexpected<void*>(result.error());
     }
     next_address_to_use = result.value();
     allocated_ptr = next_address_to_use->address;
@@ -136,7 +134,7 @@ void* FlexibleCircularAllocator::Allocate(const std::size_t size, const std::siz
     return allocated_ptr;
 }
 // clang-format on
-bool FlexibleCircularAllocator::Deallocate(void* const pointer, const std::size_t)
+ResultBlank FlexibleCircularAllocator::Deallocate(void* const pointer, const std::size_t)
 {
     std::lock_guard<std::mutex> guard(mutex_);
     // remove memory block from allocated_blocks and add it to free_blocks
@@ -144,9 +142,9 @@ bool FlexibleCircularAllocator::Deallocate(void* const pointer, const std::size_
     {
         CollectGarbage(pointer);
         std::ignore = allocated_blocks_.erase(pointer);
-        return true;
+        return {};
     }
-    return false;
+    return MakeUnexpected(FlexibleAllocatorErrorCode::kInvalidDeallocationAddress);
 }
 // clang-format off
 std::size_t FlexibleCircularAllocator::GetAvailableMemory() noexcept

@@ -18,8 +18,6 @@
 
 #include "gtest/gtest.h"
 
-using testing::_;
-
 namespace score
 {
 namespace mw
@@ -88,49 +86,49 @@ class TargetConfigReaderFixture : public ::testing::Test
     }
 
     /// \brief Example config with all possible configuration settings.
-    const std::string kEcuConfigFile()
+    std::string KEcuConfigFile()
     {
-        return get_path("ecu_config.json");
+        return GetPath("ecu_config.json");
     };
-    const std::string kAppConfigFile()
+    std::string KAppConfigFile()
     {
-        return get_path("app_config.json");
+        return GetPath("app_config.json");
     };
-    const std::string kSyntaxErrorConfigFile()
+    std::string KSyntaxErrorConfigFile()
     {
-        return get_path("syntax_error.json");
+        return GetPath("syntax_error.json");
     };
-    const std::string kInvalidAppConfigFile()
+    std::string KInvalidAppConfigFile()
     {
-        return get_path("invalid_app_config.json");
+        return GetPath("invalid_app_config.json");
     };
-    const std::string kInvalidConfigFilePath()
+    std::string KInvalidConfigFilePath()
     {
-        return get_path("___nonexistent___.json");
+        return GetPath("___nonexistent___.json");
     };
-    const std::string kEmptyConfigFile()
+    std::string KEmptyConfigFile()
     {
-        return get_path("empty_config.json");
+        return GetPath("empty_config.json");
     };
-    const std::string kCtxLevelBrokenConfigFile()
+    std::string KCtxLevelBrokenConfigFile()
     {
-        return get_path("context_level_broken_config.json");
+        return GetPath("context_level_broken_config.json");
     };
-    const std::string kErrorContent()
+    std::string KErrorContent()
     {
-        return get_path("error-json-structure.json");
+        return GetPath("error-json-structure.json");
     };
-    const std::string kWrongLogLevel()
+    std::string KWrongLogLevel()
     {
-        return get_path("wrong-loglevel-value.json");
+        return GetPath("wrong-loglevel-value.json");
     };
-    const std::string kWrongContextConfig()
+    std::string KWrongContextConfig()
     {
-        return get_path("wrong-context-config-value.json");
+        return GetPath("wrong-context-config-value.json");
     };
 
   private:
-    const std::string get_path(const std::string& file_name)
+    std::string GetPath(const std::string& file_name)
     {
         const std::string default_path = "score/mw/log/configuration/test/data/" + file_name;
 
@@ -146,7 +144,7 @@ class TargetConfigReaderFixture : public ::testing::Test
         }
     }
 
-    std::vector<std::string> configuration_file_paths_{kEcuConfigFile(), kAppConfigFile()};
+    std::vector<std::string> configuration_file_paths_{KEcuConfigFile(), KAppConfigFile()};
     std::unique_ptr<TargetConfigReader> reader_;
 };
 
@@ -360,7 +358,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigSyntaxErrorShallFallbackToEcuConfig)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains a syntax error.
-    SetConfigurationFiles({kEcuConfigFile(), kSyntaxErrorConfigFile()});
+    SetConfigurationFiles({KEcuConfigFile(), KSyntaxErrorConfigFile()});
 
     // ReadConfig shall still return the value from the ECU config.
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kEcuConfigAppId);
@@ -377,7 +375,7 @@ TEST_F(TargetConfigReaderFixture, WrongStructureConfigFileShallCauseDefaultAppId
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config has wrong structure.
-    SetConfigurationFiles({kErrorContent()});
+    SetConfigurationFiles({KErrorContent()});
 
     // ReadConfig shall return the default value.
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kDefaultConfigAppId);
@@ -394,7 +392,7 @@ TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config has wrong structure.
-    SetConfigurationFiles({kWrongLogLevel()});
+    SetConfigurationFiles({KWrongLogLevel()});
 
     // ReadConfig shall return the default value.
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kEcuConfigAppId);
@@ -411,7 +409,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid default log level.
-    SetConfigurationFiles({kEcuConfigFile(), kInvalidAppConfigFile()});
+    SetConfigurationFiles({KEcuConfigFile(), KInvalidAppConfigFile()});
 
     // ReadConfig shall still return the value from the ECU config.
     EXPECT_EQ(GetReader().ReadConfig()->GetDefaultLogLevel(), kEcuConfigLogLevel);
@@ -428,7 +426,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid log mode.
-    SetConfigurationFiles({kEcuConfigFile(), kInvalidAppConfigFile()});
+    SetConfigurationFiles({KEcuConfigFile(), KInvalidAppConfigFile()});
 
     // ReadConfig shall still return the value from the ECU config.
     EXPECT_EQ(GetReader().ReadConfig()->GetLogMode(), kEcuConfigLogMode);
@@ -445,7 +443,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidContextConfigFallbackToEcuConf
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid context log level entries.
-    SetConfigurationFiles({kEcuConfigFile(), kInvalidAppConfigFile()});
+    SetConfigurationFiles({KEcuConfigFile(), KInvalidAppConfigFile()});
 
     // ReadConfig shall still return the value from the ECU config.
     EXPECT_EQ(GetReader().ReadConfig()->GetContextLogLevel(), kEcuConfigContextLogLevel);
@@ -461,7 +459,7 @@ TEST_F(TargetConfigReaderFixture, WrongEntriesToContextConfigslShallReturnEmptyC
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config contains invalid context config entries.
-    SetConfigurationFiles({kWrongContextConfig()});
+    SetConfigurationFiles({KWrongContextConfig()});
 
     // ReadConfig shall returns empty context.
     EXPECT_TRUE(GetReader().ReadConfig()->GetContextLogLevel().empty());
@@ -478,7 +476,7 @@ TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultApp
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config does not exist
-    SetConfigurationFiles({kInvalidConfigFilePath()});
+    SetConfigurationFiles({KInvalidConfigFilePath()});
 
     // ReadConfig shall return the default value.
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kDefaultConfigAppId);
@@ -495,7 +493,7 @@ TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // The application config does not exist
-    SetConfigurationFiles({kEmptyConfigFile()});
+    SetConfigurationFiles({KEmptyConfigFile()});
 
     // ReadConfig shall return the default value.
     EXPECT_EQ(GetReader().ReadConfig()->GetAppId(), kDefaultConfigAppId);
@@ -511,7 +509,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallFallBackToContextLogLevelDefa
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    SetConfigurationFiles({kCtxLevelBrokenConfigFile()});
+    SetConfigurationFiles({KCtxLevelBrokenConfigFile()});
 
     EXPECT_EQ(GetReader().ReadConfig()->GetContextLogLevel(), ContextLogLevelMap{});
 }

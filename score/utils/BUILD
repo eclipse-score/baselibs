@@ -61,7 +61,10 @@ cc_gtest_unit_test(
     name = "scoped_operation_test",
     srcs = ["test/scoped_operation_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    deps = [":scoped_operation"],
+    deps = [
+        ":scoped_operation",
+        "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
+    ],
 )
 
 cc_unit_test_suites_for_host_and_qnx(

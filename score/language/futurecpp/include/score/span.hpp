@@ -1,6 +1,19 @@
+/********************************************************************************
+ * Copyright (c) 2015 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
 ///
 /// \file
-/// \copyright Copyright (C) 2015-2020, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+/// \copyright Copyright (c) 2015 Contributors to the Eclipse Foundation
 ///
 
 #ifndef SCORE_LANGUAGE_FUTURECPP_SPAN_HPP
@@ -33,7 +46,10 @@ template <typename T, std::size_t Extent>
 class base_span
 {
 public:
-    constexpr base_span(T* const data, const std::size_t size) : data_{data} { SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(Extent == size); }
+    constexpr base_span(T* const data, [[maybe_unused]] const std::size_t size) : data_{data}
+    {
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(Extent == size);
+    }
     constexpr std::size_t size() const noexcept { return Extent; }
     constexpr T* data() const noexcept { return data_; }
 

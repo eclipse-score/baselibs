@@ -166,7 +166,7 @@ And the following bazel dependency as well:
 
 ```bazel
 deps = [
-    "//platform/aas/mw/log:log",
+    "@score_logging//score/mw/log:log",
 ],
 ```
 
@@ -174,7 +174,7 @@ Note: This target bundles all supported logging backends, introducing additional
 
 ```bazel
 deps = [
-    "//platform/aas/mw/log:frontend",
+    "@score_baselibs//score/mw/log:frontend",
 ],
 ```
 
@@ -184,11 +184,11 @@ Note: Test binaries that depend on frontend only library targets require an expl
 
 ```bazel
 deps = [
-    "//platform/aas/mw/log:backend_stub_testutil",
+    "@score_baselibs//score/mw/log:backend_stub_testutil",
 ],
 ```
 
-[Baselibs](broken_link_g/swh/safe-posix-platform/tree/master/platform/aas/lib) follow this approach by using only the mw::log frontend in their library targets, maintaining self-containment and avoiding unnecessary dependencies. However users of those libraries could see linker errors while building binaries (cc_binary) if a backend is not provided. For this you can use the `//platform/aas/mw/log:log` as a dependency that includes all the backends depending on the [feature flags](#feature-flags) configuration.
+[Baselibs](broken_link_g/swh/safe-posix-platform/tree/master/platform/aas/lib) follow this approach by using only the mw::log frontend in their library targets, maintaining self-containment and avoiding unnecessary dependencies. However users of those libraries could see linker errors while building binaries (cc_binary) if a backend is not provided. For this you can use the `@score_logging//score/mw/log:log` as a dependency that includes all the backends depending on the [feature flags](#feature-flags) configuration.
 
 ### How to log something the most easy way?
 
@@ -362,7 +362,7 @@ The key sections of this implementation are going to be described in this docume
 The primary assumption is to **have separate library** for each custom user type.
 Thus the first step is to create separate directory. For the purpose of presenting
 an example there was a directory created inside `mw/log` test directory, e.g.:
-`aas/mw/log/test/my_custom_lib` and create `BUILD` file there, e.g.:
+`mw/log/test/my_custom_lib` and create `BUILD` file there, e.g.:
 
 ```bazel
 cc_library(
@@ -377,7 +377,7 @@ cc_library(
     ],
     ...
     deps = [
-        "//platform/aas/mw/log:log_stream",
+        "@score_logging//score/mw/log:log_stream",
     ],
 )
 ```
@@ -388,7 +388,7 @@ cc_library(
 cc_test(
     ...
     deps = [
-        "//platform/aas/mw/log",
+        "@score_logging//score/mw/log:log",
     ],
 )
 ```
@@ -421,8 +421,8 @@ The content of C++ files are declaration and definition of `operator<<` needed
 for logging, e.g. header `my_custom_type_mw_log.h`:
 
 ```c++
-#include "score/mw/log/log_stream.h"
-#include "score/mw/log/test/my_custom_lib/my_custom_type.h"
+#include "mw/log/log_stream.h"
+#include "mw/log/test/my_custom_lib/my_custom_type.h"
 
 namespace my
 {
@@ -468,7 +468,7 @@ For `LogStream` usage there is the dependency in `BUILD` file necessary:
 
 ```bazel
 deps = [
-    "//platform/aas/mw/log:log_stream",
+    "@score_logging//score/mw/log:log_stream",
 ],
 ```
 
@@ -480,7 +480,7 @@ cc_library(
     ...
     visibility = [
         ...
-        "//score/mw/log/my_custom_lib:__pkg__",
+        "//mw/log/my_custom_lib:__pkg__",
     ],
 ```
 
@@ -511,8 +511,8 @@ cc_library(
 **2.** Add the overload in header file:
 
 ```c++
-#include "platform/aas/ara/log/inc/ara/log/logstream.h"
-#include "score/mw/log/test/my_custom_lib/my_custom_type.h"
+#include "mw/log/logstream.h"
+#include "mw/log/test/my_custom_lib/my_custom_type.h"
 
 namespace my
 {
@@ -593,7 +593,7 @@ cc_library(
     ],
     deps = [
         "//platform/aas/ara/core",
-        "//platform/aas/mw/log:log_stream",
+        "@score_logging//score/mw/log:log_stream",
     ],
 )
 ```
@@ -697,7 +697,7 @@ Note, however, that other limitation like total bandwidth of network or processi
 Dropped log messages can be monitored and reported by the DLT-Daemon backend.
 
 ### DLT-Daemon backend (Datarouter) security policy (secpol) configuration
-For the [message exchange between Logging Clients and the Datarouter](broken_link_g/swh/ddad_platform/tree/master/aas/mw/log/design/datarouter_backend#message-exchange-between-logging-clients-and-datarouter), it is crucial that the secpol for the Datarouter (datarouter.secpol) contains the secpol type of the client process in its channel connect configuration. Otherwise, the Datarouter will be unable to establish a connection with the client, and consequently, it cannot forward the logs to remote.
+For the [message exchange between Logging Clients and the Datarouter](broken_link_g/swh/safe-posix-platform/tree/master/score/mw/log/design/datarouter_backend#message-exchange-between-logging-clients-and-datarouter), it is crucial that the secpol for the Datarouter (datarouter.secpol) contains the secpol type of the client process in its channel connect configuration. Otherwise, the Datarouter will be unable to establish a connection with the client, and consequently, it cannot forward the logs to remote.
 
 ```
 allow datarouter_t {

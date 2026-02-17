@@ -1,14 +1,14 @@
 # Application os/lib OSAL
 
 ## Introduction
-The purpose of OS lib is to give application developers abstraction layer towards Operating system. 
-OS functionalities are accessible as `cc_library` bazel targets. 
+The purpose of OS lib is to give application developers abstraction layer towards Operating system.
+OS functionalities are accessible as `cc_library` bazel targets.
 > FFI tagged libraries can be used in ASIL-B safety components for detail see broken_link_g/swh/xpad_documentation/blob/2ba9ae612e204979c21ec86567e57459e20ea06b/enhancement_proposals/proposals/16_common_libraries.md
 Following libraries are simple wrappers with no additional logic to OS function. For this libraries only basic description will be added, no static, dynamic architecture will be done.
 
-By default return type can be  wrapped is into one of following 
+By default return type can be  wrapped is into one of following
 
-`score::cpp::expected` - score::cpp::expected - A container for an expected value or an error p0323r4:  https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0323r4.html . 
+`score::cpp::expected` - score::cpp::expected - A container for an expected value or an error p0323r4:  https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0323r4.html .
 Please refer: broken_link_g/swh/amp/blob/master/include/score/expected.hpp
 
 `score::cpp::expected_blank` -  usage with functions that don't return a value.
@@ -29,7 +29,7 @@ Be ware, ACL is not the same as _normal_ mode handling (e.g. via chmod). It is a
 Notice, that a higher level abstraction is provided in score/os/utils/acl/acl.h
 
 The acl library exports the following functions:
-* `acl_get_fd` - This function get the access control list associated with a file descriptor. Reference: 
+* `acl_get_fd` - This function get the access control list associated with a file descriptor. Reference:
 * `acl_get_entry` - This function get an entry in an access control list . Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/a/acl_get_entry.html
 * `acl_get_tag_type` - This function get the type of tag from an ACL entry. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/a/acl_get_tag_type.html
 * `acl_get_qualifier` - This function get the qualifier from an ACL entry. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/a/acl_get_qualifier.html
@@ -94,7 +94,7 @@ This also maintains an unordered map `mapped_modes` which maps the mode bits to 
 
 This also provides the following internal function:
 * `stat_to_statbuffer` - This function is used to convert the native buffer populated by the os functions like stat, lstat, fstat to the StatBuffer structure.
-* `IntegerToMode` - This function converts the return value of the os function umask to the stat mode. 
+* `IntegerToMode` - This function converts the return value of the os function umask to the stat mode.
 * `ModeToInteger` - This function converts the stat mode to value acceptable by the os functions like fchmodat, mkdir, chmod, fchmod and umask.
 * `GetStatModesMap` - This function is used to access the map(mapped_modes) which maintains the stat mode.
 ### External Dependencies
@@ -218,7 +218,7 @@ The ioctl library exports the following function:
 * object_seam
 
 ## grp
-Get information about the group with a given name. 
+Get information about the group with a given name.
 
 The grp library exports the following functions:
 * `getgrnam` - The grp lib is extened to call the internal function GroupToGroupBuffer which copies the name and gid to the memory and returns the address of it to the getgrnam() caller. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/g/getgrnam.html
@@ -385,7 +385,7 @@ The string library exports the following functions:
 * object_seam
 
 ## time
-The time library accurately retrieving and setting system time, essential for precise time synchronization and measurement. 
+The time library accurately retrieving and setting system time, essential for precise time synchronization and measurement.
 
 The time library exports the following function:
 * `clock_settime` - This function sets a clock. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/c/clock_settime.html
@@ -403,7 +403,7 @@ The static_destruction_guard library exports the following function:
 ## mman
 The mman library provides powerful memory management functions like mmap and munmap for mapping and unmapping files to memory, and shm_open and shm_unlink for creating and managing shared memory objects, essential for efficient file handling.
 
-The mman library exports the following functions: 
+The mman library exports the following functions:
 * `mmap` - This function maps a memory region into a process's address space. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/m/mmap.html
 * `mmap64` - This function maps a memory region into a process's address space, large-file support version of mmap. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/m/mmap.html
 * `munmap` - This function unmaps the previously mapped addresses. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/m/munmap.html
@@ -468,7 +468,7 @@ The pthread library exports the following functions:
 ## object_seam
 This encapsulates helper methods for the object-seam approach to reduce code duplication. This also contains class that will automatically register an object as the test object for the specified interface.
 
-The object_seam exports the following functions: 
+The object_seam exports the following functions:
 * `set_testing_instance` - This function enables the injection of an user-owned testing instance. Without transferring ownership
 * `restore_instance` - This function removes any instance that was set by set_testing_instance()
 * `select_instance` - This function is thread safe stand-alone to select the instance
@@ -515,7 +515,7 @@ The spawn library exports the following functions:
 * `posix_spawn_file_actions_addopen` - This function dd an “open a file” action to a spawn file action object. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawn_file_actions_addopen.html
 * `posix_spawn` - This function spawn a process. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawn.html
 * `posix_spawnp` - This function spawn a process. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawn.html
-The following functions are for QNXNTO 
+The following functions are for QNXNTO
 * `posix_spawnattr_getxflags` - This function get the POSIX flags and the QNX Neutrino extended flags from a spawn attributes object. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawnattr_getxflags.html
 * `posix_spawnattr_setxflags` - This function set the POSIX flags and the QNX Neutrino extended flags in a spawn attributes object. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawnattr_setxflags.html
 * `posix_spawnattr_getrunmask` - This function get the runmask attribute from a spawn attributes object. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/posix_spawnattr_getrunmask.html
@@ -587,31 +587,25 @@ The MQueue class provides the following functions:
 The signal library is used for variour signal functionalities.
 
 The signal library provides the following functions:
-* `add_termination_signal` - This function calls os sigaddset(). It add a signal to a set. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigaddset.html
-* `pthread_sigmask` - This function calls os pthread_sigmask() and returns the value. It modify or examine a thread's signal-blocked mask. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/pthread_sigmask.html
-* `send_self_sigterm` - This function calls os kill() with itsown pid.
-* `get_current_blocked_signals` - This function calls the os sigemptyset() to initialize a set to contain no signals and calls Signal::pthread_sigmask() populates the signal set.
-* `is_signal_block` - This function calls the os sigemptyset() to initialize a set to contain no signals, then calls get_current_blocked_signals() to get the set of bloecked siganls and checks if a specified signal is blocked.and 
-* `is_member` - This function calls os sigismember() which see if a given signal is in a given set. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigismember.html
-* `sigfillset` - This function calls os sigfillset(). It initialize a set to contain all signals. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigfillset.html
-* `sigemptyset` - This function calls os sigemptyset().
-* `sigwait` - This function calls os sigwait()
-* `sigaddset` - This function calls os sigaddset().
-* `pthread_sigmask` - This function calls os pthread_sigmask().
-* `sigaction` - This function calls os sigaction().
-* `kill` - This function calls os kill(). It send a signal SIGTERM to a process or a group of processes. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/k/kill.html
-* `signal` - This function calls os signal().
+* `AddTerminationSignal` - This function calls os sigaddset(). It add a signal to a set. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigaddset.html
+* `PthreadSigMask` - This function calls os pthread_sigmask() and returns the value. It modify or examine a thread's signal-blocked mask. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/pthread_sigmask.html
+* `SendSelfSigterm` - This function calls os kill() with itsown pid.
+* `GetCurrentBlockedSignals` - This function calls the os sigemptyset() to initialize a set to contain no signals and calls Signal::PthreadSigMask() populates the signal set.
+* `IsSignalBlocked` - This function calls the os sigemptyset() to initialize a set to contain no signals, then calls GetCurrentBlockedSignals() to get the set of blocked siganls and checks if a specified signal is blocked
+* `SigIsMember` - This function calls os sigismember() which see if a given signal is in a given set. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigismember.html
+* `SigFillSet` - This function calls os sigfillset(). It initialize a set to contain all signals. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigfillset.html
+* `SigEmptySet` - This function calls os sigemptyset().
+* `SigWait` - This function calls os sigwait()
+* `SigAddSet` - This function calls os sigaddset().
+* `SigAction` - This function calls os sigaction().
+* `Kill` - This function calls os kill(). It send a signal SIGTERM to a process or a group of processes. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/k/kill.html
 
-The signal_impl provides the following functions:
-* `SigEmptySet` - This function calls os sigemptyset(). It initialize a set to contain no signals. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigemptyset.html
-* `SigAddSet` - This function calls os sigaddset(). It add a signal to a set. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sigaddset.html
-* `PthreadSigMask` - This function calls os pthread_sigmask(). It modify or examine a thread's signal-blocked mask. It returns the score::cpp::expected_blank<Error>. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/pthread_sigmask.html
 ### External Dependencies
 * //platform/aas/lib/os:errno
 * @amp
 
 ## thread_headers, thread
-The thread library is used to set or get the thread name. 
+The thread library is used to set or get the thread name.
 
 This library exposes the following functions:
 * `set_thread_affinity` - For Linux the os pthread_setaffinity_np() is called. Reference: https://man7.org/linux/man-pages/man3/pthread_setaffinity_np.3.html. For QNX ThreadCtl() is called here. Reference: https://www.qnx.com/developers/docs/7.1/index.html#com.qnx.doc.neutrino.lib_ref/topic/t/threadctl.html#threadctl___NTO_TCTL_RUNMASK_GET_AND_SET
@@ -628,7 +622,7 @@ This library exposes the following function:
 * `now()` - The high_resolution_steady_clock library provides  for the higher resolution time.
 
 ## interprocess_mutex
-The interprocess_mutex library is used to lock or unlock a mutex. 
+The interprocess_mutex library is used to lock or unlock a mutex.
 
 This library exports the following functions for mutex:
 * `lock` - This function calls os pthread_mutex_lock(). Blocks until a lock can be obtained for the current execution agent (thread, process, task). If an exception is thrown, no lock is obtained.

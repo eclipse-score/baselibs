@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_NON_BLOCKING_WRITER_H
-#define SCORE_MW_LOG_DETAIL_NON_BLOCKING_WRITER_H
+#ifndef SCORE_MW_LOG_DETAIL_TEXT_RECORDER_NON_BLOCKING_WRITER_H
+#define SCORE_MW_LOG_DETAIL_TEXT_RECORDER_NON_BLOCKING_WRITER_H
 
 // Be careful what you include here. Each additional header will be included in logging.h and thus exposed to the user.
 // We need to try to keep the includes low to reduce the compile footprint of using this library.
@@ -44,7 +44,7 @@ class NonBlockingWriter final
     };
     /// \brief Constructor that accepts fileHandle of the file to flush data into it and max_chunk size controlled by
     /// user and have limit to kMaxChunkSizeSupportedByOs.
-    explicit NonBlockingWriter(const std::int32_t fileHandle,
+    explicit NonBlockingWriter(const std::int32_t file_handle,
                                std::size_t max_chunk_size,
                                score::cpp::pmr::unique_ptr<score::os::Unistd> unistd) noexcept;
 
@@ -75,4 +75,4 @@ class NonBlockingWriter final
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_DETAIL_NON_BLOCKING_WRITER_H
+#endif  // SCORE_MW_LOG_DETAIL_TEXT_RECORDER_NON_BLOCKING_WRITER_H

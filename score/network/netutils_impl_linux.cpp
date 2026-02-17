@@ -38,7 +38,7 @@ namespace
 static constexpr char kLogContext[]{"osnu"};
 }
 
-score::cpp::expected<score::os::MacAdress, score::os::Error> NetutilsImpl::get_mac_address(
+score::cpp::expected<score::os::MacAddress, score::os::Error> NetutilsImpl::get_mac_address(
     const std::string& ifc_name) const noexcept
 {
     const auto ret = score::os::Socket::instance().socket(score::os::Socket::Domain::kIPv4, SOCK_STREAM, 0);
@@ -64,12 +64,12 @@ score::cpp::expected<score::os::MacAdress, score::os::Error> NetutilsImpl::get_m
         score::mw::log::LogError(kLogContext) << __func__ << "failed to ioctl SIOCGIFADDR";
         return score::cpp::make_unexpected(ioctl_ret.error());
     }
-    return score::os::MacAdress{static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[0]),
-                              static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[1]),
-                              static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[2]),
-                              static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[3]),
-                              static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[4]),
-                              static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[5])};
+    return score::os::MacAddress{static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[0]),
+                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[1]),
+                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[2]),
+                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[3]),
+                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[4]),
+                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[5])};
 }
 
 score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() const noexcept

@@ -36,7 +36,7 @@ class SharedMemoryChunk
     static constexpr std::uint32_t kCanaryStart = 0xDEADBEEF;
     static constexpr std::uint32_t kCanaryEnd = 0xCAFEBABE;
 
-    SharedMemoryChunk() noexcept : canary_start_(kCanaryStart), start_{}, size_(0), canary_end_(kCanaryEnd) {}
+    SharedMemoryChunk() noexcept : SharedMemoryChunk(SharedMemoryLocation{}, 0U) {}
 
     SharedMemoryChunk(const SharedMemoryLocation& start, std::size_t size) noexcept
 

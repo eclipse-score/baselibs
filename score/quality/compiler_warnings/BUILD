@@ -15,5 +15,5 @@ cc_library(
     srcs = ["warnings.cpp"],
     hdrs = ["warnings.h"],
     tags = ["FFI"],
-    visibility = ["//:__subpackages__"],
+    visibility = ["//visibility:public"],
 )

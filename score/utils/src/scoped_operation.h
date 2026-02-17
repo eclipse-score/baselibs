@@ -15,6 +15,8 @@
 
 #include <score/callback.hpp>
 
+#include <type_traits>
+
 namespace score
 {
 namespace utils
@@ -24,12 +26,10 @@ namespace utils
 ///
 /// @tparam Capacity The capacity to use by callback in storage
 /// @tparam Alignment The alignment of callback in storage
-template <std::size_t Capacity = score::cpp::callback<void()>::capacity_t::value,
-          std::size_t Alignment = score::cpp::callback<void()>::alignment_t::value>
+template <typename CallbackType = score::cpp::callback<void()>>
 class ScopedOperation final
 {
-  private:
-    using CallbackType = score::cpp::callback<void(), Capacity, Alignment>;
+    static_assert(std::is_invocable_v<CallbackType>);
 
   public:
     explicit ScopedOperation(CallbackType fn) : fn_{std::move(fn)} {}

@@ -25,7 +25,6 @@ To use Base Libraries properly, you need to set the following build settings in 
 ```bash
 --@score_baselibs//score/json:base_library=nlohmann
 --@score_baselibs//score/memory/shared/flags:use_typedshmd=False
---@score_baselibs//score/mw/log/flags:KRemote_Logging=False
 ```
 
 ### Using Unreleased Versions
@@ -79,19 +78,38 @@ bazel build --config=bl-x86_64-linux //...
 bazel test --config=bl-x86_64-linux //...
 ```
 
+#### Building for AArch64 Linux
+
+Use the same command as for x86_64 Linux, but replace `--config=bl-x86_64-linux` with `--config=bl-aarch64-linux`.
+
+> [!NOTE]
+> AArch64 Linux support is currently experimental. Some targets may not build successfully.
+
 #### Building for x86_64 QNX 8.0 SDP
 
 ```bash
-# Build all targets (with a few exceptions)
-bazel build --credential_helper="*.qnx.com=$(pwd)/.git/tools/qnx_credential_helper.py" --config=bl-x86_64-qnx -- //score/... -//score/os/mocklib/qnx:secpolev_mock -//score/os/qnx:pci_safety -//score/language/futurecpp/tests:jthread_test -//score/language/futurecpp/tests:math_test
+# Build all targets
+bazel build --config=bl-x86_64-qnx -- //score/...
 ```
-
-> [!NOTE]
-> Some targets do not currently compile on QNX and are therefore excluded with the `-//` prefix in the target list.
 
 #### Building for AArch64 QNX 8.0 SDP
 
 Use the same command as for x86_64 QNX, but replace `--config=bl-x86_64-qnx` with `--config=bl-aarch64-qnx`.
+
+### Sanitizers
+
+To detect memory errors, undefined behavior, and memory leaks, run tests with sanitizers enabled:
+
+```bash
+bazel test --config=bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...
+```
+
+This configuration enables:
+- **AddressSanitizer (ASan)**: Fast memory error detector.
+- **UndefinedBehaviorSanitizer (UBSan)**: Detects undefined behavior at runtime.
+- **LeakSanitizer (LSan)**: Memory leak detector.
+
+The sanitizers are configured with verbose output and will halt on the first error detected.
 
 ### Generating Documentation
 

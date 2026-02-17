@@ -117,6 +117,18 @@ TEST_F(PcapFixture, PcapLoopSuccess)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     GetMeADevice();
+
+    const int32_t optimize{1U};
+    const char* empty_filter{""};
+    struct bpf_program bpf_prog_;
+
+    // Compile empty string to filter program. Empty filter allows everything. This is needed for IO-sock no side
+    // effects on io-pkt
+    const auto ret_pcap_compile =
+        ::score::os::Pcap::instance().pcap_compile(good_pcap_, &bpf_prog_, empty_filter, optimize, PCAP_NETMASK_UNKNOWN);
+
+    const auto ret_pcap_setfilter = ::score::os::Pcap::instance().pcap_setfilter(good_pcap_, &bpf_prog_);
+
     auto result = pcap_->pcap_loop(good_pcap_, 1, &pcap_handler_func, nullptr);
     EXPECT_TRUE(result.has_value());
 }
@@ -401,7 +413,7 @@ TEST_F(PcapFixture, PcapDumpOpenFailure3)
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
     GetMeADevice();
-    std::string fname{"root/vlan73.pcap"};
+    std::string fname{"/file_cant_be_created.pcap"};
     auto result = pcap_->pcap_dump_open(good_pcap_, fname.c_str());
     EXPECT_FALSE(result.has_value());
 }

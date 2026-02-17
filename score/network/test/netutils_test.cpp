@@ -54,19 +54,19 @@ struct NetUtilsTestFixture : ::testing::Test
     score::os::IfaddrsMock ifaddrs_mock_;
 };
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdress_GetifadrsFail)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddress_GetifadrsFail)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     EXPECT_FALSE(score::os::Netutils::instance().get_ifcip_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdress_EmptyList)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddress_EmptyList)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs());
     EXPECT_FALSE(score::os::Netutils::instance().get_ifcip_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdress_InterfaceNotFound)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddress_InterfaceNotFound)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("lo", 0);
     auto ifa = ifaddrs_mock_.GetIfaddrsList().value();
@@ -76,7 +76,7 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAdress_InterfaceNotFound)
     EXPECT_FALSE(score::os::Netutils::instance().get_ifcip_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdress_OneAddr_Success)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddress_OneAddr_Success)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("eth0", 0x0100a8c0);
     auto ifa = ifaddrs_mock_.GetIfaddrsList().value();
@@ -86,7 +86,7 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAdress_OneAddr_Success)
     EXPECT_TRUE(score::os::Netutils::instance().get_ifcip_address("eth0").has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdress_TwoAddrs_Success)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddress_TwoAddrs_Success)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("lo", 0);
     ifaddrs_mock_.AddIfaddrsListEntry("eth0", 0x0100a8c0);
@@ -154,21 +154,21 @@ TEST_F(NetUtilsTestFixture, GetNetMask_TwoAddrs_Success)
     EXPECT_EQ(ret.value(), 0xffff);
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_GetifadrsFail)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_GetifadrsFail)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     auto ret = score::os::Netutils::instance().get_ifc_ip_address_net_mask("eth0");
     EXPECT_FALSE(ret.has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_EmptyList)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_EmptyList)
 {
     EXPECT_CALL(ifaddrs_mock_, getifaddrs());
     auto ret = score::os::Netutils::instance().get_ifc_ip_address_net_mask("eth0");
     EXPECT_FALSE(ret.has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_InterfaceNotFound)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_InterfaceNotFound)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("lo", 0);
     auto ifa = ifaddrs_mock_.GetIfaddrsList().value();
@@ -179,7 +179,7 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_InterfaceNotFound)
     EXPECT_FALSE(ret.has_value());
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_OneAddr_Success)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_OneAddr_Success)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("eth0", 0x0100a8c0, true, 0xffff);
     auto ifa = ifaddrs_mock_.GetIfaddrsList().value();
@@ -191,7 +191,7 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_OneAddr_Success)
     EXPECT_EQ(ret.value().ToStringWithNetmask(), "192.168.0.1/16");
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_OneAddrNoNetmask_Success)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_OneAddrNoNetmask_Success)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("eth0", 0x0100a8c0);
     auto ifa = ifaddrs_mock_.GetIfaddrsList().value();
@@ -203,7 +203,7 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_OneAddrNoNetmask_Success)
     EXPECT_EQ(ret.value().ToStringWithNetmask(), "192.168.0.1/24");
 }
 
-TEST_F(NetUtilsTestFixture, GetIfcIpAdressNetMask_TwoAddrs_Success)
+TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_TwoAddrs_Success)
 {
     ifaddrs_mock_.AddIfaddrsListEntry("lo", 0, 0);
     ifaddrs_mock_.AddIfaddrsListEntry("eth0", 0x0100a8c0, true, 0xffff);

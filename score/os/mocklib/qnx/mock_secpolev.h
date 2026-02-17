@@ -32,12 +32,16 @@ class MockSecpolEv : public SecpolEv
                 init,
                 (const unsigned flags, const unsigned buffer_count, const unsigned flush_interval),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), shutdown, (), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                shutdown,
+                (secpolev_shutdown_type_t type),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<secpolev_event_type_t, score::os::Error>),
                 wait_event,
                 (unsigned* flags),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), flush, (), (const, noexcept, override));
+    MOCK_METHOD(uint64_t, get_dropped_event_count, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<pid_t, score::os::Error>), get_pid, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<const char*, score::os::Error>), get_process_name, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<const char*, score::os::Error>), get_process_type, (), (const, noexcept, override));

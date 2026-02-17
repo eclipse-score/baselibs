@@ -26,6 +26,9 @@
 #include <sys/stat.h>
 #include <stack>
 
+// Remove after reproduction (Ticket-243648)
+#include <iostream>
+
 namespace score
 {
 namespace filesystem
@@ -275,6 +278,9 @@ score::ResultBlank StandardFilesystem::CreateDirectory(const Path& path) const n
                                   "Path exists but is not a directory");
         }
     }
+
+    // Remove after reproduction (Ticket-243648)
+    std::cerr << "mkdir failed with error code: " << result.error().ToString() << "\n";
     return MakeUnexpected(filesystem::ErrorCode::kCouldNotCreateDirectory);
 }
 

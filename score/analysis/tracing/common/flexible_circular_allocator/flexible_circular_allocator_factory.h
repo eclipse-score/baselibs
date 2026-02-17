@@ -12,7 +12,7 @@
  ********************************************************************************/
 #ifndef SCORE_ANALYSIS_TRACING_COMMON_FLEXIBLE_CIRCULAR_ALLOCATOR_FACTORY_H
 #define SCORE_ANALYSIS_TRACING_COMMON_FLEXIBLE_CIRCULAR_ALLOCATOR_FACTORY_H
-#include "score/analysis/tracing/common/flexible_circular_allocator/error_code.h"
+#include "score/analysis/tracing/common/flexible_circular_allocator/error_codes/factory/error_code.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_factory_interface.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
@@ -38,12 +38,12 @@ class FlexibleCircularAllocatorFactory final : public IFlexibleCircularAllocator
     {
         if (base_address == nullptr)
         {
-            return MakeUnexpected(FlexibleAllocatorErrorCode::kBaseAddressVoid);
+            return MakeUnexpected(FlexibleAllocatorFactoryErrorCode::kBaseAddressVoid);
         }
 
         if (size == static_cast<std::size_t>(0))
         {
-            return MakeUnexpected(FlexibleAllocatorErrorCode::kSizeIsZero);
+            return MakeUnexpected(FlexibleAllocatorFactoryErrorCode::kSizeIsZero);
         }
 
         return std::make_shared<FlexibleCircularAllocator>(base_address, size);

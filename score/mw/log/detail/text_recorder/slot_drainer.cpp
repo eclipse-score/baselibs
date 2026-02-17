@@ -75,7 +75,7 @@ bool SlotDrainer::MoreSlotsAvailableAndLoaded() noexcept
     {
         return false;
     }
-    auto& reference_to_slot = circular_buffer_.front();
+    const auto& reference_to_slot = circular_buffer_.front();
     circular_buffer_.pop_front();
     current_slot_ = reference_to_slot;
 

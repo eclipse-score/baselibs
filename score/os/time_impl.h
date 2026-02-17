@@ -42,6 +42,20 @@ class TimeImpl final : public Time
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     struct tm* localtime_r(const time_t* timer, struct tm* tm_local_time) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
+
+    score::cpp::expected<std::int32_t, Error> timer_create(const clockid_t clock_id,
+                                                    sigevent* const evp,
+                                                    timer_t* const timerid) const noexcept override;
+
+    score::cpp::expected<std::int32_t, Error> timer_delete(const timer_t timerid) const noexcept override;
+
+    score::cpp::expected<std::int32_t, Error> timer_settime(const timer_t timerid,
+                                                     const int32_t flags,
+                                                     const itimerspec* const value,
+                                                     itimerspec* const ovalue) const noexcept override;
+
+    score::cpp::expected<std::int32_t, Error> clock_getcpuclockid(const pid_t pid,
+                                                           clockid_t& clock_id) const noexcept override;
 };
 
 }  // namespace os

@@ -23,7 +23,7 @@ namespace
 {
 bool IsRecorderValid(const SlotHandle::RecorderIdentifier recorder) noexcept
 {
-    return recorder.value <= SlotHandle::kMaxRecorders;
+    return recorder.value < SlotHandle::kMaxRecorders;
 }
 }  // namespace
 
@@ -44,8 +44,16 @@ SlotIndex SlotHandle::GetSlot(const RecorderIdentifier recorder) const noexcept
     {
         return {};
     }
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index) bound already checked
+    /*
+    Deviation from Rule A5-2-5:
+    - An array or container shall not be accessed beyond its range
+    Justification:
+    - boundary check in function IsRecorderValid.
+    */
+    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-constant-array-index) bound already checked
+    // coverity[autosar_cpp14_a5_2_5_violation]
     return recorder_to_slot_[recorder.value];
+    // NOLINTEND(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 void SlotHandle::SetSlot(const SlotIndex slot, const RecorderIdentifier recorder) noexcept
@@ -55,9 +63,18 @@ void SlotHandle::SetSlot(const SlotIndex slot, const RecorderIdentifier recorder
         return;
     }
 
+    /*
+    Deviation from Rule A5-2-5:
+    - An array or container shall not be accessed beyond its range
+    Justification:
+    - boundary check in function IsRecorderValid.
+    */
+    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-constant-array-index) bound already checked
+    // coverity[autosar_cpp14_a5_2_5_violation]
     recorder_slot_available_[recorder.value] = true;
-    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index) bound already checked
+    // coverity[autosar_cpp14_a5_2_5_violation]
     recorder_to_slot_[recorder.value] = slot;
+    // NOLINTEND(cppcoreguidelines-pro-bounds-constant-array-index)
 }
 
 SlotHandle::RecorderIdentifier SlotHandle::GetSelectedRecorder() const noexcept
@@ -82,6 +99,13 @@ bool SlotHandle::IsRecorderActive(const RecorderIdentifier recorder) const noexc
         return false;
     }
 
+    /*
+    Deviation from Rule A5-2-5:
+    - An array or container shall not be accessed beyond its range
+    Justification:
+    - boundary check in function IsRecorderValid.
+    */
+    // coverity[autosar_cpp14_a5_2_5_violation]
     return recorder_slot_available_[recorder.value];
 }
 

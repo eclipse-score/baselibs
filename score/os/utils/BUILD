@@ -197,7 +197,7 @@ cc_library(
     hdrs = ["tcp_keep_alive.h"],
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = select({
-        "@platforms//os:qnx": ["//bazel/platforms/qnx_version:qnx7"],  # TODO: Ticket-213412 QNX8 TCP statistics are not supported yet
+        "@platforms//os:qnx": ["@score_bazel_platforms//:qnx7_1"],  # TODO: Ticket-213412 QNX8 TCP statistics are not supported yet
         "//conditions:default": [],
     }),
     visibility = ["//visibility:public"],

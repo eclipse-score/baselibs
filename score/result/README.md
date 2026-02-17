@@ -72,7 +72,7 @@ if(!first_try && first_try.error() == MyErrorCode::kFirstError) {
 
 ## Design
 
-![Static Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/result/static_design.uxf)
+<img alt="Static Design" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/result/static_design.puml">
 
 As you can see in the static architecture above, the main idea is to provide an `ErrorDomain` which users can inherit
 from. In this case, they will need to implement two things. First they will need to implement an `enum` of type

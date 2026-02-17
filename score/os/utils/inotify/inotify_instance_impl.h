@@ -13,6 +13,7 @@
 #ifndef SCORE_LIB_OS_UTILS_INOTIFY_INOTIFY_INSTANCE_IMPL_H
 #define SCORE_LIB_OS_UTILS_INOTIFY_INOTIFY_INSTANCE_IMPL_H
 
+#include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/os/utils/inotify/inotify_event.h"
 #include "score/os/utils/inotify/inotify_instance.h"
 #include "score/os/utils/inotify/inotify_watch_descriptor.h"
@@ -90,7 +91,7 @@ class InotifyInstanceImpl : public InotifyInstance
      * @param event_mask The mask of events to watch for
      * @return Descriptor to identify the watch and its associated events
      */
-    score::cpp::expected<InotifyWatchDescriptor, Error> AddWatch(std::string_view pathname,
+    score::cpp::expected<InotifyWatchDescriptor, Error> AddWatch(safecpp::zstring_view pathname,
                                                           Inotify::EventMask event_mask) noexcept override;
 
     /**

@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef MW_LOG_DETAIL_FILE_OUTPUT_BACKEND_H_
-#define MW_LOG_DETAIL_FILE_OUTPUT_BACKEND_H_
+#ifndef SCORE_MW_LOG_DETAIL_TEXT_RECORDER_FILE_OUTPUT_BACKEND_H
+#define SCORE_MW_LOG_DETAIL_TEXT_RECORDER_FILE_OUTPUT_BACKEND_H
 
 #include "score/mw/log/detail/backend.h"
 #include "score/mw/log/detail/circular_allocator.h"
@@ -70,4 +70,4 @@ class FileOutputBackend final : public Backend
 }  // namespace mw
 }  // namespace score
 
-#endif  //  MW_LOG_DETAIL_FILE_OUTPUT_BACKEND_H_
+#endif  // SCORE_MW_LOG_DETAIL_TEXT_RECORDER_FILE_OUTPUT_BACKEND_H

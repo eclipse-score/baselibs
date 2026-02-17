@@ -30,10 +30,10 @@ namespace
 {
 using safecpp::literals::operator""_zsv;
 
-static constexpr const safecpp::zstring_view kGlobalConfigPath{"/etc/ecu_logging_config.json"};
-static constexpr const safecpp::zstring_view kLocalEtcConfigPath{"etc/logging.json"};
-static constexpr const safecpp::zstring_view kCwdConfigPath{"logging.json"};
-static constexpr const auto kEnvironmentVariableConfig = "MW_LOG_CONFIG_FILE"_zsv;
+constexpr const safecpp::zstring_view kGlobalConfigPath{"/etc/ecu_logging_config.json"};
+constexpr const safecpp::zstring_view kLocalEtcConfigPath{"etc/logging.json"};
+constexpr const safecpp::zstring_view kCwdConfigPath{"logging.json"};
+constexpr const auto kEnvironmentVariableConfig = "MW_LOG_CONFIG_FILE"_zsv;
 
 }  // namespace
 
@@ -107,7 +107,7 @@ score::cpp::optional<std::string> ConfigurationFileDiscoverer::FindLocalConfigFi
 
 score::cpp::optional<std::string> ConfigurationFileDiscoverer::FindEnvironmentConfigFile() const noexcept
 {
-    const auto environmental_config_path = stdlib_->getenv(kEnvironmentVariableConfig.data());
+    auto* const environmental_config_path = stdlib_->getenv(kEnvironmentVariableConfig.data());
     if (environmental_config_path != nullptr)
     {
         if (FileExists(std::string{environmental_config_path}) == true)

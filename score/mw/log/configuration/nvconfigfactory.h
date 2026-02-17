@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_NVCONFIGFACTORY_H_
-#define SCORE_MW_LOG_NVCONFIGFACTORY_H_
+#ifndef SCORE_MW_LOG_CONFIGURATION_NVCONFIGFACTORY_H
+#define SCORE_MW_LOG_CONFIGURATION_NVCONFIGFACTORY_H
 
 #include "nvconfig.h"
 
@@ -66,4 +66,4 @@ class NvConfigFactory
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_NVCONFIGFACTORY_H_
+#endif  // SCORE_MW_LOG_CONFIGURATION_NVCONFIGFACTORY_H

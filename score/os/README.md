@@ -31,7 +31,7 @@ agreed with OSAL maintainers.
 The following diagram shows the main Bazel targets of OSAL and how applications depend on it. The modules of OSAL are
 grouped by portability.
 
-![OSAL package](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/os/diagrams/osal_arch.uxf)
+<img alt="OSAL package" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/diagrams/osal_arch.puml">
 
 * **`//platform/aas/lib/os`**
     * Contains OS-agnostic low-level APIs that should do nothing more than wrap the underlying OS call

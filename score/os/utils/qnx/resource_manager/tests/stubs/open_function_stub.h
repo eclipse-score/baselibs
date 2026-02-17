@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Stub class for the open handler interface used only for testing
-///
-///
 
 #ifndef SCORE_LIB_OS_QNX_RESOURCE_TEST_OPEN_HANDLER_INTERFACE_STUB_H
 #define SCORE_LIB_OS_QNX_RESOURCE_TEST_OPEN_HANDLER_INTERFACE_STUB_H
@@ -30,6 +23,9 @@ namespace os
 namespace test
 {
 
+///
+/// @brief Stub class for the open handler interface used only for testing
+///
 class OpenFunctionStub final : public score::os::IOpenFunction
 {
     int operator()(resmgr_context_t*, io_open_t*, RESMGR_HANDLE_T*, void*)

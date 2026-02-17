@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_TARGET_CONFIG_READER_MOCK_H
-#define SCORE_MW_LOG_DETAIL_TARGET_CONFIG_READER_MOCK_H
+#ifndef SCORE_MW_LOG_CONFIGURATION_TARGET_CONFIG_READER_MOCK_H
+#define SCORE_MW_LOG_CONFIGURATION_TARGET_CONFIG_READER_MOCK_H
 
 #include "score/mw/log/configuration/itarget_config_reader.h"
 
@@ -37,4 +37,4 @@ class TargetConfigReaderMock final : public ITargetConfigReader
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_DETAIL_TARGET_CONFIG_READER_MOCK_H
+#endif  // SCORE_MW_LOG_CONFIGURATION_TARGET_CONFIG_READER_MOCK_H

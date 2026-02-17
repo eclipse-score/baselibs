@@ -42,9 +42,9 @@ class IFlexibleCircularAllocator
     virtual ~IFlexibleCircularAllocator() = default;
     // This is intented, we don't enforce users to specify align unless needed
     // NOLINTNEXTLINE(google-default-arguments) see comment above
-    virtual void* Allocate(const std::size_t, const std::size_t alignment = alignment::kBlockSize) = 0;
+    virtual score::Result<void*> Allocate(const std::size_t, const std::size_t alignment = alignment::kBlockSize) = 0;
 
-    virtual bool Deallocate(void* const, const std::size_t) = 0;
+    virtual ResultBlank Deallocate(void* const, const std::size_t) = 0;
 
     virtual std::size_t GetAvailableMemory() noexcept = 0;
 

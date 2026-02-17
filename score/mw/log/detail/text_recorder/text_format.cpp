@@ -72,7 +72,7 @@ std::size_t TextFormat::PutLogStringViewData(const std::string_view data, score:
 
 std::size_t TextFormat::PutLogRawBufferData(const LogRawBuffer& data, score::cpp::span<Byte> buffer) noexcept
 {
-    if (buffer.size() == 0UL)
+    if (buffer.empty())
     {
         return 0UL;
     }

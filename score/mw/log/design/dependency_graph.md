@@ -5,7 +5,7 @@ implementation details of the backends. Applying the component principles from
 [1] the goal here is to structure the dependencies in a way that instable
 components depend on stable components.
 
-![Use Case Diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/frontend_dependency_graph.uxf?ref=c83de0a646f18071d97680cae5786c3c44f9d848)
+![Use Case Diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/frontend_dependency_graph.uxf)
 
 The `mw::log` component is divided in a stable frontend and the backends with
 the implementation details. The frontend shall be API compatible to the ara::log

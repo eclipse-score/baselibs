@@ -1,0 +1,4 @@
+extend-exclude = [
+    "score/static_reflection_with_serialization/visitor/util/visit_struct.py",
+    "score/os/interface/qnx/gen_unsafe_headers.py",
+]

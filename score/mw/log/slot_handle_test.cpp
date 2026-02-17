@@ -24,6 +24,7 @@ namespace
 {
 
 const SlotHandle::RecorderIdentifier kInvalidRecorder{255};
+const SlotHandle::RecorderIdentifier kInvalidRecorderBoundary{SlotHandle::kMaxRecorders};
 const SlotIndex kSlotValue{3};
 const SlotHandle::RecorderIdentifier kRecorderValue{1};
 
@@ -89,6 +90,19 @@ TEST(SlotHandle, GetSlotShallReturnZeroOnIncorrectValue)
     EXPECT_EQ(handle.GetSlot(kInvalidRecorder), 0);
 }
 
+TEST(SlotHandle, GetSlotShallReturnZeroOnIncorrectValueCornerCase)
+{
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "Check the in-ability of getting the slot in case of invalid recorder identifier value.");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("Verifies", "::score::mw::log::SlotHandle");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    SlotHandle handle{kSlotValue};
+    EXPECT_EQ(handle.GetSlot(kInvalidRecorderBoundary), 0);
+}
+
 TEST(SlotHandle, SetSlotShallSetCorrectValue)
 {
     RecordProperty("ASIL", "B");
@@ -100,6 +114,19 @@ TEST(SlotHandle, SetSlotShallSetCorrectValue)
     SlotHandle handle{kSlotValue};
     handle.SetSlot(kSlotValue, kRecorderValue);
     EXPECT_EQ(handle.GetSlot(kRecorderValue), kSlotValue);
+}
+
+TEST(SlotHandle, SetSlotShallDiscardInvalidRecorderCornerCase)
+{
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verify the in-ability of setting invalid recorder identifier value.");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("Verifies", "::score::mw::log::SlotHandle");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    SlotHandle handle{};
+    handle.SetSlot(kSlotValue, kInvalidRecorderBoundary);
+    ExpectAllSlotsUnassigned(handle);
 }
 
 TEST(SlotHandle, SetSlotShallDiscardInvalidRecorder)
@@ -142,6 +169,20 @@ TEST(SlotHandle, SetSelectedRecorderShallIgnoreInvalidValue)
     EXPECT_EQ(handle.GetSelectedRecorder(), kRecorderValue);
 }
 
+TEST(SlotHandle, SetSelectedRecorderShallIgnoreInvalidValueCornerCase)
+{
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verify the ability of SetSelectedRecorder to ignore invalid recorder.");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("Verifies", "::score::mw::log::SlotHandle");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    SlotHandle handle{};
+    handle.SetSelectedRecorder(kRecorderValue);
+    handle.SetSelectedRecorder(kInvalidRecorderBoundary);
+    EXPECT_EQ(handle.GetSelectedRecorder(), kRecorderValue);
+}
+
 TEST(SlotHandle, GetSlotAvailableShallReturnTrueOnAssigned)
 {
     RecordProperty("ASIL", "B");
@@ -164,6 +205,18 @@ TEST(SlotHandle, GetSlotAvailableShallReturnFalseOnInvalidRecorder)
 
     SlotHandle handle{};
     EXPECT_EQ(handle.IsRecorderActive(kInvalidRecorder), false);
+}
+
+TEST(SlotHandle, GetSlotAvailableShallReturnFalseOnInvalidRecorderCornerCase)
+{
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("Verifies", "::score::mw::log::SlotHandle");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    SlotHandle handle{};
+    EXPECT_EQ(handle.IsRecorderActive(kInvalidRecorderBoundary), false);
 }
 
 TEST(SlotHandle, ShallBeEqualIffSelectedRecorderAndSlotsAreEqual)

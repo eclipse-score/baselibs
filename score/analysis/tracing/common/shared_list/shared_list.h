@@ -116,14 +116,14 @@ class alignas(std::max_align_t) List
      */
     score::Result<Node*> AllocateNewNode(const T& value)
     {
-        auto node_address = flexible_allocator_->Allocate(sizeof(Node), alignof(Node));
-        if (nullptr != node_address)
+        auto node_address_result = flexible_allocator_->Allocate(sizeof(Node), alignof(Node));
+        if ((node_address_result.has_value()) && (nullptr != node_address_result.value()))
         {
             // Usage of placement new is intended here and safe as we explicitly construct the node
             // in the pre-allocated memory provided by the flexible allocator
             // NOLINTBEGIN(score-no-dynamic-raw-memory): Tolerated see above
             //  coverity[autosar_cpp14_a18_5_10_violation]
-            auto node = new (node_address) Node(value);
+            auto node = new (node_address_result.value()) Node(value);
             // NOLINTEND(score-no-dynamic-raw-memory): Tolerated see above
             return node;
         }
@@ -141,7 +141,7 @@ class alignas(std::max_align_t) List
         // DeallocateNode won't be called so this condition always evaluate to true.
         if (node != nullptr)  // LCOV_EXCL_BR_LINE not testable see comment above.
         {
-            if (flexible_allocator_)
+            if (flexible_allocator_)  // LCOV_EXCL_BR_LINE not testable see comment above.
             {
                 score::cpp::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
             }

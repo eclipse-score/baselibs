@@ -10,10 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2023, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
 
 #ifndef SCORE_LIB_OS_SPAWN_IMPL_H
 #define SCORE_LIB_OS_SPAWN_IMPL_H
@@ -164,21 +160,34 @@ class SpawnImpl final : public Spawn
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 
-// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
-// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
-// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
-// Rationale: Pre-processor commands are used to allow different implementations for linux and QNX to exist
-// in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
+    // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+    // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+    // #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+    // Rationale: Pre-processor commands are used to allow different implementations for linux and QNX to exist
+    // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__)
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#if __QNX__ >= 800
+    score::cpp::expected<std::int32_t, Error> pthread_spawnattr_getrunmask_np(
+        const posix_spawnattr_t* attrp,
+        std::uint64_t* runmask_p) const noexcept override;
+
+    score::cpp::expected<std::int32_t, Error> pthread_spawnattr_setrunmask_np(posix_spawnattr_t* attrp,
+                                                                       std::uint64_t runmask) const noexcept override;
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#else
+    score::cpp::expected<std::int32_t, Error> posix_spawnattr_getrunmask(const posix_spawnattr_t* attrp,
+                                                                  std::uint32_t* runmask_p) const noexcept override;
+
+    score::cpp::expected<std::int32_t, Error> posix_spawnattr_setrunmask(posix_spawnattr_t* attrp,
+                                                                  std::uint32_t runmask) const noexcept override;
+// coverity[autosar_cpp14_a16_0_1_violation] see rationale above
+#endif
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getxflags(const posix_spawnattr_t* attrp,
                                                                  std::uint32_t* flags_p) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setxflags(posix_spawnattr_t* attrp,
                                                                  std::uint32_t flags) const noexcept override;
-    score::cpp::expected<std::int32_t, Error> posix_spawnattr_getrunmask(const posix_spawnattr_t* attrp,
-                                                                  std::uint32_t* runmask_p) const noexcept override;
-    score::cpp::expected<std::int32_t, Error> posix_spawnattr_setrunmask(posix_spawnattr_t* attrp,
-                                                                  std::uint32_t runmask) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getsigignore(const posix_spawnattr_t* attrp,
                                                                     sigset_t* sigset_p) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setsigignore(posix_spawnattr_t* attrp,

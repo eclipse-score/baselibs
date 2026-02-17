@@ -142,14 +142,15 @@ score::Result<SharedMemoryLocation> LocalDataChunkList::SaveToSharedMemory(
     {
         return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
     }
-    void* const vector_shm_raw_pointer = AllocateVector(flexible_allocator);
+    auto vector_shm_raw_pointer_result = AllocateVector(flexible_allocator);
 
-    if (nullptr == vector_shm_raw_pointer)
+    if ((!vector_shm_raw_pointer_result.has_value()) || (nullptr == vector_shm_raw_pointer_result))
     {
         return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
     }
-    auto* vector = ConstructShmChunkVector(vector_shm_raw_pointer, flexible_allocator);
-    return FillVectorInSharedMemory(vector, memory_resource, handle, flexible_allocator, vector_shm_raw_pointer);
+    auto* vector = ConstructShmChunkVector(vector_shm_raw_pointer_result.value(), flexible_allocator);
+    return FillVectorInSharedMemory(
+        vector, memory_resource, handle, flexible_allocator, vector_shm_raw_pointer_result.value());
 }
 
 score::Result<SharedMemoryLocation> LocalDataChunkList::FillVectorInSharedMemory(
@@ -178,8 +179,8 @@ score::Result<SharedMemoryLocation> LocalDataChunkList::FillVectorInSharedMemory
         {
             continue;
         }
-        void* shm_pointer = flexible_allocator->Allocate(element.size);
-        if (shm_pointer == nullptr)
+        auto shm_pointer_result = flexible_allocator->Allocate(element.size);
+        if ((!shm_pointer_result.has_value()) || (shm_pointer_result == nullptr))
         {
             CleanupAllocatedData(allocated_data, flexible_allocator, vector, vector_shm_raw_pointer);
             return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
@@ -188,7 +189,7 @@ score::Result<SharedMemoryLocation> LocalDataChunkList::FillVectorInSharedMemory
         // not be implicitly converted to a different underlying type"
         // False positive, right hand value is the same type.
         // coverity[autosar_cpp14_m5_0_3_violation]
-        allocated_data.at(index) = std::pair<void*, std::size_t>{shm_pointer, element.size};
+        allocated_data.at(index) = std::pair<void*, std::size_t>{shm_pointer_result.value(), element.size};
 
         if (index < kMaxChunksPerOneTraceRequest - 1U)
         {
@@ -199,9 +200,10 @@ score::Result<SharedMemoryLocation> LocalDataChunkList::FillVectorInSharedMemory
             index = 0U;
         }
 
-        CopyDataToSharedMemory(element, shm_pointer);
+        CopyDataToSharedMemory(element, shm_pointer_result.value());
         auto result = vector->push_back(
-            {SharedMemoryLocation{handle, GetOffsetFromPointer(shm_pointer, memory_resource).value()}, element.size});
+            {SharedMemoryLocation{handle, GetOffsetFromPointer(shm_pointer_result.value(), memory_resource).value()},
+             element.size});
         if (!result.has_value())
         {
             CleanupAllocatedData(allocated_data, flexible_allocator, vector, vector_shm_raw_pointer);
@@ -225,7 +227,8 @@ bool LocalDataChunkList::HasEnoughMemory(std::shared_ptr<IFlexibleCircularAlloca
     }
     return flexible_allocator->GetAvailableMemory() >= required_memory_size;
 }
-void* LocalDataChunkList::AllocateVector(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const
+score::Result<void*> LocalDataChunkList::AllocateVector(
+    std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const
 {
     return flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
 }

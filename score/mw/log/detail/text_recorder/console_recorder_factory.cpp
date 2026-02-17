@@ -26,8 +26,8 @@ std::unique_ptr<Recorder> ConsoleRecorderFactory::CreateConcreteLogRecorder(cons
                                                                             score::cpp::pmr::memory_resource* memory_resource)
 {
     auto backend = CreateConsoleLoggingBackend(config, memory_resource);
-    constexpr bool check_log_level_for_console = true;
-    return std::make_unique<TextRecorder>(config, std::move(backend), check_log_level_for_console);
+    constexpr bool kCheckLogLevelForConsole = true;
+    return std::make_unique<TextRecorder>(config, std::move(backend), kCheckLogLevelForConsole);
 }
 
 std::unique_ptr<Backend> ConsoleRecorderFactory::CreateConsoleLoggingBackend(

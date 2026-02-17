@@ -110,7 +110,7 @@ class LocalDataChunkList
     bool HasEnoughMemory(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator,
                          std::size_t required_memory_size) const;
     // allocate vector
-    void* AllocateVector(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const;
+    score::Result<void*> AllocateVector(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const;
     // construct vector in shared memory
     ShmChunkVector* ConstructShmChunkVector(void* vector_shm_raw_pointer,
                                             std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const;

@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_
-#define SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_
+#ifndef SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H
+#define SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H
 
 #include "score/mw/log/configuration/invconfig.h"
 
@@ -28,8 +28,8 @@ class INvConfigMock final : public INvConfig
 {
   public:
     MOCK_METHOD(const config::NvMsgDescriptor*,
-                getDltMsgDesc,
-                (const std::string& typeName),
+                GetDltMsgDesc,
+                (const std::string& type_name),
                 (const, noexcept, override));
 };
 
@@ -37,4 +37,4 @@ class INvConfigMock final : public INvConfig
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H_
+#endif  // SCORE_MW_LOG_CONFIGURATION_INVCONFIG_MOCK_H

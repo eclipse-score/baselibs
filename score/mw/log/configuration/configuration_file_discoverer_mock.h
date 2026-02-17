@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_MW_LOG_DETAIL_CONFIG_FILE_DISCOVERER_MOCK_H
-#define SCORE_MW_LOG_DETAIL_CONFIG_FILE_DISCOVERER_MOCK_H
+#ifndef SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_FILE_DISCOVERER_MOCK_H
+#define SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_FILE_DISCOVERER_MOCK_H
 
 #include "score/mw/log/configuration/iconfiguration_file_discoverer.h"
 
@@ -37,4 +37,4 @@ class ConfigurationFileDiscovererMock final : public IConfigurationFileDiscovere
 }  // namespace mw
 }  // namespace score
 
-#endif  // SCORE_MW_LOG_DETAIL_ICONFIG_FILE_DISCOVERER_H
+#endif  // SCORE_MW_LOG_CONFIGURATION_CONFIGURATION_FILE_DISCOVERER_MOCK_H

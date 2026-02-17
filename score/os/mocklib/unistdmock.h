@@ -131,6 +131,11 @@ class UnistdMock : public Unistd
     MOCK_METHOD((std::uint32_t), alarm, (std::uint32_t), (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, sync, (), (const, noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                getpwnam_r,
+                (const char* name, struct passwd* pwd, char* buffer, size_t bufsize, struct passwd** result),
+                (const, noexcept, override));
 };
 
 }  // namespace os

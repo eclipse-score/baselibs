@@ -31,17 +31,17 @@ or onto the console.
 `MessageBuilder` is responsible for serving data in correct order of flushing
 into file or console and stores some of common parts of the header.
 
-![Static Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/mw_log_file_backend.uxf?ref=a0f7d7e092a6d561d0c889a2faf752acc969f474)
+![Static Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/mw_log_file_backend.uxf)
 
 `SlotDrainer` is responsible for storing and disposal of already serialized
 data. First data gets inserted into circular buffer. After that step program
 flow enters a loop that iterates over available slots in ring buffer and then
 by means of `NonBlockingWriter` iterates over all spans of each message.
 
-![Sequence Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/slot_drainer_sequence_design.uxf?ref=be7b21852077fc3db76686d352d9907ec8495a08)
+![Sequence Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/slot_drainer_sequence_design.uxf)
 
 Flush procedure exits whenever all available data is written to the file or
 writing procedure would block i.e. write operation reports that number of bytes
 written is less then requested.
 
-![Action Diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/mw/log/design/slot_drainer_action_diagram_design.uxf?ref=be7b21852077fc3db76686d352d9907ec8495a08)
+![Action Diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/mw/log/design/slot_drainer_action_diagram_design.uxf)

@@ -27,12 +27,10 @@ namespace detail
 namespace
 {
 
-using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::MatchesRegex;
 using ::testing::StrEq;
 
-const std::map<LogLevel, std::string> levels = {
+const std::map<LogLevel, std::string> kLevels = {
     {LogLevel::kOff, "off"},
     {LogLevel::kFatal, "fatal"},
     {LogLevel::kError, "error"},
@@ -142,7 +140,7 @@ TEST_P(TextMessageBuilderFixture, HeaderShallHaveLevelPrintedForAllParams)
 
     auto& log_entry = log_record_.getLogEntry();
     log_entry.log_level = GetParam();
-    std::string level_string{levels.at(GetParam())};
+    std::string level_string{kLevels.at(GetParam())};
     unit_.SetNextMessage(log_record_);
 
     const auto header_span = unit_.GetNextSpan().value();
@@ -164,14 +162,14 @@ TEST_F(TextMessageBuilderFixture, LogLevelToStringShouldReturnUndefinedForInvali
     // Create an invalid log level by casting back to LogLevel
     log_entry.log_level = static_cast<LogLevel>(static_cast<std::underlying_type<LogLevel>::type>(999));
 
-    const std::string kLevelStringUndefined = "undefined";
+    const std::string k_level_string_undefined = "undefined";
     unit_.SetNextMessage(log_record_);
 
     const auto header_span = unit_.GetNextSpan().value();
     const auto string_content =
         std::string(reinterpret_cast<const char*>(header_span.data()), static_cast<std::size_t>(header_span.size()));
 
-    EXPECT_THAT(string_content, HasSubstr(kLevelStringUndefined));
+    EXPECT_THAT(string_content, HasSubstr(k_level_string_undefined));
 }
 
 }  // namespace

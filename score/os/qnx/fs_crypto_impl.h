@@ -10,14 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file fs_crypto_impl.h
-/// @copyright Copyright (C) 2024, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief fs_crypto functions OSAL class
-/// [QNX fs_crypto
-/// documentation](https://www.qnx.com/developers/docs/7.1/index.html#com.qnx.doc.neutrino.utilities/topic/f/fsencrypt.html)
-///
 
 #ifndef SCORE_LIB_OS_QNX_FS_CRYPTO_IMPL_H
 #define SCORE_LIB_OS_QNX_FS_CRYPTO_IMPL_H
@@ -31,6 +23,9 @@ namespace os
 
 namespace qnx
 {
+/// @brief fs_crypto functions OSAL class
+/// [QNX fs_crypto
+/// documentation](https://www.qnx.com/developers/docs/7.1/index.html#com.qnx.doc.neutrino.utilities/topic/f/fsencrypt.html)
 class FsCryptoImpl final : public FsCrypto
 {
   public:

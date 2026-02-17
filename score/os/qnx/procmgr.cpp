@@ -80,6 +80,7 @@ class ProcMgrImpl final : public ProcMgr
         return {};
     }
 
+    // coverity[autosar_cpp14_a0_1_3_violation] , see justification above
     score::cpp::expected_blank<score::os::Error> procmgr_daemon(const std::int32_t status,
                                                        const std::uint32_t flags) const noexcept override
     {

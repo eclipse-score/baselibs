@@ -10,10 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
 #ifndef SCORE_LIB_OS_MOCKLIB_SCHED_MOCK_H
 #define SCORE_LIB_OS_MOCKLIB_SCHED_MOCK_H
 

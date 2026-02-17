@@ -135,9 +135,9 @@ score::Result<SharedMemoryLocation> ShmDataChunkList::SaveToSharedMemory(
         return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
     }
 
-    void* const vector_shm_raw_pointer =
+    auto vector_shm_raw_pointer_result =
         flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
-    if (nullptr == vector_shm_raw_pointer)
+    if ((!vector_shm_raw_pointer_result.has_value()) || (nullptr == vector_shm_raw_pointer_result.value()))
     {
         return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
     }
@@ -146,7 +146,7 @@ score::Result<SharedMemoryLocation> ShmDataChunkList::SaveToSharedMemory(
     // in the pre-allocated memory provided by the flexible allocator
     // NOLINTBEGIN(score-no-dynamic-raw-memory) Usage of placement new is intended here to allocate the shared list
     //  coverity[autosar_cpp14_a18_5_10_violation]
-    auto* const vector = new (vector_shm_raw_pointer) ShmChunkVector(flexible_allocator);
+    auto* const vector = new (vector_shm_raw_pointer_result.value()) ShmChunkVector(flexible_allocator);
     // NOLINTEND(score-no-dynamic-raw-memory) Usage of placement new is intended here to allocate the shared list
 
     const std::size_t offset = GetOffsetFromPointer(vector, memory_resource).value();
@@ -163,7 +163,7 @@ score::Result<SharedMemoryLocation> ShmDataChunkList::SaveToSharedMemory(
         if (!emplace_result.has_value())
         {
             vector->clear();
-            score::cpp::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+            score::cpp::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer_result.value(), sizeof(ShmChunkVector));
             return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
         }
     }

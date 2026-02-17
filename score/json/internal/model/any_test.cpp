@@ -454,23 +454,6 @@ TEST(Any, CanNotRetrieveWronglyTypedReferenceConst)
     EXPECT_EQ(value.error(), Error::kWrongType);
 }
 
-TEST(Any, CanAccessStringAsAmpStringView)
-{
-    RecordProperty("Verifies", "5310867");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description",
-                   "String-constructed json objects can be accessed as string_view, cf. RFC-8259 section 3, 7 and 9");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
-    RecordProperty("Priority", "3");
-
-    Any unit{std::string{"foo"}};
-
-    const auto value = unit.As<score::cpp::string_view>();
-
-    EXPECT_TRUE(value.value() == score::cpp::string_view{"foo"});
-}
-
 TEST(Any, CanAccessStringAsStdStringView)
 {
     RecordProperty("Verifies", "5310867");
@@ -488,29 +471,7 @@ TEST(Any, CanAccessStringAsStdStringView)
     EXPECT_TRUE(value.value() == std::string_view{"foo"});
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedAmpStringView)
-{
-    RecordProperty("Verifies", "5310867");
-    RecordProperty("ASIL", "B");
-    RecordProperty(
-        "Description",
-        "non String-constructed json objects can not be accessed as string_view, cf. RFC-8259 section 3, 7 and 9");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
-    RecordProperty("Priority", "3");
-
-    // Given Any with a specific value
-    Any unit{List{}};
-
-    // When trying to get the value as a different type
-    const auto value = unit.As<score::cpp::string_view>();
-
-    // Then no value is returned, rather the respective error
-    EXPECT_FALSE(value.has_value());
-    EXPECT_EQ(value.error(), Error::kWrongType);
-}
-
-TEST(Any, CanNotRetrieveWronglyTypedStdStringView)
+TEST(Any, CanNotRetrieveWronglyTypedStringView)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");

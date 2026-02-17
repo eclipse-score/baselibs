@@ -60,6 +60,10 @@ score::cpp::expected<NonBlockingFileDescriptor, Error> NonBlockingFileDescriptor
 {
     FcntlImpl fcntl_instance{};
     auto unistd = std::make_unique<internal::UnistdImpl>();  // LCOV_EXCL_LINE: tooling issue
+    // Suppress "AUTOSAR C++14 A20-8-6" rule finding: "std::make_shared shall be used to construct objects owned by
+    // std::shared_ptr" Rationale: The unique_ptr is safely moved into a std::shared_ptr, transferring ownership
+    // correctly The current code behavior is safe and does not cause memory leaks or undefined behavior.
+    // coverity[autosar_cpp14_a20_8_6_violation]
     return Make(file_descriptor, fcntl_instance, std::move(unistd));
 }
 
@@ -124,6 +128,11 @@ void NonBlockingFileDescriptor::CloseFileDescriptor() noexcept
     }
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Rationale: Constructor is intentionally noexcept and performs mandatory
+// dependency creation using std::make_shared. Exception propagation is not
+// allowed, unrecoverable construction failure may terminate.
+// coverity[autosar_cpp14_a15_5_3_violation]
 AbortableBlockingReader::AbortableBlockingReader() noexcept
     : AbortableBlockingReader(std::make_shared<FcntlImpl>(),
                               std::make_shared<SysPollImpl>(),
@@ -247,7 +256,7 @@ score::cpp::expected_blank<Error> AbortableBlockingReader::WaitForData(
 // #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
 // Checks whether we run over QNX or linux to choose the appropriate timeout.
 // coverity[autosar_cpp14_a16_0_1_violation]
-#ifdef __QNXNTO__
+#if defined(__QNX__) && __QNX__ >= 800
     // QNX8 workaround until Ticket-221150 is resolved : add finite timeout so we don't sleep forever if the
     // resource manager fails to wake pollers; keep true blocking elsewhere.
     constexpr std::int8_t kPollTimeoutMs = 50;  // tuneable: 10–100 ms

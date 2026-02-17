@@ -251,8 +251,9 @@ class PeriodicTaskFactory
     // coverity[autosar_cpp14_a0_1_3_violation] false-positive: is used
     constexpr static bool IsReturnOfBoolType()
     {
-        return std::is_same<std::result_of_t<CallableType(const score::cpp::stop_token&, const typename Clock::time_point)>,
-                            bool>::value;
+        return std::is_same<
+            std::invoke_result_t<CallableType, const score::cpp::stop_token&, const typename Clock::time_point>,
+            bool>::value;
     }
 
     template <typename Clock, typename CallableType, typename... ArgumentTypes>

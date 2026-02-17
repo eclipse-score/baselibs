@@ -10,11 +10,4 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file resmgr.cpp
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Resource Manager message writter OSAL class
-/// [Message writter](http://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/r/resmgr_msgwrite.html)
-///
 #include "score/os/qnx/resmgr.h"

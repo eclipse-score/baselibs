@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
@@ -50,6 +51,9 @@ cc_library(
     srcs = ["test_type_collection.cpp"],
     hdrs = ["test_type_collection.h"],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/language/safecpp/safe_math/details:__subpackages__"],
+    visibility = [
+        "@score_baselibs//score/language/safecpp/safe_atomics:__subpackages__",
+        "@score_baselibs//score/language/safecpp/safe_math/details:__subpackages__",
+    ],
     deps = ["@googletest//:gtest"],
 )

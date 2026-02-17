@@ -292,6 +292,23 @@ TEST_F(ChannelImplFixture, ConnectClientInfoReturnsErrorIfNonExistingCoid)
     EXPECT_FALSE(result.has_value());
 }
 
+TEST_F(ChannelImplFixture, ConnectServerInfoReturnsErrorIfNonExistingPid)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Connect Client Info returns Error If Non Existing Coid");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr int32_t invalid_pid{-1};  // kInvalidPid value 0 means current process here
+    constexpr int32_t non_existing_scoid{std::numeric_limits<int32_t>::min()};
+    constexpr _server_info* no_server_info{nullptr};
+
+    const auto result = unit_->ConnectServerInfo(invalid_pid, non_existing_scoid, no_server_info);
+
+    EXPECT_FALSE(result.has_value());
+}
+
 TEST_F(ChannelImplFixture, ConnectAttachReturnsErrorIfInvalidInput)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
@@ -331,7 +348,7 @@ TEST_F(ChannelImplFixture, ConnectAttachAndDetatchFlow)
     EXPECT_TRUE(result.has_value());
 }
 
-TEST_F(ChannelImplFixture, ConnectAttachAndMsgRegisterEventFlow)
+TEST_F(ChannelImplFixture, ConnectAttachAndMsgRegisterUnregisterEventFlow)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
     RecordProperty("ASIL", "B");
@@ -346,7 +363,9 @@ TEST_F(ChannelImplFixture, ConnectAttachAndMsgRegisterEventFlow)
     event.sigev_notify = SIGEV_SIGNAL;
     event.sigev_signo = SIGUSR1;
     event.sigev_value.sival_ptr = NULL;
-    const auto result = this->unit_->MsgRegisterEvent(&event, coid.value());
+    auto result = this->unit_->MsgRegisterEvent(&event, coid.value());
+    EXPECT_TRUE(result.has_value());
+    result = this->unit_->MsgUnregisterEvent(&event);
     EXPECT_TRUE(result.has_value());
 }
 
@@ -360,6 +379,20 @@ TEST_F(ChannelImplFixture, MsgRegisterEventReturnsError)
 
     constexpr sigevent* no_event{nullptr};
     const auto result = this->unit_->MsgRegisterEvent(no_event, kInvalidId);
+    EXPECT_FALSE(result.has_value());
+}
+
+TEST_F(ChannelImplFixture, MsgUnregisterEventReturnsError)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "MsgRegisterEvent returns error if called with invalid connection id");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    struct sigevent event{};
+    SIGEV_SIGNAL_INIT(&event, SIGUSR2);
+    const auto result = this->unit_->MsgUnregisterEvent(&event);
     EXPECT_FALSE(result.has_value());
 }
 
@@ -381,7 +414,9 @@ TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
            MsgDeliverEvent
            MsgReply
                                             MsgSend - unblocked
+                                            ConnectServerInfo - connection still exists
                                             MsgReceivePulse
+                                            MsgUnregisterEvent
     */
     constexpr auto MY_PULSE_CODE{_PULSE_CODE_MINAVAIL + 5};
 
@@ -401,7 +436,7 @@ TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
 
         SIGEV_PULSE_INIT(&msg.event, coid, SIGEV_PULSE_PRIO_INHERIT, MY_PULSE_CODE, 0);
 
-        if (::MsgRegisterEvent(&msg.event, coid) != EOK)
+        if (!this->unit_->MsgRegisterEvent(&msg.event, coid).has_value())
         {
             std::cerr << "error occurs when call MsgRegisterEvent()" << std::endl;
             return -1;
@@ -414,6 +449,14 @@ TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
             return -1;
         }
 
+        // check that the connection still exists
+        auto coid_expected = this->unit_->ConnectServerInfo(0, coid, nullptr);
+        if (!coid_expected.has_value() || (coid_expected.value() != coid))
+        {
+            std::cerr << "error occurs when call ConnectServerInfo()" << std::endl;
+            return -1;
+        }
+
         // wait for the pulse from the server
         const auto rcvid = this->unit_->MsgReceivePulse(chid, &pulse, sizeof(pulse), nullptr);
         if (!rcvid.has_value())
@@ -421,6 +464,13 @@ TEST_F(ChannelImplFixture, MsgDeliverEventFlow)
             std::cerr << "error occurs when call MsgReceivePulse()" << std::endl;
             return -1;
         }
+
+        if (!this->unit_->MsgUnregisterEvent(&msg.event).has_value())
+        {
+            std::cerr << "error occurs when call MsgUnregisterEvent()" << std::endl;
+            return -1;
+        }
+
         // must be equal MY_PULSE_CODE, checking in main thread
         return static_cast<int>(pulse.code);
     });  // end client

@@ -24,9 +24,9 @@ Note: There is a reason to not inherit the `Application class` in the lifecycle 
 ## Static Architecture
 The below component diagrams show the interaction between the user of the base template class and the resource manager skeleton:
 
-![Resource Manager Core template class diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ClassDiagram.puml)
+<img alt="Resource Manager Core template class diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ClassDiagram.puml">
 
-![Resource Manager Core component diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ComponentDiagram.puml)
+<img alt="Resource Manager Core component diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ComponentDiagram.puml">
 
 ### Functional interfacing
 
@@ -62,13 +62,13 @@ The core implementation of the resource manager has the following dependencies w
 ## Dynamic Architecture
 The following diagram represents behavior of the resource manager during the Runtime:
 
-![Resource Manager Core startup sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_StartupSequenceDiagram.puml)
+<img alt="Resource Manager Core startup sequence diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_StartupSequenceDiagram.puml">
 
-![Resource Manager Core runtime sequence diagram](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/blob/master/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_RuntimeSequenceDiagram.puml)
+<img alt="Resource Manager Core runtime sequence diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_RuntimeSequenceDiagram.puml">
 
-![Resource Manager Core activity diagram - Initialize](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Initialize.puml)
+![Resource Manager Core activity diagram - Initialize](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Initialize.puml)
 
-![Resource Manager Core activity diagram - Run](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Run.puml)
+![Resource Manager Core activity diagram - Run](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Run.puml)
 
 ## Performance
 ### Limitations and Constraints

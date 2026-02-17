@@ -10,12 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file ifaddrs_impl.h
-/// @copyright Copyright (C) 2023, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Implementation class for the ifaddrs.h module wrapper
-///
 
 #ifndef SCORE_LIB_OS_IFADDRS_IMPL_H
 #define SCORE_LIB_OS_IFADDRS_IMPL_H
@@ -28,7 +22,7 @@ namespace score
 namespace os
 {
 
-/// @brief Implementation of Ifaddrs
+/// @brief Implementation class for the ifaddrs.h module wrapper
 class IfaddrsImpl final : public Ifaddrs
 {
   public:

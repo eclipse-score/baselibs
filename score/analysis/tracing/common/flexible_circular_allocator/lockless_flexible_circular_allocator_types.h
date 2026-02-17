@@ -13,6 +13,7 @@
 #ifndef SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_TYPES_H
 #define SCORE_ANALYSIS_TRACING_COMMON_LOCKLESS_FLEXIBLE_CIRCULAR_ALLOCATOR_TYPES_H
 
+#include "score/analysis/tracing/common/flexible_circular_allocator/error_codes/lockless_flexible_circular_allocator/error_code.h"
 namespace score
 {
 namespace analysis
@@ -44,7 +45,7 @@ struct ListEntry
     uint8_t flags;
 };
 
-inline std::size_t GetAlignedSize(const std::size_t non_aligned_size, std::size_t alignment)
+inline score::Result<std::size_t> GetAlignedSize(const std::size_t non_aligned_size, std::size_t alignment)
 {
     if (alignment == static_cast<std::size_t>(0U))
     {
@@ -55,13 +56,10 @@ inline std::size_t GetAlignedSize(const std::size_t non_aligned_size, std::size_
     {
         return non_aligned_size;
     }
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: The arithmetic to compute the aligned size is performed entirely with std::size_t values,
-    // ensuring that no truncation occurs. The expression 'non_aligned_size + alignment - remainder' calculates
-    // the next multiple of 'alignment' correctly, assuming valid input, without any type conversions that could
-    // result in data loss.
-    // coverity[autosar_cpp14_a4_7_1_violation]
+    if (non_aligned_size > (std::numeric_limits<std::size_t>::max() - alignment))
+    {
+        return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+    }
     return non_aligned_size + alignment - remainder;
 }
 }  // namespace tracing

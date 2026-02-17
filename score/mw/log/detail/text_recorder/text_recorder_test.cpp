@@ -111,8 +111,8 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, WillObtainEmptySlotsWhenNoSlotsRese
         return {};
     }));
 
-    constexpr auto check_log_level_for_console = true;
-    const auto recorder = std::make_unique<TextRecorder>(config_, std::move(backend_mock), check_log_level_for_console);
+    constexpr auto kCheckLogLevelForConsole = true;
+    const auto recorder = std::make_unique<TextRecorder>(config_, std::move(backend_mock), kCheckLogLevelForConsole);
 
     const auto slot = recorder->StartRecord(context_id_, kActiveLogLevel);
     EXPECT_FALSE(slot.has_value());
@@ -159,11 +159,11 @@ TEST_F(TextRecorderFixture, TooManyArgumentsWillYieldTruncatedLog)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
-    constexpr std::size_t byte_size_of_space_seperator = 1;
+    constexpr std::size_t kByteSizeOfSpaceSeperator = 1;
     const std::string_view message{"byte"};
 
     const std::size_t number_of_arguments =
-        log_record_.getLogEntry().payload.capacity() / (message.size() + byte_size_of_space_seperator);
+        log_record_.getLogEntry().payload.capacity() / (message.size() + kByteSizeOfSpaceSeperator);
     for (std::size_t i = 0; i < number_of_arguments + 5; ++i)
     {
         recorder_->Log(SlotHandle{}, message);
@@ -430,29 +430,29 @@ TEST(TextRecorderTests, DefaultLogLevelShallBeUsedIfCheckForConsoleIsDisabled)
     RecordProperty("TestType", "Interface test");
     RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
 
-    constexpr auto default_log_level = LogLevel::kDebug;
-    constexpr auto more_than_default_log_level = LogLevel::kVerbose;
-    constexpr auto console_log_level = LogLevel::kOff;
-    static_assert(more_than_default_log_level > default_log_level,
+    constexpr auto kDefaultLogLevel = LogLevel::kDebug;
+    constexpr auto kMoreThanDefaultLogLevel = LogLevel::kVerbose;
+    constexpr auto kConsoleLogLevel = LogLevel::kOff;
+    static_assert(kMoreThanDefaultLogLevel > kDefaultLogLevel,
                   "Test only makes sense if more_than_default_log_level is higher than default_log_level.");
-    static_assert(default_log_level > console_log_level,
+    static_assert(kDefaultLogLevel > kConsoleLogLevel,
                   "Test only makes sense if default log level is higher than console log level.");
 
     // Test setup is here since we cannot reuse the fixture here because we have a specific construction use case.
     Configuration config{};
-    config.SetDefaultLogLevel(default_log_level);
-    config.SetDefaultConsoleLogLevel(console_log_level);
+    config.SetDefaultLogLevel(kDefaultLogLevel);
+    config.SetDefaultConsoleLogLevel(kConsoleLogLevel);
     auto backend = std::make_unique<NiceMock<BackendMock>>();
     ON_CALL(*backend, ReserveSlot()).WillByDefault(Return(SlotHandle{}));
     LogRecord log_record{};
     ON_CALL(*backend, GetLogRecord(testing::_)).WillByDefault(ReturnRef(log_record));
 
     // When the check for console is disabled...
-    constexpr auto check_log_level_for_console = false;
-    auto recorder = std::make_unique<TextRecorder>(config, std::move(backend), check_log_level_for_console);
+    constexpr auto kCheckLogLevelForConsole = false;
+    auto recorder = std::make_unique<TextRecorder>(config, std::move(backend), kCheckLogLevelForConsole);
     // expect that the default log level is checked;
-    EXPECT_TRUE(recorder->StartRecord(kContext, default_log_level).has_value());
-    EXPECT_FALSE(recorder->StartRecord(kContext, more_than_default_log_level).has_value());
+    EXPECT_TRUE(recorder->StartRecord(kContext, kDefaultLogLevel).has_value());
+    EXPECT_FALSE(recorder->StartRecord(kContext, kMoreThanDefaultLogLevel).has_value());
 }
 
 TEST(TextRecorderTests, TextRecorderShouldClearSlotOnStart)
@@ -470,8 +470,8 @@ TEST(TextRecorderTests, TextRecorderShouldClearSlotOnStart)
     ON_CALL(*backend, ReserveSlot()).WillByDefault(Return(SlotHandle{}));
     LogRecord log_record{};
     ON_CALL(*backend, GetLogRecord(testing::_)).WillByDefault(ReturnRef(log_record));
-    constexpr auto check_log_level_for_console = false;
-    auto recorder = std::make_unique<TextRecorder>(config, std::move(backend), check_log_level_for_console);
+    constexpr auto kCheckLogLevelForConsole = false;
+    auto recorder = std::make_unique<TextRecorder>(config, std::move(backend), kCheckLogLevelForConsole);
 
     // Simulate the case that a slot already contains data from a previous message.
     recorder->StartRecord(kContext, kActiveLogLevel);

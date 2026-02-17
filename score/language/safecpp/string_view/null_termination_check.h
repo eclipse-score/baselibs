@@ -66,8 +66,8 @@ template <typename T>
 [[nodiscard]] constexpr bool IsNullTerminatedViewType() noexcept
 {
     return std::disjunction_v<
-        std::is_convertible<T, safecpp::details::zspan<std::add_const_t<typename T::value_type>>>,
-        std::is_convertible<T, safecpp::basic_zstring_view<std::remove_const_t<typename T::value_type>>>>;
+        details::is_null_terminated_string_type<T>,
+        std::is_convertible<T, safecpp::details::zspan<std::add_const_t<typename T::value_type>>>>;
 }
 
 ///
@@ -121,22 +121,11 @@ template <typename ViewType,
     }
     else if constexpr (details::is_string_view<VT>::value)
     {
-        // TODO (Ticket-214240): static_assert here once the codebase got fully migrated to `safecpp::zstring_view`
-        class EmitCompilerWarningFor
-        {
-          public:
-            [[deprecated(
-                "CAUTION: The underlying buffer of a string_view does NOT guarantee any null-termination! "
-                "Instead, migrate your code to make use of 'safecpp::zstring_view' in order to obtain "
-                "such guarantee")]] constexpr static void
-            DoNotExpectNullTerminationOfStringViewsUnderlyingBuffer() noexcept
-            {
-            }
-        };
-        // below line is required as such so that the emitted warning also prints the source location of our caller
-        EmitCompilerWarningFor::DoNotExpectNullTerminationOfStringViewsUnderlyingBuffer();
-        // NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage) this code will get removed, see Ticket-214240
-        return view.data();
+        static_assert(safecpp::IsNullTerminatedViewType<VT>() /* such predicate being always false here is intended */,
+                      "CAUTION - The underlying buffer of a string_view does NOT guarantee any null-termination! "
+                      "Instead, migrate your code to make use of 'safecpp::zstring_view' in order to obtain "
+                      "such guarantee.");
+        return nullptr;  // LCOV_EXCL_LINE: unreachable due to above static_assert
     }
     else
     {

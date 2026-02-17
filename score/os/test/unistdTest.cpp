@@ -921,9 +921,22 @@ TEST_F(UnistdFixture, UnistdAlarmTriggersInExpectedTime)
     static bool triggered = false;
 
     score::os::SignalImpl sig{};
-    sig.signal(SIGALRM, [](int) {
+    struct sigaction sig_handler;
+    struct sigaction old_sigaction;
+    sig_handler.sa_handler = [](int) {
         triggered = true;
-    });
+    };
+    // Need to fully initialize otherwise memchecker complains
+    sig_handler.sa_flags = 0;
+    sigset_t sig_set{};
+    sig_handler.sa_mask = sig_set;
+    old_sigaction.sa_mask = sig_set;
+    old_sigaction.sa_flags = 0;
+    old_sigaction.sa_handler = SIG_DFL;
+
+    auto val = sig.SigAction(SIGALRM, sig_handler, old_sigaction);
+    EXPECT_TRUE(val.has_value());
+
     EXPECT_EQ(unit_->alarm(seconds), 0);
     std::this_thread::sleep_for(std::chrono::seconds{seconds} + std::chrono::milliseconds{100});
     EXPECT_TRUE(triggered);
@@ -1132,6 +1145,64 @@ TEST(Unistd, PMRDefaultShallReturnImplInstance)
     const auto default_instance = score::os::Unistd::Default(memory_resource);
     ASSERT_TRUE(default_instance != nullptr);
     EXPECT_NO_THROW(std::ignore = dynamic_cast<score::os::internal::UnistdImpl*>(default_instance.get()));
+}
+
+TEST_F(UnistdFixture, GetpwnamReturnsNoErrorIfPassValidUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam Returns No Error If Pass Valid User");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "root";
+    constexpr std::uint32_t kMaxBufferSize = 16384U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+    constexpr auto kUserUid = 0;
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_TRUE(val.has_value());
+    EXPECT_NE(result, nullptr);
+    EXPECT_EQ(result->pw_uid, kUserUid);
+}
+
+TEST_F(UnistdFixture, GetpwnamReturnsErrorIfBufferIsToSmall)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r Returns Error If Buffer Is To Small");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "root";
+    constexpr std::uint32_t kMaxBufferSize = 1U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_FALSE(val.has_value());
+    EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(UnistdFixture, GetpwnamReturnsErrorIfPassInvalidUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r Returns Nullptr Result If Pass Invalid User");
+    RecordProperty("TestType", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    constexpr auto kUserName = "not_existing_user";
+    constexpr std::uint32_t kMaxBufferSize = 16384U;
+    passwd pwd;
+    passwd* result = nullptr;
+    std::vector<char> buffer(kMaxBufferSize);
+
+    const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_EQ(result, nullptr);
 }
 
 }  // namespace

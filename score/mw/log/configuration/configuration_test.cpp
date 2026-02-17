@@ -35,10 +35,10 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsBelowThresho
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
-    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{kCtx}, LogLevel::kError}};
+    const std::string_view k_ctx{"CTX1"};
+    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{k_ctx}, LogLevel::kError}};
     config.SetContextLogLevel(context_log_level_map);
-    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kFatal, kCtx));
+    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kFatal, k_ctx));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsEqualThreshold)
@@ -51,10 +51,10 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsEqualThresho
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
-    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{kCtx}, LogLevel::kError}};
+    const std::string_view k_ctx{"CTX1"};
+    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{k_ctx}, LogLevel::kError}};
     config.SetContextLogLevel(context_log_level_map);
-    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kError, kCtx));
+    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kError, k_ctx));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsAboveThreshold)
@@ -67,10 +67,10 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsAboveThresh
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
-    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{kCtx}, LogLevel::kError}};
+    const std::string_view k_ctx{"CTX1"};
+    const ContextLogLevelMap context_log_level_map{{LoggingIdentifier{k_ctx}, LogLevel::kError}};
     config.SetContextLogLevel(context_log_level_map);
-    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kInfo, kCtx));
+    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kInfo, k_ctx));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqualDefaultThreshold)
@@ -84,9 +84,9 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqual
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
+    const std::string_view k_ctx{"CTX1"};
     config.SetDefaultLogLevel(LogLevel::kInfo);
-    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kInfo, kCtx));
+    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kInfo, k_ctx));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaultThreshold)
@@ -100,9 +100,9 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaul
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
+    const std::string_view k_ctx{"CTX1"};
     config.SetDefaultLogLevel(LogLevel::kInfo);
-    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kVerbose, kCtx));
+    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kVerbose, k_ctx));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqualDefaultThresholdForConsole)
@@ -118,9 +118,9 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnTrueIfLogLevelIsAboveOrEqual
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
+    const std::string_view k_ctx{"CTX1"};
     config.SetDefaultConsoleLogLevel(LogLevel::kInfo);
-    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kInfo, kCtx, true));
+    EXPECT_TRUE(config.IsLogLevelEnabled(LogLevel::kInfo, k_ctx, true));
 }
 
 TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaultThresholdForConsole)
@@ -135,9 +135,9 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaul
 
     Configuration config{};
 
-    const std::string_view kCtx{"CTX1"};
+    const std::string_view k_ctx{"CTX1"};
     config.SetDefaultConsoleLogLevel(LogLevel::kInfo);
-    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kVerbose, kCtx, true));
+    EXPECT_FALSE(config.IsLogLevelEnabled(LogLevel::kVerbose, k_ctx, true));
 }
 
 TEST(ConfigurationTestSuite, AppidWithMoreThanFourCharactersShallBeTruncated)

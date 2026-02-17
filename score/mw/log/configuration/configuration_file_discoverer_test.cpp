@@ -37,30 +37,30 @@ const std::string kLocalConfigFileInPwd{"logging.json"};
 const std::string kLocalConfigFileInExecPath{"/opt/app/etc/logging.json"};
 const std::string kExecPath{"/opt/app/bin/app"};
 const score::os::Error kError{score::os::Error::createFromErrno(0)};
-static const char* kEnvConfigFilePath = "/persistent/app/logging.json";
+const char* gKEnvConfigFilePath = "/persistent/app/logging.json";
 
 class ConfigurationFileDiscovererFixture : public ::testing::Test
 {
   public:
     void SetUp() override
     {
-        ON_CALL(*unistd_mock_, access(_, _))
+        ON_CALL(*unistd_mock, access(_, _))
             .WillByDefault([this](const char* pathname, score::os::Unistd::AccessMode mode) {
                 return this->OnAccessCall(pathname, mode);
             });
 
-        ON_CALL(*path_mock_, get_exec_path()).WillByDefault([this]() {
+        ON_CALL(*path_mock, get_exec_path()).WillByDefault([this]() {
             return this->OnExecPathCall();
         });
 
-        ON_CALL(*path_mock_, get_parent_dir(_))
-            .WillByDefault([libgen_mock_ = libgen_mock_pmr_.get()](const std::string& path) {
+        ON_CALL(*path_mock, get_parent_dir(_))
+            .WillByDefault([libgen_mock = libgen_mock_pmr.get()](const std::string& path) {
                 std::vector<std::string::value_type> path_mutable{path.begin(), path.end()};
                 path_mutable.push_back('\0');
-                return std::string{libgen_mock_->dirname(path_mutable.data())};
+                return std::string{libgen_mock->dirname(path_mutable.data())};
             });
 
-        ON_CALL(*stdlib_mock_, getenv(_)).WillByDefault(::testing::Return(const_cast<char*>(kEnvConfigFilePath)));
+        ON_CALL(*stdlib_mock, getenv(_)).WillByDefault(::testing::Return(const_cast<char*>(gKEnvConfigFilePath)));
     }
 
     void TearDown() override {}
@@ -74,7 +74,7 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
             return result;
         }
 
-        if (std::find(existing_files_.begin(), existing_files_.end(), std::string{pathname}) != existing_files_.end())
+        if (std::find(existing_files.begin(), existing_files.end(), std::string{pathname}) != existing_files.end())
         {
             result = score::cpp::expected_blank<score::os::Error>{};
         }
@@ -82,11 +82,11 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
         return result;
     }
 
-    score::cpp::expected<std::string, score::os::Error> OnExecPathCall()
+    score::cpp::expected<std::string, score::os::Error> OnExecPathCall() const
     {
         score::cpp::expected<std::string, score::os::Error> result{score::cpp::make_unexpected(kError)};
 
-        if (!exec_path_shall_fail_)
+        if (!exec_path_shall_fail)
         {
             result = kExecPath;
         }
@@ -96,35 +96,35 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 
     void AddExistingFile(std::string path)
     {
-        existing_files_.push_back(path);
+        existing_files.push_back(path);
     }
 
     void SetExecPathShallFail(bool shall_fail = true)
     {
-        exec_path_shall_fail_ = shall_fail;
+        exec_path_shall_fail = shall_fail;
     }
 
-    score::cpp::pmr::memory_resource* memory_resource_ = score::cpp::pmr::get_default_resource();
+    score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
 
-    score::cpp::pmr::unique_ptr<os::Libgen> libgen_mock_pmr_ = os::Libgen::Default(memory_resource_);
+    score::cpp::pmr::unique_ptr<os::Libgen> libgen_mock_pmr = os::Libgen::Default(memory_resource);
 
-    score::cpp::pmr::unique_ptr<os::UnistdMock> unistd_mock_pmr = score::cpp::pmr::make_unique<os::UnistdMock>(memory_resource_);
-    score::cpp::pmr::unique_ptr<os::PathMock> path_mock_pmr = score::cpp::pmr::make_unique<os::PathMock>(memory_resource_);
-    score::cpp::pmr::unique_ptr<os::StdlibMock> stdlib_mock_pmr = score::cpp::pmr::make_unique<os::StdlibMock>(memory_resource_);
+    score::cpp::pmr::unique_ptr<os::UnistdMock> unistd_mock_pmr = score::cpp::pmr::make_unique<os::UnistdMock>(memory_resource);
+    score::cpp::pmr::unique_ptr<os::PathMock> path_mock_pmr = score::cpp::pmr::make_unique<os::PathMock>(memory_resource);
+    score::cpp::pmr::unique_ptr<os::StdlibMock> stdlib_mock_pmr = score::cpp::pmr::make_unique<os::StdlibMock>(memory_resource);
 
-    os::UnistdMock* unistd_mock_ = unistd_mock_pmr.get();
-    os::PathMock* path_mock_ = path_mock_pmr.get();
-    os::StdlibMock* stdlib_mock_ = stdlib_mock_pmr.get();
+    os::UnistdMock* unistd_mock = unistd_mock_pmr.get();
+    os::PathMock* path_mock = path_mock_pmr.get();
+    os::StdlibMock* stdlib_mock = stdlib_mock_pmr.get();
 
-    score::cpp::pmr::unique_ptr<os::Unistd> unistd_mock_pmr_ = std::move(unistd_mock_pmr);
-    score::cpp::pmr::unique_ptr<os::Path> path_mock_pmr_ = std::move(path_mock_pmr);
-    score::cpp::pmr::unique_ptr<os::Stdlib> stdlib_mock_pmr_ = std::move(stdlib_mock_pmr);
+    score::cpp::pmr::unique_ptr<os::Unistd> unistd_mock_ptr = std::move(unistd_mock_pmr);
+    score::cpp::pmr::unique_ptr<os::Path> path_mock_ptr = std::move(path_mock_pmr);
+    score::cpp::pmr::unique_ptr<os::Stdlib> stdlib_mock_ptr = std::move(stdlib_mock_pmr);
 
-    ConfigurationFileDiscoverer discoverer_{std::move(path_mock_pmr_),
-                                            std::move(stdlib_mock_pmr_),
-                                            std::move(unistd_mock_pmr_)};
-    std::vector<std::string> existing_files_;
-    bool exec_path_shall_fail_{};
+    ConfigurationFileDiscoverer discoverer{std::move(path_mock_ptr),
+                                           std::move(stdlib_mock_ptr),
+                                           std::move(unistd_mock_ptr)};
+    std::vector<std::string> existing_files;
+    bool exec_path_shall_fail{};
 };
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfigurationFile)
@@ -139,7 +139,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfiguratio
     AddExistingFile(kGlobalConfigFile);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 1);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
 }
@@ -160,7 +160,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     AddExistingFile(kLocalConfigFileInPwd);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
     EXPECT_EQ(result.at(1), kLocalConfigFileInPwdEtc);
@@ -180,7 +180,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     AddExistingFile(kLocalConfigFileInPwd);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
     EXPECT_EQ(result.at(1), kLocalConfigFileInPwd);
@@ -203,7 +203,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     AddExistingFile(kLocalConfigFileInPwd);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
     EXPECT_EQ(result.at(1), kLocalConfigFileInExecPath);
@@ -221,13 +221,13 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
-    AddExistingFile(kEnvConfigFilePath);
+    AddExistingFile(gKEnvConfigFilePath);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
-    EXPECT_EQ(result.at(1), kEnvConfigFilePath);
+    EXPECT_EQ(result.at(1), gKEnvConfigFilePath);
 }
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc)
@@ -243,13 +243,13 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     // When ...
     AddExistingFile(kGlobalConfigFile);
     AddExistingFile(kLocalConfigFileInPwdEtc);
-    AddExistingFile(kEnvConfigFilePath);
+    AddExistingFile(gKEnvConfigFilePath);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
-    EXPECT_EQ(result.at(1), kEnvConfigFilePath);
+    EXPECT_EQ(result.at(1), gKEnvConfigFilePath);
 }
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwd)
@@ -265,13 +265,13 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     // When ...
     AddExistingFile(kGlobalConfigFile);
     AddExistingFile(kLocalConfigFileInPwd);
-    AddExistingFile(kEnvConfigFilePath);
+    AddExistingFile(gKEnvConfigFilePath);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
-    EXPECT_EQ(result.at(1), kEnvConfigFilePath);
+    EXPECT_EQ(result.at(1), gKEnvConfigFilePath);
 }
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath)
@@ -287,13 +287,13 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     // When ...
     AddExistingFile(kGlobalConfigFile);
     AddExistingFile(kLocalConfigFileInExecPath);
-    AddExistingFile(kEnvConfigFilePath);
+    AddExistingFile(gKEnvConfigFilePath);
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 2);
     EXPECT_EQ(result.at(0), kGlobalConfigFile);
-    EXPECT_EQ(result.at(1), kEnvConfigFilePath);
+    EXPECT_EQ(result.at(1), gKEnvConfigFilePath);
 }
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfNothingExists)
@@ -305,7 +305,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfNothingEx
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     // When no file exists then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 0);
 }
 
@@ -322,7 +322,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfExecPathF
     SetExecPathShallFail();
 
     // ... then ...
-    const auto result = discoverer_.FindConfigurationFiles();
+    const auto result = discoverer.FindConfigurationFiles();
     EXPECT_EQ(result.size(), 0);
 }
 

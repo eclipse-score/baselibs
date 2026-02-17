@@ -1,0 +1,51 @@
+@startuml sequence_diagram
+
+participant "TracingApp" as TracingApp
+participant "ObjectFacto" as ObjectFacto
+participant "TraceJobAllocator" as TraceJobAllocator
+participant "local/shm_data_chunk_list" as local_shm_data_chunk_list
+participant "FlexibleAllocator" as FlexibleAllocator
+participant "LtpmDaemon" as LtpmDaemon
+
+loop interaction frame
+
+    TracingApp -> ObjectFacto : GenericTraceAPI::Trace(trace_client_id, meta_info, local_data_chunk_list);
+    activate TracingApp
+    deactivate TracingApp
+    activate ObjectFacto
+    ObjectFacto -> TraceJobAllocator : std::make_unique<TraceJobAllocator>(\n        container, ring_buffer_memory_resource, memory_resource, handle, flexible_allocator);
+    deactivate ObjectFacto
+    activate TraceJobAllocator
+    TraceJobAllocator -> local_shm_data_chunk_list : SaveToSharedMemory(trace_metadata_memory_resource_, trace_metadata_memory_handle_, flexible_allocator_);
+    activate local_shm_data_chunk_list
+    deactivate TraceJobAllocator
+    local_shm_data_chunk_list -> FlexibleAllocator : flexible_allocator->GetAvailableMemory()
+    deactivate local_shm_data_chunk_list
+    activate FlexibleAllocator
+    FlexibleAllocator --> local_shm_data_chunk_list : There is enough memory
+    deactivate FlexibleAllocator
+    activate local_shm_data_chunk_list
+    local_shm_data_chunk_list -> FlexibleAllocator : flexible_allocator->Allocate(sizeof(ShmChunkVector), alignof(std::max_align_t));
+    activate FlexibleAllocator
+    deactivate local_shm_data_chunk_list
+    deactivate FlexibleAllocator
+    loop for all chunklist elements
+        local_shm_data_chunk_list -> FlexibleAllocator : flexible_allocator->Allocate(element_size,  alignof(std::max_align_t));
+        activate FlexibleAllocator
+        deactivate FlexibleAllocator
+        activate local_shm_data_chunk_list
+        deactivate local_shm_data_chunk_list
+    end
+    loop flexible_allocator_->Deallocate(vector, sizeof(vector));
+        TraceJobAllocator -> TraceJobAllocator : Free trace elements
+        activate TraceJobAllocator
+        deactivate TraceJobAllocator
+    end
+end
+loop Daemon will mark consumed ring buffer elements as free
+    LtpmDaemon -> LtpmDaemon : Free trace elements
+    activate LtpmDaemon
+    deactivate LtpmDaemon
+end
+
+@enduml

@@ -48,6 +48,7 @@ constexpr std::size_t no_bytes{0U};
 constexpr _msg_info* no_info{nullptr};
 constexpr _client_info* no_client_info{nullptr};
 constexpr std::int32_t ngroups{0};
+constexpr _server_info* no_server_info{nullptr};
 constexpr sigevent* no_event{nullptr};
 
 // Mock test
@@ -174,6 +175,18 @@ TEST_F(ChannelMockTest, ConnectClientInfo)
     score::os::Channel::instance().ConnectClientInfo(invalid_scoid, no_client_info, ngroups);
 }
 
+TEST_F(ChannelMockTest, ConnectServerInfo)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Connect Client Info");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    EXPECT_CALL(channelmock, ConnectServerInfo);
+    score::os::Channel::instance().ConnectServerInfo(kInvalidPid, invalid_id, no_server_info);
+}
+
 TEST_F(ChannelMockTest, ConnectAttach)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
@@ -208,6 +221,18 @@ TEST_F(ChannelMockTest, MsgRegisterEvent)
 
     EXPECT_CALL(channelmock, MsgRegisterEvent);
     score::os::Channel::instance().MsgRegisterEvent(no_event, invalid_id);
+}
+
+TEST_F(ChannelMockTest, MsgUnregisterEvent)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Msg Register Event");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+
+    EXPECT_CALL(channelmock, MsgUnregisterEvent);
+    score::os::Channel::instance().MsgUnregisterEvent(no_event);
 }
 
 // Tests of the real stuff

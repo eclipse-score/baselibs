@@ -194,8 +194,6 @@ std::int32_t internal::fcntl_helper::OperationFlagToInteger(const Fcntl::Operati
     return static_cast<std::int32_t>(native_flags);
 }
 
-}  // namespace score::os
-
 std::unique_ptr<score::os::Fcntl> score::os::Fcntl::Default() noexcept
 {
     return std::make_unique<score::os::FcntlImpl>();
@@ -208,7 +206,13 @@ score::os::Fcntl& score::os::Fcntl::instance() noexcept
     return select_instance(instance);
 }
 
+// Justification: The identifier name of a non-member object with static storage duration or
+// static function shall not be reused within a namespace.
+// static function here is overloaded and used as a wrapper.
+// coverity[autosar_cpp14_a2_10_4_violation]
 score::cpp::pmr::unique_ptr<score::os::Fcntl> score::os::Fcntl::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
 {
     return score::cpp::pmr::make_unique<score::os::FcntlImpl>(memory_resource);
 }
+
+}  // namespace score::os

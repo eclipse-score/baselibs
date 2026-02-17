@@ -240,7 +240,7 @@ class DelayedTaskFactory
   private:
     template <typename Clock, typename CallableType, typename... ArgumentTypes>
     using result_type =
-        std::result_of_t<CallableType && (score::cpp::stop_token, typename Clock::time_point, ArgumentTypes&&...)>;
+        std::invoke_result_t<CallableType, score::cpp::stop_token, typename Clock::time_point, ArgumentTypes&&...>;
 
   public:
     /**

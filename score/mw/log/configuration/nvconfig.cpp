@@ -27,10 +27,10 @@ NvConfig::NvConfig(std::unordered_map<std::string, config::NvMsgDescriptor> map)
 {
 }
 
-const config::NvMsgDescriptor* NvConfig::getDltMsgDesc(const std::string& typeName) const noexcept
+const config::NvMsgDescriptor* NvConfig::GetDltMsgDesc(const std::string& type_name) const noexcept
 {
     auto desc =
-        typemap_.find(typeName);  //  Future C++20 optimiazation by directly using std::string_view as find() argument
+        typemap_.find(type_name);  //  Future C++20 optimiazation by directly using std::string_view as find() argument
 
     if (desc != typemap_.end())
     {

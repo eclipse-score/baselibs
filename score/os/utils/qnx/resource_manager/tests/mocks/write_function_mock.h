@@ -10,13 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2022, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
-/// @brief Mock class for the write handler interface used only for testing
-///
-///
 
 #ifndef SCORE_LIB_OS_QNX_RESOURCE_TEST_WRITE_HANDLER_INTERFACE_MOCK_H
 #define SCORE_LIB_OS_QNX_RESOURCE_TEST_WRITE_HANDLER_INTERFACE_MOCK_H
@@ -31,6 +24,9 @@ namespace os
 {
 namespace test
 {
+///
+/// @brief Mock class for the write handler interface used only for testing
+///
 class WriteFunctionMock final : public IWriteFunction
 {
   public:

@@ -13,10 +13,15 @@
 #include "score/os/sys_poll.h"
 #include "score/os/sys_poll_impl.h"
 
+namespace score
+{
+namespace os
+{
+
 score::os::SysPoll& score::os::SysPoll::instance() noexcept
 {
-    static SysPollImpl instance;
-    return select_instance(instance);
+    static SysPollImpl syspoll_instance;
+    return select_instance(syspoll_instance);
 }
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
@@ -26,3 +31,6 @@ score::cpp::pmr::unique_ptr<score::os::SysPoll> score::os::SysPoll::Default(scor
 {
     return score::cpp::pmr::make_unique<score::os::SysPollImpl>(memory_resource);
 }
+
+}  // namespace os
+}  // namespace score

@@ -10,10 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-///
-/// @file
-/// @copyright Copyright (C) 2023, Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
-///
 
 #ifndef SCORE_LIB_OS_QNX_THREAD_CTL_H
 #define SCORE_LIB_OS_QNX_THREAD_CTL_H
