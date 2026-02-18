@@ -73,6 +73,6 @@ cc_library(
     ],
     deps = [
         ":linux_header",
-        "//third_party/libcap2",
+        "//:libcap2-dev",
     ],
 )

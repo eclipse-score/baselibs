@@ -405,7 +405,7 @@ cc_library(
     name = "valgrind_on_host",
     deps = select({
         "@platforms//os:qnx": [],
-        "//conditions:default": ["//third_party/valgrind"],
+        "//conditions:default": ["//:valgrind"],
     }),
 )
 
