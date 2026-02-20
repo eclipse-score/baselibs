@@ -11,6 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 name: Bazel Build (Linux)
+permissions:
+  contents: read
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -22,6 +24,22 @@ on:
   workflow_call:
 jobs:
   linux-build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - bazel-config: bl-x86_64-linux
+            bazel-build-target: "//score/..."
+            bazel-test-target: >-
+              //score/...
+              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+          - bazel-config: bl-aarch64-linux
+            bazel-build-target: >-
+              //score/result/...
+              //score/filesystem/...
+            bazel-test-target: >-
+              //score/result/...
+              //score/filesystem/...
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -30,14 +48,16 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.18.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.job }}
+          disk-cache: ${{ github.job }}_${{ matrix.bazel-config }}
           repository-cache: true
           cache-save: ${{ github.event_name == 'push' }}
+      - name: Install QEMU
+        run: |
+          sudo apt-get update
+          sudo apt install -y qemu-user
       - name: Bazel Build
         run: |
-          bazel build --config bl-x86_64-linux -- //score/...
+          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
         run: |
-          bazel test --config bl-x86_64-linux -- //score/... \
-          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
-          -//score/containers:dynamic_array_test
+          bazel test --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-test-target }}
