@@ -131,7 +131,7 @@ deb(
     visibility = ["//visibility:public"],
 )
 
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "score_nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
 
 #############################################################
