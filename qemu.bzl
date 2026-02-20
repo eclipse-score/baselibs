@@ -25,7 +25,7 @@ locate the target architecture's shared libraries at runtime.
 Prerequisites:
     The QEMU user-mode emulator for the target architecture must be installed on
     the host system and available on $PATH. For example, to emulate aarch64
-    binaries on Debian/Ubuntu, install the ``qemu-user-static`` package.
+    binaries on Debian/Ubuntu, install the ``qemu-user`` package.
 """
 
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")

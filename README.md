@@ -89,10 +89,10 @@ Use the same command as for x86_64 Linux, but replace `--config=bl-x86_64-linux`
 
 When cross-compiling for AArch64, test binaries cannot run natively on an x86_64 host. They are executed locally using [QEMU user-mode emulation](https://www.qemu.org/docs/master/user/main.html).
 
-**Prerequisite:** Install the `qemu-user-static` package on your host system:
+**Prerequisite:** Install the `qemu-user` package on your host system:
 
 ```bash
-sudo apt install qemu-user-static # Debian/Ubuntu
+sudo apt install qemu-user # Debian/Ubuntu
 ```
 
 Verify the installation:
