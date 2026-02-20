@@ -11,6 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 name: Bazel Build (Linux)
+permissions:
+  contents: read
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -22,7 +24,27 @@ on:
   workflow_call:
 jobs:
   linux-build-and-test:
-    runs-on: ubuntu-latest
+    name: Build and Test ${{ matrix.bazel-config }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - bazel-config: bl-x86_64-linux
+            bazel-build-target: "//score/..."
+            bazel-test-target: >-
+              //score/...
+              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+            bazel-test-extra-flags: ""
+          - bazel-config: bl-aarch64-linux
+            bazel-build-target: "//score/..."
+            bazel-test-target: >-
+              //score/...
+              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+              -//score/os/test:acl_test
+              -//score/os/test:errno_test
+              -//score/os/test:socket_test
+            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -30,14 +52,23 @@ jobs:
         uses: bazel-contrib/setup-bazel@0.18.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.job }}
+          disk-cache: ${{ github.job }}_${{ matrix.bazel-config }}
           repository-cache: true
           cache-save: ${{ github.event_name == 'push' }}
+      - name: Install QEMU
+        if: matrix.bazel-config == 'bl-aarch64-linux'
+        run: |
+          sudo apt-get update
+          sudo apt install -y qemu-user
       - name: Bazel Build
         run: |
-          bazel build --config bl-x86_64-linux -- //score/...
+          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
         run: |
-          bazel test --config bl-x86_64-linux -- //score/... \
-          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
-          -//score/containers:dynamic_array_test
+          bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bazel-testlogs-${{ matrix.bazel-config }}
+          path: bazel-testlogs/**/test.log

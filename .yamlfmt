@@ -1,2 +1,5 @@
 exclude:
   - score/language/futurecpp/.clang-format
+formatter:
+  type: basic
+  scan_folded_as_literal: true
