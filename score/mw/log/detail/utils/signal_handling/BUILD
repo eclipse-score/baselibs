@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 
 clang_tidy_extra_checks(
@@ -46,5 +47,33 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/os/utils:signal",
+    ],
+)
+
+cc_test(
+    name = "unit_test",
+    srcs = [
+        "signal_handling_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    visibility = ["@score_baselibs//score/mw/log/detail:__pkg__"],
+    deps = [
+        ":signal_handling",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
+        "@score_baselibs//score/os/utils/mocklib:signal_mock",
+    ],
+)
+
+cc_unit_test_suites_for_host_and_qnx(
+    name = "unit_tests",
+    cc_unit_tests = [
+        ":unit_test",
+    ],
+    visibility = [
+        "@score_baselibs//score/mw/log/detail:__pkg__",
     ],
 )
