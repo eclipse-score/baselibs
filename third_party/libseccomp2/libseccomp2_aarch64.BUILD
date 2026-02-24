@@ -1,10 +1,11 @@
 cc_library(
-    name = "libcap2",
+    name = "libseccomp2",
     srcs = [
-        "usr/lib/x86_64-linux-gnu/libcap.a",
+        "usr/lib/aarch64-linux-gnu/libseccomp.a",
     ],
     hdrs = [
-        "usr/include/sys/capability.h",
+        "usr/include/seccomp.h",
+        "usr/include/seccomp-syscalls.h",
     ],
     includes = [
         "usr/include/",

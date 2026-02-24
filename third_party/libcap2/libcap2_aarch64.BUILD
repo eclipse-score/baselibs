@@ -1,7 +1,7 @@
 cc_library(
     name = "libcap2",
     srcs = [
-        "usr/lib/x86_64-linux-gnu/libcap.a",
+        "usr/lib/aarch64-linux-gnu/libcap.a",
     ],
     hdrs = [
         "usr/include/sys/capability.h",
