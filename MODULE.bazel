@@ -100,7 +100,7 @@ deb(
 
 deb(
     name = "acl-deb-aarch64",
-    build = "//third_party/acl:acl_aarch64.BUILD",
+    build = "//third_party/acl:acl.BUILD",
     urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.2.52-3build1_arm64.deb"],
     visibility = ["//visibility:public"],
 )
@@ -140,7 +140,7 @@ deb(
 
 deb(
     name = "libcap2-dev-deb-aarch64",
-    build = "//third_party/libcap2:libcap2_aarch64.BUILD",
+    build = "//third_party/libcap2:libcap2.BUILD",
     urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/libc/libcap2/libcap-dev_2.25-1.2_arm64.deb"],
     visibility = ["//visibility:public"],
 )
@@ -167,7 +167,7 @@ deb(
 
 deb(
     name = "libseccomp2-dev-deb-aarch64",
-    build = "//third_party/libseccomp2:libseccomp2_aarch64.BUILD",
+    build = "//third_party/libseccomp2:libseccomp2.BUILD",
     urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/libs/libseccomp/libseccomp-dev_2.5.3-2ubuntu2_arm64.deb"],
     visibility = ["//visibility:public"],
 )
