@@ -52,8 +52,8 @@ class NewDeleteDelegateMemoryResource : public score::memory::shared::ManagedMem
 
     ~NewDeleteDelegateMemoryResource() override;
 
-    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override;
-    void* getBaseAddress() const noexcept override;
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override;
+    const void* getBaseAddress() const noexcept override;
     void* getUsableBaseAddress() const noexcept override;
 
     std::size_t GetUserAllocatedBytes() const noexcept override;

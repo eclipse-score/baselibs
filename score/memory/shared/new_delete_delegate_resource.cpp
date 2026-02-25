@@ -61,7 +61,7 @@ NewDeleteDelegateMemoryResource::~NewDeleteDelegateMemoryResource()
     }
 }
 
-void* NewDeleteDelegateMemoryResource::getBaseAddress() const noexcept
+const void* NewDeleteDelegateMemoryResource::getBaseAddress() const noexcept
 {
     // Suppress "AUTOSAR C++14 A5-2-4" rule finding: "reinterpret_cast shall not be used.".
     // This class holds no real memory, it only has a made-up buffer.
@@ -76,7 +76,7 @@ void* NewDeleteDelegateMemoryResource::getBaseAddress() const noexcept
 
 void* NewDeleteDelegateMemoryResource::getUsableBaseAddress() const noexcept
 {
-    return getBaseAddress();
+    return const_cast<void*>(getBaseAddress());
 }
 
 const void* NewDeleteDelegateMemoryResource::getEndAddress() const noexcept
@@ -92,7 +92,7 @@ const void* NewDeleteDelegateMemoryResource::getEndAddress() const noexcept
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): see above
 }
 
-const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() noexcept
+const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() const noexcept
 {
     // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class.".

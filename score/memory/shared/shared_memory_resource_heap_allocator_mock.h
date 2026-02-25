@@ -28,7 +28,7 @@ class SharedMemoryResourceHeapAllocatorMock : public ISharedMemoryResource
   public:
     explicit SharedMemoryResourceHeapAllocatorMock(const std::uint64_t mem_res_id) : resource_{mem_res_id} {}
 
-    MOCK_METHOD(void*, getBaseAddress, (), (const, noexcept, override));
+    MOCK_METHOD(const void*, getBaseAddress, (), (const, noexcept, override));
 
     MOCK_METHOD(void*, getUsableBaseAddress, (), (const, noexcept, override));
 
@@ -46,7 +46,7 @@ class SharedMemoryResourceHeapAllocatorMock : public ISharedMemoryResource
 
     MOCK_METHOD(std::string_view, GetIdentifier, (), (const, noexcept, override));
 
-    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
     {
         return resource_.getMemoryResourceProxy();
     }

@@ -45,12 +45,12 @@ class MyBoundedMemoryResource final : public ManagedMemoryResource
     MyBoundedMemoryResource& operator=(const MyBoundedMemoryResource&) noexcept = default;
     MyBoundedMemoryResource& operator=(MyBoundedMemoryResource&&) noexcept = default;
 
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
     {
         return manager_;
     }
 
-    void* getBaseAddress() const noexcept override
+    const void* getBaseAddress() const noexcept override
     {
         return baseAddress_;
     }
@@ -105,18 +105,18 @@ class MyBoundedMemoryResource final : public ManagedMemoryResource
         return false;
     }
 
-    MemoryResourceProxy* AllocateMemoryResourceProxy(const std::uint64_t memory_resource_id);
+    const MemoryResourceProxy* AllocateMemoryResourceProxy(const std::uint64_t memory_resource_id);
 
     static std::uint64_t instanceId;
     static std::size_t memoryResourceProxyAllocationSize_;
 
-    void* baseAddress_;
-    void* endAddress_;
+    const void* baseAddress_;
+    const void* endAddress_;
     std::size_t virtual_address_space_to_reserve_;
     std::size_t already_allocated_bytes_;
     std::size_t deallocatedMemory_;
     std::uint64_t memoryResourceId_;
-    MemoryResourceProxy* manager_;
+    const MemoryResourceProxy* manager_;
     bool should_free_memory_on_destruction_;
 };
 

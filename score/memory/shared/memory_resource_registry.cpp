@@ -66,7 +66,7 @@ auto score::memory::shared::MemoryResourceRegistry::insert_resource(
     // If we successfully inserted the ID into the registry, add the memory_range to known_regions.
     if (!input.second->IsOffsetPtrBoundsCheckBypassingEnabled() && result.second)
     {
-        void* const memory_range_start = resource->getBaseAddress();
+        const void* const memory_range_start = resource->getBaseAddress();
         const void* const memory_range_end = resource->getEndAddress();
 
         if ((memory_range_start == nullptr) || (memory_range_end == nullptr))

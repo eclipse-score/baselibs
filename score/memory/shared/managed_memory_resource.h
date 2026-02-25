@@ -65,6 +65,19 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
     ~ManagedMemoryResource() noexcept override = default;
 
     /**
+<<<<<<< HEAD
+=======
+     * We need to return a raw pointer, since we need to convert this
+     * pointer into an OffsetPtr if it shall be stored in shared memory.
+     * @return MemoryResourceProxy* that identifies _this_ memory_resource.
+     */
+
+    /// \todo: getMemoryResourceProxy should not return a non const pointer and the method should also be marked const.
+    /// This issue will be investigated and fixed in Ticket-146625"
+    virtual const MemoryResourceProxy* getMemoryResourceProxy() const noexcept = 0;
+
+    /**
+>>>>>>> 8a2efcd (const correctness for public interfaces in MemoryManagedResource)
      * @brief Construct T allocating underlying MemoryResource
      * @tparam T The type that shall be constructed
      * @tparam Args The argument types
@@ -96,7 +109,7 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
      * @brief Get the start address of the memory region that this memory resource is managing
      * @return void* start address of memory resource (e.g. mmap result)
      */
-    virtual void* getBaseAddress() const noexcept = 0;
+    virtual const void* getBaseAddress() const noexcept = 0;
 
     /**
      * @brief Get the start address of the region available to a user of this memory resource.

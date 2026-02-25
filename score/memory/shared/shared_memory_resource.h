@@ -60,14 +60,13 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
     SharedMemoryResource(SharedMemoryResource&& other) = delete;
     SharedMemoryResource& operator=(SharedMemoryResource&&) = delete;
 
-    // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
-    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override;
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override;
 
     /**
      * @brief Get the start address of the memory region that this memory resource is managing
      * @return void* start address of memory resource (e.g. mmap result)
      */
-    void* getBaseAddress() const noexcept override;
+    const void* getBaseAddress() const noexcept override;
 
     /**
      * @brief Get the start address of the region available to a user of this SharedMemoryResource.

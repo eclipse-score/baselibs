@@ -54,12 +54,12 @@ class MyBoundedSharedMemoryResource final : public ISharedMemoryResource
         return false;
     }
 
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
     {
         return resource_.getMemoryResourceProxy();
     }
 
-    void* getBaseAddress() const noexcept override
+    const void* getBaseAddress() const noexcept override
     {
         return resource_.getBaseAddress();
     }

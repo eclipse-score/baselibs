@@ -677,7 +677,7 @@ auto SharedMemoryResource::GetLockFilePath(const std::string& input_path) noexce
 }
 
 // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
-auto SharedMemoryResource::getMemoryResourceProxy() noexcept -> const MemoryResourceProxy*
+auto SharedMemoryResource::getMemoryResourceProxy() const noexcept -> const MemoryResourceProxy*
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(this->control_block_ != nullptr,
                            "Control block containing MemoryResourceProxy has not yet been created.");
@@ -731,7 +731,7 @@ auto SharedMemoryResource::do_allocate(const std::size_t bytes, const std::size_
     return new_address_aligned;
 }
 
-auto SharedMemoryResource::getBaseAddress() const noexcept -> void*
+auto SharedMemoryResource::getBaseAddress() const noexcept -> const void*
 {
     // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class.".
