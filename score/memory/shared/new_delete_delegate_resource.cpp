@@ -92,7 +92,7 @@ const void* NewDeleteDelegateMemoryResource::getEndAddress() const noexcept
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): see above
 }
 
-const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() const noexcept
+const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() noexcept
 {
     // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class.".

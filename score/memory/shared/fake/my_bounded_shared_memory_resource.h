@@ -54,7 +54,7 @@ class MyBoundedSharedMemoryResource final : public ISharedMemoryResource
         return false;
     }
 
-    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return resource_.getMemoryResourceProxy();
     }

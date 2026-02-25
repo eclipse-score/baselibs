@@ -148,12 +148,8 @@ TEST_F(BoundCheckedMemoryResourceProxyTest, AllocationIsPossibleWhenProxyInBound
 {
     // Given a registered memory resource and its respective MemoryResourceProxy
     // When allocating memory on the MemoryResourceProxy
-<<<<<<< HEAD
     ManagedMemoryResourceTestAttorney attorney(memoryResource);
     const MemoryResourceProxy* proxy = attorney.getMemoryResourceProxy();
-=======
-    const MemoryResourceProxy* proxy = memoryResource.getMemoryResourceProxy();
->>>>>>> 8a2efcd (const correctness for public interfaces in MemoryManagedResource)
 
     // Align the memory since that will be done before allocating the new memory
     const auto initial_number_allocated_bytes = memoryResource.getAllocatedMemory();

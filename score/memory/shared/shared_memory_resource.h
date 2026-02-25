@@ -60,7 +60,7 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
     SharedMemoryResource(SharedMemoryResource&& other) = delete;
     SharedMemoryResource& operator=(SharedMemoryResource&&) = delete;
 
-    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override;
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override;
 
     /**
      * @brief Get the start address of the memory region that this memory resource is managing

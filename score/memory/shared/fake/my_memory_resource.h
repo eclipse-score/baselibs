@@ -44,7 +44,7 @@ class MyMemoryResource : public ManagedMemoryResource
     {
     }
 
-    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         MemoryResourceRegistry::getInstance().clear();
         score::cpp::ignore = MemoryResourceRegistry::getInstance().insert_resource(

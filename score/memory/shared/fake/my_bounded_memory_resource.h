@@ -45,7 +45,7 @@ class MyBoundedMemoryResource final : public ManagedMemoryResource
     MyBoundedMemoryResource& operator=(const MyBoundedMemoryResource&) noexcept = default;
     MyBoundedMemoryResource& operator=(MyBoundedMemoryResource&&) noexcept = default;
 
-    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return manager_;
     }

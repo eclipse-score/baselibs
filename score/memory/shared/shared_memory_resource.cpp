@@ -677,7 +677,7 @@ auto SharedMemoryResource::GetLockFilePath(const std::string& input_path) noexce
 }
 
 // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
-auto SharedMemoryResource::getMemoryResourceProxy() const noexcept -> const MemoryResourceProxy*
+auto SharedMemoryResource::getMemoryResourceProxy() noexcept -> const MemoryResourceProxy*
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(this->control_block_ != nullptr,
                            "Control block containing MemoryResourceProxy has not yet been created.");

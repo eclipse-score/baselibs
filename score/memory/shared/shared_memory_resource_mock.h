@@ -25,7 +25,7 @@ namespace score::memory::shared
 class SharedMemoryResourceMock : public ISharedMemoryResource
 {
   public:
-    MOCK_METHOD(const MemoryResourceProxy*, getMemoryResourceProxy, (), (const, noexcept, override));
+    MOCK_METHOD(const MemoryResourceProxy*, getMemoryResourceProxy, (), (noexcept, override));
 
     MOCK_METHOD(const void*, getBaseAddress, (), (const, noexcept, override));
 
