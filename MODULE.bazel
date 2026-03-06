@@ -79,6 +79,14 @@ bazel_dep(name = "rules_python", version = "1.8.3")
 PYTHON_VERSION = "3.12"
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python", dev_dependency = True)
+python.single_version_override(
+    python_version = "3.8.20",
+    sha256 = {
+        "aarch64-unknown-linux-gnu": "9d8798f9e79e0fc0f36fcb95bfa28a1023407d51a8ea5944b4da711f1f75f1ed",
+        "x86_64-unknown-linux-gnu": "285e141c36f88b2e9357654c5f77d1f8fb29cc25132698fe35bb30d787f38e87",
+    },
+    urls = ["https://github.com/astral-sh/python-build-standalone/releases/download/20241002/cpython-{python_version}+20241002-{platform}-{build}.tar.gz"],
+)
 python.toolchain(
     #configure_coverage_tool = True,
     is_default = True,
