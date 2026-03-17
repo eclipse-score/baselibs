@@ -14,7 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
 
-def cc_unit_test_suites_for_host_and_qnx(name, cc_unit_tests = None, visibility = None, test_suites_from_sub_packages = None, excluded_tests_filter = None):
+def cc_unit_test_suites_for_host_and_qnx(name, cc_unit_tests = None, visibility = None, test_suites_from_sub_packages = None, excluded_tests_filter = None, cc_test_qnx = None):
     """
     This Bazel macro allows to add unit tests on qnx and host with a single macro.
 
@@ -31,6 +31,8 @@ def cc_unit_test_suites_for_host_and_qnx(name, cc_unit_tests = None, visibility 
             FooTest.Test1 - do not run Test1 from test suite FooTest
             FooTest.* - do not run any test from test suite FooTest
             *FooTest.* - runs all non FooTest tests.
+        cc_test_qnx: Optional macro to wrap each cc_test for QNX execution.
+            The calling project provides its own cc_test_qnx implementation.
 
     Returns:
         Test suites for host and QNX
@@ -54,6 +56,7 @@ def cc_unit_test_suites_for_host_and_qnx(name, cc_unit_tests = None, visibility 
             testonly = True,
             test_cases = cc_unit_tests,
             excluded_tests_filter = excluded_tests_filter,
+            cc_test_qnx = cc_test_qnx,
         )
 
     _qnx_test_suites_from_sub_packages = [test_suite + "_qnx" for test_suite in test_suites_from_sub_packages] if test_suites_from_sub_packages else []
