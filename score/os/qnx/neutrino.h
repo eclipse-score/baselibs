@@ -172,17 +172,19 @@ class Neutrino : public ObjectSeam<Neutrino>
 
 }  // namespace qnx
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::qnx::Neutrino::TimerTimeoutFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::qnx::Neutrino::TimerTimeoutFlag> : public std::true_type
 {
 };
 
 template <>
-struct enable_bitmask_operators<score::os::qnx::Neutrino::ChannelFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::qnx::Neutrino::ChannelFlag> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_QNX_NEUTRINO_H

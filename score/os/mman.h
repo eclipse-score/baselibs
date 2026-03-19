@@ -183,24 +183,26 @@ static StaticDestructionGuard<MmanImpl> nifty_counter;
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<os::Mman::Protection> : public std::true_type
+struct enable_bitmask_operators<::score::os::Mman::Protection> : public std::true_type
 {
 };
 
 template <>
-struct enable_bitmask_operators<os::Mman::Map> : public std::true_type
+struct enable_bitmask_operators<::score::os::Mman::Map> : public std::true_type
 {
 };
 
 #if defined(__EXT_POSIX1_200112)
 template <>
-struct enable_bitmask_operators<os::Mman::PosixTypedMem> : public std::true_type
+struct enable_bitmask_operators<::score::os::Mman::PosixTypedMem> : public std::true_type
 {
 };
 #endif
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_MMAN_H

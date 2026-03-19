@@ -101,12 +101,14 @@ Glob::FlagType FlagToInteger(const score::os::Glob::Flag flags) noexcept;
 }  // namespace internal
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Glob::Flag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Glob::Flag> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_GLOB_H

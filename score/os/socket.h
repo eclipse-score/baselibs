@@ -189,12 +189,14 @@ class Socket : public ObjectSeam<Socket>
 };
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Socket::MessageFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Socket::MessageFlag> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_SOCKET_H

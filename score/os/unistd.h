@@ -242,12 +242,14 @@ class UnistdImpl final : public Unistd
 static StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Unistd::AccessMode> : public std::true_type
+struct enable_bitmask_operators<::score::os::Unistd::AccessMode> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_UNISTD_H
