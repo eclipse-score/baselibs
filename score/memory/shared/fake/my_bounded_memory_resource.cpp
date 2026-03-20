@@ -82,7 +82,7 @@ MyBoundedMemoryResource::~MyBoundedMemoryResource()
 {
     if (should_free_memory_on_destruction_)
     {
-        std::free(baseAddress_);
+        std::free(const_cast<void*>(baseAddress_));
     }
     MemoryResourceRegistry::getInstance().remove_resource(memoryResourceId_);
 }
@@ -118,7 +118,7 @@ void MyBoundedMemoryResource::do_deallocate(void* /*memory*/, const std::size_t 
     deallocatedMemory_ += bytes;
 }
 
-MemoryResourceProxy* MyBoundedMemoryResource::AllocateMemoryResourceProxy(const std::uint64_t memory_resource_id)
+const MemoryResourceProxy* MyBoundedMemoryResource::AllocateMemoryResourceProxy(const std::uint64_t memory_resource_id)
 {
     // We allocate the MemoryResourceProxy using worst case alignment so that any further allocations will start at an
     // aligned memory address. This is important so that GetUserAllocatedBytes() is never affected by the allocation of
