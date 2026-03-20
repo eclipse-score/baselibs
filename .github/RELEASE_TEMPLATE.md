@@ -23,12 +23,18 @@ Bug Fixes
 
 Compatibility
 -------------
-- `x86_64-unknown-linux-gnu`, `x86_64-unknown-nto-qnx800` and  `aarch64-unknown-nto-qnx800` using [score_toolchains_gcc](https://github.com/eclipse-score/bazel_cpp_toolchains).
+The following platforms are supported using the [bazel_cpp_toolchains](https://github.com/eclipse-score/bazel_cpp_toolchains):
+- `x86_64-unknown-linux-gnu`
+- `aarch64-unknown-linux-gnu`
+- `x86_64-unknown-nto-qnx800`
+- `aarch64-unknown-nto-qnx800`
 
 Performed Verification
 ----------------------
-- Build for  `x86_64-unknown-linux-gnu` and `x86_64-unknown-nto-qnx800`.
-- Unit tests executed on `x86_64-unknown-linux-gnu`.
+- Build on all supported platforms
+- Unit test execution on `x86_64-unknown-linux-gnu` and `aarch64-unknown-linux-gnu` with QEMU user-mode emulation
+- Address and undefined behavior sanitized unit test execution
+- Leak sanitized unit test execution
 
 Report: $ACTION_RUN_URL
 

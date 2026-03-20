@@ -64,8 +64,14 @@ jobs:
   coverage-report:
     needs: validate-preconditions
     uses: ./.github/workflows/coverage_report.yml
+  lint:
+    needs: validate-preconditions
+    uses: ./.github/workflows/lint.yml
+  sanitizers:
+    needs: validate-preconditions
+    uses: ./.github/workflows/sanitizers_linux.yml
   create-release:
-    needs: [validate-preconditions, build-linux, build-qnx, coverage-report]
+    needs: [validate-preconditions, build-linux, build-qnx, coverage-report, lint, sanitizers]
     runs-on: ubuntu-latest
     permissions:
       contents: write
