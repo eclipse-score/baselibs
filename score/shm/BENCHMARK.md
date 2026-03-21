@@ -55,8 +55,8 @@ bazel build -c opt \
 | Benchmark | What it measures |
 |---|---|
 | `BM_StdVector_RandomAccess` | Baseline: `std::vector<std::vector<int>>` with raw `T*` pointers |
-| `BM_OffsetPtrVector_NoBoundsCheck_RandomAccess` | `score::memory::shared` OffsetPtr offset-arithmetic overhead only (bounds check bypassed) |
-| `BM_OffsetPtrVector_BoundsChecked_RandomAccess` | `score::memory::shared` OffsetPtr offset arithmetic + bounds validation |
+| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | `score::memory::shared::Vector` OffsetPtr offset-arithmetic overhead only (bounds check bypassed) |
+| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | `score::memory::shared::Vector` OffsetPtr offset arithmetic + bounds validation |
 | `BM_ShmVector_RandomAccess` | `score::shm::Vector` with inline OffsetPtr (`intptr_t`-based, no cross-TU barriers) |
 | `BM_StdMap_RandomBuild` | Baseline: `std::map<int,int>` random-order insertion |
 | `BM_MemorySharedMap_RandomBuild` | `score::memory::shared::Map<int,int>` random-order insertion |

@@ -159,7 +159,7 @@ std::vector<std::vector<int>> MakeStdNestedVector()
     return data;
 }
 
-score::memory::shared::Vector<score::memory::shared::Vector<int>> MakeOffsetPtrNestedVector(
+score::memory::shared::Vector<score::memory::shared::Vector<int>> MakeMemorySharedNestedVector(
     score::memory::shared::ManagedMemoryResource& resource)
 {
     score::memory::shared::Vector<score::memory::shared::Vector<int>> data(resource);
@@ -239,10 +239,10 @@ BENCHMARK(BM_StdVector_RandomAccess);
 /// OffsetPtr without bounds checking: NewDeleteDelegateMemoryResource bypasses
 /// OffsetPtr bounds check (IsOffsetPtrBoundsCheckBypassingEnabled = true).
 /// Measures pure OffsetPtr offset-arithmetic overhead vs raw T*.
-void BM_OffsetPtrVector_NoBoundsCheck_RandomAccess(benchmark::State& state)
+void BM_MemorySharedVector_NoBoundsCheck_RandomAccess(benchmark::State& state)
 {
     score::memory::shared::NewDeleteDelegateMemoryResource resource{1U};
-    auto data = MakeOffsetPtrNestedVector(resource);
+    auto data = MakeMemorySharedNestedVector(resource);
     const auto& pattern = GetAccessPattern();
 
     for (auto _ : state)
@@ -255,15 +255,15 @@ void BM_OffsetPtrVector_NoBoundsCheck_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_OffsetPtrVector_NoBoundsCheck_RandomAccess);
+BENCHMARK(BM_MemorySharedVector_NoBoundsCheck_RandomAccess);
 
 /// OffsetPtr with bounds checking: MyBoundedMemoryResource enables the full
 /// OffsetPtr bounds-check path (IsOffsetPtrBoundsCheckBypassingEnabled = false).
 /// Measures combined overhead of offset arithmetic + bounds validation.
-void BM_OffsetPtrVector_BoundsChecked_RandomAccess(benchmark::State& state)
+void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
 {
     score::memory::shared::test::MyBoundedMemoryResource resource{kBoundedResourceSize};
-    auto data = MakeOffsetPtrNestedVector(resource);
+    auto data = MakeMemorySharedNestedVector(resource);
     const auto& pattern = GetAccessPattern();
 
     const bool previous = score::memory::shared::EnableOffsetPtrBoundsChecking(true);
@@ -278,7 +278,7 @@ void BM_OffsetPtrVector_BoundsChecked_RandomAccess(benchmark::State& state)
     }
     score::memory::shared::EnableOffsetPtrBoundsChecking(previous);
 }
-BENCHMARK(BM_OffsetPtrVector_BoundsChecked_RandomAccess);
+BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
 /// score::shm::Vector with inline OffsetPtr — measures the overhead of a
 /// header-inline offset pointer without cross-TU barriers or bounds checking.
