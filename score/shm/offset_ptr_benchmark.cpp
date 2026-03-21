@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-/// @file Benchmark measuring OffsetPtr<T> operational overhead on nested container random access.
+/// @file Benchmark measuring OffsetPtr<T> operational overhead for vector and map scenarios.
 ///
 /// Compares four implementations of Vector<Vector<int>> with 1000x1000 elements and 100,000
 /// random (i, j) accesses. The random access pattern prevents CPU register caching of resolved
@@ -22,11 +22,18 @@
 ///   2. score::memory::shared::Vector — OffsetPtr without bounds checking
 ///   3. score::memory::shared::Vector — OffsetPtr with bounds checking
 ///   4. score::shm::Vector — header-inline OffsetPtr (intptr_t-based, no cross-TU barriers)
+///
+/// In addition, compares std::map, score::memory::shared::Map and score::shm::Map for:
+///   - random-order build
+///   - random key lookup
+///   - full in-order iteration
 
 #include "score/memory/shared/fake/my_bounded_memory_resource.h"
+#include "score/memory/shared/map.h"
 #include "score/memory/shared/new_delete_delegate_resource.h"
 #include "score/memory/shared/offset_ptr.h"
 #include "score/memory/shared/vector.h"
+#include "score/shm/map.h"
 #include "score/shm/vector.h"
 
 #include <benchmark/benchmark.h>
@@ -37,6 +44,7 @@
 #include <numeric>
 #include <random>
 #include <utility>
+#include <map>
 #include <vector>
 
 namespace
@@ -45,6 +53,8 @@ namespace
 constexpr std::size_t kOuterSize = 1000U;
 constexpr std::size_t kInnerSize = 1000U;
 constexpr std::size_t kAccessCount = 100000U;
+constexpr std::size_t kMapElementCount = 10000U;
+constexpr std::size_t kMapAccessCount = 100000U;
 
 // 64 MB — generous for bump allocator that doesn't reclaim on dealloc.
 // Total data is ~4 MB, but vector growth without reuse needs headroom.
@@ -81,6 +91,57 @@ class RandomAccessPattern
 const RandomAccessPattern& GetAccessPattern()
 {
     static const RandomAccessPattern pattern{kAccessCount, kOuterSize, kInnerSize};
+    return pattern;
+}
+
+/// Pre-generated random map insertion and lookup sequences with fixed seed for reproducible
+/// map benchmark runs.
+class RandomMapPattern
+{
+  public:
+    RandomMapPattern(const std::size_t element_count, const std::size_t access_count)
+    {
+        std::mt19937 rng{1337U};
+
+        std::vector<int> keys(element_count);
+        std::vector<int> values(element_count);
+        std::iota(keys.begin(), keys.end(), 0);
+        std::iota(values.begin(), values.end(), 0);
+        std::shuffle(keys.begin(), keys.end(), rng);
+        std::shuffle(values.begin(), values.end(), rng);
+
+        entries_.reserve(element_count);
+        for (std::size_t index = 0U; index < element_count; ++index)
+        {
+            entries_.emplace_back(keys[index], values[index]);
+        }
+
+        std::uniform_int_distribution<std::size_t> key_dist{0U, element_count - 1U};
+        lookup_keys_.reserve(access_count);
+        for (std::size_t access = 0U; access < access_count; ++access)
+        {
+            lookup_keys_.push_back(entries_[key_dist(rng)].first);
+        }
+    }
+
+    const std::vector<std::pair<int, int>>& entries() const noexcept
+    {
+        return entries_;
+    }
+
+    const std::vector<int>& lookup_keys() const noexcept
+    {
+        return lookup_keys_;
+    }
+
+  private:
+    std::vector<std::pair<int, int>> entries_;
+    std::vector<int> lookup_keys_;
+};
+
+const RandomMapPattern& GetMapPattern()
+{
+    static const RandomMapPattern pattern{kMapElementCount, kMapAccessCount};
     return pattern;
 }
 
@@ -123,6 +184,36 @@ score::shm::Vector<score::shm::Vector<int>> MakeShmNestedVector()
         outer.PushBackOrAbort(std::move(inner));
     }
     return outer;
+}
+
+std::map<int, int> MakeStdMap()
+{
+    std::map<int, int> data;
+    for (const auto& [key, value] : GetMapPattern().entries())
+    {
+        data.emplace(key, value);
+    }
+    return data;
+}
+
+score::memory::shared::Map<int, int> MakeMemorySharedMap(score::memory::shared::ManagedMemoryResource& resource)
+{
+    score::memory::shared::Map<int, int> data{resource};
+    for (const auto& [key, value] : GetMapPattern().entries())
+    {
+        data.emplace(key, value);
+    }
+    return data;
+}
+
+score::shm::Map<int, int> MakeShmMap()
+{
+    auto data = score::shm::Map<int, int>::CreateOrAbort();
+    for (const auto& [key, value] : GetMapPattern().entries())
+    {
+        data.EmplaceOrAbort(key, value);
+    }
+    return data;
 }
 
 // --- Benchmarks ---
@@ -207,5 +298,163 @@ void BM_ShmVector_RandomAccess(benchmark::State& state)
     }
 }
 BENCHMARK(BM_ShmVector_RandomAccess);
+
+// --- Map benchmarks ---
+
+/// Baseline: std::map random-order build.
+void BM_StdMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        std::map<int, int> data;
+        for (const auto& [key, value] : entries)
+        {
+            data.emplace(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_StdMap_RandomBuild);
+
+/// score::memory::shared::Map random-order build.
+void BM_MemorySharedMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    score::memory::shared::NewDeleteDelegateMemoryResource resource{2U};
+    for (auto _ : state)
+    {
+        score::memory::shared::Map<int, int> data{resource};
+        for (const auto& [key, value] : entries)
+        {
+            data.emplace(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_MemorySharedMap_RandomBuild);
+
+/// score::shm::Map random-order build.
+void BM_ShmMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        auto data = score::shm::Map<int, int>::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_ShmMap_RandomBuild);
+
+/// Baseline: std::map randomized key lookup.
+void BM_StdMap_RandomAccess(benchmark::State& state)
+{
+    const auto data = MakeStdMap();
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_StdMap_RandomAccess);
+
+/// score::memory::shared::Map randomized key lookup.
+void BM_MemorySharedMap_RandomAccess(benchmark::State& state)
+{
+    score::memory::shared::NewDeleteDelegateMemoryResource resource{3U};
+    const auto data = MakeMemorySharedMap(resource);
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_MemorySharedMap_RandomAccess);
+
+/// score::shm::Map randomized key lookup.
+void BM_ShmMap_RandomAccess(benchmark::State& state)
+{
+    const auto data = MakeShmMap();
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmMap_RandomAccess);
+
+/// Baseline: std::map begin->end iteration.
+void BM_StdMap_Iterate(benchmark::State& state)
+{
+    const auto data = MakeStdMap();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_StdMap_Iterate);
+
+/// score::memory::shared::Map begin->end iteration.
+void BM_MemorySharedMap_Iterate(benchmark::State& state)
+{
+    score::memory::shared::NewDeleteDelegateMemoryResource resource{4U};
+    const auto data = MakeMemorySharedMap(resource);
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_MemorySharedMap_Iterate);
+
+/// score::shm::Map begin->end iteration.
+void BM_ShmMap_Iterate(benchmark::State& state)
+{
+    const auto data = MakeShmMap();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmMap_Iterate);
 
 }  // namespace

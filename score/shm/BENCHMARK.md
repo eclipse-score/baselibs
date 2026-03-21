@@ -3,8 +3,11 @@
 ## Overview
 
 Measures the operational overhead of `OffsetPtr<T>` pointer semantics (offset arithmetic,
-bounds checking) on nested `Vector<Vector<int>>` random access, compared to raw `T*` pointers
-in `std::vector`.
+bounds checking) for:
+
+- nested `Vector<Vector<int>>` random access, compared to raw `T*` pointers in `std::vector`
+- map workloads (`std::map`, `score::memory::shared::Map`, `score::shm::Map`) covering
+  random-order build, randomized key lookup and begin→end iteration
 
 The benchmark uses a 1000×1000 nested vector with 100,000 random `(i, j)` element accesses.
 The random access pattern prevents the CPU from caching resolved OffsetPtr base addresses
@@ -55,6 +58,15 @@ bazel build -c opt \
 | `BM_OffsetPtrVector_NoBoundsCheck_RandomAccess` | `score::memory::shared` OffsetPtr offset-arithmetic overhead only (bounds check bypassed) |
 | `BM_OffsetPtrVector_BoundsChecked_RandomAccess` | `score::memory::shared` OffsetPtr offset arithmetic + bounds validation |
 | `BM_ShmVector_RandomAccess` | `score::shm::Vector` with inline OffsetPtr (`intptr_t`-based, no cross-TU barriers) |
+| `BM_StdMap_RandomBuild` | Baseline: `std::map<int,int>` random-order insertion |
+| `BM_MemorySharedMap_RandomBuild` | `score::memory::shared::Map<int,int>` random-order insertion |
+| `BM_ShmMap_RandomBuild` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) random-order insertion |
+| `BM_StdMap_RandomAccess` | Baseline: `std::map<int,int>` randomized key lookup |
+| `BM_MemorySharedMap_RandomAccess` | `score::memory::shared::Map<int,int>` randomized key lookup |
+| `BM_ShmMap_RandomAccess` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) randomized key lookup |
+| `BM_StdMap_Iterate` | Baseline: `std::map<int,int>` begin→end iteration |
+| `BM_MemorySharedMap_Iterate` | `score::memory::shared::Map<int,int>` begin→end iteration |
+| `BM_ShmMap_Iterate` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) begin→end iteration |
 
 ## Results
 

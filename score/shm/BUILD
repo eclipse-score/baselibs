@@ -156,8 +156,10 @@ cc_binary(
     srcs = ["offset_ptr_benchmark.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
+        ":map",
         ":vector",
         "@google_benchmark//:benchmark_main",
+        "@score_baselibs//score/memory/shared:map",
         "@score_baselibs//score/memory/shared:new_delete_delegate_resource",
         "@score_baselibs//score/memory/shared:offset_ptr",
         "@score_baselibs//score/memory/shared:vector",
