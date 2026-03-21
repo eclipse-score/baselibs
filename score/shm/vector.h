@@ -41,16 +41,17 @@ namespace score::shm
 ///   Create, Clone) return score::Result or score::ResultBlank with kOutOfMemory on failure.
 ///   Each has an OrAbort convenience variant that aborts instead.
 /// - Not copyable. Use Clone() for explicit deep copies.
-/// - Storage uses score::shm::OffsetPtr for shared-memory relocatability.
+/// - Storage pointer type is injected via PointerPolicy::Ptr (default: score::shm::OffsetPtr).
 ///
 /// @tparam T Element type.
 /// @tparam Allocator Allocator type, defaults to score::shm::PolymorphicAllocator<T>.
-template <typename T, typename Allocator = PolymorphicAllocator<T>>
+template <typename T, typename Allocator = PolymorphicAllocator<T>, typename PointerPolicy = ShmPointerPolicy>
 class Vector
 {
   public:
     using value_type = T;
     using allocator_type = Allocator;
+    using pointer_policy = PointerPolicy;
     using size_type = std::size_t;
     using reference = value_type&;
     using const_reference = const value_type&;
@@ -260,7 +261,7 @@ class Vector
           capacity_{other.capacity_},
           fixed_capacity_{other.fixed_capacity_}
     {
-        other.data_ = OffsetPtr<value_type>{nullptr};
+        other.data_ = offset_ptr<value_type>{nullptr};
         other.size_ = 0U;
         other.capacity_ = 0U;
         other.fixed_capacity_ = false;
@@ -279,7 +280,7 @@ class Vector
             capacity_ = other.capacity_;
             fixed_capacity_ = other.fixed_capacity_;
 
-            other.data_ = OffsetPtr<value_type>{nullptr};
+            other.data_ = offset_ptr<value_type>{nullptr};
             other.size_ = 0U;
             other.capacity_ = 0U;
             other.fixed_capacity_ = false;
@@ -555,7 +556,7 @@ class Vector
             allocator_.deallocate(old_storage, capacity_);
         }
 
-        data_ = OffsetPtr<value_type>{new_storage};
+        data_ = offset_ptr<value_type>{new_storage};
         capacity_ = new_capacity;
         return score::ResultBlank{};
     }
@@ -689,7 +690,7 @@ class Vector
         }
 
         allocator_.deallocate(old_storage, capacity_);
-        data_ = OffsetPtr<value_type>{new_storage};
+        data_ = offset_ptr<value_type>{new_storage};
         capacity_ = size_;
         return score::ResultBlank{};
     }
@@ -851,6 +852,9 @@ class Vector
     }
 
   private:
+    template <typename U>
+    using offset_ptr = typename pointer_policy::template Ptr<U>;
+
     Vector(const allocator_type& allocator, pointer const storage, const size_type used_size, const size_type total_capacity, const bool fixed_capacity) noexcept
         : allocator_{allocator}, data_{storage}, size_{used_size}, capacity_{total_capacity}, fixed_capacity_{fixed_capacity}
     {
@@ -886,16 +890,21 @@ class Vector
         {
             allocator_.deallocate(data(), capacity_);
         }
-        data_ = OffsetPtr<value_type>{nullptr};
+        data_ = offset_ptr<value_type>{nullptr};
         capacity_ = 0U;
     }
 
     allocator_type allocator_;
-    OffsetPtr<value_type> data_{nullptr};
+    offset_ptr<value_type> data_{nullptr};
     size_type size_{0U};
     size_type capacity_{0U};
     bool fixed_capacity_{false};
 };
+
+template <typename T,
+          typename Allocator = PolymorphicAllocator<T>,
+          typename PointerPolicy = ShmPointerPolicy>
+using VectorBase = Vector<T, Allocator, PointerPolicy>;
 
 }  // namespace score::shm
 

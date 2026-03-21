@@ -41,6 +41,30 @@ class MockMemoryResource final : public MemoryResource
     MOCK_METHOD(bool, is_equal, (const MemoryResource&), (const, noexcept, override));
 };
 
+template <typename T>
+class TestNullableRawPtr
+{
+  public:
+    TestNullableRawPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+    TestNullableRawPtr(const TestNullableRawPtr&) noexcept = default;
+    TestNullableRawPtr& operator=(const TestNullableRawPtr&) noexcept = default;
+
+    T* get() noexcept { return const_cast<T*>(pointer_); }
+    const T* get() const noexcept { return pointer_; }
+
+  private:
+    const T* pointer_{nullptr};
+};
+
+struct TestRawPointerPolicy
+{
+    template <typename T>
+    using Ptr = TestNullableRawPtr<T>;
+
+    template <typename T>
+    using NullablePtr = TestNullableRawPtr<T>;
+};
+
 TEST(Map, CreateStartsEmpty)
 {
     auto created = Map<int, int>::Create();
@@ -243,6 +267,25 @@ TEST(Map, HandlesAscendingInsertionsAndRemovals)
         EXPECT_TRUE(map.contains(key));
         EXPECT_EQ(map.at(key), key * 2);
     }
+}
+
+TEST(Map, SupportsInjectedPointerPolicy)
+{
+    using PolicyMap = Map<int,
+                          int,
+                          std::less<int>,
+                          PolymorphicAllocator<std::pair<const int, int>>,
+                          TestRawPointerPolicy>;
+
+    PolicyMap map = PolicyMap::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    EXPECT_EQ(map.size(), 3U);
+    EXPECT_EQ(map.at(1), 10);
+    EXPECT_EQ(map.at(2), 20);
+    EXPECT_EQ(map.at(3), 30);
 }
 
 TEST(Map, InsertPropagatesOutOfMemoryFromAllocator)

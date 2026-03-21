@@ -36,6 +36,30 @@ class MockMemoryResource final : public MemoryResource
     MOCK_METHOD(bool, is_equal, (const MemoryResource&), (const, noexcept, override));
 };
 
+template <typename T>
+class TestRawPtr
+{
+  public:
+    TestRawPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+    TestRawPtr(const TestRawPtr&) noexcept = default;
+    TestRawPtr& operator=(const TestRawPtr&) noexcept = default;
+
+    T* get() noexcept { return const_cast<T*>(pointer_); }
+    const T* get() const noexcept { return pointer_; }
+
+  private:
+    const T* pointer_{nullptr};
+};
+
+struct TestRawPointerPolicy
+{
+    template <typename T>
+    using Ptr = TestRawPtr<T>;
+
+    template <typename T>
+    using NullablePtr = TestRawPtr<T>;
+};
+
 TEST(Vector, CreateWithZeroCapacityStartsEmpty)
 {
     auto created = Vector<int>::CreateWithCapacity(0U);
@@ -191,6 +215,21 @@ TEST(Vector, SwapExchangesContents)
 
     EXPECT_EQ(first.front(), 20);
     EXPECT_EQ(second.front(), 10);
+}
+
+TEST(Vector, SupportsInjectedPointerPolicy)
+{
+    using PolicyVector = Vector<int, PolymorphicAllocator<int>, TestRawPointerPolicy>;
+    PolicyVector vector = PolicyVector::CreateWithCapacityOrAbort(0U);
+
+    ASSERT_TRUE(vector.PushBack(1).has_value());
+    ASSERT_TRUE(vector.PushBack(2).has_value());
+    ASSERT_TRUE(vector.PushBack(3).has_value());
+
+    EXPECT_EQ(vector.size(), 3U);
+    EXPECT_EQ(vector.at(0U), 1);
+    EXPECT_EQ(vector.at(1U), 2);
+    EXPECT_EQ(vector.at(2U), 3);
 }
 
 TEST(Vector, CreatePropagatesOutOfMemoryFromAllocator)

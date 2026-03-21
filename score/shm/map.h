@@ -43,13 +43,14 @@ namespace score::shm
 /// - Members that may allocate (Create from ranges/lists, Insert, Emplace, GetOrInsertDefault, Clone)
 ///   return score::Result with kOutOfMemory on failure. Each has an OrAbort convenience variant.
 /// - Not copyable. Use Clone() for explicit deep copies.
-/// - Tree links use score::shm::NullableOffsetPtr for shared-memory relocatability.
+/// - Tree links are injected via PointerPolicy::NullablePtr (default: score::shm::NullableOffsetPtr).
 ///
 /// The tree is AVL-balanced to provide O(log n) insert/find/erase in the worst case.
 template <typename Key,
           typename T,
           typename Compare = std::less<Key>,
-          typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>>
+          typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
+          typename PointerPolicy = ShmPointerPolicy>
 class Map
 {
     struct Node;
@@ -60,6 +61,7 @@ class Map
     using value_type = std::pair<const key_type, mapped_type>;
     using key_compare = Compare;
     using allocator_type = Allocator;
+    using pointer_policy = PointerPolicy;
     using size_type = std::size_t;
     using difference_type = std::ptrdiff_t;
     using reference = value_type&;
@@ -349,7 +351,7 @@ class Map
           root_{other.root_},
           size_{other.size_}
     {
-        other.root_ = NullableOffsetPtr<Node>{nullptr};
+        other.root_ = nullable_ptr<Node>{nullptr};
         other.size_ = 0U;
     }
 
@@ -363,7 +365,7 @@ class Map
             root_ = other.root_;
             size_ = other.size_;
 
-            other.root_ = NullableOffsetPtr<Node>{nullptr};
+            other.root_ = nullable_ptr<Node>{nullptr};
             other.size_ = 0U;
         }
         return *this;
@@ -655,7 +657,7 @@ class Map
             current = parent;
         }
 
-        root_ = NullableOffsetPtr<Node>{nullptr};
+        root_ = nullable_ptr<Node>{nullptr};
         size_ = 0U;
     }
 
@@ -703,11 +705,14 @@ class Map
     }
 
   private:
+    template <typename TNode>
+    using nullable_ptr = typename pointer_policy::template NullablePtr<TNode>;
+
     struct Node
     {
-        NullableOffsetPtr<Node> left{nullptr};
-        NullableOffsetPtr<Node> right{nullptr};
-        NullableOffsetPtr<Node> parent{nullptr};
+        nullable_ptr<Node> left{nullptr};
+        nullable_ptr<Node> right{nullptr};
+        nullable_ptr<Node> parent{nullptr};
         value_type value;
         std::uint32_t height{1U};
 
@@ -1145,9 +1150,16 @@ class Map
 
     allocator_type allocator_;
     key_compare compare_;
-    NullableOffsetPtr<Node> root_{nullptr};
+    nullable_ptr<Node> root_{nullptr};
     size_type size_{0U};
 };
+
+template <typename Key,
+          typename T,
+          typename Compare = std::less<Key>,
+          typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
+          typename PointerPolicy = ShmPointerPolicy>
+using MapBase = Map<Key, T, Compare, Allocator, PointerPolicy>;
 
 }  // namespace score::shm
 

@@ -47,7 +47,7 @@ bazel run -c opt \
 bazel run -c opt \
   --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
   //score/shm:offset_ptr_benchmark -- \
-  --benchmark_filter='Std(Vector|Map)|MemoryShared(Vector|Map)|Shm(Vector|Map)' \
+  --benchmark_filter='Std(Vector|Map)|MemoryShared(Vector|Map)|Shm(Raw|Reloc)(Vector|Map)' \
   --benchmark_min_time=0.05s
 ```
 
@@ -66,23 +66,28 @@ Naming convention used in this benchmark:
 
 - `Std*`: standard library baseline (`std::vector`, `std::map`)
 - `MemoryShared*`: `score::memory::shared::*` implementation family
-- `Shm*`: `score::shm::*` implementation family
+- `ShmRaw*`: `score::shm::*` with raw-pointer policy (`ShmPointerPolicy`)
+- `ShmReloc*`: `score::shm::*` with relocatable offset-pointer policy
 
 | Benchmark | What it measures |
 |---|---|
 | `BM_StdVector_RandomAccess` | Baseline: `std::vector<std::vector<int>>` with raw `T*` pointers |
 | `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | `score::memory::shared::Vector` OffsetPtr offset-arithmetic overhead only (bounds check bypassed) |
 | `BM_MemorySharedVector_BoundsChecked_RandomAccess` | `score::memory::shared::Vector` OffsetPtr offset arithmetic + bounds validation |
-| `BM_ShmVector_RandomAccess` | `score::shm::Vector` with inline OffsetPtr (`intptr_t`-based, no cross-TU barriers) |
+| `BM_ShmRawVector_RandomAccess` | `score::shm::Vector` with raw-pointer policy (`ShmPointerPolicy`) |
+| `BM_ShmRelocVector_RandomAccess` | `score::shm::Vector` with relocatable offset-pointer policy |
 | `BM_StdMap_RandomBuild` | Baseline: `std::map<int,int>` random-order insertion |
 | `BM_MemorySharedMap_RandomBuild` | `score::memory::shared::Map<int,int>` random-order insertion |
-| `BM_ShmMap_RandomBuild` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) random-order insertion |
+| `BM_ShmRawMap_RandomBuild` | `score::shm::Map<int,int>` with raw-pointer policy |
+| `BM_ShmRelocMap_RandomBuild` | `score::shm::Map<int,int>` with relocatable offset-pointer policy |
 | `BM_StdMap_RandomAccess` | Baseline: `std::map<int,int>` randomized key lookup |
 | `BM_MemorySharedMap_RandomAccess` | `score::memory::shared::Map<int,int>` randomized key lookup |
-| `BM_ShmMap_RandomAccess` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) randomized key lookup |
+| `BM_ShmRawMap_RandomAccess` | `score::shm::Map<int,int>` with raw-pointer policy randomized key lookup |
+| `BM_ShmRelocMap_RandomAccess` | `score::shm::Map<int,int>` with relocatable offset-pointer policy randomized key lookup |
 | `BM_StdMap_Iterate` | Baseline: `std::map<int,int>` begin→end iteration |
 | `BM_MemorySharedMap_Iterate` | `score::memory::shared::Map<int,int>` begin→end iteration |
-| `BM_ShmMap_Iterate` | `score::shm::Map<int,int>` (`NullableOffsetPtr`) begin→end iteration |
+| `BM_ShmRawMap_Iterate` | `score::shm::Map<int,int>` with raw-pointer policy begin→end iteration |
+| `BM_ShmRelocMap_Iterate` | `score::shm::Map<int,int>` with relocatable offset-pointer policy begin→end iteration |
 
 ## Results
 

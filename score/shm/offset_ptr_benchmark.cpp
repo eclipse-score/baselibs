@@ -13,7 +13,7 @@
 
 /// @file Benchmark measuring OffsetPtr<T> operational overhead for vector and map scenarios.
 ///
-/// Compares four implementations of Vector<Vector<int>> with 1000x1000 elements and 100,000
+/// Compares five implementations of Vector<Vector<int>> with 1000x1000 elements and 100,000
 /// random (i, j) accesses. The random access pattern prevents CPU register caching of resolved
 /// OffsetPtr base addresses, exercising the full offset-arithmetic path on every dereference.
 ///
@@ -21,9 +21,11 @@
 ///   1. std::vector baseline (raw T*)
 ///   2. score::memory::shared::Vector — OffsetPtr without bounds checking
 ///   3. score::memory::shared::Vector — OffsetPtr with bounds checking
-///   4. score::shm::Vector — header-inline OffsetPtr (intptr_t-based, no cross-TU barriers)
+///   4. score::shm::Vector with raw-pointer policy
+///   5. score::shm::Vector with relocatable offset-pointer policy
 ///
-/// In addition, compares std::map, score::memory::shared::Map and score::shm::Map for:
+/// In addition, compares std::map, score::memory::shared::Map and score::shm::Map
+/// (raw-pointer policy + relocatable policy) for:
 ///   - random-order build
 ///   - random key lookup
 ///   - full in-order iteration
@@ -41,6 +43,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <numeric>
 #include <random>
 #include <utility>
@@ -59,6 +62,133 @@ constexpr std::size_t kMapAccessCount = 100000U;
 // 64 MB — generous for bump allocator that doesn't reclaim on dealloc.
 // Total data is ~4 MB, but vector growth without reuse needs headroom.
 constexpr std::size_t kBoundedResourceSize = 64U * 1024U * 1024U;
+
+template <typename T>
+class BenchmarkRelativeOffsetPtr
+{
+  public:
+    BenchmarkRelativeOffsetPtr(T const* const pointer) noexcept
+        : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}
+    {
+    }
+
+    BenchmarkRelativeOffsetPtr(const BenchmarkRelativeOffsetPtr& other) noexcept
+        : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)}
+    {
+    }
+
+    BenchmarkRelativeOffsetPtr& operator=(const BenchmarkRelativeOffsetPtr& other) noexcept
+    {
+        offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
+        return *this;
+    }
+
+    T* get() noexcept { return IntegerToPointer(PointerToInteger(this) + offset_from_this_); }
+
+    const T* get() const noexcept { return IntegerToConstPointer(PointerToInteger(this) + offset_from_this_); }
+
+  private:
+    static std::intptr_t PointerToInteger(const void* const pointer) noexcept
+    {
+        return reinterpret_cast<std::intptr_t>(pointer);
+    }
+
+    static T* IntegerToPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<T*>(reinterpret_cast<void*>(value));
+    }
+
+    static const T* IntegerToConstPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<const T*>(reinterpret_cast<const void*>(value));
+    }
+
+    std::intptr_t offset_from_this_{};
+};
+
+template <typename T>
+class BenchmarkRelativeNullableOffsetPtr
+{
+  public:
+    BenchmarkRelativeNullableOffsetPtr(T const* const pointer) noexcept
+        : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}, is_nullptr_{pointer == nullptr}
+    {
+    }
+
+    BenchmarkRelativeNullableOffsetPtr(const BenchmarkRelativeNullableOffsetPtr& other) noexcept
+        : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)},
+          is_nullptr_{other.get() == nullptr}
+    {
+    }
+
+    BenchmarkRelativeNullableOffsetPtr& operator=(const BenchmarkRelativeNullableOffsetPtr& other) noexcept
+    {
+        offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
+        is_nullptr_ = other.get() == nullptr;
+        return *this;
+    }
+
+    T* get() noexcept
+    {
+        return is_nullptr_ ? nullptr : IntegerToPointer(PointerToInteger(this) + offset_from_this_);
+    }
+
+    const T* get() const noexcept
+    {
+        return is_nullptr_ ? nullptr : IntegerToConstPointer(PointerToInteger(this) + offset_from_this_);
+    }
+
+  private:
+    static std::intptr_t PointerToInteger(const void* const pointer) noexcept
+    {
+        return reinterpret_cast<std::intptr_t>(pointer);
+    }
+
+    static T* IntegerToPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<T*>(reinterpret_cast<void*>(value));
+    }
+
+    static const T* IntegerToConstPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<const T*>(reinterpret_cast<const void*>(value));
+    }
+
+    std::intptr_t offset_from_this_{};
+    bool is_nullptr_{true};
+};
+
+using ShmRawPointerPolicy = score::shm::ShmPointerPolicy;
+
+struct ShmRelocPointerPolicy
+{
+    template <typename T>
+    using Ptr = BenchmarkRelativeOffsetPtr<T>;
+
+    template <typename T>
+    using NullablePtr = BenchmarkRelativeNullableOffsetPtr<T>;
+};
+
+using ShmRawInnerVector =
+    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmRawPointerPolicy>;
+using ShmRawNestedVector =
+    score::shm::Vector<ShmRawInnerVector, score::shm::PolymorphicAllocator<ShmRawInnerVector>, ShmRawPointerPolicy>;
+using ShmRelocInnerVector =
+    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmRelocPointerPolicy>;
+using ShmRelocNestedVector = score::shm::Vector<ShmRelocInnerVector,
+                                                score::shm::PolymorphicAllocator<ShmRelocInnerVector>,
+                                                ShmRelocPointerPolicy>;
+
+using ShmRawMap = score::shm::Map<int,
+                                  int,
+                                  std::less<int>,
+                                  score::shm::PolymorphicAllocator<std::pair<const int, int>>,
+                                  ShmRawPointerPolicy>;
+using ShmRelocMap = score::shm::Map<int,
+                                    int,
+                                    std::less<int>,
+                                    score::shm::PolymorphicAllocator<std::pair<const int, int>>,
+                                    ShmRelocPointerPolicy>;
 
 /// Pre-generated random access pattern with fixed seed for reproducible benchmarks.
 /// Uniform random (i, j) pairs ensure resolved OffsetPtr base addresses cannot be
@@ -174,12 +304,24 @@ score::memory::shared::Vector<score::memory::shared::Vector<int>> MakeMemoryShar
     return data;
 }
 
-score::shm::Vector<score::shm::Vector<int>> MakeShmNestedVector()
+ShmRawNestedVector MakeShmRawNestedVector()
 {
-    auto outer = score::shm::Vector<score::shm::Vector<int>>::CreateWithCapacityOrAbort(kOuterSize);
+    auto outer = ShmRawNestedVector::CreateWithCapacityOrAbort(kOuterSize);
     for (std::size_t i = 0U; i < kOuterSize; ++i)
     {
-        auto inner = score::shm::Vector<int>::CreateOrAbort(kInnerSize);
+        auto inner = ShmRawInnerVector::CreateOrAbort(kInnerSize);
+        std::iota(inner.begin(), inner.end(), 0);
+        outer.PushBackOrAbort(std::move(inner));
+    }
+    return outer;
+}
+
+ShmRelocNestedVector MakeShmRelocNestedVector()
+{
+    auto outer = ShmRelocNestedVector::CreateWithCapacityOrAbort(kOuterSize);
+    for (std::size_t i = 0U; i < kOuterSize; ++i)
+    {
+        auto inner = ShmRelocInnerVector::CreateOrAbort(kInnerSize);
         std::iota(inner.begin(), inner.end(), 0);
         outer.PushBackOrAbort(std::move(inner));
     }
@@ -206,9 +348,19 @@ score::memory::shared::Map<int, int> MakeMemorySharedMap(score::memory::shared::
     return data;
 }
 
-score::shm::Map<int, int> MakeShmMap()
+ShmRawMap MakeShmRawMap()
 {
-    auto data = score::shm::Map<int, int>::CreateOrAbort();
+    auto data = ShmRawMap::CreateOrAbort();
+    for (const auto& [key, value] : GetMapPattern().entries())
+    {
+        data.EmplaceOrAbort(key, value);
+    }
+    return data;
+}
+
+ShmRelocMap MakeShmRelocMap()
+{
+    auto data = ShmRelocMap::CreateOrAbort();
     for (const auto& [key, value] : GetMapPattern().entries())
     {
         data.EmplaceOrAbort(key, value);
@@ -280,11 +432,10 @@ void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
-/// score::shm::Vector with inline OffsetPtr — measures the overhead of a
-/// header-inline offset pointer without cross-TU barriers or bounds checking.
-void BM_ShmVector_RandomAccess(benchmark::State& state)
+/// score::shm::Vector with raw-pointer policy (TryNullWrapper mode).
+void BM_ShmRawVector_RandomAccess(benchmark::State& state)
 {
-    auto data = MakeShmNestedVector();
+    auto data = MakeShmRawNestedVector();
     const auto& pattern = GetAccessPattern();
 
     for (auto _ : state)
@@ -297,7 +448,25 @@ void BM_ShmVector_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmVector_RandomAccess);
+BENCHMARK(BM_ShmRawVector_RandomAccess);
+
+/// score::shm::Vector with relocatable offset-pointer policy.
+void BM_ShmRelocVector_RandomAccess(benchmark::State& state)
+{
+    auto data = MakeShmRelocNestedVector();
+    const auto& pattern = GetAccessPattern();
+
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [i, j] : pattern.indices())
+        {
+            sum += data[i][j];
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmRelocVector_RandomAccess);
 
 // --- Map benchmarks ---
 
@@ -334,13 +503,13 @@ void BM_MemorySharedMap_RandomBuild(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomBuild);
 
-/// score::shm::Map random-order build.
-void BM_ShmMap_RandomBuild(benchmark::State& state)
+/// score::shm::Map random-order build with raw-pointer policy.
+void BM_ShmRawMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
     for (auto _ : state)
     {
-        auto data = score::shm::Map<int, int>::CreateOrAbort();
+        auto data = ShmRawMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -348,7 +517,23 @@ void BM_ShmMap_RandomBuild(benchmark::State& state)
         benchmark::DoNotOptimize(data.size());
     }
 }
-BENCHMARK(BM_ShmMap_RandomBuild);
+BENCHMARK(BM_ShmRawMap_RandomBuild);
+
+/// score::shm::Map random-order build with relocatable offset-pointer policy.
+void BM_ShmRelocMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        auto data = ShmRelocMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_ShmRelocMap_RandomBuild);
 
 /// Baseline: std::map randomized key lookup.
 void BM_StdMap_RandomAccess(benchmark::State& state)
@@ -387,10 +572,10 @@ void BM_MemorySharedMap_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomAccess);
 
-/// score::shm::Map randomized key lookup.
-void BM_ShmMap_RandomAccess(benchmark::State& state)
+/// score::shm::Map randomized key lookup with raw-pointer policy.
+void BM_ShmRawMap_RandomAccess(benchmark::State& state)
 {
-    const auto data = MakeShmMap();
+    const auto data = MakeShmRawMap();
     const auto& lookup_keys = GetMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -403,7 +588,25 @@ void BM_ShmMap_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmMap_RandomAccess);
+BENCHMARK(BM_ShmRawMap_RandomAccess);
+
+/// score::shm::Map randomized key lookup with relocatable offset-pointer policy.
+void BM_ShmRelocMap_RandomAccess(benchmark::State& state)
+{
+    const auto data = MakeShmRelocMap();
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmRelocMap_RandomAccess);
 
 /// Baseline: std::map begin->end iteration.
 void BM_StdMap_Iterate(benchmark::State& state)
@@ -440,10 +643,10 @@ void BM_MemorySharedMap_Iterate(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_Iterate);
 
-/// score::shm::Map begin->end iteration.
-void BM_ShmMap_Iterate(benchmark::State& state)
+/// score::shm::Map begin->end iteration with raw-pointer policy.
+void BM_ShmRawMap_Iterate(benchmark::State& state)
 {
-    const auto data = MakeShmMap();
+    const auto data = MakeShmRawMap();
     for (auto _ : state)
     {
         std::int64_t sum = 0;
@@ -455,6 +658,23 @@ void BM_ShmMap_Iterate(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmMap_Iterate);
+BENCHMARK(BM_ShmRawMap_Iterate);
+
+/// score::shm::Map begin->end iteration with relocatable offset-pointer policy.
+void BM_ShmRelocMap_Iterate(benchmark::State& state)
+{
+    const auto data = MakeShmRelocMap();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmRelocMap_Iterate);
 
 }  // namespace
