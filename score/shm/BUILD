@@ -80,6 +80,22 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "map",
+    hdrs = ["map.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        ":container_error",
+        ":memory_resource",
+        ":offset_ptr",
+        "@score_baselibs//score/result",
+    ],
+)
+
 cc_gtest_unit_test(
     name = "memory_resource_test",
     srcs = ["memory_resource_test.cpp"],
@@ -110,9 +126,21 @@ cc_gtest_unit_test(
     ],
 )
 
+cc_gtest_unit_test(
+    name = "map_test",
+    srcs = ["map_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":container_error",
+        ":map",
+        ":memory_resource",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
+        ":map_test",
         ":memory_resource_test",
         ":monotonic_buffer_resource_test",
         ":vector_test",
