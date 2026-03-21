@@ -41,6 +41,16 @@ bazel run -c opt \
   //score/shm:offset_ptr_benchmark
 ```
 
+**Run only vector + map family comparisons:**
+
+```bash
+bazel run -c opt \
+  --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
+  //score/shm:offset_ptr_benchmark -- \
+  --benchmark_filter='Std(Vector|Map)|MemoryShared(Vector|Map)|Shm(Vector|Map)' \
+  --benchmark_min_time=0.05s
+```
+
 ### With `-O3`
 
 ```bash
@@ -51,6 +61,12 @@ bazel build -c opt \
 ```
 
 ## Benchmark Variants
+
+Naming convention used in this benchmark:
+
+- `Std*`: standard library baseline (`std::vector`, `std::map`)
+- `MemoryShared*`: `score::memory::shared::*` implementation family
+- `Shm*`: `score::shm::*` implementation family
 
 | Benchmark | What it measures |
 |---|---|
