@@ -437,6 +437,57 @@ TEST(Map, EmplaceOrAbortReturnsIteratorAndFlag)
     EXPECT_EQ(map.size(), 1U);
 }
 
+TEST(Map, HintInsertSupportsSortedFastPath)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    Map<int, int>::const_iterator hint = map.cend();
+    for (int key = 0; key < 100; ++key)
+    {
+        auto inserted = map.Insert(hint, {key, key * 10});
+        ASSERT_TRUE(inserted.has_value());
+        EXPECT_TRUE(inserted.value().second);
+        hint = inserted.value().first;
+    }
+
+    EXPECT_EQ(map.size(), 100U);
+    EXPECT_EQ(map.begin()->first, 0);
+    auto it = map.end();
+    --it;
+    EXPECT_EQ(it->first, 99);
+}
+
+TEST(Map, HintInsertDuplicateReturnsExisting)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+
+    const auto hint = map.find(20);
+    auto duplicate = map.Insert(hint, {10, 7});
+    ASSERT_TRUE(duplicate.has_value());
+    EXPECT_FALSE(duplicate.value().second);
+    EXPECT_EQ(duplicate.value().first->second, 1);
+}
+
+TEST(Map, HintEmplaceSupportsSortedFastPath)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    Map<int, std::string>::const_iterator hint = map.cend();
+    for (int key = 0; key < 32; ++key)
+    {
+        auto inserted = map.Emplace(hint, key, "value");
+        ASSERT_TRUE(inserted.has_value());
+        EXPECT_TRUE(inserted.value().second);
+        hint = inserted.value().first;
+    }
+
+    EXPECT_EQ(map.size(), 32U);
+    EXPECT_EQ(map.begin()->first, 0);
+    auto it = map.end();
+    --it;
+    EXPECT_EQ(it->first, 31);
+}
+
 TEST(Map, CloneOrAbortReturnsIndependentCopy)
 {
     Map<int, int> map = Map<int, int>::CreateOrAbort();

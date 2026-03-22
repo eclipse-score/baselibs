@@ -128,7 +128,7 @@ class Map
 
             if (node_ == nullptr)
             {
-                node_ = owner_->MaxNode(owner_->root_.get());
+                node_ = owner_->rightmost_.get();
                 if (node_ == nullptr)
                 {
                     std::abort();
@@ -228,7 +228,7 @@ class Map
 
             if (node_ == nullptr)
             {
-                node_ = owner_->MaxNode(owner_->root_.get());
+                node_ = owner_->rightmost_.get();
                 if (node_ == nullptr)
                 {
                     std::abort();
@@ -283,13 +283,15 @@ class Map
                                      allocator_type allocator = allocator_type{}) noexcept
     {
         Map map{std::move(allocator), std::move(compare)};
+        const_iterator hint = map.cend();
         for (InputIt it = first; it != last; ++it)
         {
-            const auto inserted = map.Insert(*it);
+            const auto inserted = map.Insert(hint, *it);
             if (!inserted.has_value())
             {
                 return score::Result<Map>{score::unexpect, inserted.error()};
             }
+            hint = inserted.value().first;
         }
         return map;
     }
@@ -349,9 +351,13 @@ class Map
         : allocator_{std::move(other.allocator_)},
           compare_{std::move(other.compare_)},
           root_{other.root_},
+          leftmost_{other.leftmost_},
+          rightmost_{other.rightmost_},
           size_{other.size_}
     {
         other.root_ = nullable_ptr<Node>{nullptr};
+        other.leftmost_ = nullable_ptr<Node>{nullptr};
+        other.rightmost_ = nullable_ptr<Node>{nullptr};
         other.size_ = 0U;
     }
 
@@ -363,9 +369,13 @@ class Map
             allocator_ = std::move(other.allocator_);
             compare_ = std::move(other.compare_);
             root_ = other.root_;
+            leftmost_ = other.leftmost_;
+            rightmost_ = other.rightmost_;
             size_ = other.size_;
 
             other.root_ = nullable_ptr<Node>{nullptr};
+            other.leftmost_ = nullable_ptr<Node>{nullptr};
+            other.rightmost_ = nullable_ptr<Node>{nullptr};
             other.size_ = 0U;
         }
         return *this;
@@ -393,17 +403,17 @@ class Map
 
     [[nodiscard]] iterator begin() noexcept
     {
-        return iterator{MinNode(root_.get()), this};
+        return iterator{leftmost_.get(), this};
     }
 
     [[nodiscard]] const_iterator begin() const noexcept
     {
-        return const_iterator{MinNode(root_.get()), this};
+        return const_iterator{leftmost_.get(), this};
     }
 
     [[nodiscard]] const_iterator cbegin() const noexcept
     {
-        return const_iterator{MinNode(root_.get()), this};
+        return const_iterator{leftmost_.get(), this};
     }
 
     [[nodiscard]] iterator end() noexcept
@@ -471,6 +481,18 @@ class Map
         return InsertImpl(std::move(value));
     }
 
+    /// @brief Hint-aware Insert(). Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Insert(const_iterator hint, const value_type& value) noexcept
+    {
+        return InsertImpl(value, &hint);
+    }
+
+    /// @brief Hint-aware move Insert(). Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Insert(const_iterator hint, value_type&& value) noexcept
+    {
+        return InsertImpl(std::move(value), &hint);
+    }
+
     /// @brief Like Insert(), but aborts on allocation failure.
     std::pair<iterator, bool> InsertOrAbort(const value_type& value) noexcept
     {
@@ -486,6 +508,28 @@ class Map
     std::pair<iterator, bool> InsertOrAbort(value_type&& value) noexcept
     {
         auto inserted = Insert(std::move(value));
+        if (!inserted.has_value())
+        {
+            std::abort();
+        }
+        return std::move(inserted).value();
+    }
+
+    /// @brief Like hint-aware Insert(), but aborts on allocation failure.
+    std::pair<iterator, bool> InsertOrAbort(const_iterator hint, const value_type& value) noexcept
+    {
+        auto inserted = Insert(hint, value);
+        if (!inserted.has_value())
+        {
+            std::abort();
+        }
+        return std::move(inserted).value();
+    }
+
+    /// @brief Like hint-aware move Insert(), but aborts on allocation failure.
+    std::pair<iterator, bool> InsertOrAbort(const_iterator hint, value_type&& value) noexcept
+    {
+        auto inserted = Insert(hint, std::move(value));
         if (!inserted.has_value())
         {
             std::abort();
@@ -518,62 +562,49 @@ class Map
         return EmplaceKeyValueImpl(std::move(key), std::move(value));
     }
 
+    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
+                                                     const key_type& key,
+                                                     const mapped_type& value) noexcept
+    {
+        return EmplaceKeyValueImpl(key, value, &hint);
+    }
+
+    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
+                                                     const key_type& key,
+                                                     mapped_type&& value) noexcept
+    {
+        return EmplaceKeyValueImpl(key, std::move(value), &hint);
+    }
+
+    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
+                                                     key_type&& key,
+                                                     const mapped_type& value) noexcept
+    {
+        return EmplaceKeyValueImpl(std::move(key), value, &hint);
+    }
+
+    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
+                                                     key_type&& key,
+                                                     mapped_type&& value) noexcept
+    {
+        return EmplaceKeyValueImpl(std::move(key), std::move(value), &hint);
+    }
+
     template <typename... Args>
     score::Result<std::pair<iterator, bool>> Emplace(Args&&... args) noexcept
     {
-        auto allocated = AllocateNodeEmplace(nullptr, std::forward<Args>(args)...);
-        if (!allocated.has_value())
-        {
-            return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
-        }
+        return EmplaceConstructedNodeImpl(nullptr, std::forward<Args>(args)...);
+    }
 
-        Node* const node = allocated.value();
-        const key_type& key = node->value.first;
-
-        if (root_.get() == nullptr)
-        {
-            root_ = node;
-            ++size_;
-            return std::pair<iterator, bool>{iterator{root_.get(), this}, true};
-        }
-
-        Node* parent = nullptr;
-        Node* current = root_.get();
-        bool insert_left = false;
-
-        while (current != nullptr)
-        {
-            parent = current;
-            if (IsLess(key, current->value.first))
-            {
-                insert_left = true;
-                current = current->left.get();
-            }
-            else if (IsLess(current->value.first, key))
-            {
-                insert_left = false;
-                current = current->right.get();
-            }
-            else
-            {
-                DestroyNode(node);
-                return std::pair<iterator, bool>{iterator{current, this}, false};
-            }
-        }
-
-        node->parent = parent;
-        if (insert_left)
-        {
-            parent->left = node;
-        }
-        else
-        {
-            parent->right = node;
-        }
-
-        ++size_;
-        RebalanceFrom(parent, true);
-        return std::pair<iterator, bool>{iterator{node, this}, true};
+    /// @brief Hint-aware in-place construction. Falls back to regular lookup if hint is not usable.
+    template <typename... Args>
+    score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint, Args&&... args) noexcept
+    {
+        return EmplaceConstructedNodeImpl(&hint, std::forward<Args>(args)...);
     }
 
     /// @brief Like Emplace(), but aborts on allocation failure.
@@ -678,6 +709,8 @@ class Map
         }
 
         root_ = nullable_ptr<Node>{nullptr};
+        leftmost_ = nullable_ptr<Node>{nullptr};
+        rightmost_ = nullable_ptr<Node>{nullptr};
         size_ = 0U;
     }
 
@@ -687,6 +720,8 @@ class Map
         swap(allocator_, other.allocator_);
         swap(compare_, other.compare_);
         swap(root_, other.root_);
+        swap(leftmost_, other.leftmost_);
+        swap(rightmost_, other.rightmost_);
         swap(size_, other.size_);
     }
 
@@ -701,13 +736,15 @@ class Map
         }
 
         Map clone = std::move(created).value();
+        const_iterator hint = clone.cend();
         for (const auto& value : *this)
         {
-            auto inserted = clone.Insert(value);
+            auto inserted = clone.Insert(hint, value);
             if (!inserted.has_value())
             {
                 return score::Result<Map>{score::unexpect, inserted.error()};
             }
+            hint = inserted.value().first;
         }
 
         return clone;
@@ -826,6 +863,40 @@ class Map
     InsertPosition FindInsertPosition(const key_type& key) noexcept
     {
         InsertPosition position{};
+        if (root_.get() == nullptr)
+        {
+            return position;
+        }
+
+        Node* const rightmost = rightmost_.get();
+        if ((rightmost != nullptr) && IsLess(rightmost->value.first, key))
+        {
+            position.parent = rightmost;
+            position.insert_left = false;
+            return position;
+        }
+
+        Node* const leftmost = leftmost_.get();
+        if ((leftmost != nullptr) && IsLess(key, leftmost->value.first))
+        {
+            position.parent = leftmost;
+            position.insert_left = true;
+            return position;
+        }
+
+        if ((rightmost != nullptr) && !IsLess(key, rightmost->value.first) && !IsLess(rightmost->value.first, key))
+        {
+            position.existing = rightmost;
+            return position;
+        }
+
+        if ((leftmost != nullptr) && (leftmost != rightmost) && !IsLess(key, leftmost->value.first) &&
+            !IsLess(leftmost->value.first, key))
+        {
+            position.existing = leftmost;
+            return position;
+        }
+
         Node* lower_bound = nullptr;
         Node* current = root_.get();
         while (current != nullptr)
@@ -852,11 +923,127 @@ class Map
         return position;
     }
 
+    InsertPosition FindInsertPositionWithHint(const key_type& key, const const_iterator& hint) noexcept
+    {
+        if (hint.owner_ != this)
+        {
+            return FindInsertPosition(key);
+        }
+
+        if (root_.get() == nullptr)
+        {
+            return InsertPosition{};
+        }
+
+        if (hint.node_ == nullptr)
+        {
+            if (rightmost_.get() == nullptr)
+            {
+                return InsertPosition{};
+            }
+            if (IsLess(rightmost_.get()->value.first, key))
+            {
+                InsertPosition position{};
+                position.parent = rightmost_.get();
+                position.insert_left = false;
+                return position;
+            }
+            return FindInsertPosition(key);
+        }
+
+        Node* const hinted = const_cast<Node*>(hint.node_);
+        if (IsLess(key, hinted->value.first))
+        {
+            Node* const predecessor = PreviousNode(hinted);
+            const bool key_greater_than_predecessor = (predecessor == nullptr) || IsLess(predecessor->value.first, key);
+            if (key_greater_than_predecessor)
+            {
+                if (hinted->left.get() == nullptr)
+                {
+                    InsertPosition position{};
+                    position.parent = hinted;
+                    position.insert_left = true;
+                    return position;
+                }
+                return FindInsertPosition(key);
+            }
+            return FindInsertPosition(key);
+        }
+
+        if (IsLess(hinted->value.first, key))
+        {
+            Node* const successor = NextNode(hinted);
+            const bool key_less_than_successor = (successor == nullptr) || IsLess(key, successor->value.first);
+            if (key_less_than_successor)
+            {
+                if (hinted->right.get() == nullptr)
+                {
+                    InsertPosition position{};
+                    position.parent = hinted;
+                    position.insert_left = false;
+                    return position;
+                }
+                return FindInsertPosition(key);
+            }
+            return FindInsertPosition(key);
+        }
+
+        InsertPosition position{};
+        position.existing = hinted;
+        return position;
+    }
+
+    iterator FinalizeInsertResult(const InsertPosition& position, Node* inserted) noexcept
+    {
+        if (size_ == 0U)
+        {
+            leftmost_ = inserted;
+            rightmost_ = inserted;
+        }
+        else
+        {
+            if (position.insert_left && (position.parent == leftmost_.get()))
+            {
+                leftmost_ = inserted;
+            }
+            if (!position.insert_left && (position.parent == rightmost_.get()))
+            {
+                rightmost_ = inserted;
+            }
+        }
+
+        ++size_;
+        RebalanceFrom(position.parent, true);
+        return iterator{inserted, this};
+    }
+
+    score::Result<std::pair<iterator, bool>> LinkAllocatedNode(const InsertPosition& position, Node* inserted) noexcept
+    {
+        inserted->parent = position.parent;
+        if (position.parent == nullptr)
+        {
+            root_ = inserted;
+        }
+        else if (position.insert_left)
+        {
+            position.parent->left = inserted;
+        }
+        else
+        {
+            position.parent->right = inserted;
+        }
+
+        return std::pair<iterator, bool>{FinalizeInsertResult(position, inserted), true};
+    }
+
     template <typename KeyArg, typename MappedArg>
-    score::Result<std::pair<iterator, bool>> EmplaceKeyValueImpl(KeyArg&& key, MappedArg&& value) noexcept
+    score::Result<std::pair<iterator, bool>> EmplaceKeyValueImpl(KeyArg&& key,
+                                                                  MappedArg&& value,
+                                                                  const const_iterator* hint = nullptr) noexcept
     {
         const key_type& lookup_key = key;
-        const InsertPosition position = FindInsertPosition(lookup_key);
+        const InsertPosition position = (hint == nullptr) ? FindInsertPosition(lookup_key)
+                                                          : FindInsertPositionWithHint(lookup_key, *hint);
         if (position.existing != nullptr)
         {
             return std::pair<iterator, bool>{iterator{position.existing, this}, false};
@@ -868,31 +1055,17 @@ class Map
             return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
         }
 
-        Node* const inserted = allocated.value();
-        if (position.parent == nullptr)
-        {
-            root_ = inserted;
-        }
-        else if (position.insert_left)
-        {
-            position.parent->left = inserted;
-        }
-        else
-        {
-            position.parent->right = inserted;
-        }
-
-        ++size_;
-        RebalanceFrom(position.parent, true);
-        return std::pair<iterator, bool>{iterator{inserted, this}, true};
+        return LinkAllocatedNode(position, allocated.value());
     }
 
     template <typename ValueArg>
-    score::Result<std::pair<iterator, bool>> InsertImpl(ValueArg&& value) noexcept
+    score::Result<std::pair<iterator, bool>> InsertImpl(ValueArg&& value,
+                                                        const const_iterator* hint = nullptr) noexcept
     {
         const key_type& key = value.first;
 
-        const InsertPosition position = FindInsertPosition(key);
+        const InsertPosition position = (hint == nullptr) ? FindInsertPosition(key)
+                                                          : FindInsertPositionWithHint(key, *hint);
         if (position.existing != nullptr)
         {
             return std::pair<iterator, bool>{iterator{position.existing, this}, false};
@@ -904,23 +1077,44 @@ class Map
             return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
         }
 
-        Node* const inserted = allocated.value();
+        return LinkAllocatedNode(position, allocated.value());
+    }
+
+    template <typename... Args>
+    score::Result<std::pair<iterator, bool>> EmplaceConstructedNodeImpl(const const_iterator* hint,
+                                                                         Args&&... args) noexcept
+    {
+        auto allocated = AllocateNodeEmplace(nullptr, std::forward<Args>(args)...);
+        if (!allocated.has_value())
+        {
+            return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
+        }
+
+        Node* const node = allocated.value();
+        const key_type& key = node->value.first;
+        const InsertPosition position = (hint == nullptr) ? FindInsertPosition(key)
+                                                          : FindInsertPositionWithHint(key, *hint);
+        if (position.existing != nullptr)
+        {
+            DestroyNode(node);
+            return std::pair<iterator, bool>{iterator{position.existing, this}, false};
+        }
+
+        node->parent = position.parent;
         if (position.parent == nullptr)
         {
-            root_ = inserted;
+            root_ = node;
         }
         else if (position.insert_left)
         {
-            position.parent->left = inserted;
+            position.parent->left = node;
         }
         else
         {
-            position.parent->right = inserted;
+            position.parent->right = node;
         }
 
-        ++size_;
-        RebalanceFrom(position.parent, true);
-        return std::pair<iterator, bool>{iterator{inserted, this}, true};
+        return std::pair<iterator, bool>{FinalizeInsertResult(position, node), true};
     }
 
     template <typename NodePtr>
@@ -1186,6 +1380,16 @@ class Map
     void EraseNode(Node* target) noexcept
     {
         Node* rebalance_start = nullptr;
+        Node* next_leftmost = leftmost_.get();
+        Node* next_rightmost = rightmost_.get();
+        if (target == leftmost_.get())
+        {
+            next_leftmost = NextNode(target);
+        }
+        if (target == rightmost_.get())
+        {
+            next_rightmost = PreviousNode(target);
+        }
 
         if (target->left.get() == nullptr)
         {
@@ -1227,11 +1431,24 @@ class Map
         {
             RebalanceFrom(rebalance_start, false);
         }
+
+        if (root_.get() == nullptr)
+        {
+            leftmost_ = nullable_ptr<Node>{nullptr};
+            rightmost_ = nullable_ptr<Node>{nullptr};
+        }
+        else
+        {
+            leftmost_ = next_leftmost;
+            rightmost_ = next_rightmost;
+        }
     }
 
     allocator_type allocator_;
     key_compare compare_;
     nullable_ptr<Node> root_{nullptr};
+    nullable_ptr<Node> leftmost_{nullptr};
+    nullable_ptr<Node> rightmost_{nullptr};
     size_type size_{0U};
 };
 

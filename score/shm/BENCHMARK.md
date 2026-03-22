@@ -97,18 +97,65 @@ Naming convention used in this benchmark:
 
 ## Results
 
-Measured on a 2-core x86_64 VM (2712 MHz, 12 MB L3 cache).
-Element type: `int` (4 bytes) in `Vector<Vector<int>>` with 1000×1000 elements and 100,000
-random accesses.
+Measured on host `marlin` with benchmark context:
 
-### Default optimized build (`-c opt`, i.e. `-O2`)
+- 16 logical CPUs @ ~5135 MHz
+- L3 cache: 16 MiB
+- `cpu_scaling_enabled: true`
+- build: `bazel run -c opt //score/shm:offset_ptr_benchmark`
+- runtime flags: `--benchmark_min_time=0.3s --benchmark_repetitions=3 --benchmark_report_aggregates_only=true`
 
-| Variant | CPU time | Overhead vs baseline |
-|---|---|---|
-| `std::vector` (raw `T*`) | 0.223 ms | 1× |
-| `score::shm::Vector` (inline OffsetPtr) | 0.256 ms | **~1.15×** |
-| `score::memory::shared::Vector` (no bounds check) | 40.2 ms | **~180×** |
-| `score::memory::shared::Vector` (bounds checked) | 44.2 ms | **~198×** |
+Element type: `int` (4 bytes) in `Vector<Vector<int>>` with 1000×1000 elements and 100,000 random accesses.
+
+### Full benchmark suite (mean CPU time, ns)
+
+| Benchmark | Mean CPU (ns) |
+|---|---:|
+| `BM_StdVector_RandomAccess` | 132,983 |
+| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | 20,519,648 |
+| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | 22,451,792 |
+| `BM_ShmDirectVector_RandomAccess` | 137,778 |
+| `BM_ShmRelocVector_RandomAccess` | 150,015 |
+| `BM_StdMap_RandomBuild` | 849,877 |
+| `BM_MemorySharedMap_RandomBuild` | 83,105,281 |
+| `BM_ShmDirectMap_RandomBuild` | 926,174 |
+| `BM_ShmRelocMap_RandomBuild` | 1,164,263 |
+| `BM_StdMap_RandomAccess` | 3,479,497 |
+| `BM_MemorySharedMap_RandomAccess` | 397,362,142 |
+| `BM_ShmDirectMap_RandomAccess` | 3,307,379 |
+| `BM_ShmRelocMap_RandomAccess` | 7,136,843 |
+| `BM_StdMap_Iterate` | 49,237 |
+| `BM_MemorySharedMap_Iterate` | 7,259,313 |
+| `BM_ShmDirectMap_Iterate` | 48,785 |
+| `BM_ShmRelocMap_Iterate` | 73,838 |
+| `BM_StdMap_Internal_InsertRebalance` | 182,413 |
+| `BM_ShmDirectMap_Internal_InsertRebalance` | 117,100 |
+| `BM_StdMap_Internal_Find` | 2,956,408 |
+| `BM_ShmDirectMap_Internal_Find` | 2,848,400 |
+| `BM_StdMap_Internal_EraseRebalance` | 506,597 |
+| `BM_ShmDirectMap_Internal_EraseRebalance` | 593,704 |
+
+### Ratio summary (vs std baseline in each family)
+
+| Comparison | Ratio |
+|---|---:|
+| `ShmDirectVector_RandomAccess / StdVector_RandomAccess` | 1.04× |
+| `ShmRelocVector_RandomAccess / StdVector_RandomAccess` | 1.13× |
+| `MemorySharedVector_NoBoundsCheck / StdVector_RandomAccess` | 154.30× |
+| `MemorySharedVector_BoundsChecked / StdVector_RandomAccess` | 168.83× |
+| `ShmDirectMap_RandomBuild / StdMap_RandomBuild` | 1.09× |
+| `ShmDirectMap_RandomAccess / StdMap_RandomAccess` | 0.95× |
+| `ShmDirectMap_Iterate / StdMap_Iterate` | 0.99× |
+| `ShmDirectMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 0.64× |
+| `ShmDirectMap_Internal_Find / StdMap_Internal_Find` | 0.96× |
+| `ShmDirectMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 1.17× |
+
+### Current takeaways
+
+- `ShmDirect` is now near/at parity for map lookup and iteration, and faster in focused insert/rebalance and find microbenchmarks.
+- `ShmDirectMap` random build remains slightly slower than `std::map`.
+- `ShmDirectMap` erase/rebalance remains slower than `std::map` and is the primary remaining gap.
+- `score::memory::shared::*` remains far slower in this benchmark, especially for random map access and vector random access.
 
 ### Cross-validation with independent implementation
 
