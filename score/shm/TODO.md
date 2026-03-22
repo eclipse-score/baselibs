@@ -2,8 +2,11 @@
 
 ## Context
 
-`TryNullWrapper` validates performance and architecture boundaries by swapping
-`score::shm::OffsetPtr`/`NullableOffsetPtr` internals to raw-pointer composition.
+This branch validates performance and architecture boundaries by comparing
+explicit pointer policies:
+
+- `ShmPointerPolicy` (`OffsetPtr` / `NullableOffsetPtr`)
+- `ShmDirectPointerPolicy` (`DirectPtr` for both aliases)
 
 The branch now also injects pointer wrappers into container internals via
 `PointerPolicy`:
@@ -24,5 +27,5 @@ alternative pointer wrappers.
 - [ ] Consider extracting a reusable tree core that is parameterized by `PointerPolicy` and allocator model.
 - [ ] Define a minimal pointer-wrapper concept contract for policies (`Ptr<T>`, `NullablePtr<T>`, `get()`,
       copy/assign semantics) and enforce it with compile-time checks.
-- [ ] Extend benchmarks to run matrix comparisons across pointer policies (default relocatable vs raw wrapper)
+- [ ] Extend benchmarks to run matrix comparisons across pointer policies (offset vs direct wrappers)
       for both vector and map families.

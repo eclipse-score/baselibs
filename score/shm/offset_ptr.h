@@ -22,29 +22,103 @@ template <typename T>
 class OffsetPtr
 {
   public:
-    OffsetPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+    OffsetPtr(T const* const pointer) noexcept
+        : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}
+    {
+    }
 
-    OffsetPtr(const OffsetPtr& other) noexcept = default;
+    OffsetPtr(const OffsetPtr& other) noexcept : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)} {}
 
-    OffsetPtr& operator=(const OffsetPtr& other) noexcept = default;
+    OffsetPtr& operator=(const OffsetPtr& other) noexcept
+    {
+        offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
+        return *this;
+    }
 
-    T* get() noexcept { return const_cast<T*>(pointer_); }
+    T* get() noexcept { return IntegerToPointer(PointerToInteger(this) + offset_from_this_); }
 
-    const T* get() const noexcept { return pointer_; }
+    const T* get() const noexcept { return IntegerToConstPointer(PointerToInteger(this) + offset_from_this_); }
 
   private:
-    const T* pointer_{nullptr};
+    static std::intptr_t PointerToInteger(const void* const pointer) noexcept
+    {
+        return reinterpret_cast<std::intptr_t>(pointer);
+    }
+
+    static T* IntegerToPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<T*>(reinterpret_cast<void*>(value));
+    }
+
+    static const T* IntegerToConstPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<const T*>(reinterpret_cast<const void*>(value));
+    }
+
+    std::intptr_t offset_from_this_{};
 };
 
 template <typename T>
 class NullableOffsetPtr
 {
   public:
-    NullableOffsetPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+    NullableOffsetPtr(T const* const pointer) noexcept
+        : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}, is_nullptr_{pointer == nullptr}
+    {
+    }
 
-    NullableOffsetPtr(const NullableOffsetPtr& other) noexcept = default;
+    NullableOffsetPtr(const NullableOffsetPtr& other) noexcept
+        : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)},
+          is_nullptr_{other.get() == nullptr}
+    {
+    }
 
-    NullableOffsetPtr& operator=(const NullableOffsetPtr& other) noexcept = default;
+    NullableOffsetPtr& operator=(const NullableOffsetPtr& other) noexcept
+    {
+        offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
+        is_nullptr_ = other.get() == nullptr;
+        return *this;
+    }
+
+    T* get() noexcept
+    {
+        return is_nullptr_ ? nullptr : IntegerToPointer(PointerToInteger(this) + offset_from_this_);
+    }
+
+    const T* get() const noexcept
+    {
+        return is_nullptr_ ? nullptr : IntegerToConstPointer(PointerToInteger(this) + offset_from_this_);
+    }
+
+  private:
+    static std::intptr_t PointerToInteger(const void* const pointer) noexcept
+    {
+        return reinterpret_cast<std::intptr_t>(pointer);
+    }
+
+    static T* IntegerToPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<T*>(reinterpret_cast<void*>(value));
+    }
+
+    static const T* IntegerToConstPointer(const std::intptr_t value) noexcept
+    {
+        return static_cast<const T*>(reinterpret_cast<const void*>(value));
+    }
+
+    std::intptr_t offset_from_this_{};
+    bool is_nullptr_{true};
+};
+
+template <typename T>
+class DirectPtr
+{
+  public:
+    DirectPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+
+    DirectPtr(const DirectPtr& other) noexcept = default;
+
+    DirectPtr& operator=(const DirectPtr& other) noexcept = default;
 
     T* get() noexcept { return const_cast<T*>(pointer_); }
 
@@ -61,6 +135,15 @@ struct ShmPointerPolicy
 
     template <typename T>
     using NullablePtr = NullableOffsetPtr<T>;
+};
+
+struct ShmDirectPointerPolicy
+{
+    template <typename T>
+    using Ptr = DirectPtr<T>;
+
+    template <typename T>
+    using NullablePtr = DirectPtr<T>;
 };
 
 }  // namespace score::shm

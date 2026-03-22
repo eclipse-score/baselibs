@@ -21,11 +21,11 @@
 ///   1. std::vector baseline (raw T*)
 ///   2. score::memory::shared::Vector — OffsetPtr without bounds checking
 ///   3. score::memory::shared::Vector — OffsetPtr with bounds checking
-///   4. score::shm::Vector with raw-pointer policy
+///   4. score::shm::Vector with direct-pointer policy
 ///   5. score::shm::Vector with relocatable offset-pointer policy
 ///
 /// In addition, compares std::map, score::memory::shared::Map and score::shm::Map
-/// (raw-pointer policy + relocatable policy) for:
+/// (direct-pointer policy + relocatable policy) for:
 ///   - random-order build
 ///   - random key lookup
 ///   - full in-order iteration
@@ -158,7 +158,7 @@ class BenchmarkRelativeNullableOffsetPtr
     bool is_nullptr_{true};
 };
 
-using ShmRawPointerPolicy = score::shm::ShmPointerPolicy;
+using ShmDirectPointerPolicy = score::shm::ShmDirectPointerPolicy;
 
 struct ShmRelocPointerPolicy
 {
@@ -169,21 +169,22 @@ struct ShmRelocPointerPolicy
     using NullablePtr = BenchmarkRelativeNullableOffsetPtr<T>;
 };
 
-using ShmRawInnerVector =
-    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmRawPointerPolicy>;
-using ShmRawNestedVector =
-    score::shm::Vector<ShmRawInnerVector, score::shm::PolymorphicAllocator<ShmRawInnerVector>, ShmRawPointerPolicy>;
+using ShmDirectInnerVector =
+    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmDirectPointerPolicy>;
+using ShmDirectNestedVector = score::shm::Vector<ShmDirectInnerVector,
+                                                 score::shm::PolymorphicAllocator<ShmDirectInnerVector>,
+                                                 ShmDirectPointerPolicy>;
 using ShmRelocInnerVector =
     score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmRelocPointerPolicy>;
 using ShmRelocNestedVector = score::shm::Vector<ShmRelocInnerVector,
                                                 score::shm::PolymorphicAllocator<ShmRelocInnerVector>,
                                                 ShmRelocPointerPolicy>;
 
-using ShmRawMap = score::shm::Map<int,
-                                  int,
-                                  std::less<int>,
-                                  score::shm::PolymorphicAllocator<std::pair<const int, int>>,
-                                  ShmRawPointerPolicy>;
+using ShmDirectMap = score::shm::Map<int,
+                                     int,
+                                     std::less<int>,
+                                     score::shm::PolymorphicAllocator<std::pair<const int, int>>,
+                                     ShmDirectPointerPolicy>;
 using ShmRelocMap = score::shm::Map<int,
                                     int,
                                     std::less<int>,
@@ -304,12 +305,12 @@ score::memory::shared::Vector<score::memory::shared::Vector<int>> MakeMemoryShar
     return data;
 }
 
-ShmRawNestedVector MakeShmRawNestedVector()
+ShmDirectNestedVector MakeShmDirectNestedVector()
 {
-    auto outer = ShmRawNestedVector::CreateWithCapacityOrAbort(kOuterSize);
+    auto outer = ShmDirectNestedVector::CreateWithCapacityOrAbort(kOuterSize);
     for (std::size_t i = 0U; i < kOuterSize; ++i)
     {
-        auto inner = ShmRawInnerVector::CreateOrAbort(kInnerSize);
+        auto inner = ShmDirectInnerVector::CreateOrAbort(kInnerSize);
         std::iota(inner.begin(), inner.end(), 0);
         outer.PushBackOrAbort(std::move(inner));
     }
@@ -348,9 +349,9 @@ score::memory::shared::Map<int, int> MakeMemorySharedMap(score::memory::shared::
     return data;
 }
 
-ShmRawMap MakeShmRawMap()
+ShmDirectMap MakeShmDirectMap()
 {
-    auto data = ShmRawMap::CreateOrAbort();
+    auto data = ShmDirectMap::CreateOrAbort();
     for (const auto& [key, value] : GetMapPattern().entries())
     {
         data.EmplaceOrAbort(key, value);
@@ -432,10 +433,10 @@ void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
-/// score::shm::Vector with raw-pointer policy (TryNullWrapper mode).
-void BM_ShmRawVector_RandomAccess(benchmark::State& state)
+/// score::shm::Vector with direct-pointer policy.
+void BM_ShmDirectVector_RandomAccess(benchmark::State& state)
 {
-    auto data = MakeShmRawNestedVector();
+    auto data = MakeShmDirectNestedVector();
     const auto& pattern = GetAccessPattern();
 
     for (auto _ : state)
@@ -448,7 +449,7 @@ void BM_ShmRawVector_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmRawVector_RandomAccess);
+BENCHMARK(BM_ShmDirectVector_RandomAccess);
 
 /// score::shm::Vector with relocatable offset-pointer policy.
 void BM_ShmRelocVector_RandomAccess(benchmark::State& state)
@@ -503,13 +504,13 @@ void BM_MemorySharedMap_RandomBuild(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomBuild);
 
-/// score::shm::Map random-order build with raw-pointer policy.
-void BM_ShmRawMap_RandomBuild(benchmark::State& state)
+/// score::shm::Map random-order build with direct-pointer policy.
+void BM_ShmDirectMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
     for (auto _ : state)
     {
-        auto data = ShmRawMap::CreateOrAbort();
+        auto data = ShmDirectMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -517,7 +518,7 @@ void BM_ShmRawMap_RandomBuild(benchmark::State& state)
         benchmark::DoNotOptimize(data.size());
     }
 }
-BENCHMARK(BM_ShmRawMap_RandomBuild);
+BENCHMARK(BM_ShmDirectMap_RandomBuild);
 
 /// score::shm::Map random-order build with relocatable offset-pointer policy.
 void BM_ShmRelocMap_RandomBuild(benchmark::State& state)
@@ -572,10 +573,10 @@ void BM_MemorySharedMap_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomAccess);
 
-/// score::shm::Map randomized key lookup with raw-pointer policy.
-void BM_ShmRawMap_RandomAccess(benchmark::State& state)
+/// score::shm::Map randomized key lookup with direct-pointer policy.
+void BM_ShmDirectMap_RandomAccess(benchmark::State& state)
 {
-    const auto data = MakeShmRawMap();
+    const auto data = MakeShmDirectMap();
     const auto& lookup_keys = GetMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -588,7 +589,7 @@ void BM_ShmRawMap_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmRawMap_RandomAccess);
+BENCHMARK(BM_ShmDirectMap_RandomAccess);
 
 /// score::shm::Map randomized key lookup with relocatable offset-pointer policy.
 void BM_ShmRelocMap_RandomAccess(benchmark::State& state)
@@ -643,10 +644,10 @@ void BM_MemorySharedMap_Iterate(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_Iterate);
 
-/// score::shm::Map begin->end iteration with raw-pointer policy.
-void BM_ShmRawMap_Iterate(benchmark::State& state)
+/// score::shm::Map begin->end iteration with direct-pointer policy.
+void BM_ShmDirectMap_Iterate(benchmark::State& state)
 {
-    const auto data = MakeShmRawMap();
+    const auto data = MakeShmDirectMap();
     for (auto _ : state)
     {
         std::int64_t sum = 0;
@@ -658,7 +659,7 @@ void BM_ShmRawMap_Iterate(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
-BENCHMARK(BM_ShmRawMap_Iterate);
+BENCHMARK(BM_ShmDirectMap_Iterate);
 
 /// score::shm::Map begin->end iteration with relocatable offset-pointer policy.
 void BM_ShmRelocMap_Iterate(benchmark::State& state)

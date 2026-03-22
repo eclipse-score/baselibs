@@ -4,6 +4,7 @@
 
 - `score::shm::MemoryResource` / `score::shm::PolymorphicAllocator<T>` follow the overall model of `std::pmr::memory_resource` and `std::pmr::polymorphic_allocator`. Their primary purpose is providing a **nothrow allocation interface** that returns `nullptr` on failure, which is the contract expected by `score::shm` containers.
 - `score::shm::OffsetPtr<T>` / `score::shm::NullableOffsetPtr<T>` provide relative-pointer storage semantics.
+- `score::shm::DirectPtr<T>` provides direct-pointer wrappers for policy-based container experiments and benchmarks.
 
 This README focuses on **deviations and guarantees**, not on re-documenting standard APIs.
 
@@ -56,7 +57,9 @@ The general pattern of containers planned in `score::shm` is:
   - An error-propagating variant with PascalCase naming, returning `score::Result<T>` or `score::ResultBlank`.
   - An aborting variant with PascalCase naming and `OrAbort` suffix, returning the original value category and aborting on failure. These shall be used when an out-of-memory situation is algorithmically impossible, for example because the user prepared the memory resource in the same scope as using the container. Returning results would require a user to implement untestable error handling. Use of these functions implies asserting that memory is sufficient, and failure would be correctly classified as a bug and result in abort.
 - Member functions provided as error handling derivatives described above are not provided with their standard library signature.
-- Pointer members in container state are persisted using `score::shm::OffsetPtr` or `score::shm::NullableOffsetPtr` as needed.
+- Pointer members in container state are persisted via the selected pointer policy:
+  default `score::shm::ShmPointerPolicy` uses `OffsetPtr` / `NullableOffsetPtr`,
+  while `score::shm::ShmDirectPointerPolicy` uses `DirectPtr` for both pointer aliases.
 - Pointer parameters, type aliases, and local variables follow the standard/raw-pointer style where possible; wrapping/unwrapping is used only for persisted container state.
 - All containers use `score::shm::PolymorphicAllocator` as default allocator.
 - Error propagation uses `score::shm::ContainerErrorCode` and `MakeError(...)`.
@@ -95,4 +98,6 @@ reference back() noexcept;
 
 ### `score::shm::Vector`
 
-Use `score::shm::OffsetPtr` as storage pointer. No allocated memory is represented by `capacity == 0` rather than `nullptr`.
+Default policy stores vector backing storage via `score::shm::OffsetPtr`.
+Alternative policies can inject direct wrappers (for example `ShmDirectPointerPolicy`).
+No allocated memory is represented by `capacity == 0` rather than `nullptr`.
