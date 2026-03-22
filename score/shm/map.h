@@ -491,12 +491,67 @@ class Map
         return std::move(inserted).value();
     }
 
-    /// @brief Like std::map::emplace(). Returns kOutOfMemory on allocation failure.
+    /// @brief Constructs a value_type in-place in the node. Returns kOutOfMemory on allocation failure.
+    ///
+    /// Unlike Insert, the value is constructed directly in node storage without
+    /// intermediate copies or moves. If the key already exists, the pre-constructed
+    /// node is destroyed and the existing entry is returned.
     template <typename... Args>
     score::Result<std::pair<iterator, bool>> Emplace(Args&&... args) noexcept
     {
-        value_type value{std::forward<Args>(args)...};
-        return Insert(std::move(value));
+        auto allocated = AllocateNodeEmplace(nullptr, std::forward<Args>(args)...);
+        if (!allocated.has_value())
+        {
+            return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
+        }
+
+        Node* const node = allocated.value();
+        const key_type& key = node->value.first;
+
+        if (root_.get() == nullptr)
+        {
+            root_ = node;
+            ++size_;
+            return std::pair<iterator, bool>{iterator{root_.get(), this}, true};
+        }
+
+        Node* parent = nullptr;
+        Node* current = root_.get();
+        bool insert_left = false;
+
+        while (current != nullptr)
+        {
+            parent = current;
+            if (IsLess(key, current->value.first))
+            {
+                insert_left = true;
+                current = current->left.get();
+            }
+            else if (IsLess(current->value.first, key))
+            {
+                insert_left = false;
+                current = current->right.get();
+            }
+            else
+            {
+                DestroyNode(node);
+                return std::pair<iterator, bool>{iterator{current, this}, false};
+            }
+        }
+
+        node->parent = parent;
+        if (insert_left)
+        {
+            parent->left = node;
+        }
+        else
+        {
+            parent->right = node;
+        }
+
+        ++size_;
+        RebalanceFrom(parent);
+        return std::pair<iterator, bool>{iterator{node, this}, true};
     }
 
     /// @brief Like Emplace(), but aborts on allocation failure.
@@ -569,41 +624,34 @@ class Map
     void clear() noexcept
     {
         Node* current = root_.get();
-        Node* previous = nullptr;
 
         while (current != nullptr)
         {
-            Node* const parent = current->parent.get();
-            Node* const left = current->left.get();
-            Node* const right = current->right.get();
-
-            if (previous == parent)
+            if (current->left.get() != nullptr)
             {
-                if (left != nullptr)
-                {
-                    previous = current;
-                    current = left;
-                    continue;
-                }
-                if (right != nullptr)
-                {
-                    previous = current;
-                    current = right;
-                    continue;
-                }
+                current = current->left.get();
+                continue;
             }
-            else if (previous == left)
+            if (current->right.get() != nullptr)
             {
-                if (right != nullptr)
+                current = current->right.get();
+                continue;
+            }
+
+            Node* const parent = current->parent.get();
+            if (parent != nullptr)
+            {
+                if (parent->left.get() == current)
                 {
-                    previous = current;
-                    current = right;
-                    continue;
+                    parent->left = NullableOffsetPtr<Node>{nullptr};
+                }
+                else
+                {
+                    parent->right = NullableOffsetPtr<Node>{nullptr};
                 }
             }
 
             DestroyNode(current);
-            previous = current;
             current = parent;
         }
 
@@ -666,6 +714,12 @@ class Map
         Node(Node* parent_node, const value_type& value_in) noexcept : parent{parent_node}, value{value_in} {}
 
         Node(Node* parent_node, value_type&& value_in) noexcept : parent{parent_node}, value{std::move(value_in)} {}
+
+        template <typename... Args>
+        Node(Node* parent_node, std::in_place_t, Args&&... args) noexcept
+            : parent{parent_node}, value{std::forward<Args>(args)...}
+        {
+        }
     };
 
     using node_allocator_type = typename std::allocator_traits<allocator_type>::template rebind_alloc<Node>;
@@ -706,6 +760,22 @@ class Map
         }
 
         std::allocator_traits<node_allocator_type>::construct(node_allocator, node, parent, std::forward<ValueArg>(value));
+        return node;
+    }
+
+    template <typename... Args>
+    score::Result<Node*> AllocateNodeEmplace(Node* parent, Args&&... args) noexcept
+    {
+        node_allocator_type node_allocator = CreateNodeAllocator(allocator_);
+        Node* const node = std::allocator_traits<node_allocator_type>::allocate(node_allocator, 1U);
+        if (node == nullptr)
+        {
+            return score::Result<Node*>{score::unexpect,
+                                        MakeError(ContainerErrorCode::kOutOfMemory, "Map allocation failed")};
+        }
+
+        std::allocator_traits<node_allocator_type>::construct(
+            node_allocator, node, parent, std::in_place, std::forward<Args>(args)...);
         return node;
     }
 
