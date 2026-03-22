@@ -288,6 +288,29 @@ TEST(Map, SupportsInjectedPointerPolicy)
     EXPECT_EQ(map.at(3), 30);
 }
 
+TEST(Map, SupportsCustomComparatorOrderingAndLookup)
+{
+    using DescMap = Map<int, int, std::greater<int>>;
+    DescMap map = DescMap::CreateOrAbort(std::greater<int>{});
+
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    std::vector<int> iterated_keys{};
+    for (auto it = map.begin(); it != map.end(); ++it)
+    {
+        iterated_keys.push_back(it->first);
+    }
+    EXPECT_EQ(iterated_keys, (std::vector<int>{3, 2, 1}));
+
+    const auto found = map.find(2);
+    ASSERT_NE(found, map.end());
+    EXPECT_EQ(found->second, 20);
+    EXPECT_TRUE(map.contains(1));
+    EXPECT_EQ(map.find(99), map.end());
+}
+
 TEST(Map, InsertPropagatesOutOfMemoryFromAllocator)
 {
     MockMemoryResource mock_resource{};

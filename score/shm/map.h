@@ -823,43 +823,32 @@ class Map
         return compare_(lhs, rhs);
     }
 
-    int CompareKey(const key_type& lhs, const key_type& rhs) const noexcept
-    {
-        if (IsLess(lhs, rhs))
-        {
-            return -1;
-        }
-        if (IsLess(rhs, lhs))
-        {
-            return 1;
-        }
-        return 0;
-    }
-
     InsertPosition FindInsertPosition(const key_type& key) noexcept
     {
         InsertPosition position{};
+        Node* lower_bound = nullptr;
         Node* current = root_.get();
         while (current != nullptr)
         {
             position.parent = current;
-            const int relation = CompareKey(key, current->value.first);
-            if (relation < 0)
-            {
-                position.insert_left = true;
-                current = current->left.get();
-            }
-            else if (relation > 0)
+            if (IsLess(current->value.first, key))
             {
                 position.insert_left = false;
                 current = current->right.get();
             }
             else
             {
-                position.existing = current;
-                return position;
+                lower_bound = current;
+                position.insert_left = true;
+                current = current->left.get();
             }
         }
+
+        if ((lower_bound != nullptr) && !IsLess(key, lower_bound->value.first))
+        {
+            position.existing = lower_bound;
+        }
+
         return position;
     }
 
@@ -935,25 +924,35 @@ class Map
     }
 
     template <typename NodePtr>
-    NodePtr FindNode(NodePtr root, const key_type& key) const noexcept
+    NodePtr LowerBoundNode(NodePtr root, const key_type& key) const noexcept
     {
         NodePtr current = root;
+        NodePtr lower_bound = nullptr;
         while (current != nullptr)
         {
-            const int relation = CompareKey(key, current->value.first);
-            if (relation < 0)
-            {
-                current = current->left.get();
-            }
-            else if (relation > 0)
+            if (IsLess(current->value.first, key))
             {
                 current = current->right.get();
             }
             else
             {
-                return current;
+                lower_bound = current;
+                current = current->left.get();
             }
         }
+
+        return lower_bound;
+    }
+
+    template <typename NodePtr>
+    NodePtr FindNode(NodePtr root, const key_type& key) const noexcept
+    {
+        NodePtr lower_bound = LowerBoundNode(root, key);
+        if ((lower_bound != nullptr) && !IsLess(key, lower_bound->value.first))
+        {
+            return lower_bound;
+        }
+
         return nullptr;
     }
 
