@@ -19,9 +19,9 @@ alternative pointer wrappers.
 
 ## Next optimization tasks
 
-- [ ] Build a focused microbenchmark for map internals (insert/rebalance/find/erase paths) to compare
+- [x] Build a focused microbenchmark for map internals (insert/rebalance/find/erase paths) to compare
       `std::map` vs `score::shm::Map` at equal pointer cost.
-- [ ] Profile `score::shm::Map` random-build and random-lookup hot paths (branching, rotations, node access)
+- [x] Profile `score::shm::Map` random-build and random-lookup hot paths (branching, rotations, node access)
       and reduce instruction count/branch mispredictions.
 - [ ] Evaluate node layout and allocator interaction in `score::shm::Map` for cache locality improvements.
 - [ ] Consider extracting a reusable tree core that is parameterized by `PointerPolicy` and allocator model.

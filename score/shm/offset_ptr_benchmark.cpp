@@ -58,6 +58,8 @@ constexpr std::size_t kInnerSize = 1000U;
 constexpr std::size_t kAccessCount = 100000U;
 constexpr std::size_t kMapElementCount = 10000U;
 constexpr std::size_t kMapAccessCount = 100000U;
+constexpr std::size_t kMapInternalElementCount = 4096U;
+constexpr std::size_t kMapInternalLookupCount = 100000U;
 
 // 64 MB — generous for bump allocator that doesn't reclaim on dealloc.
 // Total data is ~4 MB, but vector growth without reuse needs headroom.
@@ -276,6 +278,69 @@ const RandomMapPattern& GetMapPattern()
     return pattern;
 }
 
+/// Focused pattern for map-internals microbenchmarks (insert/rebalance/find/erase).
+class FocusedMapPattern
+{
+  public:
+    FocusedMapPattern(const std::size_t element_count, const std::size_t lookup_count)
+    {
+        sorted_entries_.reserve(element_count);
+        random_entries_.reserve(element_count);
+        erase_keys_.reserve(element_count);
+        for (std::size_t index = 0U; index < element_count; ++index)
+        {
+            const int key = static_cast<int>(index);
+            const int value = static_cast<int>((index * 17U) + 1U);
+            sorted_entries_.emplace_back(key, value);
+            random_entries_.emplace_back(key, value);
+            erase_keys_.push_back(key);
+        }
+
+        std::mt19937 rng{2026U};
+        std::shuffle(random_entries_.begin(), random_entries_.end(), rng);
+        std::shuffle(erase_keys_.begin(), erase_keys_.end(), rng);
+
+        std::uniform_int_distribution<std::size_t> key_dist{0U, element_count - 1U};
+        lookup_keys_.reserve(lookup_count);
+        for (std::size_t access = 0U; access < lookup_count; ++access)
+        {
+            lookup_keys_.push_back(static_cast<int>(key_dist(rng)));
+        }
+    }
+
+    const std::vector<std::pair<int, int>>& sorted_entries() const noexcept
+    {
+        return sorted_entries_;
+    }
+
+    const std::vector<std::pair<int, int>>& random_entries() const noexcept
+    {
+        return random_entries_;
+    }
+
+    const std::vector<int>& erase_keys() const noexcept
+    {
+        return erase_keys_;
+    }
+
+    const std::vector<int>& lookup_keys() const noexcept
+    {
+        return lookup_keys_;
+    }
+
+  private:
+    std::vector<std::pair<int, int>> sorted_entries_;
+    std::vector<std::pair<int, int>> random_entries_;
+    std::vector<int> erase_keys_;
+    std::vector<int> lookup_keys_;
+};
+
+const FocusedMapPattern& GetFocusedMapPattern()
+{
+    static const FocusedMapPattern pattern{kMapInternalElementCount, kMapInternalLookupCount};
+    return pattern;
+}
+
 // --- Setup helpers ---
 
 std::vector<std::vector<int>> MakeStdNestedVector()
@@ -363,6 +428,26 @@ ShmRelocMap MakeShmRelocMap()
 {
     auto data = ShmRelocMap::CreateOrAbort();
     for (const auto& [key, value] : GetMapPattern().entries())
+    {
+        data.EmplaceOrAbort(key, value);
+    }
+    return data;
+}
+
+std::map<int, int> MakeStdMapFromEntries(const std::vector<std::pair<int, int>>& entries)
+{
+    std::map<int, int> data;
+    for (const auto& [key, value] : entries)
+    {
+        data.emplace(key, value);
+    }
+    return data;
+}
+
+ShmDirectMap MakeShmDirectMapFromEntries(const std::vector<std::pair<int, int>>& entries)
+{
+    auto data = ShmDirectMap::CreateOrAbort();
+    for (const auto& [key, value] : entries)
     {
         data.EmplaceOrAbort(key, value);
     }
@@ -677,5 +762,113 @@ void BM_ShmRelocMap_Iterate(benchmark::State& state)
     }
 }
 BENCHMARK(BM_ShmRelocMap_Iterate);
+
+// --- Focused map-internals microbenchmarks ---
+
+/// Focused insert/rebalance path: ascending inserts force balancing work.
+void BM_StdMap_Internal_InsertRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().sorted_entries();
+    for (auto _ : state)
+    {
+        std::map<int, int> data;
+        for (const auto& [key, value] : entries)
+        {
+            data.emplace(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_StdMap_Internal_InsertRebalance);
+
+/// Focused insert/rebalance path for score::shm::Map with direct-pointer policy.
+void BM_ShmDirectMap_Internal_InsertRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().sorted_entries();
+    for (auto _ : state)
+    {
+        auto data = ShmDirectMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_ShmDirectMap_Internal_InsertRebalance);
+
+/// Focused find path using pre-built tree and randomized successful lookups.
+void BM_StdMap_Internal_Find(benchmark::State& state)
+{
+    const auto data = MakeStdMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_StdMap_Internal_Find);
+
+/// Focused find path for score::shm::Map with direct-pointer policy.
+void BM_ShmDirectMap_Internal_Find(benchmark::State& state)
+{
+    const auto data = MakeShmDirectMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+BENCHMARK(BM_ShmDirectMap_Internal_Find);
+
+/// Focused erase/rebalance path using randomized erase order.
+void BM_StdMap_Internal_EraseRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().random_entries();
+    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
+    for (auto _ : state)
+    {
+        auto data = MakeStdMapFromEntries(entries);
+        std::size_t erased = 0U;
+        for (const int key : erase_keys)
+        {
+            erased += data.erase(key);
+        }
+        benchmark::DoNotOptimize(erased);
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_StdMap_Internal_EraseRebalance);
+
+/// Focused erase/rebalance path for score::shm::Map with direct-pointer policy.
+void BM_ShmDirectMap_Internal_EraseRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().random_entries();
+    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
+    for (auto _ : state)
+    {
+        auto data = MakeShmDirectMapFromEntries(entries);
+        std::size_t erased = 0U;
+        for (const int key : erase_keys)
+        {
+            erased += data.erase(key);
+        }
+        benchmark::DoNotOptimize(erased);
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+BENCHMARK(BM_ShmDirectMap_Internal_EraseRebalance);
 
 }  // namespace

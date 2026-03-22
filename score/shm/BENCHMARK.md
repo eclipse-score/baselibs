@@ -88,6 +88,12 @@ Naming convention used in this benchmark:
 | `BM_MemorySharedMap_Iterate` | `score::memory::shared::Map<int,int>` begin→end iteration |
 | `BM_ShmDirectMap_Iterate` | `score::shm::Map<int,int>` with direct-pointer policy begin→end iteration |
 | `BM_ShmRelocMap_Iterate` | `score::shm::Map<int,int>` with relocatable offset-pointer policy begin→end iteration |
+| `BM_StdMap_Internal_InsertRebalance` | Focused std::map insert/rebalance path using ascending insert order |
+| `BM_ShmDirectMap_Internal_InsertRebalance` | Focused score::shm::Map insert/rebalance path using ascending insert order |
+| `BM_StdMap_Internal_Find` | Focused std::map find hot path over randomized successful lookups |
+| `BM_ShmDirectMap_Internal_Find` | Focused score::shm::Map find hot path over randomized successful lookups |
+| `BM_StdMap_Internal_EraseRebalance` | Focused std::map erase/rebalance path using randomized erase order |
+| `BM_ShmDirectMap_Internal_EraseRebalance` | Focused score::shm::Map erase/rebalance path using randomized erase order |
 
 ## Results
 

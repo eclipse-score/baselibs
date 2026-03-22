@@ -498,6 +498,26 @@ class Map
     /// Unlike Insert, the value is constructed directly in node storage without
     /// intermediate copies or moves. If the key already exists, the pre-constructed
     /// node is destroyed and the existing entry is returned.
+    score::Result<std::pair<iterator, bool>> Emplace(const key_type& key, const mapped_type& value) noexcept
+    {
+        return EmplaceKeyValueImpl(key, value);
+    }
+
+    score::Result<std::pair<iterator, bool>> Emplace(const key_type& key, mapped_type&& value) noexcept
+    {
+        return EmplaceKeyValueImpl(key, std::move(value));
+    }
+
+    score::Result<std::pair<iterator, bool>> Emplace(key_type&& key, const mapped_type& value) noexcept
+    {
+        return EmplaceKeyValueImpl(std::move(key), value);
+    }
+
+    score::Result<std::pair<iterator, bool>> Emplace(key_type&& key, mapped_type&& value) noexcept
+    {
+        return EmplaceKeyValueImpl(std::move(key), std::move(value));
+    }
+
     template <typename... Args>
     score::Result<std::pair<iterator, bool>> Emplace(Args&&... args) noexcept
     {
@@ -552,7 +572,7 @@ class Map
         }
 
         ++size_;
-        RebalanceFrom(parent);
+        RebalanceFrom(parent, true);
         return std::pair<iterator, bool>{iterator{node, this}, true};
     }
 
@@ -727,6 +747,13 @@ class Map
         }
     };
 
+    struct InsertPosition
+    {
+        Node* parent{nullptr};
+        Node* existing{nullptr};
+        bool insert_left{false};
+    };
+
     using node_allocator_type = typename std::allocator_traits<allocator_type>::template rebind_alloc<Node>;
 
     static constexpr bool kUsesDefaultAllocator =
@@ -796,65 +823,114 @@ class Map
         return compare_(lhs, rhs);
     }
 
-    template <typename ValueArg>
-    score::Result<std::pair<iterator, bool>> InsertImpl(ValueArg&& value) noexcept
+    int CompareKey(const key_type& lhs, const key_type& rhs) const noexcept
     {
-        const key_type& key = value.first;
-
-        if (root_.get() == nullptr)
+        if (IsLess(lhs, rhs))
         {
-            auto allocated = AllocateNode(nullptr, std::forward<ValueArg>(value));
-            if (!allocated.has_value())
-            {
-                return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
-            }
-
-            root_ = allocated.value();
-            ++size_;
-            return std::pair<iterator, bool>{iterator{root_.get(), this}, true};
+            return -1;
         }
+        if (IsLess(rhs, lhs))
+        {
+            return 1;
+        }
+        return 0;
+    }
 
-        Node* parent = nullptr;
+    InsertPosition FindInsertPosition(const key_type& key) noexcept
+    {
+        InsertPosition position{};
         Node* current = root_.get();
-        bool insert_left = false;
-
         while (current != nullptr)
         {
-            parent = current;
-            if (IsLess(key, current->value.first))
+            position.parent = current;
+            const int relation = CompareKey(key, current->value.first);
+            if (relation < 0)
             {
-                insert_left = true;
+                position.insert_left = true;
                 current = current->left.get();
             }
-            else if (IsLess(current->value.first, key))
+            else if (relation > 0)
             {
-                insert_left = false;
+                position.insert_left = false;
                 current = current->right.get();
             }
             else
             {
-                return std::pair<iterator, bool>{iterator{current, this}, false};
+                position.existing = current;
+                return position;
             }
         }
+        return position;
+    }
 
-        auto allocated = AllocateNode(parent, std::forward<ValueArg>(value));
+    template <typename KeyArg, typename MappedArg>
+    score::Result<std::pair<iterator, bool>> EmplaceKeyValueImpl(KeyArg&& key, MappedArg&& value) noexcept
+    {
+        const key_type& lookup_key = key;
+        const InsertPosition position = FindInsertPosition(lookup_key);
+        if (position.existing != nullptr)
+        {
+            return std::pair<iterator, bool>{iterator{position.existing, this}, false};
+        }
+
+        auto allocated = AllocateNodeEmplace(position.parent, std::forward<KeyArg>(key), std::forward<MappedArg>(value));
         if (!allocated.has_value())
         {
             return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
         }
 
         Node* const inserted = allocated.value();
-        if (insert_left)
+        if (position.parent == nullptr)
         {
-            parent->left = inserted;
+            root_ = inserted;
+        }
+        else if (position.insert_left)
+        {
+            position.parent->left = inserted;
         }
         else
         {
-            parent->right = inserted;
+            position.parent->right = inserted;
         }
 
         ++size_;
-        RebalanceFrom(parent);
+        RebalanceFrom(position.parent, true);
+        return std::pair<iterator, bool>{iterator{inserted, this}, true};
+    }
+
+    template <typename ValueArg>
+    score::Result<std::pair<iterator, bool>> InsertImpl(ValueArg&& value) noexcept
+    {
+        const key_type& key = value.first;
+
+        const InsertPosition position = FindInsertPosition(key);
+        if (position.existing != nullptr)
+        {
+            return std::pair<iterator, bool>{iterator{position.existing, this}, false};
+        }
+
+        auto allocated = AllocateNode(position.parent, std::forward<ValueArg>(value));
+        if (!allocated.has_value())
+        {
+            return score::Result<std::pair<iterator, bool>>{score::unexpect, allocated.error()};
+        }
+
+        Node* const inserted = allocated.value();
+        if (position.parent == nullptr)
+        {
+            root_ = inserted;
+        }
+        else if (position.insert_left)
+        {
+            position.parent->left = inserted;
+        }
+        else
+        {
+            position.parent->right = inserted;
+        }
+
+        ++size_;
+        RebalanceFrom(position.parent, true);
         return std::pair<iterator, bool>{iterator{inserted, this}, true};
     }
 
@@ -864,11 +940,12 @@ class Map
         NodePtr current = root;
         while (current != nullptr)
         {
-            if (IsLess(key, current->value.first))
+            const int relation = CompareKey(key, current->value.first);
+            if (relation < 0)
             {
                 current = current->left.get();
             }
-            else if (IsLess(current->value.first, key))
+            else if (relation > 0)
             {
                 current = current->right.get();
             }
@@ -1071,11 +1148,12 @@ class Map
         return pivot;
     }
 
-    void RebalanceFrom(Node* node) noexcept
+    void RebalanceFrom(Node* node, const bool stop_on_stable_height) noexcept
     {
         Node* current = node;
         while (current != nullptr)
         {
+            const std::uint32_t previous_height = current->height;
             UpdateHeight(current);
             const int balance = BalanceFactor(current);
 
@@ -1096,6 +1174,10 @@ class Map
                     RotateRight(right);
                 }
                 current = RotateLeft(current);
+            }
+            else if (stop_on_stable_height && (previous_height == current->height))
+            {
+                break;
             }
 
             current = current->parent.get();
@@ -1144,7 +1226,7 @@ class Map
 
         if (rebalance_start != nullptr)
         {
-            RebalanceFrom(rebalance_start);
+            RebalanceFrom(rebalance_start, false);
         }
     }
 
