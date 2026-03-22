@@ -645,11 +645,11 @@ class Map
             {
                 if (parent->left.get() == current)
                 {
-                    parent->left = NullableOffsetPtr<Node>{nullptr};
+                    parent->left = nullable_ptr<Node>{nullptr};
                 }
                 else
                 {
-                    parent->right = NullableOffsetPtr<Node>{nullptr};
+                    parent->right = nullable_ptr<Node>{nullptr};
                 }
             }
 
