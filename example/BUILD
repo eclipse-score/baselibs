@@ -16,11 +16,13 @@ load("@rules_cc//cc:defs.bzl", "cc_binary")
 cc_binary(
     name = "shm_parent",
     srcs = [
-        "bounded_vector.h",
+        "bounded_containers.h",
         "shm_parent.cpp",
     ],
     linkopts = ["-lrt"],
     deps = [
+        "@score_baselibs//score/shm:map",
+        "@score_baselibs//score/shm:monotonic_buffer_resource",
         "@score_baselibs//score/shm:vector",
     ],
 )
@@ -28,11 +30,13 @@ cc_binary(
 cc_binary(
     name = "shm_child",
     srcs = [
-        "bounded_vector.h",
+        "bounded_containers.h",
         "shm_child.cpp",
     ],
     linkopts = ["-lrt"],
     deps = [
+        "@score_baselibs//score/shm:map",
+        "@score_baselibs//score/shm:monotonic_buffer_resource",
         "@score_baselibs//score/shm:vector",
     ],
 )

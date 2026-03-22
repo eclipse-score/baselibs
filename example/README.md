@@ -1,28 +1,26 @@
-# `score::shm::Vector` Shared Memory Example
+# `score::shm` Shared Memory Containers Example
 
-Demonstrates cross-process data sharing using `score::shm::Vector` in POSIX shared memory.
+Demonstrates cross-process data sharing using `score::shm::Vector` and `score::shm::Map` in POSIX shared memory.
 
 ## Design
 
-`BoundedVector<T, N>` bundles a `score::shm::Vector<T>` with an inline byte buffer:
+`BoundedContainers<T, N, M>` bundles:
 
-- The Vector is created via `CreateWithBuffer()`, operating in fixed-capacity buffer mode.
-  No allocator or memory resource is involved at runtime — all storage is the embedded
-  `std::byte buffer[N * sizeof(T)]` within the struct.
-- Because both the Vector metadata and element storage live at fixed offsets within the
-  struct, `OffsetPtr` resolves correctly when the struct is mapped at different base
-  addresses in different processes.
-- The allocator member in the Vector exists (type is unchanged) but is unused.
+- a `score::shm::Vector<T>` with inline fixed-capacity storage (`CreateWithBuffer()`),
+- a `score::shm::Map<int, int>` allocated from an inline `MonotonicBufferResource`.
+
+All backing storage lives inside the same shared-memory object, so `OffsetPtr` state
+resolves correctly when mapped at different base addresses in parent/child processes.
 
 ## How it works
 
 1. **Parent** (`shm_parent.cpp`): Creates a POSIX shared memory region, placement-constructs
-   a `BoundedVector<int, 1024>`, writes elements, then launches the child process.
+   a `BoundedContainers<int, ...>`, writes vector/map data, then launches the child process.
 2. **Child** (`shm_child.cpp`): Maps the same SHM region (at a different virtual address),
-   reads and appends elements, sorts the vector.
+   reads both containers, appends/sorts vector elements, and updates map values.
 3. **Parent** observes the child's modifications after it exits.
 
-Synchronization between parent and child is external to `BoundedVector` (the parent
+Synchronization between parent and child is external to `BoundedContainers` (the parent
 `waitpid`s for the child).
 
 ## Building and running
@@ -31,4 +29,3 @@ Synchronization between parent and child is external to `BoundedVector` (the par
 bazel build //example:shm_parent //example:shm_child
 bazel-bin/example/shm_parent
 ```
-

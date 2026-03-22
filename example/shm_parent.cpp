@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "bounded_vector.h"
+#include "bounded_containers.h"
 
 #include <algorithm>
 #include <cerrno>
@@ -26,13 +26,22 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-using ShmType = score::shm::example::BoundedVector<int, 10>;
+using ShmType = score::shm::example::BoundedContainers<int, 10, 1024>;
 
 static void print(const char* prefix, const score::shm::Vector<int>& v)
 {
     for (std::size_t i = 0U; i < v.size(); ++i)
     {
         std::cerr << prefix << ": v[" << i << "]=" << v[i] << std::endl;
+    }
+}
+
+static void print(const char* prefix, const ShmType::MapType& map)
+{
+    std::cerr << prefix << ": map(size=" << map.size() << ")" << std::endl;
+    for (auto it = map.begin(); it != map.end(); ++it)
+    {
+        std::cerr << prefix << ": map[" << it->first << "]=" << it->second << std::endl;
     }
 }
 
@@ -59,12 +68,16 @@ static void parent(const int request_pipe, const int response_pipe)
     }
     std::cerr << "Parent: shm_ptr=" << shm_ptr << std::endl;
 
-    // Placement-new the BoundedVector into shared memory
+    // Placement-new the BoundedContainers into shared memory
     new (shm_ptr) ShmType{};
     shm_ptr->vector.PushBackOrAbort(19);
     shm_ptr->vector.PushBackOrAbort(17);
     shm_ptr->vector.PushBackOrAbort(23);
+    shm_ptr->map.EmplaceOrAbort(19, 190);
+    shm_ptr->map.EmplaceOrAbort(17, 170);
+    shm_ptr->map.EmplaceOrAbort(23, 230);
     print("Parent", shm_ptr->vector);
+    print("Parent", shm_ptr->map);
 
     // Signal child with SHM name
     if (write(request_pipe, kShmName, sizeof(kShmName)) < 0)
@@ -80,6 +93,7 @@ static void parent(const int request_pipe, const int response_pipe)
     }
     std::cerr << "Parent: child done." << std::endl;
     print("Parent", shm_ptr->vector);
+    print("Parent", shm_ptr->map);
 
     shm_unlink(kShmName);
 }

@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "bounded_vector.h"
+#include "bounded_containers.h"
 
 #include <algorithm>
 #include <cerrno>
@@ -23,13 +23,22 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-using ShmType = score::shm::example::BoundedVector<int, 10>;
+using ShmType = score::shm::example::BoundedContainers<int, 10, 1024>;
 
 static void print(const char* prefix, const score::shm::Vector<int>& v)
 {
     for (std::size_t i = 0U; i < v.size(); ++i)
     {
         std::cerr << prefix << ": v[" << i << "]=" << v[i] << std::endl;
+    }
+}
+
+static void print(const char* prefix, const ShmType::MapType& map)
+{
+    std::cerr << prefix << ": map(size=" << map.size() << ")" << std::endl;
+    for (auto it = map.begin(); it != map.end(); ++it)
+    {
+        std::cerr << prefix << ": map[" << it->first << "]=" << it->second << std::endl;
     }
 }
 
@@ -59,6 +68,7 @@ static void child(const int request_pipe, const int response_pipe)
 
     // Read parent's data
     print("Child", shm_ptr->vector);
+    print("Child", shm_ptr->map);
 
     // Append elements and sort
     std::cerr << "Child: appending four elements." << std::endl;
@@ -71,6 +81,14 @@ static void child(const int request_pipe, const int response_pipe)
     std::cerr << "Child: sorting..." << std::endl;
     std::sort(shm_ptr->vector.begin(), shm_ptr->vector.end());
     print("Child", shm_ptr->vector);
+
+    // Mutate map data in-place (no new inserts => no allocator pressure).
+    std::cerr << "Child: updating map values..." << std::endl;
+    for (auto it = shm_ptr->map.begin(); it != shm_ptr->map.end(); ++it)
+    {
+        it->second += 1;
+    }
+    print("Child", shm_ptr->map);
 
     // Signal parent by closing response pipe
     std::cerr << "Child: closing response pipe." << std::endl;
