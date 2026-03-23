@@ -11,13 +11,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/memory_resource.h"
+#include "score/nothrow/memory_resource.h"
 
 #include <atomic>
 #include <cstddef>
 #include <new>
 
-namespace score::shm
+namespace score::nothrow
 {
 namespace
 {
@@ -118,4 +118,4 @@ MemoryResource* SetDefaultResource(MemoryResource* resource) noexcept
     return GetDefaultResourceAtomic().exchange(resource, std::memory_order_acq_rel);
 }
 
-}  // namespace score::shm
+}  // namespace score::nothrow

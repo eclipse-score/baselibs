@@ -21,10 +21,10 @@
 ///   1. std::vector baseline (raw T*)
 ///   2. score::memory::shared::Vector — OffsetPtr without bounds checking
 ///   3. score::memory::shared::Vector — OffsetPtr with bounds checking
-///   4. score::shm::Vector with direct-pointer policy
-///   5. score::shm::Vector with relocatable offset-pointer policy
+///   4. score::nothrow::Vector with direct-pointer policy
+///   5. score::nothrow::Vector with relocatable offset-pointer policy
 ///
-/// In addition, compares std::map, score::memory::shared::Map and score::shm::Map
+/// In addition, compares std::map, score::memory::shared::Map and score::nothrow::Map
 /// (direct-pointer policy + relocatable policy) for:
 ///   - random-order build
 ///   - random key lookup
@@ -35,8 +35,8 @@
 #include "score/memory/shared/new_delete_delegate_resource.h"
 #include "score/memory/shared/offset_ptr.h"
 #include "score/memory/shared/vector.h"
-#include "score/shm/map.h"
-#include "score/shm/vector.h"
+#include "score/nothrow/map.h"
+#include "score/nothrow/vector.h"
 
 #include <benchmark/benchmark.h>
 
@@ -160,7 +160,7 @@ class BenchmarkRelativeNullableOffsetPtr
     bool is_nullptr_{true};
 };
 
-using ShmDirectPointerPolicy = score::shm::ShmDirectPointerPolicy;
+using RawBoxPolicy = score::nothrow::RawBoxPolicy;
 
 struct ShmRelocPointerPolicy
 {
@@ -172,25 +172,25 @@ struct ShmRelocPointerPolicy
 };
 
 using ShmDirectInnerVector =
-    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmDirectPointerPolicy>;
-using ShmDirectNestedVector = score::shm::Vector<ShmDirectInnerVector,
-                                                 score::shm::PolymorphicAllocator<ShmDirectInnerVector>,
-                                                 ShmDirectPointerPolicy>;
+    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, RawBoxPolicy>;
+using ShmDirectNestedVector = score::nothrow::Vector<ShmDirectInnerVector,
+                                                 score::nothrow::PolymorphicAllocator<ShmDirectInnerVector>,
+                                                 RawBoxPolicy>;
 using ShmRelocInnerVector =
-    score::shm::Vector<int, score::shm::PolymorphicAllocator<int>, ShmRelocPointerPolicy>;
-using ShmRelocNestedVector = score::shm::Vector<ShmRelocInnerVector,
-                                                score::shm::PolymorphicAllocator<ShmRelocInnerVector>,
+    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, ShmRelocPointerPolicy>;
+using ShmRelocNestedVector = score::nothrow::Vector<ShmRelocInnerVector,
+                                                score::nothrow::PolymorphicAllocator<ShmRelocInnerVector>,
                                                 ShmRelocPointerPolicy>;
 
-using ShmDirectMap = score::shm::Map<int,
+using ShmDirectMap = score::nothrow::Map<int,
                                      int,
                                      std::less<int>,
-                                     score::shm::PolymorphicAllocator<std::pair<const int, int>>,
-                                     ShmDirectPointerPolicy>;
-using ShmRelocMap = score::shm::Map<int,
+                                     score::nothrow::PolymorphicAllocator<std::pair<const int, int>>,
+                                     RawBoxPolicy>;
+using ShmRelocMap = score::nothrow::Map<int,
                                     int,
                                     std::less<int>,
-                                    score::shm::PolymorphicAllocator<std::pair<const int, int>>,
+                                    score::nothrow::PolymorphicAllocator<std::pair<const int, int>>,
                                     ShmRelocPointerPolicy>;
 
 /// Pre-generated random access pattern with fixed seed for reproducible benchmarks.
@@ -518,7 +518,7 @@ void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
-/// score::shm::Vector with direct-pointer policy.
+/// score::nothrow::Vector with direct-pointer policy.
 void BM_ShmDirectVector_RandomAccess(benchmark::State& state)
 {
     auto data = MakeShmDirectNestedVector();
@@ -536,7 +536,7 @@ void BM_ShmDirectVector_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_ShmDirectVector_RandomAccess);
 
-/// score::shm::Vector with relocatable offset-pointer policy.
+/// score::nothrow::Vector with relocatable offset-pointer policy.
 void BM_ShmRelocVector_RandomAccess(benchmark::State& state)
 {
     auto data = MakeShmRelocNestedVector();
@@ -589,7 +589,7 @@ void BM_MemorySharedMap_RandomBuild(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomBuild);
 
-/// score::shm::Map random-order build with direct-pointer policy.
+/// score::nothrow::Map random-order build with direct-pointer policy.
 void BM_ShmDirectMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
@@ -605,7 +605,7 @@ void BM_ShmDirectMap_RandomBuild(benchmark::State& state)
 }
 BENCHMARK(BM_ShmDirectMap_RandomBuild);
 
-/// score::shm::Map random-order build with relocatable offset-pointer policy.
+/// score::nothrow::Map random-order build with relocatable offset-pointer policy.
 void BM_ShmRelocMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
@@ -658,7 +658,7 @@ void BM_MemorySharedMap_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_RandomAccess);
 
-/// score::shm::Map randomized key lookup with direct-pointer policy.
+/// score::nothrow::Map randomized key lookup with direct-pointer policy.
 void BM_ShmDirectMap_RandomAccess(benchmark::State& state)
 {
     const auto data = MakeShmDirectMap();
@@ -676,7 +676,7 @@ void BM_ShmDirectMap_RandomAccess(benchmark::State& state)
 }
 BENCHMARK(BM_ShmDirectMap_RandomAccess);
 
-/// score::shm::Map randomized key lookup with relocatable offset-pointer policy.
+/// score::nothrow::Map randomized key lookup with relocatable offset-pointer policy.
 void BM_ShmRelocMap_RandomAccess(benchmark::State& state)
 {
     const auto data = MakeShmRelocMap();
@@ -729,7 +729,7 @@ void BM_MemorySharedMap_Iterate(benchmark::State& state)
 }
 BENCHMARK(BM_MemorySharedMap_Iterate);
 
-/// score::shm::Map begin->end iteration with direct-pointer policy.
+/// score::nothrow::Map begin->end iteration with direct-pointer policy.
 void BM_ShmDirectMap_Iterate(benchmark::State& state)
 {
     const auto data = MakeShmDirectMap();
@@ -746,7 +746,7 @@ void BM_ShmDirectMap_Iterate(benchmark::State& state)
 }
 BENCHMARK(BM_ShmDirectMap_Iterate);
 
-/// score::shm::Map begin->end iteration with relocatable offset-pointer policy.
+/// score::nothrow::Map begin->end iteration with relocatable offset-pointer policy.
 void BM_ShmRelocMap_Iterate(benchmark::State& state)
 {
     const auto data = MakeShmRelocMap();
@@ -781,7 +781,7 @@ void BM_StdMap_Internal_InsertRebalance(benchmark::State& state)
 }
 BENCHMARK(BM_StdMap_Internal_InsertRebalance);
 
-/// Focused insert/rebalance path for score::shm::Map with direct-pointer policy.
+/// Focused insert/rebalance path for score::nothrow::Map with direct-pointer policy.
 void BM_ShmDirectMap_Internal_InsertRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().sorted_entries();
@@ -815,7 +815,7 @@ void BM_StdMap_Internal_Find(benchmark::State& state)
 }
 BENCHMARK(BM_StdMap_Internal_Find);
 
-/// Focused find path for score::shm::Map with direct-pointer policy.
+/// Focused find path for score::nothrow::Map with direct-pointer policy.
 void BM_ShmDirectMap_Internal_Find(benchmark::State& state)
 {
     const auto data = MakeShmDirectMapFromEntries(GetFocusedMapPattern().random_entries());
@@ -852,7 +852,7 @@ void BM_StdMap_Internal_EraseRebalance(benchmark::State& state)
 }
 BENCHMARK(BM_StdMap_Internal_EraseRebalance);
 
-/// Focused erase/rebalance path for score::shm::Map with direct-pointer policy.
+/// Focused erase/rebalance path for score::nothrow::Map with direct-pointer policy.
 void BM_ShmDirectMap_Internal_EraseRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().random_entries();

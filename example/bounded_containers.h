@@ -13,15 +13,15 @@
 #ifndef SCORE_SHM_EXAMPLE_BOUNDED_CONTAINERS_H
 #define SCORE_SHM_EXAMPLE_BOUNDED_CONTAINERS_H
 
-#include "score/shm/map.h"
-#include "score/shm/monotonic_buffer_resource.h"
-#include "score/shm/vector.h"
+#include "score/nothrow/map.h"
+#include "score/nothrow/monotonic_buffer_resource.h"
+#include "score/nothrow/vector.h"
 
 #include <cstddef>
 #include <functional>
 #include <utility>
 
-namespace score::shm::example
+namespace score::nothrow::example
 {
 
 /// @brief A self-contained Vector+Map bundle suitable for shared-memory placement.
@@ -60,6 +60,6 @@ struct BoundedContainers
     MapType map;
 };
 
-}  // namespace score::shm::example
+}  // namespace score::nothrow::example
 
 #endif  // SCORE_SHM_EXAMPLE_BOUNDED_CONTAINERS_H

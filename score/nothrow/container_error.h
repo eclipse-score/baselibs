@@ -10,14 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_SHM_CONTAINER_ERROR_H
-#define SCORE_SHM_CONTAINER_ERROR_H
+#ifndef SCORE_NOTHROW_CONTAINER_ERROR_H
+#define SCORE_NOTHROW_CONTAINER_ERROR_H
 
 #include "score/result/result.h"
 
 #include <string_view>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 enum class ContainerErrorCode : score::result::ErrorCode
@@ -45,6 +45,6 @@ class ContainerErrorDomain final : public score::result::ErrorDomain
 
 score::result::Error MakeError(const ContainerErrorCode code, const std::string_view user_message = "") noexcept;
 
-}  // namespace score::shm
+}  // namespace score::nothrow
 
-#endif  // SCORE_SHM_CONTAINER_ERROR_H
+#endif  // SCORE_NOTHROW_CONTAINER_ERROR_H

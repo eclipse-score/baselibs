@@ -10,26 +10,26 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_SHM_OFFSET_PTR_H
-#define SCORE_SHM_OFFSET_PTR_H
+#ifndef SCORE_NOTHROW_POINTER_BOX_H
+#define SCORE_NOTHROW_POINTER_BOX_H
 
 #include <cstdint>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 template <typename T>
-class OffsetPtr
+class OffsetBox
 {
   public:
-    OffsetPtr(T const* const pointer) noexcept
+    OffsetBox(T const* const pointer) noexcept
         : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}
     {
     }
 
-    OffsetPtr(const OffsetPtr& other) noexcept : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)} {}
+    OffsetBox(const OffsetBox& other) noexcept : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)} {}
 
-    OffsetPtr& operator=(const OffsetPtr& other) noexcept
+    OffsetBox& operator=(const OffsetBox& other) noexcept
     {
         offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
         return *this;
@@ -59,21 +59,21 @@ class OffsetPtr
 };
 
 template <typename T>
-class NullableOffsetPtr
+class NullableOffsetBox
 {
   public:
-    NullableOffsetPtr(T const* const pointer) noexcept
+    NullableOffsetBox(T const* const pointer) noexcept
         : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}, is_nullptr_{pointer == nullptr}
     {
     }
 
-    NullableOffsetPtr(const NullableOffsetPtr& other) noexcept
+    NullableOffsetBox(const NullableOffsetBox& other) noexcept
         : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)},
           is_nullptr_{other.get() == nullptr}
     {
     }
 
-    NullableOffsetPtr& operator=(const NullableOffsetPtr& other) noexcept
+    NullableOffsetBox& operator=(const NullableOffsetBox& other) noexcept
     {
         offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
         is_nullptr_ = other.get() == nullptr;
@@ -111,14 +111,14 @@ class NullableOffsetPtr
 };
 
 template <typename T>
-class DirectPtr
+class RawBox
 {
   public:
-    DirectPtr(T const* const pointer) noexcept : pointer_{pointer} {}
+    RawBox(T const* const pointer) noexcept : pointer_{pointer} {}
 
-    DirectPtr(const DirectPtr& other) noexcept = default;
+    RawBox(const RawBox& other) noexcept = default;
 
-    DirectPtr& operator=(const DirectPtr& other) noexcept = default;
+    RawBox& operator=(const RawBox& other) noexcept = default;
 
     T* get() noexcept { return const_cast<T*>(pointer_); }
 
@@ -128,24 +128,24 @@ class DirectPtr
     const T* pointer_{nullptr};
 };
 
-struct ShmPointerPolicy
+struct OffsetBoxPolicy
 {
     template <typename T>
-    using Ptr = OffsetPtr<T>;
+    using Ptr = OffsetBox<T>;
 
     template <typename T>
-    using NullablePtr = NullableOffsetPtr<T>;
+    using NullablePtr = NullableOffsetBox<T>;
 };
 
-struct ShmDirectPointerPolicy
+struct RawBoxPolicy
 {
     template <typename T>
-    using Ptr = DirectPtr<T>;
+    using Ptr = RawBox<T>;
 
     template <typename T>
-    using NullablePtr = DirectPtr<T>;
+    using NullablePtr = RawBox<T>;
 };
 
-}  // namespace score::shm
+}  // namespace score::nothrow
 
-#endif  // SCORE_SHM_OFFSET_PTR_H
+#endif  // SCORE_NOTHROW_POINTER_BOX_H

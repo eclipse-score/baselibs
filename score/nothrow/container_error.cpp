@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/shm/container_error.h"
+#include "score/nothrow/container_error.h"
 
-namespace score::shm
+namespace score::nothrow
 {
 
 namespace
@@ -27,4 +27,4 @@ score::result::Error MakeError(const ContainerErrorCode code, const std::string_
     return {static_cast<score::result::ErrorCode>(code), g_container_error_domain, user_message};
 }
 
-}  // namespace score::shm
+}  // namespace score::nothrow

@@ -23,9 +23,9 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-using ShmType = score::shm::example::BoundedContainers<int, 10, 1024>;
+using ShmType = score::nothrow::example::BoundedContainers<int, 10, 1024>;
 
-static void print(const char* prefix, const score::shm::Vector<int>& v)
+static void print(const char* prefix, const score::nothrow::Vector<int>& v)
 {
     for (std::size_t i = 0U; i < v.size(); ++i)
     {

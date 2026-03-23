@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/map.h"
+#include "score/nothrow/map.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -25,7 +25,7 @@
 #include <utility>
 #include <vector>
 
-namespace score::shm
+namespace score::nothrow
 {
 namespace
 {
@@ -732,5 +732,393 @@ TEST(MapDeathTest, CloneOrAbortAbortsOnOutOfMemory)
     EXPECT_DEATH(map.CloneOrAbort(), "");
 }
 
+TEST(Map, ReverseIteratorTraversesInReverseOrder)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    std::vector<int> keys{};
+    for (auto it = map.rbegin(); it != map.rend(); ++it)
+    {
+        keys.push_back(it->first);
+    }
+    EXPECT_EQ(keys, (std::vector<int>{3, 2, 1}));
+}
+
+TEST(Map, ConstReverseIteratorTraversesInReverseOrder)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    const Map<int, int>& cmap = map;
+    std::vector<int> keys{};
+    for (auto it = cmap.rbegin(); it != cmap.rend(); ++it)
+    {
+        keys.push_back(it->first);
+    }
+    EXPECT_EQ(keys, (std::vector<int>{3, 2, 1}));
+}
+
+TEST(Map, CRBeginCREndTraverseInReverseOrder)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    std::vector<int> keys{};
+    for (auto it = map.crbegin(); it != map.crend(); ++it)
+    {
+        keys.push_back(it->first);
+    }
+    EXPECT_EQ(keys, (std::vector<int>{2, 1}));
+}
+
+TEST(Map, ReverseIteratorOnEmptyMapIsNoOp)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    EXPECT_EQ(map.rbegin(), map.rend());
+    EXPECT_EQ(map.crbegin(), map.crend());
+}
+
+TEST(Map, CountReturnsOneForExistingKeyZeroOtherwise)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    EXPECT_EQ(map.count(1), 1U);
+    EXPECT_EQ(map.count(2), 1U);
+    EXPECT_EQ(map.count(3), 0U);
+}
+
+TEST(Map, LowerBoundFindsFirstNotLessThan)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    auto it = map.lower_bound(20);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 20);
+
+    it = map.lower_bound(15);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 20);
+
+    it = map.lower_bound(5);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 10);
+
+    it = map.lower_bound(31);
+    EXPECT_EQ(it, map.end());
+}
+
+TEST(Map, ConstLowerBoundFindsFirstNotLessThan)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    const Map<int, int>& cmap = map;
+    auto it = cmap.lower_bound(20);
+    ASSERT_NE(it, cmap.end());
+    EXPECT_EQ(it->first, 20);
+
+    it = cmap.lower_bound(25);
+    ASSERT_NE(it, cmap.end());
+    EXPECT_EQ(it->first, 30);
+}
+
+TEST(Map, UpperBoundFindsFirstGreaterThan)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    auto it = map.upper_bound(20);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 30);
+
+    it = map.upper_bound(15);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 20);
+
+    it = map.upper_bound(30);
+    EXPECT_EQ(it, map.end());
+
+    it = map.upper_bound(5);
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 10);
+}
+
+TEST(Map, ConstUpperBoundFindsFirstGreaterThan)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    const Map<int, int>& cmap = map;
+    auto it = cmap.upper_bound(20);
+    ASSERT_NE(it, cmap.end());
+    EXPECT_EQ(it->first, 30);
+
+    it = cmap.upper_bound(30);
+    EXPECT_EQ(it, cmap.end());
+}
+
+TEST(Map, EqualRangeForExistingKey)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    auto [first, last] = map.equal_range(20);
+    ASSERT_NE(first, map.end());
+    EXPECT_EQ(first->first, 20);
+    ASSERT_NE(last, map.end());
+    EXPECT_EQ(last->first, 30);
+}
+
+TEST(Map, EqualRangeForMissingKeyReturnsEmptyRange)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    auto [first, last] = map.equal_range(20);
+    EXPECT_EQ(first, last);
+    ASSERT_NE(first, map.end());
+    EXPECT_EQ(first->first, 30);
+}
+
+TEST(Map, ConstEqualRangeForExistingKey)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    const Map<int, int>& cmap = map;
+    auto [first, last] = cmap.equal_range(20);
+    ASSERT_NE(first, cmap.end());
+    EXPECT_EQ(first->first, 20);
+    ASSERT_NE(last, cmap.end());
+    EXPECT_EQ(last->first, 30);
+}
+
+TEST(Map, LowerBoundUpperBoundOnEmptyMap)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    EXPECT_EQ(map.lower_bound(1), map.end());
+    EXPECT_EQ(map.upper_bound(1), map.end());
+
+    auto [first, last] = map.equal_range(1);
+    EXPECT_EQ(first, map.end());
+    EXPECT_EQ(last, map.end());
+}
+
+TEST(Map, EraseByIteratorReturnsNextElement)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    auto it = map.find(2);
+    ASSERT_NE(it, map.end());
+
+    auto next = map.erase(it);
+    EXPECT_EQ(map.size(), 2U);
+    EXPECT_FALSE(map.contains(2));
+    ASSERT_NE(next, map.end());
+    EXPECT_EQ(next->first, 3);
+}
+
+TEST(Map, EraseByConstIteratorAtBegin)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    auto next = map.erase(map.cbegin());
+    EXPECT_EQ(map.size(), 1U);
+    EXPECT_FALSE(map.contains(1));
+    ASSERT_NE(next, map.end());
+    EXPECT_EQ(next->first, 2);
+}
+
+TEST(Map, EraseByIteratorAtLastElement)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    auto it = map.find(2);
+    auto next = map.erase(it);
+    EXPECT_EQ(map.size(), 1U);
+    EXPECT_FALSE(map.contains(2));
+    EXPECT_EQ(next, map.end());
+}
+
+TEST(Map, EraseByIteratorOnSingleElementMap)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+
+    auto next = map.erase(map.cbegin());
+    EXPECT_TRUE(map.empty());
+    EXPECT_EQ(next, map.end());
+}
+
+TEST(Map, EraseByIteratorSequentiallyRemovesAll)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    for (int key = 0; key < 20; ++key)
+    {
+        ASSERT_TRUE(map.Insert({key, key}).has_value());
+    }
+
+    auto it = map.cbegin();
+    while (it != map.cend())
+    {
+        it = map.erase(it);
+    }
+    EXPECT_TRUE(map.empty());
+}
+
+TEST(Map, EraseRangeRemovesSubset)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    for (int key = 1; key <= 5; ++key)
+    {
+        ASSERT_TRUE(map.Insert({key, key * 10}).has_value());
+    }
+
+    auto first = map.find(2);
+    auto last = map.find(4);
+    auto result = map.erase(first, last);
+
+    EXPECT_EQ(map.size(), 3U);
+    EXPECT_TRUE(map.contains(1));
+    EXPECT_FALSE(map.contains(2));
+    EXPECT_FALSE(map.contains(3));
+    EXPECT_TRUE(map.contains(4));
+    EXPECT_TRUE(map.contains(5));
+    ASSERT_NE(result, map.end());
+    EXPECT_EQ(result->first, 4);
+}
+
+TEST(Map, EraseRangeEntireMap)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    auto result = map.erase(map.cbegin(), map.cend());
+    EXPECT_TRUE(map.empty());
+    EXPECT_EQ(result, map.end());
+}
+
+TEST(Map, EraseEmptyRangeIsNoOp)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    auto it = map.find(2);
+    auto result = map.erase(it, it);
+    EXPECT_EQ(map.size(), 2U);
+    EXPECT_EQ(result->first, 2);
+}
+
+TEST(Map, EqualityOperatorOnEqualMaps)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(a.Insert({1, 10}).has_value());
+    ASSERT_TRUE(a.Insert({2, 20}).has_value());
+
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(b.Insert({1, 10}).has_value());
+    ASSERT_TRUE(b.Insert({2, 20}).has_value());
+
+    EXPECT_TRUE(a == b);
+    EXPECT_FALSE(a != b);
+}
+
+TEST(Map, EqualityOperatorOnDifferentValues)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(a.Insert({1, 10}).has_value());
+    ASSERT_TRUE(a.Insert({2, 20}).has_value());
+
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(b.Insert({1, 10}).has_value());
+    ASSERT_TRUE(b.Insert({2, 99}).has_value());
+
+    EXPECT_FALSE(a == b);
+    EXPECT_TRUE(a != b);
+}
+
+TEST(Map, EqualityOperatorOnDifferentKeys)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(a.Insert({1, 10}).has_value());
+
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(b.Insert({2, 10}).has_value());
+
+    EXPECT_FALSE(a == b);
+    EXPECT_TRUE(a != b);
+}
+
+TEST(Map, EqualityOperatorOnDifferentSizes)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(a.Insert({1, 10}).has_value());
+    ASSERT_TRUE(a.Insert({2, 20}).has_value());
+
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(b.Insert({1, 10}).has_value());
+
+    EXPECT_FALSE(a == b);
+    EXPECT_TRUE(a != b);
+}
+
+TEST(Map, EqualityOperatorOnEmptyMaps)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+
+    EXPECT_TRUE(a == b);
+    EXPECT_FALSE(a != b);
+}
+
+TEST(Map, EqualityWithClone)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    Map<int, int> clone = map.CloneOrAbort();
+    EXPECT_TRUE(map == clone);
+}
+
+TEST(MapDeathTest, EraseByIteratorAbortsOnEndIterator)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    EXPECT_DEATH(map.erase(map.cend()), "");
+}
+
 }  // namespace
-}  // namespace score::shm
+}  // namespace score::nothrow

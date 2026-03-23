@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_SHM_MEMORY_RESOURCE_H
-#define SCORE_SHM_MEMORY_RESOURCE_H
+#ifndef SCORE_NOTHROW_MEMORY_RESOURCE_H
+#define SCORE_NOTHROW_MEMORY_RESOURCE_H
 
 #include <cstddef>
 #include <cstdint>
@@ -19,14 +19,14 @@
 #include <new>
 #include <type_traits>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 /// @brief Polymorphic memory resource interface for nothrow allocation.
 ///
 /// Follows the std::pmr::memory_resource model with one critical deviation:
 /// all operations are noexcept and allocation failure is signaled by returning
-/// nullptr. This is the contract expected by score::shm containers, which
+/// nullptr. This is the contract expected by score::nothrow containers, which
 /// propagate allocation failures as score::Result errors rather than throwing
 /// std::bad_alloc.
 class MemoryResource
@@ -58,7 +58,7 @@ MemoryResource* SetDefaultResource(MemoryResource* resource) noexcept;
 /// @brief A polymorphic allocator in the style of std::pmr::polymorphic_allocator.
 ///
 /// All operations are noexcept. allocate() returns nullptr on failure instead
-/// of throwing std::bad_alloc. score::shm containers depend on this contract
+/// of throwing std::bad_alloc. score::nothrow containers depend on this contract
 /// to translate allocation failures into score::Result errors.
 template <typename T = std::uint8_t>
 class PolymorphicAllocator
@@ -150,6 +150,6 @@ bool operator!=(const PolymorphicAllocator<T1>& lhs, const PolymorphicAllocator<
     return !(lhs == rhs);
 }
 
-}  // namespace score::shm
+}  // namespace score::nothrow
 
-#endif  // SCORE_SHM_MEMORY_RESOURCE_H
+#endif  // SCORE_NOTHROW_MEMORY_RESOURCE_H

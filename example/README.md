@@ -1,13 +1,13 @@
-# `score::shm` Shared Memory Containers Example
+# `score::nothrow` Shared Memory Containers Example
 
-Demonstrates cross-process data sharing using `score::shm::Vector` and `score::shm::Map` in POSIX shared memory.
+Demonstrates cross-process data sharing using `score::nothrow::Vector` and `score::nothrow::Map` in POSIX shared memory.
 
 ## Design
 
 `BoundedContainers<T, N, M>` bundles:
 
-- a `score::shm::Vector<T>` with inline fixed-capacity storage (`CreateWithBuffer()`),
-- a `score::shm::Map<int, int>` allocated from an inline `MonotonicBufferResource`.
+- a `score::nothrow::Vector<T>` with inline fixed-capacity storage (`CreateWithBuffer()`),
+- a `score::nothrow::Map<int, int>` allocated from an inline `MonotonicBufferResource`.
 
 All backing storage lives inside the same shared-memory object, so `OffsetPtr` state
 resolves correctly when mapped at different base addresses in parent/child processes.

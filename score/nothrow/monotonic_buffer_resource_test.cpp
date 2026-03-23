@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/monotonic_buffer_resource.h"
+#include "score/nothrow/monotonic_buffer_resource.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -19,7 +19,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace score::shm
+namespace score::nothrow
 {
 namespace
 {
@@ -154,4 +154,4 @@ TEST(MonotonicBufferResource, WorksWithPolymorphicAllocator)
 }
 
 }  // namespace
-}  // namespace score::shm
+}  // namespace score::nothrow

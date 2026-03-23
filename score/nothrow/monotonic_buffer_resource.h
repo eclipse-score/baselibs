@@ -10,21 +10,21 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_SHM_MONOTONIC_BUFFER_RESOURCE_H
-#define SCORE_SHM_MONOTONIC_BUFFER_RESOURCE_H
+#ifndef SCORE_NOTHROW_MONOTONIC_BUFFER_RESOURCE_H
+#define SCORE_NOTHROW_MONOTONIC_BUFFER_RESOURCE_H
 
-#include "score/shm/memory_resource.h"
+#include "score/nothrow/memory_resource.h"
 
 #include <cstddef>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 /// @brief A memory resource that allocates from a fixed buffer by advancing a pointer.
 ///
 /// Follows the std::pmr::monotonic_buffer_resource model with the same nothrow
-/// contract as score::shm::MemoryResource: allocation failure returns nullptr
-/// instead of throwing, allowing score::shm containers to propagate errors via
+/// contract as score::nothrow::MemoryResource: allocation failure returns nullptr
+/// instead of throwing, allowing score::nothrow containers to propagate errors via
 /// score::Result.
 ///
 /// Does not allocate additional buffers internally; on buffer exhaustion,
@@ -69,6 +69,6 @@ class MonotonicBufferResource final : public MemoryResource
     MemoryResource* upstream_;
 };
 
-}  // namespace score::shm
+}  // namespace score::nothrow
 
-#endif  // SCORE_SHM_MONOTONIC_BUFFER_RESOURCE_H
+#endif  // SCORE_NOTHROW_MONOTONIC_BUFFER_RESOURCE_H

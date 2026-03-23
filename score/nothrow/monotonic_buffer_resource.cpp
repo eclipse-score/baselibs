@@ -11,11 +11,11 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/monotonic_buffer_resource.h"
+#include "score/nothrow/monotonic_buffer_resource.h"
 
 #include <cstddef>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 MonotonicBufferResource::MonotonicBufferResource(void* buffer,
@@ -64,4 +64,4 @@ bool MonotonicBufferResource::is_equal(const MemoryResource& other) const noexce
     return this == &other;
 }
 
-}  // namespace score::shm
+}  // namespace score::nothrow

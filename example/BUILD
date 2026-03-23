@@ -21,9 +21,9 @@ cc_binary(
     ],
     linkopts = ["-lrt"],
     deps = [
-        "@score_baselibs//score/shm:map",
-        "@score_baselibs//score/shm:monotonic_buffer_resource",
-        "@score_baselibs//score/shm:vector",
+        "@score_baselibs//score/nothrow:map",
+        "@score_baselibs//score/nothrow:monotonic_buffer_resource",
+        "@score_baselibs//score/nothrow:vector",
     ],
 )
 
@@ -35,8 +35,8 @@ cc_binary(
     ],
     linkopts = ["-lrt"],
     deps = [
-        "@score_baselibs//score/shm:map",
-        "@score_baselibs//score/shm:monotonic_buffer_resource",
-        "@score_baselibs//score/shm:vector",
+        "@score_baselibs//score/nothrow:map",
+        "@score_baselibs//score/nothrow:monotonic_buffer_resource",
+        "@score_baselibs//score/nothrow:vector",
     ],
 )

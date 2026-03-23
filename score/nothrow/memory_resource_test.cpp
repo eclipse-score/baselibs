@@ -11,14 +11,14 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/memory_resource.h"
+#include "score/nothrow/memory_resource.h"
 
 #include <gtest/gtest.h>
 
 #include <cstddef>
 #include <cstdint>
 
-namespace score::shm
+namespace score::nothrow
 {
 namespace
 {
@@ -124,4 +124,4 @@ TEST(MemoryResource, SetDefaultResourceChangesDefault)
 }
 
 }  // namespace
-}  // namespace score::shm
+}  // namespace score::nothrow

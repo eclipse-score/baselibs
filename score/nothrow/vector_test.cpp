@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/shm/vector.h"
+#include "score/nothrow/vector.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -21,7 +21,7 @@
 #include <memory>
 #include <utility>
 
-namespace score::shm
+namespace score::nothrow
 {
 namespace
 {
@@ -607,4 +607,4 @@ TEST(Vector, CreateWithBufferDoesNotDeallocateOnDestruction)
 }
 
 }  // namespace
-}  // namespace score::shm
+}  // namespace score::nothrow

@@ -10,12 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_SHM_MAP_H
-#define SCORE_SHM_MAP_H
+#ifndef SCORE_NOTHROW_MAP_H
+#define SCORE_NOTHROW_MAP_H
 
-#include "score/shm/container_error.h"
-#include "score/shm/memory_resource.h"
-#include "score/shm/offset_ptr.h"
+#include "score/nothrow/container_error.h"
+#include "score/nothrow/memory_resource.h"
+#include "score/nothrow/pointer_box.h"
 
 #include "score/result/result.h"
 
@@ -32,7 +32,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace score::shm
+namespace score::nothrow
 {
 
 /// @brief Shared-memory-safe counterpart to std::map.
@@ -43,14 +43,14 @@ namespace score::shm
 /// - Members that may allocate (Create from ranges/lists, Insert, Emplace, GetOrInsertDefault, Clone)
 ///   return score::Result with kOutOfMemory on failure. Each has an OrAbort convenience variant.
 /// - Not copyable. Use Clone() for explicit deep copies.
-/// - Tree links are injected via PointerPolicy::NullablePtr (default: score::shm::NullableOffsetPtr).
+/// - Tree links are injected via PointerPolicy::NullablePtr (default: score::nothrow::NullableOffsetBox).
 ///
 /// The tree is AVL-balanced to provide O(log n) insert/find/erase in the worst case.
 template <typename Key,
           typename T,
           typename Compare = std::less<Key>,
           typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
-          typename PointerPolicy = ShmPointerPolicy>
+          typename PointerPolicy = OffsetBoxPolicy>
 class Map
 {
     struct Node;
@@ -268,6 +268,9 @@ class Map
         const Map* owner_{nullptr};
     };
 
+    using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
     /// @brief Creates an empty map.
     static score::Result<Map> Create(key_compare compare = key_compare{},
                                      allocator_type allocator = allocator_type{}) noexcept
@@ -431,6 +434,36 @@ class Map
         return const_iterator{nullptr, this};
     }
 
+    [[nodiscard]] reverse_iterator rbegin() noexcept
+    {
+        return reverse_iterator{end()};
+    }
+
+    [[nodiscard]] const_reverse_iterator rbegin() const noexcept
+    {
+        return const_reverse_iterator{end()};
+    }
+
+    [[nodiscard]] const_reverse_iterator crbegin() const noexcept
+    {
+        return const_reverse_iterator{cend()};
+    }
+
+    [[nodiscard]] reverse_iterator rend() noexcept
+    {
+        return reverse_iterator{begin()};
+    }
+
+    [[nodiscard]] const_reverse_iterator rend() const noexcept
+    {
+        return const_reverse_iterator{begin()};
+    }
+
+    [[nodiscard]] const_reverse_iterator crend() const noexcept
+    {
+        return const_reverse_iterator{cbegin()};
+    }
+
     [[nodiscard]] iterator find(const key_type& key) noexcept
     {
         return iterator{FindNode(root_.get(), key), this};
@@ -444,6 +477,51 @@ class Map
     [[nodiscard]] bool contains(const key_type& key) const noexcept
     {
         return FindNode(root_.get(), key) != nullptr;
+    }
+
+    [[nodiscard]] size_type count(const key_type& key) const noexcept
+    {
+        return contains(key) ? 1U : 0U;
+    }
+
+    [[nodiscard]] iterator lower_bound(const key_type& key) noexcept
+    {
+        return iterator{LowerBoundNode(root_.get(), key), this};
+    }
+
+    [[nodiscard]] const_iterator lower_bound(const key_type& key) const noexcept
+    {
+        return const_iterator{LowerBoundNode(root_.get(), key), this};
+    }
+
+    [[nodiscard]] iterator upper_bound(const key_type& key) noexcept
+    {
+        Node* node = LowerBoundNode(root_.get(), key);
+        if ((node != nullptr) && !IsLess(key, node->value.first))
+        {
+            node = NextNode(node);
+        }
+        return iterator{node, this};
+    }
+
+    [[nodiscard]] const_iterator upper_bound(const key_type& key) const noexcept
+    {
+        const Node* node = LowerBoundNode(root_.get(), key);
+        if ((node != nullptr) && !IsLess(key, node->value.first))
+        {
+            node = NextNode(node);
+        }
+        return const_iterator{node, this};
+    }
+
+    [[nodiscard]] std::pair<iterator, iterator> equal_range(const key_type& key) noexcept
+    {
+        return {lower_bound(key), upper_bound(key)};
+    }
+
+    [[nodiscard]] std::pair<const_iterator, const_iterator> equal_range(const key_type& key) const noexcept
+    {
+        return {lower_bound(key), upper_bound(key)};
     }
 
     /// @brief Like std::map::at(). Aborts if key does not exist.
@@ -635,8 +713,7 @@ class Map
 
         if constexpr (std::is_default_constructible_v<mapped_type>)
         {
-            value_type value{key, mapped_type{}};
-            auto inserted = Insert(std::move(value));
+            auto inserted = Emplace(key, mapped_type{});
             if (!inserted.has_value())
             {
                 return score::Result<std::reference_wrapper<mapped_type>>{score::unexpect, inserted.error()};
@@ -672,6 +749,31 @@ class Map
 
         EraseNode(node);
         return 1U;
+    }
+
+    /// @brief Like std::map::erase(pos). Aborts if pos is invalid.
+    /// @return Iterator to the element following the erased element.
+    iterator erase(const_iterator pos) noexcept
+    {
+        if ((pos.owner_ != this) || (pos.node_ == nullptr))
+        {
+            std::abort();
+        }
+        Node* const node = const_cast<Node*>(pos.node_);
+        Node* const next = NextNode(node);
+        EraseNode(node);
+        return iterator{next, this};
+    }
+
+    /// @brief Like std::map::erase(first, last). Erases elements in [first, last).
+    /// @return Iterator to the element following the last erased element.
+    iterator erase(const_iterator first, const_iterator last) noexcept
+    {
+        while (first != last)
+        {
+            first = erase(first);
+        }
+        return iterator{const_cast<Node*>(last.node_), this};
     }
 
     void clear() noexcept
@@ -723,6 +825,32 @@ class Map
         swap(leftmost_, other.leftmost_);
         swap(rightmost_, other.rightmost_);
         swap(size_, other.size_);
+    }
+
+    friend bool operator==(const Map& lhs, const Map& rhs) noexcept
+    {
+        if (lhs.size() != rhs.size())
+        {
+            return false;
+        }
+        auto lhs_it = lhs.cbegin();
+        auto rhs_it = rhs.cbegin();
+        const auto lhs_end = lhs.cend();
+        while (lhs_it != lhs_end)
+        {
+            if ((lhs_it->first != rhs_it->first) || (lhs_it->second != rhs_it->second))
+            {
+                return false;
+            }
+            ++lhs_it;
+            ++rhs_it;
+        }
+        return true;
+    }
+
+    friend bool operator!=(const Map& lhs, const Map& rhs) noexcept
+    {
+        return !(lhs == rhs);
     }
 
     /// @brief Deep-copies all elements while preserving key ordering.
@@ -1456,9 +1584,9 @@ template <typename Key,
           typename T,
           typename Compare = std::less<Key>,
           typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
-          typename PointerPolicy = ShmPointerPolicy>
+          typename PointerPolicy = OffsetBoxPolicy>
 using MapBase = Map<Key, T, Compare, Allocator, PointerPolicy>;
 
-}  // namespace score::shm
+}  // namespace score::nothrow
 
-#endif  // SCORE_SHM_MAP_H
+#endif  // SCORE_NOTHROW_MAP_H

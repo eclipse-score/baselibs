@@ -16,8 +16,8 @@ load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_te
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "offset_ptr",
-    hdrs = ["offset_ptr.h"],
+    name = "pointer_box",
+    hdrs = ["pointer_box.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -75,7 +75,7 @@ cc_library(
     deps = [
         ":container_error",
         ":memory_resource",
-        ":offset_ptr",
+        ":pointer_box",
         "@score_baselibs//score/result",
     ],
 )
@@ -91,7 +91,7 @@ cc_library(
     deps = [
         ":container_error",
         ":memory_resource",
-        ":offset_ptr",
+        ":pointer_box",
         "@score_baselibs//score/result",
     ],
 )
@@ -151,9 +151,9 @@ cc_unit_test_suites_for_host_and_qnx(
 )
 
 cc_binary(
-    name = "offset_ptr_benchmark",
+    name = "pointer_box_benchmark",
     testonly = True,
-    srcs = ["offset_ptr_benchmark.cpp"],
+    srcs = ["pointer_box_benchmark.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
         ":map",

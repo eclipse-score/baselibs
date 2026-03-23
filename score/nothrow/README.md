@@ -1,35 +1,42 @@
-# shm
+# nothrow
 
-`score::shm` provides a small shared-memory-oriented toolkit that intentionally mirrors familiar C++ interfaces where possible:
+`score::nothrow` provides nothrow substitutes for standard C++ containers and memory resources, with pluggable pointer storage policies:
 
-- `score::shm::MemoryResource` / `score::shm::PolymorphicAllocator<T>` follow the overall model of `std::pmr::memory_resource` and `std::pmr::polymorphic_allocator`. Their primary purpose is providing a **nothrow allocation interface** that returns `nullptr` on failure, which is the contract expected by `score::shm` containers.
-- `score::shm::OffsetPtr<T>` / `score::shm::NullableOffsetPtr<T>` provide relative-pointer storage semantics.
-- `score::shm::DirectPtr<T>` provides direct-pointer wrappers for policy-based container experiments and benchmarks.
+- `score::nothrow::MemoryResource` / `score::nothrow::PolymorphicAllocator<T>` follow the overall model of `std::pmr::memory_resource` and `std::pmr::polymorphic_allocator`. Their primary purpose is providing a **nothrow allocation interface** that returns `nullptr` on failure, which is the contract expected by `score::nothrow` containers.
+- `score::nothrow::OffsetBox<T>` / `score::nothrow::NullableOffsetBox<T>` provide relative-pointer storage semantics (pointer box with offset encoding).
+- `score::nothrow::RawBox<T>` provides identity-encoded pointer boxes for policy-based container experiments and benchmarks.
 
 This README focuses on **deviations and guarantees**, not on re-documenting standard APIs.
 
 ## MemoryResource and PolymorphicAllocator
 
-Standard `std::pmr` allocation throws `std::bad_alloc` on failure. `score::shm` containers cannot use exceptions — they propagate allocation failures as `score::Result` errors. To bridge this gap, `MemoryResource::allocate()` and `PolymorphicAllocator::allocate()` are fully `noexcept` and return `nullptr` when allocation fails.
+Standard `std::pmr` allocation throws `std::bad_alloc` on failure. `score::nothrow` containers cannot use exceptions — they propagate allocation failures as `score::Result` errors. To bridge this gap, `MemoryResource::allocate()` and `PolymorphicAllocator::allocate()` are fully `noexcept` and return `nullptr` when allocation fails.
 
 Additional deviations from `std::pmr`:
 
 - Default resource is `GetDefaultResource()` (initially backed by `GetNewDeleteResource()`). Can be changed via `SetDefaultResource()`.
 - `GetNullMemoryResource()` provides a resource that always fails allocation (returns `nullptr`). Useful for testing container error paths.
-- The bound resource is stored as a raw pointer (process-local; not placed in shared memory).
+- The bound resource is stored as a raw pointer (process-local).
 
 ### MonotonicBufferResource
 
-`score::shm::MonotonicBufferResource` follows the `std::pmr::monotonic_buffer_resource` model:
+`score::nothrow::MonotonicBufferResource` follows the `std::pmr::monotonic_buffer_resource` model:
 
 - Allocates from a user-provided buffer by advancing a bump pointer.
 - On buffer exhaustion, delegates to an upstream resource (defaults to `GetDefaultResource()`).
 - Individual `deallocate()` calls are no-ops; use `release()` to reclaim the full buffer.
-- All pointer state uses raw pointers (process-local; not placed in shared memory).
+- All pointer state uses raw pointers (process-local).
 
-## OffsetPtr design focus
+## Pointer box design
 
-`score::shm::OffsetPtr` is designed around a strict round-trip invariant:
+Pointer boxes are encoding wrappers that control how raw pointers are stored inside container nodes. The container is agnostic to the encoding — it only calls `.get()` to recover the raw pointer. A `PointerPolicy` selects which box family to use:
+
+- `OffsetBoxPolicy` uses `OffsetBox<T>` / `NullableOffsetBox<T>` (offset-from-this encoding).
+- `RawBoxPolicy` uses `RawBox<T>` for both `Ptr` and `NullablePtr` (identity encoding).
+
+### OffsetBox design focus
+
+`score::nothrow::OffsetBox` is designed around a strict round-trip invariant:
 
 1. On construction, state is captured using integer arithmetic derived from the provided raw pointer and `this`.
 2. On conversion back to `T*` / `T const*`, the original pointer value is reconstructed by inverse integer arithmetic.
@@ -43,11 +50,11 @@ This is a substantial design difference compared to many fancy-pointer implement
 
 ## Scope
 
-`score::shm` currently targets header-only building blocks and keeps the API surface small. When in doubt, prefer standard library behavior and treat `score::shm` as a specialization layer for shared-memory-safe pointer/resource representation.
+`score::nothrow` currently targets header-only building blocks and keeps the API surface small. When in doubt, prefer standard library behavior and treat `score::nothrow` as a specialization layer for nothrow container/resource semantics.
 
 ## Containers
 
-The general pattern of containers planned in `score::shm` is:
+The general pattern of containers planned in `score::nothrow` is:
 
 - Functional clones of the standard counterparts.
 - All member functions are `noexcept`.
@@ -58,11 +65,11 @@ The general pattern of containers planned in `score::shm` is:
   - An aborting variant with PascalCase naming and `OrAbort` suffix, returning the original value category and aborting on failure. These shall be used when an out-of-memory situation is algorithmically impossible, for example because the user prepared the memory resource in the same scope as using the container. Returning results would require a user to implement untestable error handling. Use of these functions implies asserting that memory is sufficient, and failure would be correctly classified as a bug and result in abort.
 - Member functions provided as error handling derivatives described above are not provided with their standard library signature.
 - Pointer members in container state are persisted via the selected pointer policy:
-  default `score::shm::ShmPointerPolicy` uses `OffsetPtr` / `NullableOffsetPtr`,
-  while `score::shm::ShmDirectPointerPolicy` uses `DirectPtr` for both pointer aliases.
+  default `score::nothrow::OffsetBoxPolicy` uses `OffsetBox` / `NullableOffsetBox`,
+  while `score::nothrow::RawBoxPolicy` uses `RawBox` for both pointer aliases.
 - Pointer parameters, type aliases, and local variables follow the standard/raw-pointer style where possible; wrapping/unwrapping is used only for persisted container state.
-- All containers use `score::shm::PolymorphicAllocator` as default allocator.
-- Error propagation uses `score::shm::ContainerErrorCode` and `MakeError(...)`.
+- All containers use `score::nothrow::PolymorphicAllocator` as default allocator.
+- Error propagation uses `score::nothrow::ContainerErrorCode` and `MakeError(...)`.
 - Fallible construction is exposed as static factory methods:
   - `Create(...)` returns `score::Result<Container>`
   - `CreateOrAbort(...)` delegates to `Create(...)` and aborts on error
@@ -96,8 +103,8 @@ reference front() noexcept;
 reference back() noexcept;
 ```
 
-### `score::shm::Vector`
+### `score::nothrow::Vector`
 
-Default policy stores vector backing storage via `score::shm::OffsetPtr`.
-Alternative policies can inject direct wrappers (for example `ShmDirectPointerPolicy`).
+Default policy stores vector backing storage via `score::nothrow::OffsetBox`.
+Alternative policies can inject direct wrappers (for example `RawBoxPolicy`).
 No allocated memory is represented by `capacity == 0` rather than `nullptr`.
