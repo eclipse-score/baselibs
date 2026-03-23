@@ -20,24 +20,19 @@
 namespace score::nothrow
 {
 
-/// @brief A memory resource that allocates from a fixed buffer by advancing a pointer.
+/// @brief Nothrow counterpart to `std::pmr::monotonic_buffer_resource`.
 ///
-/// Follows the std::pmr::monotonic_buffer_resource model with the same nothrow
-/// contract as score::nothrow::MemoryResource: allocation failure returns nullptr
-/// instead of throwing, allowing score::nothrow containers to propagate errors via
-/// score::Result.
-///
-/// Does not allocate additional buffers internally; on buffer exhaustion,
-/// delegates to the upstream resource (defaults to GetDefaultResource()).
-/// Individual deallocate() calls are no-ops. Use release() to reclaim the
-/// entire buffer for reuse.
+/// Deviations:
+/// - Allocation failure is reported as `nullptr` instead of exception.
+/// - This implementation only uses the caller-provided buffer; when exhausted it
+///   delegates to `upstream` and does not allocate internal growth buffers.
 class MonotonicBufferResource final : public MemoryResource
 {
   public:
-    /// @brief Constructs from an externally owned buffer with an upstream overflow resource.
-    /// @param buffer Start of the memory region. Must remain valid for the resource lifetime.
-    /// @param size Size of the buffer in bytes.
-    /// @param upstream Resource used when the buffer is exhausted. Defaults to GetDefaultResource().
+    /// @brief Constructs from external buffer and upstream fallback resource.
+    /// @param buffer Start of region; must outlive this resource.
+    /// @param size Buffer size in bytes.
+    /// @param upstream Fallback when local buffer is exhausted.
     explicit MonotonicBufferResource(void* buffer,
                                      std::size_t size,
                                      MemoryResource* upstream = GetDefaultResource()) noexcept;
@@ -49,13 +44,13 @@ class MonotonicBufferResource final : public MemoryResource
 
     ~MonotonicBufferResource() override = default;
 
-    /// @brief Resets the bump pointer to the beginning of the buffer.
+    /// @brief Resets local bump allocation state.
     ///
-    /// Does not release upstream allocations. After release(), the full buffer
-    /// is available for new allocations again.
+    /// Same intent as `std::pmr::monotonic_buffer_resource::release()` for the
+    /// local buffer. Upstream allocations are unaffected.
     void release() noexcept;
 
-    /// @brief Returns the number of bytes remaining in the buffer.
+    /// @brief Returns bytes still available in the local buffer.
     [[nodiscard]] std::size_t remaining() const noexcept;
 
     void* allocate(std::size_t bytes, std::size_t alignment) noexcept override;

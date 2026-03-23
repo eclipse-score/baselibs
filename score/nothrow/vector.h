@@ -31,15 +31,14 @@
 namespace score::nothrow
 {
 
-/// @brief Shared-memory-safe counterpart to std::vector.
+/// @brief Nothrow counterpart to `std::vector`.
 ///
-/// Follows std::vector semantics with these deviations:
+/// Deviations from `std::vector`:
 /// - All member functions are noexcept.
-/// - Bounds-checking members (at, front, back, pop_back, erase) abort on precondition
-///   violation instead of throwing. Users can check preconditions via size()/empty().
-/// - Members that may allocate (PushBack, EmplaceBack, Insert, Reserve, Resize, ShrinkToFit,
-///   Create, Clone) return score::Result or score::ResultBlank with kOutOfMemory on failure.
-///   Each has an OrAbort convenience variant that aborts instead.
+/// - Precondition failures abort (`at`, `front`, `back`, `pop_back`, `erase`).
+/// - Potential allocation failures are reported via `score::Result*` with
+///   `ContainerErrorCode::kOutOfMemory` (`Create*`, `PushBack*`, `EmplaceBack*`,
+///   `Insert*`, `Reserve*`, `Resize*`, `ShrinkToFit*`, `Clone*`).
 /// - Not copyable. Use Clone() for explicit deep copies.
 /// - Storage pointer type is injected via PointerPolicy::Ptr (default: score::nothrow::OffsetBox).
 ///
@@ -96,19 +95,18 @@ class Vector
         return std::move(created).value();
     }
 
-    /// @brief Creates a vector backed by an externally owned buffer.
+    /// @brief Creates a vector backed by externally owned storage.
     ///
-    /// The buffer determines the fixed capacity (bytes / sizeof(T)). The vector will
-    /// never allocate or deallocate via the allocator; growth beyond the buffer returns
-    /// kOutOfMemory. The caller must ensure the buffer outlives the vector.
-    /// This mode is suitable for shared-memory placement.
+    /// Deviation from typical `std::vector` ownership model: this vector does not
+    /// own `buffer`, never reallocates it, and reports growth past capacity as
+    /// `kOutOfMemory`.
     static Vector CreateWithBuffer(void* buffer, const size_type bytes) noexcept
     {
         const size_type element_capacity = bytes / sizeof(value_type);
         return Vector{allocator_type{}, static_cast<pointer>(buffer), 0U, element_capacity, true};
     }
 
-    /// @brief Returns true if this vector uses a fixed external buffer (created via CreateWithBuffer).
+    /// @brief Returns true if created with `CreateWithBuffer`.
     [[nodiscard]] bool has_fixed_capacity() const noexcept
     {
         return fixed_capacity_;
@@ -359,7 +357,8 @@ class Vector
         return data_.get();
     }
 
-    /// @brief Like std::vector::front(). Aborts if empty.
+    /// @brief Equivalent to `std::vector::front()`.
+    /// @note Aborts when empty (standard API has undefined behavior).
     reference front() noexcept
     {
         if (empty())
@@ -378,7 +377,8 @@ class Vector
         return data()[0U];
     }
 
-    /// @brief Like std::vector::back(). Aborts if empty.
+    /// @brief Equivalent to `std::vector::back()`.
+    /// @note Aborts when empty (standard API has undefined behavior).
     reference back() noexcept
     {
         if (empty())
@@ -397,7 +397,8 @@ class Vector
         return data()[size_ - 1U];
     }
 
-    /// @brief Like std::vector::at(). Aborts if index >= size() (std::vector throws).
+    /// @brief Equivalent to `std::vector::at()`.
+    /// @note Aborts if index >= size(); `std::vector::at()` throws.
     reference at(const size_type index) noexcept
     {
         if (index >= size_)
@@ -416,8 +417,8 @@ class Vector
         return data()[index];
     }
 
-    /// @brief Like std::vector::push_back(). May grow capacity.
-    /// @return kOutOfMemory if allocation fails.
+    /// @brief Equivalent to `std::vector::push_back()`.
+    /// @return `kOutOfMemory` if growth allocation fails.
     score::ResultBlank PushBack(const value_type& value) noexcept
     {
         if (size_ == capacity_)
@@ -435,8 +436,8 @@ class Vector
         return score::ResultBlank{};
     }
 
-    /// @brief Move overload of PushBack().
-    /// @return kOutOfMemory if allocation fails.
+    /// @brief Move overload of `PushBack`.
+    /// @return `kOutOfMemory` if growth allocation fails.
     score::ResultBlank PushBack(value_type&& value) noexcept
     {
         if (size_ == capacity_)
@@ -473,8 +474,8 @@ class Vector
         }
     }
 
-    /// @brief Like std::vector::emplace_back(). May grow capacity.
-    /// @return kOutOfMemory if allocation fails.
+    /// @brief Equivalent to `std::vector::emplace_back()`.
+    /// @return `kOutOfMemory` if growth allocation fails.
     template <typename... Args>
     score::ResultBlank EmplaceBack(Args&&... args) noexcept
     {
@@ -504,7 +505,8 @@ class Vector
         }
     }
 
-    /// @brief Like std::vector::pop_back(). Aborts if empty.
+    /// @brief Equivalent to `std::vector::pop_back()`.
+    /// @note Aborts when empty (standard API has undefined behavior).
     void pop_back() noexcept
     {
         if (empty())
@@ -516,8 +518,8 @@ class Vector
         data()[size_].~value_type();
     }
 
-    /// @brief Like std::vector::reserve().
-    /// @return kOutOfMemory if allocation fails.
+    /// @brief Equivalent to `std::vector::reserve()`.
+    /// @return `kOutOfMemory` if allocation fails.
     score::ResultBlank Reserve(const size_type new_capacity) noexcept
     {
         if (new_capacity <= capacity_)
@@ -571,9 +573,9 @@ class Vector
         }
     }
 
-    /// @brief Like std::vector::resize(count). Requires default-constructible T for growth;
-    ///        aborts at runtime if called to grow a non-default-constructible type.
-    /// @return kOutOfMemory if allocation for growth fails.
+    /// @brief Equivalent to `std::vector::resize(count)`.
+    /// @return `kOutOfMemory` if growth allocation fails.
+    /// @note Aborts when growth is requested for non-default-constructible `T`.
     score::ResultBlank Resize(const size_type new_size) noexcept
     {
         if (new_size > size_)
@@ -610,8 +612,8 @@ class Vector
         return score::ResultBlank{};
     }
 
-    /// @brief Like std::vector::resize(count, value). New elements are copy-constructed from @p value.
-    /// @return kOutOfMemory if allocation for growth fails.
+    /// @brief Equivalent to `std::vector::resize(count, value)`.
+    /// @return `kOutOfMemory` if growth allocation fails.
     score::ResultBlank Resize(const size_type new_size, const value_type& value) noexcept
     {
         if (new_size > size_)
@@ -660,8 +662,9 @@ class Vector
         }
     }
 
-    /// @brief Like std::vector::shrink_to_fit(), but guaranteed to shrink (not a non-binding request).
-    /// @return kOutOfMemory if reallocation fails.
+    /// @brief Equivalent to `std::vector::shrink_to_fit()`.
+    /// @return `kOutOfMemory` if reallocation fails.
+    /// @note Unlike standard API, this is a guaranteed shrink when possible.
     score::ResultBlank ShrinkToFit() noexcept
     {
         if (fixed_capacity_ || (size_ == capacity_))
@@ -705,14 +708,14 @@ class Vector
         }
     }
 
-    /// @brief Inserts @p value before the element at @p index. May grow capacity.
-    /// @return kOutOfRange if index > size(); kOutOfMemory if allocation fails.
+    /// @brief Equivalent to inserting before position index.
+    /// @return `kOutOfMemory` on growth failure.
+    /// @note Aborts if index > size().
     score::ResultBlank Insert(const size_type index, const value_type& value) noexcept
     {
         if (index > size_)
         {
-            return score::ResultBlank{score::unexpect,
-                                      MakeError(ContainerErrorCode::kOutOfRange, "Vector insert index out of range")};
+            std::abort();
         }
 
         if (size_ == capacity_)
@@ -735,14 +738,14 @@ class Vector
         return score::ResultBlank{};
     }
 
-    /// @brief Move overload of Insert().
-    /// @return kOutOfRange if index > size(); kOutOfMemory if allocation fails.
+    /// @brief Move overload of `Insert`.
+    /// @return `kOutOfMemory` on growth failure.
+    /// @note Aborts if index > size().
     score::ResultBlank Insert(const size_type index, value_type&& value) noexcept
     {
         if (index > size_)
         {
-            return score::ResultBlank{score::unexpect,
-                                      MakeError(ContainerErrorCode::kOutOfRange, "Vector insert index out of range")};
+            std::abort();
         }
 
         if (size_ == capacity_)
@@ -784,7 +787,8 @@ class Vector
         }
     }
 
-    /// @brief Removes the element at @p index and shifts successors left. Aborts if index >= size().
+    /// @brief Equivalent to erase-at-index helper.
+    /// @note Aborts if index >= size().
     void erase(const size_type index) noexcept
     {
         if (index >= size_)
@@ -817,8 +821,8 @@ class Vector
         swap(fixed_capacity_, other.fixed_capacity_);
     }
 
-    /// @brief Deep-copies all elements into a new vector with the same capacity.
-    /// @return kOutOfMemory if allocation fails.
+    /// @brief Deep-copy helper (standard copy constructor equivalent).
+    /// @return `kOutOfMemory` if allocation fails.
     score::Result<Vector> Clone() const noexcept
     {
         score::Result<Vector> created = CreateWithCapacity(capacity_, allocator_);

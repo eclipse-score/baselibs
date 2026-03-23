@@ -20,12 +20,20 @@
 namespace score::nothrow
 {
 
+/// @brief Error codes used by score::nothrow container APIs.
+///
+/// These codes replace exception-based failure reporting used by many standard
+/// container operations (for example `std::bad_alloc` / `std::out_of_range`).
 enum class ContainerErrorCode : score::result::ErrorCode
 {
+    /// Allocation failed (including capacity overflow checks).
     kOutOfMemory = 1,
+
+    /// An index/range argument was outside the valid bounds.
     kOutOfRange,
 };
 
+/// @brief Error domain for `ContainerErrorCode`.
 class ContainerErrorDomain final : public score::result::ErrorDomain
 {
   public:
@@ -43,6 +51,9 @@ class ContainerErrorDomain final : public score::result::ErrorDomain
     }
 };
 
+/// @brief Creates a `score::result::Error` in the container error domain.
+/// @param code Container-specific error code.
+/// @param user_message Optional additional context.
 score::result::Error MakeError(const ContainerErrorCode code, const std::string_view user_message = "") noexcept;
 
 }  // namespace score::nothrow

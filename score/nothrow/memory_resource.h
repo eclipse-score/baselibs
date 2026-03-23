@@ -22,13 +22,10 @@
 namespace score::nothrow
 {
 
-/// @brief Polymorphic memory resource interface for nothrow allocation.
+/// @brief Nothrow counterpart to `std::pmr::memory_resource`.
 ///
-/// Follows the std::pmr::memory_resource model with one critical deviation:
-/// all operations are noexcept and allocation failure is signaled by returning
-/// nullptr. This is the contract expected by score::nothrow containers, which
-/// propagate allocation failures as score::Result errors rather than throwing
-/// std::bad_alloc.
+/// Deviation: `allocate()` returns `nullptr` on failure (including zero-sized
+/// requests) instead of throwing `std::bad_alloc`. All operations are `noexcept`.
 class MemoryResource
 {
   public:
@@ -39,27 +36,32 @@ class MemoryResource
     virtual bool is_equal(const MemoryResource& other) const noexcept = 0;
 };
 
-/// @brief Returns a process-local new/delete backed memory resource.
+/// @brief Returns the process-local `new`/`delete` backed resource.
+///
+/// Deviation from standard PMR contract: allocation failure is reported by
+/// `nullptr` rather than exception.
 MemoryResource* GetNewDeleteResource() noexcept;
 
-/// @brief Returns a memory resource that always fails allocation (returns nullptr).
+/// @brief Returns a resource whose `allocate()` always returns `nullptr`.
 MemoryResource* GetNullMemoryResource() noexcept;
 
-/// @brief Returns the current default memory resource.
+/// @brief Returns the current default resource.
 ///
-/// Initially returns GetNewDeleteResource(). Can be changed via SetDefaultResource().
+/// Like `std::pmr::get_default_resource()`. Initially this is
+/// `GetNewDeleteResource()`.
 MemoryResource* GetDefaultResource() noexcept;
 
-/// @brief Sets the default memory resource.
-/// @param resource The new default. If nullptr, resets to GetNewDeleteResource().
-/// @return The previous default resource.
+/// @brief Sets the default resource.
+///
+/// Like `std::pmr::set_default_resource()`. Passing `nullptr` resets to
+/// `GetNewDeleteResource()`.
+/// @return Previous default resource.
 MemoryResource* SetDefaultResource(MemoryResource* resource) noexcept;
 
-/// @brief A polymorphic allocator in the style of std::pmr::polymorphic_allocator.
+/// @brief Nothrow counterpart to `std::pmr::polymorphic_allocator`.
 ///
-/// All operations are noexcept. allocate() returns nullptr on failure instead
-/// of throwing std::bad_alloc. score::nothrow containers depend on this contract
-/// to translate allocation failures into score::Result errors.
+/// Deviation: `allocate()` returns `nullptr` on failure instead of throwing
+/// `std::bad_alloc`. `allocate(0)` also returns `nullptr`.
 template <typename T = std::uint8_t>
 class PolymorphicAllocator
 {

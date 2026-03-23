@@ -18,6 +18,10 @@
 namespace score::nothrow
 {
 
+/// @brief Stores a pointer as offset from the `OffsetBox` object address.
+///
+/// Deviation from raw pointers: persisted representation is relative, which is
+/// suitable for relocatable/shared-memory layouts in one process.
 template <typename T>
 class OffsetBox
 {
@@ -62,6 +66,7 @@ template <typename T>
 class NullableOffsetBox
 {
   public:
+    /// @brief Like `OffsetBox`, but preserves a `nullptr` state explicitly.
     NullableOffsetBox(T const* const pointer) noexcept
         : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}, is_nullptr_{pointer == nullptr}
     {
@@ -114,6 +119,7 @@ template <typename T>
 class RawBox
 {
   public:
+    /// @brief Minimal wrapper that stores a raw pointer unchanged.
     RawBox(T const* const pointer) noexcept : pointer_{pointer} {}
 
     RawBox(const RawBox& other) noexcept = default;
@@ -130,18 +136,22 @@ class RawBox
 
 struct OffsetBoxPolicy
 {
+    /// Offset-encoded non-null pointer storage.
     template <typename T>
     using Ptr = OffsetBox<T>;
 
+    /// Offset-encoded nullable pointer storage.
     template <typename T>
     using NullablePtr = NullableOffsetBox<T>;
 };
 
 struct RawBoxPolicy
 {
+    /// Raw pointer storage for non-null pointers.
     template <typename T>
     using Ptr = RawBox<T>;
 
+    /// Raw pointer storage for nullable pointers.
     template <typename T>
     using NullablePtr = RawBox<T>;
 };

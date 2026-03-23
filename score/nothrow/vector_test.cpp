@@ -168,6 +168,12 @@ TEST(Vector, InsertAddsElementAtPosition)
     EXPECT_EQ(vector.at(2U), 3);
 }
 
+TEST(VectorDeathTest, InsertAbortsOnOutOfRangeIndex)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+    EXPECT_DEATH(vector.Insert(1U, 42), "");
+}
+
 TEST(Vector, BeginEndProvideContiguousIteration)
 {
     Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(3U);

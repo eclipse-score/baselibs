@@ -35,13 +35,17 @@
 namespace score::nothrow
 {
 
-/// @brief Shared-memory-safe counterpart to std::map.
+/// @brief Nothrow counterpart to `std::map`.
 ///
-/// Follows std::map semantics with these deviations:
+/// Deviations from `std::map`:
 /// - All member functions are noexcept.
-/// - Bounds-checking member at() aborts on precondition violation instead of throwing.
-/// - Members that may allocate (Create from ranges/lists, Insert, Emplace, GetOrInsertDefault, Clone)
-///   return score::Result with kOutOfMemory on failure. Each has an OrAbort convenience variant.
+/// - `at()` aborts on missing key (`std::map::at()` throws).
+/// - Iterator/precondition misuse that is UB in standard containers is trapped
+///   with `std::abort()` (for example invalid dereference/increment/decrement and
+///   invalid `erase(pos)`).
+/// - APIs that may allocate (`Create` from ranges/lists, `Insert`, `Emplace`,
+///   `GetOrInsertDefault`, `Clone`) return `score::Result*` with
+///   `ContainerErrorCode::kOutOfMemory`; `*OrAbort` variants abort instead.
 /// - Not copyable. Use Clone() for explicit deep copies.
 /// - Tree links are injected via PointerPolicy::NullablePtr (default: score::nothrow::NullableOffsetBox).
 ///
@@ -75,6 +79,8 @@ class Map
         friend class const_iterator;
 
       public:
+        /// @brief Bidirectional iterator corresponding to `std::map::iterator`.
+        /// @note Invalid operations abort (standard behavior is undefined).
         using iterator_category = std::bidirectional_iterator_tag;
         using value_type = Map::value_type;
         using difference_type = Map::difference_type;
@@ -173,6 +179,8 @@ class Map
         friend class Map;
 
       public:
+        /// @brief Bidirectional iterator corresponding to `std::map::const_iterator`.
+        /// @note Invalid operations abort (standard behavior is undefined).
         using iterator_category = std::bidirectional_iterator_tag;
         using value_type = const Map::value_type;
         using difference_type = Map::difference_type;
@@ -278,7 +286,8 @@ class Map
         return Map{std::move(allocator), std::move(compare)};
     }
 
-    /// @brief Creates a map from iterator range [first, last).
+    /// @brief Equivalent to `std::map(first, last)`.
+    /// @return `kOutOfMemory` if node allocation fails.
     template <typename InputIt>
     static score::Result<Map> Create(InputIt first,
                                      InputIt last,
@@ -299,7 +308,8 @@ class Map
         return map;
     }
 
-    /// @brief Creates a map from an initializer list.
+    /// @brief Equivalent to `std::map(initializer_list)`.
+    /// @return `kOutOfMemory` if node allocation fails.
     static score::Result<Map> Create(std::initializer_list<value_type> init,
                                      key_compare compare = key_compare{},
                                      allocator_type allocator = allocator_type{}) noexcept
@@ -524,7 +534,8 @@ class Map
         return {lower_bound(key), upper_bound(key)};
     }
 
-    /// @brief Like std::map::at(). Aborts if key does not exist.
+    /// @brief Equivalent to `std::map::at()`.
+    /// @note Aborts if key does not exist; `std::map::at()` throws.
     mapped_type& at(const key_type& key) noexcept
     {
         Node* const node = FindNode(root_.get(), key);
@@ -535,7 +546,8 @@ class Map
         return node->value.second;
     }
 
-    /// @brief Like std::map::at(). Aborts if key does not exist.
+    /// @brief Equivalent to `std::map::at()`.
+    /// @note Aborts if key does not exist; `std::map::at()` throws.
     const mapped_type& at(const key_type& key) const noexcept
     {
         const Node* const node = FindNode(root_.get(), key);
@@ -546,8 +558,8 @@ class Map
         return node->value.second;
     }
 
-    /// @brief Inserts @p value if key is not present.
-    /// @return Pair of iterator and insertion flag. Returns kOutOfMemory on allocation failure.
+    /// @brief Equivalent to `std::map::insert(value)`.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     score::Result<std::pair<iterator, bool>> Insert(const value_type& value) noexcept
     {
         return InsertImpl(value);
@@ -559,13 +571,15 @@ class Map
         return InsertImpl(std::move(value));
     }
 
-    /// @brief Hint-aware Insert(). Falls back to regular lookup if hint is not usable.
+    /// @brief Equivalent to `std::map::insert(hint, value)` with explicit status.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     score::Result<std::pair<iterator, bool>> Insert(const_iterator hint, const value_type& value) noexcept
     {
         return InsertImpl(value, &hint);
     }
 
-    /// @brief Hint-aware move Insert(). Falls back to regular lookup if hint is not usable.
+    /// @brief Move overload of hint-aware `Insert`.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     score::Result<std::pair<iterator, bool>> Insert(const_iterator hint, value_type&& value) noexcept
     {
         return InsertImpl(std::move(value), &hint);
@@ -615,7 +629,8 @@ class Map
         return std::move(inserted).value();
     }
 
-    /// @brief Constructs a value_type in-place in the node. Returns kOutOfMemory on allocation failure.
+    /// @brief Equivalent to `std::map::emplace(key, mapped)` with explicit status.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     ///
     /// Unlike Insert, the value is constructed directly in node storage without
     /// intermediate copies or moves. If the key already exists, the pre-constructed
@@ -640,7 +655,8 @@ class Map
         return EmplaceKeyValueImpl(std::move(key), std::move(value));
     }
 
-    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    /// @brief Equivalent to `std::map::emplace_hint(hint, key, mapped)` with explicit status.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
                                                      const key_type& key,
                                                      const mapped_type& value) noexcept
@@ -648,7 +664,7 @@ class Map
         return EmplaceKeyValueImpl(key, value, &hint);
     }
 
-    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    /// @brief Move mapped-value overload of hint-aware `Emplace`.
     score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
                                                      const key_type& key,
                                                      mapped_type&& value) noexcept
@@ -656,7 +672,7 @@ class Map
         return EmplaceKeyValueImpl(key, std::move(value), &hint);
     }
 
-    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    /// @brief Move key overload of hint-aware `Emplace`.
     score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
                                                      key_type&& key,
                                                      const mapped_type& value) noexcept
@@ -664,7 +680,7 @@ class Map
         return EmplaceKeyValueImpl(std::move(key), value, &hint);
     }
 
-    /// @brief Hint-aware key/value emplace. Falls back to regular lookup if hint is not usable.
+    /// @brief Move key/value overload of hint-aware `Emplace`.
     score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint,
                                                      key_type&& key,
                                                      mapped_type&& value) noexcept
@@ -678,7 +694,8 @@ class Map
         return EmplaceConstructedNodeImpl(nullptr, std::forward<Args>(args)...);
     }
 
-    /// @brief Hint-aware in-place construction. Falls back to regular lookup if hint is not usable.
+    /// @brief Equivalent to variadic `std::map::emplace_hint()` with explicit status.
+    /// @return `{iterator, inserted}`; `kOutOfMemory` on allocation failure.
     template <typename... Args>
     score::Result<std::pair<iterator, bool>> Emplace(const_iterator hint, Args&&... args) noexcept
     {
@@ -702,7 +719,8 @@ class Map
     /// Returns a reference to the mapped value for @p key. If key is absent, inserts
     /// a new element with default-constructed mapped value.
     ///
-    /// @return kOutOfMemory if insertion allocation fails.
+    /// @return `kOutOfMemory` if insertion allocation fails.
+    /// @note Aborts if insertion is needed and `mapped_type` is not default-constructible.
     score::Result<std::reference_wrapper<mapped_type>> GetOrInsertDefault(const key_type& key) noexcept
     {
         Node* existing = FindNode(root_.get(), key);
@@ -751,7 +769,8 @@ class Map
         return 1U;
     }
 
-    /// @brief Like std::map::erase(pos). Aborts if pos is invalid.
+    /// @brief Equivalent to `std::map::erase(pos)`.
+    /// @note Aborts if `pos` is invalid for this map.
     /// @return Iterator to the element following the erased element.
     iterator erase(const_iterator pos) noexcept
     {
@@ -765,7 +784,8 @@ class Map
         return iterator{next, this};
     }
 
-    /// @brief Like std::map::erase(first, last). Erases elements in [first, last).
+    /// @brief Equivalent to `std::map::erase(first, last)`.
+    /// @note Aborts if iterator inputs are invalid for this map.
     /// @return Iterator to the element following the last erased element.
     iterator erase(const_iterator first, const_iterator last) noexcept
     {
@@ -853,8 +873,8 @@ class Map
         return !(lhs == rhs);
     }
 
-    /// @brief Deep-copies all elements while preserving key ordering.
-    /// @return kOutOfMemory if node allocation fails.
+    /// @brief Deep-copy helper (standard copy constructor equivalent).
+    /// @return `kOutOfMemory` if node allocation fails.
     score::Result<Map> Clone() const noexcept
     {
         score::Result<Map> created = Create(compare_, allocator_);
