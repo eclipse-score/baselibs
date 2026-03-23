@@ -26,6 +26,7 @@ cc_library(
         "@score_baselibs//score/memory/shared:__pkg__",
         "@score_baselibs//score/memory/shared/test/sct:__pkg__",
         "@score_baselibs//score/os/utils/test:__pkg__",
+        "@score_communication//score/memory/shared:__pkg__",
     ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
