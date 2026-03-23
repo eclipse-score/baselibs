@@ -96,11 +96,24 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "bazel_test_core_dump_suppression",
+    srcs = ["bazel_test_core_dump_suppression.cpp"],
+    hdrs = ["test_core_dump_suppression.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    testonly = True,
+    visibility = [
+        "//visibility:private",
+    ],
+)
+
 cc_gtest_unit_test(
     name = "memory_resource_test",
     srcs = ["memory_resource_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
+        ":bazel_test_core_dump_suppression",
         ":memory_resource",
     ],
 )
@@ -110,6 +123,7 @@ cc_gtest_unit_test(
     srcs = ["monotonic_buffer_resource_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
+        ":bazel_test_core_dump_suppression",
         ":memory_resource",
         ":monotonic_buffer_resource",
     ],
@@ -120,6 +134,7 @@ cc_gtest_unit_test(
     srcs = ["vector_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
+        ":bazel_test_core_dump_suppression",
         ":container_error",
         ":memory_resource",
         ":vector",
@@ -131,6 +146,7 @@ cc_gtest_unit_test(
     srcs = ["map_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
+        ":bazel_test_core_dump_suppression",
         ":container_error",
         ":map",
         ":memory_resource",
