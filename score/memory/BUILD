@@ -24,10 +24,12 @@ cc_library(
     name = "endianness",
     srcs = ["endianness.cpp"],
     hdrs = ["endianness.h"],
-    deprecation = "Moved to @score_communication//score/memory:endianness. Please update your dependency.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//platform/aas/lib/serialization:__subpackages__",
+        "//platform/aas/pas/sysmon/library:__subpackages__",
+    ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
@@ -35,7 +37,6 @@ cc_library(
     name = "data_type_size_info",
     srcs = ["data_type_size_info.cpp"],
     hdrs = ["data_type_size_info.h"],
-    deprecation = "Moved to @score_communication//score/memory:data_type_size_info. Please update your dependency.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["//visibility:public"],
@@ -45,12 +46,17 @@ cc_library(
 
 cc_library(
     name = "pmr_ring_buffer",
-    hdrs = ["pmr_ring_buffer.h"],
-    deprecation = "Moved to @score_communication//score/memory:pmr_ring_buffer. Please update your dependency.",
+    hdrs = [
+        "pmr_ring_buffer.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
-    deps = ["@score_baselibs//score/language/futurecpp"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
+    ],
 )
 
 
