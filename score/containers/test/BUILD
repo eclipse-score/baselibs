@@ -28,7 +28,7 @@ cc_library(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:offset_ptr",
+        "@score_communication//score/memory/shared:offset_ptr",
     ],
 )
 
@@ -45,8 +45,8 @@ cc_library(
         ":container_test_types",
         "@googletest//:gtest",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:managed_memory_resource",
-        "@score_baselibs//score/memory/shared:polymorphic_offset_ptr_allocator",
+        "@score_communication//score/memory/shared:managed_memory_resource",
+        "@score_communication//score/memory/shared:polymorphic_offset_ptr_allocator",
     ],
 )
 

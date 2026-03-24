@@ -143,7 +143,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":data_type_size_info_test",
     ],
     test_suites_from_sub_packages = [
-        "@score_baselibs//score/memory/shared:unit_test_suite",
+        "@score_communication//score/memory/shared:unit_test_suite",
     ],
     visibility = [
         "//visibility:public",

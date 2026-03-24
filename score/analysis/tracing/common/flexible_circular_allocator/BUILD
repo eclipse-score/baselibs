@@ -80,8 +80,8 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/analysis/tracing/common/interface_types:generic_trace_api_types",
-        "@score_baselibs//score/memory/shared:managed_memory_resource",
-        "@score_baselibs//score/memory/shared:offset_ptr",
+        "@score_communication//score/memory/shared:managed_memory_resource",
+        "@score_communication//score/memory/shared:offset_ptr",
     ],
 )
 
