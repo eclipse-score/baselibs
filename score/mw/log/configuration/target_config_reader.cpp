@@ -14,7 +14,7 @@
 
 #include "score/callback.hpp"
 #include "score/json/json_parser.h"
-#include "score/memory/split_string_view.h"
+#include "score/string/split_string_view.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/initialization_reporter.h"
 
@@ -209,7 +209,7 @@ score::Result<LogMode> LogModeFromString(const std::string_view str) noexcept
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<std::unordered_set<LogMode>> LogModesFromString(const std::string_view str) noexcept
 {
-    const auto segments = score::memory::LazySplitStringView{str, kLogModeCombineChar};
+    const auto segments = score::string::LazySplitStringView{str, kLogModeCombineChar};
 
     std::unordered_set<LogMode> result;
 

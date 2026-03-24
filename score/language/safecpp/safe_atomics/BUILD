@@ -25,7 +25,7 @@ cc_library(
     deps = [
         ":error",
         "@score_baselibs//score/language/safecpp/safe_math/details/addition_subtraction",
-        "@score_baselibs//score/memory/shared:atomic_indirector",
+        "@score_baselibs//score/concurrency/atomic:atomic_indirector",
         "@score_baselibs//score/result",
     ],
 )
@@ -47,7 +47,7 @@ cc_gtest_unit_test(
     deps = [
         ":try_atomic_add",
         "@score_baselibs//score/language/safecpp/safe_math/details:test_type_collection",
-        "@score_baselibs//score/memory/shared:atomic_indirector_mock_binding",
+        "@score_baselibs//score/concurrency/atomic:atomic_indirector_mock_binding",
     ],
 )
 

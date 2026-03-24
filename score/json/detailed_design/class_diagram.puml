@@ -46,7 +46,7 @@ class score::result::ErrorDomain
 score::result::ErrorDomain <|-- score::json::ErrorDomain
 
 
-class score::memory::StringComparisonAdaptor
+class score::string::StringComparisonAdaptor
 
 
 interface score::json::IJsonWriter {
@@ -195,7 +195,7 @@ score::json::List --> score::json::Any : use
 
 
 class score::json::Object <<typedef>>
-score::json::Object --> score::memory::StringComparisonAdaptor : use
+score::json::Object --> score::string::StringComparisonAdaptor : use
 score::json::Object --> score::json::Any : use
 
 

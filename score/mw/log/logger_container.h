@@ -39,7 +39,7 @@ class LoggerContainer final
     Logger& InsertNewLogger(const std::string_view context) noexcept;
 
     score::cpp::optional<std::reference_wrapper<Logger>> FindExistingLogger(const std::string_view context) noexcept;
-    detail::WaitFreeStack<Logger, memory::shared::AtomicIndirectorReal> stack_;
+    detail::WaitFreeStack<Logger, concurrency::atomic::AtomicIndirectorReal> stack_;
     Logger default_logger_;
 };
 

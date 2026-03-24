@@ -92,7 +92,7 @@ cc_library(
         ":configuration_interface",
         "@score_baselibs//score/json",
         "@score_baselibs//score/language/safecpp/string_view:zstring_view",
-        "@score_baselibs//score/memory:split_string_view",
+        "@score_baselibs//score/string:split_string_view",
         "@score_baselibs//score/mw/log/detail:initialization_reporter",
         "@score_baselibs//score/mw/log/detail:types_and_errors",
         "@score_baselibs//score/os:stdlib",

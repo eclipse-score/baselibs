@@ -15,7 +15,7 @@
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
 #include "score/analysis/tracing/common/interface_types/shared_memory_chunk.h"
 #include "score/analysis/tracing/generic_trace_library/interface_types/error_code/error_code.h"
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
 #include <cstdint>
 #include <list>
 #include <type_traits>
@@ -37,7 +37,7 @@ namespace shared
  *
  * @tparam T The type of the elements stored in the list.
  */
-template <typename T, template <class> class AtomicIndirectorType = memory::shared::AtomicIndirectorReal>
+template <typename T, template <class> class AtomicIndirectorType = concurrency::atomic::AtomicIndirectorReal>
 class alignas(std::max_align_t) List
 {
   private:

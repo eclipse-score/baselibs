@@ -14,12 +14,15 @@
 #define SCORE_ANALYSIS_TRACING_COMMON_TYPES
 
 #include "score/language/safecpp/scoped_function/move_only_scoped_function.h"
-#include "score/memory/shared/shared_memory_resource.h"
+#include "score/memory/shared/i_shared_memory_resource.h"
+#include "score/memory/shared/managed_memory_resource.h"
 #include "score/result/result.h"
 #include <array>
 #include <cstdint>
 #include <memory>
 #include <string_view>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 namespace score
 {

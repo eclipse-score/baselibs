@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/mw/log/detail/wait_free_stack/wait_free_stack.h"
-#include "score/memory/shared/atomic_mock.h"
+#include "score/concurrency/atomic/atomic_mock.h"
 
 #include <gtest/gtest.h>
 
@@ -42,13 +42,13 @@ TEST(WaitFreeStack, AtomicOperationFetchAddForWriteIndex)
 
     using AtomicType = std::size_t;
 
-    std::unique_ptr<score::memory::shared::AtomicMock<AtomicType>> atomic_mock{
-        std::make_unique<score::memory::shared::AtomicMock<AtomicType>>()};
+    std::unique_ptr<score::concurrency::atomic::AtomicMock<AtomicType>> atomic_mock{
+        std::make_unique<score::concurrency::atomic::AtomicMock<AtomicType>>()};
 
-    score::memory::shared::AtomicIndirectorMock<AtomicType>::SetMockObject(atomic_mock.get());
+    score::concurrency::atomic::AtomicIndirectorMock<AtomicType>::SetMockObject(atomic_mock.get());
 
     constexpr auto kStackSize = 1UL;
-    WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorMock> stack{kStackSize};
+    WaitFreeStack<std::string, score::concurrency::atomic::AtomicIndirectorMock> stack{kStackSize};
 
     EXPECT_CALL(*atomic_mock, fetch_add(_, _)).WillOnce(Return(1));
     EXPECT_CALL(*atomic_mock, load(_)).Times(0);
@@ -64,9 +64,9 @@ TEST(WaitFreeStack, AtomicShallBeLockFree)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     ASSERT_TRUE(
-        (WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorReal>::AtomicIndex{}.is_always_lock_free));
+        (WaitFreeStack<std::string, score::concurrency::atomic::AtomicIndirectorReal>::AtomicIndex{}.is_always_lock_free));
     ASSERT_TRUE(
-        (WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorReal>::AtomicBool{}.is_always_lock_free));
+        (WaitFreeStack<std::string, score::concurrency::atomic::AtomicIndirectorReal>::AtomicBool{}.is_always_lock_free));
 }
 
 TEST(WaitFreeStack, ConcurrentPushingAndReadingShouldReturnExpectedElements)
@@ -80,7 +80,7 @@ TEST(WaitFreeStack, ConcurrentPushingAndReadingShouldReturnExpectedElements)
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     constexpr auto kStackSize = 10UL;
-    WaitFreeStack<std::string, score::memory::shared::AtomicIndirectorReal> stack{kStackSize};
+    WaitFreeStack<std::string, score::concurrency::atomic::AtomicIndirectorReal> stack{kStackSize};
 
     // Start writer threads
     constexpr auto kNumberOfPushThreads = 32UL;
