@@ -241,7 +241,7 @@ GetPointerWithBoundsCheck → CalculatePointerFromOffset → AddOffsetToPointer
    The optimizer can no longer determine which allocation the pointer belongs to, defeating
    alias analysis, load/store forwarding, register promotion, and auto-vectorization.
 
-3. **Copy recalculates offsets.** Copying an OffsetBox doesn't just copy the offset — it
+3. **Copy recalculates offsets.** Copying an OffsetPtr doesn't just copy the offset — it
    reconstructs the target pointer from the source, then recomputes a new offset relative to
    the destination's address. This prevents the compiler from treating copies as simple
    register moves.
