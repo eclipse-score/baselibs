@@ -1,4 +1,4 @@
-# OffsetBox Benchmark
+# OffsetBox vs OffsetPtr Benchmark
 
 ## Overview
 
