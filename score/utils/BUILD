@@ -29,6 +29,18 @@ cc_library(
 )
 
 cc_library(
+    name = "movable_scoped_operation",
+    srcs = ["movable_scoped_operation.cpp"],
+    hdrs = ["movable_scoped_operation.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [":scoped_operation"],
+)
+
+cc_library(
     name = "base64",
     srcs = ["base64.cpp"],
     hdrs = ["base64.h"],
@@ -70,11 +82,21 @@ cc_gtest_unit_test(
     ],
 )
 
+cc_gtest_unit_test(
+    name = "movable_scoped_operation_test",
+    srcs = ["movable_scoped_operation_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":movable_scoped_operation",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":base64_unit_test",
         ":scoped_operation_test",
+        ":movable_scoped_operation_test",
     ],
     visibility = [
         "//visibility:public",
