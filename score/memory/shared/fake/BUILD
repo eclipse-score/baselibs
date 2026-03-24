@@ -19,3 +19,10 @@ alias(
     deprecation = "Moved to @score_communication//score/memory/shared/fake:fake_memory_resources. Please update your dependency.",
     visibility = ["//visibility:public"],
 )
+
+alias(
+    name = "my_bounded_shared_memory_resource",
+    actual = "@score_communication//score/memory/shared/fake:my_bounded_shared_memory_resource",
+    deprecation = "Moved to @score_communication//score/memory/shared/fake:my_bounded_shared_memory_resource. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)

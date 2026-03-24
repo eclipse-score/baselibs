@@ -135,6 +135,83 @@ alias(
 )
 
 alias(
+    name = "lock_file",
+    actual = "@score_communication//score/memory/shared:lock_file",
+    deprecation = "Moved to @score_communication//score/memory/shared:lock_file. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_resource",
+    actual = "@score_communication//score/memory/shared:shared_memory_resource",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_resource. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "i_shared_memory_factory",
+    actual = "@score_communication//score/memory/shared:i_shared_memory_factory",
+    deprecation = "Moved to @score_communication//score/memory/shared:i_shared_memory_factory. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_factory",
+    actual = "@score_communication//score/memory/shared:shared_memory_factory",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_factory. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_factory_impl",
+    actual = "@score_communication//score/memory/shared:shared_memory_factory_impl",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_factory_impl. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_factory_mock",
+    actual = "@score_communication//score/memory/shared:shared_memory_factory_mock",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_factory_mock. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared",
+    actual = "@score_communication//score/memory/shared:shared",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "new_delete_delegate_resource",
+    actual = "@score_communication//score/memory/shared:new_delete_delegate_resource",
+    deprecation = "Moved to @score_communication//score/memory/shared:new_delete_delegate_resource. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_resource_heap_allocator_mock",
+    actual = "@score_communication//score/memory/shared:shared_memory_resource_heap_allocator_mock",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_resource_heap_allocator_mock. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_resource_mock",
+    actual = "@score_communication//score/memory/shared:shared_memory_resource_mock",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_resource_mock. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "shared_memory_test_resources",
+    actual = "@score_communication//score/memory/shared:shared_memory_test_resources",
+    deprecation = "Moved to @score_communication//score/memory/shared:shared_memory_test_resources. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
     name = "atomic_interface",
     actual = "@score_baselibs//score/concurrency/atomic:atomic_interface",
     deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_interface. Please update your dependency.",
