@@ -313,7 +313,7 @@ The `score::nothrow` design cleanly separates two concerns:
 These two concerns never cross: OffsetBox never does array arithmetic, and Vector never does
 offset-based pointer reconstruction.
 
-#### `score::memory::shared::OffsetBox` — conflates both concerns
+#### `score::memory::shared::OffsetPtr` — conflates both concerns
 
 The existing design uses OffsetBox as a full **fancy pointer** (`allocator_traits::pointer`).
 This means `std::vector` delegates *all* pointer operations to OffsetBox, including:
