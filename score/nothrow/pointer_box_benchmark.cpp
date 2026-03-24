@@ -485,46 +485,6 @@ void BM_StdVector_RandomAccess(benchmark::State& state)
     }
 }
 
-/// OffsetPtr without bounds checking.
-/// Uses the same managed resource as the bounds-checked variant but disables checks globally.
-void BM_MemorySharedVector_NoBoundsCheck_RandomAccess(benchmark::State& state)
-{
-    score::memory::shared::test::MyBoundedMemoryResource resource{kBoundedResourceSize};
-    auto data = MakeMemorySharedNestedVector(resource);
-    const auto& pattern = GetAccessPattern();
-    const ScopedOffsetPtrBoundsChecking bounds_checking{false};
-
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const auto& [i, j] : pattern.indices())
-        {
-            sum += data[i][j];
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
-/// OffsetPtr with bounds checking.
-/// Uses the same managed resource as the no-bounds variant with checks enabled globally.
-/// Measures combined overhead of offset arithmetic + bounds validation.
-void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
-{
-    score::memory::shared::test::MyBoundedMemoryResource resource{kBoundedResourceSize};
-    auto data = MakeMemorySharedNestedVector(resource);
-    const auto& pattern = GetAccessPattern();
-    const ScopedOffsetPtrBoundsChecking bounds_checking{true};
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const auto& [i, j] : pattern.indices())
-        {
-            sum += data[i][j];
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
 /// score::nothrow::Vector with direct-pointer policy.
 void BM_RawBoxVector_RandomAccess(benchmark::State& state)
 {
@@ -579,6 +539,45 @@ void BM_BoostInterprocessVector_RandomAccess(benchmark::State& state)
 }
 #endif  // __linux__
 
+/// OffsetPtr without bounds checking.
+/// Uses the same managed resource as the bounds-checked variant but disables checks globally.
+void BM_MemorySharedVector_NoBoundsCheck_RandomAccess(benchmark::State& state)
+{
+    score::memory::shared::test::MyBoundedMemoryResource resource{kBoundedResourceSize};
+    auto data = MakeMemorySharedNestedVector(resource);
+    const auto& pattern = GetAccessPattern();
+    const ScopedOffsetPtrBoundsChecking bounds_checking{false};
+
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [i, j] : pattern.indices())
+        {
+            sum += data[i][j];
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+/// OffsetPtr with bounds checking.
+/// Uses the same managed resource as the no-bounds variant with checks enabled globally.
+/// Measures combined overhead of offset arithmetic + bounds validation.
+void BM_MemorySharedVector_BoundsChecked_RandomAccess(benchmark::State& state)
+{
+    score::memory::shared::test::MyBoundedMemoryResource resource{kBoundedResourceSize};
+    auto data = MakeMemorySharedNestedVector(resource);
+    const auto& pattern = GetAccessPattern();
+    const ScopedOffsetPtrBoundsChecking bounds_checking{true};
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [i, j] : pattern.indices())
+        {
+            sum += data[i][j];
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
 // --- Map benchmarks ---
 
 /// Baseline: std::map random-order build.
@@ -595,6 +594,57 @@ void BM_StdMap_RandomBuild(benchmark::State& state)
         benchmark::DoNotOptimize(data.size());
     }
 }
+
+/// score::nothrow::Map random-order build with direct-pointer policy.
+void BM_RawBoxMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        auto data = RawBoxMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+/// score::nothrow::Map random-order build with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        auto data = OffsetBoxMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+#if defined(__linux__)
+/// boost::interprocess::map random-order build.
+/// Heap setup/teardown is excluded from timing to match other map build benchmarks.
+void BM_BoostInterprocessMap_RandomBuild(benchmark::State& state)
+{
+    const auto& entries = GetMapPattern().entries();
+    for (auto _ : state)
+    {
+        state.PauseTiming();
+        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+        BoostInterprocessMap data{heap_memory.get_segment_manager()};
+        state.ResumeTiming();
+        for (const auto& [key, value] : entries)
+        {
+            data.emplace(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+#endif  // __linux__
 
 /// score::memory::shared::Map random-order build without bounds checking.
 /// Map object is allocated inside the managed region to keep map-internal sentinels in-region.
@@ -641,58 +691,6 @@ void BM_MemorySharedMap_BoundsChecked_RandomBuild(benchmark::State& state)
         state.ResumeTiming();
     }
 }
-
-#if defined(__linux__)
-/// boost::interprocess::map random-order build.
-/// Heap setup/teardown is excluded from timing to match other map build benchmarks.
-void BM_BoostInterprocessMap_RandomBuild(benchmark::State& state)
-{
-    const auto& entries = GetMapPattern().entries();
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-        BoostInterprocessMap data{heap_memory.get_segment_manager()};
-        state.ResumeTiming();
-        for (const auto& [key, value] : entries)
-        {
-            data.emplace(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-#endif  // __linux__
-
-/// score::nothrow::Map random-order build with direct-pointer policy.
-void BM_RawBoxMap_RandomBuild(benchmark::State& state)
-{
-    const auto& entries = GetMapPattern().entries();
-    for (auto _ : state)
-    {
-        auto data = RawBoxMap::CreateOrAbort();
-        for (const auto& [key, value] : entries)
-        {
-            data.EmplaceOrAbort(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
-/// score::nothrow::Map random-order build with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_RandomBuild(benchmark::State& state)
-{
-    const auto& entries = GetMapPattern().entries();
-    for (auto _ : state)
-    {
-        auto data = OffsetBoxMap::CreateOrAbort();
-        for (const auto& [key, value] : entries)
-        {
-            data.EmplaceOrAbort(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
 /// Baseline: std::map randomized key lookup.
 void BM_StdMap_RandomAccess(benchmark::State& state)
 {
@@ -709,6 +707,60 @@ void BM_StdMap_RandomAccess(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
+
+/// score::nothrow::Map randomized key lookup with direct-pointer policy.
+void BM_RawBoxMap_RandomAccess(benchmark::State& state)
+{
+    const auto data = MakeRawBoxMap();
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+/// score::nothrow::Map randomized key lookup with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_RandomAccess(benchmark::State& state)
+{
+    const auto data = MakeOffsetBoxMap();
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+#if defined(__linux__)
+/// boost::interprocess::map randomized key lookup.
+void BM_BoostInterprocessMap_RandomAccess(benchmark::State& state)
+{
+    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+    const auto data = MakeBoostInterprocessMap(heap_memory);
+    const auto& lookup_keys = GetMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+#endif  // __linux__
 
 /// score::memory::shared::Map randomized key lookup without bounds checking.
 /// Map object is allocated inside the managed region to keep map-internal sentinels in-region.
@@ -751,61 +803,6 @@ void BM_MemorySharedMap_BoundsChecked_RandomAccess(benchmark::State& state)
     }
     resource.destruct(*data);
 }
-
-#if defined(__linux__)
-/// boost::interprocess::map randomized key lookup.
-void BM_BoostInterprocessMap_RandomAccess(benchmark::State& state)
-{
-    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-    const auto data = MakeBoostInterprocessMap(heap_memory);
-    const auto& lookup_keys = GetMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-#endif  // __linux__
-
-/// score::nothrow::Map randomized key lookup with direct-pointer policy.
-void BM_RawBoxMap_RandomAccess(benchmark::State& state)
-{
-    const auto data = MakeRawBoxMap();
-    const auto& lookup_keys = GetMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
-/// score::nothrow::Map randomized key lookup with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_RandomAccess(benchmark::State& state)
-{
-    const auto data = MakeOffsetBoxMap();
-    const auto& lookup_keys = GetMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
 /// Baseline: std::map begin->end iteration.
 void BM_StdMap_Iterate(benchmark::State& state)
 {
@@ -821,6 +818,57 @@ void BM_StdMap_Iterate(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
+
+/// score::nothrow::Map begin->end iteration with direct-pointer policy.
+void BM_RawBoxMap_Iterate(benchmark::State& state)
+{
+    const auto data = MakeRawBoxMap();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+/// score::nothrow::Map begin->end iteration with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_Iterate(benchmark::State& state)
+{
+    const auto data = MakeOffsetBoxMap();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+#if defined(__linux__)
+/// boost::interprocess::map begin->end iteration.
+void BM_BoostInterprocessMap_Iterate(benchmark::State& state)
+{
+    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+    const auto data = MakeBoostInterprocessMap(heap_memory);
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const auto& [key, value] : data)
+        {
+            benchmark::DoNotOptimize(&key);
+            sum += value;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+#endif  // __linux__
 
 /// score::memory::shared::Map begin->end iteration without bounds checking.
 /// Map object is allocated inside the managed region to keep map-internal sentinels in-region.
@@ -861,58 +909,6 @@ void BM_MemorySharedMap_BoundsChecked_Iterate(benchmark::State& state)
     }
     resource.destruct(*data);
 }
-
-#if defined(__linux__)
-/// boost::interprocess::map begin->end iteration.
-void BM_BoostInterprocessMap_Iterate(benchmark::State& state)
-{
-    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-    const auto data = MakeBoostInterprocessMap(heap_memory);
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const auto& [key, value] : data)
-        {
-            benchmark::DoNotOptimize(&key);
-            sum += value;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-#endif  // __linux__
-
-/// score::nothrow::Map begin->end iteration with direct-pointer policy.
-void BM_RawBoxMap_Iterate(benchmark::State& state)
-{
-    const auto data = MakeRawBoxMap();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const auto& [key, value] : data)
-        {
-            benchmark::DoNotOptimize(&key);
-            sum += value;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
-/// score::nothrow::Map begin->end iteration with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Iterate(benchmark::State& state)
-{
-    const auto data = MakeOffsetBoxMap();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const auto& [key, value] : data)
-        {
-            benchmark::DoNotOptimize(&key);
-            sum += value;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
 // --- Focused map-internals microbenchmarks ---
 
 /// Focused insert/rebalance path: ascending inserts force balancing work.
@@ -929,6 +925,57 @@ void BM_StdMap_Internal_InsertRebalance(benchmark::State& state)
         benchmark::DoNotOptimize(data.size());
     }
 }
+
+/// Focused insert/rebalance path for score::nothrow::Map with direct-pointer policy.
+void BM_RawBoxMap_Internal_InsertRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().sorted_entries();
+    for (auto _ : state)
+    {
+        auto data = RawBoxMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+/// Focused insert/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_Internal_InsertRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().sorted_entries();
+    for (auto _ : state)
+    {
+        auto data = OffsetBoxMap::CreateOrAbort();
+        for (const auto& [key, value] : entries)
+        {
+            data.EmplaceOrAbort(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+#if defined(__linux__)
+/// Focused insert/rebalance path for boost::interprocess::map with ascending inserts.
+/// Heap setup excluded from timing to match RandomBuild pattern.
+void BM_BoostInterprocessMap_Internal_InsertRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().sorted_entries();
+    for (auto _ : state)
+    {
+        state.PauseTiming();
+        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+        BoostInterprocessMap data{heap_memory.get_segment_manager()};
+        state.ResumeTiming();
+        for (const auto& [key, value] : entries)
+        {
+            data.emplace(key, value);
+        }
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+#endif  // __linux__
 
 /// Focused insert/rebalance path for score::memory::shared::Map without bounds checking.
 /// Resource setup/teardown excluded from timing to match RandomBuild pattern.
@@ -975,58 +1022,6 @@ void BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance(benchmark::State&
         state.ResumeTiming();
     }
 }
-
-#if defined(__linux__)
-/// Focused insert/rebalance path for boost::interprocess::map with ascending inserts.
-/// Heap setup excluded from timing to match RandomBuild pattern.
-void BM_BoostInterprocessMap_Internal_InsertRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().sorted_entries();
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-        BoostInterprocessMap data{heap_memory.get_segment_manager()};
-        state.ResumeTiming();
-        for (const auto& [key, value] : entries)
-        {
-            data.emplace(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-#endif  // __linux__
-
-/// Focused insert/rebalance path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_InsertRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().sorted_entries();
-    for (auto _ : state)
-    {
-        auto data = RawBoxMap::CreateOrAbort();
-        for (const auto& [key, value] : entries)
-        {
-            data.EmplaceOrAbort(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
-/// Focused insert/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_InsertRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().sorted_entries();
-    for (auto _ : state)
-    {
-        auto data = OffsetBoxMap::CreateOrAbort();
-        for (const auto& [key, value] : entries)
-        {
-            data.EmplaceOrAbort(key, value);
-        }
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
 /// Focused find path using pre-built tree and randomized successful lookups.
 void BM_StdMap_Internal_Find(benchmark::State& state)
 {
@@ -1043,6 +1038,60 @@ void BM_StdMap_Internal_Find(benchmark::State& state)
         benchmark::DoNotOptimize(sum);
     }
 }
+
+/// Focused find path for score::nothrow::Map with direct-pointer policy.
+void BM_RawBoxMap_Internal_Find(benchmark::State& state)
+{
+    const auto data = MakeRawBoxMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+/// Focused find path for score::nothrow::Map with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_Internal_Find(benchmark::State& state)
+{
+    const auto data = MakeOffsetBoxMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+
+#if defined(__linux__)
+/// Focused find path for boost::interprocess::map with randomized successful lookups.
+void BM_BoostInterprocessMap_Internal_Find(benchmark::State& state)
+{
+    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+    const auto data = MakeBoostInterprocessMapFromEntries(heap_memory, GetFocusedMapPattern().random_entries());
+    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
+    for (auto _ : state)
+    {
+        std::int64_t sum = 0;
+        for (const int key : lookup_keys)
+        {
+            const auto it = data.find(key);
+            sum += it->second;
+        }
+        benchmark::DoNotOptimize(sum);
+    }
+}
+#endif  // __linux__
 
 /// Focused find path for score::memory::shared::Map without bounds checking.
 void BM_MemorySharedMap_NoBoundsCheck_Internal_Find(benchmark::State& state)
@@ -1083,61 +1132,6 @@ void BM_MemorySharedMap_BoundsChecked_Internal_Find(benchmark::State& state)
     }
     resource.destruct(*data);
 }
-
-#if defined(__linux__)
-/// Focused find path for boost::interprocess::map with randomized successful lookups.
-void BM_BoostInterprocessMap_Internal_Find(benchmark::State& state)
-{
-    boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-    const auto data = MakeBoostInterprocessMapFromEntries(heap_memory, GetFocusedMapPattern().random_entries());
-    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-#endif  // __linux__
-
-/// Focused find path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_Find(benchmark::State& state)
-{
-    const auto data = MakeRawBoxMapFromEntries(GetFocusedMapPattern().random_entries());
-    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
-/// Focused find path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_Find(benchmark::State& state)
-{
-    const auto data = MakeOffsetBoxMapFromEntries(GetFocusedMapPattern().random_entries());
-    const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
-    for (auto _ : state)
-    {
-        std::int64_t sum = 0;
-        for (const int key : lookup_keys)
-        {
-            const auto it = data.find(key);
-            sum += it->second;
-        }
-        benchmark::DoNotOptimize(sum);
-    }
-}
-
 /// Focused erase/rebalance path using randomized erase order.
 void BM_StdMap_Internal_EraseRebalance(benchmark::State& state)
 {
@@ -1155,6 +1149,66 @@ void BM_StdMap_Internal_EraseRebalance(benchmark::State& state)
         benchmark::DoNotOptimize(data.size());
     }
 }
+
+/// Focused erase/rebalance path for score::nothrow::Map with direct-pointer policy.
+void BM_RawBoxMap_Internal_EraseRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().random_entries();
+    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
+    for (auto _ : state)
+    {
+        auto data = MakeRawBoxMapFromEntries(entries);
+        std::size_t erased = 0U;
+        for (const int key : erase_keys)
+        {
+            erased += data.erase(key);
+        }
+        benchmark::DoNotOptimize(erased);
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+/// Focused erase/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
+void BM_OffsetBoxMap_Internal_EraseRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().random_entries();
+    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
+    for (auto _ : state)
+    {
+        auto data = MakeOffsetBoxMapFromEntries(entries);
+        std::size_t erased = 0U;
+        for (const int key : erase_keys)
+        {
+            erased += data.erase(key);
+        }
+        benchmark::DoNotOptimize(erased);
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+
+#if defined(__linux__)
+/// Focused erase/rebalance path for boost::interprocess::map with randomized erase order.
+/// Heap setup excluded from timing; map build remains timed to match std/nothrow.
+void BM_BoostInterprocessMap_Internal_EraseRebalance(benchmark::State& state)
+{
+    const auto& entries = GetFocusedMapPattern().random_entries();
+    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
+    for (auto _ : state)
+    {
+        state.PauseTiming();
+        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
+        state.ResumeTiming();
+        auto data = MakeBoostInterprocessMapFromEntries(heap_memory, entries);
+        std::size_t erased = 0U;
+        for (const int key : erase_keys)
+        {
+            erased += data.erase(key);
+        }
+        benchmark::DoNotOptimize(erased);
+        benchmark::DoNotOptimize(data.size());
+    }
+}
+#endif  // __linux__
 
 /// Focused erase/rebalance path for score::memory::shared::Map without bounds checking.
 /// Resource setup/teardown excluded from timing; map build remains timed to match std/nothrow.
@@ -1207,129 +1261,67 @@ void BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance(benchmark::State& 
         state.ResumeTiming();
     }
 }
-
-#if defined(__linux__)
-/// Focused erase/rebalance path for boost::interprocess::map with randomized erase order.
-/// Heap setup excluded from timing; map build remains timed to match std/nothrow.
-void BM_BoostInterprocessMap_Internal_EraseRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().random_entries();
-    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
-    for (auto _ : state)
-    {
-        state.PauseTiming();
-        boost::interprocess::managed_heap_memory heap_memory{kBoostMapHeapSize};
-        state.ResumeTiming();
-        auto data = MakeBoostInterprocessMapFromEntries(heap_memory, entries);
-        std::size_t erased = 0U;
-        for (const int key : erase_keys)
-        {
-            erased += data.erase(key);
-        }
-        benchmark::DoNotOptimize(erased);
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-#endif  // __linux__
-
-/// Focused erase/rebalance path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_EraseRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().random_entries();
-    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
-    for (auto _ : state)
-    {
-        auto data = MakeRawBoxMapFromEntries(entries);
-        std::size_t erased = 0U;
-        for (const int key : erase_keys)
-        {
-            erased += data.erase(key);
-        }
-        benchmark::DoNotOptimize(erased);
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
-/// Focused erase/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_EraseRebalance(benchmark::State& state)
-{
-    const auto& entries = GetFocusedMapPattern().random_entries();
-    const auto& erase_keys = GetFocusedMapPattern().erase_keys();
-    for (auto _ : state)
-    {
-        auto data = MakeOffsetBoxMapFromEntries(entries);
-        std::size_t erased = 0U;
-        for (const int key : erase_keys)
-        {
-            erased += data.erase(key);
-        }
-        benchmark::DoNotOptimize(erased);
-        benchmark::DoNotOptimize(data.size());
-    }
-}
-
 // --- Benchmark registration (ordered output) ---
 BENCHMARK(BM_StdVector_RandomAccess);
-BENCHMARK(BM_MemorySharedVector_NoBoundsCheck_RandomAccess);
-BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 BENCHMARK(BM_RawBoxVector_RandomAccess);
 BENCHMARK(BM_OffsetBoxVector_RandomAccess);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessVector_RandomAccess);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedVector_NoBoundsCheck_RandomAccess);
+BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
 BENCHMARK(BM_StdMap_RandomBuild);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomBuild);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomBuild);
 BENCHMARK(BM_RawBoxMap_RandomBuild);
 BENCHMARK(BM_OffsetBoxMap_RandomBuild);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_RandomBuild);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomBuild);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomBuild);
 
 BENCHMARK(BM_StdMap_RandomAccess);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomAccess);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomAccess);
 BENCHMARK(BM_RawBoxMap_RandomAccess);
 BENCHMARK(BM_OffsetBoxMap_RandomAccess);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_RandomAccess);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomAccess);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomAccess);
 
 BENCHMARK(BM_StdMap_Iterate);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Iterate);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_Iterate);
 BENCHMARK(BM_RawBoxMap_Iterate);
 BENCHMARK(BM_OffsetBoxMap_Iterate);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Iterate);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Iterate);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_Iterate);
 
 BENCHMARK(BM_StdMap_Internal_InsertRebalance);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance);
 BENCHMARK(BM_RawBoxMap_Internal_InsertRebalance);
 BENCHMARK(BM_OffsetBoxMap_Internal_InsertRebalance);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_InsertRebalance);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance);
 
 BENCHMARK(BM_StdMap_Internal_Find);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_Find);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_Find);
 BENCHMARK(BM_RawBoxMap_Internal_Find);
 BENCHMARK(BM_OffsetBoxMap_Internal_Find);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_Find);
 #endif  // __linux__
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_Find);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_Find);
 
 BENCHMARK(BM_StdMap_Internal_EraseRebalance);
-BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance);
-BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance);
 BENCHMARK(BM_RawBoxMap_Internal_EraseRebalance);
 BENCHMARK(BM_OffsetBoxMap_Internal_EraseRebalance);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_EraseRebalance);
 #endif  // __linux__
-
+BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance);
+BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance);
 }  // namespace
