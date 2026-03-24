@@ -21,14 +21,6 @@ package(default_visibility = [
 ])
 
 cc_library(
-    name = "string_literal",
-    hdrs = ["string_literal.h"],
-    deprecation = "Use @score_baselibs//score/string:string_literal directly. This forwarding header will be removed.",
-    visibility = ["//visibility:public"],
-    deps = ["@score_baselibs//score/string:string_literal"],
-)
-
-cc_library(
     name = "endianness",
     srcs = ["endianness.cpp"],
     hdrs = ["endianness.h"],
@@ -42,14 +34,6 @@ cc_library(
 )
 
 cc_library(
-    name = "string_comparison_adaptor",
-    hdrs = ["string_comparison_adaptor.h"],
-    deprecation = "Use @score_baselibs//score/string:string_comparison_adaptor directly. This forwarding header will be removed.",
-    visibility = ["//visibility:public"],
-    deps = ["@score_baselibs//score/string:string_comparison_adaptor"],
-)
-
-cc_library(
     name = "data_type_size_info",
     srcs = ["data_type_size_info.cpp"],
     hdrs = ["data_type_size_info.h"],
@@ -59,14 +43,6 @@ cc_library(
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
-
-cc_library(
-    name = "split_string_view",
-    hdrs = ["split_string_view.h"],
-    deprecation = "Use @score_baselibs//score/string:split_string_view directly. This forwarding header will be removed.",
-    visibility = ["//visibility:public"],
-    deps = ["@score_baselibs//score/string:split_string_view"],
-)
 
 cc_library(
     name = "pmr_ring_buffer",
@@ -142,9 +118,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":pmr_ring_buffer_unit_test",
         ":data_type_size_info_test",
     ],
-    test_suites_from_sub_packages = [
-        "@score_communication//score/memory/shared:unit_test_suite",
-    ],
+    test_suites_from_sub_packages = [],
     visibility = [
         "//visibility:public",
     ],
