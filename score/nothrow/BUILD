@@ -176,10 +176,15 @@ cc_binary(
         ":vector",
         "@google_benchmark//:benchmark_main",
         "@score_baselibs//score/memory/shared:map",
-        "@score_baselibs//score/memory/shared:new_delete_delegate_resource",
         "@score_baselibs//score/memory/shared:offset_ptr",
         "@score_baselibs//score/memory/shared:vector",
         "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:console_only_backend",
-    ],
+    ] + select({
+        "@platforms//os:linux": [
+            "@boost.container",
+            "@boost.interprocess",
+        ],
+        "@platforms//os:qnx": [],
+    }),
 )

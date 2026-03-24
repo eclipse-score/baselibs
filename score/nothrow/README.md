@@ -108,3 +108,15 @@ reference back() noexcept;
 Default policy stores vector backing storage via `score::nothrow::OffsetBox`.
 Alternative policies can inject direct wrappers (for example `RawBoxPolicy`).
 No allocated memory is represented by `capacity == 0` rather than `nullptr`.
+
+### `score::nothrow::Map`
+
+Tree links (`left`, `right`, `parent`) are persisted through
+`PointerPolicy::NullablePtr` (default: `score::nothrow::NullableOffsetBox`).
+In this representation, `nullptr` is the explicit "no child" state used for
+leaf boundaries and empty-link traversal.
+
+The map is implemented as an AVL tree (height-balanced). This keeps lookup,
+insert, and erase operations in worst-case `O(log n)`, and favors fast access
+at the cost of potentially more rebalancing work on inserts compared to less
+strictly balanced tree variants.
