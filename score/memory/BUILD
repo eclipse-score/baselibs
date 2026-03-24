@@ -20,6 +20,27 @@ package(default_visibility = [
     "@score_baselibs//score/memory:__subpackages__",
 ])
 
+alias(
+    name = "string_literal",
+    actual = "@score_baselibs//score/string:string_literal",
+    deprecation = "Moved to @score_baselibs//score/string:string_literal. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "string_comparison_adaptor",
+    actual = "@score_baselibs//score/string:string_comparison_adaptor",
+    deprecation = "Moved to @score_baselibs//score/string:string_comparison_adaptor. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "split_string_view",
+    actual = "@score_baselibs//score/string:split_string_view",
+    deprecation = "Moved to @score_baselibs//score/string:split_string_view. Please update your dependency.",
+    visibility = ["//visibility:public"],
+)
+
 cc_library(
     name = "endianness",
     srcs = ["endianness.cpp"],

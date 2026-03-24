@@ -136,21 +136,21 @@ alias(
 
 alias(
     name = "atomic_interface",
-    actual = "@score_communication//score/memory/shared:atomic_interface",
-    deprecation = "Moved to @score_communication//score/memory/shared:atomic_interface. Please update your dependency.",
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_interface",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_interface. Please update your dependency.",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "atomic_indirector",
-    actual = "@score_communication//score/memory/shared:atomic_indirector",
-    deprecation = "Moved to @score_communication//score/memory/shared:atomic_indirector. Please update your dependency.",
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_indirector",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_indirector. Please update your dependency.",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "atomic_indirector_mock_binding",
-    actual = "@score_communication//score/memory/shared:atomic_indirector_mock_binding",
-    deprecation = "Moved to @score_communication//score/memory/shared:atomic_indirector_mock_binding. Please update your dependency.",
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_indirector_mock_binding",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_indirector_mock_binding. Please update your dependency.",
     visibility = ["//visibility:public"],
 )
