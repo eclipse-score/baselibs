@@ -315,8 +315,8 @@ offset-based pointer reconstruction.
 
 #### `score::memory::shared::OffsetPtr` — conflates both concerns
 
-The existing design uses OffsetBox as a full **fancy pointer** (`allocator_traits::pointer`).
-This means `std::vector` delegates *all* pointer operations to OffsetBox, including:
+The existing design uses OffsetPtr as a full **fancy pointer** (`allocator_traits::pointer`).
+This means `std::vector` delegates *all* pointer operations to OffsetPtr, including:
 
 - `operator+`, `operator-` (element advancement within arrays)
 - `operator[]` (array subscript)
