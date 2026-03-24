@@ -121,6 +121,9 @@ cc_library(
     hdrs = ["memory_region_bounds.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
     ],
