@@ -195,14 +195,14 @@ cheaper cache-line loads for small elements).
 - **This is a worst-case benchmark** — random access with double indirection through nested
   containers. Sequential access patterns would show lower overhead due to CPU prefetching.
 
-## Analysis: Root Cause of OffsetBox Overhead
+## Analysis: Root Cause of score::memory::shared::OffsetPtr Overhead
 
 The ~180× overhead is not inherent to the concept of relative pointers. It is caused by the
 implementation strategy chosen to avoid undefined behavior in pointer arithmetic.
 
 ### The problem
 
-`OffsetBox<T>` stores a byte offset from its own address to the target object. To reconstruct
+`OffsetPtr<T>` stores a byte offset from its own address to the target object. To reconstruct
 the target pointer, it must compute `this_address + offset`. However, direct pointer arithmetic
 (`ptr + n`) is only well-defined within an array or one past its end (C++ [expr.add]). The
 OffsetBox and its target are in different allocations, so direct pointer arithmetic would be UB.
