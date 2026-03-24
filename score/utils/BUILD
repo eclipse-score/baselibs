@@ -18,6 +18,7 @@ load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_e
 
 cc_library(
     name = "scoped_operation",
+    srcs = ["src/scoped_operation.cpp"],
     hdrs = ["src/scoped_operation.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
@@ -61,7 +62,7 @@ cc_test(
 
 cc_gtest_unit_test(
     name = "scoped_operation_test",
-    srcs = ["test/scoped_operation_test.cpp"],
+    srcs = ["scoped_operation_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
         ":scoped_operation",

@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef LIB_UTILS_SRC_SCOPED_OPERATION_H
-#define LIB_UTILS_SRC_SCOPED_OPERATION_H
+#ifndef SCORE_UTILS_SRC_SCOPED_OPERATION_H
+#define SCORE_UTILS_SRC_SCOPED_OPERATION_H
 
 #include <score/callback.hpp>
 
@@ -48,4 +48,4 @@ class ScopedOperation final
 
 }  // namespace score::utils
 
-#endif  // LIB_UTILS_SRC_SCOPED_OPERATION_H
+#endif  // SCORE_UTILS_SRC_SCOPED_OPERATION_H
