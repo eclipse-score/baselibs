@@ -167,3 +167,11 @@ bazel_dep(name = "bazel_skylib", version = "1.8.2")
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "score_bazel_platforms", version = "0.1.1")
+
+# Tool to generate compile_commands.json for C++ targets, used by clangd and other tools that support the compilation database format.
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+    commit = "4f28899228fb3ad0126897876f147ca15026151e"
+)
