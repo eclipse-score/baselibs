@@ -17,7 +17,7 @@
 #include "score/json/internal/model/error.h"
 #include "score/json/internal/model/null.h"
 #include "score/json/internal/model/number.h"
-#include "score/memory/string_comparison_adaptor.h"
+#include "score/string/string_comparison_adaptor.h"
 #include "score/result/result.h"
 
 #include <cstdint>
@@ -35,7 +35,7 @@ namespace json
 class Any;
 
 using List = std::vector<score::json::Any>;
-using Object = std::map<score::memory::StringComparisonAdaptor, score::json::Any>;
+using Object = std::map<score::string::StringComparisonAdaptor, score::json::Any>;
 /// \brief Represents a JSON value, where the current type is unknown
 ///
 /// \details JSON can represent different kinds of types:

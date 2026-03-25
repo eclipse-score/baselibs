@@ -16,7 +16,7 @@
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_interface.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator_types.h"
 #include "score/analysis/tracing/common/utilities/saturating_integral.hpp"
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
 #include "score/memory/shared/managed_memory_resource.h"
 #include <array>
 #include <atomic>
@@ -29,7 +29,7 @@ namespace analysis
 namespace tracing
 {
 
-template <template <class> class AtomicIndirectorType = score::memory::shared::AtomicIndirectorReal>
+template <template <class> class AtomicIndirectorType = score::concurrency::atomic::AtomicIndirectorReal>
 class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
 {
   public:

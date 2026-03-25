@@ -11,44 +11,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+# Forwarding target — moved to @score_communication.
 
-cc_library(
+alias(
     name = "fake_memory_resources",
-    testonly = True,
-    srcs = [
-        "my_bounded_memory_resource.cpp",
-        "my_memory_resource.cpp",
-    ],
-    hdrs = [
-        "my_bounded_memory_resource.h",
-        "my_memory_resource.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
+    actual = "@score_communication//score/memory/shared/fake:fake_memory_resources",
+    deprecation = "Moved to @score_communication//score/memory/shared/fake:fake_memory_resources. Please update your dependency.",
     visibility = ["//visibility:public"],
-    deps = [
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:shared_memory_resource",
-        "@score_baselibs//score/memory/shared:types",
-    ],
 )
 
-cc_library(
+alias(
     name = "my_bounded_shared_memory_resource",
-    testonly = True,
-    srcs = [
-        "my_bounded_shared_memory_resource.cpp",
-    ],
-    hdrs = [
-        "my_bounded_shared_memory_resource.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
+    actual = "@score_communication//score/memory/shared/fake:my_bounded_shared_memory_resource",
+    deprecation = "Moved to @score_communication//score/memory/shared/fake:my_bounded_shared_memory_resource. Please update your dependency.",
     visibility = ["//visibility:public"],
-    deps = [
-        ":fake_memory_resources",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:i_shared_memory_resource",
-        "@score_baselibs//score/memory/shared:types",
-    ],
 )

@@ -14,7 +14,7 @@
 #include "score/language/safecpp/safe_atomics/error.h"
 #include "score/language/safecpp/safe_math/details/test_type_collection.h"
 #include "score/language/safecpp/safe_math/error.h"
-#include "score/memory/shared/atomic_mock.h"
+#include "score/concurrency/atomic/atomic_mock.h"
 
 #include "gtest/gtest.h"
 #include "score/result/result.h"
@@ -37,16 +37,16 @@ class AtomicFetchAddTest : public ::testing::Test
   public:
     AtomicFetchAddTest& GivenAMockedAtomicIndirector()
     {
-        memory::shared::AtomicIndirectorMock<T>::SetMockObject(&atomic_mock_);
+        concurrency::atomic::AtomicIndirectorMock<T>::SetMockObject(&atomic_mock_);
         return *this;
     }
 
     void TearDown() override
     {
-        memory::shared::AtomicIndirectorMock<T>::SetMockObject(nullptr);
+        concurrency::atomic::AtomicIndirectorMock<T>::SetMockObject(nullptr);
     }
 
-    memory::shared::AtomicMock<T> atomic_mock_{};
+    concurrency::atomic::AtomicMock<T> atomic_mock_{};
 };
 
 TYPED_TEST_SUITE(AtomicFetchAddTest, safe_math::IntegerTypes, /*unused*/);
@@ -94,7 +94,7 @@ TYPED_TEST(AtomicFetchAddTest, WillReTryAtomicAddIfCompareExchangeFails)
     std::atomic<TypeParam> test_value{10U};
     const TypeParam addition_value{11};
     constexpr std::size_t max_retries{10};
-    const auto fetch_added_value_result = details::TryAtomicAddImpl<TypeParam, memory::shared::AtomicIndirectorMock>(
+    const auto fetch_added_value_result = details::TryAtomicAddImpl<TypeParam, concurrency::atomic::AtomicIndirectorMock>(
         test_value, addition_value, max_retries);
 
     // Then the value before fetch_adding should be returned
@@ -113,7 +113,7 @@ TYPED_TEST(AtomicFetchAddTest, WillReturnErrorIfCompareExchangeFailsNumRetriesTi
     // When trying to fetch_add a value which would not overflow if fetch_added
     std::atomic<TypeParam> test_value{10U};
     const TypeParam addition_value{11};
-    const auto fetch_added_value_result = details::TryAtomicAddImpl<TypeParam, memory::shared::AtomicIndirectorMock>(
+    const auto fetch_added_value_result = details::TryAtomicAddImpl<TypeParam, concurrency::atomic::AtomicIndirectorMock>(
         test_value, addition_value, num_retries);
 
     // Then an error should be returned

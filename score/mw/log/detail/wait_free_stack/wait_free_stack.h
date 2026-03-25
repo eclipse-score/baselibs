@@ -16,7 +16,7 @@
 #include "score/callback.hpp"
 #include "score/optional.hpp"
 #include "score/span.hpp"
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
 
 #include <atomic>
 #include <utility>
@@ -35,7 +35,7 @@ template <typename Element>
 using FindPredicate = score::cpp::callback<bool(const Element&)>;
 
 /// \brief Wait- and lock-free, push-only stack with fixed capacity.
-template <typename Element, template <class> class AtomicIndirectorType = memory::shared::AtomicIndirectorReal>
+template <typename Element, template <class> class AtomicIndirectorType = concurrency::atomic::AtomicIndirectorReal>
 class WaitFreeStack
 {
   public:

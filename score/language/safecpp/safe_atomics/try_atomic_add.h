@@ -16,7 +16,7 @@
 #include "score/language/safecpp/safe_atomics/error.h"
 
 #include "score/language/safecpp/safe_math/details/addition_subtraction/addition_subtraction.h"
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
 #include "score/result/result.h"
 
 #include <atomic>
@@ -36,7 +36,7 @@ namespace details
 /// \Return Previous value of atomic before addition if addition would not lead to integer overflow. Otherwise, returns
 /// an error.
 template <class T,
-          template <class> class AtomicIndirectorType = memory::shared::AtomicIndirectorReal,
+          template <class> class AtomicIndirectorType = concurrency::atomic::AtomicIndirectorReal,
           typename std::enable_if_t<std::is_integral<T>::value, bool> = true>
 score::Result<T> TryAtomicAddImpl(std::atomic<T>& atomic, const T addition_value, const std::size_t max_retries)
 {
