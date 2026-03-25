@@ -26,5 +26,6 @@ config_setting(
     visibility = [
         "@score_baselibs//score/memory/shared/typedshm/typedshm_wrapper:__subpackages__",
         "@score_baselibs//score/memory/shared/typedshm/utils:__subpackages__",
+        "@score_communication//score/mw/com/impl:__subpackages__",
     ],
 )
