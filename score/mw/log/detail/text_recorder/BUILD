@@ -73,7 +73,7 @@ cc_library(
     tags = ["FFI"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory:string_literal",
+        "@score_baselibs//score/string:string_literal",
         "@score_baselibs//score/mw/log:shared_types",
         "@score_baselibs//score/mw/log/detail:dlt_argument_counter",
         "@score_baselibs//score/mw/log/detail:integer_representation",

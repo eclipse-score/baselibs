@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/string_comparison_adaptor.h"
+#include "score/string/string_comparison_adaptor.h"
 
-#include "score/memory/string_literal.h"
+#include "score/string/string_literal.h"
 
 #include <score/assert.hpp>
 #include <score/string_view.hpp>
@@ -23,7 +23,7 @@
 #include <string_view>
 #include <type_traits>
 
-namespace score::memory
+namespace score::string
 {
 namespace
 {
@@ -297,4 +297,4 @@ TEST(StringComparisonAdaptorLessComparison, LessThan)
 }
 
 }  // namespace
-}  // namespace score::memory
+}  // namespace score::string

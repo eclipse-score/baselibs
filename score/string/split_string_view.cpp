@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/split_string_view.h"
+#include "score/string/split_string_view.h"
 
 #include "score/assert.hpp"
 
@@ -37,7 +37,7 @@ std::string_view::size_type FindNextSeperator(std::string_view view,
 
 }  // namespace
 
-namespace score::memory
+namespace score::string
 {
 
 LazySplitStringView::LazySplitStringView(const std::string_view source,
@@ -112,4 +112,4 @@ bool operator!=(const LazySplitStringView::Iterator& lhs, const LazySplitStringV
     return !(lhs == rhs);
 }
 
-}  // namespace score::memory
+}  // namespace score::string

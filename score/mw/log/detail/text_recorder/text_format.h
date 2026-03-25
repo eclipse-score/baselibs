@@ -16,7 +16,7 @@
 #include "score/mw/log/detail/integer_representation.h"
 #include "score/mw/log/log_types.h"
 
-#include "score/memory/string_literal.h"
+#include "score/string/string_literal.h"
 
 #include "score/span.hpp"
 
