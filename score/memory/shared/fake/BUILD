@@ -16,6 +16,7 @@ load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER
 
 cc_library(
     name = "fake_memory_resources",
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:fake_memory_resources.",
     testonly = True,
     srcs = [
         "my_bounded_memory_resource.cpp",
@@ -29,13 +30,14 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:shared_memory_resource",
+        "@score_baselibs//score/memory/shared:allocation_algorithm",
         "@score_baselibs//score/memory/shared:types",
     ],
 )
 
 cc_library(
     name = "my_bounded_shared_memory_resource",
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:my_bounded_shared_memory_resource.",
     testonly = True,
     srcs = [
         "my_bounded_shared_memory_resource.cpp",
