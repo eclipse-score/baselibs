@@ -15,7 +15,7 @@
 #include "score/analysis/tracing/common/flexible_circular_allocator/error_codes/factory/error_code.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/flexible_circular_allocator_factory_interface.h"
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator.h"
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
 #include "score/memory/shared/managed_memory_resource.h"
 
 namespace score
@@ -47,7 +47,7 @@ class LocklessFlexibleCircularAllocatorFactory final : public IFlexibleCircularA
             return score::MakeUnexpected(FlexibleAllocatorFactoryErrorCode::kSizeIsZero);
         }
 
-        return std::make_shared<LocklessFlexibleCircularAllocator<score::memory::shared::AtomicIndirectorReal>>(
+        return std::make_shared<LocklessFlexibleCircularAllocator<score::concurrency::atomic::AtomicIndirectorReal>>(
             base_address, size);
     }
 };

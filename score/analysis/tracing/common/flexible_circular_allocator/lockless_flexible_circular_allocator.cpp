@@ -922,8 +922,8 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IncrementAvailable
     std::ignore = available_size_.fetch_add(delta, std::memory_order_seq_cst);
 }
 
-template class LocklessFlexibleCircularAllocator<score::memory::shared::AtomicIndirectorReal>;
-template class LocklessFlexibleCircularAllocator<score::memory::shared::AtomicIndirectorMock>;
+template class LocklessFlexibleCircularAllocator<score::concurrency::atomic::AtomicIndirectorReal>;
+template class LocklessFlexibleCircularAllocator<score::concurrency::atomic::AtomicIndirectorMock>;
 
 }  // namespace tracing
 }  // namespace analysis
