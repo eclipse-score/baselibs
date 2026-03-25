@@ -13,8 +13,8 @@
 #ifndef SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_SERVICE_INSTANCE_ELEMENT_H
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_SERVICE_INSTANCE_ELEMENT_H
 
-#include <score/utility.hpp>
-#include <score/variant.hpp>
+#include <cstdint>
+#include <variant>
 
 namespace score
 {
@@ -31,10 +31,37 @@ class ServiceInstanceElement
   public:
     using ServiceIdType = std::uint32_t;   ///< Type used to store Service Id
     using InstanceIdType = std::uint32_t;  ///< Type used to store Instance Id
-    using EventIdType = std::uint32_t;     ///< Type used to store Event Id
-    using FieldIdType = std::uint32_t;     ///< Type used to store Field Id
-    using MethodIdType = std::uint32_t;    ///< Type used to store Method Id
-    using VariantType = score::cpp::variant<EventIdType, FieldIdType, MethodIdType>;
+
+    /// @brief Type used to store Event Id (distinct struct for type-safe variant)
+    struct EventIdType
+    {
+        std::uint32_t value;
+        bool operator==(const EventIdType& rhs) const
+        {
+            return value == rhs.value;
+        }
+    };
+    /// @brief Type used to store Field Id (distinct struct for type-safe variant)
+    struct FieldIdType
+    {
+        std::uint32_t value;
+        bool operator==(const FieldIdType& rhs) const
+        {
+            return value == rhs.value;
+        }
+    };
+    /// @brief Type used to store Method Id (distinct struct for type-safe variant)
+    struct MethodIdType
+    {
+        std::uint32_t value;
+        bool operator==(const MethodIdType& rhs) const
+        {
+            return value == rhs.value;
+        }
+    };
+
+    using VariantType = std::variant<EventIdType, FieldIdType, MethodIdType>;
+
     // No harm to declare the members as public
     //  coverity[autosar_cpp14_m11_0_1_violation]
     ServiceIdType service_id;
@@ -53,11 +80,13 @@ class ServiceInstanceElement
 
     // No harm from defining the == operator as member function
     // coverity[autosar_cpp14_a13_5_5_violation]
-    bool operator==(const ServiceInstanceElement& other) const
+    bool operator==(const ServiceInstanceElement& rhs) const
     {
-        return ((((service_id == other.service_id) && (major_version == other.major_version)) &&
-                 ((minor_version == other.minor_version) && (instance_id == other.instance_id))) &&
-                (element_id == other.element_id));
+        // No harm as there are already parenthesis around the logical operators
+        // coverity[autosar_cpp14_a5_2_6_violation]
+        return ((((service_id == rhs.service_id) && (major_version == rhs.major_version)) &&
+                 ((minor_version == rhs.minor_version) && (instance_id == rhs.instance_id))) &&
+                (element_id == rhs.element_id));
     }
 };
 

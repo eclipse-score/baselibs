@@ -20,7 +20,7 @@ namespace tracing
 {
 AraComProperties::AraComProperties(const TracePointType trace_point_type,
                                    const ServiceInstanceElement service_instance_element,
-                                   score::cpp::optional<TracePointDataId> opt_trace_point_data_id)
+                                   std::optional<TracePointDataId> opt_trace_point_data_id)
     : trace_point_id{trace_point_type, service_instance_element}, trace_point_data_id{opt_trace_point_data_id}
 {
 }

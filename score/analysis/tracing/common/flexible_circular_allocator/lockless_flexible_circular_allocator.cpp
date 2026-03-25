@@ -12,7 +12,6 @@
  ********************************************************************************/
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator.h"
 
-#include <score/utility.hpp>
 #include <memory>
 namespace score
 {

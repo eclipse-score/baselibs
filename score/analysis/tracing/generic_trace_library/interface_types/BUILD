@@ -26,7 +26,6 @@ cc_library(
         ":meta_info",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -43,7 +42,6 @@ cc_library(
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
         "@score_baselibs//score/concurrency",
-        "@score_baselibs//score/language/futurecpp",
     ],
 )
 
@@ -68,7 +66,6 @@ cc_library(
     ],
     deps = [
         ":type_definitions",
-        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/memory:string_literal",
     ],
 )
