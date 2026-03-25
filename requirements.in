@@ -1,0 +1,3 @@
+# Direct dependencies for QNX unit testing
+pyfatfs
+fs
