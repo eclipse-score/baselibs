@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ * Copyright (c) 2025 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -10,19 +10,4 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_UTILS_BASE64_H
-#define SCORE_UTILS_BASE64_H
-
-#include <cstdint>
-#include <string>
-#include <vector>
-
-namespace score::utils
-{
-
-std::string EncodeBase64(const std::vector<std::uint8_t>& buffer);
-std::vector<std::uint8_t> DecodeBase64(const std::string& encoded_string);
-
-}  // namespace score::utils
-
-#endif  // SCORE_UTILS_BASE64_H
+#include "score/utils/src/scoped_operation.h"

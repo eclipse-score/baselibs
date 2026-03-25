@@ -10,42 +10,36 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_UTILS_SRC_SCOPED_OPERATION_H
-#define SCORE_UTILS_SRC_SCOPED_OPERATION_H
+#ifndef SCORE_UTILS_MOVABLE_SCOPED_OPERATION_H
+#define SCORE_UTILS_MOVABLE_SCOPED_OPERATION_H
+
+#include "score/utils/src/scoped_operation.h"
 
 #include <score/callback.hpp>
 
+#include <memory>
 #include <type_traits>
 
 namespace score::utils
 {
 
-/// @brief A simple wrapper to call a Callable on scope exit (like std::experimental::scope_exit)
-///
-/// @tparam Capacity The capacity to use by callback in storage
-/// @tparam Alignment The alignment of callback in storage
+/// @brief A movable wrapper around ScopedFunction. Ensures that the callback is only called on destruction of a
+/// MovableScopedOperation once by transferring ownership of the callable when moving the MovableScopedOperation.
 template <typename CallbackType = score::cpp::callback<void()>>
-class ScopedOperation final
+class MovableScopedOperation final
 {
     static_assert(std::is_invocable_v<CallbackType>);
 
   public:
-    explicit ScopedOperation(CallbackType fn) : fn_{std::move(fn)} {}
-
-    ~ScopedOperation()
+    explicit MovableScopedOperation(CallbackType fn)
+        : scoped_operation_{std::make_unique<ScopedOperation<CallbackType>>(std::move(fn))}
     {
-        fn_();
     }
 
-    ScopedOperation(const ScopedOperation&) = delete;
-    ScopedOperation(ScopedOperation&&) = delete;
-    ScopedOperation& operator=(const ScopedOperation&) = delete;
-    ScopedOperation& operator=(ScopedOperation&&) = delete;
-
   private:
-    CallbackType fn_;
+    std::unique_ptr<ScopedOperation<CallbackType>> scoped_operation_;
 };
 
 }  // namespace score::utils
 
-#endif  // SCORE_UTILS_SRC_SCOPED_OPERATION_H
+#endif  // SCORE_UTILS_MOVABLE_SCOPED_OPERATION_H

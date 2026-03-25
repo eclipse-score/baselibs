@@ -18,6 +18,7 @@ load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_e
 
 cc_library(
     name = "scoped_operation",
+    srcs = ["src/scoped_operation.cpp"],
     hdrs = ["src/scoped_operation.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
@@ -25,6 +26,18 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = ["@score_baselibs//score/language/futurecpp"],
+)
+
+cc_library(
+    name = "movable_scoped_operation",
+    srcs = ["movable_scoped_operation.cpp"],
+    hdrs = ["movable_scoped_operation.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [":scoped_operation"],
 )
 
 cc_library(
@@ -61,11 +74,20 @@ cc_test(
 
 cc_gtest_unit_test(
     name = "scoped_operation_test",
-    srcs = ["test/scoped_operation_test.cpp"],
+    srcs = ["scoped_operation_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
     deps = [
         ":scoped_operation",
         "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "movable_scoped_operation_test",
+    srcs = ["movable_scoped_operation_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":movable_scoped_operation",
     ],
 )
 
@@ -74,6 +96,7 @@ cc_unit_test_suites_for_host_and_qnx(
     cc_unit_tests = [
         ":base64_unit_test",
         ":scoped_operation_test",
+        ":movable_scoped_operation_test",
     ],
     visibility = [
         "//visibility:public",
