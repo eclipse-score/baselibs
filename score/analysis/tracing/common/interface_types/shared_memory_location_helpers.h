@@ -62,7 +62,7 @@ auto GetPointerFromLocation(SharedMemoryLocation memory_location, ResourcePointe
     // coverity[autosar_cpp14_m5_0_17_violation]
     // coverity[autosar_cpp14_a5_2_4_violation]
     // coverity[autosar_cpp14_m5_2_8_violation]
-    return reinterpret_cast<T*>(static_cast<std::uint8_t*>(resource_ptr->getBaseAddress()) + memory_location.offset_);// NOLINT(cppcoreguidelines-pro-type-reinterpret-cast, cppcoreguidelines-pro-bounds-pointer-arithmetic): Tolerated see above
+    return reinterpret_cast<T*>(const_cast<std::uint8_t*>(static_cast<const std::uint8_t*>(resource_ptr->getBaseAddress())) + memory_location.offset_); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast, cppcoreguidelines-pro-bounds-pointer-arithmetic): Tolerated see above
     // clang-format on
 }
 
@@ -84,7 +84,7 @@ score::Result<std::size_t> GetOffsetFromPointer(T* pointer, ResourcePointer memo
     // coverity[autosar_cpp14_a5_2_4_violation]
     // coverity[autosar_cpp14_m5_2_8_violation]
     // coverity[autosar_cpp14_m5_0_9_violation]
-    return static_cast<std::size_t>(reinterpret_cast<std::uint8_t*>(pointer) - static_cast<std::uint8_t*>(memory_resource->getBaseAddress()));// NOLINT(cppcoreguidelines-pro-type-reinterpret-cast): Tolerated
+    return static_cast<std::size_t>(reinterpret_cast<const std::uint8_t*>(pointer) - static_cast<const std::uint8_t*>(memory_resource->getBaseAddress())); // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast): Tolerated
     // clang-format on
 }
 
