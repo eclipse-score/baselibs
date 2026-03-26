@@ -35,3 +35,18 @@ serialize_buffer(
     output = "demo_config.bin",
     schema = "demo.fbs",
 )
+
+# Demo test: loads demo_config.bin at runtime, verifies and reads the config
+# using the flatbufferutils and flatbuffercpp libraries.
+cc_test(
+    name = "demo_app",
+    srcs = [
+        "demo_app_test.cpp",
+        ":demo_component_config",
+    ],
+    data = [":demo_config_bin"],
+    deps = [
+        "//third_party/flatbuffers:flatbufferscpp",
+        "@googletest//:gtest_main",
+    ],
+)
