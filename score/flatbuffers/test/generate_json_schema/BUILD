@@ -34,15 +34,15 @@ generate_json_schema(
 
 build_test(
     name = "gen_json_schema_test",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
     targets = [
         ":gen_json_schema_custom_name",
         ":gen_json_schema_default_name",
         ":gen_json_schema_in_subdir",
     ],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:linux",
-    ],  # build_test doesn't work under QEMU
 )
 
 # ===================================================
