@@ -39,6 +39,10 @@ build_test(
         ":gen_cpp_custom_name",
         ":gen_cpp_in_subdir",
     ],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
 )
 
 # ===================================================
