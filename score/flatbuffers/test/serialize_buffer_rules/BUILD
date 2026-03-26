@@ -47,16 +47,16 @@ serialize_multiple_buffers(
 
 build_test(
     name = "serialize_buffer_test",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
     targets = [
         ":gen_multiple_data_bin",
         ":serialize_buffer_custom_name",
         ":serialize_buffer_default_name",
         ":serialize_buffer_output_in_subdir",
     ],
-    target_compatible_with = [
-        "@platforms//cpu:x86_64",
-        "@platforms//os:linux",
-    ],  # build_test doesn't work under QEMU
 )
 
 # ===================================================
