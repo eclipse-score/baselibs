@@ -1,0 +1,59 @@
+/// Demo FlatBuffer schema for a component
+namespace my_component.demo;
+
+/// Generic enum for component run modes
+enum OperationMode:uint8 {
+    EVENT_DRIVEN = 0,
+    POLLING = 1,
+    PERIODIC = 2,
+}
+
+/// Union for flexible data types
+union DataPayloadUnion {
+    StringData,
+    BinaryData
+}
+
+table MyComponentConfig {
+    /// Component identification
+    component_name:string (required);
+    component_id:uint32; // Implicit default is 0
+
+    thread_pool_size:uint8 = 4; // Explicit default value
+    max_memory_mb:uint16 = 64;
+
+    /// Nested table
+    advanced_settings:AdvancedSettings (required);
+}
+
+table AdvancedSettings {
+    /// Enum example: operational mode (defaults to first enum value: EVENT_DRIVEN)
+    mode:OperationMode;
+    
+    /// Vector examples
+    allowed_priorities:[uint8]; // Vector of primitives
+    feature_flags:[FeatureFlag]; // Vector of tables
+    
+    /// Union example: flexible data payload
+    data:DataPayloadUnion;
+}
+
+/// Table used in vector
+table FeatureFlag {
+    name:string (required);
+    enabled:bool = false;
+}
+
+table StringData {
+    value:string;
+}
+
+table BinaryData {
+    value:[uint8];
+}
+
+// Root configuration object
+root_type MyComponentConfig;
+
+// Component specific file identifier
+file_identifier "DEMO";

@@ -1,0 +1,53 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("//score/flatbuffers/bazel:tools.bzl", "generate_json_schema")
+
+generate_json_schema(
+    name = "gen_json_schema_default_name",
+    output = "test.schema.json",
+    schema = "//score/flatbuffers/test/testdata:test.fbs",
+)
+
+generate_json_schema(
+    name = "gen_json_schema_custom_name",
+    output = "test_my_custom_name.schema.json",
+    schema = "//score/flatbuffers/test/testdata:test.fbs",
+)
+
+generate_json_schema(
+    name = "gen_json_schema_in_subdir",
+    output = "subdir/test_output_in_subdir.schema.json",
+    schema = "//score/flatbuffers/test/testdata:test.fbs",
+)
+
+build_test(
+    name = "gen_json_schema_test",
+    targets = [
+        ":gen_json_schema_custom_name",
+        ":gen_json_schema_default_name",
+        ":gen_json_schema_in_subdir",
+    ],
+)
+
+# ===================================================
+# Manual: Rule fault injection tests for development.
+# ===================================================
+
+generate_json_schema(
+    name = "gen_json_schema_wrong_schema_path",
+    output = "not_existing_schema.schema.json",
+    schema = "not_existing_schema.fbs",
+    tags = ["manual"],  # This target is expected to fail due to wrong schema path
+)
