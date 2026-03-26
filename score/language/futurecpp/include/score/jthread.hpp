@@ -67,6 +67,10 @@ namespace score::cpp
 /// CopyAssignable, although it is MoveConstructible and MoveAssignable.
 class jthread
 {
+    template <typename T>
+    using is_thread_attribute = std::disjunction<std::is_same<score::cpp::thread::stack_size_hint, score::cpp::remove_cvref_t<T>>,
+                                                 std::is_same<score::cpp::thread::name_hint, score::cpp::remove_cvref_t<T>>>;
+
 public:
     using id = score::cpp::thread::id;
     using stack_size_hint = score::cpp::thread::stack_size_hint;
@@ -84,13 +88,13 @@ public:
     /// The new thread of execution starts executing
     ///
     /// std::invoke(decay_copy(std::forward<Function>(f)),
-    ///            get_stop_token(),
-    ///            decay_copy(std::forward<Args>(args))...);
+    ///             get_stop_token(),
+    ///             decay_copy(std::forward<Args>(args))...);
     ///
     /// if the function f accepts a score::cpp::stop_token for its first argument; otherwise it starts executing
     ///
     /// std::invoke(decay_copy(std::forward<Function>(f)),
-    ///            decay_copy(std::forward<Args>(args))...);
+    ///             decay_copy(std::forward<Args>(args))...);
     ///
     /// In either case, decay_copy is defined as
     ///
@@ -109,16 +113,15 @@ public:
     ///
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
-    template <typename Function,
+    template <typename F,
               typename... Args,
-              typename std::enable_if_t<
-                  !std::is_same<score::cpp::remove_cvref_t<Function>, jthread>::value &&
-                      (score::cpp::is_invocable<std::decay_t<Function>, std::decay_t<Args>...>::value ||
-                       score::cpp::is_invocable<std::decay_t<Function>, stop_token, std::decay_t<Args>...>::value),
-                  int> = 0>
-    explicit jthread(Function&& f, Args&&... args)
-        : jthread(stack_size_hint{0U}, name_hint{""}, std::forward<Function>(f), std::forward<Args>(args)...)
+              typename = std::enable_if_t<!std::is_same<score::cpp::remove_cvref_t<F>, jthread>::value //
+                                          && !is_thread_attribute<F>::value>>
+    explicit jthread(F&& f, Args&&... args)
+        : jthread(stack_size_hint{0U}, name_hint{""}, std::forward<F>(f), std::forward<Args>(args)...)
     {
+        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
+                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
     }
 
     /// \brief Creates new jthread object and associates it with a thread of execution with the given stack size.
@@ -129,16 +132,12 @@ public:
     ///
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
-    template <typename Function,
-              typename... Args,
-              typename std::enable_if_t<
-                  !std::is_same<score::cpp::remove_cvref_t<Function>, jthread>::value &&
-                      (score::cpp::is_invocable<std::decay_t<Function>, std::decay_t<Args>...>::value ||
-                       score::cpp::is_invocable<std::decay_t<Function>, stop_token, std::decay_t<Args>...>::value),
-                  int> = 0>
-    explicit jthread(const stack_size_hint stack_size, Function&& f, Args&&... args)
-        : jthread(stack_size, name_hint{""}, std::forward<Function>(f), std::forward<Args>(args)...)
+    template <typename F, typename... Args, typename = std::enable_if_t<!is_thread_attribute<F>::value>>
+    explicit jthread(const stack_size_hint stack_size, F&& f, Args&&... args)
+        : jthread(stack_size, name_hint{""}, std::forward<F>(f), std::forward<Args>(args)...)
     {
+        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
+                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
     }
 
     /// \brief Creates new jthread object and associates it with a thread of execution with the given name.
@@ -148,16 +147,12 @@ public:
     ///
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
-    template <typename Function,
-              typename... Args,
-              typename std::enable_if_t<
-                  !std::is_same<score::cpp::remove_cvref_t<Function>, jthread>::value &&
-                      (score::cpp::is_invocable<std::decay_t<Function>, std::decay_t<Args>...>::value ||
-                       score::cpp::is_invocable<std::decay_t<Function>, stop_token, std::decay_t<Args>...>::value),
-                  int> = 0>
-    explicit jthread(const name_hint& name, Function&& f, Args&&... args)
-        : jthread(stack_size_hint{0U}, name, std::forward<Function>(f), std::forward<Args>(args)...)
+    template <typename F, typename... Args, typename = std::enable_if_t<!is_thread_attribute<F>::value>>
+    explicit jthread(const name_hint& name, F&& f, Args&&... args)
+        : jthread(stack_size_hint{0U}, name, std::forward<F>(f), std::forward<Args>(args)...)
     {
+        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
+                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
     }
 
     /// \brief Creates new jthread object and associates it with a thread of execution with the given stack size and
@@ -173,28 +168,23 @@ public:
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
     /// \{
-    template <typename Function,
+    template <typename F,
               typename... Args,
-              typename std::enable_if_t<!std::is_same<score::cpp::remove_cvref_t<Function>, jthread>::value &&
-                                            score::cpp::is_invocable<std::decay_t<Function>, std::decay_t<Args>...>::value,
-                                        int> = 0>
-    jthread(const stack_size_hint stack_size, const name_hint& name, Function&& f, Args&&... args)
+              typename std::enable_if_t<std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...>, bool> = true>
+    jthread(const stack_size_hint stack_size, const name_hint& name, F&& f, Args&&... args)
         : stop_source_{}, native_handle_{}
     {
-        create_thread(stack_size, name, std::forward<Function>(f), std::forward<Args>(args)...);
+        create_thread(stack_size, name, std::forward<F>(f), std::forward<Args>(args)...);
     }
 
-    template <typename Function,
-              typename... Args,
-              typename std::enable_if_t<
-                  !std::is_same<score::cpp::remove_cvref_t<Function>, jthread>::value &&
-                      score::cpp::is_invocable<std::decay_t<Function>, stop_token, std::decay_t<Args>...>::value,
-                  int> = 0>
-    jthread(const stack_size_hint stack_size, const name_hint& name, Function&& f, Args&&... args)
+    template <
+        typename F,
+        typename... Args,
+        typename std::enable_if_t<std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>, bool> = true>
+    jthread(const stack_size_hint stack_size, const name_hint& name, F&& f, Args&&... args)
         : stop_source_{}, native_handle_{}
     {
-        create_thread(
-            stack_size, name, std::forward<Function>(f), stop_source_.get_token(), std::forward<Args>(args)...);
+        create_thread(stack_size, name, std::forward<F>(f), stop_source_.get_token(), std::forward<Args>(args)...);
     }
     /// \}
 
