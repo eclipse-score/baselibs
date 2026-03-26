@@ -1,0 +1,7 @@
+{
+  "name": "invalid_config",
+  "id": 99,
+  "mode": "INVALID_MODE",
+  "timeout_ms": "not_a_number",
+  "enabled": "yes"
+}

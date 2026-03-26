@@ -1,0 +1,14 @@
+{
+  "component_name": "SubdirApp",
+  "component_id": 99,
+  "thread_pool_size": 8,
+  "max_memory_mb": 128,
+  "advanced_settings": {
+    "mode": "POLLING",
+    "allowed_priorities": [1, 2, 3],
+    "feature_flags": [
+      {"name": "feature_a", "enabled": true},
+      {"name": "feature_b", "enabled": false}
+    ]
+  }
+}
