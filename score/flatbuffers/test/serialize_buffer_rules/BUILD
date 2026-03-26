@@ -53,6 +53,10 @@ build_test(
         ":serialize_buffer_default_name",
         ":serialize_buffer_output_in_subdir",
     ],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
 )
 
 # ===================================================
