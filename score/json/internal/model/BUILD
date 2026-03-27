@@ -36,8 +36,8 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/string:string_comparison_adaptor",
         "@score_baselibs//score/result",
+        "@score_baselibs//score/string:string_comparison_adaptor",
     ],
 )
 

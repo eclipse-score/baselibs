@@ -66,6 +66,7 @@ cc_library(
     testonly = True,
     srcs = ["offset_ptr_test_resources.cpp"],
     hdrs = ["offset_ptr_test_resources.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:offset_ptr_test_resources.",
     features = COMPILER_WARNING_FEATURES,
     visibility = ["@score_baselibs//score/memory/shared:__pkg__"],
     deps = [
@@ -81,6 +82,7 @@ cc_library(
     testonly = True,
     srcs = ["bounds_check_memory_pool.cpp"],
     hdrs = ["bounds_check_memory_pool.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:bounds_check_memory_pool.",
     features = COMPILER_WARNING_FEATURES,
     deps = [
         ":offset_ptr_test_resources",

@@ -64,7 +64,6 @@ cc_library(
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
-
 cc_library(
     name = "pmr_ring_buffer",
     hdrs = [
@@ -79,7 +78,6 @@ cc_library(
         "@score_baselibs//score/language/futurecpp",
     ],
 )
-
 
 cc_test(
     name = "endianness_unit_test",

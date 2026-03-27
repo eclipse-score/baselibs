@@ -31,8 +31,8 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
-        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/concurrency/atomic:atomic_indirector",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 

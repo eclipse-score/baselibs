@@ -18,6 +18,7 @@ cc_library(
     testonly = True,
     srcs = ["typed_memory_mock.cpp"],
     hdrs = ["typed_memory_mock.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:typedmemory_mock.",
     visibility = ["@score_baselibs//score/memory/shared:__pkg__"],
     deps = [
         "@googletest//:gtest",

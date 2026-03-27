@@ -24,6 +24,7 @@ cc_library(
         "i_sealed_shm.h",
         "sealed_shm.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:sealedshm.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -52,6 +53,7 @@ cc_library(
         "i_sealed_shm.h",
         "sealed_shm_mock.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:sealedshm_mock.",
     visibility = [
         "@score_baselibs//score/memory/shared:__pkg__",
     ],

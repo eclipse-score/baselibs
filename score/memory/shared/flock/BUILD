@@ -19,6 +19,7 @@ cc_library(
     name = "flock_mutex",
     srcs = ["flock_mutex.cpp"],
     hdrs = ["flock_mutex.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:flock_mutex.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/mw/log:frontend",
@@ -34,6 +35,7 @@ cc_library(
     name = "exclusive_flock_mutex",
     srcs = ["exclusive_flock_mutex.cpp"],
     hdrs = ["exclusive_flock_mutex.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:exclusive_flock_mutex.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/os:fcntl",
@@ -52,6 +54,7 @@ cc_library(
     name = "shared_flock_mutex",
     srcs = ["shared_flock_mutex.cpp"],
     hdrs = ["shared_flock_mutex.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_flock_mutex.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/os:fcntl",
@@ -70,6 +73,7 @@ cc_library(
     name = "flock_mutex_and_lock",
     srcs = ["flock_mutex_and_lock.cpp"],
     hdrs = ["flock_mutex_and_lock.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:flock_mutex_and_lock.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
