@@ -13,8 +13,8 @@
 #include "score/memory/shared/memory_region_map.h"
 
 #include "memory_region_bounds.h"
-#include "score/memory/shared/atomic_indirector.h"
-#include "score/memory/shared/atomic_mock.h"
+#include "score/concurrency/atomic/atomic_indirector.h"
+#include "score/concurrency/atomic/atomic_mock.h"
 
 #include "gtest/gtest.h"
 
@@ -26,6 +26,7 @@
 
 namespace score::memory::shared::test
 {
+using namespace score::concurrency::atomic;
 
 using ::testing::_;
 using ::testing::Return;

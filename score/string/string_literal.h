@@ -10,4 +10,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/concurrency/atomic/atomic_mock.h"
+#ifndef SCORE_STRING_STRING_LITERAL_H
+#define SCORE_STRING_STRING_LITERAL_H
+
+namespace score
+{
+
+/// \brief We cannot use score::cpp::string view everywhere, since it is not constexpr yet.
+/// until then we need to still use string literals. In order to avoid the usage of `char` in the codebase
+///  - which will lead to Klockwork warnings -, we have a custom definition here.
+using StringLiteral = const char*;
+
+}  // namespace score
+
+#endif  // SCORE_STRING_STRING_LITERAL_H

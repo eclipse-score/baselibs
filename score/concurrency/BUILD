@@ -573,6 +573,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":synchronized_queue_test",
     ],
     test_suites_from_sub_packages = [
+        "@score_baselibs//score/concurrency/atomic:unit_test_suite",
         "@score_baselibs//score/concurrency/future:unit_test_suite",
         "@score_baselibs//score/concurrency/timed_executor:unit_test_suite",
         "@score_baselibs//score/concurrency/thread_load_tracking:unit_test_suite",

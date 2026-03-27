@@ -39,6 +39,7 @@ cc_library(
         ],
         "//conditions:default": ["ALLOW_QM"],
     }),
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:typedmemory.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [

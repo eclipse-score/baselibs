@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string>
 #include <thread>
-using namespace score::memory::shared;
+using namespace score::concurrency::atomic;
 using namespace score::analysis::tracing;
 using testing::_;
 using testing::Invoke;

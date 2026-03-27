@@ -25,11 +25,12 @@ cc_library(
         "my_bounded_memory_resource.h",
         "my_memory_resource.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:fake_memory_resources.",
     features = COMPILER_WARNING_FEATURES,
     visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:shared_memory_resource",
+        "@score_baselibs//score/memory/shared:allocation_algorithm",
         "@score_baselibs//score/memory/shared:types",
     ],
 )
@@ -43,6 +44,7 @@ cc_library(
     hdrs = [
         "my_bounded_shared_memory_resource.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:my_bounded_shared_memory_resource.",
     features = COMPILER_WARNING_FEATURES,
     visibility = ["//visibility:public"],
     deps = [

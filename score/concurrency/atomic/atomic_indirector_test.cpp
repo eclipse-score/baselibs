@@ -18,9 +18,8 @@
 #include <atomic>
 #include <memory>
 
-namespace score::memory::shared
+namespace score::concurrency::atomic
 {
-using namespace score::concurrency::atomic;
 namespace
 {
 
@@ -337,4 +336,4 @@ TEST_F(AtomicIndirectorMockFixture, CallingLoadMockObjectReturnsCorrectValue)
 }
 
 }  // namespace
-}  // namespace score::memory::shared
+}  // namespace score::concurrency::atomic

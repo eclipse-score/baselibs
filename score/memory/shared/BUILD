@@ -15,46 +15,32 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-cc_library(
+alias(
     name = "atomic_interface",
-    hdrs = ["i_atomic.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/memory/shared:__pkg__",
-    ],
-    deps = [],
-)
-
-cc_library(
-    name = "atomic_indirector",
-    srcs = ["atomic_indirector.cpp"],
-    hdrs = ["atomic_indirector.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "//visibility:public",  # platform_only
-    ],
-    deps = [":atomic_interface"],
-)
-
-cc_library(
-    name = "atomic_indirector_mock_binding",
-    testonly = True,
-    srcs = ["atomic_mock.cpp"],
-    hdrs = ["atomic_mock.h"],
-    features = COMPILER_WARNING_FEATURES,
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_interface",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_interface.",
     visibility = ["//visibility:public"],
-    deps = [
-        ":atomic_indirector",
-        "@googletest//:gtest",
-    ],
+)
+
+alias(
+    name = "atomic_indirector",
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_indirector",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_indirector.",
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "atomic_indirector_mock_binding",
+    actual = "@score_baselibs//score/concurrency/atomic:atomic_indirector_mock_binding",
+    deprecation = "Moved to @score_baselibs//score/concurrency/atomic:atomic_indirector_mock_binding.",
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "pointer_arithmetic_util",
     srcs = ["pointer_arithmetic_util.cpp"],
     hdrs = ["pointer_arithmetic_util.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:pointer_arithmetic_util.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -68,16 +54,28 @@ cc_library(
 )
 
 cc_library(
+    name = "allocation_algorithm",
+    srcs = ["allocation_algorithm.cpp"],
+    hdrs = ["allocation_algorithm.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:allocation_algorithm.",
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+    deps = [":pointer_arithmetic_util"],
+)
+
+cc_library(
     name = "i_shared_memory_resource",
     srcs = ["i_shared_memory_resource.cpp"],
     hdrs = ["i_shared_memory_resource.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:i_shared_memory_resource.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
         "//visibility:public",  # platform_only
     ],
     deps = [
-        ":types",
+        ":managed_memory_resource",
         ":user_permission",
         "@score_baselibs//score/language/futurecpp",
     ],
@@ -88,6 +86,7 @@ cc_library(
     testonly = True,
     srcs = ["shared_memory_resource_heap_allocator_mock.cpp"],
     hdrs = ["shared_memory_resource_heap_allocator_mock.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_resource_heap_allocator_mock.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -106,6 +105,7 @@ cc_library(
     testonly = True,
     srcs = ["shared_memory_resource_mock.cpp"],
     hdrs = ["shared_memory_resource_mock.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_resource_mock.",
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "//visibility:public",  # platform_only
@@ -121,6 +121,7 @@ cc_library(
     name = "shared_memory_resource",
     srcs = ["shared_memory_resource.cpp"],
     hdrs = ["shared_memory_resource.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_resource.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/language/safecpp/string_view:zstring_view",
@@ -154,6 +155,7 @@ cc_library(
     name = "i_shared_memory_factory",
     srcs = ["i_shared_memory_factory.cpp"],
     hdrs = ["i_shared_memory_factory.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:i_shared_memory_factory.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
@@ -169,6 +171,7 @@ cc_library(
     testonly = True,
     srcs = ["shared_memory_factory_mock.cpp"],
     hdrs = ["shared_memory_factory_mock.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_factory_mock.",
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "//visibility:public",  # platform_only
@@ -185,6 +188,7 @@ cc_library(
     name = "shared_memory_factory_impl",
     srcs = ["shared_memory_factory_impl.cpp"],
     hdrs = ["shared_memory_factory_impl.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_factory_impl.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
@@ -205,6 +209,7 @@ cc_library(
     name = "shared_memory_factory",
     srcs = ["shared_memory_factory.cpp"],
     hdrs = ["shared_memory_factory.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_factory.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "shared_memory_factory_impl",
@@ -223,6 +228,7 @@ cc_library(
 
 cc_library(
     name = "shared",
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -238,6 +244,7 @@ cc_library(
     name = "lock_file",
     srcs = ["lock_file.cpp"],
     hdrs = ["lock_file.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:lock_file.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/mw/log:frontend",
@@ -258,6 +265,7 @@ cc_library(
     name = "managed_memory_resource",
     srcs = ["managed_memory_resource.cpp"],
     hdrs = ["managed_memory_resource.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:managed_memory_resource.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -270,6 +278,7 @@ cc_library(
     name = "memory_region_map",
     srcs = ["memory_region_map.cpp"],
     hdrs = ["memory_region_map.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:memory_region_map.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/mw/log:frontend",
@@ -289,8 +298,10 @@ cc_library(
     name = "memory_region_bounds",
     srcs = ["memory_region_bounds.cpp"],
     hdrs = ["memory_region_bounds.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:memory_region_bounds.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
     ],
@@ -300,6 +311,7 @@ cc_library(
     name = "memory_resource_registry",
     srcs = ["memory_resource_registry.cpp"],
     hdrs = ["memory_resource_registry.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:memory_resource_registry.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         ":pointer_arithmetic_util",
@@ -323,6 +335,7 @@ cc_library(
     name = "memory_resource_proxy",
     srcs = ["memory_resource_proxy.cpp"],
     hdrs = ["memory_resource_proxy.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:memory_resource_proxy.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         ":memory_region_bounds",
@@ -345,6 +358,7 @@ cc_library(
     hdrs = [
         "offset_ptr.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:offset_ptr.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -369,6 +383,7 @@ cc_library(
     hdrs = [
         "offset_ptr_bounds_check.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:offset_ptr_bounds_check.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         ":pointer_arithmetic_util",
@@ -389,6 +404,7 @@ cc_library(
     name = "polymorphic_offset_ptr_allocator",
     srcs = ["polymorphic_offset_ptr_allocator.cpp"],
     hdrs = ["polymorphic_offset_ptr_allocator.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:polymorphic_offset_ptr_allocator.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -405,6 +421,7 @@ cc_library(
     name = "map",
     srcs = ["map.cpp"],
     hdrs = ["map.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:map.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -425,6 +442,7 @@ cc_library(
     name = "string",
     srcs = ["string.cpp"],
     hdrs = ["string.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:string.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -440,6 +458,7 @@ cc_library(
     name = "vector",
     srcs = ["vector.cpp"],
     hdrs = ["vector.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:vector.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -456,6 +475,7 @@ cc_library(
     ],
     hdrs = [
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:types.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
@@ -484,9 +504,10 @@ cc_library(
     hdrs = [
         "shared_memory_test_resources.h",
     ],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_test_resources.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/memory/shared:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":shared",
         "@score_baselibs//score/language/futurecpp",
@@ -503,9 +524,10 @@ cc_library(
 cc_library(
     name = "user_permission",
     hdrs = ["user_permission.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:user_permission.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/memory/shared:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = ["@score_baselibs//score/os/utils/acl"],
 )
 
@@ -513,6 +535,7 @@ cc_library(
     name = "new_delete_delegate_resource",
     srcs = ["new_delete_delegate_resource.cpp"],
     hdrs = ["new_delete_delegate_resource.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:new_delete_delegate_resource.",
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/language/safecpp/safe_math",
@@ -534,9 +557,10 @@ cc_library(
     name = "shared_memory_error",
     srcs = ["shared_memory_error.cpp"],
     hdrs = ["shared_memory_error.h"],
+    deprecation = "Deprecated and frozen. Migrate to @score_communication//score/memory/shared:shared_memory_error.",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/memory/shared:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/result",
     ],

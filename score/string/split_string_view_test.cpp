@@ -10,14 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/split_string_view.h"
+#include "score/string/split_string_view.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 using std::string_view_literals::operator""sv;
 
-namespace score::memory
+namespace score::string
 {
 
 namespace
@@ -111,4 +111,4 @@ TEST(StringSplitterTests, MultipleSeperatorsInRowShallReturnEmptySubstring)
 
 }  // namespace
 
-}  // namespace score::memory
+}  // namespace score::string

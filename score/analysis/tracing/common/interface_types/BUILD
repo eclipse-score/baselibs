@@ -29,7 +29,8 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
-        "@score_baselibs//score/memory/shared",
+        "@score_baselibs//score/memory/shared:i_shared_memory_resource",
+        "@score_baselibs//score/memory/shared:managed_memory_resource",
         "@score_baselibs//score/result",
     ],
 )

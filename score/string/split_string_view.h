@@ -10,12 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_SPLIT_STRING_VIEW_H
-#define SCORE_LIB_MEMORY_SPLIT_STRING_VIEW_H
+#ifndef SCORE_STRING_SPLIT_STRING_VIEW_H
+#define SCORE_STRING_SPLIT_STRING_VIEW_H
 
 #include <string_view>
 
-namespace score::memory
+namespace score::string
 {
 
 /// \brief Split a string_view by a character into multiple substring views.
@@ -84,6 +84,6 @@ class LazySplitStringView final
     std::string_view::value_type seperator_;
 };
 
-}  // namespace score::memory
+}  // namespace score::string
 
-#endif  // SCORE_LIB_MEMORY_SPLIT_STRING_VIEW_H
+#endif  // SCORE_STRING_SPLIT_STRING_VIEW_H
