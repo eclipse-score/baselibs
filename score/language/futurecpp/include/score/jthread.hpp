@@ -167,26 +167,22 @@ public:
     ///
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
-    /// \{
-    template <typename F,
-              typename... Args,
-              typename std::enable_if_t<std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...>, bool> = true>
+    template <typename F, typename... Args>
     jthread(const stack_size_hint stack_size, const name_hint& name, F&& f, Args&&... args)
         : stop_source_{}, native_handle_{}
     {
-        create_thread(stack_size, name, std::forward<F>(f), std::forward<Args>(args)...);
-    }
+        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
+                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
 
-    template <
-        typename F,
-        typename... Args,
-        typename std::enable_if_t<std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>, bool> = true>
-    jthread(const stack_size_hint stack_size, const name_hint& name, F&& f, Args&&... args)
-        : stop_source_{}, native_handle_{}
-    {
-        create_thread(stack_size, name, std::forward<F>(f), stop_source_.get_token(), std::forward<Args>(args)...);
+        if constexpr (std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...>)
+        {
+            create_thread(stack_size, name, std::forward<F>(f), std::forward<Args>(args)...);
+        }
+        else
+        {
+            create_thread(stack_size, name, std::forward<F>(f), stop_source_.get_token(), std::forward<Args>(args)...);
+        }
     }
-    /// \}
 
     /// \brief Move constructor.
     ///
