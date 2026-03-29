@@ -32,29 +32,29 @@ using ::testing::Return;
 class MockMemoryResource final : public MemoryResource
 {
   public:
-    MOCK_METHOD(void*, allocate, (std::size_t, std::size_t), (noexcept, override));
-    MOCK_METHOD(void, deallocate, (void*, std::size_t, std::size_t), (noexcept, override));
-    MOCK_METHOD(bool, is_equal, (const MemoryResource&), (const, noexcept, override));
+    MOCK_METHOD(void*, DoAllocate, (std::size_t, std::size_t), (noexcept, override));
+    MOCK_METHOD(void, DoDeallocate, (void*, std::size_t, std::size_t), (noexcept, override));
+    MOCK_METHOD(bool, DoIsEqual, (const MemoryResource&), (const, noexcept, override));
 };
 
 class FailAfterFirstAllocationResource final : public MemoryResource
 {
   public:
-    void* allocate(std::size_t bytes, std::size_t alignment) noexcept override
+    void* DoAllocate(std::size_t bytes, std::size_t alignment) noexcept override
     {
         if (allocation_count_++ > 0U)
         {
             return nullptr;
         }
-        return GetNewDeleteResource()->allocate(bytes, alignment);
+        return GetNewDeleteResource()->Allocate(bytes, alignment);
     }
 
-    void deallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override
+    void DoDeallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override
     {
-        GetNewDeleteResource()->deallocate(pointer, bytes, alignment);
+        GetNewDeleteResource()->Deallocate(pointer, bytes, alignment);
     }
 
-    bool is_equal(const MemoryResource& other) const noexcept override { return this == &other; }
+    bool DoIsEqual(const MemoryResource& other) const noexcept override { return this == &other; }
 
   private:
     std::size_t allocation_count_{0U};
@@ -746,7 +746,7 @@ TEST(Vector, CreatePropagatesOutOfMemoryFromAllocator)
     MockMemoryResource mock_resource{};
     PolymorphicAllocator<int> allocator{&mock_resource};
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto created = Vector<int, PolymorphicAllocator<int>>::CreateWithCapacity(4U, allocator);
     ASSERT_FALSE(created.has_value());
@@ -758,7 +758,7 @@ TEST(Vector, CreateCountPropagatesOutOfMemoryFromAllocator)
     MockMemoryResource mock_resource{};
     PolymorphicAllocator<int> allocator{&mock_resource};
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto created = Vector<int, PolymorphicAllocator<int>>::Create(4U, allocator);
     ASSERT_FALSE(created.has_value());
@@ -770,7 +770,7 @@ TEST(Vector, CreateCountAndValuePropagatesOutOfMemoryFromAllocator)
     MockMemoryResource mock_resource{};
     PolymorphicAllocator<int> allocator{&mock_resource};
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto created = Vector<int, PolymorphicAllocator<int>>::Create(4U, 42, allocator);
     ASSERT_FALSE(created.has_value());
@@ -783,7 +783,7 @@ TEST(Vector, CreateRangePropagatesOutOfMemoryFromAllocator)
     PolymorphicAllocator<int> allocator{&mock_resource};
     const int source[] = {1, 2, 3, 4};
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto created = Vector<int, PolymorphicAllocator<int>>::Create(std::begin(source), std::end(source), allocator);
     ASSERT_FALSE(created.has_value());
@@ -861,7 +861,7 @@ TEST(Vector, ReservePropagatesOutOfMemoryFromAllocator)
     Vector<int, PolymorphicAllocator<int>> vector =
         Vector<int, PolymorphicAllocator<int>>::CreateWithCapacityOrAbort(0U, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(10U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(10U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto reserve_result = vector.Reserve(10U);
     ASSERT_FALSE(reserve_result.has_value());
@@ -1179,7 +1179,7 @@ TEST(Vector, ResizePropagatesOutOfMemoryFromAllocator)
     Vector<int, PolymorphicAllocator<int>> vector =
         Vector<int, PolymorphicAllocator<int>>::CreateWithCapacityOrAbort(0U, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto result = vector.Resize(4U);
     ASSERT_FALSE(result.has_value());
@@ -1207,7 +1207,7 @@ TEST(Vector, ResizeWithFillValuePropagatesOutOfMemoryFromAllocator)
     Vector<int, PolymorphicAllocator<int>> vector =
         Vector<int, PolymorphicAllocator<int>>::CreateWithCapacityOrAbort(0U, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
 
     auto result = vector.Resize(4U, 42);
     ASSERT_FALSE(result.has_value());

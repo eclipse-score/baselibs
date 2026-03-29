@@ -37,9 +37,9 @@ using ::testing::_;
 class MockMemoryResource final : public MemoryResource
 {
   public:
-    MOCK_METHOD(void*, allocate, (std::size_t, std::size_t), (noexcept, override));
-    MOCK_METHOD(void, deallocate, (void*, std::size_t, std::size_t), (noexcept, override));
-    MOCK_METHOD(bool, is_equal, (const MemoryResource&), (const, noexcept, override));
+    MOCK_METHOD(void*, DoAllocate, (std::size_t, std::size_t), (noexcept, override));
+    MOCK_METHOD(void, DoDeallocate, (void*, std::size_t, std::size_t), (noexcept, override));
+    MOCK_METHOD(bool, DoIsEqual, (const MemoryResource&), (const, noexcept, override));
 };
 
 template <typename T>
@@ -403,7 +403,7 @@ TEST(Map, InsertPropagatesOutOfMemoryFromAllocator)
     PolymorphicAllocator<std::pair<const int, int>> allocator{&mock_resource};
     Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(_, _)).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(_, _)).WillOnce(Return(nullptr));
 
     auto inserted = map.Insert({1, 1});
     ASSERT_FALSE(inserted.has_value());
@@ -416,7 +416,7 @@ TEST(Map, EmplacePropagatesOutOfMemoryFromAllocator)
     PolymorphicAllocator<std::pair<const int, int>> allocator{&mock_resource};
     Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(_, _)).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(_, _)).WillOnce(Return(nullptr));
 
     auto emplaced = map.Emplace(1, 1);
     ASSERT_FALSE(emplaced.has_value());
@@ -429,7 +429,7 @@ TEST(Map, GetOrInsertDefaultPropagatesOutOfMemoryFromAllocator)
     PolymorphicAllocator<std::pair<const int, int>> allocator{&mock_resource};
     Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
 
-    EXPECT_CALL(mock_resource, allocate(_, _)).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(_, _)).WillOnce(Return(nullptr));
 
     auto result = map.GetOrInsertDefault(42);
     ASSERT_FALSE(result.has_value());
@@ -442,7 +442,7 @@ TEST(Map, CreateFromRangePropagatesOutOfMemory)
     PolymorphicAllocator<std::pair<const int, int>> allocator{&mock_resource};
     const std::array<std::pair<const int, int>, 2U> values{{{1, 1}, {2, 2}}};
 
-    EXPECT_CALL(mock_resource, allocate(_, _)).WillOnce(Return(nullptr));
+    EXPECT_CALL(mock_resource, DoAllocate(_, _)).WillOnce(Return(nullptr));
 
     auto created = Map<int, int>::Create(values.begin(), values.end(), std::less<int>{}, allocator);
     ASSERT_FALSE(created.has_value());
@@ -1515,10 +1515,10 @@ TEST(MapDeathTest, CloneOrAbortAbortsOnOutOfMemory)
     PolymorphicAllocator<std::pair<const int, int>> allocator{&mock_resource};
 
     alignas(alignof(std::max_align_t)) std::uint8_t buffer[256]{};
-    EXPECT_CALL(mock_resource, allocate(_, _))
+    EXPECT_CALL(mock_resource, DoAllocate(_, _))
         .WillOnce(Return(static_cast<void*>(buffer)))
         .WillRepeatedly(Return(nullptr));
-    EXPECT_CALL(mock_resource, deallocate(_, _, _)).Times(::testing::AnyNumber());
+    EXPECT_CALL(mock_resource, DoDeallocate(_, _, _)).Times(::testing::AnyNumber());
 
     Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
     ASSERT_TRUE(map.Insert({1, 1}).has_value());

@@ -35,7 +35,7 @@ std::size_t MonotonicBufferResource::remaining() const noexcept
     return size_ - offset_;
 }
 
-void* MonotonicBufferResource::allocate(const std::size_t bytes, const std::size_t alignment) noexcept
+void* MonotonicBufferResource::DoAllocate(const std::size_t bytes, const std::size_t alignment) noexcept
 {
     if (bytes == 0U)
     {
@@ -54,12 +54,12 @@ void* MonotonicBufferResource::allocate(const std::size_t bytes, const std::size
         return result;
     }
 
-    return upstream_->allocate(bytes, alignment);
+    return upstream_->Allocate(bytes, alignment);
 }
 
-void MonotonicBufferResource::deallocate(void*, std::size_t, std::size_t) noexcept {}
+void MonotonicBufferResource::DoDeallocate(void*, std::size_t, std::size_t) noexcept {}
 
-bool MonotonicBufferResource::is_equal(const MemoryResource& other) const noexcept
+bool MonotonicBufferResource::DoIsEqual(const MemoryResource& other) const noexcept
 {
     return this == &other;
 }

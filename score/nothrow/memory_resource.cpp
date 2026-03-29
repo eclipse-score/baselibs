@@ -25,7 +25,7 @@ namespace
 class NewDeleteMemoryResource final : public MemoryResource
 {
   public:
-    void* allocate(std::size_t bytes, std::size_t alignment) noexcept override
+    void* DoAllocate(std::size_t bytes, std::size_t alignment) noexcept override
     {
         if (bytes == 0U)
         {
@@ -40,7 +40,7 @@ class NewDeleteMemoryResource final : public MemoryResource
         return ::operator new(bytes, std::nothrow);
     }
 
-    void deallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override
+    void DoDeallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override
     {
         if (alignment > __STDCPP_DEFAULT_NEW_ALIGNMENT__)
         {
@@ -52,7 +52,7 @@ class NewDeleteMemoryResource final : public MemoryResource
         }
     }
 
-    bool is_equal(const MemoryResource& other) const noexcept override
+    bool DoIsEqual(const MemoryResource& other) const noexcept override
     {
         return this == &other;
     }
@@ -61,14 +61,14 @@ class NewDeleteMemoryResource final : public MemoryResource
 class NullMemoryResource final : public MemoryResource
 {
   public:
-    void* allocate(std::size_t, std::size_t) noexcept override
+    void* DoAllocate(std::size_t, std::size_t) noexcept override
     {
         return nullptr;
     }
 
-    void deallocate(void*, std::size_t, std::size_t) noexcept override {}
+    void DoDeallocate(void*, std::size_t, std::size_t) noexcept override {}
 
-    bool is_equal(const MemoryResource& other) const noexcept override
+    bool DoIsEqual(const MemoryResource& other) const noexcept override
     {
         return this == &other;
     }

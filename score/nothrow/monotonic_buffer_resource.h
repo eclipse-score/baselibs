@@ -53,11 +53,11 @@ class MonotonicBufferResource final : public MemoryResource
     /// @brief Returns bytes still available in the local buffer.
     [[nodiscard]] std::size_t remaining() const noexcept;
 
-    void* allocate(std::size_t bytes, std::size_t alignment) noexcept override;
-    void deallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override;
-    bool is_equal(const MemoryResource& other) const noexcept override;
-
   private:
+    void* DoAllocate(std::size_t bytes, std::size_t alignment) noexcept override;
+    void DoDeallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept override;
+    bool DoIsEqual(const MemoryResource& other) const noexcept override;
+
     std::byte* buffer_;
     std::size_t size_;
     std::size_t offset_;

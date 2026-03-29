@@ -10,7 +10,7 @@ This README focuses on **deviations and guarantees**, not on re-documenting stan
 
 ## MemoryResource and PolymorphicAllocator
 
-Standard `std::pmr` allocation throws `std::bad_alloc` on failure. `score::nothrow` containers cannot use exceptions — they propagate allocation failures as `score::Result` errors. To bridge this gap, `MemoryResource::allocate()` and `PolymorphicAllocator::allocate()` are fully `noexcept` and return `nullptr` when allocation fails.
+Standard `std::pmr` allocation throws `std::bad_alloc` on failure. `score::nothrow` containers cannot use exceptions — they propagate allocation failures as `score::Result` errors. To bridge this gap, `MemoryResource::Allocate()` and `PolymorphicAllocator::allocate()` are fully `noexcept` and return `nullptr` when allocation fails.
 
 Additional deviations from `std::pmr`:
 

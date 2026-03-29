@@ -24,16 +24,32 @@ namespace score::nothrow
 
 /// @brief Nothrow counterpart to `std::pmr::memory_resource`.
 ///
-/// Deviation: `allocate()` returns `nullptr` on failure (including zero-sized
+/// Deviation: `Allocate()` returns `nullptr` on failure (including zero-sized
 /// requests) instead of throwing `std::bad_alloc`. All operations are `noexcept`.
 class MemoryResource
 {
   public:
     virtual ~MemoryResource() = default;
 
-    virtual void* allocate(std::size_t bytes, std::size_t alignment) noexcept = 0;
-    virtual void deallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept = 0;
-    virtual bool is_equal(const MemoryResource& other) const noexcept = 0;
+    [[nodiscard]] void* Allocate(std::size_t bytes, std::size_t alignment) noexcept
+    {
+        return DoAllocate(bytes, alignment);
+    }
+
+    void Deallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept
+    {
+        DoDeallocate(pointer, bytes, alignment);
+    }
+
+    [[nodiscard]] bool IsEqual(const MemoryResource& other) const noexcept
+    {
+        return DoIsEqual(other);
+    }
+
+  protected:
+    virtual void* DoAllocate(std::size_t bytes, std::size_t alignment) noexcept = 0;
+    virtual void DoDeallocate(void* pointer, std::size_t bytes, std::size_t alignment) noexcept = 0;
+    virtual bool DoIsEqual(const MemoryResource& other) const noexcept = 0;
 };
 
 /// @brief Returns the process-local `new`/`delete` backed resource.
@@ -42,7 +58,7 @@ class MemoryResource
 /// `nullptr` rather than exception.
 MemoryResource* GetNewDeleteResource() noexcept;
 
-/// @brief Returns a resource whose `allocate()` always returns `nullptr`.
+/// @brief Returns a resource whose `Allocate()` always returns `nullptr`.
 MemoryResource* GetNullMemoryResource() noexcept;
 
 /// @brief Returns the current default resource.
@@ -104,7 +120,7 @@ class PolymorphicAllocator
         }
 
         MemoryResource* const memory_resource{resource_};
-        void* const pointer{memory_resource->allocate(count * sizeof(T), alignof(T))};
+        void* const pointer{memory_resource->Allocate(count * sizeof(T), alignof(T))};
         return static_cast<T*>(pointer);
     }
 
@@ -116,7 +132,7 @@ class PolymorphicAllocator
         }
 
         MemoryResource* const memory_resource{resource_};
-        memory_resource->deallocate(pointer, count * sizeof(T), alignof(T));
+        memory_resource->Deallocate(pointer, count * sizeof(T), alignof(T));
     }
 
     MemoryResource* resource() noexcept
@@ -143,7 +159,7 @@ bool operator==(const PolymorphicAllocator<T1>& lhs, const PolymorphicAllocator<
 {
     const MemoryResource* const lhs_resource{lhs.resource()};
     const MemoryResource* const rhs_resource{rhs.resource()};
-    return (lhs_resource == rhs_resource) || lhs_resource->is_equal(*rhs_resource);
+    return (lhs_resource == rhs_resource) || lhs_resource->IsEqual(*rhs_resource);
 }
 
 template <typename T1, typename T2>

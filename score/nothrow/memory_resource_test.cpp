@@ -26,20 +26,20 @@ namespace
 class CountingMemoryResource final : public MemoryResource
 {
   public:
-    void* allocate(std::size_t bytes, std::size_t) noexcept override
+    void* DoAllocate(std::size_t bytes, std::size_t) noexcept override
     {
         ++allocate_calls_;
         last_allocation_size_ = bytes;
         return (bytes == 0U) ? nullptr : static_cast<void*>(&storage_);
     }
 
-    void deallocate(void*, std::size_t bytes, std::size_t) noexcept override
+    void DoDeallocate(void*, std::size_t bytes, std::size_t) noexcept override
     {
         ++deallocate_calls_;
         last_deallocation_size_ = bytes;
     }
 
-    bool is_equal(const MemoryResource& other) const noexcept override
+    bool DoIsEqual(const MemoryResource& other) const noexcept override
     {
         return this == &other;
     }
@@ -63,10 +63,10 @@ TEST(MemoryResource, NewDeleteResourceCanAllocateAndDeallocate)
     MemoryResource* const resource = GetNewDeleteResource();
     ASSERT_NE(resource, nullptr);
 
-    void* const block = resource->allocate(64U, alignof(std::max_align_t));
+    void* const block = resource->Allocate(64U, alignof(std::max_align_t));
     ASSERT_NE(block, nullptr);
 
-    resource->deallocate(block, 64U, alignof(std::max_align_t));
+    resource->Deallocate(block, 64U, alignof(std::max_align_t));
 }
 
 TEST(PolymorphicAllocator, DefaultAllocatorUsesDefaultResource)
@@ -108,8 +108,8 @@ TEST(MemoryResource, NullMemoryResourceAlwaysReturnsNullptr)
 {
     MemoryResource* const resource = GetNullMemoryResource();
     ASSERT_NE(resource, nullptr);
-    EXPECT_EQ(resource->allocate(64U, alignof(std::max_align_t)), nullptr);
-    EXPECT_EQ(resource->allocate(0U, 1U), nullptr);
+    EXPECT_EQ(resource->Allocate(64U, alignof(std::max_align_t)), nullptr);
+    EXPECT_EQ(resource->Allocate(0U, 1U), nullptr);
 }
 
 TEST(MemoryResource, SetDefaultResourceChangesDefault)
