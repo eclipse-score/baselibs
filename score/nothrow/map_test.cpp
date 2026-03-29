@@ -108,6 +108,25 @@ TEST(Map, CreateFromInitializerListBuildsOrderedMap)
     EXPECT_EQ(it->second, 30);
 }
 
+TEST(Map, CreateOrAbortFromInitializerListBuildsOrderedMap)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort({{3, 30}, {1, 10}, {2, 20}});
+    ASSERT_EQ(map.size(), 3U);
+
+    auto it = map.begin();
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 1);
+    EXPECT_EQ(it->second, 10);
+    ++it;
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 2);
+    EXPECT_EQ(it->second, 20);
+    ++it;
+    ASSERT_NE(it, map.end());
+    EXPECT_EQ(it->first, 3);
+    EXPECT_EQ(it->second, 30);
+}
+
 TEST(Map, InsertStoresAndFindRetrieves)
 {
     Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
@@ -145,6 +164,30 @@ TEST(Map, EmplaceStoresValue)
     ASSERT_TRUE(emplaced.has_value());
     EXPECT_TRUE(emplaced.value().second);
     EXPECT_EQ(map.at(4), "four");
+}
+
+TEST(Map, EmplaceConstKeyConstValueOverloadStoresValue)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    const int key = 6;
+    const std::string value = "six";
+
+    auto emplaced = map.Emplace(key, value);
+    ASSERT_TRUE(emplaced.has_value());
+    EXPECT_TRUE(emplaced.value().second);
+    EXPECT_EQ(map.at(6), "six");
+}
+
+TEST(Map, EmplaceMoveKeyConstValueOverloadStoresValue)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    int key = 8;
+    const std::string value = "eight";
+
+    auto emplaced = map.Emplace(std::move(key), value);
+    ASSERT_TRUE(emplaced.has_value());
+    EXPECT_TRUE(emplaced.value().second);
+    EXPECT_EQ(map.at(8), "eight");
 }
 
 TEST(Map, GetOrInsertDefaultInsertsAndReturnsReference)
@@ -419,6 +462,23 @@ TEST(Map, CreateFromRangeBuildsOrderedMap)
     EXPECT_EQ(map.at(3), 30);
 }
 
+TEST(Map, CreateOrAbortFromRangeBuildsOrderedMap)
+{
+    const std::array<std::pair<const int, int>, 4U> values{{{4, 40}, {1, 10}, {3, 30}, {2, 20}}};
+
+    Map<int, int> map = Map<int, int>::CreateOrAbort(values.begin(), values.end());
+    ASSERT_EQ(map.size(), 4U);
+
+    std::vector<int> iterated_keys{};
+    for (const auto& [key, value] : map)
+    {
+        iterated_keys.push_back(key);
+        EXPECT_EQ(value, key * 10);
+    }
+
+    EXPECT_EQ(iterated_keys, (std::vector<int>{1, 2, 3, 4}));
+}
+
 TEST(Map, MoveAssignmentTransfersOwnership)
 {
     Map<int, int> source = Map<int, int>::CreateOrAbort();
@@ -529,6 +589,51 @@ TEST(Map, HintEmplaceSupportsSortedFastPath)
     auto it = map.end();
     --it;
     EXPECT_EQ(it->first, 31);
+}
+
+TEST(Map, HintEmplaceConstKeyConstValueOverloadStoresValue)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, "ten"}).has_value());
+    ASSERT_TRUE(map.Insert({30, "thirty"}).has_value());
+
+    const int key = 20;
+    const std::string value = "twenty";
+    auto emplaced = map.Emplace(map.cend(), key, value);
+    ASSERT_TRUE(emplaced.has_value());
+    EXPECT_TRUE(emplaced.value().second);
+    EXPECT_EQ(emplaced.value().first->first, 20);
+    EXPECT_EQ(emplaced.value().first->second, "twenty");
+}
+
+TEST(Map, HintEmplaceConstKeyMoveValueOverloadStoresValue)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, "ten"}).has_value());
+    ASSERT_TRUE(map.Insert({30, "thirty"}).has_value());
+
+    const int key = 40;
+    std::string value = "forty";
+    auto emplaced = map.Emplace(map.cend(), key, std::move(value));
+    ASSERT_TRUE(emplaced.has_value());
+    EXPECT_TRUE(emplaced.value().second);
+    EXPECT_EQ(emplaced.value().first->first, 40);
+    EXPECT_EQ(emplaced.value().first->second, "forty");
+}
+
+TEST(Map, HintEmplaceMoveKeyConstValueOverloadStoresValue)
+{
+    Map<int, std::string> map = Map<int, std::string>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, "ten"}).has_value());
+    ASSERT_TRUE(map.Insert({30, "thirty"}).has_value());
+
+    int key = 25;
+    const std::string value = "twenty-five";
+    auto emplaced = map.Emplace(map.cend(), std::move(key), value);
+    ASSERT_TRUE(emplaced.has_value());
+    EXPECT_TRUE(emplaced.value().second);
+    EXPECT_EQ(emplaced.value().first->first, 25);
+    EXPECT_EQ(emplaced.value().first->second, "twenty-five");
 }
 
 TEST(Map, StringMapHintInsertWithForeignHintFallsBackToLookup)
@@ -792,6 +897,18 @@ TEST(Map, PostIncrementIterator)
     EXPECT_EQ(it->first, 2);
 }
 
+TEST(Map, PostIncrementConstIterator)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    auto it = map.cbegin();
+    auto prev = it++;
+    EXPECT_EQ(prev->first, 1);
+    EXPECT_EQ(it->first, 2);
+}
+
 TEST(Map, PostDecrementIterator)
 {
     Map<int, int> map = Map<int, int>::CreateOrAbort();
@@ -805,11 +922,35 @@ TEST(Map, PostDecrementIterator)
     EXPECT_EQ(it->first, 1);
 }
 
+TEST(Map, PostDecrementConstIterator)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+
+    auto it = map.cend();
+    --it;
+    auto prev = it--;
+    EXPECT_EQ(prev->first, 2);
+    EXPECT_EQ(it->first, 1);
+}
+
 TEST(Map, GetAllocatorReturnsAllocator)
 {
     Map<int, int> map = Map<int, int>::CreateOrAbort();
     auto allocator = map.get_allocator();
     (void)allocator;
+}
+
+TEST(Map, InsertOrAbortLvalueOverloadReturnsIteratorAndFlag)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    const Map<int, int>::value_type value{7, 70};
+
+    auto inserted = map.InsertOrAbort(value);
+    EXPECT_TRUE(inserted.second);
+    EXPECT_EQ(inserted.first->first, 7);
+    EXPECT_EQ(inserted.first->second, 70);
 }
 
 TEST(Map, InsertOrAbortMoveOverloadReturnsIteratorAndFlag)
@@ -822,6 +963,32 @@ TEST(Map, InsertOrAbortMoveOverloadReturnsIteratorAndFlag)
     EXPECT_EQ(it->first, 7);
     EXPECT_EQ(it->second, 70);
     EXPECT_EQ(map.size(), 1U);
+}
+
+TEST(Map, HintInsertOrAbortLvalueOverloadReturnsIteratorAndFlag)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    const Map<int, int>::value_type value{2, 20};
+    auto inserted = map.InsertOrAbort(map.cend(), value);
+    EXPECT_TRUE(inserted.second);
+    EXPECT_EQ(inserted.first->first, 2);
+    EXPECT_EQ(inserted.first->second, 20);
+}
+
+TEST(Map, HintInsertOrAbortMoveOverloadReturnsIteratorAndFlag)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+
+    Map<int, int>::value_type value{4, 40};
+    auto inserted = map.InsertOrAbort(map.cend(), std::move(value));
+    EXPECT_TRUE(inserted.second);
+    EXPECT_EQ(inserted.first->first, 4);
+    EXPECT_EQ(inserted.first->second, 40);
 }
 
 TEST(Map, GetOrInsertDefaultOrAbortReturnsReference)
@@ -849,6 +1016,44 @@ TEST(Map, InsertDuplicateInLargerMapKeepsExistingValue)
     EXPECT_FALSE(duplicate.value().second);
     EXPECT_EQ(duplicate.value().first->second, 20);
     EXPECT_EQ(map.size(), 3U);
+}
+
+TEST(Map, InsertHandlesExtremeAndDuplicateKeysWithoutHint)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 100}).has_value());
+    ASSERT_TRUE(map.Insert({20, 200}).has_value());
+    ASSERT_TRUE(map.Insert({30, 300}).has_value());
+
+    auto inserted_rightmost = map.Insert({40, 400});
+    ASSERT_TRUE(inserted_rightmost.has_value());
+    EXPECT_TRUE(inserted_rightmost.value().second);
+    EXPECT_EQ(inserted_rightmost.value().first->first, 40);
+
+    auto inserted_leftmost = map.Insert({5, 50});
+    ASSERT_TRUE(inserted_leftmost.has_value());
+    EXPECT_TRUE(inserted_leftmost.value().second);
+    EXPECT_EQ(inserted_leftmost.value().first->first, 5);
+
+    auto inserted_middle = map.Insert({25, 250});
+    ASSERT_TRUE(inserted_middle.has_value());
+    EXPECT_TRUE(inserted_middle.value().second);
+    EXPECT_EQ(inserted_middle.value().first->first, 25);
+
+    auto duplicate_rightmost = map.Insert({40, 999});
+    ASSERT_TRUE(duplicate_rightmost.has_value());
+    EXPECT_FALSE(duplicate_rightmost.value().second);
+    EXPECT_EQ(duplicate_rightmost.value().first->second, 400);
+
+    auto duplicate_leftmost = map.Insert({5, 999});
+    ASSERT_TRUE(duplicate_leftmost.has_value());
+    EXPECT_FALSE(duplicate_leftmost.value().second);
+    EXPECT_EQ(duplicate_leftmost.value().first->second, 50);
+
+    auto duplicate_middle = map.Insert({20, 999});
+    ASSERT_TRUE(duplicate_middle.has_value());
+    EXPECT_FALSE(duplicate_middle.value().second);
+    EXPECT_EQ(duplicate_middle.value().first->second, 200);
 }
 
 TEST(Map, HintInsertWithForeignHintFallsBackToLookup)
@@ -1118,6 +1323,19 @@ TEST(MapDeathTest, IteratorArrowAbortsOnEndIterator)
         "");
 }
 
+TEST(MapDeathTest, IteratorDereferenceAbortsOnEndIterator)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+
+    EXPECT_DEATH(
+        {
+            auto it = map.end();
+            (void)*it;
+        },
+        "");
+}
+
 TEST(MapDeathTest, IteratorIncrementAbortsOnEndIterator)
 {
     Map<int, int> map = Map<int, int>::CreateOrAbort();
@@ -1243,6 +1461,32 @@ TEST(MapDeathTest, InsertOrAbortAbortsOnOutOfMemory)
     PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
     Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
     EXPECT_DEATH(map.InsertOrAbort({1, 1}), "");
+}
+
+TEST(MapDeathTest, InsertOrAbortLvalueOverloadAbortsOnOutOfMemory)
+{
+    PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
+    Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
+    const Map<int, int>::value_type value{1, 1};
+
+    EXPECT_DEATH(map.InsertOrAbort(value), "");
+}
+
+TEST(MapDeathTest, HintInsertOrAbortLvalueOverloadAbortsOnOutOfMemory)
+{
+    PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
+    Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
+    const Map<int, int>::value_type value{1, 1};
+
+    EXPECT_DEATH(map.InsertOrAbort(map.cend(), value), "");
+}
+
+TEST(MapDeathTest, HintInsertOrAbortMoveOverloadAbortsOnOutOfMemory)
+{
+    PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
+    Map<int, int> map = Map<int, int>::CreateOrAbort(std::less<int>{}, allocator);
+
+    EXPECT_DEATH(map.InsertOrAbort(map.cend(), Map<int, int>::value_type{1, 1}), "");
 }
 
 TEST(MapDeathTest, GetOrInsertDefaultOrAbortAbortsOnOutOfMemory)
@@ -1471,6 +1715,30 @@ TEST(Map, ConstUpperBoundFindsFirstGreaterThan)
 
     it = cmap.upper_bound(30);
     EXPECT_EQ(it, cmap.end());
+}
+
+TEST(Map, ConstUpperBoundOnEmptyMapReturnsEnd)
+{
+    const Map<int, int> map = Map<int, int>::CreateOrAbort();
+    EXPECT_EQ(map.upper_bound(42), map.end());
+}
+
+TEST(Map, ConstUpperBoundHandlesIntermediateAndBeforeFirstKeys)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({10, 1}).has_value());
+    ASSERT_TRUE(map.Insert({20, 2}).has_value());
+    ASSERT_TRUE(map.Insert({30, 3}).has_value());
+
+    const Map<int, int>& cmap = map;
+
+    auto it = cmap.upper_bound(15);
+    ASSERT_NE(it, cmap.end());
+    EXPECT_EQ(it->first, 20);
+
+    it = cmap.upper_bound(5);
+    ASSERT_NE(it, cmap.end());
+    EXPECT_EQ(it->first, 10);
 }
 
 TEST(Map, EqualRangeForExistingKey)
@@ -1712,11 +1980,72 @@ TEST(Map, EqualityWithClone)
     EXPECT_TRUE(map == clone);
 }
 
+TEST(Map, EndIteratorsFromDifferentMapsAreNotEqual)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+
+    EXPECT_NE(a.end(), b.end());
+}
+
+TEST(Map, ConstEndIteratorsFromDifferentMapsAreNotEqual)
+{
+    Map<int, int> a = Map<int, int>::CreateOrAbort();
+    Map<int, int> b = Map<int, int>::CreateOrAbort();
+
+    EXPECT_NE(a.cend(), b.cend());
+}
+
 TEST(MapDeathTest, EraseByIteratorAbortsOnEndIterator)
 {
     Map<int, int> map = Map<int, int>::CreateOrAbort();
     ASSERT_TRUE(map.Insert({1, 10}).has_value());
     EXPECT_DEATH(map.erase(map.cend()), "");
+}
+
+TEST(MapDeathTest, IteratorIncrementAbortsOnDefaultConstructedIterator)
+{
+    EXPECT_DEATH(
+        {
+            IntIntMap::iterator it{};
+            ++it;
+        },
+        "");
+}
+
+TEST(MapDeathTest, ConstIteratorIncrementAbortsOnDefaultConstructedIterator)
+{
+    EXPECT_DEATH(
+        {
+            IntIntMap::const_iterator it{};
+            ++it;
+        },
+        "");
+}
+
+TEST(MapDeathTest, CreateOrAbortRangeAbortsOnOutOfMemory)
+{
+    const std::array<IntIntMap::value_type, 2U> values{{{1, 10}, {2, 20}}};
+    PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
+
+    EXPECT_DEATH((void)IntIntMap::CreateOrAbort(values.begin(), values.end(), std::less<int>{}, allocator), "");
+}
+
+TEST(MapDeathTest, CreateOrAbortInitializerListAbortsOnOutOfMemory)
+{
+    PolymorphicAllocator<std::pair<const int, int>> allocator{GetNullMemoryResource()};
+
+    EXPECT_DEATH((void)IntIntMap::CreateOrAbort({{1, 10}, {2, 20}}, std::less<int>{}, allocator), "");
+}
+
+TEST(MapDeathTest, EraseByIteratorAbortsOnForeignIterator)
+{
+    Map<int, int> map = Map<int, int>::CreateOrAbort();
+    Map<int, int> other = Map<int, int>::CreateOrAbort();
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(other.Insert({2, 20}).has_value());
+
+    EXPECT_DEATH(map.erase(other.cbegin()), "");
 }
 
 }  // namespace

@@ -321,12 +321,7 @@ class Map
     static Map CreateOrAbort(key_compare compare = key_compare{},
                              allocator_type allocator = allocator_type{}) noexcept
     {
-        score::Result<Map> created = Create(std::move(compare), std::move(allocator));
-        if (!created.has_value())
-        {
-            std::abort();
-        }
-        return std::move(created).value();
+        return Map{std::move(allocator), std::move(compare)};
     }
 
     /// @brief Like Create(first, last), but aborts on allocation failure.
@@ -877,13 +872,7 @@ class Map
     /// @return `kOutOfMemory` if node allocation fails.
     score::Result<Map> Clone() const noexcept
     {
-        score::Result<Map> created = Create(compare_, allocator_);
-        if (!created.has_value())
-        {
-            return created;
-        }
-
-        Map clone = std::move(created).value();
+        Map clone{allocator_, compare_};
         const_iterator hint = clone.cend();
         for (const auto& value : *this)
         {
@@ -1017,7 +1006,7 @@ class Map
         }
 
         Node* const rightmost = rightmost_.get();
-        if ((rightmost != nullptr) && IsLess(rightmost->value.first, key))
+        if (IsLess(rightmost->value.first, key))
         {
             position.parent = rightmost;
             position.insert_left = false;
@@ -1025,21 +1014,20 @@ class Map
         }
 
         Node* const leftmost = leftmost_.get();
-        if ((leftmost != nullptr) && IsLess(key, leftmost->value.first))
+        if (IsLess(key, leftmost->value.first))
         {
             position.parent = leftmost;
             position.insert_left = true;
             return position;
         }
 
-        if ((rightmost != nullptr) && !IsLess(key, rightmost->value.first) && !IsLess(rightmost->value.first, key))
+        if (!IsLess(key, rightmost->value.first) && !IsLess(rightmost->value.first, key))
         {
             position.existing = rightmost;
             return position;
         }
 
-        if ((leftmost != nullptr) && (leftmost != rightmost) && !IsLess(key, leftmost->value.first) &&
-            !IsLess(leftmost->value.first, key))
+        if ((leftmost != rightmost) && !IsLess(key, leftmost->value.first) && !IsLess(leftmost->value.first, key))
         {
             position.existing = leftmost;
             return position;
@@ -1085,10 +1073,6 @@ class Map
 
         if (hint.node_ == nullptr)
         {
-            if (rightmost_.get() == nullptr)
-            {
-                return InsertPosition{};
-            }
             if (IsLess(rightmost_.get()->value.first, key))
             {
                 InsertPosition position{};
@@ -1302,7 +1286,7 @@ class Map
     static NodePtr MinNode(NodePtr node) noexcept
     {
         NodePtr current = node;
-        while ((current != nullptr) && (current->left.get() != nullptr))
+        while (current->left.get() != nullptr)
         {
             current = current->left.get();
         }
@@ -1313,7 +1297,7 @@ class Map
     static NodePtr MaxNode(NodePtr node) noexcept
     {
         NodePtr current = node;
-        while ((current != nullptr) && (current->right.get() != nullptr))
+        while (current->right.get() != nullptr)
         {
             current = current->right.get();
         }
@@ -1323,11 +1307,6 @@ class Map
     template <typename NodePtr>
     static NodePtr NextNode(NodePtr node) noexcept
     {
-        if (node == nullptr)
-        {
-            return nullptr;
-        }
-
         if (node->right.get() != nullptr)
         {
             return MinNode(node->right.get());
@@ -1347,11 +1326,6 @@ class Map
     template <typename NodePtr>
     static NodePtr PreviousNode(NodePtr node) noexcept
     {
-        if (node == nullptr)
-        {
-            return nullptr;
-        }
-
         if (node->left.get() != nullptr)
         {
             return MaxNode(node->left.get());
@@ -1375,19 +1349,11 @@ class Map
 
     static void UpdateHeight(Node* node) noexcept
     {
-        if (node == nullptr)
-        {
-            return;
-        }
         node->height = 1U + std::max(Height(node->left.get()), Height(node->right.get()));
     }
 
     static int BalanceFactor(const Node* node) noexcept
     {
-        if (node == nullptr)
-        {
-            return 0;
-        }
         return static_cast<int>(Height(node->left.get())) - static_cast<int>(Height(node->right.get()));
     }
 
@@ -1416,11 +1382,6 @@ class Map
     Node* RotateLeft(Node* node) noexcept
     {
         Node* const pivot = node->right.get();
-        if (pivot == nullptr)
-        {
-            return node;
-        }
-
         Node* const pivot_left = pivot->left.get();
         Node* const parent = node->parent.get();
 
@@ -1454,11 +1415,6 @@ class Map
     Node* RotateRight(Node* node) noexcept
     {
         Node* const pivot = node->left.get();
-        if (pivot == nullptr)
-        {
-            return node;
-        }
-
         Node* const pivot_right = pivot->right.get();
         Node* const parent = node->parent.get();
 
