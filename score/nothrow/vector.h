@@ -567,28 +567,21 @@ class Vector
 
     /// @brief Equivalent to `std::vector::resize(count)`.
     /// @return `kOutOfMemory` if growth allocation fails.
-    /// @note Aborts when growth is requested for non-default-constructible `T`.
+    template <typename U = value_type, typename = std::enable_if_t<std::is_default_constructible_v<U>>>
     score::ResultBlank Resize(const size_type new_size) noexcept
     {
         if (new_size > size_)
         {
-            if constexpr (std::is_default_constructible_v<value_type>)
+            const score::ResultBlank reserved = Reserve(new_size);
+            if (!reserved.has_value())
             {
-                const score::ResultBlank reserved = Reserve(new_size);
-                if (!reserved.has_value())
-                {
-                    return reserved;
-                }
-
-                pointer const raw_data = data();
-                for (size_type index = size_; index < new_size; ++index)
-                {
-                    new (raw_data + index) value_type{};  // NOLINT(score-no-dynamic-raw-memory)
-                }
+                return reserved;
             }
-            else
+
+            pointer const raw_data = data();
+            for (size_type index = size_; index < new_size; ++index)
             {
-                std::abort();
+                new (raw_data + index) value_type{};  // NOLINT(score-no-dynamic-raw-memory)
             }
         }
         else
@@ -636,6 +629,7 @@ class Vector
     }
 
     /// @brief Like Resize(), but aborts on allocation failure.
+    template <typename U = value_type, typename = std::enable_if_t<std::is_default_constructible_v<U>>>
     void ResizeOrAbort(const size_type new_size) noexcept
     {
         const score::ResultBlank result = Resize(new_size);
@@ -824,14 +818,12 @@ class Vector
         }
 
         Vector clone = std::move(created).value();
+        pointer const clone_data = clone.data();
         for (size_type i = 0U; i < size_; ++i)
         {
-            const score::ResultBlank push_result = clone.PushBack(data()[i]);
-            if (!push_result.has_value())
-            {
-                return score::Result<Vector>{score::unexpect, push_result.error()};
-            }
+            new (clone_data + i) value_type(data()[i]);  // NOLINT(score-no-dynamic-raw-memory)
         }
+        clone.size_ = size_;
 
         return clone;
     }
@@ -863,10 +855,12 @@ class Vector
             return 1U;
         }
         constexpr size_type kMaxCapacity = std::numeric_limits<size_type>::max() / sizeof(value_type);
+        /* GCOV_EXCL_START would require 8 EiB current size to test */
         if (current > (kMaxCapacity / 2U))
         {
             return kMaxCapacity;
         }
+        /* GCOV_EXCL_STOP */
         return current * 2U;
     }
 
