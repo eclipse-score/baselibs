@@ -69,8 +69,7 @@ class Vector
 
         if (initial_capacity > (std::numeric_limits<size_type>::max() / sizeof(value_type)))
         {
-            return score::Result<Vector>{score::unexpect,
-                                         MakeError(ContainerErrorCode::kOutOfMemory, "Vector capacity overflow")};
+            std::abort();
         }
 
         pointer const allocated_storage = allocator.allocate(initial_capacity);
@@ -114,6 +113,8 @@ class Vector
 
     /// @brief Like std::vector(count). Creates a vector with @p count default-constructed elements.
     /// @return kOutOfMemory if allocation fails.
+    template <typename U = value_type,
+              typename = std::enable_if_t<std::is_default_constructible_v<U>>>
     static score::Result<Vector> Create(const size_type count,
                                         allocator_type allocator = allocator_type{}) noexcept
     {
@@ -124,22 +125,12 @@ class Vector
         }
 
         Vector vector = std::move(created).value();
-        if constexpr (std::is_default_constructible_v<value_type>)
+        pointer const raw_data = vector.data();
+        for (size_type index = 0U; index < count; ++index)
         {
-            pointer const raw_data = vector.data();
-            for (size_type index = 0U; index < count; ++index)
-            {
-                new (raw_data + index) value_type{};  // NOLINT(score-no-dynamic-raw-memory)
-            }
-            vector.size_ = count;
+            new (raw_data + index) value_type{};  // NOLINT(score-no-dynamic-raw-memory)
         }
-        else
-        {
-            if (count != 0U)
-            {
-                std::abort();
-            }
-        }
+        vector.size_ = count;
         return vector;
     }
 
@@ -199,6 +190,8 @@ class Vector
     }
 
     /// @brief Like Create(count), but aborts on allocation failure.
+    template <typename U = value_type,
+              typename = std::enable_if_t<std::is_default_constructible_v<U>>>
     static Vector CreateOrAbort(const size_type count,
                                 allocator_type allocator = allocator_type{}) noexcept
     {
@@ -535,8 +528,7 @@ class Vector
 
         if (new_capacity > (std::numeric_limits<size_type>::max() / sizeof(value_type)))
         {
-            return score::ResultBlank{score::unexpect,
-                                      MakeError(ContainerErrorCode::kOutOfMemory, "Vector capacity overflow")};
+            std::abort();
         }
 
         pointer const new_storage = allocator_.allocate(new_capacity);

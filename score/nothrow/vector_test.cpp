@@ -18,6 +18,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <limits>
 #include <memory>
 #include <utility>
 
@@ -60,6 +61,33 @@ struct TestRawPointerPolicy
     using NullablePtr = TestRawPtr<T>;
 };
 
+struct NonDefaultConstructible
+{
+    explicit NonDefaultConstructible(int value_in) noexcept : value{value_in} {}
+
+    int value;
+};
+
+template <typename T, typename = void>
+struct HasCountCreate : std::false_type
+{
+};
+
+template <typename T>
+struct HasCountCreate<T, std::void_t<decltype(Vector<T>::Create(std::size_t{0U}))>> : std::true_type
+{
+};
+
+template <typename T, typename = void>
+struct HasCountCreateOrAbort : std::false_type
+{
+};
+
+template <typename T>
+struct HasCountCreateOrAbort<T, std::void_t<decltype(Vector<T>::CreateOrAbort(std::size_t{0U}))>> : std::true_type
+{
+};
+
 TEST(Vector, CreateWithZeroCapacityStartsEmpty)
 {
     auto created = Vector<int>::CreateWithCapacity(0U);
@@ -83,6 +111,16 @@ TEST(Vector, CreateWithCountDefaultConstructsElements)
     EXPECT_EQ(vector.at(2U), 0);
 }
 
+TEST(Vector, CreateOrAbortWithCountDefaultConstructsElements)
+{
+    Vector<int> vector = Vector<int>::CreateOrAbort(3U);
+
+    ASSERT_EQ(vector.size(), 3U);
+    EXPECT_EQ(vector.at(0U), 0);
+    EXPECT_EQ(vector.at(1U), 0);
+    EXPECT_EQ(vector.at(2U), 0);
+}
+
 TEST(Vector, CreateWithCountAndValueFillsElements)
 {
     auto created = Vector<int>::Create(3U, 42);
@@ -93,6 +131,22 @@ TEST(Vector, CreateWithCountAndValueFillsElements)
     EXPECT_EQ(vector.at(0U), 42);
     EXPECT_EQ(vector.at(1U), 42);
     EXPECT_EQ(vector.at(2U), 42);
+}
+
+TEST(Vector, CreateOrAbortWithCountAndValueFillsElements)
+{
+    Vector<int> vector = Vector<int>::CreateOrAbort(3U, 42);
+
+    ASSERT_EQ(vector.size(), 3U);
+    EXPECT_EQ(vector.at(0U), 42);
+    EXPECT_EQ(vector.at(1U), 42);
+    EXPECT_EQ(vector.at(2U), 42);
+}
+
+TEST(Vector, CountCreateIsUnavailableForNonDefaultConstructibleTypes)
+{
+    EXPECT_FALSE(HasCountCreate<NonDefaultConstructible>::value);
+    EXPECT_FALSE(HasCountCreateOrAbort<NonDefaultConstructible>::value);
 }
 
 TEST(Vector, CreateFromIteratorRange)
@@ -108,12 +162,34 @@ TEST(Vector, CreateFromIteratorRange)
     EXPECT_EQ(vector.at(2U), 30);
 }
 
+TEST(Vector, CreateOrAbortFromIteratorRange)
+{
+    const int source[] = {10, 20, 30};
+    Vector<int> vector = Vector<int>::CreateOrAbort(std::begin(source), std::end(source));
+
+    ASSERT_EQ(vector.size(), 3U);
+    EXPECT_EQ(vector.at(0U), 10);
+    EXPECT_EQ(vector.at(1U), 20);
+    EXPECT_EQ(vector.at(2U), 30);
+}
+
 TEST(Vector, CreateFromInitializerList)
 {
     auto created = Vector<int>::Create({5, 6, 7, 8});
     ASSERT_TRUE(created.has_value());
 
     Vector<int> vector = std::move(created).value();
+    ASSERT_EQ(vector.size(), 4U);
+    EXPECT_EQ(vector.at(0U), 5);
+    EXPECT_EQ(vector.at(1U), 6);
+    EXPECT_EQ(vector.at(2U), 7);
+    EXPECT_EQ(vector.at(3U), 8);
+}
+
+TEST(Vector, CreateOrAbortFromInitializerList)
+{
+    Vector<int> vector = Vector<int>::CreateOrAbort({5, 6, 7, 8});
+
     ASSERT_EQ(vector.size(), 4U);
     EXPECT_EQ(vector.at(0U), 5);
     EXPECT_EQ(vector.at(1U), 6);
@@ -135,9 +211,89 @@ TEST(Vector, PushBackAndElementAccessWork)
     EXPECT_EQ(vector.back(), 11);
 }
 
+TEST(Vector, PushBackLvalueGrowsWhenFull)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+    const int first = 7;
+    const int second = 11;
+
+    EXPECT_TRUE(vector.PushBack(first).has_value());
+    EXPECT_TRUE(vector.PushBack(second).has_value());
+
+    ASSERT_EQ(vector.size(), 2U);
+    EXPECT_GE(vector.capacity(), 2U);
+    EXPECT_EQ(vector.at(0U), 7);
+    EXPECT_EQ(vector.at(1U), 11);
+}
+
+TEST(Vector, ConstElementAccessWork)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+
+    EXPECT_TRUE(vector.PushBack(7).has_value());
+    EXPECT_TRUE(vector.PushBack(11).has_value());
+
+    const Vector<int>& cvector = vector;
+    EXPECT_EQ(cvector.size(), 2U);
+    EXPECT_EQ(cvector.at(0U), 7);
+    EXPECT_EQ(cvector.at(1U), 11);
+    EXPECT_EQ(cvector.front(), 7);
+    EXPECT_EQ(cvector.back(), 11);
+}
+
+TEST(Vector, PushBackLvaluePropagatesOutOfMemoryOnGrowth)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+    const int first = 7;
+    const int second = 11;
+
+    EXPECT_TRUE(vector.PushBack(first).has_value());
+
+    auto push_result = vector.PushBack(second);
+    ASSERT_FALSE(push_result.has_value());
+    EXPECT_EQ(push_result.error(), ContainerErrorCode::kOutOfMemory);
+    ASSERT_EQ(vector.size(), 1U);
+    EXPECT_EQ(vector.at(0U), 7);
+}
+
+TEST(Vector, PushBackOrAbortLvalueGrowsWhenFull)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+    const int first = 7;
+    const int second = 11;
+
+    vector.PushBackOrAbort(first);
+    vector.PushBackOrAbort(second);
+
+    ASSERT_EQ(vector.size(), 2U);
+    EXPECT_GE(vector.capacity(), 2U);
+    EXPECT_EQ(vector.at(0U), 7);
+    EXPECT_EQ(vector.at(1U), 11);
+}
+
+TEST(Vector, PushBackOrAbortRvalueGrowsWhenFull)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+
+    vector.PushBackOrAbort(7);
+    vector.PushBackOrAbort(11);
+
+    ASSERT_EQ(vector.size(), 2U);
+    EXPECT_GE(vector.capacity(), 2U);
+    EXPECT_EQ(vector.at(0U), 7);
+    EXPECT_EQ(vector.at(1U), 11);
+}
+
 TEST(VectorDeathTest, AtAbortsOnOutOfRange)
 {
     Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
+    EXPECT_DEATH(vector.at(0U), "");
+}
+
+TEST(VectorDeathTest, ConstAtAbortsOnOutOfRange)
+{
+    const Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
     EXPECT_DEATH(vector.at(0U), "");
 }
 
@@ -147,10 +303,42 @@ TEST(VectorDeathTest, FrontAbortsOnEmpty)
     EXPECT_DEATH(vector.front(), "");
 }
 
+TEST(VectorDeathTest, ConstFrontAbortsOnEmpty)
+{
+    const Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
+    EXPECT_DEATH(vector.front(), "");
+}
+
 TEST(VectorDeathTest, BackAbortsOnEmpty)
 {
     Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
     EXPECT_DEATH(vector.back(), "");
+}
+
+TEST(VectorDeathTest, ConstBackAbortsOnEmpty)
+{
+    const Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
+    EXPECT_DEATH(vector.back(), "");
+}
+
+TEST(VectorDeathTest, PushBackOrAbortLvalueAbortsOnGrowthFailure)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+    const int first = 7;
+    const int second = 11;
+
+    ASSERT_TRUE(vector.PushBack(first).has_value());
+    EXPECT_DEATH(vector.PushBackOrAbort(second), "");
+}
+
+TEST(VectorDeathTest, PushBackOrAbortRvalueAbortsOnGrowthFailure)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+
+    ASSERT_TRUE(vector.PushBack(7).has_value());
+    EXPECT_DEATH(vector.PushBackOrAbort(11), "");
 }
 
 TEST(Vector, InsertAddsElementAtPosition)
@@ -190,6 +378,59 @@ TEST(Vector, BeginEndProvideContiguousIteration)
     EXPECT_EQ(sum, 6);
 }
 
+TEST(Vector, ConstBeginEndProvideContiguousIteration)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(3U);
+    EXPECT_TRUE(vector.PushBack(1).has_value());
+    EXPECT_TRUE(vector.PushBack(2).has_value());
+    EXPECT_TRUE(vector.PushBack(3).has_value());
+
+    const Vector<int>& cvector = vector;
+
+    int sum = 0;
+    for (auto it = cvector.begin(); it != cvector.end(); ++it)
+    {
+        sum += *it;
+    }
+
+    int csum = 0;
+    for (auto it = cvector.cbegin(); it != cvector.cend(); ++it)
+    {
+        csum += *it;
+    }
+
+    EXPECT_EQ(sum, 6);
+    EXPECT_EQ(csum, 6);
+}
+
+TEST(Vector, SubscriptProvidesAccess)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(3U);
+    EXPECT_TRUE(vector.PushBack(1).has_value());
+    EXPECT_TRUE(vector.PushBack(2).has_value());
+    EXPECT_TRUE(vector.PushBack(3).has_value());
+
+    vector[1U] = 22;
+
+    EXPECT_EQ(vector[0U], 1);
+    EXPECT_EQ(vector[1U], 22);
+    EXPECT_EQ(vector[2U], 3);
+}
+
+TEST(Vector, ConstSubscriptProvidesAccess)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(3U);
+    EXPECT_TRUE(vector.PushBack(1).has_value());
+    EXPECT_TRUE(vector.PushBack(2).has_value());
+    EXPECT_TRUE(vector.PushBack(3).has_value());
+
+    const Vector<int>& cvector = vector;
+
+    EXPECT_EQ(cvector[0U], 1);
+    EXPECT_EQ(cvector[1U], 2);
+    EXPECT_EQ(cvector[2U], 3);
+}
+
 TEST(Vector, CloneCreatesIndependentCopy)
 {
     Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(2U);
@@ -207,6 +448,38 @@ TEST(Vector, CloneCreatesIndependentCopy)
     EXPECT_TRUE(clone.PushBack(7).has_value());
     EXPECT_EQ(vector.size(), 2U);
     EXPECT_EQ(clone.size(), 3U);
+}
+
+TEST(Vector, MoveAssignmentTransfersContents)
+{
+    Vector<int> source = Vector<int>::CreateWithCapacityOrAbort(2U);
+    EXPECT_TRUE(source.PushBack(5).has_value());
+    EXPECT_TRUE(source.PushBack(6).has_value());
+
+    Vector<int> target = Vector<int>::CreateWithCapacityOrAbort(1U);
+    EXPECT_TRUE(target.PushBack(99).has_value());
+
+    target = std::move(source);
+
+    EXPECT_EQ(target.size(), 2U);
+    EXPECT_EQ(target.at(0U), 5);
+    EXPECT_EQ(target.at(1U), 6);
+    EXPECT_TRUE(source.empty());
+    EXPECT_EQ(source.capacity(), 0U);
+}
+
+TEST(Vector, MoveAssignmentToSelfIsNoOp)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(2U);
+    EXPECT_TRUE(vector.PushBack(5).has_value());
+    EXPECT_TRUE(vector.PushBack(6).has_value());
+
+    Vector<int>& alias = vector;
+    vector = std::move(alias);
+
+    EXPECT_EQ(vector.size(), 2U);
+    EXPECT_EQ(vector.at(0U), 5);
+    EXPECT_EQ(vector.at(1U), 6);
 }
 
 TEST(Vector, SwapExchangesContents)
@@ -250,6 +523,106 @@ TEST(Vector, CreatePropagatesOutOfMemoryFromAllocator)
     EXPECT_EQ(created.error(), ContainerErrorCode::kOutOfMemory);
 }
 
+TEST(Vector, CreateCountPropagatesOutOfMemoryFromAllocator)
+{
+    MockMemoryResource mock_resource{};
+    PolymorphicAllocator<int> allocator{&mock_resource};
+
+    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+
+    auto created = Vector<int, PolymorphicAllocator<int>>::Create(4U, allocator);
+    ASSERT_FALSE(created.has_value());
+    EXPECT_EQ(created.error(), ContainerErrorCode::kOutOfMemory);
+}
+
+TEST(Vector, CreateCountAndValuePropagatesOutOfMemoryFromAllocator)
+{
+    MockMemoryResource mock_resource{};
+    PolymorphicAllocator<int> allocator{&mock_resource};
+
+    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+
+    auto created = Vector<int, PolymorphicAllocator<int>>::Create(4U, 42, allocator);
+    ASSERT_FALSE(created.has_value());
+    EXPECT_EQ(created.error(), ContainerErrorCode::kOutOfMemory);
+}
+
+TEST(Vector, CreateRangePropagatesOutOfMemoryFromAllocator)
+{
+    MockMemoryResource mock_resource{};
+    PolymorphicAllocator<int> allocator{&mock_resource};
+    const int source[] = {1, 2, 3, 4};
+
+    EXPECT_CALL(mock_resource, allocate(4U * sizeof(int), alignof(int))).WillOnce(Return(nullptr));
+
+    auto created = Vector<int, PolymorphicAllocator<int>>::Create(std::begin(source), std::end(source), allocator);
+    ASSERT_FALSE(created.has_value());
+    EXPECT_EQ(created.error(), ContainerErrorCode::kOutOfMemory);
+}
+
+TEST(VectorDeathTest, CreateWithCapacityAbortsOnCapacityOverflow)
+{
+    EXPECT_DEATH(
+        (void)Vector<int>::CreateWithCapacity((std::numeric_limits<std::size_t>::max() / sizeof(int)) + 1U),
+        "");
+}
+
+TEST(VectorDeathTest, CreateWithCapacityOrAbortAbortsOnOutOfMemory)
+{
+    using AllocVector = Vector<int, PolymorphicAllocator<int>>;
+    PolymorphicAllocator<int> allocator{GetNullMemoryResource()};
+    EXPECT_DEATH(
+        {
+            (void)AllocVector::CreateWithCapacityOrAbort(4U, allocator);
+        },
+        "");
+}
+
+TEST(VectorDeathTest, CreateOrAbortCountAbortsOnOutOfMemory)
+{
+    using AllocVector = Vector<int, PolymorphicAllocator<int>>;
+    PolymorphicAllocator<int> allocator{GetNullMemoryResource()};
+    EXPECT_DEATH(
+        {
+            (void)AllocVector::CreateOrAbort(4U, allocator);
+        },
+        "");
+}
+
+TEST(VectorDeathTest, CreateOrAbortCountAndValueAbortsOnOutOfMemory)
+{
+    using AllocVector = Vector<int, PolymorphicAllocator<int>>;
+    PolymorphicAllocator<int> allocator{GetNullMemoryResource()};
+    EXPECT_DEATH(
+        {
+            (void)AllocVector::CreateOrAbort(4U, 42, allocator);
+        },
+        "");
+}
+
+TEST(VectorDeathTest, CreateOrAbortRangeAbortsOnOutOfMemory)
+{
+    using AllocVector = Vector<int, PolymorphicAllocator<int>>;
+    const int source[] = {1, 2, 3, 4};
+    PolymorphicAllocator<int> allocator{GetNullMemoryResource()};
+    EXPECT_DEATH(
+        {
+            (void)AllocVector::CreateOrAbort(std::begin(source), std::end(source), allocator);
+        },
+        "");
+}
+
+TEST(VectorDeathTest, CreateOrAbortInitializerListAbortsOnOutOfMemory)
+{
+    using AllocVector = Vector<int, PolymorphicAllocator<int>>;
+    PolymorphicAllocator<int> allocator{GetNullMemoryResource()};
+    EXPECT_DEATH(
+        {
+            (void)AllocVector::CreateOrAbort({1, 2, 3, 4}, allocator);
+        },
+        "");
+}
+
 TEST(Vector, ReservePropagatesOutOfMemoryFromAllocator)
 {
     MockMemoryResource mock_resource{};
@@ -263,6 +636,32 @@ TEST(Vector, ReservePropagatesOutOfMemoryFromAllocator)
     auto reserve_result = vector.Reserve(10U);
     ASSERT_FALSE(reserve_result.has_value());
     EXPECT_EQ(reserve_result.error(), ContainerErrorCode::kOutOfMemory);
+}
+
+TEST(VectorDeathTest, ReserveAbortsOnCapacityOverflow)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(0U);
+    EXPECT_DEATH(vector.Reserve((std::numeric_limits<std::size_t>::max() / sizeof(int)) + 1U), "");
+}
+
+TEST(Vector, ReserveOrAbortGrowsCapacity)
+{
+    Vector<int> vector = Vector<int>::CreateWithCapacityOrAbort(1U);
+    EXPECT_TRUE(vector.PushBack(7).has_value());
+
+    vector.ReserveOrAbort(4U);
+
+    EXPECT_EQ(vector.size(), 1U);
+    EXPECT_GE(vector.capacity(), 4U);
+    EXPECT_EQ(vector.at(0U), 7);
+}
+
+TEST(VectorDeathTest, ReserveOrAbortAbortsOnAllocationFailure)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+
+    EXPECT_DEATH(vector.ReserveOrAbort(2U), "");
 }
 
 struct CountingLifecycleType
@@ -352,6 +751,44 @@ TEST(Vector, EmplaceBackGrowsWhenFull)
     EXPECT_GE(vector.capacity(), 2U);
     EXPECT_EQ(vector.at(0U), 1);
     EXPECT_EQ(vector.at(1U), 2);
+}
+
+TEST(Vector, EmplaceBackPropagatesOutOfMemoryOnGrowth)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+
+    EXPECT_TRUE(vector.EmplaceBack(7).has_value());
+
+    auto emplace_result = vector.EmplaceBack(11);
+    ASSERT_FALSE(emplace_result.has_value());
+    EXPECT_EQ(emplace_result.error(), ContainerErrorCode::kOutOfMemory);
+    ASSERT_EQ(vector.size(), 1U);
+    EXPECT_EQ(vector.at(0U), 7);
+}
+
+TEST(Vector, EmplaceBackOrAbortGrowsWhenFull)
+{
+    Vector<std::pair<int, int>> vector = Vector<std::pair<int, int>>::CreateWithCapacityOrAbort(1U);
+
+    vector.EmplaceBackOrAbort(1, 2);
+    vector.EmplaceBackOrAbort(3, 4);
+
+    ASSERT_EQ(vector.size(), 2U);
+    EXPECT_GE(vector.capacity(), 2U);
+    EXPECT_EQ(vector.at(0U).first, 1);
+    EXPECT_EQ(vector.at(0U).second, 2);
+    EXPECT_EQ(vector.at(1U).first, 3);
+    EXPECT_EQ(vector.at(1U).second, 4);
+}
+
+TEST(VectorDeathTest, EmplaceBackOrAbortAbortsOnGrowthFailure)
+{
+    alignas(int) std::byte buffer[sizeof(int)]{};
+    Vector<int> vector = Vector<int>::CreateWithBuffer(buffer, sizeof(buffer));
+
+    ASSERT_TRUE(vector.EmplaceBack(7).has_value());
+    EXPECT_DEATH(vector.EmplaceBackOrAbort(11), "");
 }
 
 TEST(Vector, PopBackRemovesLastElement)
