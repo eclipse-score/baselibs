@@ -1021,13 +1021,13 @@ class Map
             return position;
         }
 
-        if (!IsLess(key, rightmost->value.first) && !IsLess(rightmost->value.first, key))
+        if (!IsLess(key, rightmost->value.first))
         {
             position.existing = rightmost;
             return position;
         }
 
-        if ((leftmost != rightmost) && !IsLess(key, leftmost->value.first) && !IsLess(leftmost->value.first, key))
+        if (!IsLess(leftmost->value.first, key))
         {
             position.existing = leftmost;
             return position;
@@ -1051,7 +1051,7 @@ class Map
             }
         }
 
-        if ((lower_bound != nullptr) && !IsLess(key, lower_bound->value.first))
+        if (!IsLess(key, lower_bound->value.first))
         {
             position.existing = lower_bound;
         }
