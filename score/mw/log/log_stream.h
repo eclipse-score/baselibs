@@ -15,6 +15,7 @@
 
 // Be careful what you include here. Each additional header will be included in logging.h and thus exposed to the user.
 // We need to try to keep the includes low to reduce the compile footprint of using this library.
+#include "score/result/error.h"
 #include "score/mw/log/detail/logging_identifier.h"
 #include "score/mw/log/log_common.h"
 #include "score/mw/log/log_level.h"
@@ -427,30 +428,14 @@ LogStream& operator<<(LogStream& out, EnumerationT enumvalue)
 }
 }  // namespace score_ext
 
+/// \brief Global overload of a LogStream operator to enable translation from error to human readable representation)
+LogStream& operator<<(LogStream& log_stream, const score::result::Error& error) noexcept;
+
+/// \brief Global overload of a LogStream operator to enable translation from error to human readable representation)
+LogStream&& operator<<(LogStream&& log_stream, const score::result::Error& error) noexcept;
+
 }  // namespace log
 }  // namespace mw
-
-namespace result
-{
-/*
-    Deviation from Rule M3-2-3:
-    - Rule M3-2-3 (required, implementation, automated)
-    A type, object or function that is used in multiple translation units shall
-    be declared in one and only one file.
-    Justification:
-    - forward declaration is required for implementation.
-*/
-// coverity[autosar_cpp14_m3_2_3_violation]
-class Error;
-
-/// \brief Global overload of a LogStream operator to enable translation from error to human readable representation)
-score::mw::log::LogStream& operator<<(score::mw::log::LogStream& log_stream, const score::result::Error& error) noexcept;
-
-/// \brief Global overload of a LogStream operator to enable translation from error to human readable representation)
-score::mw::log::LogStream&& operator<<(score::mw::log::LogStream&& log_stream, const score::result::Error& error) noexcept;
-
-}  // namespace result
-
 }  // namespace score
 
 #endif  // SCORE_MW_LOG_LOG_STREAM_H
