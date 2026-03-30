@@ -19,6 +19,7 @@ on:
   push:
     branches:
       - main
+      - balajiyalam2
   merge_group:
     types: [checks_requested]
 jobs:
@@ -38,4 +39,4 @@ jobs:
           cache-save: ${{ github.event_name == 'push' }}
       - name: Bazel Build with clang-format
         run: |
-          bazel build --config clang_format -- //... || true
+          bazel build --lockfile_mode=error --config clang_format -- //... || true
