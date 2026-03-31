@@ -15,7 +15,8 @@
 
 #include "service_instance_element.h"
 #include "trace_point_type.h"
-#include <score/optional.hpp>
+#include <optional>
+#include <utility>
 
 namespace score
 {
@@ -37,11 +38,11 @@ class AraComProperties
     TracePointIdentification trace_point_id;
     // No harm from not declaring private members here
     // coverity[autosar_cpp14_m11_0_1_violation]
-    score::cpp::optional<TracePointDataId> trace_point_data_id;
+    std::optional<TracePointDataId> trace_point_data_id;
 
     AraComProperties(const TracePointType trace_point_type,
                      const ServiceInstanceElement service_instance_element,
-                     score::cpp::optional<TracePointDataId> opt_trace_point_data_id);
+                     std::optional<TracePointDataId> opt_trace_point_data_id);
 };
 bool operator==(const AraComProperties& lhs, const AraComProperties& rhs) noexcept;
 
