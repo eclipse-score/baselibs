@@ -18,8 +18,7 @@ on:
     types: [opened, reopened, synchronize]
   push:
     branches:
-      - main
-      - balajiyalam2
+      - main 
   merge_group:
     types: [checks_requested]
 jobs:
