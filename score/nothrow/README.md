@@ -50,7 +50,11 @@ This is a substantial design difference compared to many fancy-pointer implement
 
 ## Scope
 
-`score::nothrow` currently targets header-only building blocks and keeps the API surface small. When in doubt, prefer standard library behavior and treat `score::nothrow` as a specialization layer for nothrow container/resource semantics.
+`score::nothrow` currently targets header-only building blocks and aims to keep
+deviations from standard library container interfaces as small as possible.
+When in doubt, prefer standard library behavior and treat `score::nothrow` as a
+specialization layer for nothrow container/resource semantics that preserves as
+much as possible of the standard named interface and algorithm compatibility.
 
 ## Containers
 
