@@ -39,6 +39,7 @@ Verification Report contains:
        - For external component Assumptions of Use: coverage by platform safety manual or feature/components incl. test case, passed/failed and completeness verdict
        - This is split in a list of QM requirements tested and a separate list of tests for ASIL rated requirements.
        - List of component requirements (ASIL rated) linked to inspection checklist and verdict (derived from PR export)
+       - See :ref:`requirements_statistics` for the generated requirements coverage statistics.
 
 **1.2. on Architecture**
        - List of component architecture tags tested by which test case, passed/failed and completeness verdict
@@ -81,3 +82,8 @@ Verification Report contains:
 **Note1:** The verification report is valid for the module version tagged together with the report
 
 **Note2:** All the above lists are generated automatically
+
+.. toctree::
+   :maxdepth: 1
+
+   requirements_statistics
