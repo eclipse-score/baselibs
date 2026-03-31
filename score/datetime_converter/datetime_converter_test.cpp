@@ -458,6 +458,9 @@ TEST_F(DateTimeConverterTest, invalid_month_values)
     auto dtt = std::make_shared<DateTimeType>(2020, 0, 10, 3, 4, 5);
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
 
+    dtt->m_month = 13;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
     dtt->m_month = -1;
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
 }
@@ -473,21 +476,21 @@ TEST_F(DateTimeConverterTest, invalid_day_values)
 
 TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
 {
-    time_t epoch = 0;
+    time_t epoch = static_cast<time_t>(0x7F7F7F7F);
 
     // Invalid: month = 13 -> isValidDateTimeFormat returns false
     auto d = std::make_shared<DateTimeType>(2024, 13, 10, 12, 30, 45);
 
     ASSERT_FALSE(score::common::dateTimeToEpoch(d, &epoch));
 
+    ASSERT_EQ(epoch, static_cast<time_t>(0x7F7F7F7F));
 }
 
-TEST_F(DateTimeConverterTest, EpochToDateTime_Before1970_LeapYear_January_AdjustsDaysSum)
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_DaysSumDecrementedInJanuary)
 {
     // ------------------------------------------------------------------
-    // Loop A: Your original sweep across 1968 (pre-1970 leap year).
-    // This is enough to hit the January leap-window decrement (line 144)
-    // for some dates (e.g., epoch around -31622399).
+    // Loop A: Sweep across 1968 (pre-1970 leap year).
+    // Validate: epoch -> dt -> epoch round-trip remains stable.
     // ------------------------------------------------------------------
     for (int month = 1; month <= 12; ++month)
     {
@@ -507,12 +510,20 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Before1970_LeapYear_January_Adjust
             if (!score::common::dateTimeToEpoch(d, &epoch))
                 continue;
 
-            (void)score::common::epochToDateTime(epoch);
-
-            // Optional trace (keep if useful)
-            std::cout << "DATE=1968-" << month << "-" << day << "  epoch=" << epoch << std::endl;
+            auto dt = score::common::epochToDateTime(epoch);
+            if (dt == nullptr)
+                continue;
+            time_t epoch_roundtrip = static_cast<time_t>(-1);
+       
+			     ASSERT_TRUE(score::common::dateTimeToEpoch(dt, &epoch_roundtrip))
+                << "dateTimeToEpoch failed for round-trip. epoch=" << epoch
+                << " (DATE=1968-" << month << "-" << day << ")";
         }
     }
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_LeapYear_DaysSumDecremented)
+{
 
     // ------------------------------------------------------------------
     // Loop B: Simple sweep in 1972 (post-1970 leap year) to execute the
@@ -535,8 +546,15 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Before1970_LeapYear_January_Adjust
             if (!score::common::dateTimeToEpoch(d, &epoch))
                 continue;
 
-            (void)score::common::epochToDateTime(epoch);
-           //  std::cout << "DATE=1972-" << month << "-" << day << "  epoch=" << epoch << std::endl;
+            auto dt = score::common::epochToDateTime(epoch);
+            ASSERT_NE(dt, nullptr) << "epochToDateTime returned nullptr for epoch=" << epoch
+                                   << " (DATE=1972-" << month << "-" << day << ")";
+
+            time_t epoch_roundtrip = static_cast<time_t>(-1);
+            ASSERT_TRUE(score::common::dateTimeToEpoch(dt, &epoch_roundtrip))
+                << "dateTimeToEpoch failed for round-trip. epoch=" << epoch
+                << " (DATE=1972-" << month << "-" << day << ")";
+
         }
        
     }
