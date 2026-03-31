@@ -54,13 +54,32 @@ This is a substantial design difference compared to many fancy-pointer implement
 
 ## Containers
 
+The most important deviation from the standard library is the explicit error
+return path for allocation failure. In real systems, memory resources are
+usually dimensioned and owned in parts of the architecture that are separate
+from the individual business logic operating on containers. That business logic
+therefore cannot reliably know whether a size-changing container operation will
+succeed.
+
+The C++ standard library does not provide the missing building blocks needed to
+make such code robust without exceptions: there is no standard API to query
+remaining allocatable memory, no way to ask a container which future growth
+steps will require allocation, and no standard atomic test-and-allocate
+operation that would let callers prove a mutation is safe before performing it.
+As a consequence, standard library containers are not suitable for writing
+robust no-exception code that must survive allocation failure without
+crashing. This matters especially when allocation size is influenced by
+external requests: treating allocation failure only as an abort condition can
+turn memory pressure into a denial-of-service vector instead of a contained
+error path.
+
 The general pattern of containers planned in `score::nothrow` is:
 
 - Functional clones of the standard counterparts.
 - All member functions are `noexcept`.
 - Member functions that are non-throwing in the standard interface keep the standard spelling and signature as closely as possible to preserve named interface requirements.
 - Bounds checking member functions, e.g. `at()`, `back()`, `front()` keep the standard spelling and signature, plus noexcept, and shall abort in case of failure. The user can check these preconditions easily in advance and does not depend on doing a post-invocation check of function result.
-- Member functions that are potentially throwing `std::bad_alloc` in the standard interface (most size-changing operations) cannot be handled by users regarding memory preconditions: There is no API to query available memory; container growth strategy is an implementation detail out of user control; There are no atomic test-and-allocate operations defined by the C++ standard. Therefore they are provided in two variants with the same parameter list:
+- Member functions that are potentially throwing `std::bad_alloc` in the standard interface (most size-changing operations) cannot be guarded reliably by callers: memory budgets are typically decided elsewhere in the architecture, there is no API to query available memory, container growth strategy is an implementation detail out of user control, and there are no standard atomic test-and-allocate operations. Therefore they are provided in two variants with the same parameter list:
   - An error-propagating variant with PascalCase naming, returning `score::Result<T>` or `score::ResultBlank`.
   - An aborting variant with PascalCase naming and `OrAbort` suffix, returning the original value category and aborting on failure. These shall be used when an out-of-memory situation is algorithmically impossible, for example because the user prepared the memory resource in the same scope as using the container. Returning results would require a user to implement untestable error handling. Use of these functions implies asserting that memory is sufficient, and failure would be correctly classified as a bug and result in abort.
 - Member functions provided as error handling derivatives described above are not provided with their standard library signature.
