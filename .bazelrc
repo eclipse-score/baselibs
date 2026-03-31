@@ -55,7 +55,10 @@ build:bl-x86_64-qnx --config=_bl_stub
 build:bl-x86_64-qnx --config=_bl_toolchain_common
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
 build:bl-x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
+build:bl-x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
+build:bl-x86_64-qnx --extra_toolchains=@score_qnx_x86_64_ifs_toolchain//:ifs-x86_64-qnx-sdp_8.0.0
 test:bl-x86_64-qnx --config=_bl_common
+test:bl-x86_64-qnx --test_tag_filters=microvm_qnx_test
 
 # Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-aarch64-qnx --config=_bl_stub

@@ -54,6 +54,7 @@ use_repo(
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
     "score_qcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain_pkg",
 )
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
@@ -167,3 +168,29 @@ bazel_dep(name = "bazel_skylib", version = "1.8.2")
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "score_bazel_platforms", version = "0.1.1")
+
+# QNX IFS (Image File System) toolchain for building boot images
+bazel_dep(name = "score_rules_imagefs", version = "0.0.2", dev_dependency = True)
+git_override(
+    module_name = "score_rules_imagefs",
+    commit = "5c5d32eb5597ca6463e840deaf8a80523edba525",
+    remote = "https://github.com/eclipse-score/rules_imagefs.git",
+)
+
+imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
+imagefs.toolchain(
+    name = "score_qnx_x86_64_ifs_toolchain",
+    sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    type = "ifs",
+)
+use_repo(imagefs, "score_qnx_x86_64_ifs_toolchain")
+
+bazel_dep(name = "score_qnx_unit_tests", version = "0.0.1", dev_dependency = True)
+git_override(
+    module_name = "score_qnx_unit_tests",
+    commit = "439f8e6fa2a3dc99d9b3f74ca5b094004b58e0bb",
+    remote = "https://github.com/eclipse-score/qnx_unit_tests.git",
+)
