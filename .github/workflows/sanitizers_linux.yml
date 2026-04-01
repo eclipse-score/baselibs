@@ -39,5 +39,5 @@ jobs:
           cache-save: ${{ github.event_name == 'push' }}
       - name: Bazel Test with Sanitizers
         run: |
-          bazel test --lockfile_mode=error --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/... \
+          bazel test --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/... \
           -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
