@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-module(name = "score_baselibs")
+module(name = "score_baselibs")   
 
 ## Configure the C++ toolchain
 
