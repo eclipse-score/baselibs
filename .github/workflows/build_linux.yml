@@ -65,7 +65,7 @@ jobs:
           sudo apt install -y qemu-user
       - name: Bazel Build
         run: |
-          bazel build --lockfile_mode=erro --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
+          bazel build --lockfile_mode=error --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
         run: |
           bazel test --lockfile_mode=erro --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
