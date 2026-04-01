@@ -65,10 +65,10 @@ jobs:
           sudo apt install -y qemu-user
       - name: Bazel Build
         run: |
-          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
+          bazel build --lockfile_mode=erro --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
         run: |
-          bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
+          bazel test --lockfile_mode=erro --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
       - name: Upload test logs on failure
         if: failure()
         uses: actions/upload-artifact@v7

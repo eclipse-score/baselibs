@@ -230,15 +230,15 @@ class LogSlog2Message
 /// \public
 /// \note Helps for example to avoid array-to-pointer decay when logging char[] literals or macros (such as __func__).
 template <std::size_t n>
-// [[deprecated(
-//     "SPP_DEPRECATION: Making use of `mw::log::LogStr()` is no longer required since `mw::log::LogStream` "
-//     "meanwhile supports logging string literals natively via its `operator<<`.")]] constexpr LogString
-// // NOLINTNEXTLINE(modernize-avoid-c-arrays): required for avoiding implicit array-to-pointer decay in case of char array
-// LogStr(const LogString::CharType (&array)[n]) noexcept
-// {
-//     const LogString result{std::forward<decltype(array)>(array)};
-//     return result;
-// }
+[[deprecated(
+    "SPP_DEPRECATION: Making use of `mw::log::LogStr()` is no longer required since `mw::log::LogStream` "
+    "meanwhile supports logging string literals natively via its `operator<<`.")]] constexpr LogString
+// NOLINTNEXTLINE(modernize-avoid-c-arrays): required for avoiding implicit array-to-pointer decay in case of char array
+LogStr(const LogString::CharType (&array)[n]) noexcept
+{
+    const LogString result{std::forward<decltype(array)>(array)};
+    return result;
+}
 
 /// \brief Helper type to log the raw bytes of a buffer
 /// \public
