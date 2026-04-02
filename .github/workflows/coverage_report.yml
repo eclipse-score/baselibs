@@ -47,7 +47,7 @@ jobs:
           -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
       - name: Generate HTML Coverage Report
         run: |
-          genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat" \
+          genhtml "$(bazel info --lockfile_mode=error output_path)/_coverage/_coverage_report.dat" \
             -o=cpp_coverage \
             --show-details \
             --legend \
