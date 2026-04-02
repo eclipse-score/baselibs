@@ -23,6 +23,7 @@
 
 #include <score/private/memory/voidify.hpp>
 
+#include <type_traits>
 #include <utility>
 
 namespace score::cpp
@@ -37,6 +38,7 @@ namespace detail
 template <typename T, typename... Args, typename = decltype(::new (std::declval<void*>()) T(std::declval<Args>()...))>
 T* construct_at(T* const p, Args&&... args)
 {
+    static_assert(!std::is_array_v<T>, "not implemented");
     return ::new (score::cpp::detail::voidify(*p)) T(std::forward<Args>(args)...);
 }
 
