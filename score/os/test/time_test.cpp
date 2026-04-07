@@ -641,7 +641,7 @@ TEST(TimeImplTest, TimerSettimeOldValueReflectsPreviousArming)
     const std::int64_t remaining_ns =
         (static_cast<std::int64_t>(old_value.it_value.tv_sec) * 1000000000L) + old_value.it_value.tv_nsec;
     EXPECT_GT(remaining_ns, 8000000000LL);   // > 8 seconds remaining
-    EXPECT_LE(remaining_ns, 10000000000LL);  // <= 10 seconds (original value)
+    EXPECT_LE(remaining_ns, 10100000000LL);  // <= 10.1s (kernel may round up to its timer resolution)
 
     Time::instance().timer_delete(timerid);
 }
