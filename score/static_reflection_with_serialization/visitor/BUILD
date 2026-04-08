@@ -55,10 +55,7 @@ cc_test(
     ],
     features = _compiler_warning_features,
     tags = ["unit"],
-    visibility = [
-        #"@score_baselibs//score/mw/log/test:__pkg__",
-        # "@ddad@score_baselibs//score/mw/log/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":visitor",
         "@googletest//:gtest_main",

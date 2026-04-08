@@ -48,9 +48,7 @@ test_suite(
         ":size_visitor_ut",
         ":visitor_type_traits_ut",
     ],
-    visibility = [
-        # "@ddad@score_baselibs//score/mw/log/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -62,10 +60,7 @@ cc_test(
     ],
     features = _compiler_warning_features,
     tags = ["unit"],
-    visibility = [
-        #"@score_baselibs//score/mw/log/test:__pkg__",
-        # "@ddad@score_baselibs//score/mw/log/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":serialization",
         "@googletest//:gtest_main",
@@ -80,10 +75,7 @@ cc_test(
     ],
     features = _compiler_warning_features,
     tags = ["unit"],
-    visibility = [
-        #"@score_baselibs//score/mw/log/test:__pkg__",
-        # "@ddad@score_baselibs//score/mw/log/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":serialization",
         "@googletest//:gtest_main",
