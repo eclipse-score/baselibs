@@ -13,12 +13,16 @@
 
 common --registry=https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/
 common --registry=https://bcr.bazel.build
+common --http_connector_attempts=10
+common --http_connector_retry_max_timeout=1s
+common --http_timeout_scaling=2.0
 
 build --java_language_version=17
 build --tool_java_language_version=17
 build --java_runtime_version=remotejdk_17
 build --tool_java_runtime_version=remotejdk_17
 build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_helper.py"
+build --experimental_retain_test_configuration_across_testonly # needed for QNX tests until bazel update to 8.6.0. See https://github.com/bazelbuild/bazel/pull/28115
 
 build:_bl_stub --//score/json:base_library=nlohmann
 build:_bl_stub --//score/memory/shared/flags:use_typedshmd=False
@@ -55,7 +59,11 @@ build:bl-x86_64-qnx --config=_bl_stub
 build:bl-x86_64-qnx --config=_bl_toolchain_common
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
 build:bl-x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
+build:bl-x86_64-qnx --extra_toolchains=@score_qnx_x86_64_ifs_toolchain//:ifs-x86_64-qnx-sdp_8.0.0
 test:bl-x86_64-qnx --config=_bl_common
+test:bl-x86_64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:bl-x86_64-qnx --test_tag_filters=
+test:bl-x86_64-qnx --test_lang_filters=cc,rust
 
 # Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-aarch64-qnx --config=_bl_stub
@@ -63,7 +71,11 @@ build:bl-aarch64-qnx --config=_bl_toolchain_common
 build:bl-aarch64-qnx --incompatible_strict_action_env
 build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
 build:bl-aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0
+build:bl-aarch64-qnx --extra_toolchains=@score_qnx_aarch64_ifs_toolchain//:ifs-aarch64-qnx-sdp_8.0.0
 test:bl-aarch64-qnx --config=_bl_common
+test:bl-aarch64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:bl-aarch64-qnx --test_tag_filters=
+test:bl-aarch64-qnx --test_lang_filters=cc,rust
 
 # Coverage configuration for C++
 coverage --features=coverage

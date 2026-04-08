@@ -112,7 +112,16 @@ bazel test --config=bl-aarch64-linux //score/...
 ```bash
 # Build all targets
 bazel build --config=bl-x86_64-qnx -- //score/...
+
+# Run all tests
+bazel test --config=bl-x86_64-qnx //...
 ```
+
+> [!NOTE]
+> QNX tests run in a QEMU virtual machine. KVM acceleration is recommended for better performance. This feature is currently experimental, and some targets may not build or pass tests successfully.
+> 
+> For details, see [QNX Unit Tests Documentation](https://github.com/eclipse-score/qnx_unit_tests/blob/main/README.md).
+
 
 #### Building for AArch64 QNX 8.0 SDP
 

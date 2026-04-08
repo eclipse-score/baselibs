@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.4.0", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.0", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -34,7 +34,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
-    sdp_version = "8.0.0",
+    sdp_version = "8.0.3",
     target_cpu = "x86_64",
     target_os = "qnx",
     use_default_package = True,
@@ -42,7 +42,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
-    sdp_version = "8.0.0",
+    sdp_version = "8.0.3",
     target_cpu = "aarch64",
     target_os = "qnx",
     use_default_package = True,
@@ -53,8 +53,31 @@ use_repo(
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain_pkg",
 )
+
+bazel_dep(name = "score_rules_imagefs", version = "0.0.3", dev_dependency = True)
+
+imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
+imagefs.toolchain(
+    name = "score_qnx_x86_64_ifs_toolchain",
+    sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    type = "ifs",
+)
+imagefs.toolchain(
+    name = "score_qnx_aarch64_ifs_toolchain",
+    sdp_to_import = "@score_qcc_aarch64_toolchain_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    type = "ifs",
+)
+use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
@@ -94,6 +117,7 @@ bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
+bazel_dep(name = "score_qnx_unit_tests", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
