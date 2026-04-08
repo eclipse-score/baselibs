@@ -16,6 +16,9 @@
 #include <score/utility.hpp>
 #include <score/variant.hpp>
 
+#include <cstdint>
+#include <variant>
+
 namespace score
 {
 namespace analysis
@@ -35,6 +38,30 @@ class ServiceInstanceElement
     using FieldIdType = std::uint32_t;     ///< Type used to store Field Id
     using MethodIdType = std::uint32_t;    ///< Type used to store Method Id
     using VariantType = score::cpp::variant<EventIdType, FieldIdType, MethodIdType>;
+
+    /// @brief Variant index constants for element_id (needed since all types are uint32_t)
+    static constexpr std::size_t kEventIdIndex = 0U;   ///< Index for EventIdType in VariantType
+    static constexpr std::size_t kFieldIdIndex = 1U;   ///< Index for FieldIdType in VariantType
+    static constexpr std::size_t kMethodIdIndex = 2U;  ///< Index for MethodIdType in VariantType
+
+    /// @brief Type used to store Event Id (distinct struct for type-safe variant)
+    struct EventId
+    {
+        std::uint32_t value;
+    };
+    /// @brief Type used to store Field Id (distinct struct for type-safe variant)
+    struct FieldId
+    {
+        std::uint32_t value;
+    };
+    /// @brief Type used to store Method Id (distinct struct for type-safe variant)
+    struct MethodId
+    {
+        std::uint32_t value;
+    };
+
+    using StdVariantType = std::variant<EventId, FieldId, MethodId>;
+
     // No harm to declare the members as public
     //  coverity[autosar_cpp14_m11_0_1_violation]
     ServiceIdType service_id;
@@ -50,16 +77,19 @@ class ServiceInstanceElement
     // No harm to declare the members as public
     //  coverity[autosar_cpp14_m11_0_1_violation]
     VariantType element_id;
-
-    // No harm from defining the == operator as member function
-    // coverity[autosar_cpp14_a13_5_5_violation]
-    bool operator==(const ServiceInstanceElement& other) const
-    {
-        return ((((service_id == other.service_id) && (major_version == other.major_version)) &&
-                 ((minor_version == other.minor_version) && (instance_id == other.instance_id))) &&
-                (element_id == other.element_id));
-    }
 };
+
+/// @brief Comparison operator for ServiceInstanceElement
+bool operator==(const ServiceInstanceElement& lhs, const ServiceInstanceElement& rhs);
+
+/// @brief Comparison operator for EventId
+bool operator==(const ServiceInstanceElement::EventId& lhs, const ServiceInstanceElement::EventId& rhs);
+
+/// @brief Comparison operator for FieldId
+bool operator==(const ServiceInstanceElement::FieldId& lhs, const ServiceInstanceElement::FieldId& rhs);
+
+/// @brief Comparison operator for MethodId
+bool operator==(const ServiceInstanceElement::MethodId& lhs, const ServiceInstanceElement::MethodId& rhs);
 
 }  // namespace tracing
 }  // namespace analysis

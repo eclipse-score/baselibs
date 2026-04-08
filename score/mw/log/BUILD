@@ -64,6 +64,7 @@ cc_library(
         "@score_baselibs//score/mw/log/detail:empty_recorder",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
         "@score_baselibs//score/result",
+        "@score_baselibs//score/utils/meyer_singleton",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],

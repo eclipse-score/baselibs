@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/analysis/tracing/common/flexible_circular_allocator/lockless_flexible_circular_allocator.h"
 
+#include "score/language/safecpp/safe_math/safe_math.h"
+
 #include <score/utility.hpp>
 #include <memory>
 namespace score
@@ -116,12 +118,20 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::GetTmdMemUsage(Tmd
     tmd_stats_enabled_.store(true, std::memory_order_release);
     static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
                   "std::size_t must be able to represent all values of std::uint32_t");
-    tmd_stats.tmd_max =
-        static_cast<std::size_t>(total_size_) - static_cast<std::size_t>(lowest_size_.exchange(total_size_));
+    tmd_stats.tmd_max = score::safe_math::Subtract(static_cast<std::size_t>(total_size_),
+                                                 static_cast<std::size_t>(lowest_size_.exchange(total_size_)))
+                            .value_or(0U);
     const std::uint32_t number_of_allocations = std::max(1U, alloc_cntr_.exchange(0U));
-    tmd_stats.tmd_average = cumulative_usage_.exchange(0U) / number_of_allocations;
-    tmd_stats.tmd_alloc_rate =
-        static_cast<float>(dealloc_cntr_.exchange(0U)) / static_cast<float>(number_of_allocations);
+    const std::uint64_t cumulative_usage = cumulative_usage_.exchange(0U);
+
+    // Use floating-point Divide to allow truncating (non-exact) division.
+    // The integer overload of safe_math::Divide rejects non-exact divisions with kImplicitRounding.
+    const auto avg_result =
+        score::safe_math::Divide(static_cast<double>(cumulative_usage), static_cast<double>(number_of_allocations));
+    tmd_stats.tmd_average = static_cast<std::size_t>(avg_result.value_or(0.0));
+    const auto alloc_rate_result = score::safe_math::Divide(static_cast<float>(dealloc_cntr_.exchange(0U)),
+                                                          static_cast<float>(number_of_allocations));
+    tmd_stats.tmd_alloc_rate = alloc_rate_result.value_or(0.0F);
 
     tmd_stats.tmd_allocate_retry_cntr_res = allocate_retry_cntr_.ExchangeWithZero();
 
@@ -136,41 +146,37 @@ score::Result<std::uint32_t> LocklessFlexibleCircularAllocator<AtomicIndirectorT
     std::size_t size,
     std::size_t alignment_size) noexcept
 {
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: The addition of 'size' and 'sizeof(BufferBlock)' is performed using std::size_t arithmetic.
-    // A runtime check ensures that the sum does not overflow, preventing any loss of data. The result is then
-    // validated to fit within std::uint32_t range before casting, ensuring no data loss occurs.
-    // coverity[autosar_cpp14_a4_7_1_violation]
-    if (size > std::numeric_limits<std::size_t>::max() - sizeof(BufferBlock))
+    auto size_with_metadata_result = score::safe_math::Add(size, sizeof(BufferBlock));
+    if (!size_with_metadata_result.has_value())
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
     }
-    auto aligned_size_result = GetAlignedSize(size + sizeof(BufferBlock), alignment_size);
+    auto aligned_size_result = GetAlignedSize(size_with_metadata_result.value(), alignment_size);
     if (!aligned_size_result.has_value())
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
     }
     const std::size_t aligned_size = aligned_size_result.value();
 
-    // Check for uint32_t overflow before checking available memory
-    if (aligned_size > std::numeric_limits<std::uint32_t>::max())
+    auto aligned_size_u32_result = score::safe_math::Cast<std::uint32_t>(aligned_size);
+    if (!aligned_size_u32_result.has_value())
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
     }
-
-    const auto aligned_size_u32 = static_cast<std::uint32_t>(aligned_size);
+    const auto aligned_size_u32 = aligned_size_u32_result.value();
     bool subtraction_successful = false;
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
         std::uint32_t available = available_size_.load(std::memory_order_seq_cst);
-        if (aligned_size_u32 >= available)
+
+        auto new_available_result = score::safe_math::Subtract(available, aligned_size_u32);
+        if (!new_available_result.has_value())
         {
             return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kNotEnoughMemory);
         }
         if (AtomicIndirectorType<decltype(available_size_.load())>::compare_exchange_weak(available_size_,
                                                                                           available,
-                                                                                          available - aligned_size_u32,
+                                                                                          new_available_result.value(),
                                                                                           std::memory_order_seq_cst,
                                                                                           std::memory_order_seq_cst))
         {
@@ -220,13 +226,12 @@ void LocklessFlexibleCircularAllocator<AtomicIndirectorType>::UpdateAllocationSt
     const std::uint32_t available_tmd_size = available_size_.load(std::memory_order_seq_cst);
     lowest_size_ = std::min(available_tmd_size, lowest_size_.load(std::memory_order_seq_cst));
 
-    static_assert(sizeof(std::size_t) >= sizeof(std::uint32_t),
-                  "std::size_t must be able to represent all values of std::uint32_t");
-    // Both total_size_ and available_tmd_size are std::uint32_t. Casted to std::size_t for safe subtraction.
-    // The subtraction result is guaranteed to be within [0, total_size_] since available_tmd_size <=
-    // total_size_ by design. cumulative_usage_ is std::uint64_t with ample headroom for accumulation,
-    // and is periodically reset via GetTmdMemUsage().
-    cumulative_usage_ += (static_cast<std::size_t>(total_size_) - static_cast<std::size_t>(available_tmd_size));
+    // available_tmd_size <= total_size_ by design, so subtraction never underflows
+    auto usage_result = score::safe_math::Subtract(total_size_, available_tmd_size);
+    if (usage_result.has_value())
+    {
+        cumulative_usage_ += usage_result.value();
+    }
     alloc_cntr_++;
 }
 
@@ -254,13 +259,13 @@ score::Result<void*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Al
         return MakeUnexpected<void*>(list_entry_result.error());
     }
     const std::uint32_t list_entry_element_index = list_entry_result.value();
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: The subtraction (total_size_ - buffer_queue_head_.load()) is performed using std::uint32_t,
-    // ensuring that the result is within the 32-bit range. aligned_size is validated to be within uint32_t
-    // range by ValidateAllocationRequest(), so the comparison is safe.
-    // coverity[autosar_cpp14_a4_7_1_violation]
-    if (total_size_ - buffer_queue_head_.load() <= aligned_size)
+    auto remaining_result = score::safe_math::Subtract(total_size_, buffer_queue_head_.load());
+    if (!remaining_result.has_value())
+    {
+        IncrementAvailableSize(aligned_size);
+        return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kInvalidOffsetValue);
+    }
+    if (remaining_result.value() <= aligned_size)
     {
         if (buffer_queue_tail_.load(std::memory_order_seq_cst) < static_cast<std::uint32_t>(aligned_size))
         {
@@ -375,20 +380,13 @@ score::Result<bool> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsR
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kCorruptedBufferBlock);
     }
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: All operands and operations are performed using std::uint32_t. Since both
-    // the values and the resulting expression are within the range of a 32-bit unsigned integer,
-    // no data loss can occur.
-    // Suppress "AUTOSAR C++14 M5-0-3" rule findings. This rule states: "A cvalue expression shall
-    // not be implicitly converted to a different underlying type"
-    // False positive, right hand value is the same type.
-    // coverity[autosar_cpp14_m5_0_3_violation]
-    // coverity[autosar_cpp14_a4_7_1_violation]
-    return ((list_array_.at(meta->list_entry_offset).load().offset -
-             // coverity[autosar_cpp14_m5_0_3_violation]
-             list_array_.at(meta->list_entry_offset).load().length) == buffer_queue_tail_.load()) ||
-           (buffer_queue_tail_.load() == 0U);
+    const auto list_entry = list_array_.at(meta->list_entry_offset).load();
+    const auto subtract_result = score::safe_math::Subtract(list_entry.offset, list_entry.length);
+    if (!subtract_result.has_value())
+    {
+        return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+    }
+    return (subtract_result.value() == buffer_queue_tail_.load()) || (buffer_queue_tail_.load() == 0U);
 }
 
 template <template <class> class AtomicIndirectorType>
@@ -459,7 +457,15 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBloc
                 {
                     return MakeUnexpected<score::Blank>(free_block_result.error());
                 }
-                init_tail += current_block->block_length;
+                auto init_tail_result = score::safe_math::Add(init_tail, current_block->block_length);
+                if (!init_tail_result.has_value())
+                {
+                    // LCOV_EXCL_START init_tail and block_length are internally bounded by total_size_,
+                    // so their sum cannot overflow std::uint32_t under normal operation
+                    return MakeUnexpected<score::Blank>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+                    // LCOV_EXCL_STOP
+                }
+                init_tail = init_tail_result.value();
 
                 if (ShouldResetBufferTail(init_tail))
                 {
@@ -560,11 +566,19 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(B
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
         auto old_buffer_queue_tail = buffer_queue_tail_.load();
-        auto new_buffer_queue_tail = old_buffer_queue_tail + static_cast<uint32_t>(current_block.block_length);
+        auto new_buffer_queue_tail_result = score::safe_math::Add(old_buffer_queue_tail, current_block.block_length);
+        if (!new_buffer_queue_tail_result.has_value())
+        {
+            // LCOV_EXCL_START buffer_queue_tail and block_length are internally bounded by total_size_,
+            // so their sum cannot overflow std::uint32_t under normal operation
+            return MakeUnexpected<score::Blank>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+            // LCOV_EXCL_STOP
+        }
+        auto new_buffer_queue_tail = new_buffer_queue_tail_result.value();
         if (AtomicIndirectorType<decltype(buffer_queue_tail_.load())>::compare_exchange_strong(
                 buffer_queue_tail_, old_buffer_queue_tail, new_buffer_queue_tail, std::memory_order_seq_cst) == true)
         {
-            IncrementAvailableSize(static_cast<std::uint32_t>(current_block.block_length));
+            IncrementAvailableSize(current_block.block_length);
             break;
         }
     }
@@ -638,11 +652,19 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IsInBounds(const v
     // NOLINTBEGIN(score-no-pointer-comparison): Needed pointer comparisons for validating memory ranges safely
     // For size==0, the largest valid address is the last byte in the buffer.
     // Using offset==GetSize() would produce a one-past-end pointer, which must not be considered in-bounds.
-    auto end_ptr = (size == 0U) ? GetBufferPositionAt(GetSize() - 1U) : GetBufferPositionAt(GetSize() - size);
-
+    auto end_offset =
+        (size == 0U) ? score::safe_math::Subtract(GetSize(), 1U) : score::safe_math::Subtract(GetSize(), size);
+    if (!end_offset.has_value())
+    {
+        return false;
+    }
+    auto end_ptr = GetBufferPositionAt(end_offset.value());
     if ((!end_ptr.has_value()) || (end_ptr == nullptr))
     {
-        return false;  // Invalid offset, out of bounds
+        // LCOV_EXCL_START end_offset is always < total_size_ at this point because the preceding
+        // size check and Subtract guarantee a valid offset, making this branch unreachable
+        return false;
+        // LCOV_EXCL_STOP
     }
     if ((address >= GetBaseAddress()) && (address <= static_cast<void*>(end_ptr.value())))
     {
@@ -696,9 +718,16 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
     }
     auto block_meta_data = block_meta_data_result.value();
     block_meta_data->list_entry_offset = list_entry_element_index;
-    block_meta_data->block_length = static_cast<std::uint32_t>(aligned_size);
-    score::Result<uint8_t*> allocated_address =
-        GetBufferPositionAt(static_cast<std::size_t>(offset) + sizeof(BufferBlock));
+    block_meta_data->block_length = aligned_size;
+    auto offset_with_header = score::safe_math::Add(static_cast<std::size_t>(offset), sizeof(BufferBlock));
+    if (!offset_with_header.has_value())
+    {
+        // LCOV_EXCL_START offset (std::uint32_t) + sizeof(BufferBlock) cannot overflow std::size_t
+        // on 64-bit platforms where sizeof(std::size_t) > sizeof(std::uint32_t)
+        return MakeUnexpected<uint8_t*>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+        // LCOV_EXCL_STOP
+    }
+    score::Result<uint8_t*> allocated_address = GetBufferPositionAt(offset_with_header.value());
     if ((!allocated_address.has_value()) || (allocated_address.value() == nullptr))
     {
         return MakeUnexpected<uint8_t*>(allocated_address.error());  // Out-of-bounds offset detected
@@ -754,29 +783,18 @@ score::Result<std::uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorT
         return MakeUnexpected<std::uint8_t*>(head_result.error());
     }
     const std::uint32_t new_buffer_queue_head = head_result.value();
-    // Underflow check: ensures new_buffer_queue_head >= aligned_size before subtraction.
-    // This condition is always false in practice since AcquireWrapAroundBufferHead sets
-    // new_buffer_queue_head = aligned_size, but is required to justify the coverity suppression below.
-    if (new_buffer_queue_head < aligned_size)  // LCOV_EXCL_BR_LINE: Defensive check for coverity
-    {
-        return MakeUnexpected(                                       // LCOV_EXCL_LINE
-            LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);  // LCOV_EXCL_LINE
-    }
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: Underflow is prevented by the check above ensuring new_buffer_queue_head >= aligned_size.
-    // coverity[autosar_cpp14_a4_7_1_violation]
-    const std::uint32_t block_offset = new_buffer_queue_head - aligned_size;
+    // Wrap-around means the new allocation is placed at the start of the circular buffer (offset 0).
+    // AcquireWrapAroundBufferHead resets the head to aligned_size (i.e. 0 + aligned_size),
+    // so the block always starts at offset 0.
+    const std::uint32_t block_offset = 0U;
     auto allocated_address = SetupBlockMetadata(block_offset, aligned_size, list_entry_element_index);
     if (!allocated_address.has_value())
     {
         return MakeUnexpected<uint8_t*>(allocated_address.error());
     }
 
-    if (!UpdateListEntryForAllocation(static_cast<std::size_t>(list_entry_element_index),
-                                      // coverity[autosar_cpp14_a4_7_1_violation]
-                                      aligned_size,
-                                      new_buffer_queue_head))
+    if (!UpdateListEntryForAllocation(
+            static_cast<std::size_t>(list_entry_element_index), aligned_size, new_buffer_queue_head))
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kViolatedMaximumRetries);
     }
@@ -794,29 +812,31 @@ score::Result<std::uint32_t> LocklessFlexibleCircularAllocator<AtomicIndirectorT
         auto old_buffer_queue_head = buffer_queue_head_.load();
         // Safety check: never advance head beyond the buffer end.
         // Under allocation concurrency, the earlier wrap-around decision can become stale.
-        // Prevent unsigned underflow by validating the relationship before subtraction.
-        // All arithmetic stays within std::uint32_t.
-        if (old_buffer_queue_head > total_size_)
+        auto remaining_result = score::safe_math::Subtract(total_size_, old_buffer_queue_head);
+        if (!remaining_result.has_value())
         {
             return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kInvalidOffsetValue);
         }
-        const std::uint32_t remaining = total_size_ - old_buffer_queue_head;
+        const std::uint32_t remaining = remaining_result.value();
         if (aligned_size > remaining)
         {
             return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kNotEnoughMemory);
         }
-        auto new_buffer_queue_head = old_buffer_queue_head + static_cast<std::uint32_t>(aligned_size);
+        auto new_buffer_queue_head_result = score::safe_math::Add(old_buffer_queue_head, aligned_size);
+        if (!new_buffer_queue_head_result.has_value())
+        {
+            // LCOV_EXCL_START aligned_size <= remaining = total_size_ - old_buffer_queue_head,
+            // so old_buffer_queue_head + aligned_size <= total_size_ and cannot overflow
+            return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+            // LCOV_EXCL_STOP
+        }
+        auto new_buffer_queue_head = new_buffer_queue_head_result.value();
         if (AtomicIndirectorType<decltype(buffer_queue_head_.load())>::compare_exchange_strong(
                 buffer_queue_head_, old_buffer_queue_head, new_buffer_queue_head, std::memory_order_seq_cst) == true)
         {
-            if (new_buffer_queue_head <
-                static_cast<unsigned int>(
-                    aligned_size))  // LCOV_EXCL_BR_LINE: Defensive check, prior bounds validation prevents overflow
-            {
-                return MakeUnexpected(                                       // LCOV_EXCL_LINE
-                    LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);  // LCOV_EXCL_LINE
-            }
-            offset = new_buffer_queue_head - aligned_size;
+            // new_buffer_queue_head = old_buffer_queue_head + aligned_size, so the start of the
+            // allocated block is simply the old head position
+            offset = old_buffer_queue_head;
             break;
         }
     }
@@ -841,14 +861,17 @@ score::Result<uint8_t*> LocklessFlexibleCircularAllocator<AtomicIndirectorType>:
         return MakeUnexpected<uint8_t*>(allocated_address.error());
     }
 
-    const std::uint32_t list_entry_offset = aligned_size + offset;
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall
-    // not lead to data loss.".
-    // Rationale: Narrowing conversion validity is ensured by SetupBlockMetadata()
-    if (!UpdateListEntryForAllocation(static_cast<std::size_t>(list_entry_element_index),
-                                      // coverity[autosar_cpp14_a4_7_1_violation]
-                                      aligned_size,
-                                      list_entry_offset))
+    auto list_entry_offset_result = score::safe_math::Add(aligned_size, offset);
+    if (!list_entry_offset_result.has_value())
+    {
+        // LCOV_EXCL_START aligned_size + offset <= total_size_ is guaranteed by
+        // AcquireNoWrapAroundBufferHead, so this sum cannot overflow
+        return MakeUnexpected<uint8_t*>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+        // LCOV_EXCL_STOP
+    }
+    const std::uint32_t list_entry_offset = list_entry_offset_result.value();
+    if (!UpdateListEntryForAllocation(
+            static_cast<std::size_t>(list_entry_element_index), aligned_size, list_entry_offset))
     {
         return MakeUnexpected(LocklessFlexibleAllocatorErrorCode::kViolatedMaximumRetries);
     }

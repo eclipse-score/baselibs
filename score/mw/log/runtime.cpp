@@ -16,6 +16,8 @@
 #include "score/mw/log/detail/thread_local_guard.h"
 #include "score/mw/log/irecorder_factory.h"
 
+#include "score/utils/meyer_singleton/meyer_singleton.h"
+
 namespace score
 {
 namespace mw
@@ -27,17 +29,7 @@ namespace detail
 
 Runtime& Runtime::Instance(Recorder* const recorder, score::cpp::pmr::memory_resource* memory_resource) noexcept
 {
-    /*
-    Deviation from Rule A3-3-2:
-    - Static and thread-local objects shall be constant-initialized.
-    Justification:
-    - This is intentional to apply singleton pattern,
-      and 'runtime' is safely initialized on first use and is thread-safe due to C++11 static initialization guarantees.
-    */
-    // coverity[autosar_cpp14_a3_3_2_violation]
-    static Runtime runtime{recorder, memory_resource};
-
-    return runtime;
+    return singleton::MeyerSingleton<Runtime>::GetInstance(recorder, memory_resource);
 }
 
 Runtime::Runtime(Recorder* const recorder, score::cpp::pmr::memory_resource* memory_resource) noexcept
@@ -67,32 +59,12 @@ score::mw::log::Recorder& Runtime::GetRecorder() noexcept
         return *instance.default_recorder_;
     }
     //  Only as last resort, return static empty recorder:
-    /*
-    Deviation from Rule A3-3-2:
-    - Static and thread-local objects shall be constant-initialized.
-    Justification:
-    - This is intentional to apply singleton pattern,
-      and 'empty_recorder' is safely initialized on first use and is thread-safe due to C++11 static initialization
-      guarantees.
-    */
-    // coverity[autosar_cpp14_a3_3_2_violation]
-    static EmptyRecorder empty_recorder{};  // LCOV_EXCL_LINE : false positive
-    return empty_recorder;
+    return singleton::MeyerSingleton<EmptyRecorder>::GetInstance();
 }
 
 score::mw::log::Recorder& Runtime::GetFallbackRecorder() noexcept
 {
-    /*
-    Deviation from Rule A3-3-2:
-    - Static and thread-local objects shall be constant-initialized.
-    Justification:
-    - This is intentional to apply singleton pattern,
-      and 'empty_recorder' is safely initialized on first use and is thread-safe due to C++11 static initialization
-      guarantees.
-    */
-    // coverity[autosar_cpp14_a3_3_2_violation]
-    static EmptyRecorder empty_recorder{};
-    return empty_recorder;
+    return singleton::MeyerSingleton<EmptyRecorder>::GetInstance();
 }
 
 score::mw::log::LoggerContainer& Runtime::GetLoggerContainer() noexcept

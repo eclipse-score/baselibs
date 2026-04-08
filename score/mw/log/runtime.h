@@ -20,6 +20,17 @@
 
 namespace score
 {
+namespace singleton
+{
+
+// Suppress "AUTOSAR C++14 M3-2-3".
+// Rationale: This is a forward declaration that does not vioalate this rule.
+template <typename Object, template <class> class AtomicIndirectorType>
+// coverity[autosar_cpp14_m3_2_3_violation]
+class MeyerSingleton;
+
+}  // namespace singleton
+
 namespace mw
 {
 namespace log
@@ -39,6 +50,13 @@ class RecorderFactory;
 /// efforts in the overall codebase
 class Runtime final
 {
+    // Suppress "AUTOSAR C++14 A11-3-1"
+    // The Runtime class is intended to only be constructed as a singleton object. Therefore, the constructor should be
+    // private and the user should initialize the Runtime via GetRecorder(). The MeyerSingleton class is used to create
+    // the Runtime singleton. Therefore, MeyerSingleton needs access to the private Runtime constructor.
+    // coverity[autosar_cpp14_a11_3_1_violation]
+    friend class singleton::MeyerSingleton<Runtime, memory::shared::AtomicIndirectorReal>;
+
   public:
     /// \brief Implements a singleton, so no copying or moving
     Runtime(const Runtime&) noexcept = delete;
@@ -75,6 +93,7 @@ class Runtime final
 
   private:
     explicit Runtime(Recorder* const recorder, score::cpp::pmr::memory_resource* memory_resource) noexcept;
+
     static Runtime& Instance(Recorder* const recorder,
                              score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept;
     LoggerContainer logger_container_instance_{};

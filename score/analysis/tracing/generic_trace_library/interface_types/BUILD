@@ -75,6 +75,9 @@ cc_library(
 
 cc_library(
     name = "type_definitions",
+    srcs = [
+        "service_instance_element.cpp",
+    ],
     hdrs = [
         "service_instance_element.h",
         "trace_point_type.h",
@@ -83,5 +86,8 @@ cc_library(
     tags = ["FFI"],
     visibility = [
         "@score_baselibs//score/analysis/tracing:__subpackages__",
+    ],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
     ],
 )

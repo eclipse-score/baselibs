@@ -61,6 +61,7 @@ cc_library(
         "@score_baselibs//score/analysis/tracing/common/utilities:tracing_utils",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math",
         "@score_baselibs//score/result",
     ],
 )

@@ -84,7 +84,7 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     void IncrementAvailableSize(std::uint32_t delta) noexcept;
 
     void* base_address_;
-    std::uint32_t total_size_;
+    const std::uint32_t total_size_;
     std::atomic<std::uint32_t> gap_address_;
     std::atomic<std::uint32_t> buffer_queue_head_;
     std::atomic<std::uint32_t> buffer_queue_tail_;
