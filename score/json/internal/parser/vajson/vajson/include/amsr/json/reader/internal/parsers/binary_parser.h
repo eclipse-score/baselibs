@@ -21,88 +21,79 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that only parses a single binary value
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that only parses a single binary value
 
-class BinaryParser final : public VirtualParser {
-  /*!
-   * \brief           Type of function to be executed when a binary values are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(Bytes)>;
+class BinaryParser final : public VirtualParser
+{
+    /// \brief           Type of function to be executed when a binary values are read
+    using Fn = score::cpp::move_only_function<ResultBlank(Bytes)>;
 
- public:
-  /*!
-   * \brief           Constructs a BinaryParser
-   * \details         Callback must take the binary content as score::cpp::span<char const> and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute when the binary content is read.
-   *
-   * \context         ANY
-   * \pre             Callback does not throw exceptions.
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   */
+  public:
+    /// \brief           Constructs a BinaryParser
+    /// \details         Callback must take the binary content as score::cpp::span<char const> and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute when the binary content is read.
+    /// \context         ANY
+    /// \pre             Callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  BinaryParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
+    BinaryParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
-  /*!
-   * \brief           Event for binary content
-   * \param[in]       view
-   *                  Read binary content.
-   * \return          kFinished if the callback function succeeds, or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Execute the callback with the read binary content.
-   * - If the callback succeeds:
-   *   - Return kFinished.
-   * - Otherwise:
-   *   - Return the error of the callback.
-   * \endinternal
-   */
-  auto OnBinary(Bytes view) noexcept -> ParserResult final {
+    /// \brief           Event for binary content
+    /// \param[in]       view
+    ///                  Read binary content.
+    /// \return          kFinished if the callback function succeeds, or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-    return this->fn_(view).transform([](score::Blank) noexcept { return ParserState::kFinished; });
-  }
+    /// \internal
+    /// - Execute the callback with the read binary content.
+    /// - If the callback succeeds:
+    ///   - Return kFinished.
+    /// - Otherwise:
+    ///   - Return the error of the callback.
+    /// \endinternal
+    auto OnBinary(Bytes view) noexcept -> ParserResult final
+    {
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if no binary content is parsed
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult final {
-    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse binary content.");
-  }
+        return this->fn_(view).transform([](score::Blank) noexcept {
+            return ParserState::kFinished;
+        });
+    }
 
- private:
-  /*!
-   * \brief           Function to be executed on binary content
-   */
-  Fn fn_;
+    /// \brief           Default event for unexpected elements that aborts the parsing
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if no binary content is parsed
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    {
+        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse binary content.");
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on binary content
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

@@ -29,417 +29,340 @@
 #include "amsr/json/util/json_error_domain.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr {
-namespace json {
-namespace internal {
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
 
-/*!
- * \brief           A SAX-style JSON parser
- *
- * \details         The VirtualParser implements an interface for parsers and is based on dynamic polymorphism. The
- *                  derived parser can implement callbacks for all types of elements it expects to appear. If the parser
- *                  encounters any other type, it calls OnUnexpectedEvent. If this callback is not overridden by the
- *                  derived parser, the default implementation aborts parsing.
- * \vprivate        Vector component internal API
- *
- * \trace           DSGN-JSON-Reader-Data-Items
- */
+/// \brief           A SAX-style JSON parser
+/// \details         The VirtualParser implements an interface for parsers and is based on dynamic polymorphism. The
+///                  derived parser can implement callbacks for all types of elements it expects to appear. If the
+///                  parser encounters any other type, it calls OnUnexpectedEvent. If this callback is not overridden by
+///                  the derived parser, the default implementation aborts parsing.
 
-class VirtualParser {
- public:
+/// \trace           DSGN-JSON-Reader-Data-Items
 
-  /*!
-   * \brief           Friend declaration, in order to make StructureParser able to access private methods of
-   *                  VirtualParser
-   */
-  template <typename T>
+class VirtualParser
+{
+  public:
+    /*!
+     * \brief           Friend declaration, in order to make StructureParser able to access private methods of
+     *                  VirtualParser
+     */
+    template <typename T>
 
-  friend class StructureParser;
+    friend class StructureParser;
 
-  /*!
-   * \brief           Constructs a VirtualParser
-   * \param[in]       doc
-   *                  to parse.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  explicit VirtualParser(JsonData& doc) noexcept;
+    /// \brief           Constructs a VirtualParser
+    /// \param[in]       doc
+    ///                  to parse.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Deleted copy constructor
-   */
-  VirtualParser(VirtualParser const&) = delete;
+    explicit VirtualParser(JsonData& doc) noexcept;
 
-  /*!
-   * \brief           Deleted copy assignment
-   */
-  auto operator=(VirtualParser const&) -> VirtualParser& = delete;
+    /// \brief           Deleted copy constructor
+    VirtualParser(const VirtualParser&) = delete;
 
-  /*!
-   * \brief           Deleted move constructor
-   */
-  VirtualParser(VirtualParser&&) = delete;
+    /// \brief           Deleted copy assignment
+    auto operator=(const VirtualParser&) -> VirtualParser& = delete;
 
-  /*!
-   * \brief           Deleted move assignment
-   */
-  auto operator=(VirtualParser&&) -> VirtualParser& = delete;
+    /// \brief           Deleted move constructor
+    VirtualParser(VirtualParser&&) = delete;
 
-  /*!
-   * \brief           Default destructor
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
+    /// \brief           Deleted move assignment
+    auto operator=(VirtualParser&&) -> VirtualParser& = delete;
 
-  virtual ~VirtualParser() noexcept = default;
+    /// \brief           Default destructor
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    virtual ~VirtualParser() noexcept = default;
 
-  /*!
-   * \brief           Parses file until the current parser is finished
-   * \return          The empty Result, or an error.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if an unknown value has been encountered.
-   * \error           amsr::json::JsonErrc::kInvalidJson
-   *                  if parsing has failed due to invalid JSON data.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto Parse() noexcept -> Result<score::Blank>;
+    /// \brief           Parses file until the current parser is finished
+    /// \return          The empty Result, or an error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if an unknown value has been encountered.
+    /// \error           amsr::json::JsonErrc::kInvalidJson
+    ///                  if parsing has failed due to invalid JSON data.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Parses file until the current parser is finished
-   * \details         Parserstate will be kRunning to allow for further parsing.
-   * \return          A ParserResult.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if an unknown value has been encountered.
-   * \error           amsr::json::JsonErrc::kInvalidJson
-   *                  if parsing has failed due to invalid JSON data.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto SubParse() const noexcept -> ParserResult;
+    virtual auto Parse() noexcept -> Result<score::Blank>;
 
-  /*!
-   * \brief           Returns a reference to the CRTP child
-   * \return          Reference to the CRTP child.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto GetChild() & noexcept -> VirtualParser&;
+    /// \brief           Parses file until the current parser is finished
+    /// \details         Parserstate will be kRunning to allow for further parsing.
+    /// \return          A ParserResult.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if an unknown value has been encountered.
+    /// \error           amsr::json::JsonErrc::kInvalidJson
+    ///                  if parsing has failed due to invalid JSON data.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
- protected:
-  /*!
-   * \brief           Returns the current key
-   * \return          THe current key.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto GetCurrentKey() const noexcept -> CStringView;
+    auto SubParse() const noexcept -> ParserResult;
 
-  /*!
-   * \brief           Returns a reference to the JSON file
-   * \return          Reference to the JSON file.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto GetJsonDocument() noexcept -> JsonData&;
+    /// \brief           Returns a reference to the CRTP child
+    /// \return          Reference to the CRTP child.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*!
-   * \brief           Returns a reference to the JSON file
-   * \return          Const reference to the JSON file.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto GetJsonDocument() const noexcept -> JsonData const&;
+    auto GetChild() & noexcept -> VirtualParser&;
 
- private:
-  /*!
-   * \brief           Default event for Null
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnNull() noexcept -> ParserResult;
+  protected:
+    /// \brief           Returns the current key
+    /// \return          THe current key.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*!
-   * \brief           Default event for Bools
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnBool(bool) noexcept -> ParserResult;  // NOLINT(readability/casting)
+    auto GetCurrentKey() const noexcept -> CStringView;
 
-  /*!
-   * \brief           Default event for Numbers
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnNumber(JsonNumber) noexcept -> ParserResult;
+    /// \brief           Returns a reference to the JSON file
+    /// \return          Reference to the JSON file.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*!
-   * \brief           Default event for Strings
-   * \details         The provided StringView is only valid until any other method or parser operating on the same
-   *                  document is called.
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnString(StringView) noexcept -> ParserResult;
+    auto GetJsonDocument() noexcept -> JsonData&;
 
-  /*!
-   * \brief           Forwarding function to accept CStringView strings from parent parser
-   * \param[in]       view
-   *                  Parsed string.
-   * \return          The result of the OnString callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  // auto OnString(CStringView view) noexcept -> ParserResult {
-  //
-  //   return this->OnString(StringView{view.c_str(), view.size()});
-  // }
+    /// \brief           Returns a reference to the JSON file
+    /// \return          Const reference to the JSON file.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*!
-   * \brief           Forwarding function to accept binary strings
-   * \param[in]       view
-   *                  Parsed binary string.
-   * \return          The result of the OnString callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnBinaryString(StringView view) noexcept -> ParserResult {
+    auto GetJsonDocument() const noexcept -> const JsonData&;
 
-    return this->OnString(view);
-  }
+  private:
+    /// \brief           Default event for Null
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Default event for Keys
-   * \details         The provided StringView is only valid until any other method or parser operating on the same
-   *                  document is called.
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnKey(StringView) noexcept -> ParserResult;
+    virtual auto OnNull() noexcept -> ParserResult;
 
-  /*!
-   * \brief           Forwarding function to accept CStringView keys from parent parser
-   * \param[in]       view
-   *                  Parsed key.
-   * \return          The result of the OnKey callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  // auto OnKey(CStringView view) noexcept -> ParserResult {
-  //
-  //   return this->OnKey(StringView{view.c_str(), view.size()});
-  // }
+    /// \brief           Default event for Bools
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Forwarding function to accept binary keys
-   * \param[in]       view
-   *                  Parsed binary key.
-   * \return          The result of the OnKey callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnBinaryKey(StringView view) noexcept -> ParserResult {
+    virtual auto OnBool(bool) noexcept -> ParserResult;  // NOLINT(readability/casting)
 
-    return this->OnKey(view);
-  }
+    ///
+    /// \brief           Default event for Numbers
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Default event for the start of objects
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnStartObject() noexcept -> ParserResult;
+    ///
+    virtual auto OnNumber(JsonNumber) noexcept -> ParserResult;
 
-  /*!
-   * \brief           Default event for the end of objects
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnEndObject(std::size_t) noexcept -> ParserResult;
+    ///
+    /// \brief           Default event for Strings
+    /// \details         The provided StringView is only valid until any other method or parser operating on the same
+    ///                  document is called.
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Default event for the start of arrays
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnStartArray() noexcept -> ParserResult;
+    ///
+    virtual auto OnString(StringView) noexcept -> ParserResult;
 
-  /*!
-   * \brief           Default event for the end of arrays
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnEndArray(std::size_t) noexcept -> ParserResult;
+    /*!
+     * \brief           Forwarding function to accept CStringView strings from parent parser
+     * \param[in]       view
+     *                  Parsed string.
+     * \return          The result of the OnString callback or its error.
+     *
+     * \context         ANY
+     * \pre             -
+     * \threadsafe      TRUE, for different this pointer
+     * \spec
+     * requires true;
+     * \endspec
+     */
+    // auto OnString(CStringView view) noexcept -> ParserResult {
+    //
+    //   return this->OnString(StringView{view.c_str(), view.size()});
+    // }
 
-  /*!
-   * \brief           Default event for binary content
-   * \details         The provided Span is only valid until any other method or parser operating on the same document is
-   *                  called.
-   * \return          The result of the OnUnexpectedEvent callback or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
-   * \endinternal
-   */
-  virtual auto OnBinary(Bytes) noexcept -> ParserResult {
+    ///
+    /// \brief           Forwarding function to accept binary strings
+    /// \param[in]       view
+    ///                  Parsed binary string.
+    /// \return          The result of the OnString callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-    return this->OnUnexpectedEvent();
-  }
+    ///
+    auto OnBinaryString(StringView view) noexcept -> ParserResult
+    {
 
-  /*!
-   * \brief           Default event for default callbacks that aborts parsing
-   * \details         This callback is called by all default event callbacks which are not overridden by the derived
-   *                  parser. It allows the parser to continue parsing if an unexpected event is encountered (i.e. a
-   *                  JSON element for which no callback is implemented by the derived parser). It may be overridden by
-   *                  the derived parser if a different behaviour is desired.
-   * \return          An error result.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnUnexpectedEvent() noexcept -> ParserResult;
+        return this->OnString(view);
+    }
 
-  /*!
-   * \brief           Generic JSON structure parser
-   */
-  StructureParser<VirtualParser> parser_;
+    ///
+    /// \brief           Default event for Keys
+    /// \details         The provided StringView is only valid until any other method or parser operating on the same
+    ///                  document is called.
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    ///
+    virtual auto OnKey(StringView) noexcept -> ParserResult;
+
+    /*!
+     * \brief           Forwarding function to accept CStringView keys from parent parser
+     * \param[in]       view
+     *                  Parsed key.
+     * \return          The result of the OnKey callback or its error.
+     *
+     * \context         ANY
+     * \pre             -
+     * \threadsafe      TRUE, for different this pointer
+     * \spec
+     * requires true;
+     * \endspec
+     */
+    // auto OnKey(CStringView view) noexcept -> ParserResult {
+    //
+    //   return this->OnKey(StringView{view.c_str(), view.size()});
+    // }
+
+    ///
+    /// \brief           Forwarding function to accept binary keys
+    /// \param[in]       view
+    ///                  Parsed binary key.
+    /// \return          The result of the OnKey callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
+
+    ///
+    auto OnBinaryKey(StringView view) noexcept -> ParserResult
+    {
+
+        return this->OnKey(view);
+    }
+
+    ///
+    /// \brief           Default event for the start of objects
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    ///
+    virtual auto OnStartObject() noexcept -> ParserResult;
+
+    ///
+    /// \brief           Default event for the end of objects
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    ///
+    virtual auto OnEndObject(std::size_t) noexcept -> ParserResult;
+
+    ///
+    /// \brief           Default event for the start of arrays
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    ///
+    virtual auto OnStartArray() noexcept -> ParserResult;
+
+    ///
+    /// \brief           Default event for the end of arrays
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    ///
+    virtual auto OnEndArray(std::size_t) noexcept -> ParserResult;
+
+    ///
+    /// \brief           Default event for binary content
+    /// \details         The provided Span is only valid until any other method or parser operating on the same document
+    /// is
+    ///                  called.
+    /// \return          The result of the OnUnexpectedEvent callback or its error.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    ///
+
+    /// \internal
+    /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
+    /// \endinternal
+    ///
+    virtual auto OnBinary(Bytes) noexcept -> ParserResult
+    {
+
+        return this->OnUnexpectedEvent();
+    }
+
+    ///
+    /// \brief           Default event for default callbacks that aborts parsing
+    /// \details         This callback is called by all default event callbacks which are not overridden by the derived
+    ///                  parser. It allows the parser to continue parsing if an unexpected event is encountered (i.e. a
+    ///                  JSON element for which no callback is implemented by the derived parser). It may be overridden
+    ///                  by the derived parser if a different behaviour is desired.
+    /// \return          An error result.
+    ///
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
+
+    ///
+    virtual auto OnUnexpectedEvent() noexcept -> ParserResult;
+
+    /*!
+     * \brief           Generic JSON structure parser
+     */
+    StructureParser<VirtualParser> parser_;
 };
 
 }  // namespace internal

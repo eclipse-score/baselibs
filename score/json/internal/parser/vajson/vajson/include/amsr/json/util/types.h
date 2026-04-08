@@ -24,64 +24,42 @@
 #include <string>
 #include <string_view>
 
+#include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/optional.hpp"
 #include "score/span.hpp"
-#include "score/language/safecpp/string_view/zstring_view.h"
 
-namespace amsr {
-namespace json {
+namespace amsr
+{
+namespace json
+{
 /*!
  * \brief           Unqualified access to Optional
- * \vpublic
  * \tparam          T
  *                  Type of value.
  */
 template <typename T>
 using Optional = score::cpp::optional<T>;
 
-/*!
- * \brief           Unqualified access to CStringView
- *
- * \vpublic
- */
+/// \brief           Unqualified access to CStringView
 using CStringView = score::safecpp::zstring_view;
 
-/*!
- * \brief           Unqualified access to StringView
- *
- * \vpublic
- */
+/// \brief           Unqualified access to StringView
 using StringView = std::string_view;
 
-/*!
- * \brief           Unqualified access to String
- *
- * \vpublic
- */
+/// \brief           Unqualified access to String
 using String = std::string;
 
-/*!
- * \brief           Unqualified access to binary data
- *
- * \vpublic
- */
-using Bytes = score::cpp::span<char const>;
+/// \brief           Unqualified access to binary data
+using Bytes = score::cpp::span<const char>;
 
-/*!
- * \brief           Short form for creating a StringView
- *
- * \vpublic
- */
+/// \brief           Short form for creating a StringView
 using std::literals::string_view_literals::operator""sv;
 
-/*!
- * \brief           The encoding of the document
- *
- * \vpublic
- */
-enum class EncodingType : std::uint8_t {
-  kNone,
-  kUtf8,
+/// \brief           The encoding of the document
+enum class EncodingType : std::uint8_t
+{
+    kNone,
+    kUtf8,
 };
 
 }  // namespace json

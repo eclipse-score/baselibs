@@ -21,76 +21,71 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/v2/single_object_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that parses key value pairs
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that parses key value pairs
 
-class ObjectParser final : public v2::SingleObjectParser {
-  /*!
-   * \brief           Type of function to be executed when the objects are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
+class ObjectParser final : public v2::SingleObjectParser
+{
+    /// \brief           Type of function to be executed when the objects are read
+    using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
 
- public:
-  /*!
-   * \brief           Constructs an ObjectParser
-   * \details         Callback must take the object key as an std::string_view and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute on every object key.
-   * \param[in]       object_already_open
-   *                  Specify if the object has already been opened. Defaults to false.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  ObjectParser(JsonData& doc, Fn&& fn, bool object_already_open = false) noexcept
-      : v2::SingleObjectParser{doc, object_already_open}, fn_{std::move(fn)} {}
+  public:
+    /// \brief           Constructs an ObjectParser
+    /// \details         Callback must take the object key as an std::string_view and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute on every object key.
+    /// \param[in]       object_already_open
+    ///                  Specify if the object has already been opened. Defaults to false.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Event for object keys
-   * \param[in]       key
-   *                  Parsed key.
-   * \return          kRunning if the callback function succeeds, or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Execute the callback with the current key.
-   * - If the callback succeeds:
-   *   - Return kRunning.
-   * - Otherwise:
-   *   - Return the error of the callback.
-   * \endinternal
-   */
-  auto OnKey(std::string_view key) noexcept -> ParserResult final {
+    ObjectParser(JsonData& doc, Fn&& fn, bool object_already_open = false) noexcept
+        : v2::SingleObjectParser{doc, object_already_open}, fn_{std::move(fn)}
+    {
+    }
 
-    return std::forward<Fn>(this->fn_)(key).transform([](score::Blank) noexcept { return ParserState::kRunning; });
-  }
+    /// \brief           Event for object keys
+    /// \param[in]       key
+    ///                  Parsed key.
+    /// \return          kRunning if the callback function succeeds, or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
- private:
-  /*!
-   * \brief           Function to be executed on every element
-   */
-  Fn fn_;
+    /// \internal
+    /// - Execute the callback with the current key.
+    /// - If the callback succeeds:
+    ///   - Return kRunning.
+    /// - Otherwise:
+    ///   - Return the error of the callback.
+    /// \endinternal
+    auto OnKey(std::string_view key) noexcept -> ParserResult final
+    {
+
+        return std::forward<Fn>(this->fn_)(key).transform([](score::Blank) noexcept {
+            return ParserState::kRunning;
+        });
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on every element
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

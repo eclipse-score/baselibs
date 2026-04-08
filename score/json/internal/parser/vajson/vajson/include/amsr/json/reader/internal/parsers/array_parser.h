@@ -21,68 +21,63 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/v2/single_array_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that only parses multiple values of the same type
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that only parses multiple values of the same type
 
-class ArrayParser final : public v2::SingleArrayParser {
-  /*!
-   * \brief           Type of function to be executed when the keys are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(std::size_t)>;
+class ArrayParser final : public v2::SingleArrayParser
+{
+    /// \brief           Type of function to be executed when the keys are read
+    using Fn = score::cpp::move_only_function<ResultBlank(std::size_t)>;
 
- public:
-  /*!
-   * \brief           Constructs an ArrayParser
-   * \details         Callback must take the array index as a std::size_t and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute on every array element.
-   *
-   * \context         ANY
-   * \pre             Callback does not throw exceptions.
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   */
-  ArrayParser(JsonData& doc, Fn fn) noexcept : v2::SingleArrayParser{doc}, fn_{std::move(fn)} {}
+  public:
+    /// \brief           Constructs an ArrayParser
+    /// \details         Callback must take the array index as a std::size_t and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute on every array element.
+    /// \context         ANY
+    /// \pre             Callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    ArrayParser(JsonData& doc, Fn fn) noexcept : v2::SingleArrayParser{doc}, fn_{std::move(fn)} {}
 
-  /*!
-   * \brief           Event for array Elements
-   * \return          kRunning if the callback function succeeds, or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Execute the callback with the current array index.
-   * - If the callback succeeds:
-   *   - Return kRunning.
-   * - Otherwise:
-   *   - Return the error of the callback.
-   * \endinternal
-   */
-  auto OnElement() noexcept -> ParserResult final {
+    /// \brief           Event for array Elements
+    /// \return          kRunning if the callback function succeeds, or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-    return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](score::Blank) noexcept { return ParserState::kRunning; });
-  }
+    /// \internal
+    /// - Execute the callback with the current array index.
+    /// - If the callback succeeds:
+    ///   - Return kRunning.
+    /// - Otherwise:
+    ///   - Return the error of the callback.
+    /// \endinternal
+    auto OnElement() noexcept -> ParserResult final
+    {
 
- private:
-  /*!
-   * \brief           Function to be executed on every element
-   */
-  Fn fn_;
+        return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](score::Blank) noexcept {
+            return ParserState::kRunning;
+        });
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on every element
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

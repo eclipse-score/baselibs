@@ -27,30 +27,30 @@
 #include "amsr/json/reader/internal/parsers/composition_parser.h"
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 
-namespace amsr {
-namespace json {
-namespace v2 {
-/*!
- * \brief           A parser that aborts on unknown values
- *
- * \details         The VirtualParser implements a interface for parsers and is based on dynamic polymorphism. The
- *                  derived parser can implement callbacks for all types of elements it expects to appear. If the parser
- *                  encounters any other type, it calls OnUnexpectedEvent. If this callback is not defined by the
- *                  derived parser, the default implementation aborts parsing.
- * \vpublic
- */
+namespace amsr
+{
+namespace json
+{
+namespace v2
+{
+/// \brief           A parser that aborts on unknown values
+/// \details         The VirtualParser implements a interface for parsers and is based on dynamic polymorphism. The
+///                  derived parser can implement callbacks for all types of elements it expects to appear. If the
+///                  parser encounters any other type, it calls OnUnexpectedEvent. If this callback is not defined by
+///                  the derived parser, the default implementation aborts parsing.
 
-class Parser : public internal::CompositionParser<internal::VirtualParser> {
- public:
-  /*!
-   * \brief           Constructor
-   */
-  using internal::CompositionParser<internal::VirtualParser>::CompositionParser;
+class Parser : public internal::CompositionParser<internal::VirtualParser>
+{
+  public:
+    /*!
+     * \brief           Constructor
+     */
+    using internal::CompositionParser<internal::VirtualParser>::CompositionParser;
 
-  Parser(Parser const&) = delete;
-  Parser& operator=(Parser const&) = delete;
-  Parser(Parser&&) = delete;
-  Parser& operator=(Parser&&) = delete;
+    Parser(const Parser&) = delete;
+    Parser& operator=(const Parser&) = delete;
+    Parser(Parser&&) = delete;
+    Parser& operator=(Parser&&) = delete;
 };
 
 }  // namespace v2

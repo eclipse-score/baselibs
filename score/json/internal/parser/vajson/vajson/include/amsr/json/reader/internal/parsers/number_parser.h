@@ -19,94 +19,85 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that only parses a single number value
- * \tparam          T
- *                  Type of number to parse.
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that only parses a single number value
+/// \tparam          T
+///                  Type of number to parse.
 template <typename T>
 
-class NumberParser final : public VirtualParser {
-  /*!
-   * \brief           Type of function to be executed when the numbers are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(T)>;
+class NumberParser final : public VirtualParser
+{
+    /// \brief           Type of function to be executed when the numbers are read
+    using Fn = score::cpp::move_only_function<ResultBlank(T)>;
 
- public:
-  /*!
-   * \brief           Constructs a NumberParser
-   * \details         Callback must take the number of type T and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute on the number.
-   *
-   * \context         ANY
-   * \pre             Callback does not throw exceptions.
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   */
+  public:
+    /// \brief           Constructs a NumberParser
+    /// \details         Callback must take the number of type T and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute on the number.
+    /// \context         ANY
+    /// \pre             Callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  NumberParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
+    NumberParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
-  /*!
-   * \brief           Event for Numbers
-   * \param[in]       number
-   *                  that is parsed.
-   * \return          kFinished if the callback function succeeds, or an error.
-   *
-   * \error           amsr::jsonJsonErrc::kInvalidJson
-   *                  if the number could not be converted to the wanted type.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If the JsonNumber could be successfully converted to a number of type T:
-   *   - Execute the callback with the number.
-   *   - If the callback succeeds:
-   *     - Return kRunning.
-   * - Otherwise:
-   *   - Return the error.
-   * \endinternal
-   */
-  auto OnNumber(JsonNumber number) noexcept -> ParserResult final {
+    /// \brief           Event for Numbers
+    /// \param[in]       number
+    ///                  that is parsed.
+    /// \return          kFinished if the callback function succeeds, or an error.
+    /// \error           amsr::jsonJsonErrc::kInvalidJson
+    ///                  if the number could not be converted to the wanted type.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-    return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](score::Blank) noexcept { return ParserState::kFinished; });
-  }
+    /// \internal
+    /// - If the JsonNumber could be successfully converted to a number of type T:
+    ///   - Execute the callback with the number.
+    ///   - If the callback succeeds:
+    ///     - Return kRunning.
+    /// - Otherwise:
+    ///   - Return the error.
+    /// \endinternal
+    auto OnNumber(JsonNumber number) noexcept -> ParserResult final
+    {
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if no number is parsed
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult final {
-    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a number.");
-  }
+        return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](score::Blank) noexcept {
+            return ParserState::kFinished;
+        });
+    }
 
- private:
-  /*!
-   * \brief           Function to be executed on the number value
-   */
-  Fn fn_;
+    /// \brief           Default event for unexpected elements that aborts the parsing
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if no number is parsed
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    {
+        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a number.");
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on the number value
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

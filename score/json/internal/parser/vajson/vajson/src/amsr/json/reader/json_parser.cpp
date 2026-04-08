@@ -27,9 +27,7 @@ namespace amsr {
 namespace json {
 
 namespace {
-/*!
- * \brief           A parser that only parses an opening curly bracket
- */
+/// \brief           A parser that only parses an opening curly bracket
 
 class StartObjectParser final : public internal::VirtualParser {
  public:
@@ -45,9 +43,7 @@ class StartObjectParser final : public internal::VirtualParser {
   auto OnStartObject() noexcept -> ParserResult final { return ParserState::kFinished; }
 };
 
-/*!
- * \brief           A parser that only parses a closing curly bracket
- */
+/// \brief           A parser that only parses a closing curly bracket
 
 class EndObjectParser final : public internal::VirtualParser {
  public:
@@ -63,9 +59,7 @@ class EndObjectParser final : public internal::VirtualParser {
   auto OnEndObject(std::size_t) noexcept -> ParserResult final { return ParserState::kFinished; }
 };
 
-/*!
- * \brief           Parser that only parses an opening square bracket
- */
+/// \brief           Parser that only parses an opening square bracket
 
 class StartArrayParser final : public internal::VirtualParser {
  public:
@@ -81,9 +75,7 @@ class StartArrayParser final : public internal::VirtualParser {
   auto OnStartArray() noexcept -> ParserResult final { return ParserState::kFinished; }
 };
 
-/*!
- * \brief           Parser that only parses a closing square bracket
- */
+/// \brief           Parser that only parses a closing square bracket
 
 class EndArrayParser final : public internal::VirtualParser {
  public:

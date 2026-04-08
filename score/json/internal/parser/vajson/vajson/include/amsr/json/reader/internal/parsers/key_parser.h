@@ -21,89 +21,79 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that only parses a single key value
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that only parses a single key value
 
-class KeyParser final : public VirtualParser {
-  /*!
-   * \brief           Type of function to be executed when the keys are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
+class KeyParser final : public VirtualParser
+{
+    /// \brief           Type of function to be executed when the keys are read
+    using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
 
- public:
-  /*!
-   * \brief           Constructs a KeyParser
-   * \details         Callback must take the key as a score::safecpp::zstring_view and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute on the key.
-   *
-   * \context         ANY
-   * \pre             Callback does not throw exceptions.
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   */
+  public:
+    /// \brief           Constructs a KeyParser
+    /// \details         Callback must take the key as a score::safecpp::zstring_view and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute on the key.
+    /// \context         ANY
+    /// \pre             Callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  KeyParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
+    KeyParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
-  /*!
-   * \brief           Event for Keys
-   * \param[in]       key
-   *                  that is parsed.
-   * \return          kFinished if the callback function succeeds, or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Execute the callback with the parsed key.
-   * - If the callback succeeds:
-   *   - Return kFinished.
-   * - Otherwise:
-   *   - Return the error of the callback.
-   * \endinternal
-   */
-  auto OnKey(StringView key) noexcept -> ParserResult final {
+    /// \brief           Event for Keys
+    /// \param[in]       key
+    ///                  that is parsed.
+    /// \return          kFinished if the callback function succeeds, or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-    return this->fn_(key).transform([](score::Blank) noexcept { return ParserState::kFinished; });
-  }
+    /// \internal
+    /// - Execute the callback with the parsed key.
+    /// - If the callback succeeds:
+    ///   - Return kFinished.
+    /// - Otherwise:
+    ///   - Return the error of the callback.
+    /// \endinternal
+    auto OnKey(StringView key) noexcept -> ParserResult final
+    {
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if no key is parsed
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult final {
-    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a key.");
-  }
+        return this->fn_(key).transform([](score::Blank) noexcept {
+            return ParserState::kFinished;
+        });
+    }
 
- private:
-  /*!
-   * \brief           Function to be executed on the key
-   */
-  Fn fn_;
+    /// \brief           Default event for unexpected elements that aborts the parsing
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if no key is parsed
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    {
+        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a key.");
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on the key
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

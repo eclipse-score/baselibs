@@ -22,7 +22,6 @@
  *********************************************************************************************************************/
 #include "amsr/json/reader/internal/parsers/composition_parser.h"
 
-#include <utility>
 #include "amsr/json/reader/internal/parsers/array_parser.h"
 #include "amsr/json/reader/internal/parsers/binary_parser.h"
 #include "amsr/json/reader/internal/parsers/bool_parser.h"
@@ -31,65 +30,76 @@
 #include "amsr/json/reader/internal/parsers/object_parser.h"
 #include "amsr/json/reader/internal/parsers/string_parser.h"
 #include "amsr/json/reader/json_data.h"
-namespace amsr {
-namespace json {
-namespace internal {
+#include <utility>
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::Key(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R> {
-  static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::Key(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R>
+{
+    static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
 
-  return KeyParser(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return KeyParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::Bool(Fn fn) noexcept -> CallableReturnsResult<Fn, bool, R> {
-  static_assert(ReturnsResultVoid<Fn, bool>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::Bool(Fn fn) noexcept -> CallableReturnsResult<Fn, bool, R>
+{
+    static_assert(ReturnsResultVoid<Fn, bool>::value, "Must return ResultBlank");
 
-  return BoolParser(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return BoolParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename T, typename Fn>
-auto CompositionParser<Mixin>::Number(Fn fn) noexcept -> CallableReturnsResult<Fn, T, R> {
-  static_assert(ReturnsResultVoid<Fn, T>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::Number(Fn fn) noexcept -> CallableReturnsResult<Fn, T, R>
+{
+    static_assert(ReturnsResultVoid<Fn, T>::value, "Must return ResultBlank");
 
-  return NumberParser<T>(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return NumberParser<T>(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::String(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R> {
-  static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::String(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R>
+{
+    static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
 
-  return StringParser(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return StringParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::Binary(Fn fn) noexcept -> CallableReturnsResult<Fn, Bytes, R> {
-  static_assert(ReturnsResultVoid<Fn, Bytes>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::Binary(Fn fn) noexcept -> CallableReturnsResult<Fn, Bytes, R>
+{
+    static_assert(ReturnsResultVoid<Fn, Bytes>::value, "Must return ResultBlank");
 
-  return BinaryParser(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return BinaryParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::Array(Fn fn) noexcept -> CallableReturnsResult<Fn, std::size_t, R> {
-  static_assert(ReturnsResultVoid<Fn, std::size_t>::value, "Must return ResultBlank");
+auto CompositionParser<Mixin>::Array(Fn fn) noexcept -> CallableReturnsResult<Fn, std::size_t, R>
+{
+    static_assert(ReturnsResultVoid<Fn, std::size_t>::value, "Must return ResultBlank");
 
-  return ArrayParser(this->doc_, std::forward<Fn>(fn)).SubParse();
+    return ArrayParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
 template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::Object(Fn fn, bool object_already_open) noexcept
-    -> CallableReturnsResult<Fn, std::string_view, R> {
-  static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
+    -> CallableReturnsResult<Fn, std::string_view, R>
+{
+    static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
 
-  return ObjectParser(doc_, std::forward<Fn>(fn), object_already_open).SubParse();
+    return ObjectParser(doc_, std::forward<Fn>(fn), object_already_open).SubParse();
 }
 
 }  // namespace internal

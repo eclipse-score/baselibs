@@ -17,39 +17,31 @@
 #ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_FWD_H_
 #define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_FWD_H_
 
-namespace amsr {
-namespace json {
+namespace amsr
+{
+namespace json
+{
 
-/*!
- * \brief           Forward declaration for JsonData
- */
+/// \brief           Forward declaration for JsonData
 class JsonData;
 
-namespace internal {
-/*!
- * \brief           Forward declaration for JsonOps
- */
+namespace internal
+{
+/// \brief           Forward declaration for JsonOps
 
 class JsonOps;
 }  // namespace internal
 
-/*!
- * \brief           Forward declaration for JsonParser
- */
+/// \brief           Forward declaration for JsonParser
 class JsonParser;
 
-namespace v2 {
-/*!
- * \brief           Forward declaration for SingleArrayParser
- */
+namespace v2
+{
+/// \brief           Forward declaration for SingleArrayParser
 class SingleArrayParser;
-/*!
- * \brief           Forward declaration for SingleObjectParser
- */
+/// \brief           Forward declaration for SingleObjectParser
 class SingleObjectParser;
-/*!
- * \brief           Forward declaration for Parser
- */
+/// \brief           Forward declaration for Parser
 class Parser;
 }  // namespace v2
 }  // namespace json

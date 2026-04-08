@@ -21,88 +21,79 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "score/functional.hpp"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A parser that only parses a single boolean value
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A parser that only parses a single boolean value
 
-class BoolParser final : public VirtualParser {
-  /*!
-   * \brief           Type of function to be executed when bool values are read
-   */
-  using Fn = score::cpp::move_only_function<ResultBlank(bool)>;
+class BoolParser final : public VirtualParser
+{
+    /// \brief           Type of function to be executed when bool values are read
+    using Fn = score::cpp::move_only_function<ResultBlank(bool)>;
 
- public:
-  /*!
-   * \brief           Constructs a BoolParser
-   * \details         Callback must take the bool and return ResultBlank.
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       fn
-   *                  Function to execute on the bool.
-   *
-   * \context         ANY
-   * \pre             Callback does not throw exceptions.
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   */
+  public:
+    /// \brief           Constructs a BoolParser
+    /// \details         Callback must take the bool and return ResultBlank.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       fn
+    ///                  Function to execute on the bool.
+    /// \context         ANY
+    /// \pre             Callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  BoolParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
+    BoolParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
-  /*!
-   * \brief           Event for Bools
-   * \param[in]       v
-   *                  Parsed boolean value.
-   * \return          kFinished if the callback function succeeds, or its error.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Execute the callback with the parsed bool value.
-   * - If the callback succeeds:
-   *   - Return kFinished.
-   * - Otherwise:
-   *   - Return the error of the callback.
-   * \endinternal
-   */
-  auto OnBool(bool v) noexcept -> ParserResult final {
+    /// \brief           Event for Bools
+    /// \param[in]       v
+    ///                  Parsed boolean value.
+    /// \return          kFinished if the callback function succeeds, or its error.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-    return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](score::Blank) noexcept { return ParserState::kFinished; });
-  }
+    /// \internal
+    /// - Execute the callback with the parsed bool value.
+    /// - If the callback succeeds:
+    ///   - Return kFinished.
+    /// - Otherwise:
+    ///   - Return the error of the callback.
+    /// \endinternal
+    auto OnBool(bool v) noexcept -> ParserResult final
+    {
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if no bool value is parsed
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult final {
-    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a boolean.");
-  }
+        return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](score::Blank) noexcept {
+            return ParserState::kFinished;
+        });
+    }
 
- private:
-  /*!
-   * \brief           Function to be executed on the boolean value
-   */
-  Fn fn_;
+    /// \brief           Default event for unexpected elements that aborts the parsing
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if no bool value is parsed
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    {
+        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a boolean.");
+    }
+
+  private:
+    /*!
+     * \brief           Function to be executed on the boolean value
+     */
+    Fn fn_;
 };
 
 }  // namespace internal

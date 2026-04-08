@@ -36,91 +36,111 @@
 #include "amsr/json/util/number.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           Callbacks to an implementer
- */
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           Callbacks to an implementer
 template <typename Implementer>
-auto StructureParser<Implementer>::OnNull() noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnNull() noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnNull());
+    return ParserResult(this->implementer_.get().GetChild().OnNull());
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnBool(bool v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnBool(bool v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnBool(v));
+    return ParserResult(this->implementer_.get().GetChild().OnBool(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnNumber(JsonNumber v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnNumber(JsonNumber v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnNumber(v));
+    return ParserResult(this->implementer_.get().GetChild().OnNumber(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnString(CStringView v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnString(CStringView v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnString(v));
+    return ParserResult(this->implementer_.get().GetChild().OnString(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnKey(CStringView v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnKey(CStringView v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnKey(v));
+    return ParserResult(this->implementer_.get().GetChild().OnKey(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnStartObject() noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnStartObject() noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnStartObject());
+    return ParserResult(this->implementer_.get().GetChild().OnStartObject());
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnEndObject(std::size_t v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnEndObject(std::size_t v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnEndObject(v));
+    return ParserResult(this->implementer_.get().GetChild().OnEndObject(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnStartArray() noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnStartArray() noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnStartArray());
+    return ParserResult(this->implementer_.get().GetChild().OnStartArray());
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnEndArray(std::size_t v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnEndArray(std::size_t v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnEndArray(v));
+    return ParserResult(this->implementer_.get().GetChild().OnEndArray(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnBinaryKey(StringView v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnBinaryKey(StringView v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnBinaryKey(v));
+    return ParserResult(this->implementer_.get().GetChild().OnBinaryKey(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnBinaryString(StringView v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnBinaryString(StringView v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnBinaryString(v));
+    return ParserResult(this->implementer_.get().GetChild().OnBinaryString(v));
 }
 template <typename Implementer>
-auto StructureParser<Implementer>::OnBinary(score::cpp::span<char const> v) noexcept -> ParserResult {
+auto StructureParser<Implementer>::OnBinary(score::cpp::span<const char> v) noexcept -> ParserResult
+{
 
-  return ParserResult(this->implementer_.get().GetChild().OnBinary(v));
+    return ParserResult(this->implementer_.get().GetChild().OnBinary(v));
 }
 
 template <typename Implementer>
 StructureParser<Implementer>::StructureParser(Implementer& implementer, JsonData& doc) noexcept
 
-    : StructureParserBase(), implementer_{implementer}, json_ops_(doc) {}
-
-template <typename Implementer>
-auto StructureParser<Implementer>::GetJsonOps() & noexcept -> JsonOps& {
-  return this->json_ops_;
-}
-template <typename Implementer>
-auto StructureParser<Implementer>::GetJsonOps() const& noexcept -> JsonOps const& {
-  return this->json_ops_;
+    : StructureParserBase(), implementer_{implementer}, json_ops_(doc)
+{
 }
 
 template <typename Implementer>
-auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult {
+auto StructureParser<Implementer>::GetJsonOps() & noexcept -> JsonOps&
+{
+    return this->json_ops_;
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::GetJsonOps() const& noexcept -> const JsonOps&
+{
+    return this->json_ops_;
+}
 
-  return this->implementer_.get().GetChild().Parse().transform([](score::Blank) noexcept { return ParserState::kRunning; });
+template <typename Implementer>
+auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult
+{
+
+    return this->implementer_.get().GetChild().Parse().transform([](score::Blank) noexcept {
+        return ParserState::kRunning;
+    });
 }
 
 }  // namespace internal

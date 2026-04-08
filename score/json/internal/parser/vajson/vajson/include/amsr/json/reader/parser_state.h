@@ -23,20 +23,18 @@
  *********************************************************************************************************************/
 #include "score/result/result.h"
 
-namespace amsr {
-namespace json {
-/*!
- * \brief           State that is used for every parser event
- *
- * \vpublic
- */
-enum class ParserState : bool { kRunning, kFinished };
+namespace amsr
+{
+namespace json
+{
+/// \brief           State that is used for every parser event
+enum class ParserState : bool
+{
+    kRunning,
+    kFinished
+};
 
-/*!
- * \brief           Return type of most parser functions
- *
- * \vpublic
- */
+/// \brief           Return type of most parser functions
 using ParserResult = score::Result<ParserState>;
 }  // namespace json
 }  // namespace amsr

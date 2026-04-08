@@ -23,191 +23,179 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <cstdint>
 #include "amsr/json/reader/internal/level_validator.h"
 #include "amsr/json/reader/v2/parser.h"
+#include <cstdint>
 
-namespace amsr {
-namespace json {
-namespace v2 {
-/*!
- * \brief           A parser for a single array, i.e. an array that does not contain arrays as its elements
- *
- * \details         Handles the OnStartArray & OnEndArray callbacks by itself. Calls OnElement for every element it
- *                  encounters and Finalize on array end.
- * \vpublic
- */
-class SingleArrayParser : public v2::Parser {
- private:
-  /*!
-   * \brief           Validates if the only one level of array has been entered
-   */
-  internal::LevelValidator validator_{};
-  /*!
-   * \brief           Index for the array elements
-   */
-  std::size_t index_{0};
+namespace amsr
+{
+namespace json
+{
+namespace v2
+{
+/// \brief           A parser for a single array, i.e. an array that does not contain arrays as its elements
+/// \details         Handles the OnStartArray & OnEndArray callbacks by itself. Calls OnElement for every element it
+///                  encounters and Finalize on array end.
 
- public:
-  /*!
-   * \brief           Inherited CTOR
-   */
-  using v2::Parser::Parser;
+class SingleArrayParser : public v2::Parser
+{
+  private:
+    /*!
+     * \brief           Validates if the only one level of array has been entered
+     */
+    internal::LevelValidator validator_{};
+    /*!
+     * \brief           Index for the array elements
+     */
+    std::size_t index_{0};
 
-  /*! \brief Delete copy constructor */
-  SingleArrayParser(SingleArrayParser const&) = delete;
-  /*! \brief Delete copy assignment constructor */
-  SingleArrayParser& operator=(SingleArrayParser const&) = delete;
-  /*! \brief Delete move constructor */
-  SingleArrayParser(SingleArrayParser&&) = delete;
-  /*! \brief Delete move assignment constructor */
-  SingleArrayParser& operator=(SingleArrayParser&&) = delete;
+  public:
+    /*!
+     * \brief           Inherited CTOR
+     */
+    using v2::Parser::Parser;
 
-  /*!
-   * \brief           Default event for the start of arrays
-   * \vprivate        Vector component internal API
-   *
-   * \return          kRunning if not in an array, or the error.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if already in an array
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If not inside an array:
-   *   - Take a snapshot of the current state in case it has to be restored because this opening bracket is followed by
-   *     a value.
-   *   - Return kRunning to continue parsing.
-   * - Otherwise:
-   *   - Return an error.
-   * \endinternal
-   */
-  auto OnStartArray() noexcept -> ParserResult final {
-    return this->validator_
-        .Enter()
+    /// \brief Delete copy constructor
+    SingleArrayParser(const SingleArrayParser&) = delete;
+    /// \brief Delete copy assignment constructor
+    SingleArrayParser& operator=(const SingleArrayParser&) = delete;
+    /// \brief Delete move constructor
+    SingleArrayParser(SingleArrayParser&&) = delete;
+    /// \brief Delete move assignment constructor
+    SingleArrayParser& operator=(SingleArrayParser&&) = delete;
 
-        .and_then([this](ParserState) noexcept { return this->GetJsonDocument().Snap(); })
-        .transform([](score::Blank) noexcept { return ParserState::kRunning; });
-  }
+    /// \brief           Default event for the start of arrays
 
-  /*!
-   * \brief           Default event for the end of arrays
-   * \vprivate        Vector component internal API
-   *
-   * \return          kRunning if in an array, or the error.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if not in an array
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If inside an array:
-   *   - Call the Finalize callback and return its Result.
-   * - Otherwise:
-   *   - Return an error.
-   * \endinternal
-   */
-  auto OnEndArray(std::size_t) noexcept -> ParserResult final {
-    return this->validator_.Leave().and_then([this](ParserState state) noexcept {
+    /// \return          kRunning if not in an array, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if already in an array
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-      return Finalize().transform([&state](score::Blank) noexcept { return state; });
-    });
-  }
+    /// \internal
+    /// - If not inside an array:
+    ///   - Take a snapshot of the current state in case it has to be restored because this opening bracket is followed
+    ///   by
+    ///     a value.
+    ///   - Return kRunning to continue parsing.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// \endinternal
+    auto OnStartArray() noexcept -> ParserResult final
+    {
+        return this->validator_
+            .Enter()
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \vprivate        Vector component internal API
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if there is no callback registered for the event
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If not inside an array, return an error.
-   * - Restore the last snapshot.
-   * - If restoring the snapshot failed:
-   *   - Return the error.
-   * - Otherwise:
-   *   - Call OnElement and return its Result.
-   *   - On success, take a new snapshot, because the value could be followed by another value, and increase the index.
-   * \endinternal
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult final {
-    return MakeResult(this->validator_.IsInside(),
-                      {JsonErrc::kUserValidationFailed, "Expected to parse an array of elements."})
+            .and_then([this](ParserState) noexcept {
+                return this->GetJsonDocument().Snap();
+            })
+            .transform([](score::Blank) noexcept {
+                return ParserState::kRunning;
+            });
+    }
 
-        .and_then([this](score::Blank) noexcept { return this->GetJsonDocument().Restore(); })
-        .and_then([this](score::Blank) noexcept {
+    /// \brief           Default event for the end of arrays
 
-          return this->OnElement();
-        })
+    /// \return          kRunning if in an array, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if not in an array
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-        .and_then([this](ParserState state) noexcept {
-            return this->GetJsonDocument().Snap().transform([this, &state](score::Blank) {
-                index_++;
+    /// \internal
+    /// - If inside an array:
+    ///   - Call the Finalize callback and return its Result.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// \endinternal
+    auto OnEndArray(std::size_t) noexcept -> ParserResult final
+    {
+        return this->validator_.Leave().and_then([this](ParserState state) noexcept {
+            return Finalize().transform([&state](score::Blank) noexcept {
                 return state;
-        }); });
-  }
+            });
+        });
+    }
 
-  /*!
-   * \brief           Returns the array index of the current element
-   * \return          Array index of the current element.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto GetIndex() const noexcept -> std::size_t { return this->index_; }
+    /// \brief           Default event for unexpected elements that aborts the parsing
 
- protected:
-  /*!
-   * \brief           Event for array Elements to be implemented by the user
-   * \details         This function is expected to consume all tokens representing the element, unless it returns an
-   *                  error Result or ParserState::kFinished.
-   * \return          -
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto OnElement() noexcept -> ParserResult = 0;
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if there is no callback registered for the event
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Default event if the entire array has been successfully parsed
-   * \details         Default implementation does nothing. User implementation could be used to validate parser results
-   *                  or fill in inout parameters etc.
-   * \return          The empty Result.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto Finalize() noexcept -> Result<score::Blank> { return ResultBlank{score::Blank{}}; }
+    /// \internal
+    /// - If not inside an array, return an error.
+    /// - Restore the last snapshot.
+    /// - If restoring the snapshot failed:
+    ///   - Return the error.
+    /// - Otherwise:
+    ///   - Call OnElement and return its Result.
+    ///   - On success, take a new snapshot, because the value could be followed by another value, and increase the
+    ///   index.
+    /// \endinternal
+    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    {
+        return MakeResult(this->validator_.IsInside(),
+                          {JsonErrc::kUserValidationFailed, "Expected to parse an array of elements."})
+
+            .and_then([this](score::Blank) noexcept {
+                return this->GetJsonDocument().Restore();
+            })
+            .and_then([this](score::Blank) noexcept {
+                return this->OnElement();
+            })
+
+            .and_then([this](ParserState state) noexcept {
+                return this->GetJsonDocument().Snap().transform([this, &state](score::Blank) {
+                    index_++;
+                    return state;
+                });
+            });
+    }
+
+    /// \brief           Returns the array index of the current element
+    /// \return          Array index of the current element.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
+
+    auto GetIndex() const noexcept -> std::size_t
+    {
+        return this->index_;
+    }
+
+  protected:
+    /// \brief           Event for array Elements to be implemented by the user
+    /// \details         This function is expected to consume all tokens representing the element, unless it returns an
+    ///                  error Result or ParserState::kFinished.
+    /// \return          -
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
+
+    virtual auto OnElement() noexcept -> ParserResult = 0;
+
+    /// \brief           Default event if the entire array has been successfully parsed
+    /// \details         Default implementation does nothing. User implementation could be used to validate parser
+    /// results
+    ///                  or fill in inout parameters etc.
+    /// \return          The empty Result.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    virtual auto Finalize() noexcept -> Result<score::Blank>
+    {
+        return ResultBlank{score::Blank{}};
+    }
 };
 
 }  // namespace v2

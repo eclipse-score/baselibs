@@ -22,141 +22,125 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <cstdint>
 #include "amsr/json/reader/internal/level_validator.h"
 #include "amsr/json/reader/v2/parser.h"
+#include <cstdint>
 
-namespace amsr {
-namespace json {
-namespace v2 {
-/*!
- * \brief           A parser for a single object, i.e. an object without sub-objects
- *
- * \details         Handles the OnStartObject & OnEndObject callbacks by itself. Calls OnKey for every key it encounters
- *                  and Finalize on object end.
- * \vpublic
- */
+namespace amsr
+{
+namespace json
+{
+namespace v2
+{
+/// \brief           A parser for a single object, i.e. an object without sub-objects
+/// \details         Handles the OnStartObject & OnEndObject callbacks by itself. Calls OnKey for every key it
+/// encounters
+///                  and Finalize on object end.
 
-class SingleObjectParser : public v2::Parser {
- public:
-  /*!
-   * \brief           Constructs a SingleObjectParser
-   * \param[in]       doc
-   *                  JSON document to parse.
-   * \param[in]       object_already_open
-   *                  Specify if the object has already been opened. Defaults to false.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  explicit SingleObjectParser(JsonData& doc, bool object_already_open = false) noexcept
-      : v2::Parser{doc}, validator_{object_already_open} {}
+class SingleObjectParser : public v2::Parser
+{
+  public:
+    /// \brief           Constructs a SingleObjectParser
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \param[in]       object_already_open
+    ///                  Specify if the object has already been opened. Defaults to false.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*! \brief Delete copy constructor */
-  SingleObjectParser(SingleObjectParser const&) = delete;
-  /*! \brief Delete copy assignment constructor */
-  SingleObjectParser& operator=(SingleObjectParser const&) = delete;
-  /*! \brief Delete move constructor */
-  SingleObjectParser(SingleObjectParser&&) = delete;
-  /*! \brief Delete move assignment constructor */
-  SingleObjectParser& operator=(SingleObjectParser&&) = delete;
+    explicit SingleObjectParser(JsonData& doc, bool object_already_open = false) noexcept
+        : v2::Parser{doc}, validator_{object_already_open}
+    {
+    }
 
-  /*!
-   * \brief           Default event for the start of objects
-   * \vprivate        component
-   *
-   * \return          kRunning if not in an object, or the error.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if already in an object
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If not inside an object:
-   *   - Set the flag that an object has been entered.
-   * - Otherwise:
-   *   - Return an error.
-   * \endinternal
-   */
-  auto OnStartObject() noexcept -> ParserResult final { return this->validator_.Enter(); }
+    /// \brief Delete copy constructor
+    SingleObjectParser(const SingleObjectParser&) = delete;
+    /// \brief Delete copy assignment constructor
+    SingleObjectParser& operator=(const SingleObjectParser&) = delete;
+    /// \brief Delete move constructor
+    SingleObjectParser(SingleObjectParser&&) = delete;
+    /// \brief Delete move assignment constructor
+    SingleObjectParser& operator=(SingleObjectParser&&) = delete;
 
-  /*!
-   * \brief           Default event for the end of objects
-   * \vprivate        component
-   *
-   * \return          kRunning if in an object, or the error.
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if not in an object
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - Check if inside an object:
-   *   - Call the Finalize callback and return its Result.
-   * \endinternal
-   */
-  auto OnEndObject(std::size_t) noexcept -> ParserResult final {
-    return this->validator_.Leave().and_then([this](ParserState state) noexcept {
+    /// \brief           Default event for the start of objects
+    /// \return          kRunning if not in an object, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if already in an object
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-      return this->Finalize().transform(
-          [&state](score::Blank) noexcept { return state; });
-    });
-  }
+    /// \internal
+    /// - If not inside an object:
+    ///   - Set the flag that an object has been entered.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// \endinternal
+    auto OnStartObject() noexcept -> ParserResult final
+    {
+        return this->validator_.Enter();
+    }
 
-  /*!
-   * \brief           Default event for unexpected elements that aborts the parsing
-   *
-   * \vprivate        Vector component internal API
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if there is no callback registered for the event
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   *
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto OnUnexpectedEvent() noexcept -> ParserResult override {
-    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse an object of elements.");
-  }
+    /// \brief           Default event for the end of objects
+    /// \return          kRunning if in an object, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if not in an object
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
- protected:
-  /*!
-   * \brief           Default event if the entire object has been successfully parsed
-   * \details         Default implementation does nothing. User implementation could be used to validate parser results
-   *                  or fill in inout parameters etc.
-   * \return          The empty Result.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  virtual auto Finalize() noexcept -> Result<score::Blank> { return Result<score::Blank>{score::Blank{}}; }
+    /// \internal
+    /// - Check if inside an object:
+    ///   - Call the Finalize callback and return its Result.
+    /// \endinternal
+    auto OnEndObject(std::size_t) noexcept -> ParserResult final
+    {
+        return this->validator_.Leave().and_then([this](ParserState state) noexcept {
+            return this->Finalize().transform([&state](score::Blank) noexcept {
+                return state;
+            });
+        });
+    }
 
- private:
-  /*!
-   * \brief           Validates if the only one level of object has been entered
-   */
-  internal::LevelValidator validator_;
+    /// \brief           Default event for unexpected elements that aborts the parsing
+
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if there is no callback registered for the event
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    auto OnUnexpectedEvent() noexcept -> ParserResult override
+    {
+        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed,
+                                            "Expected to parse an object of elements.");
+    }
+
+  protected:
+    /// \brief           Default event if the entire object has been successfully parsed
+    /// \details         Default implementation does nothing. User implementation could be used to validate parser
+    /// results
+    ///                  or fill in inout parameters etc.
+    /// \return          The empty Result.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+
+    virtual auto Finalize() noexcept -> Result<score::Blank>
+    {
+        return Result<score::Blank>{score::Blank{}};
+    }
+
+  private:
+    /*!
+     * \brief           Validates if the only one level of object has been entered
+     */
+    internal::LevelValidator validator_;
 };
 
 }  // namespace v2

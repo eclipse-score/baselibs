@@ -23,119 +23,112 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <utility>
 #include "amsr/json/reader/parser_state.h"
 #include "amsr/json/util/json_error_domain.h"
+#include <utility>
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           A validator for structure elements
- */
-class LevelValidator {
- public:
-  /*!
-   * \brief           Constructs a new Level Validator object
-   * \param[in]       object_already_open
-   *                  If true the validator assumes that the object is already open.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  explicit LevelValidator(bool object_already_open = false) noexcept : entered_{object_already_open} {}
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
+/// \brief           A validator for structure elements
+class LevelValidator
+{
+  public:
+    /// \brief           Constructs a new Level Validator object
+    /// \param[in]       object_already_open
+    ///                  If true the validator assumes that the object is already open.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Tries to enter a structure
-   * \return          kRunning if no structure has been entered yet, or the error.
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if already inside a structure
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If not inside a structure:
-   *   - Set the signal that a structure has been entered.
-   *   - Return kRunning.
-   * - Otherwise:
-   *   - Return an error.
-   * \endinternal
-   */
-  auto Enter() noexcept -> ParserResult {
-    ParserResult result{ParserState::kRunning};
+    explicit LevelValidator(bool object_already_open = false) noexcept : entered_{object_already_open} {}
 
-    if (!entered_) {
-      entered_ = true;
-    } else {
+    /// \brief           Tries to enter a structure
+    /// \return          kRunning if no structure has been entered yet, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if already inside a structure
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-      result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Did not expect nested elements");
+    /// \internal
+    /// - If not inside a structure:
+    ///   - Set the signal that a structure has been entered.
+    ///   - Return kRunning.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// \endinternal
+    auto Enter() noexcept -> ParserResult
+    {
+        ParserResult result{ParserState::kRunning};
+
+        if (!entered_)
+        {
+            entered_ = true;
+        }
+        else
+        {
+
+            result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Did not expect nested elements");
+        }
+
+        return result;
     }
 
-    return result;
-  }
+    /// \brief           Tries to leave a structure
+    /// \return          kFinished if inside a structure, or the error.
+    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    ///                  if not inside a structure.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
 
-  /*!
-   * \brief           Tries to leave a structure
-   * \return          kFinished if inside a structure, or the error.
-   *
-   * \error           amsr::json::JsonErrc::kUserValidationFailed
-   *                  if not inside a structure.
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      FALSE
-   * \reentrant       FALSE
-   * \spec
-   * requires true;
-   * \endspec
-   * \internal
-   * - If inside a structure:
-   *   - Set the signal that a structure has been left.
-   *   - Return kRunning.
-   * - Otherwise:
-   *   - Return an error.
-   * \endinternal
-   */
-  auto Leave() noexcept -> ParserResult {
-    ParserResult result{ParserState::kFinished};
+    /// \internal
+    /// - If inside a structure:
+    ///   - Set the signal that a structure has been left.
+    ///   - Return kRunning.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// \endinternal
+    auto Leave() noexcept -> ParserResult
+    {
+        ParserResult result{ParserState::kFinished};
 
-    if (entered_) {
-      entered_ = false;
-    } else {
+        if (entered_)
+        {
+            entered_ = false;
+        }
+        else
+        {
 
-      result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Cannot leave level");
+            result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Cannot leave level");
+        }
+
+        return result;
     }
 
-    return result;
-  }
+    /// \brief           Returns true if currently inside a structure
+    /// \return          True if inside a structure.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      TRUE, for different this pointer
 
-  /*!
-   * \brief           Returns true if currently inside a structure
-   * \return          True if inside a structure.
-   *
-   * \context         ANY
-   * \pre             -
-   * \threadsafe      TRUE, for different this pointer
-   * \spec
-   * requires true;
-   * \endspec
-   */
-  auto IsInside() const noexcept -> bool { return this->entered_; }
+    auto IsInside() const noexcept -> bool
+    {
+        return this->entered_;
+    }
 
- private:
-  /*!
-   * \brief           Signals that a level has been entered
-   */
-  bool entered_{false};
+  private:
+    /*!
+     * \brief           Signals that a level has been entered
+     */
+    bool entered_{false};
 };
 
 }  // namespace internal
