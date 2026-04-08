@@ -27,7 +27,7 @@ cc_library(
     }),
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
-        # vajson target removed
+        "//score/json/internal/parser/vajson/vajson",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],

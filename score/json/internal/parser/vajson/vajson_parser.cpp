@@ -17,9 +17,9 @@ auto score::json::VajsonParser::FromFile(const std::string_view file_path) -> sc
     score::Result<score::json::Any> result = MakeUnexpected(Error::kParsingError);
     // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
     auto json_data = amsr::json::JsonData::FromFile(file_path);
-    if (json_data.HasValue() == true)
+    if (json_data.has_value() == true)
     {
-        score::Result<score::json::Any> json_object = VajsonParser{json_data.Value()}.GetData();
+        score::Result<score::json::Any> json_object = VajsonParser{json_data.value()}.GetData();
         if (json_object.has_value())
         {
             result = std::move(*json_object);
@@ -31,13 +31,13 @@ auto score::json::VajsonParser::FromFile(const std::string_view file_path) -> sc
 auto score::json::VajsonParser::FromBuffer(const std::string_view buffer) -> score::Result<score::json::Any>
 {
     score::Result<score::json::Any> result = MakeUnexpected(Error::kParsingError);
-    auto json_data = amsr::json::JsonData::FromBuffer(ara::core::StringView{buffer.data(), buffer.size()});
-    if (json_data.HasValue() ==
+    auto json_data = amsr::json::JsonData::FromBuffer(std::string_view{buffer.data(), buffer.size()});
+    if (json_data.has_value() ==
         true)  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from coverage report.)
     // (else branch can't be hit due to internal impementation of JsonData::FromBuffer function that accepts all kind of
     // strings.)
     {
-        auto json_object = VajsonParser{json_data.Value()}.GetData();
+        auto json_object = VajsonParser{json_data.value()}.GetData();
         if (json_object.has_value())
         {
             result = std::move(*json_object);
@@ -49,7 +49,7 @@ auto score::json::VajsonParser::FromBuffer(const std::string_view buffer) -> sco
 auto score::json::VajsonParser::GetData() noexcept -> score::Result<score::json::Any>
 {
     const auto result = Parse();
-    if (result.HasValue() == true)
+    if (result.has_value() == true)
     {
         score::Result<score::json::Any> tmp{};
         std::swap(*tmp, root_);
@@ -66,7 +66,7 @@ auto score::json::VajsonParser::OnNull() noexcept -> amsr::json::ParserResult
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
@@ -79,7 +79,7 @@ auto score::json::VajsonParser::OnBool(bool value) noexcept -> amsr::json::Parse
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
@@ -94,22 +94,22 @@ auto score::json::VajsonParser::OnNumber(amsr::json::JsonNumber value) noexcept 
     return OnNumber<uint8_t, uint16_t, uint32_t, uint64_t, int8_t, int16_t, int32_t, int64_t, double>(value);
 }
 
-auto score::json::VajsonParser::OnString(ara::core::StringView value) noexcept -> amsr::json::ParserResult
+auto score::json::VajsonParser::OnString(std::string_view value) noexcept -> amsr::json::ParserResult
 {
-    auto result = Store(value.ToString());
+    auto result = Store(std::string(value));
     if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
                               // coverage report. See comment below)
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
 
-auto score::json::VajsonParser::OnKey(ara::core::StringView key) noexcept -> amsr::json::ParserResult
+auto score::json::VajsonParser::OnKey(std::string_view key) noexcept -> amsr::json::ParserResult
 {
-    last_key_ = key.ToString();
+    last_key_ = std::string(key);
     return amsr::json::ParserState::kRunning;
 }
 
@@ -122,7 +122,7 @@ auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> amsr::json
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     else
     {
@@ -166,5 +166,5 @@ auto score::json::VajsonParser::OnUnexpectedEvent() noexcept -> amsr::json::Pars
 {
     // A call to this function means we have not implemented one of the necessary callbacks.
     // We set this equal to a failed user validation, since a missing callback means we do not support this type.
-    return amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kUserValidationFailed);
+    return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kUserValidationFailed);
 }

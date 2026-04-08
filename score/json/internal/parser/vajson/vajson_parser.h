@@ -16,7 +16,7 @@
 #include "score/json/internal/model/any.h"
 #include "score/result/result.h"
 
-#include "amsr/json/reader.h"
+#include "score/json/internal/parser/vajson/vajson/include/amsr/json/reader.h"
 
 #include <deque>
 #include <memory>
@@ -108,8 +108,8 @@ class VajsonParser final : private amsr::json::v2::Parser
     auto OnNull() noexcept -> amsr::json::ParserResult override;
     auto OnBool(bool value) noexcept -> amsr::json::ParserResult override;
     auto OnNumber(amsr::json::JsonNumber value) noexcept -> amsr::json::ParserResult override;
-    auto OnString(ara::core::StringView value) noexcept -> amsr::json::ParserResult override;
-    auto OnKey(ara::core::StringView key) noexcept -> amsr::json::ParserResult override;
+    auto OnString(std::string_view value) noexcept -> amsr::json::ParserResult override;
+    auto OnKey(std::string_view key) noexcept -> amsr::json::ParserResult override;
     auto OnStartObject() noexcept -> amsr::json::ParserResult override;
     auto OnEndObject(std::size_t) noexcept -> amsr::json::ParserResult override;
     auto OnStartArray() noexcept -> amsr::json::ParserResult override;
@@ -131,7 +131,7 @@ class VajsonParser final : private amsr::json::v2::Parser
         // coverity[autosar_cpp14_a5_2_6_violation]
         return ((TryStoreResult(value.As<NumberType>())) || ...)
                    ? amsr::json::ParserState::kRunning
-                   : amsr::json::ParserResult::FromError(amsr::json::JsonErrc::kInvalidJson);
+                   : amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson);
     }
 
     std::string last_key_{};

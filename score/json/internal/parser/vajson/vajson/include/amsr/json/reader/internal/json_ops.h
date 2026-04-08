@@ -1,0 +1,445 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+/*!        \file
+ *        \brief  Collection of all operations on a JsonData object.
+ *
+ *      \details  Provides operations for stream based input data.
+ *
+ *********************************************************************************************************************/
+
+#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_JSON_OPS_H_
+#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_JSON_OPS_H_
+
+/**********************************************************************************************************************
+ *  INCLUDES
+ *********************************************************************************************************************/
+#include <cstdint>
+#include <functional>
+#include <istream>
+#include <string>
+#include "amsr/json/reader/internal/config/json_reader_cfg.h"
+#include "amsr/json/reader_fwd.h"
+#include "amsr/json/util/json_error_domain.h"
+#include "score/functional.hpp"
+
+namespace amsr {
+namespace json {
+namespace internal {
+/*!
+ * \brief           Contains either the character value or an EOF value
+ */
+class OptChar {
+  /*!
+   * \brief           The optional character value
+   */
+  std::int64_t char_;
+
+ public:
+  /*!
+   * \brief           Construct the object with a value
+   * \param[in]       val
+   *                  The value to construct with.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  explicit OptChar(std::int64_t val) noexcept : char_{val} {}
+
+  /*!
+   * \brief           Returns true in case EOF was encountered
+   * \return          True if EOF was encountered.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto EofFound() const& noexcept -> bool { return this->char_ == -1; }
+
+  /*!
+   * \brief           Returns true in case a value is contained
+   * \return          True if a value is contained.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto HasValue() const& noexcept -> bool { return !EofFound(); }
+
+  /*!
+   * \brief           Returns the character contained
+   * \return          The contained character.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto Value() const& noexcept -> char {
+    AssertCondition(this->char_ != -1, "OptChar::Value: OptChar does not hold a value.");
+    return std::char_traits<char>::to_char_type(static_cast<std::int32_t>(this->char_));
+  }
+
+  /*!
+   * \brief           Compare the OptChar with a character for equality
+   * \param[in]       candidate
+   *                  The character to compare with the stored one.
+   * \return          True in case a character is contained and the value is equal.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  // VECTOR NCL MisraC++2023-16.6.1: MD_JSON_MisraC++2023-16.6.1_symmetric_operator
+  auto operator==(char const candidate) const noexcept -> bool {
+    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
+    return this->HasValue() && (this->Value() == candidate);
+  }
+};
+
+// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_json_ops
+/*!
+ * \brief           A handler for operations on a JsonData object
+ */
+class JsonOps final {
+ public:
+  /*!
+   * \brief           Initializes JsonOps
+   * \param[in]       json_data
+   *                  to operate on.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  explicit JsonOps(JsonData& json_data) noexcept;
+
+  /*!
+   * \brief           Default move constructor
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  JsonOps(JsonOps&&) noexcept = default;
+
+  /*!
+   * \brief           Default move assignment
+   * \return          A reference to the moved into object.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto operator=(JsonOps&&) & noexcept -> JsonOps& = default;
+
+  /*!
+   * \brief           Deleted copy constructor
+   */
+  JsonOps(JsonOps const&) = delete;
+  /*!
+   * \brief           Deleted copy assignment
+   */
+  auto operator=(JsonOps const&) -> JsonOps& = delete;
+
+  /*!
+   * \brief           Default Destructor
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  ~JsonOps() noexcept = default;
+
+  /*!
+   * \brief           Returns the character at the current position and moves the cursor to the next character
+   * \return          The character at the current position.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto Take() noexcept -> char;
+
+  /*!
+   * \brief           Tries to take the character at the current position and moves the cursor to the next character
+   * \return          The character if inside stream bounds, or the error.
+   * \error           amsr::json::JsonErrc::kInvalidJson,
+   *                  if the stream has ended
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto TryTake() noexcept -> Result<char>;
+
+  /*!
+   * \brief           Moves the cursor from the current position to the next position
+   * \return          True if the move succeeded.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto Move() noexcept -> bool;
+
+  /*!
+   * \brief           Gets the current position
+   * \return          The current position.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto Tell() const noexcept -> Result<std::uint64_t>;
+
+  /*!
+   * \brief           Moves the cursor to the next position if the passed character is equal to the current character
+   * \param[in]       character
+   *                  to compare to.
+   * \return          True if the characters are equal and the cursor has been moved to the next position, otherwise
+   *                  false.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto Skip(char character) noexcept -> bool;
+
+  /*!
+   * \brief           Checks if the next characters are equal to the passed string
+   * \param[in]       string
+   *                  that is expected.
+   * \param[in]       error_msg
+   *                  in case the check fails. Must live until the error object is evaluated.
+   * \return          The empty Result if the string was found, or the error.
+   * \error           amsr::json::JsonErrc::kInvalidJson
+   *                  if the passed string is empty or it could not be found.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<score::Blank>;
+
+  /*!
+   * \brief           Returns if the next characters are equal to the passed string
+   * \param[in]       string
+   *                  that is expected.
+   * \return          True if the string was found else false.
+   * \error           amsr::json::JsonErrc::kInvalidJson,
+   *                  if any error occurred.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto ReadString(std::string_view string) noexcept -> Result<bool>;
+
+  /*!
+   * \brief           Skips all valid whitespace characters
+   * \details         Valid JSON whitespace characters are space, newline, carriage return, and tab.
+   * \return          True in case we can continue, false in case end of file occurred.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto SkipWhitespace() noexcept -> bool;
+
+  /*!
+   * \brief           Reads num_to_read characters and executes the action for each span of characters
+   * \param[in]       num_to_read
+   *                  The number of characters to read.
+   * \param[in]       callback
+   *                  Callback to call per view.
+   * \return          The number of characters read.
+   *
+   * \context         ANY
+   * \pre             callback does not throw exceptions.
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   */
+  auto Read(std::uint64_t num_to_read, score::cpp::move_only_function<void(std::string_view), 40> const& callback) noexcept
+      -> Result<std::uint64_t>;
+
+  /*!
+   * \brief           Reads exactly num_to_read characters and executes the action
+   * \details         Buffers the data if necessary. The callback is either executed once (requested amount of
+   *                  characters has been read) or never (less characters available or EOF).
+   * \param[in]       num_to_read
+   *                  The number of characters to read.
+   * \param[in]       callback
+   *                  Callback to call once all characters have been read.
+   * \return          An empty Result or an error if less characters are available.
+   *
+   * \context         ANY
+   * \pre             callback does not throw exceptions.
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   */
+  auto ReadExactly(std::uint64_t num_to_read, score::cpp::move_only_function<void(std::string_view)> const& callback) noexcept
+      -> Result<score::Blank>;
+
+  /*!
+   * \brief           Reads characters as long as the delimiter is not found and executes the action for each span of
+   *                  characters
+   * \param[in]       delimiter
+   *                  to decide if the character should be skipped.
+   * \param[in]       callback
+   *                  Callback to call per view.
+   * \return          Either EOF or the delimiter that was found.
+   *
+   * \context         ANY
+   * \pre             callback does not throw exceptions.
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   */
+  auto ReadUntil(std::string_view delimiter,
+                 score::cpp::move_only_function<void(std::string_view)> const& callback) noexcept -> Result<OptChar>;
+
+  /*!
+   * \brief           Returns a reference to the Json file
+   * \return          Reference to the Json file.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto GetJsonDocument() & noexcept -> JsonData&;
+
+  /*!
+   * \brief           Returns a reference to the Json file
+   * \return          Const reference to the Json file.
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto GetJsonDocument() const& noexcept -> JsonData const&;
+
+ private:
+  /*!
+   * \brief           Rewind the position of the document if a condition is fulfilled
+   * \param[in]       condition
+   *                  The condition to check before seeking.
+   * \param[in]       num
+   *                  The number of bytes to rewind.
+   * \return          nothing or the error occurred.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      FALSE
+   * \reentrant       FALSE
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto RewindIf(bool condition, std::size_t num) noexcept -> Result<score::Blank>;
+
+  /*!
+   * \brief           Get direct access to the input stream
+   * \return          Reference to the input stream.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto GetStream() & noexcept -> std::istream&;
+
+  /*!
+   * \brief           Get direct access to the input stream
+   * \return          Const reference to the input stream.
+   *
+   * \context         ANY
+   * \pre             -
+   * \threadsafe      TRUE, for different this pointer
+   * \spec
+   * requires true;
+   * \endspec
+   */
+  auto GetStream() const& noexcept -> std::istream const&;
+
+  /*!
+   * \brief           JsonData to operate on
+   */
+  std::reference_wrapper<JsonData> data_;
+};
+
+}  // namespace internal
+}  // namespace json
+}  // namespace amsr
+
+#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_JSON_OPS_H_

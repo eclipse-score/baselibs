@@ -1,0 +1,647 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+/*!        \file
+ *        \brief  A SAX-Style JSON parser.
+ *
+ *      \details  Parses JSON text from a stream and sends events synchronously to an Implementer.
+ *
+ *********************************************************************************************************************/
+/**********************************************************************************************************************
+ *  INCLUDES
+ *********************************************************************************************************************/
+
+#include <algorithm>
+#include <cstring>
+#include <string>
+
+#include "amsr/json/reader/internal/depth_counter.h"
+#include "amsr/json/reader/internal/json_ops.h"
+#include "amsr/json/reader/internal/parsers/structure_parser.h"
+#include "amsr/json/reader/json_data.h"
+#include "amsr/json/reader/parser_state.h"
+#include "amsr/json/util/json_error_domain.h"
+#include "amsr/json/util/number.h"
+#include "amsr/json/util/types.h"
+
+namespace amsr {
+namespace json {
+namespace internal {
+
+auto StructureParserBase::Parse() noexcept -> Result<score::Blank> {
+  // Skip all whitespace to so that we will detect empty documents immediately.
+  // VCA_VAJSON_INTERNAL_CALL
+  ParserResult result{MakeResult(this->GetJsonOps().SkipWhitespace(),
+                                 MakeError(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty."))
+                          .transform([](score::Blank) noexcept { return ParserState::kRunning; })};
+
+  // Run parser
+  while (result == ParserState::kRunning) {
+    result = this->ParseValue();
+  }
+  return Drop(result);
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If the parsed string is "null" and a value is expected:
+ *   - Call the OnNull callback and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseNull() noexcept -> ParserResult {
+  // VCA_VAJSON_INTERNAL_CALL
+  return (this->GetJsonOps().CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
+      .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
+      .and_then([this](score::Blank) noexcept {
+        // VCA_VAJSON_LAMBDA_CAPTURE
+        return this->OnNull();
+      });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If the parsed string is "true" and a value is expected:
+ *   - Call the OnBool callback with the value "true".
+ *   - Return the Result of the callback.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseTrue() noexcept -> ParserResult {
+  // VCA_VAJSON_INTERNAL_CALL
+  return (this->GetJsonOps().CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
+      .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
+      .and_then([this](score::Blank) noexcept {
+        // VCA_VAJSON_LAMBDA_CAPTURE
+        return this->OnBool(true);
+      });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If the parsed string is "false" and a value is expected:
+ *   - Call the OnBool callback with the value "false" and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseFalse() noexcept -> ParserResult {
+  // VCA_VAJSON_INTERNAL_CALL
+  return (this->GetJsonOps().CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
+      .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
+      .and_then([this](score::Blank) noexcept {
+        // VCA_VAJSON_LAMBDA_CAPTURE
+        return this->OnBool(false);
+      });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If a value is expected:
+ *   - Parse the number string.
+ *   - Create a new JsonNumber from the string.
+ *   - If the JsonNumber could be successfully created:
+ *     - Call the OnNumber callback with the JsonNumber and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseNumber(char const cur) noexcept -> ParserResult {
+  return (this->GetState().AddValue())
+      .and_then([this, cur](score::Blank) noexcept { return JsonNumber::New(this->GetNumber(cur)); })
+      .and_then([this](JsonNumber num) noexcept {
+        // VCA_VAJSON_LAMBDA_CAPTURE
+        return this->OnNumber(num);
+      });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Convert a JSON string to a C++ string.
+ * - Parse this unescaped string.
+ * \endinternal
+ */
+auto StructureParserBase::ParseString() noexcept -> ParserResult {
+  return ReadJsonString().and_then([this](CStringView string) noexcept { return ParseUnescapedString(string); });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Skip all whitespace characters.
+ * - If the string is followed by a colon and a key is expected:
+ *   - Store the string as the current key.
+ *   - Call the OnKey callback with the key.
+ * - If the string is not followed by a colon a value is expected:
+ *   - Call the OnString callback with the string.
+ * - Return the Result of the callback.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> ParserResult {
+  // VCA_VAJSON_INTERNAL_CALL
+  static_cast<void>(this->GetJsonOps().SkipWhitespace());
+  ParserResult result{ParserState::kRunning};
+
+  // VCA_VAJSON_INTERNAL_CALL
+  if (this->GetJsonOps().Skip(':')) {
+    result = this->GetState().AddKey().and_then([this, &string](score::Blank) noexcept {
+      std::string_view const view{string};
+      this->GetJsonDocument().StoreCurrentKey(view);
+      // VCA_VAJSON_LAMBDA_CAPTURE
+      return this->OnKey(string);
+    });
+  } else {
+    result = this->GetState().AddValue().and_then([this, &string](score::Blank) noexcept {
+      // VCA_VAJSON_LAMBDA_CAPTURE
+      return this->OnString(string);
+    });
+  }
+
+  return result;
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Read the string until either an escape sequence or a string termination occurs.
+ * - While all operations are successful & an escape sequence is encountered
+ *  - Unescape the character sequence
+ *  - And read the string until either an escape sequence or a string termination occurs.
+ * - Take the string termination character
+ * - Return the result.
+ * \endinternal
+ */
+auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView> {
+  String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
+
+  auto const reader = [this, &buffer]() noexcept {
+    // VCA_VAJSON_INTERNAL_CALL
+    return this->GetJsonOps().ReadUntil(R"("\)"sv,
+                                        // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+                                        [&buffer](StringView buf) noexcept {
+                                          // VCA_VAJSON_LAMBDA_CAPTURE
+                                          static_cast<void>(buffer.append(buf.begin(), buf.end()));
+                                        });
+  };
+
+  Result<OptChar> ret_val{reader()};
+  while (ret_val.has_value()) {
+    if (!(*ret_val == '\\')) {
+      break;
+    }
+    // We encountered an escape.
+
+    // Take the backslash itself
+    // VCA_VAJSON_INTERNAL_CALL
+    static_cast<void>(this->GetJsonOps().Move());
+
+    // Unescape the escaped character
+    // VCA_VAJSON_THIS_DEREF
+    ret_val = this->GetJsonOps()
+                  // VCA_VAJSON_INTERNAL_CALL
+                  .TryTake()
+                  .and_then([this](char const escaped) noexcept { return this->UnescapeChar(escaped); })
+                  .and_then([&reader, &buffer](char const unescaped) noexcept {
+                    // VCA_VAJSON_WITHIN_SPEC
+                    buffer.push_back(unescaped);
+                    // And retry
+                    // VCA_VAJSON_LAMBDA_CAPTURE
+                    return reader();
+                  });
+  }
+
+  return Filter(ret_val, [](OptChar const opt) noexcept { return opt.HasValue(); },
+              MakeError(JsonErrc::kInvalidJson, "ReadJsonString: Runaway string."))
+      // Take the " character
+      // VCA_VAJSON_INTERNAL_CALL
+      .transform([this](OptChar) noexcept {
+        static_cast<void>(this->GetJsonOps().Move());
+        return this->GetJsonDocument().GetCurrentString();
+      });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - transform all characters to the appropriate escape sequence.
+ * - If a unicode escape is encountered return an error.
+ * - If an unknown/invalid escape is encountered return an error.
+ * \endinternal
+ */
+auto StructureParserBase::UnescapeChar(char const escaped) noexcept -> Result<char> {
+  Result<char> ret_val{escaped};
+  switch (std::char_traits<char>::to_int_type(escaped)) {
+    case std::char_traits<char>::to_int_type('b'):
+      ret_val = '\b';
+      break;
+    case std::char_traits<char>::to_int_type('f'):
+      ret_val = '\f';
+      break;
+    case std::char_traits<char>::to_int_type('n'):
+      ret_val = '\n';
+      break;
+    case std::char_traits<char>::to_int_type('r'):
+      ret_val = '\r';
+      break;
+    case std::char_traits<char>::to_int_type('t'):
+      ret_val = '\t';
+      break;
+    case std::char_traits<char>::to_int_type('\\'):
+    case std::char_traits<char>::to_int_type('/'):
+    case std::char_traits<char>::to_int_type('"'):
+      break;
+    case std::char_traits<char>::to_int_type('u'):
+      // VCA_VAJSON_EXTERNAL_CALL
+      ret_val = MakeErrorResult<char>(JsonErrc::kInvalidJson, "Unicode escape: \\u notation is not supported!");
+      break;
+    default:
+      // VCA_VAJSON_EXTERNAL_CALL
+      ret_val = MakeErrorResult<char>(JsonErrc::kInvalidJson, "Unknown escape sequence!");
+      break;
+  }
+  return ret_val;
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If an object can be added to the stack:
+ *   - Call the OnStartObject callback and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseStartObject() noexcept -> ParserResult {
+  return this->GetState().AddObject().and_then([this](score::Blank) noexcept {
+    // VCA_VAJSON_LAMBDA_CAPTURE
+    return this->OnStartObject();
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Move the position in the file past the closing brace.
+ * - Pop the Object from the ItemStack.
+ * - If the pop object call was successful:
+ *   - Call the OnStartObject callback with the number of parsed keys and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseEndObject() noexcept -> ParserResult {
+  return this->GetState().PopObject().and_then([this](std::size_t count) noexcept {
+    // VCA_VAJSON_THIS_DEREF
+    return this->OnEndObject(count);
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If an array can be added to the stack:
+ *   - Call the OnStartArray callback and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseStartArray() noexcept -> ParserResult {
+  return this->GetState().AddArray().and_then(
+      // VCA_VAJSON_THIS_DEREF
+      [this](score::Blank) noexcept { return this->OnStartArray(); });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Move the position in the file past the closing bracket.
+ * - Pop the Array from the ItemStack.
+ * - If the pop array call was successful:
+ *   - Call the OnEndArray callback with the number of parsed elements and return its Result.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseEndArray() noexcept -> ParserResult {
+  return this->GetState().PopArray().and_then([this](std::size_t count) noexcept {
+    // VCA_VAJSON_THIS_DEREF
+    return this->OnEndArray(count);
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - If the comma at this position is valid:
+ *   - Return kRunning to continue parsing.
+ * - Otherwise:
+ *   - Return the error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseComma() noexcept -> ParserResult {
+  return MakeResult(this->GetState().AddComma(),
+                    {JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma."})
+      .transform([](score::Blank) noexcept { return ParserState::kRunning; });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Read the next four bytes.
+ * - If necessary, convert the value from network to platform endianness.
+ * \endinternal
+ */
+auto StructureParserBase::ParseLength() noexcept -> Result<std::uint32_t> {
+  constexpr std::uint8_t kPrefixSize{4};
+  std::uint32_t result{0};
+  // clang-format off
+  // VCA_VAJSON_THIS_DEREF
+  return this->GetJsonOps()
+      // VCA_VAJSON_INTERNAL_CALL
+      .ReadExactly(kPrefixSize,
+                   [&result](StringView view) noexcept {
+                     static_cast<void>(std::memcpy(&result, view.data(), sizeof(result)));
+                     // VCA_VAJSON_LAMBDA_CAPTURE
+                     result = be32toh(result);
+                   })
+      .transform([&result](score::Blank) noexcept { return result; });
+  // clang-format on
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Parse the length of the binary content.
+ * - Read the binary content.
+ * - Execute the callback and return its result.
+ * \endinternal
+ */
+auto StructureParserBase::ReadBinary(score::cpp::move_only_function<ParserResult(StringView)> const& callback) noexcept
+    -> ParserResult {
+  return this->ParseLength().and_then([this, &callback](std::uint32_t length) noexcept {
+    // Will always be overwritten.
+    // VCA_VAJSON_EXTERNAL_CALL
+    ParserResult result{MakeErrorResult<ParserState>(JsonErrc::kInvalidJson)};
+    // clang-format off
+    // VCA_VAJSON_INTERNAL_CALL
+    return And(this->GetJsonOps()
+        // VCA_VAJSON_INTERNAL_CALL
+        .ReadExactly(length,
+                     // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+                     [&callback, &result](StringView view) noexcept {
+                       // VCA_VAJSON_LAMBDA_CAPTURE
+                       result = callback(view);
+                     }), result);
+    // clang-format on
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Add a key to the stack.
+ * - If the key could be added:
+ *   - Read the binary content.
+ *   - Store the key.
+ *   - Pass the stored key to the OnBinaryKey callback.
+ * \endinternal
+ */
+auto StructureParserBase::ParseBinaryKey() noexcept -> ParserResult {
+  return this->GetState().AddKey().and_then([this](score::Blank) noexcept {
+    // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+    return this->ReadBinary([this](StringView buf) noexcept {
+      // VCA_VAJSON_LAMBDA_CAPTURE
+      this->GetJsonDocument().StoreCurrentKey(buf);
+      StringView const view{this->GetJsonDocument().GetCurrentKey()};
+      // VCA_VAJSON_LAMBDA_CAPTURE
+      return this->OnBinaryKey(view);
+    });
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Add a value to the stack.
+ * - If the value could be added:
+ *   - Read the binary content.
+ *   - Pass it to the OnBinaryString callback.
+ * \endinternal
+ */
+auto StructureParserBase::ParseBinaryString() noexcept -> ParserResult {
+  return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
+    return this->ReadBinary(
+        // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+        [this](StringView buf) noexcept {
+          // VCA_VAJSON_LAMBDA_CAPTURE
+          return this->OnBinaryString(buf);
+        });
+  });
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Add a value to the stack.
+ * - If the value could be added:
+ *   - Read the binary content.
+ *   - Pass it to the OnBinary callback.
+ * \endinternal
+ */
+auto StructureParserBase::ParseBinaryValue() noexcept -> ParserResult {
+  return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
+    // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+    return this->ReadBinary([this](StringView buf) noexcept {
+      score::cpp::span<char const> const view{buf.data(), buf.size()};
+      // VCA_VAJSON_LAMBDA_CAPTURE
+      return this->OnBinary(view);
+    });
+  });
+}
+
+// VECTOR NCL Metric-HIS.VG: MD_JSON_Metric-HIS.VG_json_value
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Skip all whitespace characters.
+ * - If the stream has ended and the ItemStack is empty:
+ *   - Return kFinished.
+ * - If there are still new elements in the stream:
+ *   - Parse the next character.
+ *   - Determine the expected type to follow based on the parsed character.
+ *   - Call the specialized parser method for this type.
+ *   - Return the Result of the call.
+ * - Otherwise:
+ *   - Return an error.
+ * \endinternal
+ */
+auto StructureParserBase::ParseValue() noexcept -> ParserResult {
+  ParserResult result{ParserState::kRunning};
+
+  // VCA_VAJSON_INTERNAL_CALL
+  if (!this->GetJsonOps().SkipWhitespace()) {
+    result = this->GetState().CheckEndOfFile();
+  }
+
+  if (result == ParserState::kRunning) {
+    static_cast<void>(this->GetJsonDocument().GetClearedStringBuffer());
+    // VCA_VAJSON_INTERNAL_CALL
+    char const cur{this->GetJsonOps().Take()};
+    switch (std::char_traits<char>::to_int_type(cur)) {
+      case std::char_traits<char>::to_int_type('n'):
+        result = this->ParseNull();
+        break;
+      case std::char_traits<char>::to_int_type('t'):
+        result = this->ParseTrue();
+        break;
+      case std::char_traits<char>::to_int_type('f'):
+        result = this->ParseFalse();
+        break;
+      case std::char_traits<char>::to_int_type('"'):
+        result = this->ParseString();
+        break;
+      case std::char_traits<char>::to_int_type('{'):
+        result = this->ParseStartObject();
+        break;
+      case std::char_traits<char>::to_int_type('}'):
+        result = this->ParseEndObject();
+        break;
+      case std::char_traits<char>::to_int_type('['):
+        result = this->ParseStartArray();
+        break;
+      case std::char_traits<char>::to_int_type(']'):
+        result = this->ParseEndArray();
+        break;
+      case std::char_traits<char>::to_int_type(','):
+        result = this->ParseComma();
+        break;
+      case std::char_traits<char>::to_int_type('b'):
+        result = this->ParseBinaryValue();
+        break;
+      case std::char_traits<char>::to_int_type('k'):
+        result = this->ParseBinaryKey();
+        break;
+      case std::char_traits<char>::to_int_type('s'):
+        result = this->ParseBinaryString();
+        break;
+      case std::char_traits<char>::to_int_type('-'):
+      case std::char_traits<char>::to_int_type('0'):
+      case std::char_traits<char>::to_int_type('1'):
+      case std::char_traits<char>::to_int_type('2'):
+      case std::char_traits<char>::to_int_type('3'):
+      case std::char_traits<char>::to_int_type('4'):
+      case std::char_traits<char>::to_int_type('5'):
+      case std::char_traits<char>::to_int_type('6'):
+      case std::char_traits<char>::to_int_type('7'):
+      case std::char_traits<char>::to_int_type('8'):
+      case std::char_traits<char>::to_int_type('9'):
+        result = this->ParseNumber(cur);
+        break;
+      default:
+        // VCA_VAJSON_EXTERNAL_CALL
+        result = MakeErrorResult<ParserState>(JsonErrc::kInvalidJson, "ParseValue: Got unknown JSON token.");
+        break;
+    }
+  }
+  return result;
+}
+
+/*!
+ * \spec
+ * requires true;
+ * \endspec
+ * \internal
+ * - Parse all characters and add them to the number string until a comma, a closing brace/bracket, or a whitespace
+ *   character is encountered.
+ * \endinternal
+ */
+auto StructureParserBase::GetNumber(char const first) noexcept -> CStringView {
+  constexpr static StringView kLimiterChars{",}] \n\r\t"};
+  String& buffer{this->GetJsonDocument().GetStringBuffer()};
+  // VCA_VAJSON_WITHIN_SPEC
+  buffer.push_back(first);
+  // VCA_VAJSON_INTERNAL_CALL
+  static_cast<void>(this->GetJsonOps()
+                        // VCA_VAJSON_INTERNAL_CALL
+                        .ReadUntil(StringView{kLimiterChars},
+                                   [&buffer](StringView ch) noexcept {
+                                     // VCA_VAJSON_LAMBDA_CAPTURE
+                                     static_cast<void>(buffer.append(ch.begin(), ch.end()));
+                                   })
+                        .value());
+
+  // Create a string view from the number-string
+  return this->GetJsonDocument().GetCurrentString();
+}
+
+auto StructureParserBase::GetJsonDocument() noexcept -> JsonData& {
+  // VCA_VAJSON_INTERNAL_CALL
+  return this->GetJsonOps().GetJsonDocument();
+}
+
+auto StructureParserBase::GetJsonDocument() const noexcept -> JsonData const& {
+  // VCA_VAJSON_INTERNAL_CALL
+  return this->GetJsonOps().GetJsonDocument();
+}
+
+auto StructureParserBase::GetState() noexcept -> DepthCounter& { return this->GetJsonDocument().GetState(); }
+
+}  // namespace internal
+}  // namespace json
+}  // namespace amsr
