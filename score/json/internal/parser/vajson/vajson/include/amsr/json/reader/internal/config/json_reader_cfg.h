@@ -27,13 +27,13 @@ namespace config {
 /*!
  * \brief           Size of the key buffer
  */
-// VECTOR NL AutosarC++17_10-M3.4.1: MD_JSON_AutosarC++17_10-M3.4.1_top_level_constant
+
 constexpr static std::size_t kKeyBufferSize{1024};
 
 /*!
  * \brief           Size of the string buffer
  */
-// VECTOR NL AutosarC++17_10-M3.4.1: MD_JSON_AutosarC++17_10-M3.4.1_top_level_constant
+
 constexpr static std::size_t kStringBufferSize{1024};
 }  // namespace config
 }  // namespace internal

@@ -25,7 +25,7 @@
  *********************************************************************************************************************/
 #include <algorithm>
 #include <cassert>
-// VECTOR NL MisraC++2023-24.5.1: MD_JSON_MisraC++2023-24.5.1_safe_char_handling
+
 #include <cctype>
 #include <cerrno>
 #include <cmath>
@@ -76,8 +76,8 @@ namespace util {
  * \endspec
  */
 inline void ResetErrno() noexcept {
-  // VECTOR NCL AutosarC++17_10-M19.3.1: MD_JSON_Errno
-  // VCA_VAJSON_EXTERNAL_CALL
+
+
   errno = 0;
 }
 
@@ -145,8 +145,8 @@ class NumberParser {
    */
   auto LongLong(StringView view) noexcept -> SignedLL {
     ResetErrno();
-    // VECTOR NCL MisraC++2023-21.2.2: MD_JSON_MISRAC++2023-21.2.2_c_std_functions_deprecated
-    // VCA_VAJSON_EXTERNAL_CALL
+
+
     return std::strtoll(view.data(), &this->end_, 0);
   }
 
@@ -175,17 +175,17 @@ class NumberParser {
   auto UnsignedLongLong(StringView view) noexcept -> UnsignedLL {
     UnsignedLL result{0};
     // strtoull accepts negative values!!
-    // VCA_VAJSON_WITHIN_SPEC
+
     if (view[0] == '-') {
       // Set end_ so that it will be reported as 'parsed unsuccessfully'
-      // VECTOR NCL MisraC++2023-8.2.3: MD_JSON_MisraC++2023-8.2.3_cast_drops_const_qualifier
+
       this->end_ = const_cast<char*>(view.data());
 
     } else {
       ResetErrno();
-      // VECTOR NCL MisraC++2023-8.2.3: MD_JSON_MisraC++2023-8.2.3_cast_drops_const_qualifier
-      // VECTOR NCL MisraC++2023-21.2.2: MD_JSON_MISRAC++2023-21.2.2_c_std_functions_deprecated
-      // VCA_VAJSON_EXTERNAL_CALL
+
+
+
       result = std::strtoull(view.data(), &this->end_, 0);
     }
     return result;
@@ -212,8 +212,8 @@ class NumberParser {
    */
   auto Double(StringView view) noexcept -> double {
     ResetErrno();
-    // VECTOR NCL MisraC++2023-21.2.2: MD_JSON_MISRAC++2023-21.2.2_c_std_functions_deprecated
-    // VCA_VAJSON_EXTERNAL_CALL
+
+
     return std::strtod(view.data(), &this->end_);
   }
 
@@ -323,7 +323,7 @@ class JsonNumber final {
   auto As() const noexcept -> Optional<bool> {
     Optional<bool> opt{};
     if (this->GetNumberOfChars() == 1) {
-      // VCA_VAJSON_WITHIN_SPEC
+
       switch (std::char_traits<char>::to_int_type(this->view_[0])) {
         case std::char_traits<char>::to_int_type('1'):
           static_cast<void>(opt.emplace(true));
@@ -479,7 +479,7 @@ class JsonNumber final {
    */
   template <typename Fn>
   auto Convert(Fn&& parser) const noexcept -> decltype(parser(std::declval<StringView>())) {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return std::forward<Fn>(parser)(this->view_);
   }
 
@@ -540,7 +540,7 @@ class JsonNumber final {
   template <typename TargetType, typename SourceType>
   static auto Cast(SourceType number) noexcept -> Optional<TargetType> {
     Optional<TargetType> opt{};
-    // VECTOR NL Compiler-#186: MD_JSON_PlatformVariant
+
     if ((std::numeric_limits<TargetType>::max() >= number) && (std::numeric_limits<TargetType>::lowest() <= number)) {
       static_cast<void>(opt.emplace(TargetType(number)));
     }
@@ -571,10 +571,10 @@ class JsonNumber final {
    */
   auto ParseSuccessful(char const* end) const noexcept -> bool {
     // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
-    // VECTOR NCL AutosarC++17_10-M19.3.1: MD_JSON_Errno
-    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
+
+
     return ((errno != ERANGE) && (end == this->view_.cend()) &&
-            // VCA_VAJSON_WITHIN_SPEC
+
             (this->view_.back() != '.'));
   }
 
@@ -637,7 +637,7 @@ class JsonNumber final {
    */
   auto Validate() const noexcept -> bool {
     std::size_t const size{this->view_.size()};
-    // VCA_VAJSON_WITHIN_SPEC
+
     std::size_t const first_digit_pos{(this->view_[0] == '-') ? std::size_t{1} : std::size_t{0}};
 
     bool const is_multiple_digits{size > (first_digit_pos + 1)};
@@ -647,11 +647,11 @@ class JsonNumber final {
 
       // If it has a leading '0' character, it must be followed by a valid letter character in order to be a valid hex
       // or float number.
-      // VCA_VAJSON_WITHIN_SPEC
-      // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
+
+
       is_valid = (this->view_[first_digit_pos] != '0') ||
                  std::any_of(kValidLetters.cbegin(), kValidLetters.cend(), [this, first_digit_pos](char ch) noexcept {
-                   // VCA_VAJSON_LAMBDA_CAPTURE
+
                    return this->view_[first_digit_pos + 1] == ch;
                  });
     } else {

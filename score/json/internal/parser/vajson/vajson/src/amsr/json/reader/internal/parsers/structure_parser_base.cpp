@@ -39,7 +39,7 @@ namespace internal {
 
 auto StructureParserBase::Parse() noexcept -> Result<score::Blank> {
   // Skip all whitespace to so that we will detect empty documents immediately.
-  // VCA_VAJSON_INTERNAL_CALL
+
   ParserResult result{MakeResult(this->GetJsonOps().SkipWhitespace(),
                                  MakeError(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty."))
                           .transform([](score::Blank) noexcept { return ParserState::kRunning; })};
@@ -63,11 +63,11 @@ auto StructureParserBase::Parse() noexcept -> Result<score::Blank> {
  * \endinternal
  */
 auto StructureParserBase::ParseNull() noexcept -> ParserResult {
-  // VCA_VAJSON_INTERNAL_CALL
+
   return (this->GetJsonOps().CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
       .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
       .and_then([this](score::Blank) noexcept {
-        // VCA_VAJSON_LAMBDA_CAPTURE
+
         return this->OnNull();
       });
 }
@@ -85,11 +85,11 @@ auto StructureParserBase::ParseNull() noexcept -> ParserResult {
  * \endinternal
  */
 auto StructureParserBase::ParseTrue() noexcept -> ParserResult {
-  // VCA_VAJSON_INTERNAL_CALL
+
   return (this->GetJsonOps().CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
       .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
       .and_then([this](score::Blank) noexcept {
-        // VCA_VAJSON_LAMBDA_CAPTURE
+
         return this->OnBool(true);
       });
 }
@@ -106,11 +106,11 @@ auto StructureParserBase::ParseTrue() noexcept -> ParserResult {
  * \endinternal
  */
 auto StructureParserBase::ParseFalse() noexcept -> ParserResult {
-  // VCA_VAJSON_INTERNAL_CALL
+
   return (this->GetJsonOps().CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
       .and_then([this](score::Blank) noexcept { return this->GetState().AddValue(); })
       .and_then([this](score::Blank) noexcept {
-        // VCA_VAJSON_LAMBDA_CAPTURE
+
         return this->OnBool(false);
       });
 }
@@ -133,7 +133,7 @@ auto StructureParserBase::ParseNumber(char const cur) noexcept -> ParserResult {
   return (this->GetState().AddValue())
       .and_then([this, cur](score::Blank) noexcept { return JsonNumber::New(this->GetNumber(cur)); })
       .and_then([this](JsonNumber num) noexcept {
-        // VCA_VAJSON_LAMBDA_CAPTURE
+
         return this->OnNumber(num);
       });
 }
@@ -168,21 +168,21 @@ auto StructureParserBase::ParseString() noexcept -> ParserResult {
  * \endinternal
  */
 auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> ParserResult {
-  // VCA_VAJSON_INTERNAL_CALL
+
   static_cast<void>(this->GetJsonOps().SkipWhitespace());
   ParserResult result{ParserState::kRunning};
 
-  // VCA_VAJSON_INTERNAL_CALL
+
   if (this->GetJsonOps().Skip(':')) {
     result = this->GetState().AddKey().and_then([this, &string](score::Blank) noexcept {
       std::string_view const view{string};
       this->GetJsonDocument().StoreCurrentKey(view);
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return this->OnKey(string);
     });
   } else {
     result = this->GetState().AddValue().and_then([this, &string](score::Blank) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return this->OnString(string);
     });
   }
@@ -207,11 +207,11 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView> {
   String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
   auto const reader = [this, &buffer]() noexcept {
-    // VCA_VAJSON_INTERNAL_CALL
+
     return this->GetJsonOps().ReadUntil(R"("\)"sv,
-                                        // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
                                         [&buffer](StringView buf) noexcept {
-                                          // VCA_VAJSON_LAMBDA_CAPTURE
+
                                           static_cast<void>(buffer.append(buf.begin(), buf.end()));
                                         });
   };
@@ -224,20 +224,20 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView> {
     // We encountered an escape.
 
     // Take the backslash itself
-    // VCA_VAJSON_INTERNAL_CALL
+
     static_cast<void>(this->GetJsonOps().Move());
 
     // Unescape the escaped character
-    // VCA_VAJSON_THIS_DEREF
+
     ret_val = this->GetJsonOps()
-                  // VCA_VAJSON_INTERNAL_CALL
+
                   .TryTake()
                   .and_then([this](char const escaped) noexcept { return this->UnescapeChar(escaped); })
                   .and_then([&reader, &buffer](char const unescaped) noexcept {
-                    // VCA_VAJSON_WITHIN_SPEC
+
                     buffer.push_back(unescaped);
                     // And retry
-                    // VCA_VAJSON_LAMBDA_CAPTURE
+
                     return reader();
                   });
   }
@@ -245,7 +245,7 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView> {
   return Filter(ret_val, [](OptChar const opt) noexcept { return opt.HasValue(); },
               MakeError(JsonErrc::kInvalidJson, "ReadJsonString: Runaway string."))
       // Take the " character
-      // VCA_VAJSON_INTERNAL_CALL
+
       .transform([this](OptChar) noexcept {
         static_cast<void>(this->GetJsonOps().Move());
         return this->GetJsonDocument().GetCurrentString();
@@ -285,11 +285,11 @@ auto StructureParserBase::UnescapeChar(char const escaped) noexcept -> Result<ch
     case std::char_traits<char>::to_int_type('"'):
       break;
     case std::char_traits<char>::to_int_type('u'):
-      // VCA_VAJSON_EXTERNAL_CALL
+
       ret_val = MakeErrorResult<char>(JsonErrc::kInvalidJson, "Unicode escape: \\u notation is not supported!");
       break;
     default:
-      // VCA_VAJSON_EXTERNAL_CALL
+
       ret_val = MakeErrorResult<char>(JsonErrc::kInvalidJson, "Unknown escape sequence!");
       break;
   }
@@ -309,7 +309,7 @@ auto StructureParserBase::UnescapeChar(char const escaped) noexcept -> Result<ch
  */
 auto StructureParserBase::ParseStartObject() noexcept -> ParserResult {
   return this->GetState().AddObject().and_then([this](score::Blank) noexcept {
-    // VCA_VAJSON_LAMBDA_CAPTURE
+
     return this->OnStartObject();
   });
 }
@@ -329,7 +329,7 @@ auto StructureParserBase::ParseStartObject() noexcept -> ParserResult {
  */
 auto StructureParserBase::ParseEndObject() noexcept -> ParserResult {
   return this->GetState().PopObject().and_then([this](std::size_t count) noexcept {
-    // VCA_VAJSON_THIS_DEREF
+
     return this->OnEndObject(count);
   });
 }
@@ -347,7 +347,7 @@ auto StructureParserBase::ParseEndObject() noexcept -> ParserResult {
  */
 auto StructureParserBase::ParseStartArray() noexcept -> ParserResult {
   return this->GetState().AddArray().and_then(
-      // VCA_VAJSON_THIS_DEREF
+
       [this](score::Blank) noexcept { return this->OnStartArray(); });
 }
 
@@ -366,7 +366,7 @@ auto StructureParserBase::ParseStartArray() noexcept -> ParserResult {
  */
 auto StructureParserBase::ParseEndArray() noexcept -> ParserResult {
   return this->GetState().PopArray().and_then([this](std::size_t count) noexcept {
-    // VCA_VAJSON_THIS_DEREF
+
     return this->OnEndArray(count);
   });
 }
@@ -401,13 +401,13 @@ auto StructureParserBase::ParseLength() noexcept -> Result<std::uint32_t> {
   constexpr std::uint8_t kPrefixSize{4};
   std::uint32_t result{0};
   // clang-format off
-  // VCA_VAJSON_THIS_DEREF
+
   return this->GetJsonOps()
-      // VCA_VAJSON_INTERNAL_CALL
+
       .ReadExactly(kPrefixSize,
                    [&result](StringView view) noexcept {
                      static_cast<void>(std::memcpy(&result, view.data(), sizeof(result)));
-                     // VCA_VAJSON_LAMBDA_CAPTURE
+
                      result = be32toh(result);
                    })
       .transform([&result](score::Blank) noexcept { return result; });
@@ -428,16 +428,16 @@ auto StructureParserBase::ReadBinary(score::cpp::move_only_function<ParserResult
     -> ParserResult {
   return this->ParseLength().and_then([this, &callback](std::uint32_t length) noexcept {
     // Will always be overwritten.
-    // VCA_VAJSON_EXTERNAL_CALL
+
     ParserResult result{MakeErrorResult<ParserState>(JsonErrc::kInvalidJson)};
     // clang-format off
-    // VCA_VAJSON_INTERNAL_CALL
+
     return And(this->GetJsonOps()
-        // VCA_VAJSON_INTERNAL_CALL
+
         .ReadExactly(length,
-                     // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
                      [&callback, &result](StringView view) noexcept {
-                       // VCA_VAJSON_LAMBDA_CAPTURE
+
                        result = callback(view);
                      }), result);
     // clang-format on
@@ -458,12 +458,12 @@ auto StructureParserBase::ReadBinary(score::cpp::move_only_function<ParserResult
  */
 auto StructureParserBase::ParseBinaryKey() noexcept -> ParserResult {
   return this->GetState().AddKey().and_then([this](score::Blank) noexcept {
-    // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
     return this->ReadBinary([this](StringView buf) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       this->GetJsonDocument().StoreCurrentKey(buf);
       StringView const view{this->GetJsonDocument().GetCurrentKey()};
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return this->OnBinaryKey(view);
     });
   });
@@ -483,9 +483,9 @@ auto StructureParserBase::ParseBinaryKey() noexcept -> ParserResult {
 auto StructureParserBase::ParseBinaryString() noexcept -> ParserResult {
   return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
     return this->ReadBinary(
-        // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
         [this](StringView buf) noexcept {
-          // VCA_VAJSON_LAMBDA_CAPTURE
+
           return this->OnBinaryString(buf);
         });
   });
@@ -504,16 +504,16 @@ auto StructureParserBase::ParseBinaryString() noexcept -> ParserResult {
  */
 auto StructureParserBase::ParseBinaryValue() noexcept -> ParserResult {
   return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
-    // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
     return this->ReadBinary([this](StringView buf) noexcept {
       score::cpp::span<char const> const view{buf.data(), buf.size()};
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return this->OnBinary(view);
     });
   });
 }
 
-// VECTOR NCL Metric-HIS.VG: MD_JSON_Metric-HIS.VG_json_value
+
 /*!
  * \spec
  * requires true;
@@ -534,14 +534,14 @@ auto StructureParserBase::ParseBinaryValue() noexcept -> ParserResult {
 auto StructureParserBase::ParseValue() noexcept -> ParserResult {
   ParserResult result{ParserState::kRunning};
 
-  // VCA_VAJSON_INTERNAL_CALL
+
   if (!this->GetJsonOps().SkipWhitespace()) {
     result = this->GetState().CheckEndOfFile();
   }
 
   if (result == ParserState::kRunning) {
     static_cast<void>(this->GetJsonDocument().GetClearedStringBuffer());
-    // VCA_VAJSON_INTERNAL_CALL
+
     char const cur{this->GetJsonOps().Take()};
     switch (std::char_traits<char>::to_int_type(cur)) {
       case std::char_traits<char>::to_int_type('n'):
@@ -594,7 +594,7 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult {
         result = this->ParseNumber(cur);
         break;
       default:
-        // VCA_VAJSON_EXTERNAL_CALL
+
         result = MakeErrorResult<ParserState>(JsonErrc::kInvalidJson, "ParseValue: Got unknown JSON token.");
         break;
     }
@@ -614,14 +614,14 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult {
 auto StructureParserBase::GetNumber(char const first) noexcept -> CStringView {
   constexpr static StringView kLimiterChars{",}] \n\r\t"};
   String& buffer{this->GetJsonDocument().GetStringBuffer()};
-  // VCA_VAJSON_WITHIN_SPEC
+
   buffer.push_back(first);
-  // VCA_VAJSON_INTERNAL_CALL
+
   static_cast<void>(this->GetJsonOps()
-                        // VCA_VAJSON_INTERNAL_CALL
+
                         .ReadUntil(StringView{kLimiterChars},
                                    [&buffer](StringView ch) noexcept {
-                                     // VCA_VAJSON_LAMBDA_CAPTURE
+
                                      static_cast<void>(buffer.append(ch.begin(), ch.end()));
                                    })
                         .value());
@@ -631,12 +631,12 @@ auto StructureParserBase::GetNumber(char const first) noexcept -> CStringView {
 }
 
 auto StructureParserBase::GetJsonDocument() noexcept -> JsonData& {
-  // VCA_VAJSON_INTERNAL_CALL
+
   return this->GetJsonOps().GetJsonDocument();
 }
 
 auto StructureParserBase::GetJsonDocument() const noexcept -> JsonData const& {
-  // VCA_VAJSON_INTERNAL_CALL
+
   return this->GetJsonOps().GetJsonDocument();
 }
 

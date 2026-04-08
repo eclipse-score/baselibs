@@ -31,7 +31,7 @@ namespace internal {
 /*!
  * \brief           A parser that parses key value pairs
  */
-// VCA_VAJSON_MOLE_1298
+
 class ObjectParser final : public v2::SingleObjectParser {
   /*!
    * \brief           Type of function to be executed when the objects are read
@@ -82,7 +82,7 @@ class ObjectParser final : public v2::SingleObjectParser {
    * \endinternal
    */
   auto OnKey(std::string_view key) noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return std::forward<Fn>(this->fn_)(key).transform([](score::Blank) noexcept { return ParserState::kRunning; });
   }
 

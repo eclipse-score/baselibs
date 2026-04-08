@@ -111,14 +111,14 @@ class OptChar {
    * requires true;
    * \endspec
    */
-  // VECTOR NCL MisraC++2023-16.6.1: MD_JSON_MisraC++2023-16.6.1_symmetric_operator
+
   auto operator==(char const candidate) const noexcept -> bool {
-    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
+
     return this->HasValue() && (this->Value() == candidate);
   }
 };
 
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_json_ops
+
 /*!
  * \brief           A handler for operations on a JsonData object
  */

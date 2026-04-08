@@ -144,7 +144,7 @@ class JsonParser final {
    */
   template <typename Fn>
   auto Key(Fn const& fn) noexcept -> JsonParser& {
-    // VECTOR NL AutosarC++17_10-M5.2.12: MD_JSON_AutosarC++17_10-M5.2.12_array_to_pointer_decay
+
     return this->IfValid([this, &fn]() noexcept { return this->parser_.Key(fn).Drop(); });
   }
 
@@ -645,7 +645,7 @@ class JsonParser final {
   template <typename... Args>
   auto AddErrorInfo(Args... args) noexcept -> JsonParser& {
     if (ContainsStandardError()) {
-      // VCA_VAJSON_WITHIN_SPEC
+
       this->result_ = ResultBlank(ErrorCode{args...});
       this->customized_ = true;
     }
@@ -666,7 +666,7 @@ class JsonParser final {
    */
   auto AddErrorInfo(JsonErrorDomain::Errc errc, CStr msg) & noexcept -> JsonParser& {
     if (ContainsStandardError()) {
-      // VCA_VAJSON_WITHIN_SPEC
+
       this->result_ = MakeErrorResult<score::Blank>(errc, msg);
       this->customized_ = true;
     }

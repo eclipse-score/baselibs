@@ -39,7 +39,7 @@ namespace v2 {
  *                  derived parser, the default implementation aborts parsing.
  * \vpublic
  */
-// VCA_VAJSON_MOLE_1298
+
 class Parser : public internal::CompositionParser<internal::VirtualParser> {
  public:
   /*!

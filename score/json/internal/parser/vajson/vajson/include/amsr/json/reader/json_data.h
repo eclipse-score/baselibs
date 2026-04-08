@@ -34,7 +34,7 @@
 
 namespace amsr {
 namespace json {
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_json_data
+
 /*!
  * \brief           A JSON data representation
  *
@@ -218,7 +218,7 @@ class JsonData final {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   auto operator=(JsonData&&) & noexcept -> JsonData& = default;
 
   /*!
@@ -243,7 +243,7 @@ class JsonData final {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   ~JsonData() noexcept = default;
 
   /*!
@@ -275,7 +275,7 @@ class JsonData final {
    * \endspec
    */
   void StoreCurrentKey(StringView key) noexcept {
-    // VCA_VAJSON_WITHIN_SPEC
+
     this->current_key_ = std::string(key);
   }
 
@@ -320,7 +320,7 @@ class JsonData final {
    * \endspec
    */
   auto GetClearedStringBuffer() & noexcept -> String& {
-    // VCA_VAJSON_WITHIN_SPEC
+
     this->current_buffer_.clear();
     return this->current_buffer_;
   }

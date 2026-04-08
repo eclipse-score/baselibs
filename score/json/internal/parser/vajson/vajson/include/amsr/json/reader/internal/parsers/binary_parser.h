@@ -31,7 +31,7 @@ namespace internal {
 /*!
  * \brief           A parser that only parses a single binary value
  */
-// VCA_VAJSON_MOLE_1298
+
 class BinaryParser final : public VirtualParser {
   /*!
    * \brief           Type of function to be executed when a binary values are read
@@ -52,7 +52,7 @@ class BinaryParser final : public VirtualParser {
    * \threadsafe      FALSE
    * \reentrant       FALSE
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   BinaryParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
   /*!
@@ -77,7 +77,7 @@ class BinaryParser final : public VirtualParser {
    * \endinternal
    */
   auto OnBinary(Bytes view) noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return this->fn_(view).transform([](score::Blank) noexcept { return ParserState::kFinished; });
   }
 

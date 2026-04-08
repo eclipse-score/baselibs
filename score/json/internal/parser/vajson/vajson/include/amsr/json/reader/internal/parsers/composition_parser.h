@@ -150,7 +150,7 @@ using ArrayCallableReturnsNoResult = std::enable_if_t<!ArrayReturnsResult<F, T>:
  * \trace           DSGN-JSON-Reader-Composition-Parser
  */
 template <typename Mixin>
-// VCA_VAJSON_MOLE_1298
+
 class CompositionParser : public Mixin {
   /*!
    * \brief           Shorthand for the ParserResult
@@ -169,7 +169,7 @@ class CompositionParser : public Mixin {
    *    requires true;
    * \endspec
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   explicit CompositionParser(JsonData& doc) noexcept : Mixin(doc), doc_(doc) {}
   /*! \brief Delete  copy constructor */
   CompositionParser(CompositionParser const&) = delete;
@@ -214,7 +214,7 @@ class CompositionParser : public Mixin {
   auto Key(Fn fn) noexcept -> CallableReturnsNoResult<Fn, std::string_view, R> {
     static_assert(ReturnsVoid<Fn, std::string_view>::value, "Must return void");
     return this->Key([&fn](std::string_view s) noexcept {
-      // VCA_VAJSON_WITHIN_SPEC
+
       std::forward<Fn>(fn)(s);
       return ResultBlank{};
     });
@@ -318,7 +318,7 @@ class CompositionParser : public Mixin {
   auto Bool(Fn fn) noexcept -> CallableReturnsNoResult<Fn, bool, R> {
     static_assert(ReturnsVoid<Fn, bool>::value, "Must return void");
     return this->Bool([&fn](bool b) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(b);
       return ResultBlank{};
     });
@@ -389,7 +389,7 @@ class CompositionParser : public Mixin {
   auto Number(Fn fn) noexcept -> CallableReturnsNoResult<Fn, T, R> {
     static_assert(ReturnsVoid<Fn, T>::value, "Must return void");
     return this->Number<T>([&fn](T n) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(n);
       return ResultBlank{};
     });
@@ -464,7 +464,7 @@ class CompositionParser : public Mixin {
   auto String(Fn fn) noexcept -> CallableReturnsNoResult<Fn, std::string_view, R> {
     static_assert(ReturnsVoid<Fn, std::string_view>::value, "Must return void");
     return this->String([&fn](std::string_view s) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(s);
       return ResultBlank{};
     });
@@ -566,7 +566,7 @@ class CompositionParser : public Mixin {
   auto NumberArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, T, R> {
     static_assert(ArrayReturnsVoid<Fn, T>::value, "Must return void");
     return this->NumberArray<T>([&fn](std::size_t n, T number) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(n, number);
       return ResultBlank{};
     });
@@ -604,11 +604,11 @@ class CompositionParser : public Mixin {
     static_assert(ArrayReturnsResultVoid<Fn, T>::value, "Must return ResultBlank");
     return this->Array([this, &fn](std::size_t n) noexcept {
       return this
-          // VCA_VAJSON_LAMBDA_CAPTURE
+
           ->Number<T>(
-              // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
               [&fn, n](T number) noexcept {
-                // VCA_VAJSON_LAMBDA_CAPTURE
+
                 return std::forward<Fn>(fn)(n, number);
               })
           .Drop();
@@ -645,7 +645,7 @@ class CompositionParser : public Mixin {
   auto StringArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, std::string_view, R> {
     static_assert(ArrayReturnsVoid<Fn, std::string_view>::value, "Must return void");
     return this->StringArray([&fn](std::size_t n, std::string_view s) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(n, s);
       return ResultBlank{};
     });
@@ -682,11 +682,11 @@ class CompositionParser : public Mixin {
     static_assert(ArrayReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
     return this->Array([this, &fn](std::size_t n) noexcept {
       return this
-          // VCA_VAJSON_LAMBDA_CAPTURE
+
           ->String(
-              // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
               [&fn, n](std::string_view s) noexcept {
-                // VCA_VAJSON_LAMBDA_CAPTURE
+
                 return std::forward<Fn>(fn)(n, s);
               })
           .Drop();
@@ -722,7 +722,7 @@ class CompositionParser : public Mixin {
   auto BoolArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, bool, R> {
     static_assert(ArrayReturnsVoid<Fn, bool>::value, "Must return void");
     return this->BoolArray([&fn](std::size_t n, bool b) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(n, b);
       return ResultBlank{};
     });
@@ -758,11 +758,11 @@ class CompositionParser : public Mixin {
     static_assert(ArrayReturnsResultVoid<Fn, bool>::value, "Must return ResultBlank");
     return this->Array([this, &fn](std::size_t n) noexcept {
       return this
-          // VCA_VAJSON_LAMBDA_CAPTURE
+
           ->Bool(
-              // VECTOR NL AutosarC++17_10-A5.1.8: MD_JSON_nested_lambda_constructs
+
               [&fn, n](bool b) noexcept {
-                // VCA_VAJSON_LAMBDA_CAPTURE
+
                 return std::forward<Fn>(fn)(n, b);
               })
           .Drop();
@@ -835,7 +835,7 @@ class CompositionParser : public Mixin {
   auto Binary(Fn fn) noexcept -> CallableReturnsNoResult<Fn, Bytes, R> {
     static_assert(ReturnsVoid<Fn, Bytes>::value, "Must return void");
     return this->Binary([&fn](Bytes view) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(view);
       return ResultBlank{};
     });
@@ -869,7 +869,7 @@ class CompositionParser : public Mixin {
   auto Array(Fn fn) noexcept -> CallableReturnsNoResult<Fn, std::size_t, R> {
     static_assert(ReturnsVoid<Fn, std::size_t>::value, "Must return void");
     return this->Array([&fn](std::size_t n) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       std::forward<Fn>(fn)(n);
       return ResultBlank{};
     });
@@ -936,7 +936,7 @@ class CompositionParser : public Mixin {
     static_assert(ReturnsVoid<Fn, std::string_view>::value, "Must return void");
     return Object(
         [&fn](std::string_view key) noexcept {
-          // VCA_VAJSON_LAMBDA_CAPTURE
+
           std::forward<Fn>(fn)(key);
           return ResultBlank{};
         },

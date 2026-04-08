@@ -48,7 +48,7 @@ auto VirtualParser::GetJsonDocument() const noexcept -> JsonData const& { return
  *                  its result
  */
 auto VirtualParser::OnNull() noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -57,7 +57,7 @@ auto VirtualParser::OnNull() noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnBool(bool) noexcept -> ParserResult {  // NOLINT(readability/casting)
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -66,7 +66,7 @@ auto VirtualParser::OnBool(bool) noexcept -> ParserResult {  // NOLINT(readabili
  *                  its result
  */
 auto VirtualParser::OnNumber(JsonNumber) noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -75,7 +75,7 @@ auto VirtualParser::OnNumber(JsonNumber) noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnString(StringView) noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -84,7 +84,7 @@ auto VirtualParser::OnString(StringView) noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnKey(StringView) noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -93,7 +93,7 @@ auto VirtualParser::OnKey(StringView) noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnStartObject() noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -102,7 +102,7 @@ auto VirtualParser::OnStartObject() noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnEndObject(std::size_t) noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -111,7 +111,7 @@ auto VirtualParser::OnEndObject(std::size_t) noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnStartArray() noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 
@@ -120,7 +120,7 @@ auto VirtualParser::OnStartArray() noexcept -> ParserResult {
  *                  its result
  */
 auto VirtualParser::OnEndArray(std::size_t) noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->OnUnexpectedEvent();
 }
 /*!

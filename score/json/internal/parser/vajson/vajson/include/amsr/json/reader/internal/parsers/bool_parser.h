@@ -31,7 +31,7 @@ namespace internal {
 /*!
  * \brief           A parser that only parses a single boolean value
  */
-// VCA_VAJSON_MOLE_1298
+
 class BoolParser final : public VirtualParser {
   /*!
    * \brief           Type of function to be executed when bool values are read
@@ -52,7 +52,7 @@ class BoolParser final : public VirtualParser {
    * \threadsafe      FALSE
    * \reentrant       FALSE
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   BoolParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
   /*!
@@ -77,7 +77,7 @@ class BoolParser final : public VirtualParser {
    * \endinternal
    */
   auto OnBool(bool v) noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](score::Blank) noexcept { return ParserState::kFinished; });
   }
 

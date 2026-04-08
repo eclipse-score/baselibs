@@ -36,7 +36,7 @@ namespace amsr {
 namespace json {
 namespace internal {
 
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_parser
+
 /*!
  * \brief           A SAX-style JSON parser
  * \details         Parses JSON text from a stream and sends events synchronously to an Implementer.
@@ -48,7 +48,7 @@ namespace internal {
  * \trace           DSGN-JSON-Reader-Data-Items
  */
 template <typename Implementer>
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric-OO.WMC.0ne_over20methods
+
 class StructureParser : public StructureParserBase {
   /*!
    * \brief           Callback implementer
@@ -303,7 +303,7 @@ class StructureParser : public StructureParserBase {
    * requires true;
    * \endspec
    */
-  ~StructureParser() noexcept override = default;  // VCA_VAJSON_FREE_STATIC_MEMORY
+  ~StructureParser() noexcept override = default;
 
   /*!
    * \brief           Parses the file until the current parser is finished

@@ -32,7 +32,7 @@ namespace internal {
  *                  Type of number to parse.
  */
 template <typename T>
-// VCA_VAJSON_MOLE_1298
+
 class NumberParser final : public VirtualParser {
   /*!
    * \brief           Type of function to be executed when the numbers are read
@@ -53,7 +53,7 @@ class NumberParser final : public VirtualParser {
    * \threadsafe      FALSE
    * \reentrant       FALSE
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   NumberParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
   /*!
@@ -81,7 +81,7 @@ class NumberParser final : public VirtualParser {
    * \endinternal
    */
   auto OnNumber(JsonNumber number) noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](score::Blank) noexcept { return ParserState::kFinished; });
   }
 

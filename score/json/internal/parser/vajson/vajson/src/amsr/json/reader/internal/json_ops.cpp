@@ -148,10 +148,10 @@ auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
       ->Read(total_size,
              [&is_same, &to_be_read](std::string_view view) noexcept {
                std::string_view to_be_compared{};
-               // VCA_VAJSON_LAMBDA_CAPTURE
+
                std::tie(to_be_compared, to_be_read) = SplitStringView(to_be_read, view.size());
                if (view != to_be_compared) {
-                 // VCA_VAJSON_LAMBDA_CAPTURE
+
                  is_same = false;
                }
              })
@@ -255,7 +255,7 @@ auto JsonOps::Read(std::uint64_t const num_to_read,
 auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                           score::cpp::move_only_function<void(std::string_view)> const& callback) noexcept
     -> Result<score::Blank> {
-  // VCA_VAJSON_THIS_DEREF
+
   String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
   bool callback_executed{false};
@@ -275,7 +275,7 @@ auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                  }
                 return result; }));
 
-  // VECTOR NL AutosarC++17_10-M0.1.2: MD_JSON_M0.1.2_condition_always_true_false_positive
+
   if (result && (!callback_executed)) {
     StringView const buf_view{buffer};
     callback(buf_view);
@@ -335,22 +335,22 @@ auto JsonOps::ReadUntil(std::string_view const delimiter,
 }
 
 auto JsonOps::GetJsonDocument() & noexcept -> JsonData& {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->data_.get();
 }
 
 auto JsonOps::GetJsonDocument() const& noexcept -> JsonData const& {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->data_.get();
 }
 
 auto JsonOps::GetStream() & noexcept -> std::istream& {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->GetJsonDocument().GetStream();
 }
 
 auto JsonOps::GetStream() const& noexcept -> std::istream const& {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->GetJsonDocument().GetStream();
 }
 

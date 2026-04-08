@@ -31,7 +31,7 @@ namespace internal {
 /*!
  * \brief           A parser that only parses multiple values of the same type
  */
-// VCA_VAJSON_MOLE_1298
+
 class ArrayParser final : public v2::SingleArrayParser {
   /*!
    * \brief           Type of function to be executed when the keys are read
@@ -74,7 +74,7 @@ class ArrayParser final : public v2::SingleArrayParser {
    * \endinternal
    */
   auto OnElement() noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](score::Blank) noexcept { return ParserState::kRunning; });
   }
 

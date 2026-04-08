@@ -250,7 +250,7 @@ auto And(score::Result<T> first, score::Result<U> second) noexcept -> score::Res
  * requires true;
  * \endspec
  */
-// VECTOR NCL AutosarC++17_10-M3.2.2: MD_JSON_AutosarC++17_10-M3.2.2_error_domain_violates_odr
+
 inline constexpr auto GetJsonDomain() noexcept -> ErrorDomain const& { return detail::kJsonErrorDomain; }
 
 /*!
@@ -313,7 +313,7 @@ inline auto MakeResult(bool value, score::result::Error error) noexcept -> score
   return value ? score::ResultBlank{} : score::MakeUnexpected<score::Blank>(error);
 }
 
-// VECTOR NCL AutosarC++17_10-M0.1.8: MD_JSON_abort_effect
+
 /*!
  * \brief           Assert that a condition holds
  * \param[in]       value

@@ -19,7 +19,7 @@
 
 namespace amsr {
 namespace json {
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric-OO.WMC.0ne_over20methods
+
 /*!
  * \brief           Forward declaration for JsonData
  */
@@ -29,7 +29,7 @@ namespace internal {
 /*!
  * \brief           Forward declaration for JsonOps
  */
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric-OO.WMC.0ne_over20methods
+
 class JsonOps;
 }  // namespace internal
 

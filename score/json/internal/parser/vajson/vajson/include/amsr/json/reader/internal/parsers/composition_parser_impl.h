@@ -39,7 +39,7 @@ template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::Key(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R> {
   static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return KeyParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -47,7 +47,7 @@ template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::Bool(Fn fn) noexcept -> CallableReturnsResult<Fn, bool, R> {
   static_assert(ReturnsResultVoid<Fn, bool>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return BoolParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -55,7 +55,7 @@ template <typename Mixin>
 template <typename T, typename Fn>
 auto CompositionParser<Mixin>::Number(Fn fn) noexcept -> CallableReturnsResult<Fn, T, R> {
   static_assert(ReturnsResultVoid<Fn, T>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return NumberParser<T>(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -63,7 +63,7 @@ template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::String(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R> {
   static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return StringParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -71,7 +71,7 @@ template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::Binary(Fn fn) noexcept -> CallableReturnsResult<Fn, Bytes, R> {
   static_assert(ReturnsResultVoid<Fn, Bytes>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return BinaryParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -79,7 +79,7 @@ template <typename Mixin>
 template <typename Fn>
 auto CompositionParser<Mixin>::Array(Fn fn) noexcept -> CallableReturnsResult<Fn, std::size_t, R> {
   static_assert(ReturnsResultVoid<Fn, std::size_t>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return ArrayParser(this->doc_, std::forward<Fn>(fn)).SubParse();
 }
 
@@ -88,7 +88,7 @@ template <typename Fn>
 auto CompositionParser<Mixin>::Object(Fn fn, bool object_already_open) noexcept
     -> CallableReturnsResult<Fn, std::string_view, R> {
   static_assert(ReturnsResultVoid<Fn, std::string_view>::value, "Must return ResultBlank");
-  // VCA_VAJSON_INTERNAL_CALL
+
   return ObjectParser(doc_, std::forward<Fn>(fn), object_already_open).SubParse();
 }
 

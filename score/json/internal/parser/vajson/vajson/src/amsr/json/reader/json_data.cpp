@@ -41,9 +41,9 @@ namespace json {
  * \endinternal
  */
 JsonData::JsonData(std::istream& input_stream) noexcept : stream_{input_stream} {
-  // VCA_VAJSON_WITHIN_SPEC
+
   this->current_key_.reserve(internal::config::kKeyBufferSize);
-  // VCA_VAJSON_WITHIN_SPEC
+
   this->current_buffer_.reserve(internal::config::kStringBufferSize);
   this->ParseBom();
 }
@@ -55,9 +55,9 @@ JsonData::JsonData(std::istream& input_stream) noexcept : stream_{input_stream} 
  * \endinternal
  */
 
-// VCA_VAJSON_MOLE_1298
+
 JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonData(*input_stream) {
-  // VCA_VAJSON_THIS_DEREF
+
   this->owned_stream_ = std::move(input_stream);
 }
 
@@ -188,9 +188,9 @@ auto JsonData::Restore() noexcept -> Result<score::Blank> {
 void JsonData::ParseBom() noexcept {
   constexpr std::array<char const, 3> kUtf8Bom{'\xEF', '\xBB', '\xBF'};
   std::string_view const view{kUtf8Bom.data(), kUtf8Bom.size()};
-  // VCA_VAJSON_INTERNAL_CALL
+
   internal::JsonOps ops{*this};
-  // VCA_VAJSON_INTERNAL_CALL
+
   Result<bool> const result{ops.ReadString(view)};
 
   if (result.has_value()) {

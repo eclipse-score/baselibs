@@ -36,7 +36,7 @@ namespace amsr {
 namespace json {
 namespace internal {
 
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_parser
+
 /*!
  * \brief           Contains the logic to structure_parser
  *

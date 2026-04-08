@@ -77,7 +77,7 @@ class LevelValidator {
     if (!entered_) {
       entered_ = true;
     } else {
-      // VCA_VAJSON_WITHIN_SPEC
+
       result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Did not expect nested elements");
     }
 
@@ -111,7 +111,7 @@ class LevelValidator {
     if (entered_) {
       entered_ = false;
     } else {
-      // VCA_VAJSON_WITHIN_SPEC
+
       result = MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Cannot leave level");
     }
 

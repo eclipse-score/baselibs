@@ -90,7 +90,7 @@ class SingleArrayParser : public v2::Parser {
   auto OnStartArray() noexcept -> ParserResult final {
     return this->validator_
         .Enter()
-        // VCA_VAJSON_INTERNAL_CALL
+
         .and_then([this](ParserState) noexcept { return this->GetJsonDocument().Snap(); })
         .transform([](score::Blank) noexcept { return ParserState::kRunning; });
   }
@@ -119,7 +119,7 @@ class SingleArrayParser : public v2::Parser {
    */
   auto OnEndArray(std::size_t) noexcept -> ParserResult final {
     return this->validator_.Leave().and_then([this](ParserState state) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return Finalize().transform([&state](score::Blank) noexcept { return state; });
     });
   }
@@ -152,13 +152,13 @@ class SingleArrayParser : public v2::Parser {
   auto OnUnexpectedEvent() noexcept -> ParserResult final {
     return MakeResult(this->validator_.IsInside(),
                       {JsonErrc::kUserValidationFailed, "Expected to parse an array of elements."})
-        // VCA_VAJSON_INTERNAL_CALL
+
         .and_then([this](score::Blank) noexcept { return this->GetJsonDocument().Restore(); })
         .and_then([this](score::Blank) noexcept {
-          // VCA_VAJSON_THIS_DEREF
+
           return this->OnElement();
         })
-        // VCA_VAJSON_INTERNAL_CALL
+
         .and_then([this](ParserState state) noexcept {
             return this->GetJsonDocument().Snap().transform([this, &state](score::Blank) {
                 index_++;

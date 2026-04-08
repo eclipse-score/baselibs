@@ -44,68 +44,68 @@ namespace internal {
  */
 template <typename Implementer>
 auto StructureParser<Implementer>::OnNull() noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnNull());
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnBool(bool v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnBool(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnNumber(JsonNumber v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnNumber(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnString(CStringView v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnString(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnKey(CStringView v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnKey(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnStartObject() noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnStartObject());
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnEndObject(std::size_t v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnEndObject(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnStartArray() noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnStartArray());
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnEndArray(std::size_t v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnEndArray(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnBinaryKey(StringView v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnBinaryKey(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnBinaryString(StringView v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnBinaryString(v));
 }
 template <typename Implementer>
 auto StructureParser<Implementer>::OnBinary(score::cpp::span<char const> v) noexcept -> ParserResult {
-  // VCA_VAJSON_LAMBDA_CAPTURE
+
   return ParserResult(this->implementer_.get().GetChild().OnBinary(v));
 }
 
 template <typename Implementer>
 StructureParser<Implementer>::StructureParser(Implementer& implementer, JsonData& doc) noexcept
-    // VCA_VAJSON_INTERNAL_CALL
+
     : StructureParserBase(), implementer_{implementer}, json_ops_(doc) {}
 
 template <typename Implementer>
@@ -119,7 +119,7 @@ auto StructureParser<Implementer>::GetJsonOps() const& noexcept -> JsonOps const
 
 template <typename Implementer>
 auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult {
-  // VCA_VAJSON_THIS_DEREF
+
   return this->implementer_.get().GetChild().Parse().transform([](score::Blank) noexcept { return ParserState::kRunning; });
 }
 

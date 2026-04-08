@@ -32,7 +32,7 @@
 namespace amsr {
 namespace json {
 namespace internal {
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric.OO.WMC.One_parser
+
 /*!
  * \brief           A SAX-style JSON parser
  *
@@ -44,16 +44,16 @@ namespace internal {
  *
  * \trace           DSGN-JSON-Reader-Data-Items
  */
-// VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric-OO.WMC.0ne_over20methods
+
 class VirtualParser {
  public:
-  // VECTOR NCL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_structure_parser
+
   /*!
    * \brief           Friend declaration, in order to make StructureParser able to access private methods of
    *                  VirtualParser
    */
   template <typename T>
-  // VECTOR NCL Metric-OO.WMC.One: MD_JSON_Metric-OO.WMC.0ne_over20methods
+
   friend class StructureParser;
 
   /*!
@@ -102,7 +102,7 @@ class VirtualParser {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   virtual ~VirtualParser() noexcept = default;
 
   /*!
@@ -266,7 +266,7 @@ class VirtualParser {
    * \endspec
    */
   // auto OnString(CStringView view) noexcept -> ParserResult {
-  //   // VCA_VAJSON_THIS_DEREF
+  //
   //   return this->OnString(StringView{view.c_str(), view.size()});
   // }
 
@@ -284,7 +284,7 @@ class VirtualParser {
    * \endspec
    */
   auto OnBinaryString(StringView view) noexcept -> ParserResult {
-    // VCA_VAJSON_THIS_DEREF
+
     return this->OnString(view);
   }
 
@@ -318,7 +318,7 @@ class VirtualParser {
    * \endspec
    */
   // auto OnKey(CStringView view) noexcept -> ParserResult {
-  //   // VCA_VAJSON_THIS_DEREF
+  //
   //   return this->OnKey(StringView{view.c_str(), view.size()});
   // }
 
@@ -336,7 +336,7 @@ class VirtualParser {
    * \endspec
    */
   auto OnBinaryKey(StringView view) noexcept -> ParserResult {
-    // VCA_VAJSON_THIS_DEREF
+
     return this->OnKey(view);
   }
 
@@ -415,7 +415,7 @@ class VirtualParser {
    * \endinternal
    */
   virtual auto OnBinary(Bytes) noexcept -> ParserResult {
-    // VCA_VAJSON_THIS_DEREF
+
     return this->OnUnexpectedEvent();
   }
 

@@ -31,7 +31,7 @@ namespace internal {
 /*!
  * \brief           A parser that only parses a single string value
  */
-// VCA_VAJSON_MOLE_1298
+
 class StringParser : public VirtualParser {
   /*!
    * \brief           Type of function to be executed when the strings are read
@@ -52,7 +52,7 @@ class StringParser : public VirtualParser {
    * \threadsafe      FALSE
    * \reentrant       FALSE
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   StringParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
   /*!
@@ -78,7 +78,7 @@ class StringParser : public VirtualParser {
    * \endinternal
    */
   auto OnString(StringView str) noexcept -> ParserResult final {
-    // VCA_VAJSON_WITHIN_SPEC
+
     return this->fn_(str).transform([](score::Blank) noexcept { return ParserState::kFinished; });
   }
 

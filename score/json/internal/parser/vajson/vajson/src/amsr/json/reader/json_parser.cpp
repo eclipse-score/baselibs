@@ -30,13 +30,13 @@ namespace {
 /*!
  * \brief           A parser that only parses an opening curly bracket
  */
-// VCA_VAJSON_MOLE_1298
+
 class StartObjectParser final : public internal::VirtualParser {
  public:
   /*!
    * \brief           Constructs the parser
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   using internal::VirtualParser::VirtualParser;
 
   /*!
@@ -48,13 +48,13 @@ class StartObjectParser final : public internal::VirtualParser {
 /*!
  * \brief           A parser that only parses a closing curly bracket
  */
-// VCA_VAJSON_MOLE_1298
+
 class EndObjectParser final : public internal::VirtualParser {
  public:
   /*!
    * \brief           Constructs the parser
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   using internal::VirtualParser::VirtualParser;
 
   /*!
@@ -66,13 +66,13 @@ class EndObjectParser final : public internal::VirtualParser {
 /*!
  * \brief           Parser that only parses an opening square bracket
  */
-// VCA_VAJSON_MOLE_1298
+
 class StartArrayParser final : public internal::VirtualParser {
  public:
   /*!
    * \brief           Constructs the parser
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   using internal::VirtualParser::VirtualParser;
 
   /*!
@@ -84,13 +84,13 @@ class StartArrayParser final : public internal::VirtualParser {
 /*!
  * \brief           Parser that only parses a closing square bracket
  */
-// VCA_VAJSON_MOLE_1298
+
 class EndArrayParser final : public internal::VirtualParser {
  public:
   /*!
    * \brief           Constructs the parser
    */
-  // VCA_VAJSON_INTERNAL_CALL
+
   using internal::VirtualParser::VirtualParser;
 
   /*!
@@ -111,8 +111,8 @@ JsonParser::JsonParser(JsonData& data) noexcept : parser_{data}, data_{data} {}
  * \endinternal
  */
 auto JsonParser::StartObject() noexcept -> JsonParser& {
-  // VECTOR NCL MisraC++2023-8.2.2: MD_JSON_MisraC++2023-8.2.2_false_positive
-  // VCA_VAJSON_INTERNAL_CALL
+
+
   return this->IfValid([this]() noexcept { return StartObjectParser(this->data_.get()).Parse(); });
 }
 
@@ -124,8 +124,8 @@ auto JsonParser::StartObject() noexcept -> JsonParser& {
  * \endinternal
  */
 auto JsonParser::EndObject() noexcept -> JsonParser& {
-  // VECTOR NCL MisraC++2023-8.2.2: MD_JSON_MisraC++2023-8.2.2_false_positive
-  // VCA_VAJSON_INTERNAL_CALL
+
+
   return this->IfValid([this]() noexcept { return EndObjectParser(this->data_.get()).Parse(); });
 }
 
@@ -137,8 +137,8 @@ auto JsonParser::EndObject() noexcept -> JsonParser& {
  * \endinternal
  */
 auto JsonParser::StartArray() noexcept -> JsonParser& {
-  // VECTOR NCL MisraC++2023-8.2.2: MD_JSON_MisraC++2023-8.2.2_false_positive
-  // VCA_VAJSON_INTERNAL_CALL
+
+
   return this->IfValid([this]() noexcept { return StartArrayParser(this->data_.get()).Parse(); });
 }
 
@@ -150,8 +150,8 @@ auto JsonParser::StartArray() noexcept -> JsonParser& {
  * \endinternal
  */
 auto JsonParser::EndArray() noexcept -> JsonParser& {
-  // VECTOR NCL MisraC++2023-8.2.2: MD_JSON_MisraC++2023-8.2.2_false_positive
-  // VCA_VAJSON_INTERNAL_CALL
+
+
   return this->IfValid([this]() noexcept { return EndArrayParser(this->data_.get()).Parse(); });
 }
 

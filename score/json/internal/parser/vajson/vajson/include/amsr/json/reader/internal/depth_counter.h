@@ -105,7 +105,7 @@ class DepthCounter final {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   auto operator=(DepthCounter&&) & noexcept -> DepthCounter& = default;
 
   /*!
@@ -118,7 +118,7 @@ class DepthCounter final {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   auto operator=(DepthCounter const&) & noexcept(false) -> DepthCounter& = default;
 
   /*!
@@ -132,7 +132,7 @@ class DepthCounter final {
    * requires true;
    * \endspec
    */
-  // VCA_VAJSON_MOLE_1298
+
   ~DepthCounter() noexcept = default;
 
   /*!
@@ -225,16 +225,16 @@ class DepthCounter final {
   auto AddKey() noexcept -> ResultBlank {
     ResultBlank result{};
     if (this->is_finished_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Multiple top level elements.");
     } else if (this->comma_expected_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Missing comma.");
     } else if (this->CheckLastElement('{')) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       this->stack_.push('k');
     } else {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Expected a value.");
     }
     return result;
@@ -272,37 +272,37 @@ class DepthCounter final {
     Result<score::Blank> result{score::Blank{}};
 
     if (this->is_finished_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Multiple top level elements.");
     } else if (this->comma_expected_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Missing comma.");
     } else if (!this->IsEmpty()) {
       this->comma_expected_ = true;
 
       // We now know that the stack is not empty, so there's no need to use CheckLastElement.
-      // VCA_VAJSON_EXTERNAL_CALL
+
       char const last{this->stack_.top()};
       switch (std::char_traits<char>::to_int_type(last)) {
         case std::char_traits<char>::to_int_type('['):
-          // VECTOR NCL VectorC++-V16.0.5: MD_JSON_VectorC++-V16.0.5_increment_or_decrement_side_effects
-          // VCA_VAJSON_EXTERNAL_CALL
+
+
           ++this->counter_.top();
           break;
         case std::char_traits<char>::to_int_type('k'):
-          // VCA_VAJSON_EXTERNAL_CALL
+
           this->stack_.pop();
-          // VECTOR NCL VectorC++-V16.0.5: MD_JSON_VectorC++-V16.0.5_increment_or_decrement_side_effects
-          // VCA_VAJSON_EXTERNAL_CALL
+
+
           ++this->counter_.top();
           break;
         default:
-          // VCA_VAJSON_EXTERNAL_CALL
+
           result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Expected a key.");
           break;
       }
     } else {
-      // VCA_VAJSON_THIS_DEREF
+
       this->is_finished_ = true;
     }
 
@@ -395,8 +395,8 @@ class DepthCounter final {
       this->comma_expected_ = false;
     }
 
-    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
-    // VCA_VAJSON_EXTERNAL_CALL
+
+
     return ((!this->IsEmpty()) && (this->stack_.top() != 'k'));
   }
 
@@ -429,16 +429,16 @@ class DepthCounter final {
    * \endinternal
    */
   auto Pop() noexcept -> std::size_t {
-    // VCA_VAJSON_EXTERNAL_CALL
+
     std::size_t const count{this->counter_.top()};
-    // VCA_VAJSON_EXTERNAL_CALL
+
     this->counter_.pop();
-    // VCA_VAJSON_EXTERNAL_CALL
+
     this->stack_.pop();
 
-    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
+
     if (this->CheckLastElement('[') || this->CheckLastElement('{')) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       ++this->counter_.top();
     }
 
@@ -478,22 +478,22 @@ class DepthCounter final {
     ResultBlank result{};
 
     if (this->is_finished_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Multiple top level elements.");
     } else if (this->CheckLastElement('{')) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a key.");
     } else if (this->comma_expected_) {
-      // VCA_VAJSON_EXTERNAL_CALL
+
       result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a comma.");
     } else {
       if (this->CheckLastElement('k')) {
-        // VCA_VAJSON_EXTERNAL_CALL
+
         this->stack_.pop();
       }
-      // VCA_VAJSON_EXTERNAL_CALL
+
       this->stack_.push(element);
-      // VCA_VAJSON_EXTERNAL_CALL
+
       this->counter_.push(0U);
     }
 
@@ -514,8 +514,8 @@ class DepthCounter final {
    * \endspec
    */
   auto CheckLastElement(char item) const noexcept -> bool {
-    // VECTOR NCL MisraC++2023-8.14.1: MD_JSON_MisraC++2023-8.14.1_no_effective_operation_on_rhs
-    // VCA_VAJSON_EXTERNAL_CALL
+
+
     return (!this->IsEmpty()) && (this->stack_.top() == item);
   }
 

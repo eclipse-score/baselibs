@@ -36,7 +36,7 @@ namespace v2 {
  *                  and Finalize on object end.
  * \vpublic
  */
-// VCA_VAJSON_MOLE_1298
+
 class SingleObjectParser : public v2::Parser {
  public:
   /*!
@@ -110,7 +110,7 @@ class SingleObjectParser : public v2::Parser {
    */
   auto OnEndObject(std::size_t) noexcept -> ParserResult final {
     return this->validator_.Leave().and_then([this](ParserState state) noexcept {
-      // VCA_VAJSON_LAMBDA_CAPTURE
+
       return this->Finalize().transform(
           [&state](score::Blank) noexcept { return state; });
     });
