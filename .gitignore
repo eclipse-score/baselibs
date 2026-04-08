@@ -1,4 +1,5 @@
 bazel-*
+MODULE.bazel.lock
 user.bazelrc
 .cache
 compile_commands.json
@@ -6,3 +7,9 @@ compile_commands.json
 # docs build artifacts
 _build
 docs/ubproject.toml
+
+# ignore folders created by IDEs
+.vscode
+.idea
+# Ignore clangd's config
+.clangd
