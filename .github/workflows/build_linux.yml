@@ -19,6 +19,7 @@ on:
   push:
     branches:
       - main
+      - balajiyalam2
   merge_group:
     types: [checks_requested]
   workflow_call:
@@ -64,7 +65,7 @@ jobs:
           sudo apt install -y qemu-user
       - name: Bazel Build
         run: |
-          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
+          bazel build --lockfile_mode=error --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}

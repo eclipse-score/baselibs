@@ -17,6 +17,7 @@ on:
   push:
     branches:
       - main
+      - balajiyalam2
   merge_group:
     types: [checks_requested]
   workflow_call:

@@ -19,6 +19,7 @@ on:
   push:
     branches:
       - main
+      - balajiyalam2
   merge_group:
     types: [checks_requested]
   workflow_call:
@@ -43,7 +44,7 @@ jobs:
           cache-save: ${{ github.event_name == 'push' }}
       - name: Run Bazel Coverage
         run: |
-          bazel coverage --config=bl-x86_64-linux -- //score/... \
+          bazel coverage --lockfile_mode=error --config=bl-x86_64-linux -- //score/... \
           -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
       - name: Generate HTML Coverage Report
         run: |
