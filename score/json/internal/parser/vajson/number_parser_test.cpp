@@ -31,7 +31,7 @@ namespace
 template <typename T>
 std::optional<T> ParseNumberAs(const std::string& json_number)
 {
-    const auto result = amsr::json::JsonNumber::New(json_number).Value().As<T>();
+    const auto result = amsr::json::JsonNumber::New(json_number).value().As<T>();
     if (result.has_value())
     {
         return result.value();
