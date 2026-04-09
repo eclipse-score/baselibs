@@ -34,8 +34,8 @@ auto score::json::VajsonParser::FromBuffer(const std::string_view buffer) -> sco
     auto json_data = score::json::vajson::JsonData::FromBuffer(std::string_view{buffer.data(), buffer.size()});
     if (json_data.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from coverage
                                 // report.)
-    // (else branch can't be hit due to internal implementation of JsonData::FromBuffer function that accepts all kind of
-    // strings.)
+    // (else branch can't be hit due to internal implementation of JsonData::FromBuffer function that accepts all kind
+    // of strings.)
     {
         auto json_object = VajsonParser{json_data.value()}.GetData();
         if (json_object.has_value())
@@ -89,7 +89,8 @@ auto score::json::VajsonParser::OnBool(bool value) noexcept -> score::json::vajs
     return score::json::vajson::ParserState::kRunning;
 }
 
-auto score::json::VajsonParser::OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult
+auto score::json::VajsonParser::OnNumber(score::json::vajson::JsonNumber value) noexcept
+    -> score::json::vajson::ParserResult
 {
     // The parser shall try first the unsigned types from smallest to largest.
     // Then it shall try the signed types from smallest to largest.
@@ -173,5 +174,6 @@ auto score::json::VajsonParser::OnUnexpectedEvent() noexcept -> score::json::vaj
 {
     // A call to this function means we have not implemented one of the necessary callbacks.
     // We set this equal to a failed user validation, since a missing callback means we do not support this type.
-    return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(score::json::vajson::JsonErrc::kUserValidationFailed);
+    return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
+        score::json::vajson::JsonErrc::kUserValidationFailed);
 }

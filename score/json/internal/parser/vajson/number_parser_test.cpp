@@ -13,8 +13,8 @@
 #include "gtest/gtest.h"
 #ifdef VAJSON
 
-#include "amsr/json/util/number.h"
 #include "score/json/internal/parser/number_parser_test_suite.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
 #include "score/json/internal/parser/vajson/vajson_parser.h"
 
 #include <limits>

@@ -16,7 +16,7 @@
 #include "score/json/internal/model/any.h"
 #include "score/result/result.h"
 
-#include "score/json/internal/parser/vajson/vajson/include/amsr/json/reader.h"
+#include "score/json/internal/parser/vajson/vajson_impl/reader.h"
 
 #include <deque>
 #include <memory>
@@ -131,7 +131,8 @@ class VajsonParser final : private score::json::vajson::v2::Parser
         // coverity[autosar_cpp14_a5_2_6_violation]
         return ((TryStoreResult(value.As<NumberType>())) || ...)
                    ? score::json::vajson::ParserState::kRunning
-                   : score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(score::json::vajson::JsonErrc::kInvalidJson);
+                   : score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
+                         score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     std::string last_key_{};
