@@ -157,7 +157,13 @@ deb(
     visibility = ["//visibility:public"],
 )
 
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "score_nlohmann_json", version = "3.11.3")
+git_override(
+    module_name = "score_nlohmann_json",
+    commit = "ad132c58839b9a7d007d90547325d68572daaac9",
+    remote = "https://github.com/eclipse-score/nlohmann_json.git",
+)
+
 bazel_dep(name = "bazel_skylib", version = "1.8.2")
 
 #############################################################
