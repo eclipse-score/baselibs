@@ -34,6 +34,10 @@ cc_test(
     # on toolchain level so that unmistakably the linked abortsuponexception library gets tested
     features = ["throws_upon_exception"],
     tags = ["unit"],
+    # The aborts_upon_exception mechanism relies on overriding __cxa_allocate_exception via link
+    # order, which only works with static linking of the C++ runtime. On QNX the C++ runtime
+    # (libc++) is linked dynamically so the override cannot interpose.
+    target_compatible_with = ["@platforms//os:linux"],
     deps = [
         ":abortsuponexception",
         "@googletest//:gtest_main",
@@ -50,6 +54,7 @@ cc_test(
     ],
     features = ["aborts_upon_exception"],
     tags = ["unit"],
+    target_compatible_with = ["@platforms//os:linux"],
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",

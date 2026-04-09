@@ -52,9 +52,12 @@ TEST(GetGrNam, SecondCallDoesNotOverwriteBuffer)
 #if defined(__linux__)
     const auto group_name_2{"daemon"};
     const auto group_number_2{1};
-#elif defined(__QNX__)
+#elif defined(__QNX__) && defined(__aarch64__)
     const auto group_name_2{"autosar"};
     const auto group_number_2{1054};
+#elif defined(__QNX__) && defined(__x86_64__)
+    const auto group_name_2{"kmem"};
+    const auto group_number_2{498};
 #else
 #error "Unsupported OS"
 #endif

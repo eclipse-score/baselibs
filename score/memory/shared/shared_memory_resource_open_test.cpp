@@ -288,7 +288,7 @@ TEST_F(SharedMemoryResourceOpenTest, DifferentChildClassIsNotEqual)
 }
 
 // typed memory daemon is only running on the QNX, so these tests will only pass on the QNX
-#if defined(__QNX__)
+#if defined(__QNX__) && defined(USE_TYPEDSHMD)
 TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsTrueWhenOpenTypedSharedMemorySuccess)
 {
     InSequence sequence{};

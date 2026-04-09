@@ -177,7 +177,7 @@ TEST(mmap, GetInfoInvalidFD)
 
     EXPECT_FALSE(info_result.has_value());
     // TODO: Ticket-253097
-#if defined(__QNX__) && __QNX__ >= 800 && defined(__aarch64__)
+#if defined(__QNX__) && __QNX__ >= 800
     EXPECT_EQ(info_result.error(), Error::Code::kNoSuchProcess);
 #else
     EXPECT_EQ(info_result.error(), Error::Code::kNoSuchFileOrDirectory);
