@@ -82,9 +82,7 @@ class ObjectParser final : public v2::SingleObjectParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on every element
-     */
+    /// \brief           Function to be executed on every element
     Fn fn_;
 };
 

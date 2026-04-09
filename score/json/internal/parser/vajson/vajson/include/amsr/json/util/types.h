@@ -33,8 +33,8 @@ namespace amsr
 namespace json
 {
 /*!
- * \brief           Unqualified access to Optional
- * \tparam          T
+ /// \brief            Unqualified access to Optional
+ /// \tparam          T
  *                  Type of value.
  */
 template <typename T>

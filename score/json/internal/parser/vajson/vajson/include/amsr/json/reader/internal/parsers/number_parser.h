@@ -94,9 +94,7 @@ class NumberParser final : public VirtualParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on the number value
-     */
+    /// \brief           Function to be executed on the number value
     Fn fn_;
 };
 

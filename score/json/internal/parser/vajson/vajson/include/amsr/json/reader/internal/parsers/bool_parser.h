@@ -90,9 +90,7 @@ class BoolParser final : public VirtualParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on the boolean value
-     */
+    /// \brief           Function to be executed on the boolean value
     Fn fn_;
 };
 

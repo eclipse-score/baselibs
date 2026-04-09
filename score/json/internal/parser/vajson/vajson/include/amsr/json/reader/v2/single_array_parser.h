@@ -40,19 +40,13 @@ namespace v2
 class SingleArrayParser : public v2::Parser
 {
   private:
-    /*!
-     * \brief           Validates if the only one level of array has been entered
-     */
+    /// \brief           Validates if the only one level of array has been entered
     internal::LevelValidator validator_{};
-    /*!
-     * \brief           Index for the array elements
-     */
+    /// \brief           Index for the array elements
     std::size_t index_{0};
 
   public:
-    /*!
-     * \brief           Inherited CTOR
-     */
+    /// \brief           Inherited CTOR
     using v2::Parser::Parser;
 
     /// \brief Delete copy constructor

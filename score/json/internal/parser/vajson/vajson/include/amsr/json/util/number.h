@@ -48,27 +48,18 @@ namespace json
 {
 namespace internal
 {
-/*!
- * \brief           Checks if type is an integer
- * \details         Does not apply for bool.
- * \tparam          T
- *                  Type to check.
- */
+/// \brief            Checks if type is an integer
+/// \details         Does not apply for bool.
+/// \tparam          T                  Type to check.
 template <typename T>
 using IsInt = std::conjunction<std::negation<std::is_same<T, bool>>, std::is_integral<T>>;
 
-/*!
- * \brief           Typedef for longlong
- *
- * \details         Return type of std::strtoll and transformed to fixed-size type later.
- */
+/// \brief            Typedef for longlong
+/// \details         Return type of std::strtoll and transformed to fixed-size type later.
 using SignedLL = long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
 
-/*!
- * \brief           Typedef for unsigned longlong
- *
- * \details         Return type of std::strtoull and transformed to fixed-size type later.
- */
+/// \brief            Typedef for unsigned longlong
+/// \details         Return type of std::strtoull and transformed to fixed-size type later.
 using UnsignedLL = unsigned long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
 
 namespace util
@@ -193,11 +184,8 @@ class NumberParser
     }
 
   private:
-    /*!
-     * \brief           Pointer beyond the last parsed character
-     *
-     * \details         Set by character conversion functions. Null if the parse did not work.
-     */
+    /// \brief            Pointer beyond the last parsed character
+    /// \details         Set by character conversion functions. Null if the parse did not work.
     char* end_{nullptr};
 };
 
@@ -205,13 +193,11 @@ class NumberParser
 }  // namespace internal
 
 /// \brief           A representation of a parsed JSON number
-
 /// \trace           DSGN-JSON-Reader-Number-Formatting
 class JsonNumber final
 {
   public:
     /// \brief           Creates a new number
-
     /// \param[in]       view
     ///                  to parse.
     /// \return          A Result containing the number or the error that occurred.
@@ -308,21 +294,14 @@ class JsonNumber final
         return opt;
     }
 
+    /// \brief            Tries to convert the number to a signed integer
+    /// \tparam          Integer Type of signed integer to convert to.
+    /// \return          The Optional containing the signed integer if the conversion was successful, or empty.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
     /*!
-     * \brief           Tries to convert the number to a signed integer
-     * \tparam          Integer
-     *                  Type of signed integer to convert to.
-     * \return          The Optional containing the signed integer if the conversion was successful, or empty.
-     *
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      FALSE
-     * \reentrant       FALSE
-     * \synchronous     TRUE
-     *
-     * \spec
-     * requires true;
-     * \endspec
      * \internal
      * - Convert the number to a signed number.
      * - If the conversion was successful:
@@ -350,7 +329,6 @@ class JsonNumber final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    ///
 
     /// \internal
     /// - Convert the number to an unsigned number.
@@ -359,7 +337,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Integer,
               std::enable_if_t<internal::IsInt<Integer>::value && (!std::is_signed<Integer>::value)>* = nullptr>
 
@@ -371,18 +348,15 @@ class JsonNumber final
         return this->ExtractIfSuccessful<Integer>(result, parser.End());
     }
 
-    ///
     /// \brief           Tries to convert the number to a floating point type
     /// \tparam          Float
     ///                  Floating point type to convert to.
     /// \return          The Optional containing the floating point number if the conversion was successful, or empty.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    ///
 
     /// \internal
     /// - Convert the number to the desired floating point type.
@@ -391,7 +365,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Float, std::enable_if_t<std::is_floating_point<Float>::value>* = nullptr>
     auto As() const noexcept -> Optional<Float>
     {
@@ -401,28 +374,23 @@ class JsonNumber final
         return this->ExtractIfSuccessful<Float>(conversion_result, parser.End());
     }
 
-    ///
     /// \brief           Converts the number to a JsonNumber
 
     /// \return          The Optional containing the JsonNumber.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - Return the number as a Number type.
     /// \endinternal
-    ///
     template <typename Num, std::enable_if_t<std::is_same<JsonNumber, Num>::value>* = nullptr>
     auto As() const noexcept -> Optional<Num>
     {
         return Optional<Num>{JsonNumber(this->view_)};
     }
 
-    ///
     /// \brief           Converts the number using a user defined parser
     /// \details         Parser function must take the string representation of the number as std::string_view and
     ///                  return the desired number type.
@@ -431,17 +399,14 @@ class JsonNumber final
     /// \param[in]       parser
     ///                  function to convert the string view into a number.
     /// \return          The parsed number.
-    ///
     /// \context         ANY
     /// \pre             Parser does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    ///
     /// \internal
     /// - Convert the number using the given function.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Convert(Fn&& parser) const noexcept -> decltype(parser(std::declval<StringView>()))
     {
@@ -450,33 +415,27 @@ class JsonNumber final
     }
 
   private:
-    ///
     /// \brief           Constructs a Number from a StringView
     /// \param[in]       view
     ///                  to parse.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     explicit constexpr JsonNumber(StringView view) noexcept : view_{view} {}
 
-    ///
     /// \brief           Gets the number of characters
     /// \return          The number of characters.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetNumberOfChars() const noexcept -> std::size_t
     {
         return this->view_.size();
     }
 
-    ///
     /// \brief           Casts the passed number to a smaller number type if still valid
     /// \tparam          TargetType
     ///                  Type to cast to.
@@ -485,12 +444,10 @@ class JsonNumber final
     /// \param[in]       number
     ///                  to cast.
     /// \return          The Optional containing the number if the cast was successful, or empty.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - If the number does not exceed the numeric limits of the target type:
@@ -499,7 +456,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Return an empty Optional.
     /// \endinternal
-    ///
     template <typename TargetType, typename SourceType>
     static auto Cast(SourceType number) noexcept -> Optional<TargetType>
     {
@@ -512,17 +468,14 @@ class JsonNumber final
         return opt;
     }
 
-    ///
     /// \brief           Checks if the parse has been successful
     /// \param[in]       end
     ///                  The end-pointer that is used to verify the parse.
     /// \return          True if the number was successfully parsed, otherwise false.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - If no ERANGE error occurred and the end-pointer has been set to past-the-last character and the last character
@@ -532,7 +485,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Return false.
     /// \endinternal
-    ///
     auto ParseSuccessful(const char* end) const noexcept -> bool
     {
         // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
@@ -542,7 +494,6 @@ class JsonNumber final
                 (this->view_.back() != '.'));
     }
 
-    ///
     /// \brief           Converts the passed number to a smaller number type if still valid
     /// \tparam          TargetType
     ///                  Type to convert to.
@@ -553,12 +504,10 @@ class JsonNumber final
     /// \param[in]       end
     ///                  The end iterator of the buffer.
     /// \return          The Optional containing the number if the conversion was successful, or empty.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - If the number has been successfully parsed and casted to the target type:
@@ -566,7 +515,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Return an empty Optional.
     /// \endinternal
-    ///
     template <typename TargetType, typename SourceType>
     auto ExtractIfSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
     {
@@ -580,15 +528,12 @@ class JsonNumber final
         return opt;
     }
 
-    ///
     /// \brief           Validates the contained number
     /// \return          True if the number is valid, otherwise false.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - If the number has multiple digits:
@@ -596,7 +541,6 @@ class JsonNumber final
     /// - Otherwise:
     ///   - Check that it is a valid digit.
     /// \endinternal
-    ///
     auto Validate() const noexcept -> bool
     {
         std::size_t const size{this->view_.size()};
@@ -625,9 +569,7 @@ class JsonNumber final
         return is_valid;
     }
 
-    /*!
-     * \brief           Stored view onto the buffer
-     */
+    /// \brief           Stored view onto the buffer
     StringView view_;
 };
 

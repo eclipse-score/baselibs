@@ -172,10 +172,10 @@ class JsonParser final
     }
 
     /*!
-     * \copydoc         Key(std::string_view)
-     * \spec
+     /// \copydoc         Key(std::string_view)
+     /// \spec
      *    requires true;
-     * \endspec
+     /// \endspec
      */
     // auto Key(CStringView key) noexcept -> JsonParser& { return this->Key(std::string_view(key.c_str(), key.size()));
     // }
@@ -326,19 +326,7 @@ class JsonParser final
         });
     }
 
-    /*!
-     * \copydoc         String(std::string_view)
-     * \spec
-     *    requires true;
-     * \endspec
-     */
-    // auto String(CStringView string) noexcept -> JsonParser& { return this->String(std::string_view(string.c_str(),
-    // string.size())); }
-
     /// \copydoc         String(std::string_view)
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto String(const std::string& string) noexcept -> JsonParser&
     {
         return this->String(std::string_view{string});
@@ -375,7 +363,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is binary content and executes the given callable
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return
     /// ResultBlank. The
@@ -387,7 +374,6 @@ class JsonParser final
     /// \param[in]       fn
     ///                  Callable.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -401,7 +387,6 @@ class JsonParser final
     ///   - Execute the given callable with the string.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Binary(const Fn& fn) noexcept -> JsonParser&
     {
@@ -410,7 +395,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is an array and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t and return void or ResultBlank.
     ///                  The callable is expected to have consumed all tokens representing the element if it returns a
@@ -422,7 +406,6 @@ class JsonParser final
     /// \param[in]       fn
     ///                  Callable.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -437,7 +420,6 @@ class JsonParser final
     ///   - Repeat for all elements of the array.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Array(const Fn& fn) noexcept -> JsonParser&
     {
@@ -446,7 +428,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is an array of strings and executes the given callable on every
     /// element \details         The callable must take the current array index as a std::size_t, the current string as
     /// an
@@ -458,7 +439,6 @@ class JsonParser final
     /// \param[in]       fn
     ///                  Callable.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -473,7 +453,6 @@ class JsonParser final
     ///   - Repeat for all elements of the array.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Fn>
     auto StringArray(const Fn& fn) noexcept -> JsonParser&
     {
@@ -482,7 +461,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is an array of numbers and executes the given callable on every
     /// element \details         The callable must take the current array index as a std::size_t, the current number of
     /// template
@@ -495,7 +473,6 @@ class JsonParser final
     /// \param[in]       fn
     ///                  Callable.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -510,7 +487,6 @@ class JsonParser final
     ///   - Repeat for all elements of the array.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Num, typename Fn>
     auto NumberArray(const Fn& fn) noexcept -> JsonParser&
     {
@@ -519,7 +495,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is an array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return void or ResultBlank.
@@ -529,7 +504,6 @@ class JsonParser final
     /// \param[in]       fn
     ///                  Callable.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -544,7 +518,6 @@ class JsonParser final
     ///   - Repeat for all elements of the array.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Fn>
     auto BoolArray(const Fn& fn) noexcept -> JsonParser&
     {
@@ -553,7 +526,6 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Checks if the next token is an object and executes the given callable on every key
     /// \details         The callable must take the name of the current key as a std::string_view and return void or
     ///                  ResultBlank. The provided StringView is only valid until any other method or parser operating
@@ -568,7 +540,6 @@ class JsonParser final
     /// \param[in]       object_already_open
     ///                  Specify if the object has already been opened. Defaults to false.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -583,7 +554,6 @@ class JsonParser final
     ///   - Repeat for all keys of the object.
     /// - If an error occurred, store it as the state of the parser.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Object(const Fn& fn, bool object_already_open = false) noexcept -> JsonParser&
     {
@@ -592,13 +562,11 @@ class JsonParser final
         });
     }
 
-    ///
     /// \brief           Adds a custom error message to the ParserResult
 
     /// \param[in]       msg
     ///                  to add. Must live until the ParserResult is evaluated.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -611,7 +579,6 @@ class JsonParser final
     /// - If the error message has not been customized yet:
     ///   - Replace the SupportDataType of the erroneous parser result with the given one.
     /// \endinternal
-    ///
     auto AddErrorInfo(const char* msg) & noexcept -> JsonParser&
     {
         if (ContainsStandardError())
@@ -622,15 +589,6 @@ class JsonParser final
         return *this;
     }
 
-    /*!
-     * \copydoc         AddErrorInfo
-     * \spec
-     *    requires true;
-     * \endspec
-     */
-    // auto AddErrorInfo(CStringView msg) noexcept -> JsonParser& { return AddErrorInfo(msg.c_str()); }
-
-    ///
     /// \brief           Adds a custom error message to the ParserResult
 
     /// \tparam          Args
@@ -638,7 +596,6 @@ class JsonParser final
     /// \param[in]       args
     ///                  to construct the error code.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -651,7 +608,6 @@ class JsonParser final
     /// - If the error message has not been customized yet:
     ///   - Replace the erroneous parser result with the error constructed from the given arguments.
     /// \endinternal
-    ///
     template <typename... Args>
     auto AddErrorInfo(Args... args) noexcept -> JsonParser&
     {
@@ -664,8 +620,6 @@ class JsonParser final
         return *this;
     }
 
-    ///
-
     /// \param[in]       errc
     ///                  The error code to add.
     /// \param[in]       msg
@@ -675,7 +629,6 @@ class JsonParser final
     /// \spec
     ///    requires true;
     /// \endspec
-    ///
     auto AddErrorInfo(JsonErrorDomain::Errc errc, CStr msg) & noexcept -> JsonParser&
     {
         if (ContainsStandardError())
@@ -688,24 +641,20 @@ class JsonParser final
     }
 
   private:
-    ///
     /// \brief           Executes the function and saves the Result if the previous actions were successful
     /// \tparam          Fn
     ///                  Type of function.
     /// \param[in]       fn
     ///                  Function to execute.
     /// \return          The reference to itself.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
     /// \internal
     /// - If no error occurred before:
     ///   - Execute the function and set the state of the parser from its return value.
     /// \endinternal
-    ///
     template <typename Fn>
     auto IfValid(const Fn& fn) & noexcept -> JsonParser&
     {
@@ -719,10 +668,8 @@ class JsonParser final
         return *this;
     }
 
-    ///
     /// \brief           Checks the current error state of the parser
     /// \return          True if the state contains a standard error, otherwise false.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -736,31 +683,22 @@ class JsonParser final
     /// - Otherwise:
     ///   - Return false.
     /// \endinternal
-    ///
     auto ContainsStandardError() const noexcept -> bool
     {
         return !(this->customized_ || this->result_);
     }
 
-    /*!
-     * \brief           Internal parser
-     */
+    /// \brief           Internal parser
     internal::CompositionParser<internal::VirtualParser> parser_;
 
-    /*!
-     * \brief           JSON data
-     */
+    /// \brief           JSON data
     std::reference_wrapper<JsonData> data_;
 
-    /*!
-     * \brief           State of the parser
-     * \details         Contains the first error that occurred.
-     */
+     /// \brief            State of the parser
+     /// \details         Contains the first error that occurred.
     ResultBlank result_{};
 
-    /*!
-     * \brief           Flag if the error message has already been customized
-     */
+    /// \brief           Flag if the error message has already been customized
     bool customized_{false};
 };
 

@@ -49,14 +49,10 @@ template <typename Implementer>
 
 class StructureParser : public StructureParserBase
 {
-    /*!
-     * \brief           Callback implementer
-     */
+    /// \brief           Callback implementer
     std::reference_wrapper<Implementer> implementer_;
 
-    /*!
-     * \brief           Operations on JSON document
-     */
+    /// \brief           Operations on JSON document
     JsonOps json_ops_;
 
   public:
@@ -129,132 +125,99 @@ class StructureParser : public StructureParserBase
 
     /// \brief           Default event for the end of arrays
     /// \return          The result of the OnUnexpectedEvent callback or its error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto OnStartArray() noexcept -> ParserResult override;
 
-    ///
     /// \brief           Default event for binary content
     /// \details         The provided Span is only valid until any other method or parser operating on the same document
     /// is
     ///                  called. Call the OnUnexpectedEvent callback that determines how to handle the unexpected event
     ///                  and return its result.
     /// \return          The result of the OnUnexpectedEvent callback or its error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
-    ///
     auto OnEndArray(std::size_t) noexcept -> ParserResult override;
 
-    ///
     /// \brief           Forwarding function to accept binary strings
     /// \return          The result of the OnString callback or its error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto OnBinaryKey(StringView) noexcept -> ParserResult override;
 
-    ///
     /// \brief           Forwarding function to accept binary strings
     /// \return          The result of the OnString callback or its error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto OnBinaryString(StringView) noexcept -> ParserResult override;
 
-    ///
     /// \brief           Default event for binary content
     /// \details         The provided Span is only valid until any other method or parser operating on the same document
     /// is
     ///                  called.
     /// \return          The result of the OnUnexpectedEvent callback or its error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
 
     /// \internal
     /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
     /// \endinternal
-    ///
     auto OnBinary(score::cpp::span<const char>) noexcept -> ParserResult override;
 
-    ///
     /// \brief           Constructs a StructureParser
     /// \param[in]       implementer
     ///                  The implementer for this parser.
     /// \param[in]       doc
     ///                  JSON document to parse.
-    ///
     /// \context         ANY
     /// \pre             Implementer does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
     StructureParser(Implementer& implementer, JsonData& doc) noexcept;
 
-    ///
     /// \brief           Default move constructor
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     StructureParser(StructureParser&&) noexcept = default;
 
-    ///
     /// \brief           Default move assignment
     /// \return          A reference to the moved into object.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto operator=(StructureParser&&) & noexcept -> StructureParser& = default;
 
-    ///
     /// \brief           Deleted copy constructor
-    ///
     StructureParser(const StructureParser&) = delete;
 
-    ///
     /// \brief           Deleted copy assignment
-    ///
     auto operator=(const StructureParser&) -> StructureParser& = delete;
 
-    ///
     /// \brief           Default destructor
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     ~StructureParser() noexcept override = default;
 
-    ///
     /// \brief           Parses the file until the current parser is finished
     /// \details         Parserstate will be kRunning to allow for further parsing.
     /// \return          kRunning, or an error.
@@ -267,30 +230,23 @@ class StructureParser : public StructureParserBase
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto SubParse() const noexcept -> ParserResult;
 
   private:
-    ///
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetJsonOps() & noexcept -> JsonOps& override;
 
-    ///
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file const.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetJsonOps() const& noexcept -> const JsonOps& override;
 
     // Deleted rvalue-qualified version to prevent dangling reference

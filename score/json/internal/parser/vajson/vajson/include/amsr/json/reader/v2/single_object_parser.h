@@ -137,9 +137,7 @@ class SingleObjectParser : public v2::Parser
     }
 
   private:
-    /*!
-     * \brief           Validates if the only one level of object has been entered
-     */
+    /// \brief           Validates if the only one level of object has been entered
     internal::LevelValidator validator_;
 };
 

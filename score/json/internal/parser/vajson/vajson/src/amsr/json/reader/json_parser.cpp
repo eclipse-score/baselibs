@@ -23,72 +23,75 @@
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "amsr/json/reader/json_data.h"
 
-namespace amsr {
-namespace json {
+namespace amsr
+{
+namespace json
+{
 
-namespace {
+namespace
+{
 /// \brief           A parser that only parses an opening curly bracket
 
-class StartObjectParser final : public internal::VirtualParser {
- public:
-  /*!
-   * \brief           Constructs the parser
-   */
+class StartObjectParser final : public internal::VirtualParser
+{
+  public:
+    /// \brief           Constructs the parser
 
-  using internal::VirtualParser::VirtualParser;
+    using internal::VirtualParser::VirtualParser;
 
-  /*!
-   * \brief           Implements the StartObject callback returning kFinished
-   */
-  auto OnStartObject() noexcept -> ParserResult final { return ParserState::kFinished; }
+    /// \brief           Implements the StartObject callback returning kFinished
+    auto OnStartObject() noexcept -> ParserResult final
+    {
+        return ParserState::kFinished;
+    }
 };
 
 /// \brief           A parser that only parses a closing curly bracket
 
-class EndObjectParser final : public internal::VirtualParser {
- public:
-  /*!
-   * \brief           Constructs the parser
-   */
+class EndObjectParser final : public internal::VirtualParser
+{
+  public:
+    /// \brief           Constructs the parser
 
-  using internal::VirtualParser::VirtualParser;
+    using internal::VirtualParser::VirtualParser;
 
-  /*!
-   * \brief           Implements the EndObject callback returning kFinished
-   */
-  auto OnEndObject(std::size_t) noexcept -> ParserResult final { return ParserState::kFinished; }
+    /// \brief           Implements the EndObject callback returning kFinished
+    auto OnEndObject(std::size_t) noexcept -> ParserResult final
+    {
+        return ParserState::kFinished;
+    }
 };
 
 /// \brief           Parser that only parses an opening square bracket
 
-class StartArrayParser final : public internal::VirtualParser {
- public:
-  /*!
-   * \brief           Constructs the parser
-   */
+class StartArrayParser final : public internal::VirtualParser
+{
+  public:
+    /// \brief           Constructs the parser
 
-  using internal::VirtualParser::VirtualParser;
+    using internal::VirtualParser::VirtualParser;
 
-  /*!
-   * \brief           Implements the StartArray callback returning kFinished
-   */
-  auto OnStartArray() noexcept -> ParserResult final { return ParserState::kFinished; }
+    /// \brief           Implements the StartArray callback returning kFinished
+    auto OnStartArray() noexcept -> ParserResult final
+    {
+        return ParserState::kFinished;
+    }
 };
 
 /// \brief           Parser that only parses a closing square bracket
 
-class EndArrayParser final : public internal::VirtualParser {
- public:
-  /*!
-   * \brief           Constructs the parser
-   */
+class EndArrayParser final : public internal::VirtualParser
+{
+  public:
+    /// \brief           Constructs the parser
 
-  using internal::VirtualParser::VirtualParser;
+    using internal::VirtualParser::VirtualParser;
 
-  /*!
-   * \brief           Implements the EndArray callback returning kFinished
-   */
-  auto OnEndArray(std::size_t) noexcept -> ParserResult final { return ParserState::kFinished; }
+    /// \brief           Implements the EndArray callback returning kFinished
+    auto OnEndArray(std::size_t) noexcept -> ParserResult final
+    {
+        return ParserState::kFinished;
+    }
 };
 
 }  // namespace
@@ -96,42 +99,48 @@ class EndArrayParser final : public internal::VirtualParser {
 JsonParser::JsonParser(JsonData& data) noexcept : parser_{data}, data_{data} {}
 
 /*!
- * \internal
+ /// \internal
  * - If no error occurred before and the start of the object could be parsed successfully:
  *   - Execute the given callable.
  * - If an error occurred, store it as the state of the parser.
- * \endinternal
+ /// \endinternal
  */
-auto JsonParser::StartObject() noexcept -> JsonParser& {
+auto JsonParser::StartObject() noexcept -> JsonParser&
+{
 
-
-  return this->IfValid([this]() noexcept { return StartObjectParser(this->data_.get()).Parse(); });
+    return this->IfValid([this]() noexcept {
+        return StartObjectParser(this->data_.get()).Parse();
+    });
 }
 
 /*!
- * \internal
+ /// \internal
  * - If no error occurred before and the end of the object could be parsed successfully:
  *   - Execute the given callable.
  * - If an error occurred, store it as the state of the parser.
- * \endinternal
+ /// \endinternal
  */
-auto JsonParser::EndObject() noexcept -> JsonParser& {
+auto JsonParser::EndObject() noexcept -> JsonParser&
+{
 
-
-  return this->IfValid([this]() noexcept { return EndObjectParser(this->data_.get()).Parse(); });
+    return this->IfValid([this]() noexcept {
+        return EndObjectParser(this->data_.get()).Parse();
+    });
 }
 
 /*!
- * \internal
+ /// \internal
  * - If no error occurred before and the start of the array could be parsed successfully:
  *   - Execute the given callable.
  * - If an error occurred, store it as the state of the parser.
- * \endinternal
+ /// \endinternal
  */
-auto JsonParser::StartArray() noexcept -> JsonParser& {
+auto JsonParser::StartArray() noexcept -> JsonParser&
+{
 
-
-  return this->IfValid([this]() noexcept { return StartArrayParser(this->data_.get()).Parse(); });
+    return this->IfValid([this]() noexcept {
+        return StartArrayParser(this->data_.get()).Parse();
+    });
 }
 
 /*!
@@ -141,10 +150,12 @@ auto JsonParser::StartArray() noexcept -> JsonParser& {
  * - If an error occurred, store it as the state of the parser.
  * \endinternal
  */
-auto JsonParser::EndArray() noexcept -> JsonParser& {
+auto JsonParser::EndArray() noexcept -> JsonParser&
+{
 
-
-  return this->IfValid([this]() noexcept { return EndArrayParser(this->data_.get()).Parse(); });
+    return this->IfValid([this]() noexcept {
+        return EndArrayParser(this->data_.get()).Parse();
+    });
 }
 
 }  // namespace json

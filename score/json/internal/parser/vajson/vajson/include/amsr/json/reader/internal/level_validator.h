@@ -125,9 +125,7 @@ class LevelValidator
     }
 
   private:
-    /*!
-     * \brief           Signals that a level has been entered
-     */
+    /// \brief           Signals that a level has been entered
     bool entered_{false};
 };
 

@@ -42,9 +42,7 @@ namespace v2
 class Parser : public internal::CompositionParser<internal::VirtualParser>
 {
   public:
-    /*!
-     * \brief           Constructor
-     */
+    /// \brief           Constructor
     using internal::CompositionParser<internal::VirtualParser>::CompositionParser;
 
     Parser(const Parser&) = delete;

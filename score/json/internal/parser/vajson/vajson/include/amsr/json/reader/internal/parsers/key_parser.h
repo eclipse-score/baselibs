@@ -90,9 +90,7 @@ class KeyParser final : public VirtualParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on the key
-     */
+    /// \brief           Function to be executed on the key
     Fn fn_;
 };
 

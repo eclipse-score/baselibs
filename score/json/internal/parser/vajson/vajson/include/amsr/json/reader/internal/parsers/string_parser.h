@@ -90,9 +90,7 @@ class StringParser : public VirtualParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on the string value
-     */
+    /// \brief           Function to be executed on the string value
     Fn fn_;
 };
 

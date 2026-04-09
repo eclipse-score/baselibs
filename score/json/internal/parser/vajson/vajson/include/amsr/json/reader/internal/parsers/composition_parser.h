@@ -61,24 +61,24 @@ template <typename F, typename T>
 using ReturnsVoid = std::is_void<std::result_of_t<F(const T&)>>;
 
 /*!
- * \brief           SFINAE for callable returning Result<...>
- * \tparam          F
+ /// \brief            SFINAE for callable returning Result<...>
+ /// \tparam          F
  *                  Type of callable.
- * \tparam          T
+ /// \tparam          T
  *                  Type of argument.
- * \tparam          Out
+ /// \tparam          Out
  *                  Type of return value.
  */
 template <typename F, typename T, typename Out>
 using CallableReturnsResult = std::enable_if_t<ReturnsResult<F, T>::value, Out>;
 
 /*!
- * \brief           SFINAE for callable returning Result<...>
- * \tparam          F
+ /// \brief            SFINAE for callable returning Result<...>
+ /// \tparam          F
  *                  Type of callable.
- * \tparam          T
+ /// \tparam          T
  *                  Type of argument.
- * \tparam          Out
+ /// \tparam          Out
  *                  Type of return value.
  */
 template <typename F, typename T, typename Out>
@@ -109,24 +109,24 @@ template <typename F, typename T>
 using ArrayReturnsVoid = std::is_void<std::result_of_t<F(std::size_t, const T&)>>;
 
 /*!
- * \brief           SFINAE for callable returning Result<...>
- * \tparam          F
+ /// \brief            SFINAE for callable returning Result<...>
+ /// \tparam          F
  *                  Type of callable.
- * \tparam          T
+ /// \tparam          T
  *                  Type of argument.
- * \tparam          Out
+ /// \tparam          Out
  *                  Type of return value.
  */
 template <typename F, typename T, typename Out>
 using ArrayCallableReturnsResult = std::enable_if_t<ArrayReturnsResult<F, T>::value, Out>;
 
 /*!
- * \brief           SFINAE for callable returning Result<...>
- * \tparam          F
+ /// \brief            SFINAE for callable returning Result<...>
+ /// \tparam          F
  *                  Type of callable.
- * \tparam          T
+ /// \tparam          T
  *                  Type of argument.
- * \tparam          Out
+ /// \tparam          Out
  *                  Type of return value.
  */
 template <typename F, typename T, typename Out>
@@ -140,9 +140,7 @@ template <typename Mixin>
 
 class CompositionParser : public Mixin
 {
-    /*!
-     * \brief           Shorthand for the ParserResult
-     */
+    /// \brief           Shorthand for the ParserResult
     using R = ParserResult;
 
   public:
@@ -265,7 +263,6 @@ class CompositionParser : public Mixin
     /// \brief           Parses the following bool value and executes the given callable
     /// \details         The callable must take the bool and return void.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -288,7 +285,6 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Bool(Fn fn) noexcept -> CallableReturnsNoResult<Fn, bool, R>
     {
@@ -299,11 +295,9 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following bool value and executes the given callable
     /// \details         The callable must take the bool and return ResultBlank.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -326,15 +320,12 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Bool(Fn fn) noexcept -> CallableReturnsResult<Fn, bool, R>;
 
-    ///
     /// \brief           Parses the following number value and executes the given callable
     /// \details         The callable must take the number of type T and return void.
 
-    ///
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -359,7 +350,6 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename T, typename Fn>
     auto Number(Fn fn) noexcept -> CallableReturnsNoResult<Fn, T, R>
     {
@@ -370,11 +360,9 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following number value and executes the given callable
     /// \details         The callable must take the number of type T and return ResultBlank.
 
-    ///
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -382,10 +370,8 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    ///
     /// \error           amsr::json::JsonErrc::kUserValidationFailed
     ///                  if no number comes next
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -401,17 +387,14 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename T, typename Fn>
     auto Number(Fn fn) noexcept -> CallableReturnsResult<Fn, T, R>;
 
-    ///
     /// \brief           Parses the following string value and executes the given callable
     /// \details         The callable must take the string as a std::string_view and return void. The provided
     ///                  StringView is only valid until any other method or parser operating on the same document is
     ///                  called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -434,7 +417,6 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto String(Fn fn) noexcept -> CallableReturnsNoResult<Fn, std::string_view, R>
     {
@@ -445,19 +427,16 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following string value and executes the given callable
     /// \details         The callable must take the string as an std::string_view and return ResultBlank. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    ///
     /// \error           amsr::json::JsonErrc::kUserValidationFailed
     ///                  if no string comes next
     /// \context         ANY
@@ -475,19 +454,14 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto String(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R>;
 
-    ///
     /// \brief           Parses the following string value and checks if it is a specific string
 
-    ///
     /// \param[in]       str
     ///                  to compare with.
-    ///
     /// \return          kRunning if the strings are the same.
-    ///
     /// \error           amsr::json::JsonErrc::kUserValidationFailed
     ///                  if the strings are not equal or no string comes next
     /// \context         ANY
@@ -503,7 +477,6 @@ class CompositionParser : public Mixin
     ///   - If the parsed string is equal to passed string return an empty result.
     ///   - Otherwise return an error.
     /// \endinternal
-    ///
     auto String(std::string_view str) noexcept -> R
     {
         return this->String([&str](std::string_view str_view) noexcept {
@@ -511,13 +484,11 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of numbers and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current number of type T,
     /// and
     ///                  return void.
 
-    ///
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -538,7 +509,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of numbers and execute the callable with every number.
     /// \endinternal
-    ///
     template <typename T, typename Fn>
     auto NumberArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, T, R>
     {
@@ -549,13 +519,11 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of numbers and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current number of type T,
     /// and
     ///                  return ResultBlank.
 
-    ///
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -576,7 +544,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of numbers and execute the callable with every number.
     /// \endinternal
-    ///
     template <typename T, typename Fn>
     auto NumberArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, T, R>
     {
@@ -593,13 +560,11 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of strings and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current string as an
     ///                  std::string_view, and return void. The provided StringView is only valid until any other
     ///                  method or parser operating on the same document is called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -618,7 +583,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of strings and execute the callable with every string.
     /// \endinternal
-    ///
     template <typename Fn>
     auto StringArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, std::string_view, R>
     {
@@ -629,13 +593,11 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of strings and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current string as an
     ///                  std::string_view, and return ResultBlank. The provided StringView is only valid until any
     ///                  other method or parser operating on the same document is called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -654,7 +616,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of strings and execute the callable with every string.
     /// \endinternal
-    ///
     template <typename Fn>
     auto StringArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, std::string_view, R>
     {
@@ -671,12 +632,10 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return void.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -695,7 +654,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of bools and execute the callable with every string.
     /// \endinternal
-    ///
     template <typename Fn>
     auto BoolArray(Fn fn) noexcept -> ArrayCallableReturnsNoResult<Fn, bool, R>
     {
@@ -706,12 +664,10 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return ResultBlank.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -730,7 +686,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array of bools and execute the callable with every string.
     /// \endinternal
-    ///
     template <typename Fn>
     auto BoolArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, bool, R>
     {
@@ -747,14 +702,12 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following binary content and executes the given callable
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return
     /// ResultBlank. The
     ///                  provided Span is only valid until any other method or parser operating on the same document is
     ///                  called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -777,17 +730,14 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Binary(Fn fn) noexcept -> CallableReturnsResult<Fn, Bytes, R>;
 
-    ///
     /// \brief           Parses the following binary content and executes the given callable
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return void. The
     /// provided
     ///                  Span is only valid until any other method or parser operating on the same document is called.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -810,7 +760,6 @@ class CompositionParser : public Mixin
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Binary(Fn fn) noexcept -> CallableReturnsNoResult<Fn, Bytes, R>
     {
@@ -821,19 +770,16 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t and return void. The callable
     /// must
     ///                  consume all tokens representing the element.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -845,7 +791,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array and execute the callable with every array element.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Array(Fn fn) noexcept -> CallableReturnsNoResult<Fn, std::size_t, R>
     {
@@ -856,20 +801,17 @@ class CompositionParser : public Mixin
         });
     }
 
-    ///
     /// \brief           Parses the following array and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t and return ResultBlank. The
     ///                  callable is expected to have consumed all tokens representing the element if it returns a
     ///                  successful Result. If the callable is unable to consume all tokens it must return an error
     ///                  Result.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    ///
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
     /// \threadsafe      FALSE
@@ -881,18 +823,15 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the array and execute the callable with every array element.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Array(Fn fn) noexcept -> CallableReturnsResult<Fn, std::size_t, R>;
 
-    ///
     /// \brief           Parses the following object and executes the given callable on every key
     /// \details         The callable must take the current object key as an std::string_view and return void. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called. The callable must consume all tokens representing the value related to the
     ///                  key.
 
-    ///
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -900,7 +839,6 @@ class CompositionParser : public Mixin
     /// \param[in]       object_already_open
     ///                  Specify if the object has already been opened. Defaults to false.
     /// \return          kRunning on success, or an error.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -912,7 +850,6 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the object and execute the callable with every key.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Object(Fn fn, bool object_already_open = false) noexcept -> CallableReturnsNoResult<Fn, std::string_view, R>
     {
@@ -925,7 +862,6 @@ class CompositionParser : public Mixin
             object_already_open);
     }
 
-    ///
     /// \brief           Parses the following object and executes the given callable on every key
     /// \details         The callable must take the current key as an std::string_view and return ResultBlank. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
@@ -939,10 +875,8 @@ class CompositionParser : public Mixin
     /// \param[in]       object_already_open
     ///                  Specify if the object has already been opened. Defaults to false.
     /// \return          kRunning on success, or an error.
-    ///
     /// \error           amsr::jsonJsonErrc::kUserValidationFailed,
     ///                  if no object comes next
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -952,14 +886,11 @@ class CompositionParser : public Mixin
     /// \internal
     /// - Parse the object and execute the callable with every key.
     /// \endinternal
-    ///
     template <typename Fn>
     auto Object(Fn fn, bool object_already_open = false) noexcept -> CallableReturnsResult<Fn, std::string_view, R>;
 
   private:
-    /*!
-     * \brief           Reference to the JSON document to parse
-     */
+    /// \brief           Reference to the JSON document to parse
     JsonData& doc_;
 };
 

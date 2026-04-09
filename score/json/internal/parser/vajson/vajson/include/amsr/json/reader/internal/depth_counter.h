@@ -41,22 +41,14 @@ namespace internal
 /// \brief           A counter to track the nesting depth of the JSON parser
 class DepthCounter final
 {
-    /*!
-     * \brief           Stores the stack items
-     * \details         Intentionally a string to make use of SSO.
-     */
+    /// \brief            Stores the stack items
+    /// \details         Intentionally a string to make use of SSO.
     std::stack<char, std::string> stack_{};
-    /*!
-     * \brief           Stores the element count of arrays and objects on the stack
-     */
+    /// \brief           Stores the element count of arrays and objects on the stack
     std::stack<std::size_t> counter_{};
-    /*!
-     * \brief           Flag to indicate if a comma must appear before the next value
-     */
+    /// \brief           Flag to indicate if a comma must appear before the next value
     bool comma_expected_{false};
-    /*!
-     * \brief           Flag to indicate if all elements are closed
-     */
+    /// \brief           Flag to indicate if all elements are closed
     bool is_finished_{false};
 
   public:
@@ -379,7 +371,6 @@ class DepthCounter final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto IsEmpty() const noexcept -> bool
     {
         return this->stack_.empty();
@@ -392,13 +383,11 @@ class DepthCounter final
     /// \pre             The stack contains at least one element.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
     /// \internal
     /// - Remove the element at the last position from the stack.
     /// - Remove the counter at the last position and return its value.
     /// - If the element was inside another element, increase the outer element's count.
     /// \endinternal
-    ///
     auto Pop() noexcept -> std::size_t
     {
 
@@ -419,12 +408,10 @@ class DepthCounter final
         return count;
     }
 
-    ///
     /// \brief           Adds an element to the stack
     /// \param[in]       element
     ///                  The element to add.
     /// \return          The empty Result if the element could be added, or an error.
-    ///
     /// \error           amsr::json::JsonErrc::kInvalidJson
     ///                  if a key was expected
     /// \error           amsr::json::JsonErrc::kInvalidJson
@@ -443,7 +430,6 @@ class DepthCounter final
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    ///
     auto AddElement(char element) noexcept -> ResultBlank
     {
         ResultBlank result{};
@@ -481,27 +467,20 @@ class DepthCounter final
         return result;
     }
 
-    ///
     /// \brief           Compares the given element to the last element on the stack if it is not empty
     /// \param[in]       item
     ///                  to check for.
     /// \return          True if the last element equals the given item.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
-    ///
     auto CheckLastElement(char item) const noexcept -> bool
     {
 
         return (!this->IsEmpty()) && (this->stack_.top() == item);
     }
 
-    ///
     /// \brief           Sets the finished flag if the stack is empty
-
-    ///
     void CheckIfFinished() noexcept
     {
         if (this->IsEmpty())

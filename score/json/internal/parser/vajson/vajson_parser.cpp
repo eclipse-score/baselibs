@@ -66,7 +66,8 @@ auto score::json::VajsonParser::OnNull() noexcept -> amsr::json::ParserResult
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(
+            amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
@@ -79,7 +80,8 @@ auto score::json::VajsonParser::OnBool(bool value) noexcept -> amsr::json::Parse
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(
+            amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
@@ -102,7 +104,8 @@ auto score::json::VajsonParser::OnString(std::string_view value) noexcept -> ams
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(
+            amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     return amsr::json::ParserState::kRunning;
 }
@@ -122,7 +125,8 @@ auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> amsr::json
     {
         // Coverage: Not reachable. Line excluded from coverage report.
         // This case never happens, because condition can't be fulfilled due to Store implementantion
-        return amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+        return amsr::json::MakeErrorResult<amsr::json::ParserState>(
+            amsr::json::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
     }
     else
     {

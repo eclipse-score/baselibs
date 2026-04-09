@@ -26,109 +26,111 @@
 #include "amsr/json/reader/json_data.h"
 #include "amsr/json/util/json_error_domain.h"
 
-namespace amsr {
-namespace json {
-namespace internal {
+namespace amsr
+{
+namespace json
+{
+namespace internal
+{
 VirtualParser::VirtualParser(JsonData& doc) noexcept : parser_{*this, doc} {}
 
-auto VirtualParser::Parse() noexcept -> Result<score::Blank> { return this->parser_.Parse(); }
-
-auto VirtualParser::SubParse() const noexcept -> ParserResult { return this->parser_.SubParse(); }
-
-auto VirtualParser::GetChild() & noexcept -> VirtualParser& { return *this; }
-
-auto VirtualParser::GetCurrentKey() const noexcept -> CStringView { return this->GetJsonDocument().GetCurrentKey(); }
-
-auto VirtualParser::GetJsonDocument() noexcept -> JsonData& { return this->parser_.GetJsonDocument(); }
-
-auto VirtualParser::GetJsonDocument() const noexcept -> JsonData const& { return this->parser_.GetJsonDocument(); }
-
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnNull() noexcept -> ParserResult {
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::Parse() noexcept -> Result<score::Blank>
+{
+    return this->parser_.Parse();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnBool(bool) noexcept -> ParserResult {  // NOLINT(readability/casting)
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::SubParse() const noexcept -> ParserResult
+{
+    return this->parser_.SubParse();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnNumber(JsonNumber) noexcept -> ParserResult {
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::GetChild() & noexcept -> VirtualParser&
+{
+    return *this;
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnString(StringView) noexcept -> ParserResult {
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::GetCurrentKey() const noexcept -> CStringView
+{
+    return this->GetJsonDocument().GetCurrentKey();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnKey(StringView) noexcept -> ParserResult {
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::GetJsonDocument() noexcept -> JsonData&
+{
+    return this->parser_.GetJsonDocument();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnStartObject() noexcept -> ParserResult {
-
-  return this->OnUnexpectedEvent();
+auto VirtualParser::GetJsonDocument() const noexcept -> const JsonData&
+{
+    return this->parser_.GetJsonDocument();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnEndObject(std::size_t) noexcept -> ParserResult {
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnNull() noexcept -> ParserResult
+{
 
-  return this->OnUnexpectedEvent();
+    return this->OnUnexpectedEvent();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnStartArray() noexcept -> ParserResult {
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnBool(bool) noexcept -> ParserResult
+{  // NOLINT(readability/casting)
 
-  return this->OnUnexpectedEvent();
+    return this->OnUnexpectedEvent();
 }
 
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnEndArray(std::size_t) noexcept -> ParserResult {
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnNumber(JsonNumber) noexcept -> ParserResult
+{
 
-  return this->OnUnexpectedEvent();
+    return this->OnUnexpectedEvent();
 }
-/*!
- * \brief           Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return
- *                  its result
- */
-auto VirtualParser::OnUnexpectedEvent() noexcept -> ParserResult {
-  return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Use of default method not allowed in this context.");
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnString(StringView) noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnKey(StringView) noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnStartObject() noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnEndObject(std::size_t) noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnStartArray() noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnEndArray(std::size_t) noexcept -> ParserResult
+{
+
+    return this->OnUnexpectedEvent();
+}
+/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+auto VirtualParser::OnUnexpectedEvent() noexcept -> ParserResult
+{
+    return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed,
+                                        "Use of default method not allowed in this context.");
 }
 
 }  // namespace internal

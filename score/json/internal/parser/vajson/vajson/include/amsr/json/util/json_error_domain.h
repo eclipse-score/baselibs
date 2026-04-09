@@ -39,8 +39,8 @@ namespace json
 using CStr = const char*;
 
 /*!
- * \brief           Unqualified access to Result
- * \tparam          T
+ /// \brief            Unqualified access to Result
+ /// \tparam          T
  *                  Type of value.
  */
 template <typename T>
@@ -69,9 +69,7 @@ enum class JsonErrc : ErrorCode
 class JsonErrorDomain final : public ErrorDomain
 {
   public:
-    /*!
-     * \brief           Implements the Errc interface-type
-     */
+    /// \brief           Implements the Errc interface-type
     using Errc = ErrorCode;
 
     /// \brief           Constructs a JsonErrorDomain type
@@ -213,7 +211,6 @@ auto And(score::Result<T> first, score::Result<U> second) noexcept -> score::Res
 /// \pre             -
 /// \context         ANY
 /// \threadsafe      TRUE, for different this pointer
-
 
 inline constexpr auto GetJsonDomain() noexcept -> const ErrorDomain&
 {

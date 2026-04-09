@@ -43,47 +43,27 @@ namespace json
 /// \trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
-    /*!
-     * \brief           Stream buffer
-     */
+    /// \brief           Stream buffer
     std::reference_wrapper<std::istream> stream_;
-    /*!
-     * \brief           The potentially owned stream
-     */
+    /// \brief           The potentially owned stream
     std::unique_ptr<std::istream> owned_stream_{nullptr};
-    /*!
-     * \brief           JSON structure state
-     */
+    /// \brief           JSON structure state
     internal::DepthCounter depth_counter_{};
-    /*!
-     * \brief           Current key
-     */
+    /// \brief           Current key
     String current_key_{};
-    /*!
-     * \brief           Current buffer
-     */
+    /// \brief           Current buffer
     String current_buffer_{};
-    /*!
-     * \brief           Flag to indicate if the document has a UTF-8 BOM
-     */
+    /// \brief           Flag to indicate if the document has a UTF-8 BOM
     EncodingType encoding_{EncodingType::kNone};
-    /*!
-     * \brief           Backup of the structure state
-     */
+    /// \brief           Backup of the structure state
     internal::DepthCounter depth_counter_backup_{};
-    /*!
-     * \brief           Backup of the document position
-     */
+    /// \brief           Backup of the document position
     std::uint64_t pos_backup_{0U};
-    /*!
-     * \brief           Flag to indicate if a backup state is available
-     */
+    /// \brief           Flag to indicate if a backup state is available
     bool has_backup_{false};
 
   public:
-    /*!
-     * \brief           Class JsonOps must have access to the InputStream but no other classes
-     */
+    /// \brief           Class JsonOps must have access to the InputStream but no other classes
     friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
 
     /// \brief           Initializes a JSON data object using a constructed reader
@@ -254,7 +234,6 @@ class JsonData final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetClearedStringBuffer() & noexcept -> String&
     {
 
@@ -262,22 +241,18 @@ class JsonData final
         return this->current_buffer_;
     }
 
-    ///
     /// \brief           Gets the string buffer
 
     /// \return          The string buffer.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetStringBuffer() & noexcept -> String&
     {
         return this->current_buffer_;
     }
 
-    ///
     /// \brief           Returns the detected encoding type
 
     /// \return          The encoding type.
@@ -288,13 +263,11 @@ class JsonData final
     /// \synchronous     -
     /// \trace           DSGN-JSON-Reader-Encoding
 
-    ///
     auto GetEncoding() & noexcept -> EncodingType&
     {
         return this->encoding_;
     }
 
-    ///
     /// \brief           Stores a snapshot of the parser's current state
 
     /// \return          A Result being empty, or the error that occurred.
@@ -302,10 +275,8 @@ class JsonData final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto Snap() noexcept -> Result<score::Blank>;
 
-    ///
     /// \brief           Restores the parser's state from the previous snapshot
 
     /// \return          A Result being empty, or the error that occurred.
@@ -313,45 +284,37 @@ class JsonData final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto Restore() noexcept -> Result<score::Blank>;
 
   private:
-    ///
     /// \brief           Returns the stream
     /// \return          The stream.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetStream() noexcept -> std::istream&
     {
         return this->stream_.get();
     }
 
-    ///
     /// \brief           Returns the stream
     /// \return          The stream.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetStream() const noexcept -> const std::istream&
     {
         return this->stream_.get();
     }
 
-    ///
     /// \brief           Inspects the document's BOM
-    ///
     /// \context         ANY
     /// \pre             The read pointer must be at the beginning of the document.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     void ParseBom() noexcept;
 };
 

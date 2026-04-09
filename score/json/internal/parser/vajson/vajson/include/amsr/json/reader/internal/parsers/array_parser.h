@@ -74,9 +74,7 @@ class ArrayParser final : public v2::SingleArrayParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on every element
-     */
+    /// \brief           Function to be executed on every element
     Fn fn_;
 };
 

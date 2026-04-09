@@ -90,9 +90,7 @@ class BinaryParser final : public VirtualParser
     }
 
   private:
-    /*!
-     * \brief           Function to be executed on binary content
-     */
+    /// \brief           Function to be executed on binary content
     Fn fn_;
 };
 

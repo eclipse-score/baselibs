@@ -41,9 +41,7 @@ namespace internal
 /// \brief           Contains either the character value or an EOF value
 class OptChar
 {
-    /*!
-     * \brief           The optional character value
-     */
+    /// \brief           The optional character value
     std::int64_t char_;
 
   public:
@@ -179,30 +177,24 @@ class JsonOps final
 
     /// \brief           Gets the current position
     /// \return          The current position.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto Tell() const noexcept -> Result<std::uint64_t>;
 
-    ///
     /// \brief           Moves the cursor to the next position if the passed character is equal to the current character
     /// \param[in]       character
     ///                  to compare to.
     /// \return          True if the characters are equal and the cursor has been moved to the next position, otherwise
     ///                  false.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto Skip(char character) noexcept -> bool;
 
-    ///
     /// \brief           Checks if the next characters are equal to the passed string
     /// \param[in]       string
     ///                  that is expected.
@@ -216,10 +208,8 @@ class JsonOps final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<score::Blank>;
 
-    ///
     /// \brief           Returns if the next characters are equal to the passed string
     /// \param[in]       string
     ///                  that is expected.
@@ -231,40 +221,32 @@ class JsonOps final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto ReadString(std::string_view string) noexcept -> Result<bool>;
 
-    ///
     /// \brief           Skips all valid whitespace characters
     /// \details         Valid JSON whitespace characters are space, newline, carriage return, and tab.
     /// \return          True in case we can continue, false in case end of file occurred.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto SkipWhitespace() noexcept -> bool;
 
-    ///
     /// \brief           Reads num_to_read characters and executes the action for each span of characters
     /// \param[in]       num_to_read
     ///                  The number of characters to read.
     /// \param[in]       callback
     ///                  Callback to call per view.
     /// \return          The number of characters read.
-    ///
     /// \context         ANY
     /// \pre             callback does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
     auto Read(std::uint64_t num_to_read,
               const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
         -> Result<std::uint64_t>;
 
-    ///
     /// \brief           Reads exactly num_to_read characters and executes the action
     /// \details         Buffers the data if necessary. The callback is either executed once (requested amount of
     ///                  characters has been read) or never (less characters available or EOF).
@@ -273,95 +255,79 @@ class JsonOps final
     /// \param[in]       callback
     ///                  Callback to call once all characters have been read.
     /// \return          An empty Result or an error if less characters are available.
-    ///
     /// \context         ANY
     /// \pre             callback does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    ///
     auto ReadExactly(std::uint64_t num_to_read,
                      const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
         -> Result<score::Blank>;
 
     /*!
-     * \brief           Reads characters as long as the delimiter is not found and executes the action for each span of
+     /// \brief            Reads characters as long as the delimiter is not found and executes the action for each span
+     of
      *                  characters
-     * \param[in]       delimiter
+     /// \param[in]       delimiter
      *                  to decide if the character should be skipped.
-     * \param[in]       callback
+     /// \param[in]       callback
      *                  Callback to call per view.
-     * \return          Either EOF or the delimiter that was found.
+     /// \return          Either EOF or the delimiter that was found.
      *
      * \context         ANY
      * \pre             callback does not throw exceptions.
      * \threadsafe      FALSE
-     * \reentrant       FALSE
+     /// \reentrant       FALSE
      */
     auto ReadUntil(std::string_view delimiter,
                    const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept -> Result<OptChar>;
 
-    ///
     /// \brief           Returns a reference to the Json file
     /// \return          Reference to the Json file.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetJsonDocument() & noexcept -> JsonData&;
 
-    ///
     /// \brief           Returns a reference to the Json file
     /// \return          Const reference to the Json file.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetJsonDocument() const& noexcept -> const JsonData&;
 
   private:
-    ///
     /// \brief           Rewind the position of the document if a condition is fulfilled
     /// \param[in]       condition
     ///                  The condition to check before seeking.
     /// \param[in]       num
     ///                  The number of bytes to rewind.
     /// \return          nothing or the error occurred.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    ///
     auto RewindIf(bool condition, std::size_t num) noexcept -> Result<score::Blank>;
 
-    ///
     /// \brief           Get direct access to the input stream
     /// \return          Reference to the input stream.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetStream() & noexcept -> std::istream&;
 
-    ///
     /// \brief           Get direct access to the input stream
     /// \return          Const reference to the input stream.
-    ///
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
 
-    ///
     auto GetStream() const& noexcept -> const std::istream&;
 
-    /*!
-     * \brief           JsonData to operate on
-     */
+    /// \brief           JsonData to operate on
     std::reference_wrapper<JsonData> data_;
 };
 
