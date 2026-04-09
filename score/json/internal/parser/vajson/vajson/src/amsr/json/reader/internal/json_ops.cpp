@@ -41,10 +41,8 @@ namespace
 /*!
  /// \brief            Split a StringView into two at the specified pivot point
  /// \details         The pivot element will be contained in the second view.
- /// \param[in]       view
- *                  The StringView to split
- /// \param[in]       pivot
- *                  The index on which to split.
+ /// \param[in]       view                  The StringView to split
+ /// \param[in]       pivot                  The index on which to split.
  /// \return          A pair of string views.
  *
  /// \context         ANY

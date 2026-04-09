@@ -36,7 +36,7 @@ namespace amsr
 namespace json
 {
 /*!
- /// \internal
+ * \internal
  * - Initialize the stream buffer from the given input stream.
  * - Set the capacity for the key and string buffer to the values defined in the static configuration.
  * - Parse the BOM.
@@ -116,7 +116,7 @@ auto JsonData::FromBuffer(score::safecpp::zstring_view const buffer) noexcept ->
  * - Create & return the JsonData object.
  * \endinternal
  */
-auto JsonData::FromBuffer(const score::cpp::span<char const> buffer) noexcept -> Result<JsonData>
+auto JsonData::FromBuffer(const score::cpp::span<const char> buffer) noexcept -> Result<JsonData>
 {
     // Create istringstream from the buffer
     std::unique_ptr<std::istream> iss{std::make_unique<std::istringstream>(std::string(buffer.data(), buffer.size()))};

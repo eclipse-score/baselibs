@@ -263,21 +263,14 @@ class JsonOps final
                      const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
         -> Result<score::Blank>;
 
-    /*!
-     /// \brief            Reads characters as long as the delimiter is not found and executes the action for each span
-     of
-     *                  characters
-     /// \param[in]       delimiter
-     *                  to decide if the character should be skipped.
-     /// \param[in]       callback
-     *                  Callback to call per view.
-     /// \return          Either EOF or the delimiter that was found.
-     *
-     * \context         ANY
-     * \pre             callback does not throw exceptions.
-     * \threadsafe      FALSE
-     /// \reentrant       FALSE
-     */
+    /// \brief            Reads characters as long as the delimiter is not found and executes the action for each span
+    /// of characters \param[in]       delimiter                  to decide if the character should be skipped.
+    /// \param[in]       callback                  Callback to call per view.
+    /// \return          Either EOF or the delimiter that was found.
+    /// \context         ANY
+    /// \pre             callback does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
     auto ReadUntil(std::string_view delimiter,
                    const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept -> Result<OptChar>;
 
@@ -286,7 +279,6 @@ class JsonOps final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() & noexcept -> JsonData&;
 
     /// \brief           Returns a reference to the Json file

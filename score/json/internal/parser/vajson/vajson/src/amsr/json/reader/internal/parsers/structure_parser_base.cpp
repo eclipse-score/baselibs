@@ -59,9 +59,6 @@ auto StructureParserBase::Parse() noexcept -> Result<score::Blank>
 }
 
 /*!
- /// \spec
- * requires true;
- /// \endspec
  /// \internal
  * - If the parsed string is "null" and a value is expected:
  *   - Call the OnNull callback and return its Result.

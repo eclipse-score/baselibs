@@ -60,27 +60,17 @@ using ReturnsResultVoid = std::is_same<ResultBlank, std::result_of_t<F(const T&)
 template <typename F, typename T>
 using ReturnsVoid = std::is_void<std::result_of_t<F(const T&)>>;
 
-/*!
- /// \brief            SFINAE for callable returning Result<...>
- /// \tparam          F
- *                  Type of callable.
- /// \tparam          T
- *                  Type of argument.
- /// \tparam          Out
- *                  Type of return value.
- */
+/// \brief            SFINAE for callable returning Result<...>
+/// \tparam          F                  Type of callable.
+/// \tparam          T                  Type of argument.
+/// \tparam          Out                  Type of return value.
 template <typename F, typename T, typename Out>
 using CallableReturnsResult = std::enable_if_t<ReturnsResult<F, T>::value, Out>;
 
-/*!
- /// \brief            SFINAE for callable returning Result<...>
- /// \tparam          F
- *                  Type of callable.
- /// \tparam          T
- *                  Type of argument.
- /// \tparam          Out
- *                  Type of return value.
- */
+/// \brief            SFINAE for callable returning Result<...>
+/// \tparam          F                  Type of callable.
+/// \tparam          T                  Type of argument.
+/// \tparam          Out                  Type of return value.
 template <typename F, typename T, typename Out>
 using CallableReturnsNoResult = std::enable_if_t<!ReturnsResult<F, T>::value, Out>;
 
@@ -108,27 +98,17 @@ using ArrayReturnsResultVoid = std::is_same<Result<score::Blank>, std::result_of
 template <typename F, typename T>
 using ArrayReturnsVoid = std::is_void<std::result_of_t<F(std::size_t, const T&)>>;
 
-/*!
- /// \brief            SFINAE for callable returning Result<...>
- /// \tparam          F
- *                  Type of callable.
- /// \tparam          T
- *                  Type of argument.
- /// \tparam          Out
- *                  Type of return value.
- */
+/// \brief            SFINAE for callable returning Result<...>
+/// \tparam          F                  Type of callable.
+/// \tparam          T                  Type of argument.
+/// \tparam          Out                  Type of return value.
 template <typename F, typename T, typename Out>
 using ArrayCallableReturnsResult = std::enable_if_t<ArrayReturnsResult<F, T>::value, Out>;
 
-/*!
- /// \brief            SFINAE for callable returning Result<...>
- /// \tparam          F
- *                  Type of callable.
- /// \tparam          T
- *                  Type of argument.
- /// \tparam          Out
- *                  Type of return value.
- */
+/// \brief            SFINAE for callable returning Result<...>
+/// \tparam          F                  Type of callable.
+/// \tparam          T                  Type of argument.
+/// \tparam          Out                  Type of return value.
 template <typename F, typename T, typename Out>
 using ArrayCallableReturnsNoResult = std::enable_if_t<!ArrayReturnsResult<F, T>::value, Out>;
 

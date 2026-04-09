@@ -32,11 +32,8 @@ namespace amsr
 {
 namespace json
 {
-/*!
- /// \brief            Unqualified access to Optional
- /// \tparam          T
- *                  Type of value.
- */
+/// \brief            Unqualified access to Optional
+/// \tparam          T                  Type of value.
 template <typename T>
 using Optional = score::cpp::optional<T>;
 

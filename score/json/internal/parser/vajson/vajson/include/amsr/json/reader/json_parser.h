@@ -171,26 +171,13 @@ class JsonParser final
         });
     }
 
-    /*!
-     /// \copydoc         Key(std::string_view)
-     /// \spec
-     *    requires true;
-     /// \endspec
-     */
-    // auto Key(CStringView key) noexcept -> JsonParser& { return this->Key(std::string_view(key.c_str(), key.size()));
-    // }
-
     /// \copydoc         Key(std::string_view)
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto Key(const std::string& key) noexcept -> JsonParser&
     {
         return this->Key(std::string_view{key});
     }
 
     /// \brief           Checks if the next token is the start of an object
-
     /// \return          The reference to itself.
     /// \context         ANY
     /// \pre             -
@@ -462,10 +449,9 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is an array of numbers and executes the given callable on every
-    /// element \details         The callable must take the current array index as a std::size_t, the current number of
-    /// template
-    ///                  type Num, and return void or ResultBlank.
-
+    /// element
+    /// \details         The callable must take the current array index as a std::size_t, the current number of
+    /// template type Num, and return void or ResultBlank.
     /// \tparam          Num
     ///                  Type of number.
     /// \tparam          Fn
@@ -498,7 +484,6 @@ class JsonParser final
     /// \brief           Checks if the next token is an array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return void or ResultBlank.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -532,7 +517,6 @@ class JsonParser final
     ///                  on the same document is called. The callable is expected to have consumed all tokens
     ///                  representing the value related to the key if it returns a successful Result or has return type
     ///                  void. If the callable is unable to consume all tokens it must return an error Result.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -563,7 +547,6 @@ class JsonParser final
     }
 
     /// \brief           Adds a custom error message to the ParserResult
-
     /// \param[in]       msg
     ///                  to add. Must live until the ParserResult is evaluated.
     /// \return          The reference to itself.
@@ -590,7 +573,6 @@ class JsonParser final
     }
 
     /// \brief           Adds a custom error message to the ParserResult
-
     /// \tparam          Args
     ///                  Constructor arguments for the error code.
     /// \param[in]       args
@@ -620,6 +602,7 @@ class JsonParser final
         return *this;
     }
 
+    /// \brief           Adds a custom error message to the ErrorCode
     /// \param[in]       errc
     ///                  The error code to add.
     /// \param[in]       msg
@@ -674,9 +657,6 @@ class JsonParser final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the parser state contains an error and it has not been customized yet:
     ///   - Return true.
@@ -694,8 +674,8 @@ class JsonParser final
     /// \brief           JSON data
     std::reference_wrapper<JsonData> data_;
 
-     /// \brief            State of the parser
-     /// \details         Contains the first error that occurred.
+    /// \brief            State of the parser
+    /// \details         Contains the first error that occurred.
     ResultBlank result_{};
 
     /// \brief           Flag if the error message has already been customized

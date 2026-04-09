@@ -38,11 +38,8 @@ namespace json
 /// \brief           Null-terminated C-string
 using CStr = const char*;
 
-/*!
- /// \brief            Unqualified access to Result
- /// \tparam          T
- *                  Type of value.
- */
+/// \brief            Unqualified access to Result
+/// \tparam          T                  Type of value.
 template <typename T>
 using Result = score::Result<T>;
 
