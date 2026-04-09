@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -476,4 +476,4 @@ class StructureParserBase
 }  // namespace vajson
 }  // namespace json
 }  // namespace score
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_

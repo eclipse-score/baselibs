@@ -16,11 +16,11 @@
  *      \details  Provides a callback for every element it encounters and keeps track of the nesting depth.
  *
  *********************************************************************************************************************/
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_SINGLE_OBJECT_PARSER_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_SINGLE_OBJECT_PARSER_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_SINGLE_OBJECT_PARSER_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_SINGLE_OBJECT_PARSER_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_object_parser.h"
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_SINGLE_OBJECT_PARSER_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_SINGLE_OBJECT_PARSER_H_

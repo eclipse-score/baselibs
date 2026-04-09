@@ -14,8 +14,8 @@
  *        \brief  A single include to provide all JSON deserialization utilities.
  *
  *********************************************************************************************************************/
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -28,4 +28,4 @@
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_object_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader_fwd.h"
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_H_

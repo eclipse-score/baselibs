@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -199,4 +199,4 @@ class SingleArrayParser : public v2::Parser
 }  // namespace json
 }  // namespace score
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_V2_SINGLE_ARRAY_PARSER_H_

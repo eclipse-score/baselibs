@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_JSON_ERROR_DOMAIN_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_JSON_ERROR_DOMAIN_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -290,4 +290,4 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
 }  // namespace json
 }  // namespace score
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_JSON_ERROR_DOMAIN_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H_

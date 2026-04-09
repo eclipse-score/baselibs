@@ -14,8 +14,8 @@
  *        \brief  A specialized parser for number values.
  *
  *********************************************************************************************************************/
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
@@ -105,4 +105,4 @@ class NumberParser final : public VirtualParser
 }  // namespace json
 }  // namespace score
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_
