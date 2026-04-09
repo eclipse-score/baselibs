@@ -44,7 +44,7 @@ namespace internal
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ReturnsResult = score::IsResult<std::result_of_t<F(const T&)>>;
+using ReturnsResult = score::IsResult<std::invoke_result_t<F, const T&>>;
 
 /// \brief           Returns bool if the function returns ResultBlank
 /// \tparam          F
@@ -52,7 +52,7 @@ using ReturnsResult = score::IsResult<std::result_of_t<F(const T&)>>;
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ReturnsResultVoid = std::is_same<ResultBlank, std::result_of_t<F(const T&)>>;
+using ReturnsResultVoid = std::is_same<ResultBlank, std::invoke_result_t<F, const T&>>;
 
 /// \brief           Returns bool if the function returns void
 /// \tparam          F
@@ -60,7 +60,7 @@ using ReturnsResultVoid = std::is_same<ResultBlank, std::result_of_t<F(const T&)
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ReturnsVoid = std::is_void<std::result_of_t<F(const T&)>>;
+using ReturnsVoid = std::is_void<std::invoke_result_t<F, const T&>>;
 
 /// \brief            SFINAE for callable returning Result<...>
 /// \tparam          F                  Type of callable.
@@ -82,7 +82,7 @@ using CallableReturnsNoResult = std::enable_if_t<!ReturnsResult<F, T>::value, Ou
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ArrayReturnsResult = score::IsResult<std::result_of_t<F(std::size_t, const T&)>>;
+using ArrayReturnsResult = score::IsResult<std::invoke_result_t<F, std::size_t, const T&>>;
 
 /// \brief           Returns bool in case the function returns a Result<score::Blank>
 /// \tparam          F
@@ -90,7 +90,7 @@ using ArrayReturnsResult = score::IsResult<std::result_of_t<F(std::size_t, const
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ArrayReturnsResultVoid = std::is_same<Result<score::Blank>, std::result_of_t<F(std::size_t, const T&)>>;
+using ArrayReturnsResultVoid = std::is_same<Result<score::Blank>, std::invoke_result_t<F(std::size_t, const T&)>>;
 
 /// \brief           Returns bool in case the function returns void
 /// \tparam          F
@@ -98,7 +98,7 @@ using ArrayReturnsResultVoid = std::is_same<Result<score::Blank>, std::result_of
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ArrayReturnsVoid = std::is_void<std::result_of_t<F(std::size_t, const T&)>>;
+using ArrayReturnsVoid = std::is_void<std::invoke_result_t<F(std::size_t, const T&)>>;
 
 /// \brief            SFINAE for callable returning Result<...>
 /// \tparam          F                  Type of callable.
