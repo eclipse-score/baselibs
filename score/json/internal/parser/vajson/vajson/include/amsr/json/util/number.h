@@ -42,9 +42,11 @@
 #include "amsr/json/util/json_error_domain.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -201,7 +203,7 @@ class JsonNumber final
     /// \param[in]       view
     ///                  to parse.
     /// \return          A Result containing the number or the error that occurred.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the number contains invalid characters
     /// \context         ANY
     /// \pre             All whitespace must have been stripped.
@@ -234,7 +236,7 @@ class JsonNumber final
     /// \tparam          T
     ///                  Type to convert to.
     /// \return          The Result containing the converted number if the conversion was successful, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  Could not convert number
     /// \context         ANY
     /// \pre             -
@@ -573,7 +575,8 @@ class JsonNumber final
     StringView view_;
 };
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_NUMBER_H_

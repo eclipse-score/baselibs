@@ -31,9 +31,11 @@
 #include "score/result/error_domain.h"
 #include "score/result/result.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 /// \brief           Null-terminated C-string
 using CStr = const char*;
@@ -123,7 +125,7 @@ inline score::result::Error MakeError(const ErrorCode code, const std::string_vi
     return {static_cast<score::result::ErrorCode>(code), detail::kJsonErrorDomain, user_message};
 }
 
-inline score::result::Error MakeError(amsr::json::JsonErrc const error_code,
+inline score::result::Error MakeError(score::json::vajson::JsonErrc const error_code,
                                       const std::string_view user_message = "") noexcept
 {
     return MakeError(static_cast<ErrorCode>(error_code), user_message);
@@ -284,7 +286,8 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
     }
 }
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_JSON_ERROR_DOMAIN_H_

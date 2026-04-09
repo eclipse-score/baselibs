@@ -32,9 +32,11 @@
 #include <istream>
 #include <string>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -157,7 +159,7 @@ class JsonOps final
 
     /// \brief           Tries to take the character at the current position and moves the cursor to the next character
     /// \return          The character if inside stream bounds, or the error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson,
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson,
     ///                  if the stream has ended
     /// \context         ANY
     /// \pre             -
@@ -201,7 +203,7 @@ class JsonOps final
     /// \param[in]       error_msg
     ///                  in case the check fails. Must live until the error object is evaluated.
     /// \return          The empty Result if the string was found, or the error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the passed string is empty or it could not be found.
     /// \context         ANY
     /// \pre             -
@@ -214,7 +216,7 @@ class JsonOps final
     /// \param[in]       string
     ///                  that is expected.
     /// \return          True if the string was found else false.
-    /// \error           amsr::json::JsonErrc::kInvalidJson,
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson,
     ///                  if any error occurred.
     /// \context         ANY
     /// \pre             -
@@ -324,7 +326,8 @@ class JsonOps final
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_JSON_OPS_H_

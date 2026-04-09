@@ -28,9 +28,11 @@
 #include "score/optional.hpp"
 #include "score/span.hpp"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 /// \brief            Unqualified access to Optional
 /// \tparam          T                  Type of value.
@@ -59,7 +61,8 @@ enum class EncodingType : std::uint8_t
     kUtf8,
 };
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_UTIL_TYPES_H_

@@ -26,9 +26,11 @@
 #include "amsr/json/reader/v2/parser.h"
 #include <cstdint>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace v2
 {
@@ -65,7 +67,7 @@ class SingleObjectParser : public v2::Parser
 
     /// \brief           Default event for the start of objects
     /// \return          kRunning if not in an object, or the error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if already in an object
     /// \context         ANY
     /// \pre             -
@@ -85,7 +87,7 @@ class SingleObjectParser : public v2::Parser
 
     /// \brief           Default event for the end of objects
     /// \return          kRunning if in an object, or the error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if not in an object
     /// \context         ANY
     /// \pre             -
@@ -107,7 +109,7 @@ class SingleObjectParser : public v2::Parser
 
     /// \brief           Default event for unexpected elements that aborts the parsing
 
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if there is no callback registered for the event
     /// \context         ANY
     /// \pre             -
@@ -142,7 +144,8 @@ class SingleObjectParser : public v2::Parser
 };
 
 }  // namespace v2
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_SINGLE_OBJECT_PARSER_H_

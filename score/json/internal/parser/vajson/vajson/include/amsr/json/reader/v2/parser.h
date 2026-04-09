@@ -27,9 +27,11 @@
 #include "amsr/json/reader/internal/parsers/composition_parser.h"
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace v2
 {
@@ -52,7 +54,8 @@ class Parser : public internal::CompositionParser<internal::VirtualParser>
 };
 
 }  // namespace v2
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_V2_PARSER_H_

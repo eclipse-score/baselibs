@@ -27,9 +27,11 @@
 #include "amsr/json/util/json_error_domain.h"
 #include <utility>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -49,7 +51,7 @@ class LevelValidator
 
     /// \brief           Tries to enter a structure
     /// \return          kRunning if no structure has been entered yet, or the error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if already inside a structure
     /// \context         ANY
     /// \pre             -
@@ -82,7 +84,7 @@ class LevelValidator
 
     /// \brief           Tries to leave a structure
     /// \return          kFinished if inside a structure, or the error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if not inside a structure.
     /// \context         ANY
     /// \pre             -
@@ -130,7 +132,8 @@ class LevelValidator
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H_

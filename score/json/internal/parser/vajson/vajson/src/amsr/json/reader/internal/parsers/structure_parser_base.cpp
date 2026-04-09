@@ -33,9 +33,11 @@
 #include "amsr/json/util/number.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -628,5 +630,6 @@ auto StructureParserBase::GetState() noexcept -> DepthCounter&
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score

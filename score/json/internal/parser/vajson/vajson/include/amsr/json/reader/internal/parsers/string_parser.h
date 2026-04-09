@@ -25,9 +25,11 @@
 #include "score/functional.hpp"
 #include <utility>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -77,7 +79,7 @@ class StringParser : public VirtualParser
     }
 
     /// \brief           Default event for unexpected elements that aborts the parsing
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no string is parsed
     /// \context         ANY
     /// \pre             -
@@ -95,7 +97,8 @@ class StringParser : public VirtualParser
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRING_PARSER_H_

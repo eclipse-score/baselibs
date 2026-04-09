@@ -31,9 +31,11 @@
 #include "score/filesystem/path.h"
 
 #include "amsr/json/reader/internal/json_ops.h"
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 /*!
  * \internal
@@ -228,5 +230,6 @@ void JsonData::ParseBom() noexcept
     }
 }
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score

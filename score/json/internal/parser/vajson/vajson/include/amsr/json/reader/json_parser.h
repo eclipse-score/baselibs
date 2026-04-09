@@ -29,9 +29,11 @@
 #include <string>
 #include <utility>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 
 /// \brief           A parser that can be used to parse stateful JSON files
@@ -58,9 +60,9 @@ class JsonParser final
     /// \details         Does not change the internal state of the parser and thus may be called multiple times.
 
     /// \return          The empty Result, or the error that occurred.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if checking for a specific type but the next token is not of that type
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if checking for a specific name of a key or string but the next key or string has a different
     ///                  name
     /// \context         ANY
@@ -682,7 +684,8 @@ class JsonParser final
     bool customized_{false};
 };
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_JSON_PARSER_H_

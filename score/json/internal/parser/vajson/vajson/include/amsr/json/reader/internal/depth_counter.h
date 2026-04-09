@@ -32,9 +32,11 @@
 #include "amsr/json/util/json_error_domain.h"
 #include "score/result/result.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -102,7 +104,7 @@ class DepthCounter final
     ///                  are left open, or there is only a single value, in case the document consists of only a single
     ///                  value.
     /// \return          The empty Result if the stack is empty, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no EOF was encountered.
     /// \context         ANY
     /// \pre             -
@@ -119,17 +121,17 @@ class DepthCounter final
         ParserResult result{ParserState::kFinished};
         if (!is_finished_ && IsEmpty())
         {
-            result = MakeErrorResult<ParserState>(amsr::json::JsonErrc::kInvalidJson,
+            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
                                                   "DepthCounter::CheckEndOfFile: Empty document.");
         }
         else if (!is_finished_ && !IsEmpty() && stack_.top() == '[')
         {
-            result = MakeErrorResult<ParserState>(amsr::json::JsonErrc::kInvalidJson,
+            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
                                                   "DepthCounter::CheckEndOfFile: Expected closing brackets.");
         }
         else if (!is_finished_ && !IsEmpty() && stack_.top() != '[')
         {
-            result = MakeErrorResult<ParserState>(amsr::json::JsonErrc::kInvalidJson,
+            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
                                                   "DepthCounter::CheckEndOfFile: Expected closing braces.");
         }
         else
@@ -141,7 +143,7 @@ class DepthCounter final
 
     /// \brief           Adds an Array to the stack
     /// \return          The empty Result if an array can be added, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson,
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson,
     ///                  if a key was expected
     /// \context         ANY
     /// \pre             -
@@ -155,7 +157,7 @@ class DepthCounter final
 
     /// \brief           Adds an Object to the stack
     /// \return          The empty Result if an object can be added, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
     /// \context         ANY
     /// \pre             -
@@ -169,7 +171,7 @@ class DepthCounter final
 
     /// \brief           Adds a single key to the stack
     /// \return          The empty Result if a key can be added, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value was expected
     /// \context         ANY
     /// \pre             -
@@ -212,9 +214,9 @@ class DepthCounter final
 
     /// \brief           Adds a single value to the stack
     /// \return          The empty Result if a value can be added, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value is already present on the stack
     /// \context         ANY
     /// \pre             -
@@ -285,7 +287,7 @@ class DepthCounter final
 
     /// \brief           Pops an Object from the stack
     /// \return          The number of keys in the object if the end object call was valid, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If the object cannot be closed.
     /// \context         ANY
     /// \pre             -
@@ -302,7 +304,7 @@ class DepthCounter final
     {
         const bool expected_key{this->CheckLastElement('{')};
         return MakeResult(expected_key,
-                          MakeError(static_cast<amsr::json::ErrorCode>(JsonErrc::kInvalidJson),
+                          MakeError(static_cast<score::json::vajson::ErrorCode>(JsonErrc::kInvalidJson),
                                     "DepthCounter::PopObject: Not in an object."))
             .transform([this](score::Blank) noexcept {
                 this->comma_expected_ = true;
@@ -312,7 +314,7 @@ class DepthCounter final
 
     /// \brief           Pops an Array from the stack
     /// \return          The number of elements in the array if the end array call was valid, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if in an object or on toplevel.
     /// \context         ANY
     /// \pre             -
@@ -412,9 +414,9 @@ class DepthCounter final
     /// \param[in]       element
     ///                  The element to add.
     /// \return          The empty Result if the element could be added, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value is already present on the stack
     /// \context         ANY
     /// \pre             -
@@ -491,7 +493,8 @@ class DepthCounter final
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_DEPTH_COUNTER_H_

@@ -29,9 +29,11 @@
 #include "amsr/json/util/json_error_domain.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -84,9 +86,9 @@ class VirtualParser
 
     /// \brief           Parses file until the current parser is finished
     /// \return          The empty Result, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if parsing has failed due to invalid JSON data.
     /// \context         ANY
     /// \pre             -
@@ -98,9 +100,9 @@ class VirtualParser
     /// \brief           Parses file until the current parser is finished
     /// \details         Parserstate will be kRunning to allow for further parsing.
     /// \return          A ParserResult.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if parsing has failed due to invalid JSON data.
     /// \context         ANY
     /// \pre             -
@@ -284,7 +286,8 @@ class VirtualParser
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_VIRTUAL_PARSER_H_

@@ -29,7 +29,7 @@ namespace json
 
 /// \brief General purpose JSON parser that uses vaJSON from Vector. It abstracts the vendor specific API and returns
 /// a custom tree of data elements.
-class VajsonParser final : private amsr::json::v2::Parser
+class VajsonParser final : private score::json::vajson::v2::Parser
 {
   public:
     /// \brief Constructs a data-tree from a JSON file
@@ -43,7 +43,7 @@ class VajsonParser final : private amsr::json::v2::Parser
     static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>;
 
   private:
-    using amsr::json::v2::Parser::Parser;
+    using score::json::vajson::v2::Parser::Parser;
 
     auto GetData() noexcept -> score::Result<Any>;
 
@@ -100,24 +100,24 @@ class VajsonParser final : private amsr::json::v2::Parser
 
     /// \brief Updates the state of the parser to store any newly parsed data in the provided container
     template <typename T>
-    auto StartContainer(T&& value) noexcept -> amsr::json::ParserResult;
+    auto StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult;
 
     /// \brief Updates the state of the parser to store any newly parsed data in the previous container
-    auto EndContainer() noexcept -> amsr::json::ParserResult;
+    auto EndContainer() noexcept -> score::json::vajson::ParserResult;
 
-    auto OnNull() noexcept -> amsr::json::ParserResult override;
-    auto OnBool(bool value) noexcept -> amsr::json::ParserResult override;
-    auto OnNumber(amsr::json::JsonNumber value) noexcept -> amsr::json::ParserResult override;
-    auto OnString(std::string_view value) noexcept -> amsr::json::ParserResult override;
-    auto OnKey(std::string_view key) noexcept -> amsr::json::ParserResult override;
-    auto OnStartObject() noexcept -> amsr::json::ParserResult override;
-    auto OnEndObject(std::size_t) noexcept -> amsr::json::ParserResult override;
-    auto OnStartArray() noexcept -> amsr::json::ParserResult override;
-    auto OnEndArray(std::size_t) noexcept -> amsr::json::ParserResult override;
-    auto OnUnexpectedEvent() noexcept -> amsr::json::ParserResult override;
+    auto OnNull() noexcept -> score::json::vajson::ParserResult override;
+    auto OnBool(bool value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnKey(std::string_view key) noexcept -> score::json::vajson::ParserResult override;
+    auto OnStartObject() noexcept -> score::json::vajson::ParserResult override;
+    auto OnEndObject(std::size_t) noexcept -> score::json::vajson::ParserResult override;
+    auto OnStartArray() noexcept -> score::json::vajson::ParserResult override;
+    auto OnEndArray(std::size_t) noexcept -> score::json::vajson::ParserResult override;
+    auto OnUnexpectedEvent() noexcept -> score::json::vajson::ParserResult override;
 
     template <typename... NumberType>
-    auto OnNumber(amsr::json::JsonNumber& value) noexcept -> amsr::json::ParserResult
+    auto OnNumber(score::json::vajson::JsonNumber& value) noexcept -> score::json::vajson::ParserResult
     {
         auto TryStoreResult = [this](auto result) -> bool {
             return (result.has_value() && Store(score::json::Number{result.value()}).has_value());
@@ -130,8 +130,8 @@ class VajsonParser final : private amsr::json::v2::Parser
         // (TryStoreResult(value.As<float>())) || (TryStoreResult(value.As<double>())) ) )
         // coverity[autosar_cpp14_a5_2_6_violation]
         return ((TryStoreResult(value.As<NumberType>())) || ...)
-                   ? amsr::json::ParserState::kRunning
-                   : amsr::json::MakeErrorResult<amsr::json::ParserState>(amsr::json::JsonErrc::kInvalidJson);
+                   ? score::json::vajson::ParserState::kRunning
+                   : score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     std::string last_key_{};

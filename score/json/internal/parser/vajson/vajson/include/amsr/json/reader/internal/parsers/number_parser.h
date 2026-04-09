@@ -23,9 +23,11 @@
 #include "score/functional.hpp"
 #include <utility>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -57,7 +59,7 @@ class NumberParser final : public VirtualParser
     /// \param[in]       number
     ///                  that is parsed.
     /// \return          kFinished if the callback function succeeds, or an error.
-    /// \error           amsr::jsonJsonErrc::kInvalidJson
+    /// \error           score::json::vajsonJsonErrc::kInvalidJson
     ///                  if the number could not be converted to the wanted type.
     /// \context         ANY
     /// \pre             -
@@ -81,7 +83,7 @@ class NumberParser final : public VirtualParser
     }
 
     /// \brief           Default event for unexpected elements that aborts the parsing
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no number is parsed
     /// \context         ANY
     /// \pre             -
@@ -99,7 +101,8 @@ class NumberParser final : public VirtualParser
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_NUMBER_PARSER_H_

@@ -29,9 +29,11 @@
 #include "score/span.hpp"
 
 #include "amsr/json/reader/json_data.h"
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -409,5 +411,6 @@ auto JsonOps::GetStream() const& noexcept -> const std::istream&
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score

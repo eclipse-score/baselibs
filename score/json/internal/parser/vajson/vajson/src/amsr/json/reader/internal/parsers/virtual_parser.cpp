@@ -26,9 +26,11 @@
 #include "amsr/json/reader/json_data.h"
 #include "amsr/json/util/json_error_domain.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -134,5 +136,6 @@ auto VirtualParser::OnUnexpectedEvent() noexcept -> ParserResult
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score

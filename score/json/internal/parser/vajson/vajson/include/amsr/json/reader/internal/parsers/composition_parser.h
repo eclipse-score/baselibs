@@ -30,9 +30,11 @@
 #include "amsr/json/reader_fwd.h"
 #include "amsr/json/util/json_error_domain.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -154,7 +156,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no key comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -191,7 +193,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no key comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -216,7 +218,7 @@ class CompositionParser : public Mixin
     /// \param[in]       key
     ///                  to compare with.
     /// \return          kRunning if the keys are the same.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if the names of the keys are not equal or no key comes next
     /// \context         ANY
     /// \pre             -
@@ -248,7 +250,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no bool comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -283,7 +285,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no bool comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -313,7 +315,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no number comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -350,7 +352,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no number comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -380,7 +382,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no string comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -417,7 +419,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no string comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -442,7 +444,7 @@ class CompositionParser : public Mixin
     /// \param[in]       str
     ///                  to compare with.
     /// \return          kRunning if the strings are the same.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if the strings are not equal or no string comes next
     /// \context         ANY
     /// \pre             -
@@ -476,7 +478,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::jsonJsonErrc::kUserValidationFailed
+    /// \error           score::json::vajsonJsonErrc::kUserValidationFailed
     ///                  if no array of numbers comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -511,7 +513,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::jsonJsonErrc::kUserValidationFailed
+    /// \error           score::json::vajsonJsonErrc::kUserValidationFailed
     ///                  if no array of numbers comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -550,7 +552,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no array of strings comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -583,7 +585,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no array of strings comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -621,7 +623,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no array of bools comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -653,7 +655,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no array of bools comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -693,7 +695,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no binary content comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -723,7 +725,7 @@ class CompositionParser : public Mixin
     /// \param[in]       fn
     ///                  Callable.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if no binary content comes next
     /// \context         ANY
     /// \pre             Callable does not throw exceptions.
@@ -855,7 +857,7 @@ class CompositionParser : public Mixin
     /// \param[in]       object_already_open
     ///                  Specify if the object has already been opened. Defaults to false.
     /// \return          kRunning on success, or an error.
-    /// \error           amsr::jsonJsonErrc::kUserValidationFailed,
+    /// \error           score::json::vajsonJsonErrc::kUserValidationFailed,
     ///                  if no object comes next
     /// \context         ANY
     /// \pre             -
@@ -875,7 +877,8 @@ class CompositionParser : public Mixin
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_H_

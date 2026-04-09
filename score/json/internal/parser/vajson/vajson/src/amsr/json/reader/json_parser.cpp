@@ -23,9 +23,11 @@
 #include "amsr/json/reader/internal/parsers/virtual_parser.h"
 #include "amsr/json/reader/json_data.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 
 namespace
@@ -158,5 +160,6 @@ auto JsonParser::EndArray() noexcept -> JsonParser&
     });
 }
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score

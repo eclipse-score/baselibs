@@ -31,9 +31,11 @@
 #include "amsr/json/reader/internal/parsers/string_parser.h"
 #include "amsr/json/reader/json_data.h"
 #include <utility>
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -103,7 +105,8 @@ auto CompositionParser<Mixin>::Object(Fn fn, bool object_already_open) noexcept
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H_

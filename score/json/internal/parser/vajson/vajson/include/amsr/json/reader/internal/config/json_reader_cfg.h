@@ -22,9 +22,11 @@
 
 #include <cstddef>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -38,7 +40,8 @@ constexpr static std::size_t kKeyBufferSize{1024};
 constexpr static std::size_t kStringBufferSize{1024};
 }  // namespace config
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_CONFIG_JSON_READER_CFG_H_

@@ -32,9 +32,11 @@
 #include <functional>
 #include <memory>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 
 /// \brief           A JSON data representation
@@ -93,7 +95,7 @@ class JsonData final
     /// \param[in]       path
     ///                  The path to the JSON file.
     /// \return          A constructed JSON data object.
-    /// \error           amsr::json::JsonErrc::kStreamFailure
+    /// \error           score::json::vajson::JsonErrc::kStreamFailure
     ///                  if the file could not be opened.
     /// \context         ANY
     /// \pre             -
@@ -318,7 +320,8 @@ class JsonData final
     void ParseBom() noexcept;
 };
 
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_JSON_DATA_H_

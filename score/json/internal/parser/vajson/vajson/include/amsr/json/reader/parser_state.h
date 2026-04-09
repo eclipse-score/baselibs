@@ -23,9 +23,11 @@
  *********************************************************************************************************************/
 #include "score/result/result.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 /// \brief           State that is used for every parser event
 enum class ParserState : bool
@@ -36,7 +38,8 @@ enum class ParserState : bool
 
 /// \brief           Return type of most parser functions
 using ParserResult = score::Result<ParserState>;
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_PARSER_STATE_H_

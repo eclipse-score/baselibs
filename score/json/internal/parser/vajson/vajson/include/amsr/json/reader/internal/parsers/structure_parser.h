@@ -32,9 +32,11 @@
 #include <functional>
 #include <string>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -221,9 +223,9 @@ class StructureParser : public StructureParserBase
     /// \brief           Parses the file until the current parser is finished
     /// \details         Parserstate will be kRunning to allow for further parsing.
     /// \return          kRunning, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if parsing has failed due to invalid JSON data.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
     /// \context         ANY
     /// \pre             -
@@ -254,7 +256,8 @@ class StructureParser : public StructureParserBase
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_H_

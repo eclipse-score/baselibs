@@ -32,9 +32,11 @@
 #include "amsr/json/util/number.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -231,9 +233,9 @@ class StructureParserBase
 
     /// \brief           Parses the file until the current parser is finished
     /// \return          The empty Result, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if parsing has failed due to invalid JSON data.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
     /// \context         ANY
     /// \pre             -
@@ -244,7 +246,7 @@ class StructureParserBase
 
     /// \brief           Parses a "null" value
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no valid 'null' literal was encountered.
     /// \context         ANY
     /// \pre             -
@@ -255,7 +257,7 @@ class StructureParserBase
 
     /// \brief           Parses a "true" value
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no valid string was encountered.
     /// \context         ANY
     /// \pre             -
@@ -266,7 +268,7 @@ class StructureParserBase
 
     /// \brief           Parses a "false" value
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::jsonJsonErrc::kInvalidJson
+    /// \error           score::json::vajsonJsonErrc::kInvalidJson
     ///                  if the 'false' literal cannot be parsed
     /// \context         ANY
     /// \pre             -
@@ -279,7 +281,7 @@ class StructureParserBase
     /// \param[in]       cur
     ///                  The current character.
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the number literal cannot be parsed
     /// \context         ANY
     /// \pre             -
@@ -290,7 +292,7 @@ class StructureParserBase
 
     /// \brief           Parses a string value
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the next token is no valid string.
     /// \context         ANY
     /// \pre             -
@@ -303,7 +305,7 @@ class StructureParserBase
     /// \param[in]       string
     ///                  The unescaped string to parse.
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the next token is no valid string.
     /// \context         ANY
     /// \pre             -
@@ -314,7 +316,7 @@ class StructureParserBase
 
     /// \brief           Parses a JSON string and removes JSON escape characters
     /// \return          A string view into the parsed string, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if an invalid JSON string was encountered.
     /// \context         ANY
     /// \pre             -
@@ -327,7 +329,7 @@ class StructureParserBase
     /// \param[in]       escaped
     ///                  The character to unescape.
     /// \return          The unescaped character.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If an unknown/unsupported escape sequence was encountered
     /// \context         ANY
     /// \pre             -
@@ -338,7 +340,7 @@ class StructureParserBase
 
     /// \brief           Parses the start of an Object
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the object cannot be opened
     /// \context         ANY
     /// \pre             -
@@ -349,7 +351,7 @@ class StructureParserBase
 
     /// \brief           Parses the end of an Object
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// \context         ANY
     /// \pre             -
@@ -360,7 +362,7 @@ class StructureParserBase
 
     /// \brief           Parses the start of an Array
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// \context         ANY
     /// \pre             -
@@ -371,7 +373,7 @@ class StructureParserBase
 
     /// \brief           Parses the end of an Array
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// \context         ANY
     /// \pre             -
@@ -382,7 +384,7 @@ class StructureParserBase
 
     /// \brief           Parses a comma in a list/object
     /// \return          kRunning if the parser is in an object or array, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if in an object or on toplevel
     /// \context         ANY
     /// \pre             -
@@ -413,7 +415,7 @@ class StructureParserBase
 
     /// \brief           Parses a binary key
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no key is allowed at this point
     /// \context         ANY
     /// \pre             -
@@ -424,7 +426,7 @@ class StructureParserBase
 
     /// \brief           Parses a binary string
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no value is allowed at this point
     /// \context         ANY
     /// \pre             -
@@ -435,7 +437,7 @@ class StructureParserBase
 
     /// \brief           Parses a binary value
     /// \return          The Result of the implementer callback, or an error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no value is allowed at this point
     /// \context         ANY
     /// \pre             -
@@ -447,9 +449,9 @@ class StructureParserBase
     /// \brief           Parses any JSON value
     /// \return          kRunning if the parser has not finished yet, kFinished if the end of the file is reached, or an
     ///                  error.
-    /// \error           amsr::json::JsonErrc::kInvalidJson
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the JSON data is invalid.
-    /// \error           amsr::json::JsonErrc::kUserValidationFailed
+    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
     /// \context         ANY
     /// \pre             -
@@ -471,6 +473,7 @@ class StructureParserBase
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_BASE_H_

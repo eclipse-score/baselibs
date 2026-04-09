@@ -36,9 +36,11 @@
 #include "amsr/json/util/number.h"
 #include "amsr/json/util/types.h"
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -144,7 +146,8 @@ auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H_

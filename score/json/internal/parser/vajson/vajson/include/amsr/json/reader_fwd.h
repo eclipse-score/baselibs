@@ -17,9 +17,11 @@
 #ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_READER_FWD_H_
 #define LIB_VAJSON_INCLUDE_AMSR_JSON_READER_FWD_H_
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 
 /// \brief           Forward declaration for JsonData
@@ -44,6 +46,7 @@ class SingleObjectParser;
 /// \brief           Forward declaration for Parser
 class Parser;
 }  // namespace v2
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_FWD_H_

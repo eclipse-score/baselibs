@@ -25,9 +25,11 @@
 #include "score/functional.hpp"
 #include <utility>
 
-namespace amsr
+namespace score
 {
 namespace json
+{
+namespace vajson
 {
 namespace internal
 {
@@ -79,7 +81,8 @@ class ArrayParser final : public v2::SingleArrayParser
 };
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_READER_INTERNAL_PARSERS_ARRAY_PARSER_H_
