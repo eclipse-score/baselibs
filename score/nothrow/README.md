@@ -126,6 +126,87 @@ reference front() noexcept;
 reference back() noexcept;
 ```
 
+### Alternative return mode selection: `score::safe_math::ReturnMode`
+
+The `score::safe_math` library uses a compile-time `ReturnMode` enum to select
+between error-propagating and aborting behavior from a single function template:
+
+```cpp
+enum class ReturnMode {
+    kReturnResultOnError,  // returns score::Result<T>
+    kAbortOnError          // returns T directly, aborts on error
+};
+
+template <typename R, ReturnMode return_mode>
+using ModeBasedReturnType =
+    std::conditional_t<return_mode == ReturnMode::kReturnResultOnError,
+                       score::Result<R>, R>;
+```
+
+Applied to the nothrow containers, this could collapse each `Foo` / `FooOrAbort`
+pair into a single function template:
+
+```cpp
+// Today — two separate functions per operation:
+score::ResultBlank PushBack(const value_type& value) noexcept;
+void PushBackOrAbort(const value_type& value) noexcept;
+
+// Hypothetical — one template:
+template <ReturnMode mode = kDefaultReturnMode>
+ModeBasedReturnType<void, mode> PushBack(const value_type& value) noexcept;
+// Callers: vec.PushBack(x)                     — returns ResultBlank
+//          vec.PushBack<kAbortOnError>(x)       — aborts on failure
+```
+
+For operations that return a non-void value the mapping is analogous:
+
+```cpp
+// Today:
+score::Result<std::pair<iterator, bool>> Insert(const value_type& v) noexcept;
+std::pair<iterator, bool> InsertOrAbort(const value_type& v) noexcept;
+
+// Hypothetical:
+template <ReturnMode mode = kDefaultReturnMode>
+ModeBasedReturnType<std::pair<iterator, bool>, mode>
+Insert(const value_type& v) noexcept;
+```
+
+**Why this is not adopted here:**
+
+* **`ResultBlank` vs `Result<void>`** — Void-returning operations in the
+  nothrow containers use `score::ResultBlank`, not `Result<void>`.
+  `ModeBasedReturnType` would need a specialization or the containers would
+  need to migrate to `Result<void>`.
+
+* **Call-site verbosity** — `vec.PushBack<kAbortOnError>(x)` is more verbose
+  than `vec.PushBackOrAbort(x)` and slightly harder for a code author to get
+  right, though `kAbortOnError` is self-explanatory to a reader.
+
+* **No logic is duplicated today** — Every `*OrAbort` variant is a trivial
+  wrapper that delegates to the `Result`-returning version:
+  ```cpp
+  void PushBackOrAbort(const value_type& value) noexcept {
+      if (!PushBack(value).has_value()) { std::abort(); }
+  }
+  ```
+  `ReturnMode` would eliminate these wrappers but would not reduce logic
+  duplication.
+
+* **Internal error propagation** — Container operations call other failable
+  operations internally (e.g. `Resize` calls `Reserve`). Adopting `ReturnMode`
+  would require propagating the mode through the entire internal call chain.
+
+* **Class-level vs function-level** — Templating the entire class on
+  `ReturnMode` prevents mixing modes on the same instance. Templating each
+  member function keeps flexibility but makes call sites more verbose.
+
+**Conclusion:** Adopting `ReturnMode` is feasible and would remove roughly 30
+trivial wrapper functions across `Vector` and `Map`, but it trades that
+boilerplate for increased template complexity and less readable call sites.
+A stronger case could be made if `ResultBlank` / `Result<void>` were unified
+first, making `ReturnMode` a consistent vocabulary type across the whole
+`score` library rather than an isolated refactor.
+
 ### `score::nothrow::Vector`
 
 Default policy stores vector backing storage via `score::nothrow::OffsetBox`.

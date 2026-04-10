@@ -281,7 +281,8 @@ cheaper cache-line loads for small elements).
 ## Analysis: Root Cause of score::memory::shared::OffsetPtr Overhead
 
 The large overhead in the current implementation (~22–83× in no-bounds mode and up to ~372× in bounds-checked mode) is not inherent to the concept of relative pointers. It is caused by the
-implementation strategy chosen to avoid undefined behavior in pointer arithmetic.
+implementation strategy chosen to avoid using built-in pointer arithmetic between unrelated
+objects, and to quarantine the remaining pointer/integer mapping behind optimization barriers.
 
 ### The problem
 
@@ -292,8 +293,8 @@ OffsetBox and its target are in different allocations, so direct pointer arithme
 
 ### The chosen solution: cast through `uintptr_t`
 
-Every pointer reconstruction (dereference, copy, comparison) goes through this pattern in
-`pointer_arithmetic_util`:
+`score::memory::shared::OffsetPtr` reconstructs pointers by converting addresses to integers,
+performing integer arithmetic there, and then casting back:
 
 ```cpp
 uintptr_t CastPointerToInteger(const void* ptr) {
@@ -305,12 +306,20 @@ T* CastIntegerToPointer(uintptr_t integer) {
 }
 ```
 
-The call chain for every `operator*()`, `operator->()`, `operator[]()` is:
+The call chain for `operator*()`, `operator->()`, and `operator[]()` is:
 
 ```
 GetPointerWithBoundsCheck → CalculatePointerFromOffset → AddOffsetToPointer
   → CastPointerToInteger → integer add → CastIntegerToPointer
 ```
+
+In this implementation, `CastPointerToInteger` lives in `pointer_arithmetic_util.cpp`, so without
+LTO the compiler cannot inline the whole sequence. This acts as an **optimization barrier** around
+the pointer/integer/pointer conversion.
+
+That barrier does **not** make the code more standard-conforming. Its purpose is to keep the
+compiler from seeing through the entire reconstruction pipeline and reasoning about the resulting
+pointers as if they had ordinary source-level provenance.
 
 ### Why this is expensive
 
@@ -319,10 +328,12 @@ GetPointerWithBoundsCheck → CalculatePointerFromOffset → AddOffsetToPointer
    it, so every dereference involves an actual function call. This alone likely accounts for
    the majority of the overhead.
 
-2. **Pointer provenance is destroyed.** Even when inlined (e.g. with LTO), the
-   `reinterpret_cast` round-trip through `uintptr_t` breaks GCC's pointer provenance tracking.
-   The optimizer can no longer determine which allocation the pointer belongs to, defeating
-   alias analysis, load/store forwarding, register promotion, and auto-vectorization.
+2. **The optimizer cannot treat reconstructed pointers like ordinary `T*`.** The barrier hides
+   the full cast/add/cast sequence from the optimizer. This prevents many aggressive
+   transformations across the boundary, including scalar replacement, load/store forwarding,
+   register promotion, and some alias-based simplifications. Boost.Interprocess uses a different
+   mechanism (`volatile` helper functions) for the same reason: not to change the language rules,
+   but to stop the compiler from seeing too much of the non-ordinary reconstruction.
 
 3. **Copy recalculates offsets.** Copying an OffsetPtr doesn't just copy the offset — it
    reconstructs the target pointer from the source, then recomputes a new offset relative to
@@ -337,15 +348,14 @@ The C++ standard ([expr.reinterpret.cast]/5) guarantees:
 > will have its original value; mappings between pointers and integers are **otherwise
 > implementation-defined**."
 
-The key insight is that this guarantee only covers **unmodified round-trips**: the integer
-value passed to `reinterpret_cast<T*>()` must be exactly the value originally obtained from
-`reinterpret_cast<intptr_t>(ptr)`. Integer arithmetic applied between the two casts places
-the result in the "otherwise implementation-defined" category.
+The key distinction is whether the integer passed to `reinterpret_cast<T*>()` is the same value
+originally obtained from the pointer. If so, the result is the guaranteed identity round-trip.
+If not, the mapping falls into the standard's "otherwise implementation-defined" bucket.
 
 The `score::nothrow` and `score::memory::shared` designs differ fundamentally in how they handle
 this constraint.
 
-#### `score::nothrow::OffsetBox` — well-defined by construction
+#### `score::nothrow::OffsetBox` — identity round-trip only
 
 The `score::nothrow` design cleanly separates two concerns:
 
@@ -363,8 +373,8 @@ The `score::nothrow` design cleanly separates two concerns:
      = intptr_t(ptr)   // algebraic identity
    ```
 
-   The `reinterpret_cast<T*>()` always receives the **original, unmodified** integer value
-   of the pointer. This is the guaranteed round-trip per [expr.reinterpret.cast]/5.
+   The `reinterpret_cast<T*>()` receives the **original pointer value** again. This is the
+   guaranteed round-trip per [expr.reinterpret.cast]/5.
 
    **Copy and move semantics preserve this property.** The copy constructor and assignment
    operator always transfer state via the raw pointer in the current address space, never
@@ -382,11 +392,11 @@ The `score::nothrow` design cleanly separates two concerns:
    }
    ```
 
-   The source's conversion `static_cast<T*>(other)` is a guaranteed round-trip (the
-   source's `this` is unchanged). The destination then stores a fresh offset relative to
-   its own address. At no point is an offset value copied between two OffsetBox instances
-   — the raw pointer is always the transfer medium, and each OffsetBox independently
-   maintains a well-defined round-trip with its own `this`.
+   The source's conversion `static_cast<T*>(other)` follows the same identity-round-trip
+   argument. The destination then stores a fresh offset relative to its own address. At no
+   point is an offset value copied between two OffsetBox instances — the raw pointer is always
+   the transfer medium, and each OffsetBox independently reconstructs its pointee by returning
+   to the original pointer value.
 
 2. **Vector: array pointer arithmetic.** All element-level operations (`data[i]`, `data + n`,
    iterator arithmetic) use raw `T*` obtained from the allocator. The Vector knows it is
@@ -394,9 +404,11 @@ The `score::nothrow` design cleanly separates two concerns:
    [expr.add].
 
 These two concerns never cross: OffsetBox never does array arithmetic, and Vector never does
-offset-based pointer reconstruction.
+offset-based pointer reconstruction. Because `OffsetBox` only needs the standard's
+pointer-to-integer-to-same-pointer guarantee, it does not need an optimization barrier for
+semantic correctness.
 
-#### `score::memory::shared::OffsetPtr` — conflates both concerns
+#### `score::memory::shared::OffsetPtr` — conflates storage and traversal
 
 The existing design uses OffsetPtr as a full **fancy pointer** (`allocator_traits::pointer`).
 This means `std::vector` delegates *all* pointer operations to OffsetPtr, including:
@@ -405,16 +417,25 @@ This means `std::vector` delegates *all* pointer operations to OffsetPtr, includ
 - `operator[]` (array subscript)
 - `operator*`, `operator->` (dereference)
 
-Every one of these operations routes through the `uintptr_t` conversion machinery. When
-`std::vector` does `ptr + n` to access element `n`, the OffsetBox computes:
+Some of these operations reconstruct the current pointee, but the design must also synthesize
+**different element pointers** during traversal. When `std::vector` does `ptr + n` to access
+element `n`, `OffsetPtr` computes:
 
 ```
 CastIntegerToPointer(CastPointerToInteger(this) + stored_offset + n * sizeof(T))
 ```
 
-The integer passed to `CastIntegerToPointer` was not obtained from `CastPointerToInteger` —
-it is a manufactured value. This is "otherwise implementation-defined" per the standard, for
-every element access.
+For `n != 0`, the integer passed to `CastIntegerToPointer` is not the original pointer value —
+it is a derived value for a different element. That is exactly the "otherwise
+implementation-defined" case from [expr.reinterpret.cast]/5.
+
+This is why the design needs optimization barriers and why removing them is risky. If the
+compiler can see directly through the full cast/add/cast sequence on these traversal paths, it
+is free to optimize using its own aliasing and provenance model rather than the flat-address
+machine model that the implementation intends. The out-of-line helper functions in
+`score::memory::shared` and the `volatile` helper functions in Boost.Interprocess are both ways
+to quarantine that reconstruction from overly aggressive optimization. They do not make the
+mapping more defined; they just make miscompilation less likely on mainstream compilers.
 
 #### Shared memory: out of scope for the standard
 
@@ -424,17 +445,3 @@ differs from the original process. From the reading process's perspective, the O
 simply constructed (via the copy constructor or equivalent) with values that produce a valid
 pointer *within that process's address space*. This is a platform concern, not a language
 concern — both designs handle it equivalently.
-
-### Potential improvements
-
-- **Move `CastPointerToInteger` to the header** (or mark `inline`). This would allow the
-  compiler to inline the entire pointer reconstruction path, likely reducing the overhead
-  dramatically while preserving the same semantics.
-- **Separate pointer storage from array arithmetic** as demonstrated by `score::nothrow`. Use
-  OffsetBox exclusively for storing pointers in shared memory. Use raw `T*` for all
-  element-level operations in container code. This achieves both standard conformance
-  (well-defined round-trips only) and performance (~1–14% overhead vs ~22–83× in legacy/shared no-bounds paths).
-- **Investigate `std::launder`** or compiler-specific provenance intrinsics as a
-  standard-conforming alternative.
-- **Benchmark with LTO enabled** to measure the overhead when inlining is possible across
-  translation units.
