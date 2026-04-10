@@ -45,7 +45,6 @@ googletest_tests = [
     "latch_test",
     "math_test",
     "member_iterator_test",
-    "memory_resource_test",
     "memory_test",
     "move_only_function_test",
     "multi_span_test",
@@ -105,6 +104,20 @@ cc_test(
         "static_const_test_helper.cpp",
         "static_const_test_helper.hpp",
     ],
+    copts = SCORE_LANGUAGE_FUTURECPP_TEST_COPTS,
+    defines = SCORE_LANGUAGE_FUTURECPP_ASSERT_DEFINES,
+    tags = ["unit"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//score/language/futurecpp:futurecpp_internal",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "memory_resource_test",
+    size = "medium",
+    srcs = ["memory_resource_test.cpp"],
     copts = SCORE_LANGUAGE_FUTURECPP_TEST_COPTS,
     defines = SCORE_LANGUAGE_FUTURECPP_ASSERT_DEFINES,
     tags = ["unit"],

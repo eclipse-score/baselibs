@@ -18,7 +18,7 @@
 #include <thread>
 #include <utility>
 
-#if defined(__QNXNTO__)
+#if defined(__QNXNTO__) && defined(USE_TYPEDSHMD)
 constexpr auto kTypedSharedMemoryPathPrefix = "/dev/shmem";
 #endif
 
@@ -65,7 +65,7 @@ int CountNonNullResources(const std::vector<std::shared_ptr<ManagedMemoryResourc
         });
     return non_null_count;
 }
-#if defined(__QNXNTO__)
+#if defined(__QNXNTO__) && defined(USE_TYPEDSHMD)
 std::string GetShmFilePath(const std::string& input_path) noexcept
 {
     return std::string{kTypedSharedMemoryPathPrefix} + input_path;
@@ -867,7 +867,7 @@ TEST(SharedMemoryFactoryRemoveStaleArtefactsTest, CallingRemoveStaleArtefactsWil
 }
 
 // typed memory daemon is only running on the QNX, so these tests will only pass on the QNX
-#if defined(__QNXNTO__)
+#if defined(__QNXNTO__) && defined(USE_TYPEDSHMD)
 TEST(SharedMemoryFactoryRemoveStaleArtefactsTest,
      CallingRemoveStaleArtefactsWillUnlinkAnOldSharedMemoryRegionWhenAcquireTmdUidFailed)
 {

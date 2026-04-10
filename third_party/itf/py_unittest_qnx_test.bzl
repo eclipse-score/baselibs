@@ -12,4 +12,8 @@
 # *******************************************************************************
 
 def py_unittest_qnx_test(**kwargs):
+    # This is intentionally left blank.
+    # The cc_test_qnx from @score_qnx_unit_tests can be used here,
+    # but we rely on executing tests on QNX via the run_under approach in this repository.
+    # See .bazelrc for details.
     pass

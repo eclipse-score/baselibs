@@ -98,10 +98,17 @@ public:
     const Base& base() const { return *this; }
 };
 
+template <typename... Ts, std::size_t... Idxs>
+void swap_impl(zipped_tuple_like<Ts...> lhs, zipped_tuple_like<Ts...> rhs, std::index_sequence<Idxs...>)
+{
+    using std::swap;
+    score::cpp::ignore = std::initializer_list<int>{(swap(std::get<Idxs>(lhs), std::get<Idxs>(rhs)), 0)...};
+}
+
 template <typename... Ts>
 void swap(zipped_tuple_like<Ts...> lhs, zipped_tuple_like<Ts...> rhs)
 {
-    std::swap(lhs.base(), rhs.base());
+    swap_impl(lhs, rhs, std::index_sequence_for<Ts...>{});
 }
 
 template <typename Iterators, std::size_t... Idxs>

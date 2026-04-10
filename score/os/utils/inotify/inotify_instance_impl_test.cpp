@@ -427,8 +427,8 @@ TEST_F(InotifyInstanceImplTest, ReadReturnsWhenCallingClose)
 
 TEST_F(InotifyInstanceImplTest, EventNameContainsOnlyFileName)
 {
-#if defined(__QNX__) && __QNX__ >= 800 && defined(__x86_64__)
-    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 x86_64 filesystem";
+#if defined(__QNX__) && __QNX__ >= 800
+    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 filesystem";
 #else
     InotifyInstanceImpl inotify_instance{};
     ASSERT_TRUE(inotify_instance.IsValid().has_value());
@@ -450,8 +450,8 @@ TEST_F(InotifyInstanceImplTest, EventNameContainsOnlyFileName)
 
 TEST_F(InotifyInstanceImplTest, ReadReturnsEventWhenWatchTriggersForInCreate)
 {
-#if defined(__QNX__) && __QNX__ >= 800 && defined(__x86_64__)
-    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 x86_64 filesystem";
+#if defined(__QNX__) && __QNX__ >= 800
+    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 filesystem";
 #else
     InotifyInstanceImpl inotify_instance{};
     ASSERT_TRUE(inotify_instance.IsValid().has_value());
@@ -476,8 +476,8 @@ TEST_F(InotifyInstanceImplTest, ReadReturnsEventWhenWatchTriggersForInCreate)
 
 TEST_F(InotifyInstanceImplTest, ReadReturnsEventWhenWatchTriggersForInDelete)
 {
-#if defined(__QNX__) && __QNX__ >= 800 && defined(__x86_64__)
-    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 x86_64 filesystem";
+#if defined(__QNX__) && __QNX__ >= 800
+    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 filesystem";
 #else
     CreateFile();
 
@@ -504,8 +504,8 @@ TEST_F(InotifyInstanceImplTest, ReadReturnsEventWhenWatchTriggersForInDelete)
 
 TEST_F(InotifyInstanceImplTest, ReadReturnsEventsWhenWatchTriggersForMultipleEvents)
 {
-#if defined(__QNX__) && __QNX__ >= 800 && defined(__x86_64__)
-    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 x86_64 filesystem";
+#if defined(__QNX__) && __QNX__ >= 800
+    GTEST_SKIP() << "Ticket-253098 Inotify not supported on QNX 8 filesystem";
 #else
     InotifyInstanceImpl inotify_instance{};
     ASSERT_TRUE(inotify_instance.IsValid().has_value());
