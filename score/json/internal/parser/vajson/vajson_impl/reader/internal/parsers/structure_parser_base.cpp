@@ -405,8 +405,10 @@ auto StructureParserBase::ParseLength() noexcept -> Result<std::uint32_t>
       .ReadExactly(kPrefixSize,
                    [&result](StringView view) noexcept {
                      static_cast<void>(std::memcpy(&result, view.data(), sizeof(result)));
-
-                     result = be32toh(result);
+                       result = ((result >> 24U) & 0x000000FFU) | /*!< byte 3 to byte 0 */
+                                ((result >> 8U) & 0x0000FF00U) |  /*!< byte 2 to byte 1 */
+                                ((result << 8U) & 0x00FF0000U) |  /*!< byte 1 to byte 2 */
+                                ((result << 24U) & 0xFF000000U);  /*!< byte 0 to byte 3 */
                    })
       .transform([&result](score::Blank) noexcept { return result; });
     // clang-format on
