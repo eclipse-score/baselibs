@@ -43,9 +43,7 @@ namespace internal
 ///                  derived parser can implement callbacks for all types of elements it expects to appear. If the
 ///                  parser encounters any other type, it calls OnUnexpectedEvent. If this callback is not overridden by
 ///                  the derived parser, the default implementation aborts parsing.
-
 /// \trace           DSGN-JSON-Reader-Data-Items
-
 class VirtualParser
 {
   public:
@@ -62,7 +60,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     explicit VirtualParser(JsonData& doc) noexcept;
 
     /// \brief           Deleted copy constructor
@@ -94,7 +91,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto Parse() noexcept -> Result<score::Blank>;
 
     /// \brief           Parses file until the current parser is finished
@@ -108,7 +104,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto SubParse() const noexcept -> ParserResult;
 
     /// \brief           Returns a reference to the CRTP child
@@ -116,7 +111,6 @@ class VirtualParser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetChild() & noexcept -> VirtualParser&;
 
   protected:
@@ -125,7 +119,6 @@ class VirtualParser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetCurrentKey() const noexcept -> CStringView;
 
     /// \brief           Returns a reference to the JSON file
@@ -133,7 +126,6 @@ class VirtualParser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() noexcept -> JsonData&;
 
     /// \brief           Returns a reference to the JSON file
@@ -141,7 +133,6 @@ class VirtualParser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() const noexcept -> const JsonData&;
 
   private:
@@ -151,7 +142,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnNull() noexcept -> ParserResult;
 
     /// \brief           Default event for Bools
@@ -160,7 +150,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnBool(bool) noexcept -> ParserResult;  // NOLINT(readability/casting)
 
     /// \brief           Default event for Numbers
@@ -169,7 +158,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnNumber(JsonNumber) noexcept -> ParserResult;
 
     /// \brief           Default event for Strings
@@ -180,7 +168,6 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnString(StringView) noexcept -> ParserResult;
 
     /// \brief           Default event for Keys

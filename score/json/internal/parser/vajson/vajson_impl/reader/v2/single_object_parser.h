@@ -38,7 +38,6 @@ namespace v2
 /// \details         Handles the OnStartObject & OnEndObject callbacks by itself. Calls OnKey for every key it
 /// encounters
 ///                  and Finalize on object end.
-
 class SingleObjectParser : public v2::Parser
 {
   public:
@@ -50,7 +49,6 @@ class SingleObjectParser : public v2::Parser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     explicit SingleObjectParser(JsonData& doc, bool object_already_open = false) noexcept
         : v2::Parser{doc}, validator_{object_already_open}
     {
@@ -73,7 +71,6 @@ class SingleObjectParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If not inside an object:
     ///   - Set the flag that an object has been entered.
@@ -93,7 +90,6 @@ class SingleObjectParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Check if inside an object:
     ///   - Call the Finalize callback and return its Result.
@@ -108,14 +104,12 @@ class SingleObjectParser : public v2::Parser
     }
 
     /// \brief           Default event for unexpected elements that aborts the parsing
-
     /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if there is no callback registered for the event
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnUnexpectedEvent() noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed,
@@ -132,7 +126,6 @@ class SingleObjectParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto Finalize() noexcept -> Result<score::Blank>
     {
         return Result<score::Blank>{score::Blank{}};

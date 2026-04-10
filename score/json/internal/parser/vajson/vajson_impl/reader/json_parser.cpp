@@ -33,12 +33,10 @@ namespace vajson
 namespace
 {
 /// \brief           A parser that only parses an opening curly bracket
-
 class StartObjectParser final : public internal::VirtualParser
 {
   public:
     /// \brief           Constructs the parser
-
     using internal::VirtualParser::VirtualParser;
 
     /// \brief           Implements the StartObject callback returning kFinished
@@ -49,12 +47,10 @@ class StartObjectParser final : public internal::VirtualParser
 };
 
 /// \brief           A parser that only parses a closing curly bracket
-
 class EndObjectParser final : public internal::VirtualParser
 {
   public:
     /// \brief           Constructs the parser
-
     using internal::VirtualParser::VirtualParser;
 
     /// \brief           Implements the EndObject callback returning kFinished
@@ -65,12 +61,10 @@ class EndObjectParser final : public internal::VirtualParser
 };
 
 /// \brief           Parser that only parses an opening square bracket
-
 class StartArrayParser final : public internal::VirtualParser
 {
   public:
     /// \brief           Constructs the parser
-
     using internal::VirtualParser::VirtualParser;
 
     /// \brief           Implements the StartArray callback returning kFinished
@@ -81,12 +75,10 @@ class StartArrayParser final : public internal::VirtualParser
 };
 
 /// \brief           Parser that only parses a closing square bracket
-
 class EndArrayParser final : public internal::VirtualParser
 {
   public:
     /// \brief           Constructs the parser
-
     using internal::VirtualParser::VirtualParser;
 
     /// \brief           Implements the EndArray callback returning kFinished

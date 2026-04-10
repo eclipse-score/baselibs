@@ -41,7 +41,6 @@ namespace vajson
 
 /// \brief           A JSON data representation
 /// \details         Handles the state of the data, such as the current position in the file and nesting of JSON tree.
-
 /// \trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
@@ -81,7 +80,6 @@ class JsonData final
     explicit JsonData(std::istream& input_stream) noexcept;
 
     /// \brief           Initializes a JSON data object using a constructed reader
-
     /// \param[in]       input_stream
     ///                  to operate on.
     /// \context         ANY
@@ -91,7 +89,6 @@ class JsonData final
     explicit JsonData(std::unique_ptr<std::istream> input_stream) noexcept;
 
     /// \brief           Initializes a JSON data object from a file
-
     /// \param[in]       path
     ///                  The path to the JSON file.
     /// \return          A constructed JSON data object.
@@ -102,11 +99,9 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     -
-
     static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
 
     /// \brief           Initializes a JSON data object from a buffer
-
     /// \param[in]       buffer
     ///                  The buffer containing the JSON value.
     /// \return          A constructed JSON data object.
@@ -115,11 +110,9 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     -
-
     static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
 
     /// \brief           Initializes a JSON data object from a buffer
-
     /// \param[in]       buffer
     ///                  The buffer containing the JSON value.
     /// \return          A constructed JSON data object.
@@ -128,11 +121,9 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     -
-
     static auto FromBuffer(score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>;
 
     /// \brief           Initializes a JSON data object from a buffer
-
     /// \param[in]       buffer
     ///                  The buffer containing the JSON value.
     /// \return          A constructed JSON data object.
@@ -141,22 +132,18 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     -
-
     static auto FromBuffer(score::cpp::span<const char> buffer) noexcept -> Result<JsonData>;
 
     /// \brief           Move constructor
-
     /// \param[in]       other
     ///                  The moved from object.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     JsonData(JsonData&& other) noexcept = default;
 
     /// \brief           Default move assignment
-
     /// \return          A reference to the moved into object.
     /// \context         ANY
     /// \pre             -
@@ -171,7 +158,6 @@ class JsonData final
     auto operator=(const JsonData&) -> JsonData& = delete;
 
     /// \brief           Default destructor
-
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
@@ -179,26 +165,22 @@ class JsonData final
     ~JsonData() noexcept = default;
 
     /// \brief           Returns the JSON structure state
-
     /// \return          The current state.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetState() & noexcept -> internal::DepthCounter&
     {
         return this->depth_counter_;
     }
 
     /// \brief           Sets the current key
-
     /// \param[in]       key
     ///                  to store.
     /// \return          The current key.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     void StoreCurrentKey(StringView key) noexcept
     {
 
@@ -206,36 +188,30 @@ class JsonData final
     }
 
     /// \brief           Returns the current key
-
     /// \return          The current key.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetCurrentKey() const noexcept -> CStringView
     {
         return CStringView{this->current_key_};
     }
 
     /// \brief           Returns the current string
-
     /// \return          The current string.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetCurrentString() const noexcept -> CStringView
     {
         return CStringView{this->current_buffer_};
     }
 
     /// \brief           Gets the emptied string buffer
-
     /// \return          The emptied string buffer.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetClearedStringBuffer() & noexcept -> String&
     {
 
@@ -244,19 +220,16 @@ class JsonData final
     }
 
     /// \brief           Gets the string buffer
-
     /// \return          The string buffer.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetStringBuffer() & noexcept -> String&
     {
         return this->current_buffer_;
     }
 
     /// \brief           Returns the detected encoding type
-
     /// \return          The encoding type.
     /// \context         ANY
     /// \pre             -
@@ -264,28 +237,23 @@ class JsonData final
     /// \reentrant       TRUE, for different this pointer
     /// \synchronous     -
     /// \trace           DSGN-JSON-Reader-Encoding
-
     auto GetEncoding() & noexcept -> EncodingType&
     {
         return this->encoding_;
     }
 
     /// \brief           Stores a snapshot of the parser's current state
-
     /// \return          A Result being empty, or the error that occurred.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto Snap() noexcept -> Result<score::Blank>;
 
     /// \brief           Restores the parser's state from the previous snapshot
-
     /// \return          A Result being empty, or the error that occurred.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto Restore() noexcept -> Result<score::Blank>;
 
   private:
@@ -294,7 +262,6 @@ class JsonData final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetStream() noexcept -> std::istream&
     {
         return this->stream_.get();
@@ -305,7 +272,6 @@ class JsonData final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetStream() const noexcept -> const std::istream&
     {
         return this->stream_.get();
@@ -316,7 +282,6 @@ class JsonData final
     /// \pre             The read pointer must be at the beginning of the document.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     void ParseBom() noexcept;
 };
 

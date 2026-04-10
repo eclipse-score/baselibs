@@ -43,7 +43,6 @@ namespace internal
 
 /// \brief           A SAX-style JSON parser
 /// \details         Parses JSON text from a stream and sends events synchronously to an Implementer.
-
 /// \tparam          Implementer
 ///                  to use.
 /// \trace           DSGN-JSON-Reader-Data-Items
@@ -64,7 +63,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnNull() noexcept -> ParserResult override;
 
     /// \brief           Default event for Bools
@@ -73,7 +71,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnBool(bool) noexcept -> ParserResult override;  // NOLINT(readability/casting)
 
     /// \brief           Default event for Numbers
@@ -82,7 +79,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnNumber(JsonNumber) noexcept -> ParserResult override;
 
     /// \brief           Default event for Strings
@@ -93,7 +89,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnString(CStringView) noexcept -> ParserResult override;
 
     /// \brief           Default event for Keys
@@ -104,7 +99,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnKey(CStringView) noexcept -> ParserResult override;
 
     /// \brief           Default event for the end of objects
@@ -113,7 +107,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnStartObject() noexcept -> ParserResult override;
 
     /// \brief           Default event for the start of arrays
@@ -122,7 +115,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnEndObject(std::size_t) noexcept -> ParserResult override;
 
     /// \brief           Default event for the end of arrays
@@ -131,7 +123,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnStartArray() noexcept -> ParserResult override;
 
     /// \brief           Default event for binary content
@@ -144,7 +135,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnEndArray(std::size_t) noexcept -> ParserResult override;
 
     /// \brief           Constructs a StructureParser
@@ -163,7 +153,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     StructureParser(StructureParser&&) noexcept = default;
 
     /// \brief           Default move assignment
@@ -172,7 +161,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto operator=(StructureParser&&) & noexcept -> StructureParser& = default;
 
     /// \brief           Deleted copy constructor
@@ -186,7 +174,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     ~StructureParser() noexcept override = default;
 
     /// \brief           Parses the file until the current parser is finished
@@ -200,7 +187,6 @@ class StructureParser : public StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto SubParse() const noexcept -> ParserResult;
 
   private:
@@ -209,7 +195,6 @@ class StructureParser : public StructureParserBase
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonOps() & noexcept -> JsonOps& override;
 
     /// \brief           Returns the reference to the encoded file
@@ -217,7 +202,6 @@ class StructureParser : public StructureParserBase
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonOps() const& noexcept -> const JsonOps& override;
 
     // Deleted rvalue-qualified version to prevent dangling reference

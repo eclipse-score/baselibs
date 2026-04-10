@@ -92,7 +92,6 @@ class NumberParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     NumberParser() noexcept = default;
 
     /// \brief           Gets a pointer beyond the last parsed character
@@ -100,7 +99,6 @@ class NumberParser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto End() const& noexcept -> const char*
     {
         return end_;
@@ -117,7 +115,6 @@ class NumberParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Reset errno.
     /// - Convert the view to a long long.
@@ -137,7 +134,6 @@ class NumberParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the view starts with a dash:
     ///   - Skip the parsing.
@@ -173,7 +169,6 @@ class NumberParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Reset errno.
     /// - Convert the view to a double.
@@ -243,7 +238,6 @@ class JsonNumber final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-
     /// \internal
     /// - Convert the number to type T.
     /// - If the conversion was successful:
@@ -265,7 +259,6 @@ class JsonNumber final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-
     /// \internal
     /// - If the number is a single '1' or '0' character:
     ///   - Convert to true or false respectively.
@@ -331,7 +324,6 @@ class JsonNumber final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-
     /// \internal
     /// - Convert the number to an unsigned number.
     /// - If the conversion was successful:
@@ -359,7 +351,6 @@ class JsonNumber final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-
     /// \internal
     /// - Convert the number to the desired floating point type.
     /// - If the conversion was successful:
@@ -377,13 +368,11 @@ class JsonNumber final
     }
 
     /// \brief           Converts the number to a JsonNumber
-
     /// \return          The Optional containing the JsonNumber.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Return the number as a Number type.
     /// \endinternal
@@ -424,7 +413,6 @@ class JsonNumber final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     explicit constexpr JsonNumber(StringView view) noexcept : view_{view} {}
 
     /// \brief           Gets the number of characters
@@ -432,7 +420,6 @@ class JsonNumber final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetNumberOfChars() const noexcept -> std::size_t
     {
         return this->view_.size();
@@ -450,7 +437,6 @@ class JsonNumber final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the number does not exceed the numeric limits of the target type:
     ///   - Cast the number to the target type.
@@ -478,7 +464,6 @@ class JsonNumber final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseFormatSuccessful(const char* end) const noexcept -> bool
     {
         // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
@@ -513,7 +498,6 @@ class JsonNumber final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the number has been successfully parsed and casted to the target type:
     ///   - Return an Optional containing the number.
@@ -552,7 +536,6 @@ class JsonNumber final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the number has multiple digits:
     ///   - Check that if it has a leading zero, it is a valid hex or float number.

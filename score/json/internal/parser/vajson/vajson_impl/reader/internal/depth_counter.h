@@ -60,7 +60,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     DepthCounter() noexcept {}
 
     /// \brief           Move constructor
@@ -70,11 +69,9 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     DepthCounter(DepthCounter&& that) noexcept : stack_{std::move(that.stack_)}, counter_{std::move(that.counter_)} {}
 
     /// \brief           Default copy constructor
-
     DepthCounter(const DepthCounter&) noexcept = default;
 
     /// \brief           Move assignment
@@ -110,7 +107,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If there are no elements in the stack or there is only a single value:
     ///   - Return an empty Result.
@@ -149,7 +145,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto AddArray() noexcept -> ResultBlank
     {
         return this->AddElement('[');
@@ -163,7 +158,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto AddObject() noexcept -> ResultBlank
     {
         return this->AddElement('{');
@@ -177,7 +171,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the last element is an object:
     ///   - Add a key to the stack.
@@ -222,7 +215,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the stack contains elements:
     ///   - If the last element is an array:
@@ -293,7 +285,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the last element is an object:
     ///   - Pop the Object from the stack.
@@ -320,7 +311,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the last element is an array:
     ///   - Pop the Array from the stack.
@@ -345,7 +335,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If a comma is expected:
     ///   - Reset the flag.
@@ -422,7 +411,6 @@ class DepthCounter final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the last element is not an object and not a value:
     ///   - If the last element is a key, pop it from the stack, because the pair is complete.

@@ -34,7 +34,6 @@ namespace vajson
 namespace internal
 {
 /// \brief           A parser that only parses multiple values of the same type
-
 class ArrayParser final : public v2::SingleArrayParser
 {
     /// \brief           Type of function to be executed when the keys are read
@@ -59,7 +58,6 @@ class ArrayParser final : public v2::SingleArrayParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Execute the callback with the current array index.
     /// - If the callback succeeds:

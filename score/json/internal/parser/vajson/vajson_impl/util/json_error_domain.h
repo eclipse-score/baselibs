@@ -64,7 +64,6 @@ enum class JsonErrc : ErrorCode
 };
 
 /// \brief           An error domain for all JSON related errors
-
 class JsonErrorDomain final : public ErrorDomain
 {
   public:
@@ -76,7 +75,6 @@ class JsonErrorDomain final : public ErrorDomain
     /// \context         ANY
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     constexpr JsonErrorDomain() noexcept : ErrorDomain() {}
 
     /// \brief           Converts an error code into a message
@@ -210,7 +208,6 @@ auto And(score::Result<T> first, score::Result<U> second) noexcept -> score::Res
 /// \pre             -
 /// \context         ANY
 /// \threadsafe      TRUE, for different this pointer
-
 inline constexpr auto GetJsonDomain() noexcept -> const ErrorDomain&
 {
     return detail::kJsonErrorDomain;
@@ -226,7 +223,6 @@ inline constexpr auto GetJsonDomain() noexcept -> const ErrorDomain&
 /// \context         ANY
 /// \threadsafe      FALSE
 /// \reentrant       FALSE
-
 /// \internal
 /// - Return a Result created from the given value.
 /// \endinternal
@@ -246,7 +242,6 @@ constexpr auto Ok(T value) noexcept -> Result<T>
 /// \context         ANY
 /// \threadsafe      FALSE
 /// \reentrant       FALSE
-
 /// \internal
 /// - If the value is true:
 ///   - Return an empty Result.
@@ -272,7 +267,6 @@ inline auto MakeResult(bool value, score::result::Error error) noexcept -> score
 /// \context         ANY
 /// \threadsafe      FALSE
 /// \reentrant       FALSE
-
 /// \internal
 /// - If the value is false:
 ///   - Abort printing the passed message.

@@ -38,7 +38,6 @@ namespace v2
 /// \brief           A parser for a single array, i.e. an array that does not contain arrays as its elements
 /// \details         Handles the OnStartArray & OnEndArray callbacks by itself. Calls OnElement for every element it
 ///                  encounters and Finalize on array end.
-
 class SingleArrayParser : public v2::Parser
 {
   private:
@@ -61,7 +60,6 @@ class SingleArrayParser : public v2::Parser
     SingleArrayParser& operator=(SingleArrayParser&&) = delete;
 
     /// \brief           Default event for the start of arrays
-
     /// \return          kRunning if not in an array, or the error.
     /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if already in an array
@@ -69,7 +67,6 @@ class SingleArrayParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If not inside an array:
     ///   - Take a snapshot of the current state in case it has to be restored because this opening bracket is followed
@@ -93,7 +90,6 @@ class SingleArrayParser : public v2::Parser
     }
 
     /// \brief           Default event for the end of arrays
-
     /// \return          kRunning if in an array, or the error.
     /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if not in an array
@@ -101,7 +97,6 @@ class SingleArrayParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If inside an array:
     ///   - Call the Finalize callback and return its Result.
@@ -118,14 +113,12 @@ class SingleArrayParser : public v2::Parser
     }
 
     /// \brief           Default event for unexpected elements that aborts the parsing
-
     /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if there is no callback registered for the event
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If not inside an array, return an error.
     /// - Restore the last snapshot.
@@ -161,7 +154,6 @@ class SingleArrayParser : public v2::Parser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetIndex() const noexcept -> std::size_t
     {
         return this->index_;
@@ -175,7 +167,6 @@ class SingleArrayParser : public v2::Parser
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     virtual auto OnElement() noexcept -> ParserResult = 0;
 
     /// \brief           Default event if the entire array has been successfully parsed
@@ -187,7 +178,6 @@ class SingleArrayParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto Finalize() noexcept -> Result<score::Blank>
     {
         return ResultBlank{score::Blank{}};

@@ -34,7 +34,6 @@ namespace vajson
 namespace internal
 {
 /// \brief           A parser that only parses a single boolean value
-
 class BoolParser final : public VirtualParser
 {
     /// \brief           Type of function to be executed when bool values are read
@@ -51,7 +50,6 @@ class BoolParser final : public VirtualParser
     /// \pre             Callback does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     BoolParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
     /// \brief           Event for Bools
@@ -62,7 +60,6 @@ class BoolParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Execute the callback with the parsed bool value.
     /// - If the callback succeeds:
@@ -85,7 +82,6 @@ class BoolParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnUnexpectedEvent() noexcept -> ParserResult final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a boolean.");

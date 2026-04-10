@@ -40,7 +40,6 @@ namespace v2
 ///                  derived parser can implement callbacks for all types of elements it expects to appear. If the
 ///                  parser encounters any other type, it calls OnUnexpectedEvent. If this callback is not defined by
 ///                  the derived parser, the default implementation aborts parsing.
-
 class Parser : public internal::CompositionParser<internal::VirtualParser>
 {
   public:

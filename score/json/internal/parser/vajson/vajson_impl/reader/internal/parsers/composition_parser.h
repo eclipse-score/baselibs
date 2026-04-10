@@ -116,7 +116,6 @@ using ArrayCallableReturnsNoResult = std::enable_if_t<!ArrayReturnsResult<F, T>:
 
 /// \brief           A parser that works through composition rather than inheritance
 /// \details         Provides pre-defined parsers for JSON elements.
-
 /// \trace           DSGN-JSON-Reader-Composition-Parser
 template <typename Mixin>
 
@@ -135,7 +134,6 @@ class CompositionParser : public Mixin
     /// \spec
     ///    requires true;
     /// \endspec
-
     explicit CompositionParser(JsonData& doc) noexcept : Mixin(doc), doc_(doc) {}
     /// \brief Delete  copy constructor
     CompositionParser(const CompositionParser&) = delete;
@@ -150,7 +148,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the name of the key as an std::string_view and return void. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -187,7 +184,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the name of the key as an std::string_view and return ResultBlank.
     ///                  The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -214,7 +210,6 @@ class CompositionParser : public Mixin
     auto Key(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R>;
 
     /// \brief           Parses the following key value and checks if it is a specific key
-
     /// \param[in]       key
     ///                  to compare with.
     /// \return          kRunning if the keys are the same.
@@ -244,7 +239,6 @@ class CompositionParser : public Mixin
 
     /// \brief           Parses the following bool value and executes the given callable
     /// \details         The callable must take the bool and return void.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -279,7 +273,6 @@ class CompositionParser : public Mixin
 
     /// \brief           Parses the following bool value and executes the given callable
     /// \details         The callable must take the bool and return ResultBlank.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -307,7 +300,6 @@ class CompositionParser : public Mixin
 
     /// \brief           Parses the following number value and executes the given callable
     /// \details         The callable must take the number of type T and return void.
-
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -344,7 +336,6 @@ class CompositionParser : public Mixin
 
     /// \brief           Parses the following number value and executes the given callable
     /// \details         The callable must take the number of type T and return ResultBlank.
-
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -376,7 +367,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the string as a std::string_view and return void. The provided
     ///                  StringView is only valid until any other method or parser operating on the same document is
     ///                  called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -413,7 +403,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the string as an std::string_view and return ResultBlank. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -440,7 +429,6 @@ class CompositionParser : public Mixin
     auto String(Fn fn) noexcept -> CallableReturnsResult<Fn, std::string_view, R>;
 
     /// \brief           Parses the following string value and checks if it is a specific string
-
     /// \param[in]       str
     ///                  to compare with.
     /// \return          kRunning if the strings are the same.
@@ -470,7 +458,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the current array index as a std::size_t, the current number of type T,
     /// and
     ///                  return void.
-
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -505,7 +492,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the current array index as a std::size_t, the current number of type T,
     /// and
     ///                  return ResultBlank.
-
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -546,7 +532,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the current array index as a std::size_t, the current string as an
     ///                  std::string_view, and return void. The provided StringView is only valid until any other
     ///                  method or parser operating on the same document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -579,7 +564,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the current array index as a std::size_t, the current string as an
     ///                  std::string_view, and return ResultBlank. The provided StringView is only valid until any
     ///                  other method or parser operating on the same document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -617,7 +601,6 @@ class CompositionParser : public Mixin
     /// \brief           Parses the following array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return void.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -649,7 +632,6 @@ class CompositionParser : public Mixin
     /// \brief           Parses the following array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
     ///                  return ResultBlank.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -689,7 +671,6 @@ class CompositionParser : public Mixin
     /// ResultBlank. The
     ///                  provided Span is only valid until any other method or parser operating on the same document is
     ///                  called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -719,7 +700,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return void. The
     /// provided
     ///                  Span is only valid until any other method or parser operating on the same document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -756,7 +736,6 @@ class CompositionParser : public Mixin
     /// \details         The callable must take the current array index as a std::size_t and return void. The callable
     /// must
     ///                  consume all tokens representing the element.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -788,7 +767,6 @@ class CompositionParser : public Mixin
     ///                  callable is expected to have consumed all tokens representing the element if it returns a
     ///                  successful Result. If the callable is unable to consume all tokens it must return an error
     ///                  Result.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -813,7 +791,6 @@ class CompositionParser : public Mixin
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called. The callable must consume all tokens representing the value related to the
     ///                  key.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -864,7 +841,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-
     /// \internal
     /// - Parse the object and execute the callable with every key.
     /// \endinternal

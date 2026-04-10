@@ -30,7 +30,6 @@ class JsonData;
 namespace internal
 {
 /// \brief           Forward declaration for JsonOps
-
 class JsonOps;
 }  // namespace internal
 

@@ -34,7 +34,6 @@ namespace vajson
 namespace internal
 {
 /// \brief           A parser that only parses a single string value
-
 class StringParser : public VirtualParser
 {
     /// \brief           Type of function to be executed when the strings are read
@@ -51,7 +50,6 @@ class StringParser : public VirtualParser
     /// \pre             Callback does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     StringParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
     /// \brief           Event for Strings
@@ -62,7 +60,6 @@ class StringParser : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Execute the callback with the parsed string.
     /// - If the callback succeeds:
@@ -85,7 +82,6 @@ class StringParser : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnUnexpectedEvent() noexcept -> ParserResult final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a string.");

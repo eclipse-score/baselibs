@@ -53,7 +53,6 @@ class OptChar
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     explicit OptChar(std::int64_t val) noexcept : char_{val} {}
 
     /// \brief           Returns true in case EOF was encountered
@@ -61,7 +60,6 @@ class OptChar
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto EofFound() const& noexcept -> bool
     {
         return this->char_ == -1;
@@ -72,7 +70,6 @@ class OptChar
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto HasValue() const& noexcept -> bool
     {
         return !EofFound();
@@ -83,7 +80,6 @@ class OptChar
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto Value() const& noexcept -> char
     {
         AssertCondition(this->char_ != -1, "OptChar::Value: OptChar does not hold a value.");
@@ -115,7 +111,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     explicit JsonOps(JsonData& json_data) noexcept;
 
     /// \brief           Default move constructor
@@ -123,7 +118,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     JsonOps(JsonOps&&) noexcept = default;
 
     /// \brief           Default move assignment
@@ -132,7 +126,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto operator=(JsonOps&&) & noexcept -> JsonOps& = default;
 
     /// \brief           Deleted copy constructor
@@ -145,7 +138,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     ~JsonOps() noexcept = default;
 
     /// \brief           Returns the character at the current position and moves the cursor to the next character
@@ -154,7 +146,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto Take() noexcept -> char;
 
     /// \brief           Tries to take the character at the current position and moves the cursor to the next character
@@ -165,7 +156,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto TryTake() noexcept -> Result<char>;
 
     /// \brief           Moves the cursor from the current position to the next position
@@ -174,7 +164,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto Move() noexcept -> bool;
 
     /// \brief           Gets the current position
@@ -182,7 +171,6 @@ class JsonOps final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto Tell() const noexcept -> Result<std::uint64_t>;
 
     /// \brief           Moves the cursor to the next position if the passed character is equal to the current character
@@ -194,7 +182,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto Skip(char character) noexcept -> bool;
 
     /// \brief           Checks if the next characters are equal to the passed string
@@ -209,7 +196,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<score::Blank>;
 
     /// \brief           Returns if the next characters are equal to the passed string
@@ -222,7 +208,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ReadString(std::string_view string) noexcept -> Result<bool>;
 
     /// \brief           Skips all valid whitespace characters
@@ -232,7 +217,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto SkipWhitespace() noexcept -> bool;
 
     /// \brief           Reads num_to_read characters and executes the action for each span of characters
@@ -288,7 +272,6 @@ class JsonOps final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() const& noexcept -> const JsonData&;
 
   private:
@@ -302,7 +285,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto RewindIf(bool condition, std::size_t num) noexcept -> Result<score::Blank>;
 
     /// \brief           Get direct access to the input stream
@@ -310,7 +292,6 @@ class JsonOps final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetStream() & noexcept -> std::istream&;
 
     /// \brief           Get direct access to the input stream
@@ -318,7 +299,6 @@ class JsonOps final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetStream() const& noexcept -> const std::istream&;
 
     /// \brief           JsonData to operate on

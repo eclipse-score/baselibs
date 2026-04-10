@@ -46,7 +46,6 @@ class LevelValidator
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     explicit LevelValidator(bool object_already_open = false) noexcept : entered_{object_already_open} {}
 
     /// \brief           Tries to enter a structure
@@ -57,7 +56,6 @@ class LevelValidator
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If not inside a structure:
     ///   - Set the signal that a structure has been entered.
@@ -90,7 +88,6 @@ class LevelValidator
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If inside a structure:
     ///   - Set the signal that a structure has been left.
@@ -120,7 +117,6 @@ class LevelValidator
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto IsInside() const noexcept -> bool
     {
         return this->entered_;

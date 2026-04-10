@@ -37,13 +37,11 @@ namespace vajson
 {
 
 /// \brief           A parser that can be used to parse stateful JSON files
-
 /// \trace           DSGN-JSON-Reader-Method-Based-Parser
 class JsonParser final
 {
   public:
     /// \brief           Constructs the parser
-
     /// \param[in]       data
     ///                  The JSON data.
     /// \context         ANY
@@ -58,7 +56,6 @@ class JsonParser final
 
     /// \brief           Gets the current status of the parser
     /// \details         Does not change the internal state of the parser and thus may be called multiple times.
-
     /// \return          The empty Result, or the error that occurred.
     /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if checking for a specific type but the next token is not of that type
@@ -85,7 +82,6 @@ class JsonParser final
     }
 
     /// \brief           Returns a reference to the JSON file
-
     /// \return          A reference to the JSON file.
     /// \context         ANY
     /// \pre             -
@@ -101,7 +97,6 @@ class JsonParser final
     }
 
     /// \brief           Returns a reference to the JSON file
-
     /// \return          A reference to the JSON file.
     /// \context         ANY
     /// \pre             -
@@ -120,7 +115,6 @@ class JsonParser final
     /// \details         The callable must take the name of the key as an std::string_view and return void or
     ///                  ResultBlank. The provided StringView is only valid until any other method or parser operating
     ///                  on the same document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -149,7 +143,6 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is a specific key
-
     /// \param[in]       key
     ///                  to compare with.
     /// \return          The reference to itself.
@@ -192,7 +185,6 @@ class JsonParser final
     auto StartObject() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the end of an object
-
     /// \return          The reference to itself.
     /// \context         ANY
     /// \pre             -
@@ -205,7 +197,6 @@ class JsonParser final
     auto EndObject() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the start of an array
-
     /// \return          The reference to itself.
     /// \context         ANY
     /// \pre             -
@@ -218,7 +209,6 @@ class JsonParser final
     auto StartArray() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the end of an array
-
     /// \return          The reference to itself.
     /// \context         ANY
     /// \pre             -
@@ -232,7 +222,6 @@ class JsonParser final
 
     /// \brief           Checks if the next token is a bool and executes the given callable
     /// \details         The callable must take the bool and return void or ResultBlank.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -263,7 +252,6 @@ class JsonParser final
     /// \details         The callable must take the string as an std::string_view and return void or ResultBlank. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -291,7 +279,6 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is the expected string
-
     /// \param[in]       string
     ///                  to expect.
     /// \return          The reference to itself.
@@ -323,7 +310,6 @@ class JsonParser final
 
     /// \brief           Checks if the next token is a number and executes the given callable
     /// \details         The callable must take the number of template type Num and return void or ResultBlank.
-
     /// \tparam          Num
     ///                  Type of number.
     /// \tparam          Fn
@@ -357,7 +343,6 @@ class JsonParser final
     /// ResultBlank. The
     ///                  provided Span is only valid until any other method or parser operating on the same document is
     ///                  called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -389,7 +374,6 @@ class JsonParser final
     ///                  The callable is expected to have consumed all tokens representing the element if it returns a
     ///                  successful Result or has return type void. If the callable is unable to consume all tokens it
     ///                  must return an error Result.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -422,7 +406,6 @@ class JsonParser final
     /// an
     ///                  std::string_view, and return void or ResultBlank. The provided StringView is only valid
     ///                  until any other method or parser operating on the same document is called.
-
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn

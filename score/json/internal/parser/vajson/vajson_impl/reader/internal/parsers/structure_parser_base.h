@@ -46,7 +46,6 @@ namespace internal
 ///                  StructureParserBase, it doesn't increase object size per virtual function in the base class.
 ///                  When the base class is not a template, the templated derived class does not need multiple vtables
 ///                  for each template instantiation, but can just point to the base class
-
 /// \trace           DSGN-JSON-Reader-Data-Items
 class StructureParserBase
 {
@@ -68,7 +67,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual ~StructureParserBase() noexcept = default;
 
     /// \brief           Default event for Null
@@ -77,7 +75,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnNull() noexcept -> ParserResult = 0;
 
     /// \brief           Default event for Bools
@@ -86,7 +83,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnBool(bool) noexcept -> ParserResult = 0;  // NOLINT(readability/casting)
 
     /// \brief           Default event for Numbers
@@ -95,7 +91,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnNumber(JsonNumber) noexcept -> ParserResult = 0;
     /// \brief           Default event for Strings
     /// \details         The provided StringView is only valid until any other method or parser operating on the same
@@ -105,7 +100,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnString(CStringView) noexcept -> ParserResult = 0;
 
     /// \brief           Default event for Keys
@@ -116,7 +110,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnKey(CStringView) noexcept -> ParserResult = 0;
 
     /// \brief           Default event for the end of objects
@@ -125,7 +118,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnStartObject() noexcept -> ParserResult = 0;
 
     /// \brief           Default event for the start of arrays
@@ -134,7 +126,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnEndObject(std::size_t) noexcept -> ParserResult = 0;
 
     /// \brief           Default event for the end of arrays
@@ -143,7 +134,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     virtual auto OnStartArray() noexcept -> ParserResult = 0;
 
     /// \brief           Default event for binary content
@@ -155,7 +145,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
     /// \endinternal
@@ -258,7 +247,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseString() noexcept -> ParserResult;
 
     /// \brief           Parses an unescaped string value
@@ -271,7 +259,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseUnescapedString(CStringView string) noexcept -> ParserResult;
 
     /// \brief           Parses a JSON string and removes JSON escape characters
@@ -282,7 +269,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ReadJsonString() noexcept -> Result<CStringView>;
 
     /// \brief           Unescapes a single character
@@ -295,7 +281,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     static auto UnescapeChar(char escaped) noexcept -> Result<char>;
 
     /// \brief           Parses the start of an Object
@@ -306,7 +291,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseStartObject() noexcept -> ParserResult;
 
     /// \brief           Parses the end of an Object
@@ -317,7 +301,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseEndObject() noexcept -> ParserResult;
 
     /// \brief           Parses the start of an Array
@@ -328,7 +311,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseStartArray() noexcept -> ParserResult;
 
     /// \brief           Parses the end of an Array
@@ -339,7 +321,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseEndArray() noexcept -> ParserResult;
 
     /// \brief           Parses a comma in a list/object
@@ -350,7 +331,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseComma() noexcept -> ParserResult;
 
     /// \brief           Parses any JSON value
@@ -364,7 +344,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseValue() noexcept -> ParserResult;
 
     /// \brief           Parses a (more or less valid) number
@@ -375,7 +354,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto GetNumber(char first) noexcept -> CStringView;
 };
 

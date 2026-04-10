@@ -34,7 +34,6 @@ namespace vajson
 namespace internal
 {
 /// \brief           A parser that parses key value pairs
-
 class ObjectParser final : public v2::SingleObjectParser
 {
     /// \brief           Type of function to be executed when the objects are read
@@ -53,7 +52,6 @@ class ObjectParser final : public v2::SingleObjectParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     ObjectParser(JsonData& doc, Fn&& fn, bool object_already_open = false) noexcept
         : v2::SingleObjectParser{doc, object_already_open}, fn_{std::move(fn)}
     {
@@ -67,7 +65,6 @@ class ObjectParser final : public v2::SingleObjectParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - Execute the callback with the current key.
     /// - If the callback succeeds:

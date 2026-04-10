@@ -52,7 +52,6 @@ class NumberParser final : public VirtualParser
     /// \pre             Callback does not throw exceptions.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     NumberParser(JsonData& doc, Fn fn) noexcept : VirtualParser{doc}, fn_{std::move(fn)} {}
 
     /// \brief           Event for Numbers
@@ -65,7 +64,6 @@ class NumberParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     /// \internal
     /// - If the JsonNumber could be successfully converted to a number of type T:
     ///   - Execute the callback with the number.
@@ -89,7 +87,6 @@ class NumberParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto OnUnexpectedEvent() noexcept -> ParserResult final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a number.");
