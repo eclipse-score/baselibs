@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.3.1", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.4.0", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -91,8 +91,8 @@ python.toolchain(
 )
 
 bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
-bazel_dep(name = "buildifier_prebuilt", version = "8.2.0.2", dev_dependency = True)
-bazel_dep(name = "aspect_rules_lint", version = "1.5.3", dev_dependency = True)
+bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
+bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
 
@@ -166,4 +166,4 @@ bazel_dep(name = "bazel_skylib", version = "1.8.2")
 #
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "0.1.1")
+bazel_dep(name = "score_bazel_platforms", version = "0.1.2")
