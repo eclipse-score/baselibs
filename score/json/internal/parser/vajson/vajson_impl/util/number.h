@@ -319,7 +319,7 @@ class JsonNumber final
         internal::util::NumberParser parser{};
         internal::SignedLL const result{parser.LongLong(this->view_)};
 
-        return this->ExtractIfSuccessful<Integer>(result, parser.End());
+        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
 
     /// \brief           Tries to convert the number to an unsigned integer
@@ -347,7 +347,7 @@ class JsonNumber final
         internal::util::NumberParser parser{};
         internal::UnsignedLL const result{parser.UnsignedLongLong(this->view_)};
 
-        return this->ExtractIfSuccessful<Integer>(result, parser.End());
+        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
 
     /// \brief           Tries to convert the number to a floating point type
@@ -373,7 +373,7 @@ class JsonNumber final
         internal::util::NumberParser parser{};
         const double conversion_result{parser.Double(this->view_)};
 
-        return this->ExtractIfSuccessful<Float>(conversion_result, parser.End());
+        return this->ExtractIfFloatingSuccessful<Float>(conversion_result, parser.End());
     }
 
     /// \brief           Converts the number to a JsonNumber
@@ -470,33 +470,36 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief           Checks if the parse has been successful
+    /// \brief           Checks if the parsed token format is valid
     /// \param[in]       end
     ///                  The end-pointer that is used to verify the parse.
-    /// \return          True if the number was successfully parsed, otherwise false.
+    /// \return          True if parsing consumed the whole token and does not end with '.'.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
 
-    /// \internal
-    /// - If no ERANGE error occurred and the end-pointer has been set to past-the-last character and the last character
-    /// is
-    ///   no '.' character:
-    ///   - Return true.
-    /// - Otherwise:
-    ///   - Return false.
-    /// \endinternal
-    auto ParseSuccessful(const char* end) const noexcept -> bool
+    auto ParseFormatSuccessful(const char* end) const noexcept -> bool
     {
         // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
 
-        return ((errno != ERANGE) && (end == this->view_.cend()) &&
-
-                (this->view_.back() != '.'));
+        return ((end == this->view_.cend()) && (this->view_.back() != '.'));
     }
 
-    /// \brief           Converts the passed number to a smaller number type if still valid
+    auto ParseIntegerSuccessful(const char* end) const noexcept -> bool
+    {
+        return ((errno != ERANGE) && this->ParseFormatSuccessful(end));
+    }
+
+    template <typename Float>
+    auto ParseFloatingSuccessful(const char* end, const double conversion_result) const noexcept -> bool
+    {
+        // Some libc implementations set ERANGE for near-limit finite values; accept those when representable.
+        return (this->ParseFormatSuccessful(end) && std::isfinite(conversion_result) &&
+                JsonNumber::Cast<Float>(conversion_result).has_value());
+    }
+
+    /// \brief           Converts the parsed integer to target type when parsing was successful
     /// \tparam          TargetType
     ///                  Type to convert to.
     /// \tparam          SourceType
@@ -518,11 +521,24 @@ class JsonNumber final
     ///   - Return an empty Optional.
     /// \endinternal
     template <typename TargetType, typename SourceType>
-    auto ExtractIfSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
+    auto ExtractIfIntegerSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
     {
         Optional<TargetType> opt{};
 
-        if (this->ParseSuccessful(end))
+        if (this->ParseIntegerSuccessful(end))
+        {
+            opt = JsonNumber::Cast<TargetType>(num);
+        }
+
+        return opt;
+    }
+
+    template <typename TargetType>
+    auto ExtractIfFloatingSuccessful(double num, const char* end) const noexcept -> Optional<TargetType>
+    {
+        Optional<TargetType> opt{};
+
+        if (this->ParseFloatingSuccessful<TargetType>(end, num))
         {
             opt = JsonNumber::Cast<TargetType>(num);
         }

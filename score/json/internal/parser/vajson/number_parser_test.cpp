@@ -222,6 +222,30 @@ TEST(Number, FloatingPointWithoutDecimalPoint)
     EXPECT_EQ(ParseNumberAs<double>("18446744073709551615").value_or(-999), 18446744073709551615.0);
 }
 
+TEST(Number, NearDoubleLimitsIsParsable)
+{
+    RecordProperty("Verifies", "5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Near-limit finite doubles are accepted across architectures.");
+    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+
+    EXPECT_TRUE(ParseNumberAs<double>("2.225073858507201383090e-308").has_value());
+    EXPECT_TRUE(ParseNumberAs<double>("1.797693134862315708145e+308").has_value());
+}
+
+TEST(Number, FloatingPointOverflowIsRejected)
+{
+    RecordProperty("Verifies", "5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Overflowing floating-point values are rejected.");
+    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+
+    EXPECT_FALSE(ParseNumberAs<double>("1e309").has_value());
+    EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
+}
+
 INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, VajsonParser, /*unused*/);
 }  // namespace
 }  // namespace json
