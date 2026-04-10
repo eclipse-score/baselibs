@@ -183,19 +183,6 @@ class VirtualParser
 
     virtual auto OnString(StringView) noexcept -> ParserResult;
 
-    /// \brief           Forwarding function to accept binary strings
-    /// \param[in]       view
-    ///                  Parsed binary string.
-    /// \return          The result of the OnString callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto OnBinaryString(StringView view) noexcept -> ParserResult
-    {
-
-        return this->OnString(view);
-    }
-
     /// \brief           Default event for Keys
     /// \details         The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
@@ -205,19 +192,6 @@ class VirtualParser
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     virtual auto OnKey(StringView) noexcept -> ParserResult;
-
-    /// \brief           Forwarding function to accept binary keys
-    /// \param[in]       view
-    ///                  Parsed binary key.
-    /// \return          The result of the OnKey callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto OnBinaryKey(StringView view) noexcept -> ParserResult
-    {
-
-        return this->OnKey(view);
-    }
 
     /// \brief           Default event for the start of objects
     /// \return          The result of the OnUnexpectedEvent callback or its error.
@@ -250,25 +224,6 @@ class VirtualParser
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     virtual auto OnEndArray(std::size_t) noexcept -> ParserResult;
-
-    /// \brief           Default event for binary content
-    /// \details         The provided Span is only valid until any other method or parser operating on the same document
-    /// is
-    ///                  called.
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    /// \internal
-    /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
-    /// \endinternal
-    virtual auto OnBinary(Bytes) noexcept -> ParserResult
-    {
-
-        return this->OnUnexpectedEvent();
-    }
 
     /// \brief           Default event for default callbacks that aborts parsing
     /// \details         This callback is called by all default event callbacks which are not overridden by the derived

@@ -29,7 +29,6 @@ cc_library(
         "reader/internal/json_ops.h",
         "reader/internal/level_validator.h",
         "reader/internal/parsers/array_parser.h",
-        "reader/internal/parsers/binary_parser.h",
         "reader/internal/parsers/bool_parser.h",
         "reader/internal/parsers/composition_parser.h",
         "reader/internal/parsers/composition_parser_impl.h",

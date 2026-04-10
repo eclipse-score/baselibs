@@ -99,24 +99,6 @@ auto StructureParser<Implementer>::OnEndArray(std::size_t v) noexcept -> ParserR
 
     return ParserResult(this->implementer_.get().GetChild().OnEndArray(v));
 }
-template <typename Implementer>
-auto StructureParser<Implementer>::OnBinaryKey(StringView v) noexcept -> ParserResult
-{
-
-    return ParserResult(this->implementer_.get().GetChild().OnBinaryKey(v));
-}
-template <typename Implementer>
-auto StructureParser<Implementer>::OnBinaryString(StringView v) noexcept -> ParserResult
-{
-
-    return ParserResult(this->implementer_.get().GetChild().OnBinaryString(v));
-}
-template <typename Implementer>
-auto StructureParser<Implementer>::OnBinary(score::cpp::span<const char> v) noexcept -> ParserResult
-{
-
-    return ParserResult(this->implementer_.get().GetChild().OnBinary(v));
-}
 
 template <typename Implementer>
 StructureParser<Implementer>::StructureParser(Implementer& implementer, JsonData& doc) noexcept

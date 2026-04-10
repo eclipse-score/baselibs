@@ -161,50 +161,18 @@ class StructureParserBase
     /// \endinternal
     virtual auto OnEndArray(std::size_t) noexcept -> ParserResult = 0;
 
-    /// \brief           Forwarding function to accept binary strings
-    /// \return          The result of the OnString callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-
-    virtual auto OnBinaryKey(StringView) noexcept -> ParserResult = 0;
-
-    /// \brief           Forwarding function to accept binary strings
-    /// \return          The result of the OnString callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-
-    virtual auto OnBinaryString(StringView) noexcept -> ParserResult = 0;
-
-    /// \brief           Default event for binary content
-    /// \details         The provided Span is only valid until any other method or parser operating on the same document
-    /// is
-    ///                  called.
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    /// \internal
-    /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
-    /// \endinternal
-    virtual auto OnBinary(score::cpp::span<const char>) noexcept -> ParserResult = 0;
-
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     virtual auto GetJsonOps() & noexcept -> JsonOps& = 0;
+
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file const.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     virtual auto GetJsonOps() const& noexcept -> const JsonOps& = 0;
 
     /// \brief           Returns the Json structure state
@@ -212,7 +180,6 @@ class StructureParserBase
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetState() noexcept -> DepthCounter&;
 
     /// \brief           Returns a reference to the Json file
@@ -220,7 +187,6 @@ class StructureParserBase
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() noexcept -> JsonData&;
 
     /// \brief           Returns a reference to the Json file
@@ -228,7 +194,6 @@ class StructureParserBase
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-
     auto GetJsonDocument() const noexcept -> const JsonData&;
 
     /// \brief           Parses the file until the current parser is finished
@@ -241,7 +206,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto Parse() noexcept -> Result<score::Blank>;
 
     /// \brief           Parses a "null" value
@@ -252,7 +216,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseNull() noexcept -> ParserResult;
 
     /// \brief           Parses a "true" value
@@ -263,7 +226,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseTrue() noexcept -> ParserResult;
 
     /// \brief           Parses a "false" value
@@ -274,7 +236,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseFalse() noexcept -> ParserResult;
 
     /// \brief           Parses a number value
@@ -287,7 +248,6 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-
     auto ParseNumber(char cur) noexcept -> ParserResult;
 
     /// \brief           Parses a string value
@@ -392,59 +352,6 @@ class StructureParserBase
     /// \reentrant       FALSE
 
     auto ParseComma() noexcept -> ParserResult;
-
-    /// \brief           Parses the length tag of a value
-    /// \return          A Result containing the length, or an error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    auto ParseLength() noexcept -> Result<std::uint32_t>;
-
-    /// \brief           Parses binary content
-    /// \param[in]       callback
-    ///                  to execute on the binary content.
-    /// \return          The Result of the callback, or an error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    auto ReadBinary(const score::cpp::move_only_function<ParserResult(StringView)>& callback) noexcept -> ParserResult;
-
-    /// \brief           Parses a binary key
-    /// \return          The Result of the implementer callback, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if no key is allowed at this point
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    auto ParseBinaryKey() noexcept -> ParserResult;
-
-    /// \brief           Parses a binary string
-    /// \return          The Result of the implementer callback, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if no value is allowed at this point
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    auto ParseBinaryString() noexcept -> ParserResult;
-
-    /// \brief           Parses a binary value
-    /// \return          The Result of the implementer callback, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if no value is allowed at this point
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    auto ParseBinaryValue() noexcept -> ParserResult;
 
     /// \brief           Parses any JSON value
     /// \return          kRunning if the parser has not finished yet, kFinished if the end of the file is reached, or an

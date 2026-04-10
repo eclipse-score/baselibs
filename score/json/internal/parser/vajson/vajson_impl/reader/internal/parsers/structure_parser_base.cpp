@@ -390,119 +390,6 @@ auto StructureParserBase::ParseComma() noexcept -> ParserResult
 
 /*!
  * \internal
- * - Read the next four bytes.
- * - If necessary, convert the value from network to platform endianness.
- * \endinternal
- */
-auto StructureParserBase::ParseLength() noexcept -> Result<std::uint32_t>
-{
-    constexpr std::uint8_t kPrefixSize{4};
-    std::uint32_t result{0};
-    // clang-format off
-
-  return this->GetJsonOps()
-
-      .ReadExactly(kPrefixSize,
-                   [&result](StringView view) noexcept {
-                     static_cast<void>(std::memcpy(&result, view.data(), sizeof(result)));
-                       result = ((result >> 24U) & 0x000000FFU) | /*!< byte 3 to byte 0 */
-                                ((result >> 8U) & 0x0000FF00U) |  /*!< byte 2 to byte 1 */
-                                ((result << 8U) & 0x00FF0000U) |  /*!< byte 1 to byte 2 */
-                                ((result << 24U) & 0xFF000000U);  /*!< byte 0 to byte 3 */
-                   })
-      .transform([&result](score::Blank) noexcept { return result; });
-    // clang-format on
-}
-
-/*!
- * \internal
- * - Parse the length of the binary content.
- * - Read the binary content.
- * - Execute the callback and return its result.
- * \endinternal
- */
-auto StructureParserBase::ReadBinary(const score::cpp::move_only_function<ParserResult(StringView)>& callback) noexcept
-    -> ParserResult
-{
-    return this->ParseLength().and_then([this, &callback](std::uint32_t length) noexcept {
-        // Will always be overwritten.
-
-        ParserResult result{MakeErrorResult<ParserState>(JsonErrc::kInvalidJson)};
-        // clang-format off
-
-    return And(this->GetJsonOps()
-
-        .ReadExactly(length,
-
-                     [&callback, &result](StringView view) noexcept {
-
-                       result = callback(view);
-                     }), result);
-        // clang-format on
-    });
-}
-
-/*!
- * \internal
- * - Add a key to the stack.
- * - If the key could be added:
- *   - Read the binary content.
- *   - Store the key.
- *   - Pass the stored key to the OnBinaryKey callback.
- * \endinternal
- */
-auto StructureParserBase::ParseBinaryKey() noexcept -> ParserResult
-{
-    return this->GetState().AddKey().and_then([this](score::Blank) noexcept {
-        return this->ReadBinary([this](StringView buf) noexcept {
-            this->GetJsonDocument().StoreCurrentKey(buf);
-            StringView const view{this->GetJsonDocument().GetCurrentKey()};
-
-            return this->OnBinaryKey(view);
-        });
-    });
-}
-
-/*!
- * \internal
- * - Add a value to the stack.
- * - If the value could be added:
- *   - Read the binary content.
- *   - Pass it to the OnBinaryString callback.
- * \endinternal
- */
-auto StructureParserBase::ParseBinaryString() noexcept -> ParserResult
-{
-    return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
-        return this->ReadBinary(
-
-            [this](StringView buf) noexcept {
-                return this->OnBinaryString(buf);
-            });
-    });
-}
-
-/*!
- * \internal
- * - Add a value to the stack.
- * - If the value could be added:
- *   - Read the binary content.
- *   - Pass it to the OnBinary callback.
- * \endinternal
- */
-auto StructureParserBase::ParseBinaryValue() noexcept -> ParserResult
-{
-    return this->GetState().AddValue().and_then([this](score::Blank) noexcept {
-        return this->ReadBinary([this](StringView buf) noexcept {
-            score::cpp::span<char const> const view{buf.data(), buf.size()};
-
-            return this->OnBinary(view);
-        });
-    });
-}
-
-/*!
- * \internal
  * - Skip all whitespace characters.
  * - If the stream has ended and the ItemStack is empty:
  *   - Return kFinished.
@@ -557,15 +444,6 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult
                 break;
             case std::char_traits<char>::to_int_type(','):
                 result = this->ParseComma();
-                break;
-            case std::char_traits<char>::to_int_type('b'):
-                result = this->ParseBinaryValue();
-                break;
-            case std::char_traits<char>::to_int_type('k'):
-                result = this->ParseBinaryKey();
-                break;
-            case std::char_traits<char>::to_int_type('s'):
-                result = this->ParseBinaryString();
                 break;
             case std::char_traits<char>::to_int_type('-'):
             case std::char_traits<char>::to_int_type('0'):

@@ -23,7 +23,6 @@
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/composition_parser.h"
 
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/array_parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/binary_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/bool_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/key_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/number_parser.h"

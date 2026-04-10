@@ -147,37 +147,6 @@ class StructureParser : public StructureParserBase
 
     auto OnEndArray(std::size_t) noexcept -> ParserResult override;
 
-    /// \brief           Forwarding function to accept binary strings
-    /// \return          The result of the OnString callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-
-    auto OnBinaryKey(StringView) noexcept -> ParserResult override;
-
-    /// \brief           Forwarding function to accept binary strings
-    /// \return          The result of the OnString callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-
-    auto OnBinaryString(StringView) noexcept -> ParserResult override;
-
-    /// \brief           Default event for binary content
-    /// \details         The provided Span is only valid until any other method or parser operating on the same document
-    /// is
-    ///                  called.
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-
-    /// \internal
-    /// - Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result.
-    /// \endinternal
-    auto OnBinary(score::cpp::span<const char>) noexcept -> ParserResult override;
-
     /// \brief           Constructs a StructureParser
     /// \param[in]       implementer
     ///                  The implementer for this parser.
