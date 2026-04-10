@@ -32,7 +32,7 @@ The following platforms are supported using the [bazel_cpp_toolchains](https://g
 Performed Verification
 ----------------------
 - Build on all supported platforms
-- Unit test execution on `x86_64-unknown-linux-gnu` and `aarch64-unknown-linux-gnu` with QEMU user-mode emulation
+- Unit test execution on all supported platforms (some test failures are expected on AArch64 and QNX targets).
 - Address and undefined behavior sanitized unit test execution
 - Leak sanitized unit test execution
 
