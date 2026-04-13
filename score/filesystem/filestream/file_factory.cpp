@@ -151,9 +151,9 @@ inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
     return gid;
 }
 
-ResultBlank AdjustOwnership(const Path& temp_path,
-                            const details::IdentityMetadata& metadata,
-                            const AtomicUpdateOwnershipFlags ownership_flag)
+Result<void> AdjustOwnership(const Path& temp_path,
+                             const details::IdentityMetadata& metadata,
+                             const AtomicUpdateOwnershipFlags ownership_flag)
 {
     const uid_t uid = ExtractUid(metadata, ownership_flag);
     const gid_t gid = ExtractGid(metadata, ownership_flag);

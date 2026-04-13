@@ -126,7 +126,7 @@ class InterruptiblePromiseTest<void> : public InterruptiblePromiseTestBase<void>
         return promise.SetValue();
     }
 
-    void ExpectCorrectValue(const score::ResultBlank& actual_value_expected) const noexcept
+    void ExpectCorrectValue(const score::Result<void>& actual_value_expected) const noexcept
     {
         EXPECT_TRUE(actual_value_expected.has_value());
     }

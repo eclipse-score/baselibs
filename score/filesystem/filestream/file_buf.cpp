@@ -20,7 +20,7 @@
 namespace score::filesystem::details
 {
 
-ResultBlank StdioFileBuf::Close()
+Result<void> StdioFileBuf::Close()
 {
     if (!is_open())
     {
@@ -48,7 +48,7 @@ AtomicFileBuf::~AtomicFileBuf()
     }
 }
 
-ResultBlank AtomicFileBuf::Close()
+Result<void> AtomicFileBuf::Close()
 {
     if (!is_open())
     {

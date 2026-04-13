@@ -36,36 +36,36 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     /// \param path The path to file
     /// \param group_name Name of the group
     /// \details Also changes the owner of the file to the real user.
-    virtual ResultBlank ChangeGroup(const Path& path, const std::string& group_name) const noexcept = 0;
+    virtual Result<void> ChangeGroup(const Path& path, const std::string& group_name) const noexcept = 0;
 
     /// \brief Changes group ownership of the file to group_id.
     /// \param path The path to file
     /// \param group_id Id of the group
     /// \details Also changes the owner of the file to the real user.
-    virtual ResultBlank ChangeGroup(const Path& path, const gid_t group_id) const noexcept = 0;
+    virtual Result<void> ChangeGroup(const Path& path, const gid_t group_id) const noexcept = 0;
 
     /// \brief Check if filesystem is corrupted
     /// \param   partition   device to check (e.g. /dev/mmcblk0p1)
     /// \return  true        if not corrupted
     ///          false       if corrupted
-    virtual ResultBlank CheckFileSystem(const Path& partition) const noexcept = 0;
+    virtual Result<void> CheckFileSystem(const Path& partition) const noexcept = 0;
 
     /// \brief Do automatic filesystem repair
     /// \param   partition   device to repair (e.g. /dev/mmcblk0p1)
-    /// @return Returns either success @ref ResultBlank, or error @ref ErrorCode
-    virtual ResultBlank RepairFileSystem(const Path& partition) const noexcept = 0;
+    /// @return Returns either success @ref Result<void>, or error @ref ErrorCode
+    virtual Result<void> RepairFileSystem(const Path& partition) const noexcept = 0;
 
     /// \brief Creates the directory p as if by POSIX mkdir() with a second argument of perms.
     /// The parent directory must already exist.
     /// If the function fails because p resolves to an existing directory, no error is reported.
     /// Otherwise on failure an error is reported.
     /// \details If the perms parameter is not required then use IStandardFilesystem::CreateDirectory.
-    virtual ResultBlank CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept = 0;
+    virtual Result<void> CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept = 0;
 
     /// \brief Executes CreateDirectory() for every element of p that does not already exist.
     /// If p already exists, the function does nothing (this condition is not treated as an error).
     /// \details If the perms parameter is not required then use IStandardFilesystem::CreateDirectories.
-    virtual ResultBlank CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept = 0;
+    virtual Result<void> CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept = 0;
 
     /// \brief Returns an iostream to a file with a unique filename ending opened with the specified mode.
     virtual Result<std::pair<std::unique_ptr<std::iostream>, Path>> OpenUniqueFile(
@@ -82,7 +82,7 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     ///  \param   partition   device to format (e.g. /dev/mmcblk0p1)
     ///  \return  true        if succeeded
     ///           false       if failed
-    virtual ResultBlank FormatPartition(const Path& partition) const noexcept = 0;
+    virtual Result<void> FormatPartition(const Path& partition) const noexcept = 0;
 
     ///  \brief Check if device filesystem is QNX compatible
     ///  \param   partition   device to check (e.g. /dev/mmcblk0p1)
@@ -93,7 +93,7 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     /// \brief Synchronizes directory entries (filenames, inodes, etc.).
     /// Can be used to ensure that a newly created file entry is fully synchronized with disk
     /// \note Does not synchronize file contents. Use other ways to synchronize file content.
-    virtual ResultBlank SyncDirectory(const Path& dirname) const noexcept = 0;
+    virtual Result<void> SyncDirectory(const Path& dirname) const noexcept = 0;
 
     /// \brief Verifies if given files identified by @path ownership permission is set to @group_name
     /// \param path The path to file

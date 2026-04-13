@@ -25,17 +25,17 @@ SigEventQnxImpl::SigEventQnxImpl(std::unique_ptr<SigEvent> signal_event)
 {
 }
 
-ResultBlank SigEventQnxImpl::SetNotificationType(const NotificationType notification_type)
+Result<void> SigEventQnxImpl::SetNotificationType(const NotificationType notification_type)
 {
     return signal_event_->SetNotificationType(notification_type);
 }
 
-ResultBlank SigEventQnxImpl::SetSignalNumber(const std::int32_t signal_number)
+Result<void> SigEventQnxImpl::SetSignalNumber(const std::int32_t signal_number)
 {
     return signal_event_->SetSignalNumber(signal_number);
 }
 
-ResultBlank SigEventQnxImpl::SetSignalEventValue(const std::variant<std::int32_t, void*> signal_event_value)
+Result<void> SigEventQnxImpl::SetSignalEventValue(const std::variant<std::int32_t, void*> signal_event_value)
 {
     const auto& raw_sigevent = signal_event_->GetSigevent();
     // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
@@ -50,12 +50,12 @@ ResultBlank SigEventQnxImpl::SetSignalEventValue(const std::variant<std::int32_t
     return signal_event_->SetSignalEventValue(signal_event_value);
 }
 
-ResultBlank SigEventQnxImpl::SetThreadCallback(const SigValCallback callback)
+Result<void> SigEventQnxImpl::SetThreadCallback(const SigValCallback callback)
 {
     return signal_event_->SetThreadCallback(callback);
 }
 
-ResultBlank SigEventQnxImpl::SetThreadAttributes(pthread_attr_t& attr)
+Result<void> SigEventQnxImpl::SetThreadAttributes(pthread_attr_t& attr)
 {
     return signal_event_->SetThreadAttributes(attr);
 }

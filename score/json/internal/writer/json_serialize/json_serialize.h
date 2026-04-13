@@ -39,14 +39,14 @@ class JsonSerialize final
     JsonSerialize& operator=(JsonSerialize&& other) = delete;
 
     template <typename T>
-    score::ResultBlank operator<<(const T& json_data)
+    score::Result<void> operator<<(const T& json_data)
     {
-        ResultBlank result{MakeUnexpected(Error::kWrongType)};
+        Result<void> result{MakeUnexpected(Error::kWrongType)};
         if (SerializeType(json_data,
                           static_cast<std::uint16_t>(0)))  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable.
                                                            // Branch excluded from coverage report. See comment below)
         {
-            result = ResultBlank{};
+            result = Result<void>{};
         }
         // Never happens because SerializeType always returns true
         return result; /* LCOV_EXCL_LINE */

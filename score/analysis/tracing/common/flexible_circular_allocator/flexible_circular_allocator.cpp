@@ -134,7 +134,7 @@ score::Result<void*> FlexibleCircularAllocator::Allocate(const std::size_t size,
     return allocated_ptr;
 }
 // clang-format on
-ResultBlank FlexibleCircularAllocator::Deallocate(void* const pointer, const std::size_t)
+Result<void> FlexibleCircularAllocator::Deallocate(void* const pointer, const std::size_t)
 {
     std::lock_guard<std::mutex> guard(mutex_);
     // remove memory block from allocated_blocks and add it to free_blocks

@@ -37,7 +37,7 @@ class ITraceLibrary
                                                                const std::string& shm_object_path) = 0;
     virtual RegisterSharedMemoryObjectResult RegisterShmObject(const TraceClientId trace_client_id,
                                                                int shm_object_fd) = 0;
-    virtual ResultBlank UnregisterShmObject(const TraceClientId trace_client_id, const ShmObjectHandle handle) = 0;
+    virtual Result<void> UnregisterShmObject(const TraceClientId trace_client_id, const ShmObjectHandle handle) = 0;
     virtual RegisterTraceDoneCallBackResult RegisterTraceDoneCB(const TraceClientId trace_client_id,
                                                                 TraceDoneCallBackType trace_done_callback) = 0;
     virtual TraceResult Trace(const TraceClientId trace_client_id,

@@ -25,11 +25,11 @@ class SigEventQnxMock : public SigEventQnx
     ~SigEventQnxMock() override = default;
 
     // Mock generic SigEvent functionality
-    MOCK_METHOD(ResultBlank, SetNotificationType, (const NotificationType), (override));
-    MOCK_METHOD(ResultBlank, SetSignalNumber, (const std::int32_t), (override));
-    MOCK_METHOD(ResultBlank, SetSignalEventValue, ((const std::variant<int, void*>)), (override));
-    MOCK_METHOD(ResultBlank, SetThreadCallback, (const SigValCallback), (override));
-    MOCK_METHOD(ResultBlank, SetThreadAttributes, (pthread_attr_t&), (override));
+    MOCK_METHOD(Result<void>, SetNotificationType, (const NotificationType), (override));
+    MOCK_METHOD(Result<void>, SetSignalNumber, (const std::int32_t), (override));
+    MOCK_METHOD(Result<void>, SetSignalEventValue, ((const std::variant<int, void*>)), (override));
+    MOCK_METHOD(Result<void>, SetThreadCallback, (const SigValCallback), (override));
+    MOCK_METHOD(Result<void>, SetThreadAttributes, (pthread_attr_t&), (override));
     MOCK_METHOD((const sigevent&), GetSigevent, (), (const, override));
     MOCK_METHOD(void, ModifySigevent, (const SigeventModifier&), (override));
     MOCK_METHOD(void, Reset, (), (override));

@@ -88,7 +88,7 @@ class "InterruptibleState<typename Value&>" as InterruptibleStateRef {
 class "InterruptibleState<void>" as InterruptibleStateVoid {
   --
   + SetError(error: score::result::Error) noexcept: void
-  + GetValue() noexcept: score::ResultBlank&
+  + GetValue() noexcept: score::Result<void>&
 }
 }
 
@@ -134,7 +134,7 @@ class "InterruptibleFuture<void>" as InterruptibleFutureVoid {
   + InterruptibleFuture(InterruptibleFuture<void>&& other) noexcept
   + operator=(InterruptibleFuture<void>&&) noexcept: InterruptibleFuture&
   + InterruptibleFuture(state_ptr: std::shared_ptr<InterruptibleState<void>>)
-  + Get(score::cpp::stop_token const& stop_token) noexcept: score::ResultBlank
+  + Get(score::cpp::stop_token const& stop_token) noexcept: score::Result<void>
   + Share(): InterruptibleSharedFuture<void>
 }
 }
@@ -167,7 +167,7 @@ class "InterruptibleSharedFuture<void>" as InterruptibleSharedFutureVoid {
   + InterruptibleFuture(InterruptibleFuture<void>&& other) noexcept
   + operator=(InterruptibleFuture<void>&&) noexcept: InterruptibleFuture&
   + InterruptibleFuture(state_ptr: std::shared_ptr<InterruptibleState<void>>)
-  + Get(score::cpp::stop_token const& stop_token) noexcept: score::ResultBlank
+  + Get(score::cpp::stop_token const& stop_token) noexcept: score::Result<void>
 }
 }
 

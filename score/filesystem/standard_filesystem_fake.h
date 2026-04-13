@@ -47,7 +47,7 @@ class StandardFilesystemFake final : public StandardFilesystemMock, public IStri
 
     /// @brief Creates a regular file using the specified path and permissions. The parent folder should exist.
     /// @note If there is no error, returns an empty result, otherwise returns the error details.
-    ResultBlank CreateRegularFile(const Path& path, const Perms permissions) const noexcept;
+    Result<void> CreateRegularFile(const Path& path, const Perms permissions) const noexcept;
 
     /// @brief Initializes an empty root folder.
     void ResetRootDirectory() noexcept;
@@ -102,8 +102,8 @@ class StandardFilesystemFake final : public StandardFilesystemMock, public IStri
         Result<std::shared_ptr<Entry>> Create(const std::string& name,
                                               const FileType file_type,
                                               const Perms permissions) noexcept;
-        ResultBlank AddHardLink(const std::string& name, const std::shared_ptr<Entry>& entry) noexcept;
-        ResultBlank Erase(const std::string& name) noexcept;
+        Result<void> AddHardLink(const std::string& name, const std::shared_ptr<Entry>& entry) noexcept;
+        Result<void> Erase(const std::string& name) noexcept;
         bool Empty() const noexcept;
         std::list<std::string> FileList() const noexcept;
 
@@ -116,25 +116,25 @@ class StandardFilesystemFake final : public StandardFilesystemMock, public IStri
                                                const FileType file_type,
                                                const Perms permissions) const noexcept;
     Result<std::shared_ptr<Entry>> FindEntry(const Path& path) const noexcept;
-    ResultBlank CopyFileInternal(const Path& source, const Path& destination) const noexcept;
+    Result<void> CopyFileInternal(const Path& source, const Path& destination) const noexcept;
 
     // fake methods
     Result<Path> FakeAbsolute(const Path& path) const noexcept;
     // Result<Path> FakeCanonical(const Path& path) const noexcept; // Ticket-55932
     Result<bool> FakeExists(const Path& path) const noexcept;
-    ResultBlank FakeCreateDirectory(const Path& path) const noexcept;
-    ResultBlank FakeCreateDirectories(const Path& path) const noexcept;
+    Result<void> FakeCreateDirectory(const Path& path) const noexcept;
+    Result<void> FakeCreateDirectories(const Path& path) const noexcept;
     Result<FileTime> FakeLastWriteTime(const Path& path) const noexcept;
-    ResultBlank FakeCopyFile(const Path& from, const Path& dest, const CopyOptions copy_option) const noexcept;
-    ResultBlank FakeRemove(const Path& path) const noexcept;
-    ResultBlank FakeRemoveAll(const Path& path) const noexcept;
+    Result<void> FakeCopyFile(const Path& from, const Path& dest, const CopyOptions copy_option) const noexcept;
+    Result<void> FakeRemove(const Path& path) const noexcept;
+    Result<void> FakeRemoveAll(const Path& path) const noexcept;
     Result<FileStatus> FakeStatus(const Path& path) const noexcept;
-    ResultBlank FakePermissions(const Path& path, const Perms perms, const PermOptions options) const noexcept;
+    Result<void> FakePermissions(const Path& path, const Perms perms, const PermOptions options) const noexcept;
     Result<Path> FakeWeaklyCanonical(const Path& path) const noexcept;
     Result<Path> FakeCurrentPath() const noexcept;
-    ResultBlank FakeSetCurrentPath(const Path& path) noexcept;
-    ResultBlank FakeCreateHardLink(const Path& oldpath, const Path& newpath) noexcept;
-    // ResultBlank FakeCreateSymlink(const Path& target, const Path& linkpath) const noexcept; // Ticket-55932
+    Result<void> FakeSetCurrentPath(const Path& path) noexcept;
+    Result<void> FakeCreateHardLink(const Path& oldpath, const Path& newpath) noexcept;
+    // Result<void> FakeCreateSymlink(const Path& target, const Path& linkpath) const noexcept; // Ticket-55932
     Result<uint64_t> FakeHardLinkCount(const Path& path) noexcept;
     Result<bool> FakeIsDirectory(const Path& path) const noexcept;
     Result<bool> FakeIsRegularFile(const Path& path) const noexcept;

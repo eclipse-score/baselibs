@@ -33,14 +33,14 @@ bool score::concurrency::InterruptibleState<void>::SetError(score::result::Error
 
     // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
     // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-    new (&value_) score::ResultBlank{MakeUnexpected<score::Blank>(error)};
+    new (&value_) score::Result<void>{MakeUnexpected<void>(error)};
 
     MakeReady();
     TriggerContinuations();
     return true;
 }
 
-score::ResultBlank& score::concurrency::InterruptibleState<void>::GetValue() noexcept
+score::Result<void>& score::concurrency::InterruptibleState<void>::GetValue() noexcept
 {
     // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class."

@@ -69,17 +69,17 @@ class JsonWriter final : public IJsonWriter
     JsonWriter& operator=(const JsonWriter&) = delete;
     JsonWriter& operator=(JsonWriter&&) noexcept = delete;
     ~JsonWriter() noexcept override = default;
-    score::ResultBlank ToFile(const score::json::Object& json_data,
-                            const std::string_view& file_path,
-                            std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
+    score::Result<void> ToFile(const score::json::Object& json_data,
+                             const std::string_view& file_path,
+                             std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
 
-    score::ResultBlank ToFile(const score::json::List& json_data,
-                            const std::string_view& file_path,
-                            std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
+    score::Result<void> ToFile(const score::json::List& json_data,
+                             const std::string_view& file_path,
+                             std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
 
-    score::ResultBlank ToFile(const score::json::Any& json_data,
-                            const std::string_view& file_path,
-                            std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
+    score::Result<void> ToFile(const score::json::Any& json_data,
+                             const std::string_view& file_path,
+                             std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
 
     score::Result<std::string> ToBuffer(const score::json::Object& json_data) override;
     score::Result<std::string> ToBuffer(const score::json::List& json_data) override;
