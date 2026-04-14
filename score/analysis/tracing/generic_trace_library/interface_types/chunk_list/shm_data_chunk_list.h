@@ -14,8 +14,6 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_SHM_DATA_CHUNK_LIST_H
 
 #include "score/analysis/tracing/common/canary_wrapper/canary_wrapper.h"
-#include "score/analysis/tracing/common/interface_types/shared_memory_chunk.h"
-#include "score/analysis/tracing/common/interface_types/types.h"
 #include "score/analysis/tracing/common/shared_list/shared_list.h"
 #include <array>
 
