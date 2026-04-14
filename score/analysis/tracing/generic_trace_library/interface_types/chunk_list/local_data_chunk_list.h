@@ -73,9 +73,9 @@ class LocalDataChunkList
     /// @param next reference to the new element that should be appended to list at the end.
     void Append(const LocalDataChunk& next);
 
-    // /// @brief Get count of chunks currently on the list
-    // ///
-    // /// @return Count of chunks in the list
+    /// @brief Get count of chunks currently on the list
+    ///
+    /// @return Count of chunks in the list
     std::size_t Size() const;
 
     /// @brief Clear the contents of LocalDataChunkList
