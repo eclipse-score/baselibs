@@ -125,9 +125,13 @@ Path::Path() noexcept = default;
 //    broken_link_j/Ticket-148878?focusedId=16079234&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-16079234
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
-// NOLINTNEXTLINE(misc-no-recursion,modernize-use-equals-default): See above
+// NOLINTBEGIN(misc-no-recursion,modernize-use-equals-default): See above
 // coverity[autosar_cpp14_a15_5_3_violation]
-Path::Path(const Path& p) noexcept : native_path_{p.native_path_}, parts_{p.parts_} {}
+Path::Path(const Path& p) noexcept : native_path_{p.native_path_}, parts_{p.parts_}
+// NOLINTEND(misc-no-recursion,modernize-use-equals-default): See above
+{
+}
+
 Path::Path(Path&& p) noexcept : native_path_{std::move(p.native_path_)}, parts_{std::move(p.parts_)} {}
 
 // Path::Parse method is called conditionally in Path constructor.
