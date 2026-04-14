@@ -39,8 +39,9 @@ constexpr std::int32_t kSystemTicksDigitsLength = 8;
 constexpr std::uint32_t kSystemTicksDigitsCropMask = 100'000'000U;
 
 }  // namespace
-// coverity[autosar_cpp14_a15_5_3_violation]: Memory allocation failure extremely unlikely for small temp filename
-// generation
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Memory allocation failure extremely unlikely for small temp filename generation.
+// coverity[autosar_cpp14_a15_5_3_violation]: see above
 std::string ComposeTempFilename(std::string_view original_filename,
                                 std::size_t thread_id_hash,
                                 std::uint64_t timestamp) noexcept

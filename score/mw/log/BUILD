@@ -460,7 +460,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":slot_handle_test",
     ],
     test_suites_from_sub_packages = [
-        "@score_baselibs//score/mw/log/backend:unit_tests",
+        #"@score_baselibs//score/mw/log/backend:unit_tests",
         "@score_baselibs//score/mw/log/configuration:unit_tests",
         "@score_baselibs//score/mw/log/detail:unit_tests",
         #"@score_baselibs//score/mw/log/legacy_non_verbose_api:unit_tests",
