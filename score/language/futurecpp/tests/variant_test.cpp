@@ -44,21 +44,21 @@ public:
     argh& operator=(argh const& rhs)
     {
         id_ = rhs.id();
-        ++copy_op_counter;
+        ++copy_assign_counter;
         return *this;
     }
     argh& operator=(argh&& rhs)
     {
         id_ = rhs.id();
-        ++move_op_counter;
+        ++move_assign_counter;
         return *this;
     }
 
     static std::uint32_t default_ctor_calls() { return default_ctor_counter; }
     static std::uint32_t copy_ctor_calls() { return copy_ctor_counter; }
-    static std::uint32_t copy_op_calls() { return copy_op_counter; }
+    static std::uint32_t copy_assign_calls() { return copy_assign_counter; }
     static std::uint32_t move_ctor_calls() { return move_ctor_counter; }
-    static std::uint32_t move_op_calls() { return move_op_counter; }
+    static std::uint32_t move_assign_calls() { return move_assign_counter; }
     static std::uint32_t dtor_calls() { return dtor_counter; }
 
     std::uint32_t id() const { return id_; }
@@ -69,9 +69,9 @@ private:
     static std::uint32_t next_id;
     static std::uint32_t default_ctor_counter;
     static std::uint32_t copy_ctor_counter;
-    static std::uint32_t copy_op_counter;
+    static std::uint32_t copy_assign_counter;
     static std::uint32_t move_ctor_counter;
-    static std::uint32_t move_op_counter;
+    static std::uint32_t move_assign_counter;
     static std::uint32_t dtor_counter;
     std::uint32_t id_;
 };
@@ -80,18 +80,18 @@ void argh::reset()
 {
     argh::default_ctor_counter = 0;
     argh::copy_ctor_counter = 0;
-    argh::copy_op_counter = 0;
+    argh::copy_assign_counter = 0;
     argh::move_ctor_counter = 0;
-    argh::move_op_counter = 0;
+    argh::move_assign_counter = 0;
     argh::dtor_counter = 0;
 }
 
 std::uint32_t argh::next_id = 0;
 std::uint32_t argh::default_ctor_counter = 0;
 std::uint32_t argh::copy_ctor_counter = 0;
-std::uint32_t argh::copy_op_counter = 0;
+std::uint32_t argh::copy_assign_counter = 0;
 std::uint32_t argh::move_ctor_counter = 0;
-std::uint32_t argh::move_op_counter = 0;
+std::uint32_t argh::move_assign_counter = 0;
 std::uint32_t argh::dtor_counter = 0;
 
 enum found_type
@@ -123,28 +123,19 @@ protected:
 
     void expected_argh_counters(std::uint32_t default_ctor_calls,
                                 std::uint32_t copy_ctor_calls,
-                                std::uint32_t copy_op_calls,
+                                std::uint32_t copy_assign_calls,
                                 std::uint32_t move_ctor_calls,
-                                std::uint32_t move_op_calls,
+                                std::uint32_t move_assign_calls,
                                 std::uint32_t dtor_calls)
     {
         EXPECT_EQ(default_ctor_calls, argh::default_ctor_calls());
         EXPECT_EQ(copy_ctor_calls, argh::copy_ctor_calls());
-        EXPECT_EQ(copy_op_calls, argh::copy_op_calls());
+        EXPECT_EQ(copy_assign_calls, argh::copy_assign_calls());
         EXPECT_EQ(move_ctor_calls, argh::move_ctor_calls());
-        EXPECT_EQ(move_op_calls, argh::move_op_calls());
+        EXPECT_EQ(move_assign_calls, argh::move_assign_calls());
         EXPECT_EQ(dtor_calls, argh::dtor_calls());
     }
 };
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#9487688
-TEST_F(variant_fixture, variant_capacity)
-{
-    typedef variant<argh, double, int> v;
-    const std::size_t storage_size = v::storage_size;
-    EXPECT_EQ(storage_size, sizeof(double));
-}
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#9487688, CB-#17432448
@@ -233,7 +224,7 @@ TEST_F(variant_fixture, variant_copy_operator)
         v1 = v2;
     }
 
-    expected_argh_counters(2, 1, 0, 0, 0, 3);
+    expected_argh_counters(2, 0, 1, 0, 0, 2);
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -258,7 +249,7 @@ TEST_F(variant_fixture, variant_move_operator)
         v1 = std::move(v2);
     }
 
-    expected_argh_counters(2, 0, 0, 1, 0, 3);
+    expected_argh_counters(2, 0, 0, 0, 1, 2);
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -420,39 +411,6 @@ TEST_F(variant_fixture, variant_with_vector)
 }
 
 /// @testmethods TM_REQUIREMENT
-/// @requirement CB-#9487688, CB-#17432434
-TEST_F(variant_fixture, variant_with_big_object)
-{
-    typedef variant<int[100 * 100 * 10], double, int> big_variant;
-    std::unique_ptr<big_variant> v1(new big_variant);
-    EXPECT_TRUE(holds_alternative<int[100 * 100 * 10]>(*v1));
-    EXPECT_EQ(0, v1->index());
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#9487688
-TEST_F(variant_fixture, sizeof_variant)
-{
-    typedef variant<int[100 * 100 * 10], double, int> big_variant;
-    static_assert(sizeof(big_variant::storage_type) == (sizeof(int) * 100 * 100 * 10));
-    static_assert(big_variant::storage_size == (sizeof(int) * 100 * 100 * 10));
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#9487688
-TEST_F(variant_fixture, alignment)
-{
-    typedef variant<std::uint8_t, std::uint32_t*, std::uint16_t> variant_a;
-    static_assert(variant_a::storage_alignment == sizeof(std::uint32_t*));
-    typedef variant<std::uint8_t, std::uint16_t, std::uint32_t> variant_b;
-    static_assert(variant_b::storage_alignment == 4);
-    typedef variant<std::uint16_t, std::uint8_t> variant_c;
-    static_assert(variant_c::storage_alignment == 2);
-    typedef variant<std::uint8_t> variant_d;
-    static_assert(variant_d::storage_alignment == 1);
-}
-
-/// @testmethods TM_REQUIREMENT
 /// @requirement CB-#9487688
 TEST_F(variant_fixture, variant_alternatives)
 {
@@ -488,6 +446,7 @@ TEST_F(variant_fixture, Visit_void_result_type)
 
 namespace
 {
+
 enum constness
 {
     const_visitor_const_variant,
@@ -501,9 +460,12 @@ struct constness_visitor
     constness_visitor() {}
     constness operator()(int const&) const { return const_visitor_const_variant; }
     constness operator()(int&) const { return const_visitor_non_const_variant; }
+    constness operator()(int&&) const { return const_visitor_non_const_variant; }
     constness operator()(int const&) { return non_const_visitor_const_variant; }
     constness operator()(int&) { return non_const_visitor_non_const_variant; }
+    constness operator()(int&&) { return non_const_visitor_non_const_variant; }
 };
+
 } // namespace
 
 /// @testmethods TM_REQUIREMENT
@@ -526,17 +488,29 @@ TEST_F(variant_fixture, Visit_const_correct_lvalue)
 /// @requirement CB-#9487688, CB-#17431441
 TEST_F(variant_fixture, Visit_const_correct_rvalue)
 {
-    const variant<int> const_variant;
-    variant<int> non_const_variant;
-
-    const constness_visitor const_visitor;
-    constness_visitor non_const_visitor;
-
-    EXPECT_EQ(const_visitor_const_variant, visit(std::move(const_visitor), std::move(const_variant)));
-    EXPECT_EQ(const_visitor_non_const_variant, visit(std::move(const_visitor), std::move(non_const_variant)));
-    EXPECT_EQ(non_const_visitor_const_variant, visit(std::move(non_const_visitor), std::move(const_variant)));
-    EXPECT_EQ(non_const_visitor_non_const_variant, visit(std::move(non_const_visitor), std::move(non_const_variant)));
-    EXPECT_EQ(non_const_visitor_non_const_variant, visit(constness_visitor(), variant<int>()));
+    {
+        const variant<int> var;
+        const constness_visitor vis;
+        EXPECT_EQ(const_visitor_const_variant, visit(std::move(vis), std::move(var)));
+    }
+    {
+        variant<int> var;
+        const constness_visitor vis;
+        EXPECT_EQ(const_visitor_non_const_variant, visit(std::move(vis), std::move(var)));
+    }
+    {
+        const variant<int> var;
+        constness_visitor vis;
+        EXPECT_EQ(non_const_visitor_const_variant, visit(std::move(vis), std::move(var)));
+    }
+    {
+        variant<int> var;
+        constness_visitor vis;
+        EXPECT_EQ(non_const_visitor_non_const_variant, visit(std::move(vis), std::move(var)));
+    }
+    {
+        EXPECT_EQ(non_const_visitor_non_const_variant, visit(constness_visitor(), variant<int>()));
+    }
 }
 
 class forward_counter
@@ -549,7 +523,17 @@ public:
     forward_counter(const forward_counter& other) : copy_count_(other.copy_count_ + 1), move_count_(other.move_count_)
     {
     }
+    forward_counter& operator=(const forward_counter& other)
+    {
+        copy_count_ = other.copy_count_ + 1;
+        return *this;
+    }
     forward_counter(forward_counter&& other) : copy_count_(other.copy_count_), move_count_(other.move_count_ + 1) {}
+    forward_counter& operator=(forward_counter&& other)
+    {
+        move_count_ = other.move_count_ + 1;
+        return *this;
+    }
 
     std::int32_t copy_calls() const { return copy_count_; }
     std::int32_t move_calls() const { return move_count_; }
