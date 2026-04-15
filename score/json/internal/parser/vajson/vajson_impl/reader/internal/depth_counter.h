@@ -228,14 +228,14 @@ class DepthCounter final
     /// - Otherwise:
     ///   - Return an empty Result, because a single value is valid JSON.
     /// \endinternal
-    auto AddValue() noexcept -> Result<score::cpp::blank>
+    auto AddValue() noexcept -> vajson::ResultBlank
     {
-        Result<score::cpp::blank> result{score::cpp::blank{}};
+        ResultBlank result{vajson::Blank{}};
 
         if (this->is_finished_)
         {
-            result =
-                MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Multiple top level elements.");
+            result = MakeErrorResult<vajson::Blank>(JsonErrc::kInvalidJson,
+                                                    "DepthCounter::AddValue: Multiple top level elements.");
         }
         else if (this->comma_expected_)
         {

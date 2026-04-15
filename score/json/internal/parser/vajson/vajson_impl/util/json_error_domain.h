@@ -45,6 +45,8 @@ using CStr = const char*;
 template <typename T>
 using Result = score::Result<T>;
 
+using Blank = score::cpp::blank;
+
 using ResultBlank = score::ResultBlank;
 
 /// \brief           Unqualified access to ErrorDomain
