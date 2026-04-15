@@ -132,6 +132,7 @@ auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> amsr::json
     {
         // Justification: Using std::move or std::forward on a raw pointer does not provide any benefit
         // coverity[autosar_cpp14_a18_9_2_violation]
+        // coverity[autosar_cpp14_a15_5_3_violation]  Since result.has_value() is checked before calling *result
         hierarchy_.push(*result);
     }
     return amsr::json::ParserState::kRunning;
