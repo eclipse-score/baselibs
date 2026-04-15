@@ -488,7 +488,7 @@ class JsonParser final
     {
         if (ContainsStandardError())
         {
-            result_ = MakeErrorResult<score::Blank>(static_cast<JsonErrc>(*result_.error()), msg);
+            result_ = MakeErrorResult<Blank>(static_cast<JsonErrc>(*result_.error()), msg);
             this->customized_ = true;
         }
         return *this;
@@ -533,7 +533,7 @@ class JsonParser final
         if (ContainsStandardError())
         {
 
-            this->result_ = MakeErrorResult<score::Blank>(errc, msg);
+            this->result_ = MakeErrorResult<Blank>(errc, msg);
             this->customized_ = true;
         }
         return *this;

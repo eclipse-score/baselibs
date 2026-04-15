@@ -70,7 +70,7 @@ class BoolParser final : public VirtualParser
     auto OnBool(bool v) noexcept -> ParserResult final
     {
 
-        return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](score::Blank) noexcept {
+        return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](Blank) noexcept {
             return ParserState::kFinished;
         });
     }

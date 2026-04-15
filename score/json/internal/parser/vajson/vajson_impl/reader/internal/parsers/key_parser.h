@@ -70,7 +70,7 @@ class KeyParser final : public VirtualParser
     auto OnKey(StringView key) noexcept -> ParserResult final
     {
 
-        return this->fn_(key).transform([](score::Blank) noexcept {
+        return this->fn_(key).transform([](Blank) noexcept {
             return ParserState::kFinished;
         });
     }

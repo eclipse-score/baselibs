@@ -195,7 +195,7 @@ class StructureParserBase
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto Parse() noexcept -> Result<score::Blank>;
+    auto Parse() noexcept -> Result<Blank>;
 
     /// \brief           Parses a "null" value
     /// \return          The Result of the implementer callback, or an error.

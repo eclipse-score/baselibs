@@ -70,7 +70,7 @@ class StringParser : public VirtualParser
     auto OnString(StringView str) noexcept -> ParserResult final
     {
 
-        return this->fn_(str).transform([](score::Blank) noexcept {
+        return this->fn_(str).transform([](Blank) noexcept {
             return ParserState::kFinished;
         });
     }

@@ -75,7 +75,7 @@ class ObjectParser final : public v2::SingleObjectParser
     auto OnKey(std::string_view key) noexcept -> ParserResult final
     {
 
-        return std::forward<Fn>(this->fn_)(key).transform([](score::Blank) noexcept {
+        return std::forward<Fn>(this->fn_)(key).transform([](Blank) noexcept {
             return ParserState::kRunning;
         });
     }

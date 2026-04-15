@@ -84,13 +84,13 @@ using CallableReturnsNoResult = std::enable_if_t<!ReturnsResult<F, T>::value, Ou
 template <typename F, typename T>
 using ArrayReturnsResult = score::IsResult<std::invoke_result_t<F, std::size_t, const T&>>;
 
-/// \brief           Returns bool in case the function returns a Result<score::Blank>
+/// \brief           Returns bool in case the function returns a Result<Blank>
 /// \tparam          F
 ///                  Type of function.
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ArrayReturnsResultVoid = std::is_same<Result<score::Blank>, std::invoke_result_t<F(std::size_t, const T&)>>;
+using ArrayReturnsResultVoid = std::is_same<Result<Blank>, std::invoke_result_t<F(std::size_t, const T&)>>;
 
 /// \brief           Returns bool in case the function returns void
 /// \tparam          F

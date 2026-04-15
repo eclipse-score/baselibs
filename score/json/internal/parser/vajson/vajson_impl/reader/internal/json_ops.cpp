@@ -135,10 +135,10 @@ auto JsonOps::Skip(const char character) noexcept -> bool
 auto JsonOps::CheckString(std::string_view const string, std::string_view const error_msg) noexcept -> ResultBlank
 {
     return ReadString(string).and_then([&error_msg](bool val) noexcept {
-        ResultBlank result{MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, error_msg)};
+        ResultBlank result{MakeErrorResult<Blank>(JsonErrc::kInvalidJson, error_msg)};
         if (val)
         {
-            result.emplace(score::Blank{});
+            result.emplace(Blank{});
         }
         return result;
     });
@@ -175,7 +175,7 @@ auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
         .and_then([this, &is_same, &total_size](std::size_t read_size) noexcept {
             return this->RewindIf((!is_same) || (total_size != read_size), read_size);
         })
-        .transform([&is_same](score::Blank) noexcept {
+        .transform([&is_same](Blank) noexcept {
             return is_same;
         });
 }
@@ -196,7 +196,7 @@ auto JsonOps::RewindIf(const bool condition, std::size_t const num) noexcept -> 
 
         if (stream.fail())
         {
-            result = MakeErrorResult<score::Blank>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
+            result = MakeErrorResult<Blank>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
         }
     }
 
@@ -288,13 +288,13 @@ auto JsonOps::Read(std::uint64_t const num_to_read,
  */
 auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                           const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
-    -> Result<score::Blank>
+    -> Result<Blank>
 {
 
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
     bool callback_executed{false};
-    Result<score::Blank> result =
+    Result<Blank> result =
         Drop(Read(num_to_read, [&buffer, &callback, &num_to_read, &callback_executed](std::string_view view) noexcept {
                  if (view.size() == num_to_read)
                  {
@@ -307,10 +307,10 @@ auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                  }
              }).and_then([&num_to_read](const std::uint64_t& read) noexcept {
             score::ResultBlank result{
-                MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
+                MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
             if (num_to_read == read)
             {
-                result.emplace(score::Blank{});
+                result.emplace(Blank{});
             }
             return result;
         }));

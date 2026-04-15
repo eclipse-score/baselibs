@@ -68,7 +68,7 @@ class ArrayParser final : public v2::SingleArrayParser
     auto OnElement() noexcept -> ParserResult final
     {
 
-        return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](score::Blank) noexcept {
+        return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](Blank) noexcept {
             return ParserState::kRunning;
         });
     }

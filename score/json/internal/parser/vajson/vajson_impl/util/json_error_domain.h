@@ -250,12 +250,12 @@ constexpr auto Ok(T value) noexcept -> Result<T>
 /// \endinternal
 inline auto MakeResult(bool value, ErrorCode error) noexcept -> ResultBlank
 {
-    return value ? ResultBlank{} : score::MakeUnexpected<score::Blank>(MakeError(error, ""));
+    return value ? ResultBlank{} : score::MakeUnexpected<Blank>(MakeError(error, ""));
 }
 
 inline auto MakeResult(bool value, score::result::Error error) noexcept -> ResultBlank
 {
-    return value ? ResultBlank{} : score::MakeUnexpected<score::Blank>(error);
+    return value ? ResultBlank{} : score::MakeUnexpected<Blank>(error);
 }
 
 /// \brief           Assert that a condition holds

@@ -28,6 +28,7 @@
 #include <string>
 #include <utility>
 
+#include "score/blank.hpp"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/parser_state.h"
 #include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
 #include "score/result/result.h"
@@ -184,13 +185,13 @@ class DepthCounter final
         if (this->is_finished_)
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson,
-                                                   "DepthCounter::AddKey: Multiple top level elements.");
+            result =
+                MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Multiple top level elements.");
         }
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Missing comma.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Missing comma.");
         }
         else if (this->CheckLastElement('{'))
         {
@@ -200,7 +201,7 @@ class DepthCounter final
         else
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Expected a value.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Expected a value.");
         }
         return result;
     }
@@ -227,20 +228,19 @@ class DepthCounter final
     /// - Otherwise:
     ///   - Return an empty Result, because a single value is valid JSON.
     /// \endinternal
-    auto AddValue() noexcept -> Result<score::Blank>
+    auto AddValue() noexcept -> Result<score::cpp::blank>
     {
-        Result<Blank> result{Blank{}};
+        Result<score::cpp::blank> result{score::cpp::blank{}};
 
         if (this->is_finished_)
         {
-
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson,
-                                                   "DepthCounter::AddValue: Multiple top level elements.");
+            result =
+                MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Multiple top level elements.");
         }
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Missing comma.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Missing comma.");
         }
         else if (!this->IsEmpty())
         {
@@ -263,8 +263,7 @@ class DepthCounter final
                     break;
                 default:
 
-                    result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson,
-                                                           "DepthCounter::AddValue: Expected a key.");
+                    result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Expected a key.");
                     break;
             }
         }
@@ -297,7 +296,7 @@ class DepthCounter final
         return MakeResult(expected_key,
                           MakeError(static_cast<score::json::vajson::ErrorCode>(JsonErrc::kInvalidJson),
                                     "DepthCounter::PopObject: Not in an object."))
-            .transform([this](score::Blank) noexcept {
+            .transform([this](Blank) noexcept {
                 this->comma_expected_ = true;
                 return Pop();
             });
@@ -323,7 +322,7 @@ class DepthCounter final
         return MakeResult(expected_key,
                           MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
                                     "DepthCounter::PopArray: Not in an array."))
-            .transform([this](score::Blank) noexcept {
+            .transform([this](Blank) noexcept {
                 this->comma_expected_ = true;
                 return this->Pop();
             });
@@ -427,19 +426,18 @@ class DepthCounter final
         if (this->is_finished_)
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson,
-                                                   "DepthCounter::AddElement: Multiple top level elements.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson,
+                                            "DepthCounter::AddElement: Multiple top level elements.");
         }
         else if (this->CheckLastElement('{'))
         {
 
-            result = MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a key.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a key.");
         }
         else if (this->comma_expected_)
         {
 
-            result =
-                MakeErrorResult<score::Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a comma.");
+            result = MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a comma.");
         }
         else
         {

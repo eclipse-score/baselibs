@@ -75,7 +75,7 @@ class NumberParser final : public VirtualParser
     auto OnNumber(JsonNumber number) noexcept -> ParserResult final
     {
 
-        return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](score::Blank) noexcept {
+        return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](Blank) noexcept {
             return ParserState::kFinished;
         });
     }

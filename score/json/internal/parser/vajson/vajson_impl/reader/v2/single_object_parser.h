@@ -97,7 +97,7 @@ class SingleObjectParser : public v2::Parser
     auto OnEndObject(std::size_t) noexcept -> ParserResult final
     {
         return this->validator_.Leave().and_then([this](ParserState state) noexcept {
-            return this->Finalize().transform([&state](score::Blank) noexcept {
+            return this->Finalize().transform([&state](Blank) noexcept {
                 return state;
             });
         });
@@ -126,9 +126,9 @@ class SingleObjectParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    virtual auto Finalize() noexcept -> Result<score::Blank>
+    virtual auto Finalize() noexcept -> Result<Blank>
     {
-        return Result<score::Blank>{score::Blank{}};
+        return Result<Blank>{Blank{}};
     }
 
   private:
