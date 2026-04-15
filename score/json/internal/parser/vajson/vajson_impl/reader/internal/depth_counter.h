@@ -229,7 +229,7 @@ class DepthCounter final
     /// \endinternal
     auto AddValue() noexcept -> Result<score::Blank>
     {
-        Result<score::Blank> result{score::Blank{}};
+        Result<Blank> result{Blank{}};
 
         if (this->is_finished_)
         {

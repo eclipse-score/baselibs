@@ -130,13 +130,13 @@ inline score::result::Error MakeError(score::json::vajson::JsonErrc const error_
 }
 
 template <typename T>
-inline score::Result<T> MakeErrorResult(const ErrorCode error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const ErrorCode error_code, std::string_view const user_message = "") noexcept
 {
-    return score::Result<T>{score::unexpect, MakeError(error_code, user_message)};
+    return Result<T>{score::unexpect, MakeError(error_code, user_message)};
 }
 
 template <typename T>
-inline score::Result<T> MakeErrorResult(const JsonErrc error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const JsonErrc error_code, std::string_view const user_message = "") noexcept
 {
     return MakeErrorResult<T>(static_cast<ErrorCode>(error_code), user_message);
 }
@@ -149,11 +149,11 @@ inline score::Result<T> MakeErrorResult(const JsonErrc error_code, std::string_v
 /// \param[in]       error   Error to use if the predicate returns false.
 /// \return          The filtered Result.
 template <typename T, typename Pred>
-auto Filter(score::Result<T> result, Pred pred, score::result::Error error) noexcept -> score::Result<T>
+auto Filter(Result<T> result, Pred pred, score::result::Error error) noexcept -> Result<T>
 {
     if (result.has_value() && !pred(result.value()))
     {
-        return score::Result<T>{score::unexpect, error};
+        return Result<T>{score::unexpect, error};
     }
     return result;
 }
@@ -163,13 +163,13 @@ auto Filter(score::Result<T> result, Pred pred, score::result::Error error) noex
 /// \param[in]       result  The Result to drop.
 /// \return          ResultBlank with same error state.
 template <typename T>
-auto Drop(score::Result<T> result) noexcept -> score::ResultBlank
+auto Drop(Result<T> result) noexcept -> ResultBlank
 {
     if (result.has_value())
     {
-        return score::ResultBlank{score::Blank{}};
+        return ResultBlank{Blank{}};
     }
-    return score::ResultBlank{score::unexpect, result.error()};
+    return ResultBlank{score::unexpect, result.error()};
 }
 
 /// \brief           Inspects (peeks at) a Result without transforming it
@@ -179,7 +179,7 @@ auto Drop(score::Result<T> result) noexcept -> score::ResultBlank
 /// \param[in]       fn      Side-effect function called with the value if present.
 /// \return          The original Result unchanged.
 template <typename T, typename Fn>
-auto Inspect(score::Result<T> result, Fn fn) noexcept -> score::Result<T>
+auto Inspect(Result<T> result, Fn fn) noexcept -> Result<T>
 {
     if (result.has_value())
     {
@@ -195,11 +195,11 @@ auto Inspect(score::Result<T> result, Fn fn) noexcept -> score::Result<T>
 /// \param[in]       second  The second Result.
 /// \return          The second Result if first has a value, else the first error.
 template <typename T, typename U>
-auto And(score::Result<T> first, score::Result<U> second) noexcept -> score::Result<U>
+auto And(Result<T> first, Result<U> second) noexcept -> Result<U>
 {
     if (!first.has_value())
     {
-        return score::Result<U>{score::unexpect, first.error()};
+        return Result<U>{score::unexpect, first.error()};
     }
     return second;
 }
@@ -248,14 +248,14 @@ constexpr auto Ok(T value) noexcept -> Result<T>
 /// - Otherwise:
 ///   - Return an Error created from the given arguments.
 /// \endinternal
-inline auto MakeResult(bool value, ErrorCode error) noexcept -> score::ResultBlank
+inline auto MakeResult(bool value, ErrorCode error) noexcept -> ResultBlank
 {
-    return value ? score::ResultBlank{} : score::MakeUnexpected<score::Blank>(MakeError(error, ""));
+    return value ? ResultBlank{} : score::MakeUnexpected<score::Blank>(MakeError(error, ""));
 }
 
-inline auto MakeResult(bool value, score::result::Error error) noexcept -> score::ResultBlank
+inline auto MakeResult(bool value, score::result::Error error) noexcept -> ResultBlank
 {
-    return value ? score::ResultBlank{} : score::MakeUnexpected<score::Blank>(error);
+    return value ? ResultBlank{} : score::MakeUnexpected<score::Blank>(error);
 }
 
 /// \brief           Assert that a condition holds
