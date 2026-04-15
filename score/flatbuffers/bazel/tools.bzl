@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -29,8 +29,67 @@ def _serialize_buffer_impl(ctx):
     generated_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
     out_bin = ctx.actions.declare_file(ctx.attr.output)
 
+    # Options for flatc --binary: Convert JSON data to a binary FlatBuffer.
+    # Options that apply only to other modes are not listed.
+    # flatc reference: https://flatbuffers.dev/flatc/
+    #
+    # Options considered and their decisions:
+    #
+    # --binary (REQUIRED)
+    #   Generate a binary FlatBuffer from a JSON data file using the provided schema.
+    #
+    # --strict-json (ENABLED)
+    #   Require strict JSON compliance: field names must be enclosed in double quotes
+    #   and trailing commas are not allowed. By default, flatc is lenient and accepts
+    #   unquoted field names and trailing commas.
+    #   DECISION: ENABLED - enforce files that a compliant to standard JSON tooling
+    #   (validators, formatters, editors, linters).
+    #
+    # --force-defaults (NOT USED)
+    #   Emit fields set to their default value in the binary output. By default,
+    #   flatc omits default-valued fields to minimize binary size.
+    #   DECISION: Not used - omitting defaults is the intended FlatBuffers behavior,
+    #   reduces binary size, and consumers always read correct defaults via the
+    #   generated accessor code.
+    #
+    # --size-prefixed (NOT USED)
+    #   Interpret input/output buffers as size-prefixed. When used with --binary,
+    #   the generated binary buffer is prefixed with its size.
+    #   DECISION: Not used - our buffers are stored as standalone files with known
+    #   sizes. Size-prefixed buffers add complexity on the consumer side without
+    #   benefit for file-based configuration.
+    #
+    # --schema (NOT USED)
+    #   Serialize the schema definition itself into a binary schema file (.bfbs)
+    #   instead of serializing JSON data.
+    #   DECISION: Not used - this rule serializes JSON data to binary buffers.
+    #   Binary schema generation is a separate concern.
+    #
+    # --root-type T (NOT USED)
+    #   Select or override the default root_type defined in the schema.
+    #   DECISION: Not used - schemas should explicitly define their own root_type.
+    #   Overriding it via the build rule could cause confusion between schema
+    #   definition and build configuration.
+    #
+    # --flexbuffers (NOT USED)
+    #   When used with --binary, generate schema-less FlexBuffer data instead of
+    #   typed FlatBuffer data.
+    #   DECISION: Not used - we use typed FlatBuffer schemas for configuration data.
+    #   Schema-less FlexBuffers lose type safety and schema validation guarantees.
+    #
+    # --json-nested-bytes (NOT USED)
+    #   Allow a nested_flatbuffer field to be parsed as a vector of bytes in JSON,
+    #   which is unsafe unless checked by a verifier afterwards.
+    #   DECISION: Not used - bypasses type safety for nested buffers. Not needed
+    #   for standard configuration data.
+    #
+    # --allow-non-utf8 (NOT USED)
+    #   Pass non-UTF-8 input through the parser instead of raising a parse error.
+    #   DECISION: Not used - configuration data should contain valid UTF-8 strings.
+
     args = ctx.actions.args()
     args.add("--binary")
+    args.add("--strict-json")
     args.add("-o", generated_file.dirname)
     args.add(schema_file.path)
     args.add(data_file.path)
@@ -97,19 +156,21 @@ def _serialize_multiple_buffers_impl(ctx):
     # Parse the data files dict and process each data file
     output_files = []
 
-    # Get files and output paths (they're in the same order from the dict)
-    data_files = ctx.files.data_dict
-    output_paths = list(ctx.attr.data_dict.values())
-
-    for data_file, output_path in zip(data_files, output_paths):
+    for data_key, data_value in ctx.attr.data_dict.items():
+        # data_key is a Target; extract the single File via .files.to_list()[0] (safe since allow_files = [".json"]).
+        data_file = data_key.files.to_list()[0]
         # When converting JSON to binary, flatc generates a file named after the JSON file
         default_name = data_file.basename.replace(".json", ".bin")
         temp_subdir = "tmp_{}_{}".format(ctx.label.name, data_file.basename.replace(".json", "").replace(".", "_"))
         generated_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
-        out_bin = ctx.actions.declare_file(output_path)
+        out_bin = ctx.actions.declare_file(data_value)
+
+        # Options for flatc --binary: Convert JSON data to a binary FlatBuffer.
+        # Refer to the options and decisions in the _serialize_buffer_impl function.
 
         args = ctx.actions.args()
         args.add("--binary")
+        args.add("--strict-json")
         args.add("-o", generated_file.dirname)
         args.add(schema_file.path)
         args.add(data_file.path)
@@ -178,6 +239,22 @@ def _generate_json_schema_impl(ctx):
     temp_subdir = "tmp_{}".format(ctx.label.name)
     generated_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
     out_schema = ctx.actions.declare_file(ctx.attr.output)
+
+    # Options for flatc --jsonschema: Generate a JSON Schema from a FlatBuffer schema.
+    # Options that apply only to other modes are not listed.
+    # flatc reference: https://flatbuffers.dev/flatc/
+    #
+    # Options considered and their decisions:
+    #
+    # --jsonschema (REQUIRED)
+    #   Generate a JSON Schema file from the FlatBuffer schema definition.
+    #
+    # --root-type T (NOT USED)
+    #   Override the root_type declared in the schema. Determines which table
+    #   becomes the top-level object in the generated JSON Schema.
+    #   DECISION: Not used - the root_type must be declared in the schema itself,
+    #   keeping the JSON Schema output self-contained and independent of build
+    #   rule parameters.
 
     args = ctx.actions.args()
     args.add("--jsonschema")

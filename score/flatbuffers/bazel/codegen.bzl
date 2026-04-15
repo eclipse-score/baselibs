@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -29,8 +29,9 @@ def _generate_cpp_impl(ctx):
     generated_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
     out_header = ctx.actions.declare_file(ctx.attr.output)
 
-    # Generate the header file
-    # flatc C++ Code Generation Options reference: https://flatbuffers.dev/flatc/
+    # Options for flatc --cpp: Generate a C++ header from a FlatBuffer schema.
+    # Options that apply only to other modes are not listed.
+    # flatc reference: https://flatbuffers.dev/flatc/
     #
     # Options considered and their decisions:
     #
@@ -49,12 +50,13 @@ def _generate_cpp_impl(ctx):
     #
     # --gen-mutable (OUT OF SCOPE)
     #   Generate non-const accessors for in-place mutation of FlatBuffers.
-    #   DECISION: Out of scope for current use case - read-only access is currently intended.
-    #   Mutation support can be added in future if needed for extended use cases.
+    #   DECISION: Out of scope for current use case - module configuration
+    #   Mutation support is usefull for storage and payload format use case.
+    #   Allow optional activation once these shall be supported.
     #
     # --gen-object-api (OUT OF SCOPE)
     #   Generate object-based API for convenient construction/mutation.
-    #   DECISION: Out of scope for current use case - read-only buffer access is currently intended.
+    #   DECISION: Out of scope for current use case - module configuration
     #   This option relies on heap allocation for object construction, which conflicts with
     #   potential future heap-free buffer building requirements in safety-critical systems.
     #
