@@ -329,7 +329,6 @@ class DelayedTaskFactory
     {
         auto wrapped_callable =
             Wrap<Clock>(std::forward<decltype(callable)>(callable), std::forward<decltype(arguments)>(arguments)...);
-        /* KW_SUPPRESS_END:MISRA.VAR.NEEDS.CONST:Moving from variable below */
         // due to lambda usage number of template instantiation increases
         // leading to slightly longer compilation time
         // but doesnt affect the performance and keeps the code simple

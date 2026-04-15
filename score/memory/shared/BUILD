@@ -211,6 +211,7 @@ cc_library(
         "@score_baselibs//score/mw/log:frontend",
         "@score_baselibs//score/os:errno_logging",
         "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/utils/meyer_singleton",
     ],
     tags = ["FFI"],
     deps = [
@@ -316,6 +317,7 @@ cc_library(
         ":memory_region_map",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
+        "@score_baselibs//score/utils/meyer_singleton",
     ],
 )
 

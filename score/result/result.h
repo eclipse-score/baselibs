@@ -41,8 +41,8 @@ inline constexpr details::unexpect_t unexpect{};
 
 using Unexpected = details::unexpected<score::result::Error>;
 
-/// \brief Blank and ResultBlank shall be used for `T` instead of `void`.
-using Blank = score::cpp::blank;
+/// \brief Blank and ResultBlank can be used interchangeably with void and Result<void>.
+using Blank = void;
 using ResultBlank = Result<Blank>;
 
 template <typename Code>

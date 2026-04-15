@@ -427,6 +427,10 @@ score::ResultBlank StandardFilesystem::RemoveAll(const Path& path) const noexcep
     return result;
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 ResultBlank StandardFilesystem::RemoveContentFromExistingDirectory(const Path& path) const noexcept
 {
     ResultBlank result{};

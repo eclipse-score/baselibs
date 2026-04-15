@@ -86,3 +86,8 @@ message and comparing the `Error` with the user defined error codes.
 To let users of this library interact with the `score::details::expected` without them using API of implementation
 details, we provide the type `Result<T>` which is a type alias of `score::details::expected<T, Error>`.
 In case `T == void`, use `ResultBlank` instead of `Result<void>`.
+
+## Rust integration
+
+There's an interface that allows one to exchange Result objects between C++ and Rust. Check the `rust` subfolder
+for details.

@@ -37,8 +37,6 @@ namespace log
 {
 namespace detail
 {
-class RecorderFactory;
-
 /// \brief The runtime is a singleton that is responsible for providing the usage of the current Recorder. Due to the
 /// distributed nature of the logging library, we need a central place to know which logging infrastructure to use. This
 /// enables us logging distributed within our code base without the necessity to inject it everywhere.

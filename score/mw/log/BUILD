@@ -34,8 +34,7 @@ COMPILER_WARNING_FEATURES = [
 
 alias(
     name = "log",
-    actual = ":frontend",
-    deprecation = "DEPRECATED: use @score_baselibs//score/mw/log:frontend instead. Refer usage in mw/log/README.md",
+    actual = ":console",
     visibility = ["//visibility:public"],
 )
 
@@ -58,10 +57,10 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         ":recorder",
-        ":recorder_interface",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/mw/log/detail:circular_allocator",
         "@score_baselibs//score/mw/log/detail:empty_recorder",
+        "@score_baselibs//score/mw/log/detail:recorder_interface",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
         "@score_baselibs//score/result",
         "@score_baselibs//score/utils/meyer_singleton",
@@ -74,29 +73,60 @@ cc_library(
     ],
 )
 
+# frontend + empty backend, supports additive backend registration
+cc_library(
+    name = "minimal",
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/mw/log:__subpackages__"],
+    deps = [
+        ":frontend",
+        "@score_baselibs//score/mw/log:backend_table",
+        "@score_baselibs//score/mw/log/detail:registry_aware_recorder_factory",
+    ],
+    alwayslink = True,
+)
+
+# frontend + console backend, supports additive backend registration
+cc_library(
+    name = "console",
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":frontend",
+        "@score_baselibs//score/mw/log/detail:backend_console",
+    ],
+)
+
+# backend registration API for backend registrants
+cc_library(
+    name = "backend_table",
+    srcs = ["backend_table.cpp"],
+    hdrs = ["backend_table.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/mw/log:__subpackages__"],
+    deps = [
+        "@score_baselibs//score/mw/log:recorder",
+        "@score_baselibs//score/mw/log:shared_types",
+        "@score_baselibs//score/mw/log/configuration",
+    ],
+)
+
 alias(
     name = "console_only_backend",
-    actual = "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
+    actual = ":console",
+    deprecation = "Deprecated: Please use @score_baselibs//score/mw/log:console instead",
     visibility = ["//visibility:public"],
 )
 
 alias(
     name = "backend_stub_testutil",
     testonly = True,
-    actual = "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
+    actual = ":console",  # Supports backward compatibility
+    deprecation = "Deprecated: Please use @score_baselibs//score/mw/log:console OR @score_baselibs//score/mw/log:minimal instead",
     visibility = ["//visibility:public"],
-)
-
-cc_library(
-    name = "recorder_interface",
-    srcs = ["irecorder_factory.cpp"],
-    hdrs = ["irecorder_factory.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "//visibility:public",
-    ],
-    deps = [":recorder"],
 )
 
 cc_library(
@@ -201,8 +231,7 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
     ],
@@ -218,8 +247,7 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -236,8 +264,7 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
     ],
@@ -253,8 +280,7 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -269,13 +295,21 @@ cc_test(
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
+    local_defines = select({
+        "@score_baselibs//score/mw/log/detail/flags:config_KConsole_Logging": ["KCONSOLE_LOGGING"],
+        "//conditions:default": [],
+    }),
     tags = ["unit"],
     deps = [
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log:frontend",
+        "@score_baselibs//score/mw/log:console",
         "@score_baselibs//score/mw/log:recorder_mock",
-        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
-    ],
+    ] + select({
+        "@score_baselibs//score/mw/log/detail/flags:config_KConsole_Logging": [
+            "@score_baselibs//score/mw/log/detail/text_recorder",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_test(
@@ -292,10 +326,9 @@ cc_test(
     }),
     tags = ["unit"],
     deps = [
-        ":frontend",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
+        "@score_baselibs//score/mw/log:console",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
     ],
 )
@@ -310,8 +343,7 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":backend_stub_testutil",
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",
@@ -343,10 +375,9 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
         "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
     ],
 )
@@ -368,10 +399,9 @@ cc_test(
     ],
     tags = ["unit"],
     deps = [
-        ":frontend",
+        ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/detail:console_only_recorder_factory",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
     ],
 )
@@ -398,9 +428,24 @@ cc_test(
     ],
 )
 
+cc_test(
+    name = "backend_table_test",
+    srcs = ["backend_table_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":backend_table",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log/detail:empty_recorder",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
+        ":backend_table_test",
         ":log_stream_test",
         ":log_types_test",
         ":log_level_test",
@@ -415,6 +460,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":slot_handle_test",
     ],
     test_suites_from_sub_packages = [
+        "@score_baselibs//score/mw/log/backend:unit_tests",
         "@score_baselibs//score/mw/log/configuration:unit_tests",
         "@score_baselibs//score/mw/log/detail:unit_tests",
         #"@score_baselibs//score/mw/log/legacy_non_verbose_api:unit_tests",

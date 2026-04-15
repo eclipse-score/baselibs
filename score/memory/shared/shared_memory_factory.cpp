@@ -14,6 +14,8 @@
 #include "score/memory/shared/i_shared_memory_factory.h"
 #include "score/memory/shared/shared_memory_factory_impl.h"
 
+#include "score/utils/meyer_singleton/meyer_singleton.h"
+
 #include <score/span.hpp>
 
 #include <sys/types.h>
@@ -94,8 +96,7 @@ auto SharedMemoryFactory::instance() noexcept -> ISharedMemoryFactory&
     // constant-initialized.".
     // Rationale: SharedMemoryFactoryImpl does not have a constexpr constructor.
     // coverity[autosar_cpp14_a3_3_2_violation]
-    static SharedMemoryFactoryImpl instance{};
-    return instance;
+    return singleton::MeyerSingleton<SharedMemoryFactoryImpl>::GetInstance();
 }
 
 auto SharedMemoryFactory::InjectMock(ISharedMemoryFactory* mock) noexcept -> void

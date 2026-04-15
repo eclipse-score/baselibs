@@ -113,6 +113,10 @@ auto score::json::VajsonParser::OnKey(ara::core::StringView key) noexcept -> ams
     return amsr::json::ParserState::kRunning;
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since result.has_value() is checked before calling *result,
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 template <typename T>
 auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> amsr::json::ParserResult
 {

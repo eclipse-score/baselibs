@@ -35,6 +35,7 @@ cc_library(
         "@score_baselibs//score/os:fcntl",
         "@score_baselibs//score/os:stdio",
         "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/scope_exit",
     ],
     tags = ["FFI"],
     visibility = [
@@ -137,8 +138,10 @@ cc_test(
         "@score_baselibs//score/os:stdio",
         "@score_baselibs//score/os:unistd",
         "@score_baselibs//score/os/mocklib:fcntl_mock",
+        "@score_baselibs//score/os/mocklib:stat_mock",
         "@score_baselibs//score/os/mocklib:stdio_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/result",
+        "@score_baselibs//score/scope_exit",
     ],
 )

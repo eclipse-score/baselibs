@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/result/result.h"
+#include "score/result/dummy_error_code.h"
 #include "score/result/error.h"
 
 #include <gmock/gmock.h>
@@ -22,30 +23,6 @@ namespace
 {
 
 using ::testing::_;
-
-enum class DummyErrorCode : ErrorCode
-{
-    kFirstError,
-    kSecondError,
-};
-
-class DummyErrorDomain final : public ErrorDomain
-{
-    [[nodiscard]] std::string_view MessageFor(const ErrorCode& code) const noexcept override
-    {
-        switch (static_cast<DummyErrorCode>(code))
-        {
-            case DummyErrorCode::kFirstError:
-                return "First Error!";
-            case DummyErrorCode::kSecondError:
-                return "Second Error!";
-            default:
-                return "Unknown Error!";
-        }
-    }
-};
-
-constexpr DummyErrorDomain dummy_error_domain;
 
 Error MakeError(DummyErrorCode code, const std::string_view user_message = "") noexcept
 {
