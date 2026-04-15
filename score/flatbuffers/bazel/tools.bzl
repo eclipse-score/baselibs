@@ -159,6 +159,7 @@ def _serialize_multiple_buffers_impl(ctx):
     for data_key, data_value in ctx.attr.data_dict.items():
         # data_key is a Target; extract the single File via .files.to_list()[0] (safe since allow_files = [".json"]).
         data_file = data_key.files.to_list()[0]
+
         # When converting JSON to binary, flatc generates a file named after the JSON file
         default_name = data_file.basename.replace(".json", ".bin")
         temp_subdir = "tmp_{}_{}".format(ctx.label.name, data_file.basename.replace(".json", "").replace(".", "_"))
