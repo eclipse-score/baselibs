@@ -126,9 +126,9 @@ class SingleObjectParser : public v2::Parser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    virtual auto Finalize() noexcept -> Result<Blank>
+    virtual auto Finalize() noexcept -> Result<vajson::Blank>
     {
-        return Result<Blank>{Blank{}};
+        return Result<vajson::Blank>{vajson::Blank{}};
     }
 
   private:

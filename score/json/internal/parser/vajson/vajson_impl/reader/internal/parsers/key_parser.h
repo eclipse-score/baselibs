@@ -41,7 +41,7 @@ class KeyParser final : public VirtualParser
 
   public:
     /// \brief           Constructs a KeyParser
-    /// \details         Callback must take the key as a score::safecpp::zstring_view and return ResultBlank.
+    /// \details         Callback must take the key as a score::safecpp::zstring_view and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn

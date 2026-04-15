@@ -244,14 +244,14 @@ class JsonData final
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-    auto Snap() noexcept -> Result<Blank>;
+    auto Snap() noexcept -> Result<vajson::Blank>;
 
     /// \brief           Restores the parser's state from the previous snapshot
     /// \return          A Result being empty, or the error that occurred.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-    auto Restore() noexcept -> Result<Blank>;
+    auto Restore() noexcept -> Result<vajson::Blank>;
 
   private:
     /// \brief           Returns the stream

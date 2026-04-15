@@ -41,7 +41,7 @@ class StringParser : public VirtualParser
 
   public:
     /// \brief           Constructs a StringParser
-    /// \details         Callback must take the string as a std::string_view and return ResultBlank.
+    /// \details         Callback must take the string as a std::string_view and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn

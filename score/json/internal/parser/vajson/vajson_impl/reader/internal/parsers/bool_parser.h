@@ -23,6 +23,7 @@
  *********************************************************************************************************************/
 #include "score/functional.hpp"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/virtual_parser.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
 #include <utility>
 
 namespace score
@@ -37,11 +38,11 @@ namespace internal
 class BoolParser final : public VirtualParser
 {
     /// \brief           Type of function to be executed when bool values are read
-    using Fn = score::cpp::move_only_function<ResultBlank(bool)>;
+    using Fn = score::cpp::move_only_function<vajson::ResultBlank(bool)>;
 
   public:
     /// \brief           Constructs a BoolParser
-    /// \details         Callback must take the bool and return ResultBlank.
+    /// \details         Callback must take the bool and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -70,7 +71,7 @@ class BoolParser final : public VirtualParser
     auto OnBool(bool v) noexcept -> ParserResult final
     {
 
-        return ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](Blank) noexcept {
+        return vajson::ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](Blank) noexcept {
             return ParserState::kFinished;
         });
     }

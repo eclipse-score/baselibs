@@ -43,7 +43,7 @@ class NumberParser final : public VirtualParser
 
   public:
     /// \brief           Constructs a NumberParser
-    /// \details         Callback must take the number of type T and return ResultBlank.
+    /// \details         Callback must take the number of type T and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn

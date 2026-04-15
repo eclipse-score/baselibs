@@ -196,7 +196,7 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<Blank>;
+    auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<vajson::Blank>;
 
     /// \brief           Returns if the next characters are equal to the passed string
     /// \param[in]       string
@@ -247,7 +247,7 @@ class JsonOps final
     /// \reentrant       FALSE
     auto ReadExactly(std::uint64_t num_to_read,
                      const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
-        -> Result<Blank>;
+        -> Result<vajson::Blank>;
 
     /// \brief            Reads characters as long as the delimiter is not found and executes the action for each span
     /// of characters \param[in]       delimiter                  to decide if the character should be skipped.
@@ -285,7 +285,7 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto RewindIf(bool condition, std::size_t num) noexcept -> Result<Blank>;
+    auto RewindIf(bool condition, std::size_t num) noexcept -> Result<vajson::Blank>;
 
     /// \brief           Get direct access to the input stream
     /// \return          Reference to the input stream.

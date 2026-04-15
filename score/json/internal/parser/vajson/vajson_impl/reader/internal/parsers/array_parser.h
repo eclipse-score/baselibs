@@ -41,7 +41,7 @@ class ArrayParser final : public v2::SingleArrayParser
 
   public:
     /// \brief           Constructs an ArrayParser
-    /// \details         Callback must take the array index as a std::size_t and return ResultBlank.
+    /// \details         Callback must take the array index as a std::size_t and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn

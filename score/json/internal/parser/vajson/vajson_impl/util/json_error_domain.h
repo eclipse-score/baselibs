@@ -47,7 +47,7 @@ using Result = score::Result<T>;
 
 using Blank = score::cpp::blank;
 
-using ResultBlank = score::ResultBlank;
+using ResultBlank = score::Result<score::cpp::blank>;
 
 /// \brief           Unqualified access to ErrorDomain
 using ErrorDomain = score::result::ErrorDomain;
@@ -160,18 +160,18 @@ auto Filter(Result<T> result, Pred pred, score::result::Error error) noexcept ->
     return result;
 }
 
-/// \brief           Discards the value of a Result (converts to ResultBlank)
+/// \brief           Discards the value of a Result (converts to vajson::ResultBlank)
 /// \tparam          T  Value type of the Result.
 /// \param[in]       result  The Result to drop.
-/// \return          ResultBlank with same error state.
+/// \return          vajson::ResultBlank with same error state.
 template <typename T>
-auto Drop(Result<T> result) noexcept -> ResultBlank
+auto Drop(Result<T> result) noexcept -> vajson::ResultBlank
 {
     if (result.has_value())
     {
-        return ResultBlank{Blank{}};
+        return vajson::ResultBlank{vajson::Blank{}};
     }
-    return ResultBlank{score::unexpect, result.error()};
+    return vajson::ResultBlank{score::unexpect, result.error()};
 }
 
 /// \brief           Inspects (peeks at) a Result without transforming it
@@ -250,14 +250,14 @@ constexpr auto Ok(T value) noexcept -> Result<T>
 /// - Otherwise:
 ///   - Return an Error created from the given arguments.
 /// \endinternal
-inline auto MakeResult(bool value, ErrorCode error) noexcept -> ResultBlank
+inline auto MakeResult(bool value, ErrorCode error) noexcept -> vajson::ResultBlank
 {
-    return value ? ResultBlank{} : score::MakeUnexpected<Blank>(MakeError(error, ""));
+    return value ? vajson::ResultBlank{} : score::MakeUnexpected<vajson::Blank>(MakeError(error, ""));
 }
 
-inline auto MakeResult(bool value, score::result::Error error) noexcept -> ResultBlank
+inline auto MakeResult(bool value, score::result::Error error) noexcept -> vajson::ResultBlank
 {
-    return value ? ResultBlank{} : score::MakeUnexpected<Blank>(error);
+    return value ? vajson::ResultBlank{} : score::MakeUnexpected<vajson::Blank>(error);
 }
 
 /// \brief           Assert that a condition holds

@@ -41,7 +41,7 @@ class ObjectParser final : public v2::SingleObjectParser
 
   public:
     /// \brief           Constructs an ObjectParser
-    /// \details         Callback must take the object key as an std::string_view and return ResultBlank.
+    /// \details         Callback must take the object key as an std::string_view and return vajson::ResultBlank.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn

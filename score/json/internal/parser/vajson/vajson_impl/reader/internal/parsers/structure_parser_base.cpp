@@ -42,7 +42,7 @@ namespace vajson
 namespace internal
 {
 
-auto StructureParserBase::Parse() noexcept -> Result<Blank>
+auto StructureParserBase::Parse() noexcept -> Result<vajson::Blank>
 {
     // Skip all whitespace to so that we will detect empty documents immediately.
 

@@ -70,7 +70,7 @@ class JsonParser final
     /// - Otherwise:
     ///   - Return the error.
     /// \endinternal
-    auto Validate() const noexcept -> ResultBlank
+    auto Validate() const noexcept -> vajson::ResultBlank
     {
         return this->result_;
     }
@@ -101,8 +101,8 @@ class JsonParser final
 
     /// \brief           Checks if the next token is a key and executes the given callable
     /// \details         The callable must take the name of the key as an std::string_view and return void or
-    ///                  ResultBlank. The provided StringView is only valid until any other method or parser operating
-    ///                  on the same document is called.
+    ///                  vajson::ResultBlank. The provided StringView is only valid until any other method or parser
+    ///                  operating on the same document is called.
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -191,7 +191,7 @@ class JsonParser final
     auto EndArray() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is a bool and executes the given callable
-    /// \details         The callable must take the bool and return void or ResultBlank.
+    /// \details         The callable must take the bool and return void or vajson::ResultBlank.
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -216,7 +216,8 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is a string and executes the given callable
-    /// \details         The callable must take the string as an std::string_view and return void or ResultBlank. The
+    /// \details         The callable must take the string as an std::string_view and return void or
+    /// vajson::ResultBlank. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
     /// \tparam          Fn
@@ -270,7 +271,7 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is a number and executes the given callable
-    /// \details         The callable must take the number of template type Num and return void or ResultBlank.
+    /// \details         The callable must take the number of template type Num and return void or vajson::ResultBlank.
     /// \tparam          Num
     ///                  Type of number.
     /// \tparam          Fn
@@ -298,7 +299,7 @@ class JsonParser final
 
     /// \brief           Checks if the next token is binary content and executes the given callable
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return
-    /// ResultBlank. The
+    /// vajson::ResultBlank. The
     ///                  provided Span is only valid until any other method or parser operating on the same document is
     ///                  called.
     /// \tparam          Fn
@@ -325,7 +326,8 @@ class JsonParser final
     }
 
     /// \brief           Checks if the next token is an array and executes the given callable on every element
-    /// \details         The callable must take the current array index as a std::size_t and return void or ResultBlank.
+    /// \details         The callable must take the current array index as a std::size_t and return void or
+    /// vajson::ResultBlank.
     ///                  The callable is expected to have consumed all tokens representing the element if it returns a
     ///                  successful Result or has return type void. If the callable is unable to consume all tokens it
     ///                  must return an error Result.
@@ -356,7 +358,7 @@ class JsonParser final
     /// \brief           Checks if the next token is an array of strings and executes the given callable on every
     /// element \details         The callable must take the current array index as a std::size_t, the current string as
     /// an
-    ///                  std::string_view, and return void or ResultBlank. The provided StringView is only valid
+    ///                  std::string_view, and return void or vajson::ResultBlank. The provided StringView is only valid
     ///                  until any other method or parser operating on the same document is called.
     /// \tparam          Fn
     ///                  Type of callable.
@@ -385,7 +387,7 @@ class JsonParser final
     /// \brief           Checks if the next token is an array of numbers and executes the given callable on every
     /// element
     /// \details         The callable must take the current array index as a std::size_t, the current number of
-    /// template type Num, and return void or ResultBlank.
+    /// template type Num, and return void or vajson::ResultBlank.
     /// \tparam          Num
     ///                  Type of number.
     /// \tparam          Fn
@@ -414,7 +416,7 @@ class JsonParser final
 
     /// \brief           Checks if the next token is an array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
-    ///                  return void or ResultBlank.
+    ///                  return void or vajson::ResultBlank.
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -441,8 +443,8 @@ class JsonParser final
 
     /// \brief           Checks if the next token is an object and executes the given callable on every key
     /// \details         The callable must take the name of the current key as a std::string_view and return void or
-    ///                  ResultBlank. The provided StringView is only valid until any other method or parser operating
-    ///                  on the same document is called. The callable is expected to have consumed all tokens
+    ///                  vajson::ResultBlank. The provided StringView is only valid until any other method or parser
+    ///                  operating on the same document is called. The callable is expected to have consumed all tokens
     ///                  representing the value related to the key if it returns a successful Result or has return type
     ///                  void. If the callable is unable to consume all tokens it must return an error Result.
     /// \tparam          Fn
@@ -488,7 +490,7 @@ class JsonParser final
     {
         if (ContainsStandardError())
         {
-            result_ = MakeErrorResult<Blank>(static_cast<JsonErrc>(*result_.error()), msg);
+            result_ = MakeErrorResult<vajson::Blank>(static_cast<JsonErrc>(*result_.error()), msg);
             this->customized_ = true;
         }
         return *this;
@@ -515,7 +517,7 @@ class JsonParser final
         if (ContainsStandardError())
         {
 
-            this->result_ = ResultBlank(ErrorCode{args...});
+            this->result_ = vajson::ResultBlank(ErrorCode{args...});
             this->customized_ = true;
         }
         return *this;
@@ -533,7 +535,7 @@ class JsonParser final
         if (ContainsStandardError())
         {
 
-            this->result_ = MakeErrorResult<Blank>(errc, msg);
+            this->result_ = MakeErrorResult<vajson::Blank>(errc, msg);
             this->customized_ = true;
         }
         return *this;
@@ -560,8 +562,8 @@ class JsonParser final
         if (this->result_)
         {
             // If a callable that returns void changes this->result_ to an error, the return value of any pre-defined
-            // parser call is still just a positive ResultBlank. Thus, even if the parser call returned successfully,
-            // this->result_ must be checked again and set because it might contain an error.
+            // parser call is still just a positive vajson::ResultBlank. Thus, even if the parser call returned
+            // successfully, this->result_ must be checked again and set because it might contain an error.
             this->result_ = And(fn(), (this->result_));
         }
         return *this;
@@ -592,7 +594,7 @@ class JsonParser final
 
     /// \brief            State of the parser
     /// \details         Contains the first error that occurred.
-    ResultBlank result_{};
+    vajson::ResultBlank result_{};
 
     /// \brief           Flag if the error message has already been customized
     bool customized_{false};

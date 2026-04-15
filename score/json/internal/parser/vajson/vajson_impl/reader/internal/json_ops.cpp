@@ -132,10 +132,11 @@ auto JsonOps::Skip(const char character) noexcept -> bool
  *   - Return an error.
  * \endinternal
  */
-auto JsonOps::CheckString(std::string_view const string, std::string_view const error_msg) noexcept -> ResultBlank
+auto JsonOps::CheckString(std::string_view const string, std::string_view const error_msg) noexcept
+    -> vajson::ResultBlank
 {
     return ReadString(string).and_then([&error_msg](bool val) noexcept {
-        ResultBlank result{MakeErrorResult<Blank>(JsonErrc::kInvalidJson, error_msg)};
+        vajson::ResultBlank result{MakeErrorResult<vajson::Blank>(JsonErrc::kInvalidJson, error_msg)};
         if (val)
         {
             result.emplace(Blank{});
@@ -186,9 +187,9 @@ auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
  *  - Seek back the number of bytes passed from the current position.
  * \endinternal
  */
-auto JsonOps::RewindIf(const bool condition, std::size_t const num) noexcept -> ResultBlank
+auto JsonOps::RewindIf(const bool condition, std::size_t const num) noexcept -> vajson::ResultBlank
 {
-    ResultBlank result{};
+    vajson::ResultBlank result{};
     if (condition)
     {
         std::istream& stream = this->GetStream();
@@ -196,7 +197,8 @@ auto JsonOps::RewindIf(const bool condition, std::size_t const num) noexcept -> 
 
         if (stream.fail())
         {
-            result = MakeErrorResult<Blank>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
+            result =
+                MakeErrorResult<vajson::Blank>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
         }
     }
 
@@ -288,13 +290,13 @@ auto JsonOps::Read(std::uint64_t const num_to_read,
  */
 auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                           const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
-    -> Result<Blank>
+    -> Result<vajson::Blank>
 {
 
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
     bool callback_executed{false};
-    Result<Blank> result =
+    Result<vajson::Blank> result =
         Drop(Read(num_to_read, [&buffer, &callback, &num_to_read, &callback_executed](std::string_view view) noexcept {
                  if (view.size() == num_to_read)
                  {
@@ -307,7 +309,7 @@ auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                  }
              }).and_then([&num_to_read](const std::uint64_t& read) noexcept {
             score::ResultBlank result{
-                MakeErrorResult<Blank>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
+                MakeErrorResult<vajson::Blank>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
             if (num_to_read == read)
             {
                 result.emplace(Blank{});
