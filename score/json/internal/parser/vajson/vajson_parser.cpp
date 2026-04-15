@@ -130,9 +130,12 @@ auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> amsr::json
     }
     else
     {
-        // Justification: Using std::move or std::forward on a raw pointer does not provide any benefit
+        // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide
+        // any benefit.
+        // Justification for autosar_cpp14_a15_5_3: result will never be empty, thus *result will never
+        // throw std::bad_optional_access.
         // coverity[autosar_cpp14_a18_9_2_violation]
-        // coverity[autosar_cpp14_a15_5_3_violation]  Since result.has_value() is checked before calling *result
+        // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
         hierarchy_.push(*result);
     }
     return amsr::json::ParserState::kRunning;
