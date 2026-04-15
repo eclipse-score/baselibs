@@ -49,9 +49,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     explicit JsonParser(JsonData& data) noexcept;
 
     /// \brief           Gets the current status of the parser
@@ -67,9 +64,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred:
     ///   - Return an empty Result.
@@ -88,9 +82,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto GetJsonDocument() noexcept -> JsonData&
     {
         return this->data_.get();
@@ -103,9 +94,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto GetJsonDocument() const noexcept -> const JsonData&
     {
         return this->data_.get();
@@ -125,9 +113,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the key could be parsed successfully:
     ///   - Execute the given callable with the key.
@@ -151,9 +136,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the key could be parsed successfully:
     ///   - Compare the parsed key with the given one.
@@ -179,9 +161,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto StartObject() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the end of an object
@@ -191,9 +170,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto EndObject() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the start of an array
@@ -203,9 +179,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto StartArray() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is the end of an array
@@ -215,9 +188,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto EndArray() noexcept -> JsonParser&;
 
     /// \brief           Checks if the next token is a bool and executes the given callable
@@ -232,9 +202,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the bool could be parsed successfully:
     ///   - Execute the given callable with the bool.
@@ -262,9 +229,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the string could be parsed successfully:
     ///   - Execute the given callable with the string.
@@ -287,9 +251,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the string could be parsed successfully:
     ///   - Compare the parsed string with the given one.
@@ -322,9 +283,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the number could be parsed successfully:
     ///   - Execute the given callable with the number.
@@ -353,9 +311,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the binary content could be parsed successfully:
     ///   - Execute the given callable with the string.
@@ -384,9 +339,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the array element could be parsed successfully:
     ///   - Execute the given callable with the array index.
@@ -416,9 +368,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the array element could be parsed successfully:
     ///   - Execute the given callable with the array index and the parsed string.
@@ -449,9 +398,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the array element could be parsed successfully:
     ///   - Execute the given callable with the array index and the parsed number.
@@ -479,9 +425,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the array element could be parsed successfully:
     ///   - Execute the given callable with the array index and the parsed bool.
@@ -514,9 +457,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If no error occurred before and the objects key could be parsed successfully:
     ///   - Execute the given callable with the objects key.
@@ -540,9 +480,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the error message has not been customized yet:
     ///   - Replace the SupportDataType of the erroneous parser result with the given one.
@@ -568,9 +505,6 @@ class JsonParser final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the error message has not been customized yet:
     ///   - Replace the erroneous parser result with the error constructed from the given arguments.
@@ -594,9 +528,6 @@ class JsonParser final
     ///                  The data msg to add. Must live until the ParserResult is evaluated.
     /// \return          The reference to itself.
     /// \copybrief       AddErrorInfo
-    /// \spec
-    ///    requires true;
-    /// \endspec
     auto AddErrorInfo(JsonErrorDomain::Errc errc, CStr msg) & noexcept -> JsonParser&
     {
         if (ContainsStandardError())

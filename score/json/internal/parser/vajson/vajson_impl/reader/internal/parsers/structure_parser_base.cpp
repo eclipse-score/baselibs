@@ -81,9 +81,6 @@ auto StructureParserBase::ParseNull() noexcept -> ParserResult
 }
 
 /*!
- /// \spec
- * requires true;
- /// \endspec
  * \internal
  * - If the parsed string is "true" and a value is expected:
  *   - Call the OnBool callback with the value "true".

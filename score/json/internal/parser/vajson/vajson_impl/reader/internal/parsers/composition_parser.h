@@ -131,9 +131,6 @@ class CompositionParser : public Mixin
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
-    /// \spec
-    ///    requires true;
-    /// \endspec
     explicit CompositionParser(JsonData& doc) noexcept : Mixin(doc), doc_(doc) {}
     /// \brief Delete  copy constructor
     CompositionParser(const CompositionParser&) = delete;
@@ -160,9 +157,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the key could be parsed successfully:
     ///   - Execute the callable with the key.
@@ -196,9 +190,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the key could be parsed successfully:
     ///   - Execute the callable with the key.
@@ -220,9 +211,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the key could be parsed successfully:
     ///   - Compare the parsed key with the given one.
@@ -251,9 +239,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the bool could be parsed successfully:
     ///   - Execute the callable with the bool.
@@ -285,9 +270,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the bool could be parsed successfully:
     ///   - Execute the callable with the bool.
@@ -314,9 +296,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the number could be parsed successfully:
     ///   - Execute the callable with the number.
@@ -350,9 +329,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the number could be parsed successfully:
     ///   - Execute the callable with the number.
@@ -379,9 +355,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the string could be parsed successfully:
     ///   - Execute the callable with the string.
@@ -415,9 +388,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the string could be parsed successfully:
     ///   - Execute the callable with the string.
@@ -439,9 +409,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Call the method String.
     ///   - If the parsed string is equal to passed string return an empty result.
@@ -472,9 +439,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of numbers and execute the callable with every number.
     /// \endinternal
@@ -506,9 +470,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of numbers and execute the callable with every number.
     /// \endinternal
@@ -544,9 +505,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of strings and execute the callable with every string.
     /// \endinternal
@@ -576,9 +534,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of strings and execute the callable with every string.
     /// \endinternal
@@ -613,9 +568,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of bools and execute the callable with every string.
     /// \endinternal
@@ -644,9 +596,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array of bools and execute the callable with every string.
     /// \endinternal
@@ -683,9 +632,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the binary content could be parsed successfully:
     ///   - Execute the callable with the binary content.
@@ -712,9 +658,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - If the binary content could be parsed successfully:
     ///   - Execute the callable with the binary content.
@@ -746,9 +689,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array and execute the callable with every array element.
     /// \endinternal
@@ -777,9 +717,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the array and execute the callable with every array element.
     /// \endinternal
@@ -803,9 +740,6 @@ class CompositionParser : public Mixin
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     /// \internal
     /// - Parse the object and execute the callable with every key.
     /// \endinternal

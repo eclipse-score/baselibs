@@ -74,9 +74,6 @@ class JsonData final
     /// \pre             input_stream has to be open.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    /// \spec
-    ///    requires true;
-    /// \endspec
     explicit JsonData(std::istream& input_stream) noexcept;
 
     /// \brief           Initializes a JSON data object using a constructed reader
