@@ -97,7 +97,7 @@ class SingleObjectParser : public v2::Parser
     auto OnEndObject(std::size_t) noexcept -> ParserResult final
     {
         return this->validator_.Leave().and_then([this](ParserState state) noexcept {
-            return this->Finalize().transform([&state](Blank) noexcept {
+            return this->Finalize().transform([&state](vajson::Blank) noexcept {
                 return state;
             });
         });

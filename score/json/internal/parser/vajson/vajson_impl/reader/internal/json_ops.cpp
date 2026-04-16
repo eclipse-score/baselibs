@@ -139,7 +139,7 @@ auto JsonOps::CheckString(std::string_view const string, std::string_view const 
         vajson::ResultBlank result{MakeErrorResult<vajson::Blank>(JsonErrc::kInvalidJson, error_msg)};
         if (val)
         {
-            result.emplace(Blank{});
+            result.emplace(vajson::Blank{});
         }
         return result;
     });
@@ -176,7 +176,7 @@ auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
         .and_then([this, &is_same, &total_size](std::size_t read_size) noexcept {
             return this->RewindIf((!is_same) || (total_size != read_size), read_size);
         })
-        .transform([&is_same](Blank) noexcept {
+        .transform([&is_same](vajson::Blank) noexcept {
             return is_same;
         });
 }
@@ -308,11 +308,11 @@ auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
                      static_cast<void>(buffer.append(view));
                  }
              }).and_then([&num_to_read](const std::uint64_t& read) noexcept {
-            score::ResultBlank result{
+            vajson::ResultBlank result{
                 MakeErrorResult<vajson::Blank>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
             if (num_to_read == read)
             {
-                result.emplace(Blank{});
+                result.emplace(vajson::Blank{});
             }
             return result;
         }));

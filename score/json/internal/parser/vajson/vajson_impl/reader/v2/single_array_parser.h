@@ -84,7 +84,7 @@ class SingleArrayParser : public v2::Parser
             .and_then([this](ParserState) noexcept {
                 return this->GetJsonDocument().Snap();
             })
-            .transform([](Blank) noexcept {
+            .transform([](vajson::Blank) noexcept {
                 return ParserState::kRunning;
             });
     }
@@ -106,7 +106,7 @@ class SingleArrayParser : public v2::Parser
     auto OnEndArray(std::size_t) noexcept -> ParserResult final
     {
         return this->validator_.Leave().and_then([this](ParserState state) noexcept {
-            return Finalize().transform([&state](Blank) noexcept {
+            return Finalize().transform([&state](vajson::Blank) noexcept {
                 return state;
             });
         });
@@ -134,15 +134,15 @@ class SingleArrayParser : public v2::Parser
         return MakeResult(this->validator_.IsInside(),
                           {JsonErrc::kUserValidationFailed, "Expected to parse an array of elements."})
 
-            .and_then([this](Blank) noexcept {
+            .and_then([this](vajson::Blank) noexcept {
                 return this->GetJsonDocument().Restore();
             })
-            .and_then([this](Blank) noexcept {
+            .and_then([this](vajson::Blank) noexcept {
                 return this->OnElement();
             })
 
             .and_then([this](ParserState state) noexcept {
-                return this->GetJsonDocument().Snap().transform([this, &state](Blank) {
+                return this->GetJsonDocument().Snap().transform([this, &state](vajson::Blank) {
                     index_++;
                     return state;
                 });

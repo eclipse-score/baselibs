@@ -71,7 +71,7 @@ class BoolParser final : public VirtualParser
     auto OnBool(bool v) noexcept -> ParserResult final
     {
 
-        return vajson::ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](Blank) noexcept {
+        return vajson::ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](vajson::Blank) noexcept {
             return ParserState::kFinished;
         });
     }

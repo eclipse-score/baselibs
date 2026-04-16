@@ -48,7 +48,7 @@ auto StructureParserBase::Parse() noexcept -> Result<vajson::Blank>
 
     ParserResult result{MakeResult(this->GetJsonOps().SkipWhitespace(),
                                    MakeError(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty."))
-                            .transform([](Blank) noexcept {
+                            .transform([](vajson::Blank) noexcept {
                                 return ParserState::kRunning;
                             })};
 
@@ -72,10 +72,10 @@ auto StructureParserBase::ParseNull() noexcept -> ParserResult
 {
 
     return (this->GetJsonOps().CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->GetState().AddValue();
         })
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->OnNull();
         });
 }
@@ -93,10 +93,10 @@ auto StructureParserBase::ParseTrue() noexcept -> ParserResult
 {
 
     return (this->GetJsonOps().CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->GetState().AddValue();
         })
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->OnBool(true);
         });
 }
@@ -113,10 +113,10 @@ auto StructureParserBase::ParseFalse() noexcept -> ParserResult
 {
 
     return (this->GetJsonOps().CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->GetState().AddValue();
         })
-        .and_then([this](Blank) noexcept {
+        .and_then([this](vajson::Blank) noexcept {
             return this->OnBool(false);
         });
 }
@@ -135,7 +135,7 @@ auto StructureParserBase::ParseFalse() noexcept -> ParserResult
 auto StructureParserBase::ParseNumber(const char cur) noexcept -> ParserResult
 {
     return (this->GetState().AddValue())
-        .and_then([this, cur](Blank) noexcept {
+        .and_then([this, cur](vajson::Blank) noexcept {
             return JsonNumber::New(this->GetNumber(cur));
         })
         .and_then([this](JsonNumber num) noexcept {
@@ -177,7 +177,7 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
 
     if (this->GetJsonOps().Skip(':'))
     {
-        result = this->GetState().AddKey().and_then([this, &string](Blank) noexcept {
+        result = this->GetState().AddKey().and_then([this, &string](vajson::Blank) noexcept {
             std::string_view const view{string};
             this->GetJsonDocument().StoreCurrentKey(view);
 
@@ -186,7 +186,7 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
     }
     else
     {
-        result = this->GetState().AddValue().and_then([this, &string](Blank) noexcept {
+        result = this->GetState().AddValue().and_then([this, &string](vajson::Blank) noexcept {
             return this->OnString(string);
         });
     }
@@ -312,7 +312,7 @@ auto StructureParserBase::UnescapeChar(const char escaped) noexcept -> Result<ch
  */
 auto StructureParserBase::ParseStartObject() noexcept -> ParserResult
 {
-    return this->GetState().AddObject().and_then([this](Blank) noexcept {
+    return this->GetState().AddObject().and_then([this](vajson::Blank) noexcept {
         return this->OnStartObject();
     });
 }
@@ -346,7 +346,7 @@ auto StructureParserBase::ParseStartArray() noexcept -> ParserResult
 {
     return this->GetState().AddArray().and_then(
 
-        [this](Blank) noexcept {
+        [this](vajson::Blank) noexcept {
             return this->OnStartArray();
         });
 }
@@ -380,7 +380,7 @@ auto StructureParserBase::ParseComma() noexcept -> ParserResult
 {
     return MakeResult(this->GetState().AddComma(),
                       {JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma."})
-        .transform([](Blank) noexcept {
+        .transform([](vajson::Blank) noexcept {
             return ParserState::kRunning;
         });
 }

@@ -139,7 +139,7 @@ auto JsonData::Snap() noexcept -> Result<vajson::Blank>
         MakeErrorResult<vajson::Blank>(JsonErrc::kStreamFailure, "JsonData::Snap: Could not get stream position.");
     if (!this->GetStream().fail())
     {
-        result.emplace(Blank{});
+        result.emplace(vajson::Blank{});
         this->depth_counter_backup_ = this->depth_counter_;
         this->pos_backup_ = static_cast<std::uint64_t>(pos);
         this->has_backup_ = true;

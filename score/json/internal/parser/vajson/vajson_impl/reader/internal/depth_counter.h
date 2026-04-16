@@ -297,7 +297,7 @@ class DepthCounter final
         return MakeResult(expected_key,
                           MakeError(static_cast<score::json::vajson::ErrorCode>(JsonErrc::kInvalidJson),
                                     "DepthCounter::PopObject: Not in an object."))
-            .transform([this](Blank) noexcept {
+            .transform([this](vajson::Blank) noexcept {
                 this->comma_expected_ = true;
                 return Pop();
             });
@@ -323,7 +323,7 @@ class DepthCounter final
         return MakeResult(expected_key,
                           MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
                                     "DepthCounter::PopArray: Not in an array."))
-            .transform([this](Blank) noexcept {
+            .transform([this](vajson::Blank) noexcept {
                 this->comma_expected_ = true;
                 return this->Pop();
             });
