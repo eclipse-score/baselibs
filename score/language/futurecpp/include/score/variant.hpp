@@ -79,13 +79,6 @@ public:
     ///
     /// A default constructed variant will be constructed with the T0 provided type.
     variant() = default;
-    variant(const variant& rhs) = default;
-    variant(variant&& rhs) = default;
-    variant& operator=(const variant& rhs) = default;
-    variant& operator=(variant&& rhs) = default;
-
-    /// \brief Destruct the variant and the containing object.
-    ~variant() {}
 
     /// \brief Construct a variant from another type.
     ///
