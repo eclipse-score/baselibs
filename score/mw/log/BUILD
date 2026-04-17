@@ -78,7 +78,7 @@ cc_library(
     name = "minimal",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/mw/log:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":frontend",
         "@score_baselibs//score/mw/log:backend_table",
