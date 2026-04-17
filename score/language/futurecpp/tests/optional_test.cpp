@@ -183,6 +183,192 @@ struct noexcept_move_assign_and_ctor
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#9337998
+TEST(optional, trivial)
+{
+    static_assert(std::is_trivially_copy_constructible_v<score::cpp::optional<std::int32_t>>);
+    static_assert(std::is_trivially_copy_assignable_v<score::cpp::optional<std::int32_t>>);
+    static_assert(std::is_trivially_move_constructible_v<score::cpp::optional<std::int32_t>>);
+    static_assert(std::is_trivially_move_assignable_v<score::cpp::optional<std::int32_t>>);
+    static_assert(std::is_trivially_destructible_v<score::cpp::optional<std::int32_t>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
+TEST(optional, trivial_copy_constructible)
+{
+    struct trivial_copy_only
+    {
+        trivial_copy_only() {}
+        trivial_copy_only(const trivial_copy_only&) = default;
+        trivial_copy_only& operator=(const trivial_copy_only&) { return *this; }
+        trivial_copy_only(trivial_copy_only&&) {}
+        trivial_copy_only& operator=(trivial_copy_only&&) { return *this; }
+        // keep it trivial because otherwise copy constructible trait will be false. See the note on cppreference:
+        // https://en.cppreference.com/w/cpp/types/is_copy_constructible.html
+        //
+        // "Same applies to is_trivially_copy_constructible, which, in these implementations, also requires that the
+        // destructor is trivial:
+        // [GCC bug 51452](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=51452),
+        // [LWG issue 2116](https://cplusplus.github.io/LWG/issue2116).
+        ~trivial_copy_only() = default;
+    };
+
+    static_assert(std::is_trivially_copy_constructible_v<score::cpp::optional<trivial_copy_only>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
+TEST(optional, trivial_move_constructible)
+{
+    struct trivial_move_only
+    {
+        trivial_move_only() {}
+        trivial_move_only(const trivial_move_only&) {}
+        trivial_move_only& operator=(const trivial_move_only&) { return *this; }
+        trivial_move_only(trivial_move_only&&) = default;
+        trivial_move_only& operator=(trivial_move_only&&) { return *this; }
+        // same argument to keep it trivial as in `TrivialCopyOnly`
+        ~trivial_move_only() = default;
+    };
+
+    static_assert(std::is_trivially_move_constructible_v<score::cpp::optional<trivial_move_only>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
+TEST(optional, trivial_copy_assignable)
+{
+    {
+        struct trivial_copy_assignable
+        {
+            trivial_copy_assignable() {}
+            trivial_copy_assignable(const trivial_copy_assignable&) = default;
+            trivial_copy_assignable& operator=(const trivial_copy_assignable&) = default;
+            trivial_copy_assignable(trivial_copy_assignable&&) {}
+            trivial_copy_assignable& operator=(trivial_copy_assignable&&) { return *this; }
+            ~trivial_copy_assignable() = default;
+        };
+
+        static_assert(std::is_trivially_copy_assignable_v<score::cpp::optional<trivial_copy_assignable>>);
+    }
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) {}
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() = default;
+        };
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::optional<not_trivial_copy_assignable>>);
+    }
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) { return *this; }
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() = default;
+        };
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::optional<not_trivial_copy_assignable>>);
+    }
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() {}
+        };
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::optional<not_trivial_copy_assignable>>);
+    }
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
+TEST(optional, trivial_move_assignable)
+{
+    {
+        struct trivial_move_assignable
+        {
+            trivial_move_assignable() {}
+            trivial_move_assignable(const trivial_move_assignable&) {}
+            trivial_move_assignable& operator=(const trivial_move_assignable&) { return *this; }
+            trivial_move_assignable(trivial_move_assignable&&) = default;
+            trivial_move_assignable& operator=(trivial_move_assignable&&) = default;
+            ~trivial_move_assignable() = default;
+        };
+
+        static_assert(std::is_trivially_move_assignable_v<score::cpp::optional<trivial_move_assignable>>);
+    }
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) = default;
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) { return *this; }
+            ~not_trivial_move_assignable() = default;
+        };
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::optional<not_trivial_move_assignable>>);
+    }
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) {}
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) = default;
+            ~not_trivial_move_assignable() = default;
+        };
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::optional<not_trivial_move_assignable>>);
+    }
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) = default;
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) = default;
+            ~not_trivial_move_assignable() {}
+        };
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::optional<not_trivial_move_assignable>>);
+    }
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
+TEST(optional, trivial_destructible)
+{
+    struct trivial_destructible_only
+    {
+        trivial_destructible_only() {}
+        trivial_destructible_only(const trivial_destructible_only&) {}
+        trivial_destructible_only& operator=(const trivial_destructible_only&) { return *this; }
+        trivial_destructible_only(trivial_destructible_only&&) {}
+        trivial_destructible_only& operator=(trivial_destructible_only&&) { return *this; }
+        ~trivial_destructible_only() = default;
+    };
+    static_assert(std::is_trivially_destructible_v<score::cpp::optional<trivial_destructible_only>>);
+    static_assert(std::is_trivially_destructible_v<score::cpp::optional<std::int32_t>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9337998
 TEST(optional, basic_functionality)
 {
     score::cpp::optional<int> fixture;
