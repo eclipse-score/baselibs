@@ -14,6 +14,8 @@
 
 #include "score/filesystem/filestream/file_factory_fake.h"
 
+#include <score/assert.hpp>
+
 #include <gtest/gtest.h>
 
 #include <chrono>

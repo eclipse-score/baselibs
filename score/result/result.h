@@ -19,7 +19,6 @@
 #include "score/result/details/expected/extensions.h"
 
 #include <score/expected.hpp>
-#include <score/optional.hpp>
 
 #include <optional>
 #include <string_view>
@@ -58,23 +57,6 @@ template <typename T>
 auto MakeUnexpected(score::result::Error error) noexcept -> Result<T>
 {
     return Result<T>{details::unexpect, error};
-}
-
-template <typename T, typename F>
-auto ResultToAmpOptionalOrElse(const Result<T>& result, F&& error_handling) -> score::cpp::optional<T>
-{
-    return details::expected_value_to_score_future_cpp_optional_or_else(result, std::forward<F>(error_handling));
-}
-
-template <typename T, typename F>
-// Suppress "AUTOSAR C++14 A13-3-1", The rule states: "A function that contains “forwarding reference” as its
-// argument shall not be overloaded".
-// As we here have a different parameters, so no confusion on which API to be used.
-// coverity[autosar_cpp14_a13_3_1_violation]
-auto ResultToAmpOptionalOrElse(Result<T>&& result, F&& error_handling) -> score::cpp::optional<T>
-{
-    return details::expected_value_to_score_future_cpp_optional_or_else(std::forward<Result<T>>(result),
-                                                           std::forward<F>(error_handling));
 }
 
 template <typename T, typename F>

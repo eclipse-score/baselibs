@@ -19,6 +19,8 @@
 #include "score/os/stdlib.h"
 #include "score/os/unistd.h"
 
+#include <score/assert.hpp>
+
 #include <array>
 #include <cstdint>
 #include <sstream>

@@ -17,6 +17,8 @@
 #include "score/json/internal/model/error.h"
 #include "score/json/internal/writer/json_serialize/json_serialize.h"
 
+#include <score/assert.hpp>
+
 #include <algorithm>
 #include <array>
 #include <iterator>

@@ -13,6 +13,7 @@
 #include "score/filesystem/filestream/file_factory_fake.h"
 #include "score/filesystem/filestream/file_buf.h"
 
+#include <score/assert.hpp>
 #include <score/utility.hpp>
 #include <sstream>
 

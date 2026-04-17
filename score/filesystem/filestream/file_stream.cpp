@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/filesystem/filestream/file_stream.h"
 
+#include <score/assert.hpp>
+
 score::ResultBlank score::filesystem::FileStream::Close()
 {
     auto buf = rdbuf();

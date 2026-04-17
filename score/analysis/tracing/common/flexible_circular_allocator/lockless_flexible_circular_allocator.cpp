@@ -14,7 +14,7 @@
 
 #include "score/language/safecpp/safe_math/safe_math.h"
 
-#include <score/utility.hpp>
+#include <score/assert.hpp>
 #include <memory>
 namespace score
 {

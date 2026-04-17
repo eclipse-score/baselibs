@@ -15,6 +15,7 @@
 #include "score/callback.hpp"
 #include "score/json/json_parser.h"
 #include "score/memory/split_string_view.h"
+#include "score/memory/string_literal.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/initialization_reporter.h"
 

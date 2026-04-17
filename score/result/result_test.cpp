@@ -94,43 +94,6 @@ class MoveOnlyType
     std::int32_t value_;
 };
 
-TEST_F(ConversionTests, CanConvertLValueResultWithValueToAmpOptional)
-{
-    CopyableType value{32};
-    const Result<CopyableType> result{value};
-    EXPECT_CALL(error_handling, Call(_)).Times(0);
-    score::cpp::optional<CopyableType> optional = ResultToAmpOptionalOrElse(result, error_handling.AsStdFunction());
-    EXPECT_TRUE(optional.has_value());
-    EXPECT_EQ(optional.value(), value);
-}
-
-TEST_F(ConversionTests, CanConvertLValueResultWithErrorToAmpOptional)
-{
-    const Result<CopyableType> result{unexpect, error};
-    EXPECT_CALL(error_handling, Call(error)).Times(1);
-    score::cpp::optional<CopyableType> optional = ResultToAmpOptionalOrElse(result, error_handling.AsStdFunction());
-    EXPECT_FALSE(optional.has_value());
-}
-
-TEST_F(ConversionTests, CanConvertRValueResultWithValueToAmpOptional)
-{
-    const auto raw_value{53};
-    MoveOnlyType value{raw_value};
-    Result<MoveOnlyType> result{std::move(value)};
-    EXPECT_CALL(error_handling, Call(_)).Times(0);
-    score::cpp::optional<MoveOnlyType> optional = ResultToAmpOptionalOrElse(std::move(result), error_handling.AsStdFunction());
-    EXPECT_TRUE(optional.has_value());
-    EXPECT_EQ(optional.value().value_, raw_value);
-}
-
-TEST_F(ConversionTests, CanConvertRValueResultWithErrorToAmpOptional)
-{
-    Result<MoveOnlyType> result{unexpect, error};
-    EXPECT_CALL(error_handling, Call(error)).Times(1);
-    score::cpp::optional<MoveOnlyType> optional = ResultToAmpOptionalOrElse(std::move(result), error_handling.AsStdFunction());
-    EXPECT_FALSE(optional.has_value());
-}
-
 TEST_F(ConversionTests, CanConvertLValueResultWithValueToStdOptional)
 {
     CopyableType value{14};

@@ -16,6 +16,7 @@
 #include "ara_com_meta_info.h"
 #include "dlt_meta_info.h"
 #include <score/variant.hpp>
+#include <variant>
 
 namespace score
 {
@@ -28,8 +29,10 @@ namespace tracing
 class MetaInfoVariants
 {
   public:
-    /// @brief Datatype used to store meta info data in std::variant
+    /// @brief Datatype used to store meta info data in score::cpp::variant (backward compatibility)
     using Type = score::cpp::variant<AraComMetaInfo, DltMetaInfo>;
+    /// @brief Datatype used to store meta info data in std::variant (new type-safe interface)
+    using StdType = std::variant<AraComMetaInfo, DltMetaInfo>;
 };
 
 }  // namespace tracing

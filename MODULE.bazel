@@ -88,13 +88,13 @@ bazel_dep(name = "rules_cc", version = "0.2.16")
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "3.0.0")
-bazel_dep(name = "score_process", version = "1.4.4")
-bazel_dep(name = "score_tooling", version = "1.1.2")
+bazel_dep(name = "score_docs_as_code", version = "3.0.0", dev_dependency = True)
+bazel_dep(name = "score_process", version = "1.4.4", dev_dependency = True)
+bazel_dep(name = "score_tooling", version = "1.1.2", dev_dependency = True)
 
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.8.3")
+bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
 
 PYTHON_VERSION = "3.12"
 

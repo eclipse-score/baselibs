@@ -403,11 +403,11 @@ void SharedMemoryResourceTest::expectMmapReturns(void* const data_region_start,
 void SharedMemoryResourceTest::expectSharedMemorySuccessfullyOpened(std::int32_t file_descriptor,
                                                                     bool is_read_write,
                                                                     void* const data_region_start,
-                                                                    uid_t st_uid)
+                                                                    uid_t st_uid,
+                                                                    std::int32_t lock_file_descriptor)
 {
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we hold the lock file during open (prevents racing with Create)
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -419,6 +419,10 @@ void SharedMemoryResourceTest::expectSharedMemorySuccessfullyOpened(std::int32_t
         .WillRepeatedly(Return(score::cpp::blank{}));
 
     expectMmapReturns(data_region_start, file_descriptor, is_read_write);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));

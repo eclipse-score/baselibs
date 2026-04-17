@@ -14,7 +14,6 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_META_INFO_H
 
 #include "ara_com_properties.h"
-#include <score/optional.hpp>
 #include <bitset>
 #include <cstdint>
 #include <type_traits>

@@ -17,6 +17,7 @@
 
 #include "score/result/result.h"
 
+#include <score/assert.hpp>
 #include <static_reflection_with_serialization/visitor/visit.h>
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 

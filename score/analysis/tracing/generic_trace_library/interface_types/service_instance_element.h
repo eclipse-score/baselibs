@@ -62,6 +62,23 @@ class ServiceInstanceElement
 
     using StdVariantType = std::variant<EventId, FieldId, MethodId>;
 
+    /// @brief Default constructor
+    ServiceInstanceElement() = default;
+
+    /// @brief Constructor accepting VariantType (score::cpp::variant)
+    ServiceInstanceElement(ServiceIdType input_service_id,
+                           std::uint32_t input_major_version,
+                           std::uint32_t input_minor_version,
+                           InstanceIdType input_instance_id,
+                           VariantType input_element_id);
+
+    /// @brief Constructor accepting StdVariantType (std::variant, new type-safe interface)
+    ServiceInstanceElement(ServiceIdType input_service_id,
+                           std::uint32_t input_major_version,
+                           std::uint32_t input_minor_version,
+                           InstanceIdType input_instance_id,
+                           StdVariantType input_element_id);
+
     // No harm to declare the members as public
     //  coverity[autosar_cpp14_m11_0_1_violation]
     ServiceIdType service_id;

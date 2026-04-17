@@ -14,6 +14,7 @@
 #define SCORE_LIB_MEMORY_PMR_RING_BUFFER_H
 
 #include "score/vector.hpp"
+#include <score/assert.hpp>
 
 #include <type_traits>
 

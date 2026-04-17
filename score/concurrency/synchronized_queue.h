@@ -15,6 +15,7 @@
 
 #include "score/concurrency/notification.h"
 
+#include <score/assert.hpp>
 #include <score/deque.hpp>
 
 #include <chrono>

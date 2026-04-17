@@ -91,7 +91,7 @@ constexpr auto readAccessForEveryBody = readWriteAccessForUser | Stat::Mode::kRe
 constexpr auto readWriteAccessForEveryBody =
     readAccessForEveryBody | Stat::Mode::kWriteGroup | Stat::Mode::kWriteOthers;
 
-// coverity[autosar_cpp14_a0_1_1_violation] false-positive: used in waitForOtherProcessAndOpen
+// coverity[autosar_cpp14_a0_1_1_violation] false-positive: used in acquireLockAndOpenSharedMemory
 constexpr auto read_only = ::score::os::Stat::Mode::kReadUser;
 
 /// \brief Class aggregating info about shm-object read out via stat/fstat from the shm-object file
@@ -153,7 +153,7 @@ bool doesFileExist(const safecpp::zstring_view filePath)
     return result.has_value();
 }
 
-// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in waitUntilInitializedByOtherProcess
+// coverity[autosar_cpp14_a0_1_3_violation] false-positive: used in acquireLockFile
 bool waitForFreeLockFile(const std::string& lock_file_path)
 {
     constexpr std::chrono::milliseconds timeout{500};
@@ -602,17 +602,20 @@ score::cpp::expected_blank<Error> SharedMemoryResource::OpenImpl(const bool is_r
         this->opening_mode_ = Fcntl::Open::kReadWrite;
         this->map_mode_ = ::score::os::Mman::Protection::kRead | ::score::os::Mman::Protection::kWrite;
     }
-    return this->waitForOtherProcessAndOpen();
+    // Note: acquireLockAndOpenSharedMemory() creates a temporary lock file to synchronize with concurrent CreateImpl
+    // calls. This is NOT the shared-memory object, it is a guard file that is auto-removed on scope exit.
+    // The shared-memory object itself is only opened (not created) via shm_open.
+    return this->acquireLockAndOpenSharedMemory();
 }
 
 // Warning is due to score::cpp::expected value() but the rationale is the same as for score::Result::value() above
 // coverity[autosar_cpp14_a15_5_3_violation]
-auto SharedMemoryResource::waitForOtherProcessAndOpen() noexcept -> score::cpp::expected_blank<Error>
+auto SharedMemoryResource::acquireLockAndOpenSharedMemory() noexcept -> score::cpp::expected_blank<Error>
 {
     const auto* const path = std::get_if<std::string>(&shared_memory_resource_identifier_);
     const auto is_named_shm = (path != nullptr);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(is_named_shm, "shm-object file path is not set.");
-    this->waitUntilInitializedByOtherProcess();
+    const auto lock_file = this->acquireLockFile();
 
     // NOLINTNEXTLINE(score-banned-function) need to use shm_open for correct behavior
     const auto result = ::score::os::Mman::instance().shm_open(path->data(), this->opening_mode_, read_only);
@@ -933,20 +936,25 @@ auto SharedMemoryResource::initializeControlBlock() noexcept -> void
 
 // Warning is due to std::optional::value but the rationale is the same as for std::optional:value() above
 // coverity[autosar_cpp14_a15_5_3_violation]
-auto SharedMemoryResource::waitUntilInitializedByOtherProcess() const noexcept -> void
+auto SharedMemoryResource::acquireLockFile() const noexcept -> std::optional<LockFile>
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(lock_file_path_.has_value(), "Lock file path is not set.");
-    const auto* const path = std::get_if<std::string>(&shared_memory_resource_identifier_);
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(path != nullptr, "shm-object file path is not set.");
-    if (!waitForFreeLockFile(lock_file_path_.value()))
+
+    // Hold the lock file during Open to prevent racing with CreateImpl.
+    auto lock_file = LockFile::Create(lock_file_path_.value());
+    while (!lock_file.has_value())
     {
-        // Lock file is still there after timeout, we cannot remove it and reinitialize,
-        // so there is nothing for us to do besides dying.
-        ::score::mw::log::LogFatal("shm")
-            << __func__ << __LINE__ << "Shared Memory Resource: " << *path
-            << "Lock file still present after timeout. Cannot open shared memory. Terminating";
-        std::terminate();
+        if (!waitForFreeLockFile(lock_file_path_.value()))
+        {
+            const auto* const path = std::get_if<std::string>(&shared_memory_resource_identifier_);
+            ::score::mw::log::LogFatal("shm")
+                << __func__ << __LINE__ << "Shared Memory Resource: " << (path != nullptr ? *path : "<unknown>")
+                << " Lock file still present after timeout. Cannot open shared memory. Terminating";
+            std::terminate();
+        }
+        lock_file = LockFile::Create(lock_file_path_.value());
     }
+    return lock_file;
 }
 
 // Warning is due to std::optional::value but the rationale is the same as for std::optional:value() above

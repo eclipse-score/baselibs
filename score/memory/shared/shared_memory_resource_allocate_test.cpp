@@ -221,14 +221,18 @@ TEST_F(SharedMemoryResourceAllocateDeathTest, AllocatingBlockLargerThanAllocated
     auto* const control_block_addr = new (dataRegion.data()) ControlBlock(id);
     control_block_addr->alreadyAllocatedBytes = sizeof(ControlBlock);
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(dataRegion.data(), file_descriptor, is_read_write, is_death_test);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));
@@ -262,14 +266,18 @@ TEST_F(SharedMemoryResourceAllocateDeathTest, AllocationFailureLogsCorrectStartA
     auto* const control_block_addr = new (dataRegion.data()) ControlBlock(id);
     control_block_addr->alreadyAllocatedBytes = sizeof(ControlBlock);
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(dataRegion.data(), file_descriptor, is_read_write, is_death_test);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));
@@ -297,14 +305,18 @@ TEST_F(SharedMemoryResourceAllocateDeathTest, AllocatingMultipleBlocksLargerThan
     auto* const control_block_addr = new (dataRegion.data()) ControlBlock(id);
     control_block_addr->alreadyAllocatedBytes = sizeof(ControlBlock);
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(dataRegion.data(), file_descriptor, is_read_write, is_death_test);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));

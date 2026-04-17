@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/language/safecpp/scoped_function/details/instrumented_memory_resource.h"
 
+#include <score/assert.hpp>
+
 namespace score
 {
 namespace safecpp

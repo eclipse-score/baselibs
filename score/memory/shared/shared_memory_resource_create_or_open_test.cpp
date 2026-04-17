@@ -53,16 +53,20 @@ TEST_F(SharedMemoryResourceCreateOrOpenTest, SharedMemoryCreatedWhenSharedMemory
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
     constexpr std::int32_t lock_file_descriptor = 1;
+    constexpr std::int32_t open_lock_file_descriptor = 10;
     constexpr bool is_read_write = true;
     bool isInitialized = false;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file for the open attempt
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
 
     // And the shared memory region also doesn't exist
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_read_write);
+
+    // and the lock file is cleaned up after the failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // Then we successfully create the lock
     // the data region, where mmap shall place the mapping (which would in reality ALWAYS PAGE aligned) should be
@@ -98,16 +102,20 @@ TEST_F(SharedMemoryResourceCreateOrOpenTest, SharedMemoryOpenedWhenSharedMemoryI
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
     constexpr std::int32_t lock_file_descriptor = 1;
+    constexpr std::int32_t open_lock_file_descriptor = 10;
     constexpr bool is_read_write = true;
     bool isInitialized = false;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file for the first open attempt
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
 
     // And the shared memory region doesn't exist when we first try to open it
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_read_write);
+
+    // and the lock file is cleaned up after the failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // And we can create the lock file
     expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
@@ -142,9 +150,9 @@ TEST_F(SharedMemoryResourceCreateOrOpenDeathTest, OpeningSharedMemoryWithUnknown
     InSequence sequence{};
     constexpr bool is_death_test = true;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(
-        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_death_test);
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor, is_death_test);
 
     // And we get an unknown error when trying to open the shared memory region
     expectShmOpenReturns(

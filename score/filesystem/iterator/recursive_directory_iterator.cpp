@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/filesystem/iterator/recursive_directory_iterator.h"
 
+#include <score/assert.hpp>
+
 namespace score
 {
 namespace filesystem

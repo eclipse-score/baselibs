@@ -18,6 +18,7 @@
 #include "score/memory/shared/atomic_indirector.h"
 #include <cstdint>
 #include <list>
+#include <tuple>
 #include <type_traits>
 
 namespace score
@@ -146,7 +147,7 @@ class alignas(std::max_align_t) List
         {
             if (flexible_allocator_)  // LCOV_EXCL_BR_LINE not testable see comment above.
             {
-                score::cpp::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
+                std::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
             }
         }
     }

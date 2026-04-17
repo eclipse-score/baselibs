@@ -26,6 +26,8 @@
 #include <sys/stat.h>
 #include <stack>
 
+#include <score/assert.hpp>
+
 // Remove after reproduction (Ticket-243648)
 #include <iostream>
 
