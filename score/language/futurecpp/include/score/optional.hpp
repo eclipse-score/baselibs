@@ -230,16 +230,6 @@ public:
         return *this;
     }
 
-    optional(const optional&) = default;
-    optional(optional&&) = default;
-    optional& operator=(const optional&) = default;
-    optional& operator=(optional&&) = default;
-
-    /// \brief Destruct an optional.
-    ///
-    /// When the optional holds a value, this value will be destructed as well.
-    ~optional() {}
-
     /// \brief Constructs the contained value in-place
     ///
     /// \warning If *this already contains a value it is destroyed
