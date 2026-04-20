@@ -573,7 +573,7 @@ TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
 
     // Get current absolute time and compute an expiration 200ms in the future
     struct timespec now{};
-    ::clock_gettime(CLOCK_REALTIME, &now);
+    Time::instance().clock_gettime(CLOCK_REALTIME, &now);
 
     itimerspec new_value{};
     new_value.it_value.tv_sec = now.tv_sec;
@@ -595,7 +595,7 @@ TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
     itimerspec current_value{};
     const std::int32_t gettime_result = ::timer_gettime(timerid, &current_value);
     EXPECT_EQ(gettime_result, 0);
-    EXPECT_GT(current_value.it_value.tv_sec + current_value.it_value.tv_nsec, 0);
+    EXPECT_TRUE(current_value.it_value.tv_sec > 0 || current_value.it_value.tv_nsec > 0);
 
     Time::instance().timer_delete(timerid);
 }
