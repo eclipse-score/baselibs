@@ -595,7 +595,9 @@ TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
     itimerspec current_value{};
     const std::int32_t gettime_result = ::timer_gettime(timerid, &current_value);
     EXPECT_EQ(gettime_result, 0);
-    EXPECT_TRUE(current_value.it_value.tv_sec > 0 || current_value.it_value.tv_nsec > 0);
+    const auto remaining_ns = (current_value.it_value.tv_sec * 1000000000L) + current_value.it_value.tv_nsec;
+    EXPECT_GT(remaining_ns, 0);           // Timer is armed
+    EXPECT_LE(remaining_ns, 200000000L);  // Remaining time <= 200ms
 
     Time::instance().timer_delete(timerid);
 }
