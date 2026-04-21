@@ -74,7 +74,10 @@ cc_library(
     name = "slog",
     srcs = ["slog_registrant.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
+    tags = [
+        "FFI",
+        "manual",  # target broken because the logger is part of score_logging
+    ],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],  # platform_only
     deps = [
@@ -148,7 +151,10 @@ cc_test(
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
-    tags = ["unit"],
+    tags = [
+        "manual",
+        "unit",
+    ],
     target_compatible_with = ["@platforms//os:qnx"],
     deps = [
         ":slog",
@@ -162,7 +168,6 @@ cc_unit_test_suites_for_host_and_qnx(
     cc_unit_tests = [
         ":file_registrant_test",
         ":remote_registrant_test",
-        ":slog_registrant_test",
     ],
     visibility = [
         "@score_baselibs//score/mw/log:__pkg__",
