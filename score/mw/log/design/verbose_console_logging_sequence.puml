@@ -1,0 +1,108 @@
+@startuml verbose_logging_sequence
+
+participant "_:App_" as App
+participant "FreeFunctions" as FreeFunctions
+participant "LogStreamFactory" as LogStreamFactory
+participant "Runtime" as Runtime
+participant "_:LogStream_" as LogStream
+participant "_:TextRecorder_" as TextRecorder
+participant "TextFormat" as TextFormat
+participant "_:EmptyRecorder_" as EmptyRecorder
+participant "Console\n(stdout)" as Console
+
+activate App
+
+App -> FreeFunctions : score::mw::log::Error()
+
+FreeFunctions -> LogStreamFactory : GetStream(LogLevel)
+
+activate LogStreamFactory
+
+LogStreamFactory -> Runtime : GetRecorder()
+Runtime -> TextRecorder : creates
+LogStreamFactory <-- Runtime : Recorder
+
+LogStreamFactory -> LogStream : construct
+
+activate LogStream
+
+LogStream -> TextRecorder : StartRecord(ctx, LogLevel)
+activate TextRecorder
+
+LogStream <-- TextRecorder : score::cpp::optional<SlotHandle>
+deactivate TextRecorder
+
+alt SlotHandle is empty (TextRecorder failure)
+
+  LogStream -> Runtime : GetRecorder()
+  Runtime -> EmptyRecorder : fallback
+  activate EmptyRecorder
+
+  LogStream -> EmptyRecorder : StartRecord(ctx, LogLevel)
+
+  note right of EmptyRecorder #orange
+    EmptyRecorder acts as /dev/null.
+    All log data is silently discarded.
+  end note
+
+  LogStream <-- EmptyRecorder : score::cpp::optional<SlotHandle>
+  deactivate EmptyRecorder
+
+end
+
+LogStreamFactory <-- LogStream : LogStream
+deactivate LogStream
+
+FreeFunctions <-- LogStreamFactory : LogStream
+deactivate LogStreamFactory
+
+App <-- FreeFunctions : LogStream
+
+App -> LogStream : << Some Data
+
+activate LogStream
+
+LogStream -> TextRecorder : Log(SlotHandle, Data)
+activate TextRecorder
+
+TextRecorder -> TextFormat : Format(data)
+activate TextFormat
+
+TextFormat -> TextFormat : format data as\nhuman-readable text
+
+TextRecorder <-- TextFormat : formatted text
+deactivate TextFormat
+
+TextRecorder -> Console : write to stdout
+activate Console
+TextRecorder <-- Console
+deactivate Console
+
+LogStream <-- TextRecorder
+deactivate TextRecorder
+
+App <-- LogStream : LogStream
+deactivate LogStream
+
+App -> LogStream : Destruct
+
+activate LogStream
+
+LogStream -> TextRecorder : StopRecord(SlotHandle)
+activate TextRecorder
+
+TextRecorder -> Console : flush to stdout
+activate Console
+TextRecorder <-- Console
+deactivate Console
+
+LogStream <-- TextRecorder
+deactivate TextRecorder
+
+destroy LogStream
+
+App <-- LogStream
+
+deactivate App
+
+@enduml
