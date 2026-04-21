@@ -69,9 +69,9 @@ Starting from this basic idea, the static design is divided into four main parts
 This design allows that any content streamed by the user into a `LogStream`, will directly end up in the respective slot
 implementation.
 
-![Verbose Logging class diagram](./score/mw/log/design/verbose_logging_static.puml)
+![Verbose Console Logging class diagram](./score/mw/log/design/verbose_console_logging_static.puml)
 
-![Verbose Logging sequence diagram](./score/mw/log/design/verbose_logging_sequence.puml)
+![Verbose Console Logging sequence diagram](./score/mw/log/design/verbose_console_logging_sequence.puml)
 
 ![Non-Verbose Logging class diagram](./score/mw/log/design/non_verbose_logging_static.puml)
 
@@ -88,7 +88,7 @@ Following recorders are supported:
 5. EmptyRecoder - used when logging is off.
 Because of the similarity between TextRecorder and FileRecorder it is decided to use the common Backend for both.
 
-![Recorders class diagram](./score/mw/log/design/mw_log_recorders.puml)
+![Recorders class diagram](./score/mw/log/design/mw_log_default_recorders.puml)
 
 ### High Level Component Diagram - Remote Logging
 
