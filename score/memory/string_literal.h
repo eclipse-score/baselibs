@@ -16,10 +16,9 @@
 namespace score
 {
 
-/// \brief We cannot use score::cpp::string view everywhere, since it is not constexpr yet.
-/// until then we need to still use string literals. In order to avoid the usage of `char` in the codebase
-///  - which will lead to Klockwork warnings -, we have a custom definition here.
-using StringLiteral = const char*;
+using StringLiteral
+    [[deprecated("No longer supported. Use std::string, std::string_view, safecpp::zstring_view, or const char* "
+                 "depending on your use case")]] = const char*;
 
 }  // namespace score
 

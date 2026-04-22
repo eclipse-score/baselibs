@@ -13,7 +13,7 @@
 #include "score/os/fcntl_impl.h"
 #include "score/os/errno.h"
 #include "score/os/fcntl.h"
-#include "score/utils/src/scoped_operation.h"
+#include "score/scope_exit/scope_exit.h"
 
 #include "gtest/gtest.h"
 
@@ -332,7 +332,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockTwice)
     {
         auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopedOperation<> scoped_operation_open{[&file_descriptor]() noexcept {
+        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
             ::close(file_descriptor);
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,
@@ -370,7 +370,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockAndSharedLock)
     {
         auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopedOperation<> scoped_operation_open{[&file_descriptor]() noexcept {
+        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
             ::close(file_descriptor);
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,
@@ -408,7 +408,7 @@ TEST_F(FcntlImplTest, FlockSucceedsWhenTryToObtainSharedLockTwice)
     {
         auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
         ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopedOperation<> scoped_operation_open{[&file_descriptor]() noexcept {
+        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
             ::close(file_descriptor);
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,

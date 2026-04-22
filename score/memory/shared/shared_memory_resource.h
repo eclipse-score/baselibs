@@ -213,10 +213,20 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
     /// allocation within this SharedMemoryResource will take place. This will be directly after the control block
     /// itself at the first address behind the control block, which is maximum/worst-case aligned.
     void initializeControlBlock() noexcept;
-    void waitUntilInitializedByOtherProcess() const noexcept;
 
+    /// \brief Acquires a lock file to prevent racing with concurrent CreateImpl calls.
+    /// \details Creates a lock file and retries until successful or a timeout is reached. If the lock file cannot be
+    /// acquired within the timeout, the process terminates. The caller must keep the returned LockFile alive for the
+    /// duration of the critical section (e.g. shm_open + fstat + mmap) to ensure mutual exclusion with CreateImpl.
+    /// \return The acquired LockFile. The function never returns std::nullopt; it either succeeds or terminates.
+    std::optional<LockFile> acquireLockFile() const noexcept;
+
+    /// \brief Acquires a lock file and then opens an existing shared-memory object.
+    /// \details The lock file is held across the entire shm_open + fstat + mmap sequence to prevent a concurrent
+    /// CreateImpl from initializing the same SHM region while this function is reading it.
+    /// \return Empty result on success, score::os::Error on failure (e.g. shared-memory object does not exist).
     // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
-    score::cpp::expected_blank<score::os::Error> waitForOtherProcessAndOpen() noexcept;
+    score::cpp::expected_blank<score::os::Error> acquireLockAndOpenSharedMemory() noexcept;
 
     void loadInternalsFromSharedMemory() noexcept;
     void initializeInternalsInSharedMemory() noexcept;
@@ -344,6 +354,13 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
                                                          const UserPermissions& permissions) noexcept;
 
     /// \brief Called by SharedMemoryResource::Open() after calling the constructor.
+    /// \details Despite being an "open" operation, this method creates a temporary lock file to prevent a race
+    /// condition with concurrent CreateImpl calls. The lock file is NOT the shared-memory object, it is an
+    /// synchronization artifact (located at <shm_path>_lock) that is automatically removed when the LockFile goes out
+    /// of scope. The shared-memory object itself is only opened (not created) via shm_open without O_CREAT.
+    /// \note Creating the lock file in the Open path is intentional and required: without it, a concurrent CreateImpl
+    /// could begin initializing the SHM region between Open's lock-check and shm_open, causing Open to read
+    /// partially-initialized memory.
     /// \return in case of error an score::os::Error is returned.
     // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
     score::cpp::expected_blank<score::os::Error> OpenImpl(const bool is_read_write) noexcept;

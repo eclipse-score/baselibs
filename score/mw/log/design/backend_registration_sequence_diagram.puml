@@ -1,0 +1,123 @@
+@startuml sequence_diagram
+' Sequence Diagram: Backend Registration and Recorder Creation Flow
+
+skinparam backgroundColor #FEFEFE
+skinparam sequenceArrowThickness 2
+skinparam sequenceParticipantBorderColor #666666
+skinparam sequenceLifeLineBorderColor #999999
+skinparam noteBackgroundColor #FFFFCC
+skinparam noteBorderColor #999999
+skinparam sequenceGroupBackgroundColor #F5F5F5
+
+title **mw::log — Backend Registration & Recorder Creation Sequence**
+
+' === Participants ===
+participant "OS Loader" as loader #F8CECC
+participant "gBackendCreators\n[std::array<FnPtr,6>]" as table #FFF2CC
+participant "ConsoleRegistrant\n(static const)" as console_reg #D5E8D4
+participant "FileRegistrant\n(static const)" as file_reg #DAE8FC
+participant "RemoteRegistrant\n(static const)" as remote_reg #DAE8FC
+participant "Application\nmain()" as app #F8CECC
+participant "Runtime\n(Meyers' Singleton)" as runtime #D5E8D4
+participant "RegistryAware\nRecorderFactory" as factory #D5E8D4
+participant "TargetConfigReader" as config_reader #FFF2CC
+participant "CompositeRecorder" as composite #E1D5E7
+
+' === Phase 1: Constant Initialization (load time) ===
+autonumber
+group #E8F5E9 Phase 1: Constant Initialization (before main)
+    loader -> table : Zero-initialize gBackendCreators
+    note over table
+        gBackendCreators = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr}
+    end note
+end
+
+' === Phase 2: Dynamic Initialization (static constructors, before main) ===
+group #E3F2FD Phase 2: Dynamic Initialization (static constructors, TU order unspecified)
+    console_reg -> table : RegisterBackend(kConsole, &CreateConsoleRecorder)
+    note right : gBackendCreators[0] = &CreateConsoleRecorder
+    activate table
+    deactivate table
+
+    file_reg -> table : RegisterBackend(kFile, &CreateFileRecorder)
+    note right : gBackendCreators[1] = &CreateFileRecorder
+    activate table
+    deactivate table
+
+    note over table
+        Assuming the user has linked the respective backends (E.g.: mw/log/backend:file)*
+            - If a backend is not linked, its slot remains nullptr.
+        mw/log:console is always linked, so kConsole is guaranteed to be registered.
+    end note
+end
+
+' === Phase 3: main() starts ===
+group #FFF3E0 Phase 3: Application Runtime (after main)
+    app -> runtime : First LOG_INFO() call
+    activate runtime
+
+    runtime -> runtime : Instance() — Meyers' singleton created
+    note right of runtime
+        Single creation point.
+        All registrants have completed.
+    end note
+
+    runtime -> factory : CreateRecorderFactory()
+    activate factory
+
+    factory -> config_reader : ReadConfig()
+    activate config_reader
+    config_reader --> factory : Result<Configuration>\n{logMode: kConsole | kFile | kRemote}
+    deactivate config_reader
+
+    ' --- Iterate over configured log modes ---
+    loop for each mode in config.GetLogMode()
+        alt mode = kConsole
+            factory -> table : IsBackendAvailable(kConsole)
+            table --> factory : true
+            factory -> table : CreateRecorderForMode(kConsole, config, memory_resource)
+            table --> factory : unique_ptr<TextRecorder>
+        else mode = kFile
+            factory -> table : IsBackendAvailable(kFile)
+            table --> factory : true
+            factory -> table : CreateRecorderForMode(kFile, config, memory_resource)
+            table --> factory : unique_ptr<FileRecorder>
+        else mode = kRemote (not linked)
+            factory -> table : IsBackendAvailable(kRemote)
+            table --> factory : false (nullptr)
+            note right
+                **Fallback:** Backend not linked.
+                Create console recorder instead.
+            end note
+            factory -> table : CreateRecorderForMode(kConsole, config, memory_resource)
+            table --> factory : unique_ptr<TextRecorder> (fallback)
+        end
+    end
+
+    alt recorders.size() == 1
+        factory --> runtime : single Recorder
+    else recorders.size() > 1
+        factory -> composite : CompositeRecorder(move(recorders))
+        activate composite
+        composite --> factory : unique_ptr<CompositeRecorder>
+        deactivate composite
+        factory --> runtime : unique_ptr<CompositeRecorder>
+    end
+    deactivate factory
+
+    runtime --> app : Recorder& (ready for logging)
+    deactivate runtime
+end
+
+' === Phase 4: Shutdown ===
+group #FFEBEE Phase 4: Program Shutdown
+    app -> runtime : Process exit
+    note over runtime, table
+        - Runtime singleton destroyed releasing owned Recorder instances
+        - BackendRegistrant instances destroyed -> no-op (no destructor body)
+        - gBackendCreators "destroyed" -> trivially destructible, no dtor runs
+
+    end note
+end
+
+@enduml

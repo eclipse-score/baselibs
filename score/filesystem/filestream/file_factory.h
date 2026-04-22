@@ -27,7 +27,7 @@ namespace score::filesystem
 namespace details
 {
 std::string ComposeTempFilename(std::string_view original_filename,
-                                std::size_t threa_id_hash,
+                                std::size_t thread_id_hash,
                                 std::uint64_t timestamp) noexcept;
 }
 

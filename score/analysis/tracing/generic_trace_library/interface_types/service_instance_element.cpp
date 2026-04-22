@@ -19,6 +19,43 @@ namespace analysis
 namespace tracing
 {
 
+ServiceInstanceElement::ServiceInstanceElement(ServiceIdType input_service_id,
+                                               std::uint32_t input_major_version,
+                                               std::uint32_t input_minor_version,
+                                               InstanceIdType input_instance_id,
+                                               VariantType input_element_id)
+    : service_id{input_service_id},
+      major_version{input_major_version},
+      minor_version{input_minor_version},
+      instance_id{input_instance_id},
+      element_id{input_element_id}
+{
+}
+
+ServiceInstanceElement::ServiceInstanceElement(ServiceIdType input_service_id,
+                                               std::uint32_t input_major_version,
+                                               std::uint32_t input_minor_version,
+                                               InstanceIdType input_instance_id,
+                                               StdVariantType input_element_id)
+    : service_id{input_service_id},
+      major_version{input_major_version},
+      minor_version{input_minor_version},
+      instance_id{input_instance_id}
+{
+    if (std::holds_alternative<EventId>(input_element_id))
+    {
+        element_id = VariantType{score::cpp::in_place_type<EventIdType>, std::get<EventId>(input_element_id).value};
+    }
+    else if (std::holds_alternative<FieldId>(input_element_id))
+    {
+        element_id = VariantType{score::cpp::in_place_type<FieldIdType>, std::get<FieldId>(input_element_id).value};
+    }
+    else
+    {
+        element_id = VariantType{score::cpp::in_place_type<MethodIdType>, std::get<MethodId>(input_element_id).value};
+    }
+}
+
 bool operator==(const ServiceInstanceElement::EventId& lhs, const ServiceInstanceElement::EventId& rhs)
 {
     return lhs.value == rhs.value;

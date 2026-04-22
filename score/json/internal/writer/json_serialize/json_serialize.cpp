@@ -13,6 +13,7 @@
 
 #include "score/json/internal/writer/json_serialize/json_serialize.h"
 
+#include <score/assert.hpp>
 #include <score/utility.hpp>
 #include <cstdint>
 #include <iomanip>

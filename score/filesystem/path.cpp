@@ -92,7 +92,9 @@ void RemovePotentialFileNamesFollowedByMoveUpsAndSeparator(std::list<std::string
         }
     }
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 std::string CreatePathStringFromParts(std::list<std::string>& new_parts) noexcept
 {
     std::string normalized_path{};
@@ -121,6 +123,9 @@ Path::Path() noexcept = default;
 //    considers the constructor as deleted because one of the members is not noexcept
 //    For more information see:
 //    broken_link_j/Ticket-148878?focusedId=16079234&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-16079234
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 // NOLINTNEXTLINE(misc-no-recursion,modernize-use-equals-default): See above
 Path::Path(const Path& p) noexcept : native_path_{p.native_path_}, parts_{p.parts_} {}
 Path::Path(Path&& p) noexcept : native_path_{std::move(p.native_path_)}, parts_{std::move(p.parts_)} {}
@@ -128,6 +133,10 @@ Path::Path(Path&& p) noexcept : native_path_{std::move(p.native_path_)}, parts_{
 // Path::Parse method is called conditionally in Path constructor.
 // In Path::Parse itself all Path instances created with (parse == false) => no recursion.
 // coverity[autosar_cpp14_a6_2_1_violation] false-positive; can't be replaced with =default because of the self guard
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Move assignment of native_path_ and parts_ could theoretically throw std::bad_alloc, but calling std::terminate()
+// if exceptions are thrown is expected as per safety requirements in automotive context
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path& Path::operator=(const Path& p) noexcept  // NOLINT(misc-no-recursion): See above coverity
 {
     if (this == &p)
@@ -173,6 +182,9 @@ Path::Path(Path::string_type&& path, const bool do_parsing) noexcept : native_pa
     }
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path& Path::operator/=(const Path& to_append) noexcept
 {
     // If the user tries to append an absolute path, overwrite the current path.
@@ -212,7 +224,9 @@ Path::operator string_type() const noexcept
 {
     return native_path_;
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::LexicallyNormal() const noexcept
 {
     constexpr std::string_view dot_string_view = ".";
@@ -306,6 +320,9 @@ Path Path::RootPath() const noexcept
     return RootDirectory();
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::RelativePath() const noexcept
 {
     if (IsAbsolute())
@@ -317,7 +334,9 @@ Path Path::RelativePath() const noexcept
 
     return *this;
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::ParentPath() const noexcept
 {
     if (Empty())
@@ -345,7 +364,9 @@ Path Path::ParentPath() const noexcept
     score::cpp::ignore = parent_path.erase(position_of_last_path_separator, string_type::npos);
     return parent_path;
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::Filename() const noexcept
 {
     const auto position_of_filename = FilenamePosition();
@@ -381,6 +402,9 @@ std::size_t Path::FilenamePosition() const noexcept
     return position_of_filename;
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 std::size_t Path::ExtensionPosition(const std::size_t position_of_filename) const noexcept
 {
     if (position_of_filename == string_type::npos)
@@ -405,7 +429,9 @@ std::size_t Path::ExtensionPosition() const noexcept
 {
     return ExtensionPosition(FilenamePosition());
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::Extension() const noexcept
 {
     const std::size_t position_of_extension_separator = ExtensionPosition();
@@ -415,7 +441,9 @@ Path Path::Extension() const noexcept
     }
     return Native().substr(position_of_extension_separator);
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path Path::Stem() const noexcept
 {
     const std::size_t position_of_filename = FilenamePosition();
@@ -433,6 +461,9 @@ Path Path::Stem() const noexcept
     return Native().substr(position_of_filename, position_of_extension_separator - position_of_filename);
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path& Path::ReplaceExtension(const Path& replacement) noexcept
 {
     const std::size_t position_of_extension_separator = ExtensionPosition();
@@ -453,7 +484,9 @@ Path& Path::ReplaceExtension(const Path& replacement) noexcept
 
     return *this;
 }
-
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 Path& Path::RemoveFilename() noexcept
 {
     const std::size_t filename_position = FilenamePosition();
@@ -541,6 +574,9 @@ bool operator<(const Path& lhs, const Path& rhs) noexcept
 // Path::Parse method is called conditionally in Path constructor.
 // In Path::Parse itself all Path instances created with (parse == false) => no recursion.
 // NOLINTNEXTLINE(misc-no-recursion): See above
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 void Path::Parse(const string_type& path) noexcept
 {
     parts_.clear();
@@ -581,6 +617,10 @@ void Path::Parse(const string_type& path) noexcept
 // Path::AddPathPartToParts method is called conditionally in Path constructor.
 // In Path::AddPathPartToParts itself all Path instances created with (parse == false) => no recursion.
 // NOLINTNEXTLINE(misc-no-recursion) See above
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since getline is check whether the data is successfully read before using the data,
+// std::bad_alloc should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 void Path::AddPathPartToParts(std::stringstream& stringstream_path, std::string& path_part) noexcept
 {
     while (!std::getline(stringstream_path, path_part, preferred_separator).fail())

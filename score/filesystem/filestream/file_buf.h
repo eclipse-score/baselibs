@@ -59,7 +59,7 @@ class AtomicFileBuf : public StdioFileBuf
     AtomicFileBuf(AtomicFileBuf&&) = default;             // NOLINT(performance-noexcept-move-constructor): see above
     AtomicFileBuf(const AtomicFileBuf&) = delete;
     AtomicFileBuf& operator=(const AtomicFileBuf&) = delete;
-    ~AtomicFileBuf() override = default;
+    ~AtomicFileBuf() override;
 
     ResultBlank Close() override;
 

@@ -79,16 +79,20 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningSharedMemoryFreesResourcesOnDestruct
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     bool memory_unmapped{false};
     bool file_descriptor_closed{false};
@@ -128,17 +132,29 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryWillWaitUntilLockFileIsGon
 
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
 
-    // Given that the lock file is not gone at the beginning of the execution
+    // Given that the lock file creation first fails (another process is creating)
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath,
+                                score::cpp::make_unexpected(Error::createFromErrno(EEXIST)));
+
+    // And the lock file exists initially, then disappears
     EXPECT_CALL(*stat_mock_, stat(StrEq(TestValues::sharedMemorySegmentLockPath), _, _))
         .WillOnce(Return(score::cpp::blank{}))
         .WillOnce(Return(score::cpp::make_unexpected(Error::createFromErrno(ENOENT))));
+
+    // Then the lock file creation retry succeeds
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));
@@ -153,16 +169,20 @@ TEST_F(SharedMemoryResourceOpenTest, OpensSharedMemoryErrorOnLockFileHandleGrace
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 5;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
 
-    // Given that the querying the lockfile throws an unexpected error
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(EIO)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // and the memory region is safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _));
@@ -205,14 +225,18 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceThatDoesNotExistWillReturnEr
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     constexpr bool is_read_write = false;
+    constexpr std::int32_t lock_file_descriptor = 10;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and that when the shared memory segment is opened, it fails with an error that no such file or directory exists
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_read_write);
+
+    // and the lock file is cleaned up when the function returns
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // When constructing a SharedMemoryResource
     auto resource_result = SharedMemoryResourceTestAttorney::Open(TestValues::sharedMemorySegmentPath, is_read_write);
@@ -233,14 +257,18 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningResourceWithoutTheRequiredACLsWillRe
     RecordProperty("DerivationTechnique", "Analysis of requirements");
 
     constexpr bool is_read_write = false;
+    constexpr std::int32_t lock_file_descriptor = 10;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and that when the shared memory segment is opened, it fails with a permission denied error
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(EACCES)), is_read_write);
+
+    // and the lock file is cleaned up when the function returns
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // When constructing a SharedMemoryResource
     auto resource_result = SharedMemoryResourceTestAttorney::Open(TestValues::sharedMemorySegmentPath, is_read_write);
@@ -293,6 +321,7 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsTrueWhenOpenTypedS
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     constexpr bool is_death_test = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
@@ -300,9 +329,8 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsTrueWhenOpenTypedS
     std::vector<score::os::IAccessControlList::UserIdentifier> users_with_exec_permission = {2025U};
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -320,6 +348,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsTrueWhenOpenTypedS
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
 
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
+
     // and given the shared memory region is opened
     const auto resource_result = SharedMemoryResourceTestAttorney::Open(
         TestValues::sharedMemorySegmentPath, is_read_write, acl_control_list, typedmemory_mock);
@@ -336,14 +372,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenAcquireTy
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -361,6 +397,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenAcquireTy
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
 
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
+
     // and given the shared memory region is opened
     const auto resource_result = SharedMemoryResourceTestAttorney::Open(
         TestValues::sharedMemorySegmentPath, is_read_write, acl_control_list, typedmemory_mock);
@@ -377,15 +421,15 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenAcquireTy
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
     passwd* pwd = nullptr;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -403,6 +447,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenAcquireTy
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
 
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
+
     // and given the shared memory region is opened
     const auto resource_result = SharedMemoryResourceTestAttorney::Open(
         TestValues::sharedMemorySegmentPath, is_read_write, acl_control_list, typedmemory_mock);
@@ -419,14 +471,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenTypedshmD
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -444,6 +496,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenTypedshmD
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
 
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
+
     // and given the shared memory region is opened
     const auto resource_result = SharedMemoryResourceTestAttorney::Open(
         TestValues::sharedMemorySegmentPath, is_read_write, acl_control_list, typedmemory_mock);
@@ -460,14 +520,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenTypedshmD
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -484,6 +544,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenTypedshmD
     EXPECT_CALL(*typedmemory_mock, GetCreatorUid(StrEq(TestValues::sharedMemorySegmentPath))).Times(0);
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
+
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
 
     // and given the shared memory region is opened
     const auto resource_result = SharedMemoryResourceTestAttorney::Open(
@@ -502,14 +570,14 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenOpenTyped
 {
     InSequence sequence{};
     constexpr std::int32_t file_descriptor = 1;
+    constexpr std::int32_t lock_file_descriptor = 10;
     constexpr bool is_read_write = false;
     constexpr bool is_death_test = false;
     auto acl_control_list_mock = std::make_unique<score::os::AccessControlListMock>();
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that the lock file is successfully created
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
@@ -522,7 +590,12 @@ TEST_F(SharedMemoryResourceOpenTest, IsShmInTypedMemoryReturnsFalseWhenOpenTyped
 
     expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
 
-    EXPECT_CALL(*unistd_mock_, close(_)).Times(1);
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // and the shm file descriptor is closed on destruction
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor)).Times(1);
 
     // and given the shared memory region is opened
     const auto resource_result =
@@ -540,27 +613,34 @@ TEST_F(SharedMemoryResourceOpenTest, DifferentInstancesAreNotEqual)
     constexpr bool is_read_write = false;
     constexpr std::int32_t file_descriptor = 5;
     constexpr auto fileDescriptor2 = 6;
+    constexpr std::int32_t lock_file_descriptor = 10;
 
     void* const baseAddress0 = reinterpret_cast<void*>(10);
     void* const baseAddress1 = static_cast<void*>(static_cast<std::uint8_t*>(baseAddress0) +
                                                   TestValues::some_share_memory_size + sizeof(ControlBlock) + 1U);
 
     // Given a SharedMemoryResource
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
     expectFstatReturns(file_descriptor);
     expectMmapReturns(baseAddress0, file_descriptor, is_read_write);
+
+    // and the first lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     auto resource_result = SharedMemoryResourceTestAttorney::Open(TestValues::sharedMemorySegmentPath, is_read_write);
     ASSERT_TRUE(resource_result.has_value());
     auto resource = resource_result.value();
 
-    expectOpenLockFileReturns(TestValues::secondSharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    expectCreateLockFileReturns(TestValues::secondSharedMemorySegmentLockPath, lock_file_descriptor);
     expectShmOpenReturns(TestValues::secondSharedMemorySegmentPath, fileDescriptor2, is_read_write);
     expectFstatReturns(fileDescriptor2);
     expectMmapReturns(baseAddress1, fileDescriptor2, is_read_write);
+
+    // and the second lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::secondSharedMemorySegmentLockPath)));
 
     auto resource_result2 =
         SharedMemoryResourceTestAttorney::Open(TestValues::secondSharedMemorySegmentPath, is_read_write);
@@ -569,9 +649,9 @@ TEST_F(SharedMemoryResourceOpenTest, DifferentInstancesAreNotEqual)
 
     // and the memory regions are safely unmapped on destruction
     EXPECT_CALL(*mman_mock_, munmap(_, _)).Times(1);
-    EXPECT_CALL(*unistd_mock_, close(_)).Times(1);
+    EXPECT_CALL(*unistd_mock_, close(fileDescriptor2)).Times(1);
     EXPECT_CALL(*mman_mock_, munmap(_, _)).Times(1);
-    EXPECT_CALL(*unistd_mock_, close(_)).Times(1);
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor)).Times(1);
 
     // When checking equality with another instance
     // That it is not equal
@@ -603,6 +683,36 @@ TEST_F(SharedMemoryResourceOpenTest, OpeningSharedMemoryFillsRegistryKnownRegion
     EXPECT_EQ(known_memory_region_size, TestValues::some_share_memory_size);
 }
 
+// Regression test: Open() must hold the lock file across the entire shm_open + fstat + mmap sequence.
+// Without this, a concurrent Create() could start initializing the SHM object after Open's lock check
+// but before Open's shm_open, causing Open to read partially-initialized memory.
+TEST_F(SharedMemoryResourceOpenTest, LockFileIsHeldDuringEntireOpenSequence)
+{
+    InSequence sequence{};
+    constexpr std::int32_t file_descriptor = 5;
+    constexpr std::int32_t lock_file_descriptor = 10;
+    constexpr bool is_read_write = false;
+
+    // 1. Lock file is acquired BEFORE any SHM operation
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
+
+    // 2. SHM operations happen while the lock is held
+    expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write);
+    expectFstatReturns(file_descriptor);
+    expectMmapReturns(reinterpret_cast<void*>(1), file_descriptor, is_read_write);
+
+    // 3. Lock file is released only AFTER mmap completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
+    // Cleanup
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(file_descriptor));
+
+    auto result = SharedMemoryResourceTestAttorney::Open(TestValues::sharedMemorySegmentPath, is_read_write);
+    ASSERT_TRUE(result.has_value());
+}
+
 using SharedMemoryResourceOpenDeathTest = SharedMemoryResourceOpenTest;
 TEST_F(SharedMemoryResourceOpenDeathTest, OpensSharedMemoryTerminatesProcessIfLockfileIsAlwaysThere)
 {
@@ -610,7 +720,10 @@ TEST_F(SharedMemoryResourceOpenDeathTest, OpensSharedMemoryTerminatesProcessIfLo
     constexpr bool is_death_test = true;
     constexpr bool is_read_write = false;
 
-    // Given that the lock file will not be removed
+    // Given that lock file creation fails (another process holds it)
+    expectCreateLockFileReturns(
+        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(EEXIST)), is_death_test);
+    // And the lock file is always present (never goes away)
     expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath, score::cpp::blank{}, is_death_test);
 
     // That the shared memory segment is opened read only if not otherwise specified.
@@ -625,9 +738,9 @@ TEST_F(SharedMemoryResourceOpenDeathTest, UnableToMemoryMapCausesTermination)
     constexpr bool is_read_write = false;
     constexpr bool is_death_test = true;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(
-        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(EOF)), is_death_test);
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor, is_death_test);
 
     // That the shared memory segment is opened read only if not otherwise specified.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
@@ -645,9 +758,9 @@ TEST_F(SharedMemoryResourceOpenDeathTest, OpensSharedMemoryErrorOnFstatCausesTer
     constexpr bool is_read_write = false;
     constexpr bool is_death_test = true;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(
-        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_death_test);
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor, is_death_test);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
@@ -670,9 +783,9 @@ TEST_F(SharedMemoryResourceOpenDeathTest, OpensSharedMemoryEAGAINOnFstatCausesTe
     constexpr bool is_read_write = false;
     constexpr bool is_death_test = true;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(
-        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_death_test);
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor, is_death_test);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);
@@ -698,9 +811,9 @@ TEST_F(SharedMemoryResourceOpenDeathTest, OpenTypedSharedMemoryTerminatesWhenGet
     score::os::IAccessControlList* acl_control_list = acl_control_list_mock.get();
     auto typedmemory_mock = std::make_shared<score::memory::shared::TypedMemoryMock>();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(
-        TestValues::sharedMemorySegmentLockPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_death_test);
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor, is_death_test);
 
     // and that we can open the shared memory region
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, file_descriptor, is_read_write, is_death_test);

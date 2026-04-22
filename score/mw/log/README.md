@@ -170,25 +170,25 @@ deps = [
 ],
 ```
 
-Note: This target bundles all supported logging backends, introducing additional dependencies determined by [feature flags](#feature-flags) configuration. For projects or targets requiring minimal footprint, depend exclusively on the logging frontend to avoid including unused backends and their transitive dependencies.
+Note: This target bundles all supported logging backends, introducing additional dependencies determined by [feature flags](#feature-flags) configuration. For projects or targets requiring minimal footprint, depend exclusively on the logging minimal (includes stub backend only) target to avoid including unused backends and their transitive dependencies.
 
 ```bazel
 deps = [
-    "@score_baselibs//score/mw/log:frontend",
+    "//platform/aas/mw/log:minimal",
 ],
 ```
 
 This approach ensures that only required dependencies are included per target, avoiding bloat from unused logging backends.
 
-Note: Test binaries that depend on frontend only library targets require an explicit backend implementation. For this you can provide a basic console backend:
+Note: Test binaries that depend on frontend only library targets require an explicit backend implementation. For this you can provide either a stub backend like above or a basic console backend:
 
 ```bazel
 deps = [
-    "@score_baselibs//score/mw/log:backend_stub_testutil",
+    "//platform/aas/mw/log:console",
 ],
 ```
 
-[Baselibs](broken_link_g/swh/safe-posix-platform/tree/master/platform/aas/lib) follow this approach by using only the mw::log frontend in their library targets, maintaining self-containment and avoiding unnecessary dependencies. However users of those libraries could see linker errors while building binaries (cc_binary) if a backend is not provided. For this you can use the `@score_logging//score/mw/log:log` as a dependency that includes all the backends depending on the [feature flags](#feature-flags) configuration.
+Few targets in [Baselibs](broken_link_g/swh/safe-posix-platform/tree/master/platform/aas/lib) use only the mw::log frontend in their library targets, maintaining self-containment and avoiding unnecessary dependencies. However users of those libraries could see linker errors while building binaries (cc_test/cc_binary) if a concrete backend is not provided. For this you can provide either a stub backend or a console backend (particularly useful for cc_test targets) or the `@score_logging//score/mw/log:log` as a dependency that includes all the backends depending on the [feature flags](#feature-flags) configuration.
 
 ### How to log something the most easy way?
 

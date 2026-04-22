@@ -15,6 +15,7 @@
 #include "score/memory/shared/pointer_arithmetic_util.h"
 #include "score/memory/shared/shared_memory_error.h"
 
+#include "score/utils/meyer_singleton/meyer_singleton.h"
 #include "score/mw/log/logging.h"
 
 #include <score/utility.hpp>
@@ -32,8 +33,7 @@ auto score::memory::shared::MemoryResourceRegistry::getInstance() -> MemoryResou
     // because MemoryResourceRegistry contains a std::shared_time_mutex and std::unordered_map which don't have
     // constexpr constructors.
     // coverity[autosar_cpp14_a3_3_2_violation]
-    static MemoryResourceRegistry instance{};
-    return instance;
+    return score::singleton::MeyerSingleton<MemoryResourceRegistry>::GetInstance();
 }
 
 auto score::memory::shared::MemoryResourceRegistry::at(const MemoryResourceIdentifier identifier) const noexcept

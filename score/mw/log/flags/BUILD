@@ -22,7 +22,7 @@ bool_flag(
 config_setting(
     name = "Remote_Logging",
     flag_values = {
-        ":KRemote_Logging": "True",
+        ":KRemote_Logging": "False",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

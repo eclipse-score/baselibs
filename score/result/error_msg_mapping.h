@@ -10,4 +10,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/mw/log/irecorder_factory.h"
+#ifndef SCORE_LIB_RESULT_ERROR_MSG_MAPPING_H
+#define SCORE_LIB_RESULT_ERROR_MSG_MAPPING_H
+
+#include "score/result/error.h"
+
+#include <string_view>
+
+/// This function can be used to get the message for an error code in a C-compatible way. It is used by the Rust Result
+/// bindings.
+extern "C" void LibResultErrorDomainGetMessageForErrorCode(const score::result::ErrorDomain& domain,
+                                                           score::result::ErrorCode code,
+                                                           std::string_view& result) noexcept;
+
+#endif

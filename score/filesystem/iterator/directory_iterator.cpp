@@ -139,6 +139,9 @@ void DirectoryIterator::Directory::SetError(score::os::Error error) noexcept
 
 DirectoryIterator::DirectoryIterator() noexcept = default;
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
 DirectoryIterator::DirectoryIterator(const Path& path, const DirectoryOptions directory_options) noexcept
     : directory_{std::make_shared<DirectoryIterator::Directory>(path)}
 {
@@ -161,6 +164,10 @@ DirectoryIterator::pointer DirectoryIterator::operator->() const noexcept
     return &operator*();
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since directory_.get() is checked before calling ++(*directory_)
+// This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 DirectoryIterator& DirectoryIterator::operator++() noexcept
 {
     if (directory_.get() != nullptr)

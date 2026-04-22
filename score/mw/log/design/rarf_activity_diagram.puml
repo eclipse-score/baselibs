@@ -1,0 +1,87 @@
+@startuml activity_diagram
+
+skinparam backgroundColor #FEFEFE
+skinparam activityBackgroundColor #FFFFFF
+skinparam activityBorderColor #666666
+skinparam activityDiamondBackgroundColor #FFF2CC
+skinparam activityDiamondBorderColor #D6B656
+skinparam noteBackgroundColor #FFFFCC
+skinparam noteBorderColor #999999
+
+title mw::log — RegistryAwareRecorderFactory::CreateFromConfiguration() Decision Flow\n(kRemote backend)
+
+|RegistryAwareRecorderFactory|
+start
+
+:Receive **memory_resource** parameter;
+
+if (memory_resource == nullptr?) then (yes)
+    :ReportInitializationError(kMemoryResourceError);
+    #FFCCCC:Return fallback - EmptyRecorder;
+    stop
+else (no)
+endif
+
+:Initialize **recorders** vector (empty);
+:Get logModes from config;
+note right
+    logModes contains **kRemote**
+    (and kConsole, always present).
+    Console recorder is created
+    by default.
+end note
+
+|Backend Table|
+:Query **IsBackendAvailable(kRemote)**;
+
+if (kRemote backend registered?) then (yes)
+    |RegistryAwareRecorderFactory|
+    :recorder = **CreateRecorderForMode**(kRemote, config, memory_resource);
+    note right
+        Calls gBackendCreators[kRemote](config, memory_resource)
+        via the registered function pointer.
+    end note
+
+    if (recorder != nullptr?) then (yes)
+        :Add remote recorder to **recorders** vector;
+    else (no - creation failed)
+        note right
+            Recorder factory returned nullptr.
+            kRemote slot is skipped.
+            Console recorder remains.
+        end note
+    endif
+
+else (no - slot is nullptr)
+    |RegistryAwareRecorderFactory|
+    :ReportInitializationError(
+    kRecorderFactoryUnsupportedLogMode,
+    "kRemote not registered. Falling back to console only.");
+    note right
+        kRemote logmode was requested
+        but remote backend is not registered
+        in the backend table.
+    end note
+endif
+
+|RegistryAwareRecorderFactory|
+
+if (recorders.size() == 1?) then (yes)
+    :Return **move(recorders[0])**;
+    note right
+        Only console recorder is made available
+        (kRemote creation failed
+        or was not registered).
+    end note
+    stop
+else (no - multiple recorders)
+    :Return **CompositeRecorder(move(recorders))**;
+    note right
+        Wraps console + remote recorders.
+        Each Log() call is
+        forwarded to console and remote backend.
+    end note
+    stop
+endif
+
+@enduml

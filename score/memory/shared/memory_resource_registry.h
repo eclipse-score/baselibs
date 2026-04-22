@@ -16,6 +16,7 @@
 #include "score/memory/shared/managed_memory_resource.h"
 #include "score/memory/shared/memory_region_bounds.h"
 #include "score/memory/shared/memory_region_map.h"
+#include "score/utils/meyer_singleton/meyer_singleton.h"
 
 #include "score/result/result.h"
 
@@ -53,6 +54,14 @@ class MemoryResourceRegistryAttorney;
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
 class MemoryResourceRegistry final
 {
+    // Suppress "AUTOSAR C++14 A11-3-1"
+    // The MemoryResourceRegistry class is intended to only be constructed as a singleton object. Therefore, the
+    // constructor should be private and the user should initialize the MemoryResourceRegistry via getInstance(). The
+    // MeyerSingleton class is used to create the MemoryResourceRegistry singleton. Therefore, MeyerSingleton needs
+    // access to the private MemoryResourceRegistry constructor.
+    // coverity[autosar_cpp14_a11_3_1_violation]
+    friend class singleton::MeyerSingleton<MemoryResourceRegistry>;
+
   public:
     using MemoryResourceIdentifier = std::uint64_t;
 

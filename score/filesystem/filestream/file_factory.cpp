@@ -39,13 +39,15 @@ constexpr std::int32_t kSystemTicksDigitsLength = 8;
 constexpr std::uint32_t kSystemTicksDigitsCropMask = 100'000'000U;
 
 }  // namespace
+// coverity[autosar_cpp14_a15_5_3_violation]: Memory allocation failure extremely unlikely for small temp filename
+// generation
 std::string ComposeTempFilename(std::string_view original_filename,
-                                std::size_t threa_id_hash,
+                                std::size_t thread_id_hash,
                                 std::uint64_t timestamp) noexcept
 {
     std::stringstream final_filename;
     final_filename << "." << original_filename << "-" << std::setw(kTIDDigitsLength) << std::setfill('0')
-                   << (threa_id_hash % kTIDDigitsCropMask) << "-" << std::setw(kSystemTicksDigitsLength)
+                   << (thread_id_hash % kTIDDigitsCropMask) << "-" << std::setw(kSystemTicksDigitsLength)
                    << std::setfill('0') << (timestamp % kSystemTicksDigitsCropMask);
     return final_filename.str();
 }
@@ -148,6 +150,27 @@ inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
     return gid;
 }
 
+ResultBlank AdjustOwnership(const Path& temp_path,
+                            const details::IdentityMetadata& metadata,
+                            const AtomicUpdateOwnershipFlags ownership_flag)
+{
+    const uid_t uid = ExtractUid(metadata, ownership_flag);
+    const gid_t gid = ExtractGid(metadata, ownership_flag);
+
+    if ((uid == kDoNotChangeUID) && (gid == kDoNotChangeGID))
+    {
+        return {};
+    }
+
+    auto result = os::Unistd::instance().chown(temp_path.CStr(), uid, gid);
+    if (!result.has_value())
+    {
+        return MakeUnexpected(ErrorCode::kCouldNotSetPermissions);
+    }
+
+    return {};
+}
+
 }  // namespace
 
 namespace details
@@ -174,45 +197,43 @@ Result<IdentityMetadata> GetIdentityMetadata(const Path& path)
 {
     os::StatBuffer buffer{};
     const auto result = os::Stat::instance().stat(path.CStr(), buffer, true);
-    if (result.has_value())
-    {
-        // NOLINTBEGIN(hicpp-signed-bitwise): macro does not affect the sign of the result.
-        // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
-        // applied to operands of unsigned underlying type."
-        // Rationale: Macro does not affect the sign of the result
-        // Suppress "AUTOSAR C++14 M2-13-3" rule findings. This rule declares: "A “U” suffix shall be applied to all
-        // octal or hexadecimal integer literals of unsigned type."
-        // Suppress "AUTOSAR C++14 M5-0-4" rule findings. This rule declares: "An implicit integral conversion shall
-        // not change the signedness of the underlying type"
-        // Rationale: S_IFMT(integer), S_IFREG(integer) and StatBuffer.st_mode(u-integer) are defined in stat.h from
-        // infrastructure delivery and can't be modified by user
-        // coverity[autosar_cpp14_m5_0_21_violation]
-        // coverity[autosar_cpp14_m2_13_3_violation]
-        // coverity[autosar_cpp14_m5_0_4_violation]
-        if ((buffer.st_mode & S_IFMT) != S_IFREG)
-        // NOLINTEND(hicpp-signed-bitwise): macro does not affect the sign of the result.
-        {
-            return MakeUnexpected(ErrorCode::kNotImplemented);
-        }
-
-        os::Stat::Mode mode = os::IntegerToMode(buffer.st_mode);
-        // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
-        // loss."
-        // Rationale: QNX defined uid_t as uint32_t, so no data loss expected
-        // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
-        const auto uid = static_cast<uid_t>(buffer.st_uid);
-        // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
-        // loss."
-        // Rationale: QNX defined gid_t as uint32_t, so no data loss expected
-        // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
-        const auto gid = static_cast<gid_t>(buffer.st_gid);
-
-        return IdentityMetadata{mode, uid, gid};
-    }
-    else
+    if (!result.has_value())
     {
         return MakeUnexpected(ErrorCode::kCouldNotRetrieveStatus);
     }
+
+    // NOLINTBEGIN(hicpp-signed-bitwise): macro does not affect the sign of the result.
+    // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
+    // applied to operands of unsigned underlying type."
+    // Rationale: Macro does not affect the sign of the result
+    // Suppress "AUTOSAR C++14 M2-13-3" rule findings. This rule declares: "A “U” suffix shall be applied to all
+    // octal or hexadecimal integer literals of unsigned type."
+    // Suppress "AUTOSAR C++14 M5-0-4" rule findings. This rule declares: "An implicit integral conversion shall
+    // not change the signedness of the underlying type"
+    // Rationale: S_IFMT(integer), S_IFREG(integer) and StatBuffer.st_mode(u-integer) are defined in stat.h from
+    // infrastructure delivery and can't be modified by user
+    // coverity[autosar_cpp14_m5_0_21_violation]
+    // coverity[autosar_cpp14_m2_13_3_violation]
+    // coverity[autosar_cpp14_m5_0_4_violation]
+    if ((buffer.st_mode & S_IFMT) != S_IFREG)
+    // NOLINTEND(hicpp-signed-bitwise): macro does not affect the sign of the result.
+    {
+        return MakeUnexpected(ErrorCode::kNotImplemented);
+    }
+
+    os::Stat::Mode mode = os::IntegerToMode(buffer.st_mode);
+    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
+    // loss."
+    // Rationale: QNX defined uid_t as uint32_t, so no data loss expected
+    // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
+    const auto uid = static_cast<uid_t>(buffer.st_uid);
+    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
+    // loss."
+    // Rationale: QNX defined gid_t as uint32_t, so no data loss expected
+    // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
+    const auto gid = static_cast<gid_t>(buffer.st_gid);
+
+    return IdentityMetadata{mode, uid, gid};
 }
 
 }  // namespace details
@@ -233,13 +254,14 @@ Result<std::unique_ptr<FileStream>> FileFactory::AtomicUpdate(const Path& path,
 {
     if ((mode & ~(std::ios::out | std::ios::trunc | std::ios::binary)) != 0U)
     {
+        // Only out/trunc/binary modes are supported
         return MakeUnexpected(ErrorCode::kNotImplemented);
     }
 
     auto filename = path.Filename();
-    std::string_view filename_view{filename.Native()};
-    if (filename_view.empty())
+    if (std::string_view filename_view{filename.Native()}; filename_view.empty())
     {
+        // Path has no filename component
         return MakeUnexpected(filesystem::ErrorCode::kCouldNotOpenFileStream);
     }
 
@@ -250,41 +272,53 @@ Result<std::unique_ptr<FileStream>> FileFactory::AtomicUpdate(const Path& path,
     const auto metadata = details::GetIdentityMetadata(path);
     const auto create_mode = ExtractMode(metadata);
 
-    // If the original file exists but the calling process cannot write to it, reject early.
     if (metadata.has_value() && !os::Unistd::instance().access(path.CStr(), os::Unistd::AccessMode::kWrite).has_value())
     {
+        // Target file exists but is not writable
         return MakeUnexpected(ErrorCode::kWritePermissionDenied);
     }
 
-    if (auto file_handle = details::OpenFileHandle(temp_path, mode, create_mode); file_handle.has_value())
+    if (!metadata.has_value() && (metadata.error() == ErrorCode::kNotImplemented))
     {
-        if (metadata.has_value())
-        {
-            const uid_t uid = ExtractUid(metadata.value(), ownership_flag);
-            const gid_t gid = ExtractGid(metadata.value(), ownership_flag);
-
-            if ((uid != kDoNotChangeUID) || (gid != kDoNotChangeGID))
-            {
-                auto ownership_adjustment = os::Unistd::instance().chown(temp_path.CStr(), uid, gid);
-                if (!ownership_adjustment.has_value())
-                {
-                    // If close or unlink fails, there is not much we can do. Returning a different error would hide the
-                    // original issue that permissions could not be set.
-                    // We could log an error but this library is currently designed without logging. Introduce logging
-                    // only for that does not seem worth it.
-                    score::cpp::ignore = os::Unistd::instance().close(*file_handle);
-                    score::cpp::ignore = os::Unistd::instance().unlink(temp_path.CStr());
-                    return MakeUnexpected(ErrorCode::kCouldNotSetPermissions);
-                }
-            }
-        }
-
-        return details::CreateFileStream<details::AtomicFileBuf>(*file_handle, mode, std::move(temp_path), path);
+        // Target file is not a regular file
+        return MakeUnexpected(ErrorCode::kNotImplemented);
     }
-    else
+
+    auto file_handle = details::OpenFileHandle(temp_path, mode, create_mode);
+    if (!file_handle.has_value())
     {
+        // Could not open temp file
         return MakeUnexpected<std::unique_ptr<FileStream>>(file_handle.error());
     }
+
+    const auto temp_path_copy = temp_path;
+    auto file_stream =
+        details::CreateFileStream<details::AtomicFileBuf>(*file_handle, mode, std::move(temp_path), path);
+
+    if (!file_stream.has_value())
+    {
+        // Stream creation failed; fd and temp file cleaned up
+        score::cpp::ignore = os::Unistd::instance().close(*file_handle);
+        score::cpp::ignore = os::Unistd::instance().unlink(temp_path_copy.CStr());
+        return file_stream;
+    }
+
+    if (!metadata.has_value())
+    {
+        // Target file doesn't exist yet; skip ownership adjustment
+        return file_stream;
+    }
+
+    auto ownership_result = AdjustOwnership(temp_path_copy, metadata.value(), ownership_flag);
+    if (!ownership_result.has_value())
+    {
+        // Could not set ownership on temp file; temp file cleaned up
+        score::cpp::ignore = os::Unistd::instance().unlink(temp_path_copy.CStr());
+        return MakeUnexpected<std::unique_ptr<FileStream>>(ownership_result.error());
+    }
+
+    // Success: stream ready for writing
+    return file_stream;
 }
 
 }  // namespace score::filesystem

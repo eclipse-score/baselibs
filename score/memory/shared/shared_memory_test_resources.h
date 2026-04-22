@@ -218,7 +218,8 @@ class SharedMemoryResourceTest : public ::testing::TestWithParam<bool>
     void expectSharedMemorySuccessfullyOpened(std::int32_t file_descriptor,
                                               bool is_read_write,
                                               void* const data_region_start = reinterpret_cast<void*>(1),
-                                              uid_t st_uid = TestValues::our_uid);
+                                              uid_t st_uid = TestValues::our_uid,
+                                              std::int32_t lock_file_descriptor = 10);
 
     void expectSharedMemorySuccessfullyCreated(
         const std::int32_t file_descriptor,

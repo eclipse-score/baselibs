@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string>
 #include <thread>
+#include <tuple>
 using namespace score::memory::shared;
 using namespace score::analysis::tracing;
 using testing::_;
@@ -290,7 +291,7 @@ TEST_F(SharedListFixture, IteratorDereferenceAllocateSuccessfully)
     shared::List<std::uint8_t>::iterator iterator(&list, nullptr);
 
     auto value = *iterator;
-    score::cpp::ignore = value;
+    std::ignore = value;
 
     free(allocated_memory);
 }
@@ -305,7 +306,7 @@ TEST_F(SharedListFixture, IteratorDereferenceFailToAllocate)
     shared::List<std::uint8_t>::iterator iterator(&list, nullptr);
 
     auto value = *iterator;
-    score::cpp::ignore = value;
+    std::ignore = value;
 }
 
 TEST_F(SharedListFixture, SharedMemoryChunk)
@@ -343,7 +344,7 @@ TEST_F(SharedListFixture, SharedMemoryChunk)
             if (!emplace_result.has_value())
             {
                 list.clear();
-                score::cpp::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
+                std::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer, sizeof(ShmChunkVector));
                 std::cout << "ErrorCode::kNotEnoughMemoryRecoverable" << std::endl;
             }
         }

@@ -14,6 +14,8 @@
 
 #include "score/filesystem/standard_filesystem_fake.h"
 
+#include <score/assert.hpp>
+
 namespace score
 {
 namespace filesystem

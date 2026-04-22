@@ -14,7 +14,7 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ERROR_CODE_ERROR_CODE_H
 
 #include "score/result/error.h"
-#include <score/string_view.hpp>
+#include <string_view>
 
 namespace score
 {

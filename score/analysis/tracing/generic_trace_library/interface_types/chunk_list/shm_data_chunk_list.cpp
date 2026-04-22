@@ -14,6 +14,7 @@
 #include "score/analysis/tracing/common/interface_types/shared_memory_location_helpers.h"
 #include "score/analysis/tracing/generic_trace_library/interface_types/error_code/error_code.h"
 #include <memory>
+#include <tuple>
 
 namespace score
 {
@@ -152,7 +153,7 @@ score::Result<SharedMemoryLocation> ShmDataChunkList::SaveToSharedMemory(
     auto list_data = vector->GetData();
     if (!list_data.has_value())
     {
-        score::cpp::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer_result.value(), sizeof(ShmChunkVector));
+        std::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer_result.value(), sizeof(ShmChunkVector));
         return score::MakeUnexpected(ErrorCode::kMemoryCorruptionDetectedFatal);
     }
     auto& list = list_data.value().get();
@@ -171,7 +172,7 @@ score::Result<SharedMemoryLocation> ShmDataChunkList::SaveToSharedMemory(
         if (!emplace_result.has_value())
         {
             list.clear();
-            score::cpp::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer_result.value(), sizeof(ShmChunkVector));
+            std::ignore = flexible_allocator->Deallocate(vector_shm_raw_pointer_result.value(), sizeof(ShmChunkVector));
             return score::MakeUnexpected(ErrorCode::kNotEnoughMemoryRecoverable);
         }
     }

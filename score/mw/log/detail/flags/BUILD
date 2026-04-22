@@ -36,7 +36,7 @@ bool_flag(
 config_setting(
     name = "config_KFile_Logging",
     flag_values = {
-        ":KFile_Logging": "True",
+        ":KFile_Logging": "False",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",
