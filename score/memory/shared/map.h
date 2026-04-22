@@ -18,6 +18,7 @@
 #if defined(__linux__)
 #include <boost/container/scoped_allocator.hpp>
 #include <boost/interprocess/containers/map.hpp>
+#include <boost/tuple/tuple.hpp>
 #endif  // __linux__
 
 #include <map>
