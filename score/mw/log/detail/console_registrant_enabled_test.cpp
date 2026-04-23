@@ -28,7 +28,7 @@ namespace
 TEST(ConsoleRegistrantTest, ConsoleBackendIsRegisteredAfterStaticInitialization)
 {
     RecordProperty("Description", "The console backend registrant shall be registered for LogMode::kConsole");
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty("DerivationTechnique", "Analysis of functional dependencies");
 
     EXPECT_TRUE(IsBackendAvailable(LogMode::kConsole));
@@ -38,7 +38,7 @@ TEST(ConsoleRegistrantTest, ConsoleBackendCreatorReturnsNonNullRecorder)
 {
     RecordProperty("Description",
                    "The registered console backend shall return a non-null Recorder given valid configuration.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "Analysis of functional dependencies");
 
     ASSERT_TRUE(IsBackendAvailable(LogMode::kConsole));

@@ -113,7 +113,7 @@ TEST_F(CompositeRecorderFixture, CompositeRecorderShallCropExceedingNumberOfReco
                    "adding recorders to composite recorder which exceed number of recorders will have no effect and "
                    "will be cropped.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
 
@@ -146,7 +146,7 @@ TEST_F(CompositeRecorderFixture, StartRecordWithSlotAvailableShallRetainCorrectS
     RecordProperty("Description",
                    "if a slot is available, starting record in CompositeRecorder shall retain a correct slot.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
 
@@ -181,7 +181,7 @@ TEST_F(CompositeRecorderFixture, StartRecordWithNoSlotAvailableShallDropRecorder
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "if no slot is available, starting record CompositeRecorder shall drop recorder.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
 
@@ -210,7 +210,7 @@ TEST_F(CompositeRecorderFixture, LogInvocationShallBeForwardedToAllAvailableReco
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "log invocation shall be forworded to any supported logging type.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
 
@@ -281,7 +281,7 @@ TEST_F(CompositeRecorderFixture, LogSlog2MessageAvailableRecorders)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "log invocation shall be forworded to any supported logging type.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
     CreateAllAvailableRecorders([](std::size_t recorder) {
@@ -308,7 +308,7 @@ TEST_F(CompositeRecorderFixture, LogShallBeEnabledIfAtLeastOneRecorderIsEnabled)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "if at least one recorder is enabled, the logging shall be enabled.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     const auto enable_first_recorder = [](std::size_t recorder_index) {
         auto mock_recorder = std::make_unique<RecorderMock>();
@@ -329,7 +329,7 @@ TEST_F(CompositeRecorderFixture, LogShallBeDisabledIfAllRecorderAreDisabled)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "if all recorders is disabled, the logging shall be disabled.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::vector<std::unique_ptr<Recorder>> recorders;
 

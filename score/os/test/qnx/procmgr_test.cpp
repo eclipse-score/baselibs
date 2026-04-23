@@ -68,7 +68,7 @@ TEST_F(ProcMgrImplTest, procmgr_ability)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(procmgrmock, procmgr_ability(kCurrentPid, PROCMGR_AID_EOL));
     score::os::ProcMgr::instance().procmgr_ability(kCurrentPid, PROCMGR_AID_EOL);
@@ -80,7 +80,7 @@ TEST_F(ProcMgrImplTest, procmgr_subrange_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Subrange Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(kCurrentPid, PROCMGR_AID_EOL | PROCMGR_AOP_SUBRANGE);
     EXPECT_FALSE(result.has_value());
@@ -92,7 +92,7 @@ TEST_F(ProcMgrImplTest, procmgr_generic_invalid_pid_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Generic Invalid Pid Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(kInvalidPid, PROCMGR_AID_EOL);
     EXPECT_FALSE(result.has_value());
@@ -104,7 +104,7 @@ TEST_F(ProcMgrImplTest, procmgr_invalid_ability_fails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Invalid Ability Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(
         kCurrentPid, PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_PUBLIC_CHANNEL | PROCMGR_AID_UNCREATED);
@@ -117,7 +117,7 @@ TEST_F(ProcMgrImplTest, procmgr_generic_succeeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Generic Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(kCurrentPid, PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_EOL);
     EXPECT_TRUE(result.has_value());
@@ -129,7 +129,7 @@ TEST_F(ProcMgrImplTest, procmgr_specific_succeeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Specific Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result =
         procmgr.procmgr_ability(kCurrentPid, PROCMGR_ADN_ROOT | PROCMGR_AOP_ALLOW | PROCMGR_AID_PUBLIC_CHANNEL);
@@ -142,7 +142,7 @@ TEST_F(ProcMgrImplTest, procmgr_ability_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(
         kCurrentPid,
@@ -160,7 +160,7 @@ TEST_F(ProcMgrImplTest, procmgr_ability_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Ability Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_ability(kInvalidPid, PROCMGR_AID_EOL, 0U, 0U, 0U, PROCMGR_AID_EOL);
     EXPECT_FALSE(result.has_value());
@@ -173,7 +173,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_daemon_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Daemon Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(daemon_raw_mock_,
                 procmgr_daemon(kCurrentPid,
@@ -193,7 +193,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_daemon_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Daemon Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(daemon_raw_mock_, procmgr_daemon(kCurrentPid, 0U)).WillOnce(Return(-1));
 
@@ -210,7 +210,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_event_notify_add_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Event Notify Add Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -230,7 +230,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_event_notify_add_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Event Notify Add Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -255,7 +255,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_event_notify_delete_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Event Notify Delete Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -277,7 +277,7 @@ TEST_F(ProcMgrRealImplDaemonTest, procmgr_event_notify_delete_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Event Notify Delete Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -304,7 +304,7 @@ TEST_F(ProcMgrImplTest, procmgr_event_notify_add_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Event Notify Add Failure with Nullptr Event");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     // Pass nullptr to trigger error
     auto result = procmgr.procmgr_event_notify_add(PROCMGR_EVENT_PROCESS_DEATH, nullptr);
@@ -317,7 +317,7 @@ TEST_F(ProcMgrImplTest, procmgr_value_notify_add_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Value Notify Add Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -332,7 +332,7 @@ TEST_F(ProcMgrImplTest, procmgr_value_notify_add_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Value Notify Add Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -348,7 +348,7 @@ TEST_F(ProcMgrImplTest, procmgr_value_notify_add_failure_nullptr_event)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Value Notify Add Failure with Nullptr Event");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = procmgr.procmgr_value_notify_add(PROCMGR_VALUE_FREE_MEM, 0, 0, nullptr);
     EXPECT_FALSE(result.has_value());
@@ -360,7 +360,7 @@ TEST_F(ProcMgrImplTest, procmgr_value_current_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Value Current Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigevent event{};
     event.sigev_notify = SIGEV_PULSE;
@@ -378,7 +378,7 @@ TEST_F(ProcMgrImplTest, procmgr_value_current_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Procmgr Value Current Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     // Use that invalid ID to trigger error
     auto result = procmgr.procmgr_value_current(-999);

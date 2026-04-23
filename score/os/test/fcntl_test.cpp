@@ -32,8 +32,8 @@ TEST(CommandToInteger, kFileGetStatusFlags)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "CommandToInteger k File Get Status Flags");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::CommandToInteger(Fcntl::Command::kFileGetStatusFlags);
     ASSERT_TRUE(result.has_value());
@@ -45,8 +45,8 @@ TEST(CommandToInteger, kFileSetStatusFlags)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "CommandToInteger k File Set Status Flags");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::CommandToInteger(Fcntl::Command::kFileSetStatusFlags);
     ASSERT_TRUE(result.has_value());
@@ -58,8 +58,8 @@ TEST(CommandToInteger, kInvalid)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "CommandToInteger k Invalid");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::CommandToInteger(Fcntl::Command::kInvalid);
     ASSERT_FALSE(result.has_value());
@@ -71,8 +71,8 @@ TEST(IntegerToOpenFlag, Translate_O_RDONLY)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_RDONLY");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_RDONLY);
     EXPECT_EQ(result, Fcntl::Open::kReadOnly);
@@ -83,8 +83,8 @@ TEST(IntegerToOpenFlag, Translate_O_WRONLY)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_WRONLY");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_WRONLY);
     EXPECT_EQ(result, Fcntl::Open::kWriteOnly);
@@ -95,8 +95,8 @@ TEST(IntegerToOpenFlag, Translate_O_RDWR)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_RDWR");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_RDWR);
     EXPECT_EQ(result, Fcntl::Open::kReadWrite);
@@ -107,8 +107,8 @@ TEST(IntegerToOpenFlag, Translate_O_CREAT)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_CREAT");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_CREAT);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -120,8 +120,8 @@ TEST(IntegerToOpenFlag, Translate_O_CLOEXEC)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_CLOEXEC");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_CLOEXEC);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -133,8 +133,8 @@ TEST(IntegerToOpenFlag, Translate_O_NONBLOCK)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_NONBLOCK");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_NONBLOCK);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -146,8 +146,8 @@ TEST(IntegerToOpenFlag, Translate_O_EXCL)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_EXCL");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_EXCL);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -159,8 +159,8 @@ TEST(IntegerToOpenFlag, Translate_O_TRUNC)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_TRUNC");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_TRUNC);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -172,8 +172,8 @@ TEST(IntegerToOpenFlag, Translate_O_DIRECTORY)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_DIRECTORY");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_DIRECTORY);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -193,8 +193,8 @@ TEST(IntegerToOpenFlag, Translate_O_SYNC)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate_O_SYNC");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_SYNC);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -207,8 +207,8 @@ TEST(IntegerToOpenFlag, TranslateMultiple)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "IntegerToOpenFlag Translate Multiple");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::IntegerToOpenFlag(O_RDWR | O_CREAT);
     // Open flags have always an access mode. If none is explicitly set it is readonly
@@ -220,8 +220,8 @@ TEST(OpenFlagToInteger, TranslateKReadOnly)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KRead Only");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kReadOnly);
     EXPECT_EQ(result, O_RDONLY);
@@ -232,8 +232,8 @@ TEST(OpenFlagToInteger, TranslateKWriteOnly)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KWrite Only");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kWriteOnly);
     EXPECT_EQ(result, O_WRONLY);
@@ -244,8 +244,8 @@ TEST(OpenFlagToInteger, TranslateKReadWrite)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KRead Write");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kReadWrite);
     EXPECT_EQ(result, O_RDWR);
@@ -256,8 +256,8 @@ TEST(OpenFlagToInteger, TranslateKCreate)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KCreate");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kCreate);
     EXPECT_EQ(result, O_CREAT);
@@ -268,8 +268,8 @@ TEST(OpenFlagToInteger, TranslateKCloseOnExec)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KClose On Exec");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kCloseOnExec);
     EXPECT_EQ(result, O_CLOEXEC);
@@ -280,8 +280,8 @@ TEST(OpenFlagToInteger, TranslateKNonBlocking)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KNon Blocking");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kNonBlocking);
     EXPECT_EQ(result, O_NONBLOCK);
@@ -292,8 +292,8 @@ TEST(OpenFlagToInteger, TranslateKExclusive)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KExclusive");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kExclusive);
     EXPECT_EQ(result, O_EXCL);
@@ -304,8 +304,8 @@ TEST(OpenFlagToInteger, TranslateKTruncate)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KTruncate");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kTruncate);
     EXPECT_EQ(result, O_TRUNC);
@@ -316,8 +316,8 @@ TEST(OpenFlagToInteger, TranslateKDirectory)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KDirectory");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kDirectory);
     EXPECT_EQ(result, O_DIRECTORY);
@@ -335,8 +335,8 @@ TEST(OpenFlagToInteger, TranslateKSynchronized)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "OpenFlagToInteger Translate KSynchronized");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = internal::fcntl_helper::OpenFlagToInteger(Fcntl::Open::kSynchronized);
     EXPECT_EQ(result, O_SYNC);
@@ -348,8 +348,8 @@ TEST(fcntl, DefaultShallReturnImplInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "fcntl Default Shall Return Impl Instance");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto default_instance = score::os::Fcntl::Default();
     ASSERT_TRUE(default_instance != nullptr);
@@ -361,8 +361,8 @@ TEST(fcntl, PMRDefaultShallReturnImplInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "fcntl PMRDefault Shall Return Impl Instance");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Fcntl::Default(memory_resource);
@@ -375,8 +375,8 @@ TEST(fcntl, CanGetInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "fcntl Can Get Instance");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_NO_FATAL_FAILURE(Fcntl::instance());
 }

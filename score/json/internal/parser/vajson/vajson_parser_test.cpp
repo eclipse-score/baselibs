@@ -29,8 +29,8 @@ TEST(VajsonParser, CanParseObjectHexadecimalNumber)
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "parse hex value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "Requirements-based test");
-    this->RecordProperty("DerivationTechnique", "Analysis of requirements");
+    this->RecordProperty("TestType", "requirements-based"); // requirements test
+    this->RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     std::string buffer_json_hex{R"(
         {

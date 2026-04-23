@@ -40,8 +40,8 @@ TEST_F(UnameTest, GetUnameSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "UnameTest Get Uname Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(unameMock, UnameWrapper(::testing::_)).WillOnce([](struct utsname* info) {
         std::cout << "Pointer received: " << info << std::endl;
@@ -56,8 +56,8 @@ TEST_F(UnameTest, GetUnameFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "UnameTest Get Uname Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(unameMock, UnameWrapper(::testing::_)).WillOnce([](struct utsname* info) {
         std::cout << "Pointer received: " << info << std::endl;
@@ -72,8 +72,8 @@ TEST(UnameWrapperTest, Success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "UnameWrapperTest Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     // Prepare the expected behavior
     struct utsname info;

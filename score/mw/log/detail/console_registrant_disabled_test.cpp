@@ -28,8 +28,8 @@ namespace
 TEST(ConsoleRegistrantTest, ConsoleBackendIsNotRegisteredWhenDisabled)
 {
     RecordProperty("Description", "The console backend registrant shall be registered for LogMode::kConsole");
-    RecordProperty("TestType", "Verification of the control flow and data flow");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_FALSE(IsBackendAvailable(LogMode::kConsole));
 }
@@ -39,8 +39,8 @@ TEST(ConsoleRegistrantTest, CreateRecorderForModeReturnsNullptrWhenConsoleLoggin
     RecordProperty(
         "Description",
         "CreateRecorderForMode shall return nullptr for LogMode::kConsole when console logging is disabled.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const Configuration config;
     auto recorder = CreateRecorderForMode(LogMode::kConsole, config, score::cpp::pmr::get_default_resource());

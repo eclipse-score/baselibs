@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -10,35 +10,22 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
 bool_flag(
-    name = "KConsole_Logging",
-    build_setting_default = True,
+    name = "require_typed_memory",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
 )
 
 config_setting(
-    name = "config_KConsole_Logging",
-    flag_values = {
-        ":KConsole_Logging": "True",
-    },
-    visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
+    name = "require_typed_memory_enabled",  #This is a stub and should always be false
+    constraint_values = [
+        "@platforms//os:qnx",
+        "@platforms//os:linux",  # Contradicts qnx — ensures this config_setting never matches (stub)
     ],
-)
-
-bool_flag(
-    name = "KFile_Logging",
-    build_setting_default = True,
-)
-
-config_setting(
-    name = "config_KFile_Logging",
     flag_values = {
-        ":KFile_Logging": "True",
+        ":require_typed_memory": "True",
     },
-    visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
 )
