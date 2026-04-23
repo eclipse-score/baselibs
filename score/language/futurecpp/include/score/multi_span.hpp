@@ -1045,7 +1045,7 @@ protected:
     /// \param stride \ref offset representing the stride
     /// \param data raw data pointer
     ///
-    constexpr multi_span_base(const bounds_type& bnds, const offset_type& stride, pointer const data)
+    constexpr multi_span_base(const bounds_type& bnds, const offset_type& stride, const pointer data)
         : bnds_(bnds), srd_(stride), data_ptr_(data)
     {
     }
