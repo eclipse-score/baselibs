@@ -36,7 +36,7 @@ using RecorderCreatorFn = std::unique_ptr<Recorder> (*)(const detail::Configurat
                                                         score::cpp::pmr::memory_resource* memory_resource);
 
 /// \brief Maximum number of supported log modes. Matches the LogMode enum.
-/// kConsole=0, kFile=1, kRemote=2, kSystem=3, kCustom=4, plus one spare.
+/// kConsole=0, kFile=1, kRemote=2, kSystem=3, kCustom=4, kDltTrace=5.
 static constexpr std::size_t kMaxBackendSlots{6U};
 
 /// \brief Maps LogMode enum value to array index. Returns kMaxBackendSlots on invalid input.
@@ -54,6 +54,8 @@ constexpr std::size_t ModeToSlotIndex(const LogMode mode) noexcept
             return 3U;
         case LogMode::kCustom:
             return 4U;
+        case LogMode::kDltTrace:
+            return 5U;
         case LogMode::kInvalid:
             [[fallthrough]];
         default:
