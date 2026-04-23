@@ -24,7 +24,7 @@ build --tool_java_runtime_version=remotejdk_17
 build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_helper.py"
 build --experimental_retain_test_configuration_across_testonly # needed for QNX tests until bazel update to 8.6.0. See https://github.com/bazelbuild/bazel/pull/28115
 
-build:_bl_stub --//score/json:base_library=vajson
+build:_bl_stub --//score/json:base_library=nlohmann
 build:_bl_stub --//score/memory/shared/flags:use_typedshmd=False
 
 build:_bl_stub --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
