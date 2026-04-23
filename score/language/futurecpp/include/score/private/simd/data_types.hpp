@@ -704,7 +704,7 @@ public:
     where_expression& operator=(const where_expression&) = delete;
 
     /// \brief Replace the elements of value with the elements of x for elements where mask is true.
-    // misc-unconventional-assign-operator: follows reference implementation.
+    // misc-unconventional-assign-operator: follows specification.
     template <typename U>
     void SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE operator=(U&& x) && noexcept // NOLINT(misc-unconventional-assign-operator)
     {
