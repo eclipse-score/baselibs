@@ -704,8 +704,9 @@ public:
     where_expression& operator=(const where_expression&) = delete;
 
     /// \brief Replace the elements of value with the elements of x for elements where mask is true.
+    // misc-unconventional-assign-operator: follows reference implementation.
     template <typename U>
-    void SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE operator=(U&& x) && noexcept
+    void SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE operator=(U&& x) && noexcept // NOLINT(misc-unconventional-assign-operator)
     {
         static_assert(std::is_same<const T, const std::remove_reference_t<U>>::value, "x must be of type T");
         v_ = T{impl::blend(static_cast<typename impl::type>(v_),
