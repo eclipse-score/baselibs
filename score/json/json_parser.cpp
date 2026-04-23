@@ -13,7 +13,7 @@
 
 #include "score/json/json_parser.h"
 
-#include "score/json/internal/parser/vajson/vajson_parser.h"
+#include "score/json/internal/parser/nlohmann/nlohmann_parser.h"
 
 #include <iostream>
 
@@ -26,12 +26,12 @@ namespace json
 // coverity[autosar_cpp14_a15_5_3_violation]
 auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<Any>
 {
-    return VajsonParser::FromFile(file_path);
+    return NlohmannParser::FromFile(file_path);
 }
 
 auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> score::Result<Any>
 {
-    return VajsonParser::FromBuffer(buffer);
+    return NlohmannParser::FromBuffer(buffer);
 }
 
 // False positive, user defined literal operator is used to perform conversion.
