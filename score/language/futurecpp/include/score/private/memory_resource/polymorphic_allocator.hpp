@@ -69,13 +69,25 @@ public:
     polymorphic_allocator(const polymorphic_allocator&) = default;
     polymorphic_allocator& operator=(const polymorphic_allocator&) = delete;
 
-    Tp* allocate(std::size_t n) { return static_cast<Tp*>(resource_->allocate(sizeof(Tp) * n, alignof(Tp))); }
+    Tp* allocate(std::size_t n)
+    {
+        // bugprone-sizeof-expression: compliant to standard:
+        // https://eel.is/c++draft/mem.poly.allocator.class#mem.poly.allocator.mem-1
+        // NOLINTNEXTLINE(bugprone-sizeof-expression)
+        return static_cast<Tp*>(resource_->allocate(sizeof(Tp) * n, alignof(Tp)));
+    }
 
     ///
     ///\pre ptr must have been returned by a previous call to allocate(n) on a polymorphic allocator equal to *this
     ///     and must not have been deallocated since.
     ///
-    void deallocate(Tp* ptr, std::size_t n) { resource_->deallocate(ptr, sizeof(Tp) * n, alignof(Tp)); }
+    void deallocate(Tp* ptr, std::size_t n)
+    {
+        // bugprone-sizeof-expression: compliant to standard:
+        // https://eel.is/c++draft/mem.poly.allocator.class#mem.poly.allocator.mem-3
+        // NOLINTNEXTLINE(bugprone-sizeof-expression)
+        resource_->deallocate(ptr, sizeof(Tp) * n, alignof(Tp));
+    }
 
     /// Constructs an object of the given type U in allocated, but not initialized storage pointed to by p with the
     /// provided arguments.
