@@ -208,7 +208,7 @@ template <typename T>
 constexpr T bit_ceil(const T x)
 {
     static_assert(detail::is_unsigned_integer_type<T>::value, "T must be an unsigned integer type.");
-    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(x <= std::numeric_limits<T>::max() / 2U + 1U);
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(x <= (std::numeric_limits<T>::max() / 2U) + 1U);
     return (x <= 1U) ? T{1U} : static_cast<T>(T{1U} << score::cpp::bit_width(static_cast<T>(x - 1U)));
 }
 
