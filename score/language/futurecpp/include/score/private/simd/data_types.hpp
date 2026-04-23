@@ -427,18 +427,19 @@ public:
                                           && std::is_convertible_v<R, span<const U, size()>>   //
                                           >>
     SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE basic_vec(R&& range, vector_aligned_tag)
-        : v_{[](auto&& r) {
-            SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((score::cpp::bit_cast<std::uintptr_t>(r.data()) % alignment_v<basic_vec>) == 0U);
+        : v_{[](auto&& r)
+             {
+                 SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((score::cpp::bit_cast<std::uintptr_t>(r.data()) % alignment_v<basic_vec>) == 0U);
 
-            if constexpr (std::is_same_v<value_type, U>)
-            {
-                return Abi::impl::load_aligned(r.data());
-            }
-            else
-            {
-                return native_abi<U>::impl::convert(native_abi<U>::impl::load_aligned(r.data()), value_type{});
-            }
-        }(std::forward<R>(range))}
+                 if constexpr (std::is_same_v<value_type, U>)
+                 {
+                     return Abi::impl::load_aligned(r.data());
+                 }
+                 else
+                 {
+                     return native_abi<U>::impl::convert(native_abi<U>::impl::load_aligned(r.data()), value_type{});
+                 }
+             }(std::forward<R>(range))}
     {
         static_assert(std::is_integral_v<U> || std::is_floating_point_v<U>, "U not a vectorizable type");
     }
@@ -456,16 +457,17 @@ public:
                                           && std::is_convertible_v<R, span<const U, size()>>   //
                                           >>
     SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE basic_vec(R&& range, element_aligned_tag = {})
-        : v_{[](auto&& r) {
-            if constexpr (std::is_same_v<value_type, U>)
-            {
-                return Abi::impl::load(r.data());
-            }
-            else
-            {
-                return native_abi<U>::impl::convert(native_abi<U>::impl::load(r.data()), value_type{});
-            }
-        }(std::forward<R>(range))}
+        : v_{[](auto&& r)
+             {
+                 if constexpr (std::is_same_v<value_type, U>)
+                 {
+                     return Abi::impl::load(r.data());
+                 }
+                 else
+                 {
+                     return native_abi<U>::impl::convert(native_abi<U>::impl::load(r.data()), value_type{});
+                 }
+             }(std::forward<R>(range))}
     {
         static_assert(std::is_integral_v<U> || std::is_floating_point_v<U>, "U not a vectorizable type");
     }

@@ -55,12 +55,15 @@ int main()
     score::cpp::bounds<3>::const_iterator last = std::end(view.bounds());    // or view.bounds().end()
 
     // Dereferencing an iterator returns a `const score::cpp::offset<Rank>`. Indices are always immutable.
-    std::for_each(first, last, [&view](const score::cpp::offset<3>& off) {
-        auto z = off[0];
-        auto y = off[1];
-        auto x = off[2];
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(view[off] == x * 2 + y - z);
-    });
+    std::for_each(first,
+                  last,
+                  [&view](const score::cpp::offset<3>& off)
+                  {
+                      auto z = off[0];
+                      auto y = off[1];
+                      auto x = off[2];
+                      SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(view[off] == x * 2 + y - z);
+                  });
     /// [multi_span-iterator]
 
     /// [multi_span-slice]

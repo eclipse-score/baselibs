@@ -35,7 +35,7 @@ namespace detail
 ///
 /// Implements https://isocpp.org/files/papers/N4860.pdf#subsection.25.11.7
 /// Non-conforming: Not constexpr and not constrained.
-template <typename T, typename... Args, typename = decltype(::new (std::declval<void*>()) T(std::declval<Args>()...))>
+template <typename T, typename... Args, typename = decltype(::new(std::declval<void*>()) T(std::declval<Args>()...))>
 T* construct_at(T* const p, Args&&... args)
 {
     static_assert(!std::is_array_v<T>, "not implemented");

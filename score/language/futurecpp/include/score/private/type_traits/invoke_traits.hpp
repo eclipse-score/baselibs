@@ -42,8 +42,8 @@ struct is_invocable_impl : std::false_type
 {
 };
 template <typename F, typename... Args>
-struct is_invocable_impl<decltype(
-                             static_cast<void>(score::cpp::detail::try_invoke(std::declval<F>(), std::declval<Args>()...))),
+struct is_invocable_impl<decltype(static_cast<void>(
+                             score::cpp::detail::try_invoke(std::declval<F>(), std::declval<Args>()...))),
                          F,
                          Args...> : std::true_type
 {
@@ -71,8 +71,8 @@ struct is_invocable_r_impl : std::false_type
 };
 
 template <typename F, typename... Args>
-struct is_invocable_r_impl<decltype(
-                               static_cast<void>(score::cpp::detail::try_invoke(std::declval<F>(), std::declval<Args>()...))),
+struct is_invocable_r_impl<decltype(static_cast<void>(
+                               score::cpp::detail::try_invoke(std::declval<F>(), std::declval<Args>()...))),
                            void,
                            F,
                            Args...> : std::true_type

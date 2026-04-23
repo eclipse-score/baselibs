@@ -197,8 +197,8 @@ public:
     ///
     /// \param rhs an instance of \ref expected that can hold either a value or an error.
     ///
-    expected(const expected& rhs) noexcept(
-        std::is_nothrow_copy_constructible<ValueType>::value&& std::is_nothrow_copy_constructible<ErrorType>::value)
+    expected(const expected& rhs) noexcept(std::is_nothrow_copy_constructible<ValueType>::value &&
+                                           std::is_nothrow_copy_constructible<ErrorType>::value)
         : has_value_{rhs.has_value()}
     {
         if (has_value())
@@ -222,8 +222,8 @@ public:
         typename V = ValueType,
         typename E = ErrorType,
         std::enable_if_t<std::is_move_constructible<V>::value && std::is_move_constructible<E>::value, bool> = true>
-    expected(expected&& rhs) noexcept(
-        std::is_nothrow_move_constructible<ValueType>::value&& std::is_nothrow_move_constructible<ErrorType>::value)
+    expected(expected&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
+                                      std::is_nothrow_move_constructible<ErrorType>::value)
         : has_value_{rhs.has_value()}
     {
         if (has_value())
@@ -245,9 +245,10 @@ public:
     ///
     /// \return \c *this
     ///
-    expected& operator=(const expected& rhs) noexcept(
-        std::is_nothrow_copy_constructible<ValueType>::value&& std::is_nothrow_copy_constructible<ErrorType>::value&&
-            std::is_nothrow_destructible<ValueType>::value&& std::is_nothrow_destructible<ErrorType>::value)
+    expected& operator=(const expected& rhs) noexcept(std::is_nothrow_copy_constructible<ValueType>::value &&
+                                                      std::is_nothrow_copy_constructible<ErrorType>::value &&
+                                                      std::is_nothrow_destructible<ValueType>::value &&
+                                                      std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -289,9 +290,10 @@ public:
         typename V = ValueType,
         typename E = ErrorType,
         std::enable_if_t<std::is_move_constructible<V>::value && std::is_move_constructible<E>::value, bool> = true>
-    expected& operator=(expected&& rhs) noexcept(
-        std::is_nothrow_move_constructible<ValueType>::value&& std::is_nothrow_move_constructible<ErrorType>::value&&
-            std::is_nothrow_destructible<ValueType>::value&& std::is_nothrow_destructible<ErrorType>::value)
+    expected& operator=(expected&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
+                                                 std::is_nothrow_move_constructible<ErrorType>::value &&
+                                                 std::is_nothrow_destructible<ValueType>::value &&
+                                                 std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -332,9 +334,9 @@ public:
     /// \note This function is needed to disambiguate creation of \ref expected between the creation from a valid value
     /// and from \ref unexpected.
     ///
-    expected& operator=(ValueType&& rhs) noexcept(
-        std::is_rvalue_reference<ValueType>::value&& std::is_nothrow_destructible<ValueType>::value&&
-            std::is_nothrow_destructible<ErrorType>::value)
+    expected& operator=(ValueType&& rhs) noexcept(std::is_rvalue_reference<ValueType>::value &&
+                                                  std::is_nothrow_destructible<ValueType>::value &&
+                                                  std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -357,9 +359,10 @@ public:
     ///
     /// \return \c *this
     ///
-    expected& operator=(const unexpected<ErrorType>& error) noexcept(
-        std::is_nothrow_copy_constructible<ErrorType>::value&& std::is_nothrow_destructible<ValueType>::value&&
-            std::is_nothrow_destructible<ErrorType>::value)
+    expected&
+    operator=(const unexpected<ErrorType>& error) noexcept(std::is_nothrow_copy_constructible<ErrorType>::value &&
+                                                           std::is_nothrow_destructible<ValueType>::value &&
+                                                           std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -382,9 +385,9 @@ public:
     /// \return \c *this
     ///
     template <typename E = ErrorType, std::enable_if_t<std::is_move_constructible<E>::value, bool> = true>
-    expected& operator=(unexpected<ErrorType>&& error) noexcept(
-        std::is_nothrow_move_constructible<ErrorType>::value&& std::is_nothrow_destructible<ValueType>::value&&
-            std::is_nothrow_destructible<ErrorType>::value)
+    expected& operator=(unexpected<ErrorType>&& error) noexcept(std::is_nothrow_move_constructible<ErrorType>::value &&
+                                                                std::is_nothrow_destructible<ValueType>::value &&
+                                                                std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -400,8 +403,8 @@ public:
     }
 
     /// \brief Destructor that cleans up after either value or error.
-    ~expected() noexcept(
-        std::is_nothrow_destructible<ValueType>::value&& std::is_nothrow_destructible<ErrorType>::value)
+    ~expected() noexcept(std::is_nothrow_destructible<ValueType>::value &&
+                         std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {
@@ -592,10 +595,12 @@ public:
     /// - value <-> error
     /// - error <-> error
     ///
-    void swap(expected& rhs) noexcept(
-        std::is_nothrow_move_constructible<ValueType>::value&& std::is_nothrow_move_assignable<ValueType>::value&&
-            std::is_nothrow_move_constructible<ErrorType>::value&& std::is_nothrow_move_assignable<ErrorType>::value&&
-                std::is_nothrow_destructible<ValueType>::value&& std::is_nothrow_destructible<ErrorType>::value)
+    void swap(expected& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
+                                      std::is_nothrow_move_assignable<ValueType>::value &&
+                                      std::is_nothrow_move_constructible<ErrorType>::value &&
+                                      std::is_nothrow_move_assignable<ErrorType>::value &&
+                                      std::is_nothrow_destructible<ValueType>::value &&
+                                      std::is_nothrow_destructible<ErrorType>::value)
     {
         if (has_value())
         {

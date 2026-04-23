@@ -97,10 +97,11 @@ public:
                          const name_hint& name = name_hint{""},
                          const score::cpp::pmr::polymorphic_allocator<>& allocator = {})
         : sync_point_{count.value()}
-        , worker_count_{[worker_count = count.value()]() {
-            SCORE_LANGUAGE_FUTURECPP_PRECONDITION(worker_count > 0);
-            return static_cast<std::uint32_t>(worker_count);
-        }()}
+        , worker_count_{[worker_count = count.value()]()
+                        {
+                            SCORE_LANGUAGE_FUTURECPP_PRECONDITION(worker_count > 0);
+                            return static_cast<std::uint32_t>(worker_count);
+                        }()}
         , push_index_{0U}
         , queues_{worker_count_, allocator}
         , threads_{allocator}

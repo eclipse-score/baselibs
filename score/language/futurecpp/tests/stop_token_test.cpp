@@ -414,12 +414,13 @@ TEST(stop_callback, create_callback_and_request_stop_in_parallel)
     std::atomic<bool> was_executed{false};
     score::cpp::stop_source source{};
     auto token = source.get_token();
-    score::cpp::jthread t{[token, &was_executed]() {
-        score::cpp::stop_callback unit{token, [&was_executed]() { was_executed = true; }};
-        while (!was_executed)
-        {
-        }
-    }};
+    score::cpp::jthread t{[token, &was_executed]()
+                   {
+                       score::cpp::stop_callback unit{token, [&was_executed]() { was_executed = true; }};
+                       while (!was_executed)
+                       {
+                       }
+                   }};
     source.request_stop();
     t.join();
     EXPECT_TRUE(was_executed);
@@ -450,9 +451,9 @@ TEST(stop_callback, callback_not_executed_for_stateless_stop_source)
     score::cpp::stop_source source{score::cpp::nostopstate};
 
     {
-        score::cpp::stop_callback unit{static_cast<score::cpp::stop_token&&>(source.get_token()), [&was_executed]() {
-                                    was_executed = true;
-                                }}; // static_cast to silence pessimizing-move compiler warning
+        score::cpp::stop_callback unit{static_cast<score::cpp::stop_token&&>(source.get_token()),
+                                [&was_executed]()
+                                { was_executed = true; }}; // static_cast to silence pessimizing-move compiler warning
     }
 
     source.request_stop();
@@ -487,27 +488,30 @@ TEST(stop_callback, destructor_blocking_when_invoked_from_different_thread)
     std::atomic<bool> start_destruction{false};
     score::cpp::stop_source source{};
 
-    auto unit = std::make_unique<score::cpp::stop_callback>(source.get_token(), [&run, &callback_executed_at_least_once]() {
-        callback_executed_at_least_once = true;
-        while (run)
-        {
-            std::this_thread::yield();
-        }
-    });
+    auto unit = std::make_unique<score::cpp::stop_callback>(source.get_token(),
+                                                     [&run, &callback_executed_at_least_once]()
+                                                     {
+                                                         callback_executed_at_least_once = true;
+                                                         while (run)
+                                                         {
+                                                             std::this_thread::yield();
+                                                         }
+                                                     });
 
     score::cpp::jthread t{[&source]() { source.request_stop(); }};
 
     std::promise<void> p{};
     auto f = p.get_future();
 
-    score::cpp::jthread t2{[unit = std::move(unit), &p, &start_destruction]() mutable {
-        while (!start_destruction)
-        {
-            std::this_thread::yield();
-        }
-        unit.reset();
-        p.set_value();
-    }};
+    score::cpp::jthread t2{[unit = std::move(unit), &p, &start_destruction]() mutable
+                    {
+                        while (!start_destruction)
+                        {
+                            std::this_thread::yield();
+                        }
+                        unit.reset();
+                        p.set_value();
+                    }};
 
     while (!callback_executed_at_least_once)
     {
@@ -573,14 +577,15 @@ TEST(stop_callback, parallel_register_and_request_stop)
 
         std::promise<void> request_stop_started{};
         std::vector<std::unique_ptr<score::cpp::stop_callback>> callbacks{};
-        score::cpp::jthread t{[&source, &callbacks, &request_stop_started, &num_invoked_callbacks]() {
-            request_stop_started.get_future().wait();
-            for (std::uint32_t counter = 0U; counter < 1'000U; ++counter)
-            {
-                callbacks.emplace_back(std::make_unique<score::cpp::stop_callback>(
-                    source.get_token(), [&num_invoked_callbacks]() { ++num_invoked_callbacks; }));
-            }
-        }};
+        score::cpp::jthread t{[&source, &callbacks, &request_stop_started, &num_invoked_callbacks]()
+                       {
+                           request_stop_started.get_future().wait();
+                           for (std::uint32_t counter = 0U; counter < 1'000U; ++counter)
+                           {
+                               callbacks.emplace_back(std::make_unique<score::cpp::stop_callback>(
+                                   source.get_token(), [&num_invoked_callbacks]() { ++num_invoked_callbacks; }));
+                           }
+                       }};
 
         request_stop_started.set_value();
         source.request_stop();
@@ -611,13 +616,14 @@ TEST(stop_callback, parallel_unregister_and_request_stop)
         }
 
         std::promise<void> request_stop_started{};
-        score::cpp::jthread t{[&callbacks, &request_stop_started]() {
-            request_stop_started.get_future().wait();
-            for (auto& callback : callbacks)
-            {
-                callback.reset();
-            }
-        }};
+        score::cpp::jthread t{[&callbacks, &request_stop_started]()
+                       {
+                           request_stop_started.get_future().wait();
+                           for (auto& callback : callbacks)
+                           {
+                               callback.reset();
+                           }
+                       }};
 
         request_stop_started.set_value();
         source.request_stop();
@@ -644,25 +650,29 @@ TEST(stop_callback, register_and_unregister_after_request_stop_while_other_callb
     blocking_data blocking_function_data{};
 
     // utility for notifying the blocked callback function to continue with its execution
-    const auto notify_blocked_callback_function_to_continue_execution = [&blocking_function_data] {
+    const auto notify_blocked_callback_function_to_continue_execution = [&blocking_function_data]
+    {
         std::unique_lock<std::mutex> lock{blocking_function_data.wait_mutex};
         blocking_function_data.blocked_callback_shall_finish = true;
         blocking_function_data.wait_cv.notify_all();
     };
 
     // setup a callback function which will block execution in case of its first invocation
-    const auto blocking_function_upon_first_invocation{[&blocking_function_data, &num_invoked_callbacks]() {
-        std::unique_lock<std::mutex> lock{blocking_function_data.wait_mutex};
-        if (++num_invoked_callbacks == 1U)
+    const auto blocking_function_upon_first_invocation{
+        [&blocking_function_data, &num_invoked_callbacks]()
         {
-            blocking_function_data.callback_is_blocked.set_value();
-            blocking_function_data.wait_cv.wait(
-                lock, [&blocking_function_data]() { return blocking_function_data.blocked_callback_shall_finish; });
-        }
-    }};
+            std::unique_lock<std::mutex> lock{blocking_function_data.wait_mutex};
+            if (++num_invoked_callbacks == 1U)
+            {
+                blocking_function_data.callback_is_blocked.set_value();
+                blocking_function_data.wait_cv.wait(
+                    lock, [&blocking_function_data]() { return blocking_function_data.blocked_callback_shall_finish; });
+            }
+        }};
 
     // utility for registering a stop_callback whose underlying callback shall be executed immediately
-    const auto register_stop_callback_and_expect_immediate_execution = [&source] {
+    const auto register_stop_callback_and_expect_immediate_execution = [&source]
+    {
         bool callback_is_finished{false};
 
         // when registering the stop_callback
@@ -743,39 +753,44 @@ public:
                           std::mutex& outer_mutex)
         : max_num_iterations_{max_num_iterations}, stop_source_{stop_source}, outer_mutex_{outer_mutex}
     {
-        the_thread_ = score::cpp::jthread{[this] {
-            // see the comment in the actual test about why we need this loop within the thread and not outside of it
-            for (std::uint64_t num_iteration = 0U; num_iteration < max_num_iterations_; ++num_iteration)
+        the_thread_ = score::cpp::jthread{
+            [this]
             {
-                wait_until_token_waiter_shall_continue();
+                // see the comment in the actual test about why we need this loop within the thread and not outside of
+                // it
+                for (std::uint64_t num_iteration = 0U; num_iteration < max_num_iterations_; ++num_iteration)
+                {
+                    wait_until_token_waiter_shall_continue();
 
-                { // this is the actual test logic
-                    std::mutex own_mutex{};
-                    std::condition_variable own_cv{};
-                    const score::cpp::stop_token stop_token{stop_source_.get_token()};
+                    { // this is the actual test logic
+                        std::mutex own_mutex{};
+                        std::condition_variable own_cv{};
+                        const score::cpp::stop_token stop_token{stop_source_.get_token()};
 
-                    // notify the stop_requester thread that we will actually start waiting now
-                    token_waiter_is_running_.set_value();
+                        // notify the stop_requester thread that we will actually start waiting now
+                        token_waiter_is_running_.set_value();
 
-                    // when registering an score::cpp::stop_callback for waiting that stop_token gets stop requested
-                    score::cpp::stop_callback stop_callback{stop_token, [&own_cv, &own_mutex] {
-                                                         // mutex must be acquired here since own_cv.notify_all()
-                                                         // must not get called prior to below own_cv.wait()
-                                                         // operation really being in waiting state
-                                                         std::unique_lock<std::mutex> callback_lock{own_mutex};
-                                                         own_cv.notify_all();
-                                                     }};
+                        // when registering an score::cpp::stop_callback for waiting that stop_token gets stop requested
+                        score::cpp::stop_callback stop_callback{stop_token,
+                                                         [&own_cv, &own_mutex]
+                                                         {
+                                                             // mutex must be acquired here since own_cv.notify_all()
+                                                             // must not get called prior to below own_cv.wait()
+                                                             // operation really being in waiting state
+                                                             std::unique_lock<std::mutex> callback_lock{own_mutex};
+                                                             own_cv.notify_all();
+                                                         }};
 
-                    // and initiating a wait operation for own_cv
-                    std::unique_lock<std::mutex> own_lock{own_mutex};
-                    own_cv.wait(own_lock, [&stop_token] { return stop_token.stop_requested(); });
+                        // and initiating a wait operation for own_cv
+                        std::unique_lock<std::mutex> own_lock{own_mutex};
+                        own_cv.wait(own_lock, [&stop_token] { return stop_token.stop_requested(); });
 
-                    // then the wait operation must have ended once stop_token got stop requested
+                        // then the wait operation must have ended once stop_token got stop requested
+                    }
+
+                    indicate_that_token_waiter_finished_an_iteration();
                 }
-
-                indicate_that_token_waiter_finished_an_iteration();
-            }
-        }};
+            }};
     }
 
     token_waiter& operator=(const token_waiter&) = delete;
@@ -845,26 +860,30 @@ public:
         , token_waiter_{token_waiter}
         , outer_mutex_{outer_mutex}
     {
-        the_thread_ = score::cpp::jthread{[this] {
-            // see the comment in the actual test about why we need this loop within the thread and not outside of it
-            for (std::uint64_t num_iteration = 0U; num_iteration < max_num_iterations_; ++num_iteration)
-            {
-                wait_until_stop_requester_shall_continue();
+        the_thread_ = score::cpp::jthread{[this]
+                                   {
+                                       // see the comment in the actual test about why we need this loop within the
+                                       // thread and not outside of it
+                                       for (std::uint64_t num_iteration = 0U; num_iteration < max_num_iterations_;
+                                            ++num_iteration)
+                                       {
+                                           wait_until_stop_requester_shall_continue();
 
-                { // this is the actual test logic
-                    // after waiting for the token_waiter thread to actually start waiting
-                    token_waiter_.wait_until_is_running();
+                                           { // this is the actual test logic
+                                               // after waiting for the token_waiter thread to actually start waiting
+                                               token_waiter_.wait_until_is_running();
 
-                    // when calling request_stop() at stop_source around the same time token_waiter started waiting
-                    const bool stop_requested = stop_source_.request_stop();
+                                               // when calling request_stop() at stop_source around the same time
+                                               // token_waiter started waiting
+                                               const bool stop_requested = stop_source_.request_stop();
 
-                    // then the operation must have succeeded
-                    ASSERT_TRUE(stop_requested);
-                }
+                                               // then the operation must have succeeded
+                                               ASSERT_TRUE(stop_requested);
+                                           }
 
-                indicate_that_stop_requester_finished_an_iteration();
-            }
-        }};
+                                           indicate_that_stop_requester_finished_an_iteration();
+                                       }
+                                   }};
     }
 
     stop_requester& operator=(const stop_requester&) = delete;
@@ -945,13 +964,15 @@ TEST(stop_callback, parallel_stop_callback_usage_and_request_stop)
     // always continue at the same time again.
 
     // utilities for synchronizing a single iteration of token_waiter as well as stop_requester thread
-    const auto notify_threads_to_perform_an_iteration = [&] {
+    const auto notify_threads_to_perform_an_iteration = [&]
+    {
         std::unique_lock<std::mutex> lock{mutex};
         // token_waiter must be notified prior to stop_requester since it resets its std::promise
         token_waiter.perform_an_iteration(lock);
         stop_requester.perform_an_iteration(lock);
     };
-    const auto wait_for_threads_to_finish_such_iteration = [&] {
+    const auto wait_for_threads_to_finish_such_iteration = [&]
+    {
         std::unique_lock<std::mutex> lock{mutex};
         token_waiter.wait_until_has_finished(lock);
         stop_requester.wait_until_has_finished(lock);

@@ -29,10 +29,10 @@ namespace
 template <bool CTorThrows, bool CopyTorThrows, bool MoveTorThrows, bool DTorThrows>
 struct test_type
 {
-    test_type() noexcept(!CTorThrows){};
-    test_type(const test_type&) noexcept(!CopyTorThrows){};
-    test_type(test_type&&) noexcept(!MoveTorThrows){};
-    ~test_type() noexcept(!DTorThrows){};
+    test_type() noexcept(!CTorThrows) {};
+    test_type(const test_type&) noexcept(!CopyTorThrows) {};
+    test_type(test_type&&) noexcept(!MoveTorThrows) {};
+    ~test_type() noexcept(!DTorThrows) {};
 };
 
 constexpr bool t = true;

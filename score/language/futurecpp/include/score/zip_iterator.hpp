@@ -250,20 +250,28 @@ public:
     template <typename I = zip_iterator_impl, typename = std::enable_if_t<detail::is_random_access_iterator<I>::value>>
     zip_iterator_impl& operator+=(const difference_type n)
     {
-        score::cpp::for_each_tuple_element(current_iterators_, [n](auto& iter) {
-            using actual_difference_type = typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
-            iter += narrow_cast<actual_difference_type>(n);
-        });
+        score::cpp::for_each_tuple_element(
+            current_iterators_,
+            [n](auto& iter)
+            {
+                using actual_difference_type =
+                    typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
+                iter += narrow_cast<actual_difference_type>(n);
+            });
         return *this;
     }
 
     template <typename I = zip_iterator_impl, typename = std::enable_if_t<detail::is_random_access_iterator<I>::value>>
     zip_iterator_impl& operator-=(const difference_type n)
     {
-        score::cpp::for_each_tuple_element(current_iterators_, [n](auto& iter) {
-            using actual_difference_type = typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
-            iter -= narrow_cast<actual_difference_type>(n);
-        });
+        score::cpp::for_each_tuple_element(
+            current_iterators_,
+            [n](auto& iter)
+            {
+                using actual_difference_type =
+                    typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
+                iter -= narrow_cast<actual_difference_type>(n);
+            });
         return *this;
     }
 
