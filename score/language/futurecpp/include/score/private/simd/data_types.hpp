@@ -291,7 +291,9 @@ public:
 
     basic_mask() = delete;
     basic_mask(const basic_mask&) = delete;
+    basic_mask(basic_mask&&) = delete;
     basic_mask& operator=(const basic_mask&) = delete;
+    basic_mask& operator=(basic_mask&&) = delete;
     ~basic_mask() = delete;
 };
 
@@ -642,7 +644,9 @@ public:
 
     basic_vec() = delete;
     basic_vec(const basic_vec&) = delete;
+    basic_vec(basic_vec&&) = delete;
     basic_vec& operator=(const basic_vec&) = delete;
+    basic_vec& operator=(basic_vec&&) = delete;
     ~basic_vec() = delete;
 };
 
@@ -686,8 +690,8 @@ inline basic_vec<T, Abi> SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE clamp(const
 /// \brief The class abstracts the notion of selecting elements of a given object of a data-parallel type.
 ///
 /// [parallel] 9.5 ff
-// NOLINTNEXTLINE(cppcoreguidelines-special-member-functions) Follows literaly the C++ standard
 template <typename M, typename T>
+// NOLINTNEXTLINE(cppcoreguidelines-special-member-functions) Follows literaly the C++ standard
 class where_expression
 {
     static_assert(detail::is_basic_mask_v<M>, "M not a basic_mask type");
