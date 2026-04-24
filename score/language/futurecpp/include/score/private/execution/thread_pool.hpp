@@ -110,9 +110,11 @@ public:
 
         for (std::uint32_t i{0U}; i < worker_count_; ++i)
         {
-            // NOLINTNEXTLINE(performance-unnecessary-value-param)
-            static_cast<void>(threads_.emplace_back(
-                stack_size, name, [this, index = i](const score::cpp::stop_token token) { work(token, index); }));
+            static_cast<void>(threads_.emplace_back(stack_size,
+                                                    name,
+                                                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                                                    [this, index = i](const score::cpp::stop_token token)
+                                                    { work(token, index); }));
         }
 
         SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(worker_count_ == queues_.size());
