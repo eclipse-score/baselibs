@@ -38,7 +38,7 @@ class FlexibleCircularAllocator : public IFlexibleCircularAllocator
     // This is intented, we don't enforce users to specify align unless needed
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     score::Result<void*> Allocate(const std::size_t size, const std::size_t alignment = alignment::kBlockSize) override;
-    ResultBlank Deallocate(void* const pointer, const std::size_t) override;
+    Result<void> Deallocate(void* const pointer, const std::size_t) override;
 
     std::size_t GetAvailableMemory() noexcept override;
 

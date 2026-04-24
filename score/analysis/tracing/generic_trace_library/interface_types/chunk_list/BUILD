@@ -31,13 +31,8 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/analysis/tracing/common/flexible_circular_allocator:lockless_flexible_circular_allocator_factory",
-        "@score_baselibs//score/analysis/tracing/common/interface_types:generic_trace_api_types",
-        "@score_baselibs//score/analysis/tracing/common/interface_types:shared_memory_chunk",
-        "@score_baselibs//score/analysis/tracing/common/interface_types:shared_memory_location",
-        "@score_baselibs//score/analysis/tracing/common/interface_types:shared_memory_location_helpers",
         "@score_baselibs//score/analysis/tracing/common/shared_list",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:types",
     ],
 )

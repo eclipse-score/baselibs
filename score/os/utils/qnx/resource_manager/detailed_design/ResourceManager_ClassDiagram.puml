@@ -211,8 +211,8 @@ package "The QNX Resource Manager Core Skeleton" {
     - preRead(
       IN offset: off_t,
       IN size: std::size_t
-    ): score::ResultBlank
-    - postRead():score::ResultBlank
+    ): score::Result<void>
+    - postRead():score::Result<void>
   }
 }
 

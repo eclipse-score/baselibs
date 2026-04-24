@@ -47,7 +47,7 @@ class TraceLibraryMock : public ITraceLibrary
                 RegisterShmObject,
                 (const TraceClientId client, int shm_object_fd),
                 (override));
-    MOCK_METHOD(ResultBlank, UnregisterShmObject, (const TraceClientId client, ShmObjectHandle handle), (override));
+    MOCK_METHOD(Result<void>, UnregisterShmObject, (const TraceClientId client, ShmObjectHandle handle), (override));
     MOCK_METHOD(RegisterTraceDoneCallBackResult,
                 RegisterTraceDoneCB,
                 (const TraceClientId client, TraceDoneCallBackType trace_done_callback),

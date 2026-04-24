@@ -14,7 +14,7 @@
 
 #include <score/assert.hpp>
 
-score::ResultBlank score::filesystem::FileStream::Close()
+score::Result<void> score::filesystem::FileStream::Close()
 {
     auto buf = rdbuf();
     if (buf != nullptr)

@@ -14,10 +14,7 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_LOCAL_DATA_CHUNK_LIST_H
 
 #include "score/analysis/tracing/common/flexible_circular_allocator/custom_polymorphic_offset_ptr_allocator.h"
-#include "score/analysis/tracing/common/interface_types/shared_memory_location.h"
-#include "score/analysis/tracing/common/interface_types/types.h"
 #include "score/analysis/tracing/generic_trace_library/interface_types/chunk_list/shm_data_chunk_list.h"
-#include "score/memory/shared/managed_memory_resource.h"
 #include "score/result/result.h"
 #include <array>
 
@@ -88,51 +85,11 @@ class LocalDataChunkList
     /// @brief Get the underlying container
     std::array<LocalDataChunk, kMaxChunksPerOneTraceRequest>& GetList();
 
-    /// @brief Copies LocalDataChunkList into shared-memory and copy all data from local to shared
-    /// memory.
-    ///
-    /// @param memory_resource shared pointer holding a shared-memory resource in which the ChunkList will be placed.
-    /// @param handle shared-memory handle assigned by the daemon during region registration
-    ///
-    /// @return SharedMemoryLocation where vector with data is stored or error code if operation fails.
-    score::Result<SharedMemoryLocation> SaveToSharedMemory(
-        ResourcePointer memory_resource,
-        ShmObjectHandle handle,
-        std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator);
     /// @param lhs the  instance of the chunk list which is the subject of the comparison.
     /// @param rhs the other instance of the chunk list which is the subject of the comparison.
     /// @brief == operator overloading to check if two chunk list are similar or not
     /// @return True if the two instances are typical and False otherwise.
     friend bool operator==(const LocalDataChunkList& lhs, const LocalDataChunkList& rhs) noexcept;
-    // check on availabilty of the mem resource
-    bool IsValidResource(ResourcePointer memory_resource, ShmObjectHandle handle) const;
-    // check on size of the memory
-    bool HasEnoughMemory(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator,
-                         std::size_t required_memory_size) const;
-    // allocate vector
-    score::Result<void*> AllocateVector(std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const;
-    // construct vector in shared memory
-    ShmChunkVector* ConstructShmChunkVector(void* vector_shm_raw_pointer,
-                                            std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator) const;
-    // check on availabilty of the element
-    bool IsValidElement(const LocalDataChunk& element) const;
-    // copy data to the shared memory
-    void CopyDataToSharedMemory(const LocalDataChunk& element, void* shm_pointer) const;
-    // do some cleaning in the memory
-    void CleanupAllocatedData(std::array<std::pair<void*, std::size_t>, kMaxChunksPerOneTraceRequest>& allocated_data,
-                              const std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator,
-                              ShmChunkVector* vector,
-                              void* vector_shm_raw_pointer) const;
-    // create an object to refer to the location in shared memory where the vector is stored.
-    score::Result<SharedMemoryLocation> CreateSharedMemoryLocation(ShmChunkVector* vector,
-                                                                 ResourcePointer memory_resource,
-                                                                 ShmObjectHandle handle) const;
-    score::Result<SharedMemoryLocation> FillVectorInSharedMemory(
-        ShmChunkVector* vector,
-        ResourcePointer memory_resource,
-        ShmObjectHandle handle,
-        const std::shared_ptr<IFlexibleCircularAllocator>& flexible_allocator,
-        void* vector_shm_raw_pointer);
 
   private:
     /// @brief Private Delegator Constructor to centralize the members initialization

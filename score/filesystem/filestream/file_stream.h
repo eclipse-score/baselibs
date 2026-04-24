@@ -37,7 +37,7 @@ class FileStream : public std::iostream
     // coverity[autosar_cpp14_a12_8_6_violation] See above.
     FileStream& operator=(FileStream&& other) = delete;
 
-    ResultBlank Close();
+    Result<void> Close();
 };
 
 namespace details

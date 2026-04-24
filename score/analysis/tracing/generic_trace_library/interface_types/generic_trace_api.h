@@ -106,7 +106,7 @@ class GenericTraceAPI
     /// @param handle Handle to previously registered shared-memory object
     /// @return a blank or error code (kDaemonNotConnectedFatal, kSharedMemoryObjectUnregisterFailedFatal,
     /// kMessageSendFailedRecoverable, kClientNotFoundRecoverable) if operation was not successful
-    static ResultBlank UnregisterShmObject(const TraceClientId client, const ShmObjectHandle handle);
+    static Result<void> UnregisterShmObject(const TraceClientId client, const ShmObjectHandle handle);
 
     /// @brief Register a callback to be invoked once a trace has completed.
     /// Method used to register callback method that will be called when the trace operation is done. Each client has

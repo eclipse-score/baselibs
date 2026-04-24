@@ -46,7 +46,7 @@ class StdioFileBuf : public StdioFilebufBase
     // coverity[autosar_cpp14_a12_8_6_violation]
     StdioFileBuf(StdioFileBuf&&) = default;  // NOLINT(performance-noexcept-move-constructor): see above
 
-    virtual ResultBlank Close();
+    virtual Result<void> Close();
 };
 
 class AtomicFileBuf : public StdioFileBuf
@@ -61,7 +61,7 @@ class AtomicFileBuf : public StdioFileBuf
     AtomicFileBuf& operator=(const AtomicFileBuf&) = delete;
     ~AtomicFileBuf() override;
 
-    ResultBlank Close() override;
+    Result<void> Close() override;
 
   private:
     Path from_path_;

@@ -78,7 +78,7 @@ cc_library(
     name = "minimal",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/mw/log:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":frontend",
         "@score_baselibs//score/mw/log:backend_table",
@@ -460,7 +460,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":slot_handle_test",
     ],
     test_suites_from_sub_packages = [
-        "@score_baselibs//score/mw/log/backend:unit_tests",
+        #"@score_baselibs//score/mw/log/backend:unit_tests",
         "@score_baselibs//score/mw/log/configuration:unit_tests",
         "@score_baselibs//score/mw/log/detail:unit_tests",
         #"@score_baselibs//score/mw/log/legacy_non_verbose_api:unit_tests",

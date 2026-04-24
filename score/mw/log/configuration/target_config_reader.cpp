@@ -127,14 +127,14 @@ template <typename T>
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
 // coverity[autosar_cpp14_a15_5_3_violation]
-score::ResultBlank GetElementAndThen(const score::json::Object& obj,
-                                   const StringLiteral key,
-                                   GetElementCallback<T> update) noexcept
+score::Result<void> GetElementAndThen(const score::json::Object& obj,
+                                    const StringLiteral key,
+                                    GetElementCallback<T> update) noexcept
 {
     const auto parser_result = GetElementAs<T>(obj, key);
     if (parser_result.has_value() == false)
     {
-        return score::MakeUnexpected<score::Blank>(parser_result.error());
+        return score::MakeUnexpected<void>(parser_result.error());
     }
 
     update(parser_result.value());
@@ -142,7 +142,7 @@ score::ResultBlank GetElementAndThen(const score::json::Object& obj,
     return {};
 }
 
-score::ResultBlank ParseEcuId(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseEcuId(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -154,7 +154,7 @@ score::ResultBlank ParseEcuId(const score::json::Object& root, Configuration& co
     // clang-format on
 }
 
-score::ResultBlank ParseAppId(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseAppId(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -166,7 +166,7 @@ score::ResultBlank ParseAppId(const score::json::Object& root, Configuration& co
     // clang-format on
 }
 
-score::ResultBlank ParseAppDescription(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseAppDescription(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -178,7 +178,7 @@ score::ResultBlank ParseAppDescription(const score::json::Object& root, Configur
     // clang-format on
 }
 
-score::ResultBlank ParseLogFilePath(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseLogFilePath(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -226,7 +226,7 @@ score::Result<std::unordered_set<LogMode>> LogModesFromString(const std::string_
     return result;
 }
 
-score::ResultBlank ParseLogMode(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseLogMode(const score::json::Object& root, Configuration& config) noexcept
 {
     // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
     // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
@@ -272,7 +272,7 @@ class GetElementAsImpl<LogLevel>
     }
 };
 
-score::ResultBlank ParseLogLevel(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseLogLevel(const score::json::Object& root, Configuration& config) noexcept
 {
     // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
     // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
@@ -286,7 +286,7 @@ score::ResultBlank ParseLogLevel(const score::json::Object& root, Configuration&
     });
 }
 
-score::ResultBlank ParseLogLevelConsole(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseLogLevelConsole(const score::json::Object& root, Configuration& config) noexcept
 {
     // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
     // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
@@ -303,14 +303,14 @@ score::ResultBlank ParseLogLevelConsole(const score::json::Object& root, Configu
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // std::terminate() will not  implicitly be called from ParseContextLogLevel as it declared as noexcept
 // coverity[autosar_cpp14_a15_5_3_violation]
-score::ResultBlank ParseContextLogLevel(const score::json::Object& root,
-                                      Configuration& config,
-                                      const std::string& path_for_reporting) noexcept
+score::Result<void> ParseContextLogLevel(const score::json::Object& root,
+                                       Configuration& config,
+                                       const std::string& path_for_reporting) noexcept
 {
     const auto context_config = GetElementAsRef<score::json::List>(root, kContextConfigsKey);
     if (context_config.has_value() == false)
     {
-        return score::MakeUnexpected<score::Blank>(context_config.error());
+        return score::MakeUnexpected<void>(context_config.error());
     }
 
     auto context_config_map = config.GetContextLogLevel();
@@ -346,7 +346,7 @@ score::ResultBlank ParseContextLogLevel(const score::json::Object& root,
     return {};
 }
 
-score::ResultBlank ParseStackBufferSize(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseStackBufferSize(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -358,7 +358,7 @@ score::ResultBlank ParseStackBufferSize(const score::json::Object& root, Configu
     // clang-format on
 }
 
-score::ResultBlank ParseRingBufferSize(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseRingBufferSize(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -370,7 +370,7 @@ score::ResultBlank ParseRingBufferSize(const score::json::Object& root, Configur
     // clang-format on
 }
 
-score::ResultBlank ParseOverwriteOnFull(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseOverwriteOnFull(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -382,7 +382,7 @@ score::ResultBlank ParseOverwriteOnFull(const score::json::Object& root, Configu
     // clang-format on
 }
 
-score::ResultBlank ParseNumberOfSlots(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseNumberOfSlots(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -394,7 +394,7 @@ score::ResultBlank ParseNumberOfSlots(const score::json::Object& root, Configura
     // clang-format on
 }
 
-score::ResultBlank ParseSlotSizeBytes(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseSlotSizeBytes(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -406,7 +406,7 @@ score::ResultBlank ParseSlotSizeBytes(const score::json::Object& root, Configura
     // clang-format on
 }
 
-score::ResultBlank ParseDatarouterUid(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseDatarouterUid(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off
@@ -418,7 +418,7 @@ score::ResultBlank ParseDatarouterUid(const score::json::Object& root, Configura
     // clang-format on
 }
 
-score::ResultBlank ParseDynamicDatarouterIdentifiers(const score::json::Object& root, Configuration& config) noexcept
+score::Result<void> ParseDynamicDatarouterIdentifiers(const score::json::Object& root, Configuration& config) noexcept
 {
     // Disabling clang-format to address Coverity warning: autosar_cpp14_a7_1_7_violation
     // clang-format off

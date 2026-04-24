@@ -34,6 +34,12 @@ std::string_view score::analysis::tracing::GenericTraceAPIErrorDomain::MessageFo
         case static_cast<score::result::ErrorCode>(ErrorCode::kInvalidBindingTypeFatal):
             error_message = "Invalid binding type";
             break;
+        case static_cast<score::result::ErrorCode>(ErrorCode::kModuleInitializedRecoverable):
+            error_message = "Module already initialized";
+            break;
+        case static_cast<score::result::ErrorCode>(ErrorCode::kModuleNotInitializedRecoverable):
+            error_message = "Module not initialized";
+            break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kNotEnoughMemoryRecoverable):
             error_message = "Not enough memory for allocation";
             break;
@@ -55,14 +61,8 @@ std::string_view score::analysis::tracing::GenericTraceAPIErrorDomain::MessageFo
         case static_cast<score::result::ErrorCode>(ErrorCode::kAtomicRingBufferMaxRetriesRecoverable):
             error_message = "Atomic ring buffer access failed max retry times";
             break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kModuleNotInitializedRecoverable):
-            error_message = "Module not initialized";
-            break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kFailedToCacheEarlyTraceJobRecoverable):
             error_message = "Failed to cache early trace job during daemon disconnection";
-            break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kModuleInitializedRecoverable):
-            error_message = "Module already initialized";
             break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kDaemonNotConnectedRecoverable):
             error_message = "Daemon is not yet available";
@@ -128,12 +128,6 @@ std::string_view score::analysis::tracing::GenericTraceAPIErrorDomain::MessageFo
         case static_cast<score::result::ErrorCode>(ErrorCode::kDaemonCommunicatorNotSupportedFatal):
             error_message = "Daemon communication is supported only with QNX";
             break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kServerConnectionNameOpenFailedFatal):
-            error_message = "Server name open failed";
-            break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kDaemonTerminationDetectionFailedFatal):
-            error_message = "Daemon termination detection failed";
-            break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kMessageSendFailedRecoverable):
             error_message = "Failed to send the message";
             break;
@@ -160,12 +154,6 @@ std::string_view score::analysis::tracing::GenericTraceAPIErrorDomain::MessageFo
             break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kWrongMessageIdRecoverable):
             error_message = "Wrong message id";
-            break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kWrongClientIdRecoverable):
-            error_message = "Wrong client id";
-            break;
-        case static_cast<score::result::ErrorCode>(ErrorCode::kClientNameAlreadyUsedRecoverable):
-            error_message = "Client name is already used by different process";
             break;
         case static_cast<score::result::ErrorCode>(ErrorCode::kBadFileDescriptorFatal):
             error_message = "Bad file descriptor";
@@ -269,8 +257,6 @@ bool score::analysis::tracing::IsErrorRecoverable(const score::analysis::tracing
         case ErrorCode::kNoFreeSlotToSaveTheCallbackRecoverable:
         case ErrorCode::kMessageSendFailedRecoverable:
         case ErrorCode::kWrongMessageIdRecoverable:
-        case ErrorCode::kWrongClientIdRecoverable:
-        case ErrorCode::kClientNameAlreadyUsedRecoverable:
         case ErrorCode::kWrongHandleRecoverable:
         case ErrorCode::kLastRecoverable:
         case ErrorCode::kGenericErrorRecoverable:
@@ -286,8 +272,6 @@ bool score::analysis::tracing::IsErrorRecoverable(const score::analysis::tracing
         case ErrorCode::kInvalidArgumentFatal:
         case ErrorCode::kDaemonConnectionFailedFatal:
         case ErrorCode::kDaemonCommunicatorNotSupportedFatal:
-        case ErrorCode::kServerConnectionNameOpenFailedFatal:
-        case ErrorCode::kDaemonTerminationDetectionFailedFatal:
         case ErrorCode::kNoDeallocatorCallbackRegisteredFatal:
         case ErrorCode::kSharedMemoryObjectRegistrationFailedFatal:
         case ErrorCode::kSharedMemoryObjectNotInTypedMemoryFatal:

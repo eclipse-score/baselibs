@@ -125,9 +125,13 @@ Path::Path() noexcept = default;
 //    broken_link_j/Ticket-148878?focusedId=16079234&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-16079234
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// NOLINTBEGIN(misc-no-recursion,modernize-use-equals-default): See above
 // coverity[autosar_cpp14_a15_5_3_violation]
-// NOLINTNEXTLINE(misc-no-recursion,modernize-use-equals-default): See above
-Path::Path(const Path& p) noexcept : native_path_{p.native_path_}, parts_{p.parts_} {}
+Path::Path(const Path& p) noexcept : native_path_{p.native_path_}, parts_{p.parts_}
+// NOLINTEND(misc-no-recursion,modernize-use-equals-default): See above
+{
+}
+
 Path::Path(Path&& p) noexcept : native_path_{std::move(p.native_path_)}, parts_{std::move(p.parts_)} {}
 
 // Path::Parse method is called conditionally in Path constructor.
@@ -573,11 +577,12 @@ bool operator<(const Path& lhs, const Path& rhs) noexcept
 
 // Path::Parse method is called conditionally in Path constructor.
 // In Path::Parse itself all Path instances created with (parse == false) => no recursion.
-// NOLINTNEXTLINE(misc-no-recursion): See above
+// NOLINTBEGIN(misc-no-recursion): See above
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
 // coverity[autosar_cpp14_a15_5_3_violation]
 void Path::Parse(const string_type& path) noexcept
+// NOLINTEND(misc-no-recursion): See above
 {
     parts_.clear();
     if (path.empty())
@@ -616,12 +621,13 @@ void Path::Parse(const string_type& path) noexcept
 
 // Path::AddPathPartToParts method is called conditionally in Path constructor.
 // In Path::AddPathPartToParts itself all Path instances created with (parse == false) => no recursion.
-// NOLINTNEXTLINE(misc-no-recursion) See above
+// NOLINTBEGIN(misc-no-recursion) See above
 // Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
 // not be called implicitly". Since getline is check whether the data is successfully read before using the data,
 // std::bad_alloc should never be thrown. This is false positive.
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 void Path::AddPathPartToParts(std::stringstream& stringstream_path, std::string& path_part) noexcept
+// NOLINTEND(misc-no-recursion) See above
 {
     while (!std::getline(stringstream_path, path_part, preferred_separator).fail())
     {

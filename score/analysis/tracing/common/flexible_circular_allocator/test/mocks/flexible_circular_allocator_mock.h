@@ -26,7 +26,7 @@ class FlexibleCircularAllocatorMock : public IFlexibleCircularAllocator
 {
   public:
     MOCK_METHOD(score::Result<void*>, Allocate, (const std::size_t, const std::size_t), (noexcept, override));
-    MOCK_METHOD(ResultBlank, Deallocate, (void* const, const std::size_t), (noexcept, override));
+    MOCK_METHOD(Result<void>, Deallocate, (void* const, const std::size_t), (noexcept, override));
     MOCK_METHOD(std::size_t, GetAvailableMemory, (), (noexcept, override));
     MOCK_METHOD(void, GetTmdMemUsage, (TmdStatistics&), (noexcept, override));
     MOCK_METHOD(void*, GetBaseAddress, (), (const, noexcept, override));

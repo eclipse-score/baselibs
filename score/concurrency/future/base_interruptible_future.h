@@ -283,7 +283,7 @@ class BaseInterruptibleFuture
               std::enable_if_t<std::is_void<LocalValue>::value, bool> = true>
     static void CallContinuationWithoutState(Callable callback)
     {
-        auto error = score::MakeUnexpected<Blank>(Error::kNoState);
+        auto error = score::MakeUnexpected<void>(Error::kNoState);
         CallAndIgnoreResult(callback, error);
     }
 

@@ -50,7 +50,7 @@ RegisterSharedMemoryObjectResult GenericTraceAPI::RegisterShmObject(const TraceC
     return static_cast<ShmObjectHandle>(0);
 }
 
-ResultBlank GenericTraceAPI::UnregisterShmObject(const TraceClientId client, const ShmObjectHandle handle)
+Result<void> GenericTraceAPI::UnregisterShmObject(const TraceClientId client, const ShmObjectHandle handle)
 {
     if (gMock != nullptr)
     {

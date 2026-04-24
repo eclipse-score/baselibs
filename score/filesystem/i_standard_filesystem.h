@@ -88,21 +88,21 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
     virtual Result<bool> Exists(const Path&) const noexcept = 0;
 
     /// \brief Copies a single file from from to to
-    virtual ResultBlank CopyFile(const Path& from, const Path& to) const noexcept = 0;
+    virtual Result<void> CopyFile(const Path& from, const Path& to) const noexcept = 0;
 
     /// \brief Copies a single file from from to to, using the copy options indicated by options. The behavior is
     /// undefined if there is more than one option in any of the copy_options option group present in options (even in
     /// the groups not relevant to CopyFile)
-    virtual ResultBlank CopyFile(const Path& from, const Path& to, const CopyOptions) const noexcept = 0;
+    virtual Result<void> CopyFile(const Path& from, const Path& to, const CopyOptions) const noexcept = 0;
 
     /// \brief Creates the directory p as if by POSIX mkdir() with a second argument of
     /// static_cast<int>(std::filesystem::perms::all) (the parent directory must already exist). If the function fails
     /// because p resolves to an existing directory, no error is reported. Otherwise on failure an error is reported.
-    virtual ResultBlank CreateDirectory(const Path&) const noexcept = 0;
+    virtual Result<void> CreateDirectory(const Path&) const noexcept = 0;
 
     /// \brief  Executes CreateDirectory() for every element of p that does not already exist. If p already exists, the
     /// function does nothing (this condition is not treated as an error).
-    virtual ResultBlank CreateDirectories(const Path&) const noexcept = 0;
+    virtual Result<void> CreateDirectories(const Path&) const noexcept = 0;
 
     /// \brief Returns the time of the last modification of p, determined as if by accessing the member st_mtime of the
     /// POSIX stat (symlinks are followed).
@@ -110,11 +110,11 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
 
     /// \brief Changes access permissions of the file to which p resolves.
     /// Symlinks are followed.
-    virtual ResultBlank Permissions(const Path&, const Perms) const noexcept = 0;
+    virtual Result<void> Permissions(const Path&, const Perms) const noexcept = 0;
 
     /// \brief Changes access permissions of the file to which p resolves.
     /// Symlinks are followed unless PermOptions::kNoFollow is set in opts.
-    virtual ResultBlank Permissions(const Path&, const Perms, const PermOptions) const noexcept = 0;
+    virtual Result<void> Permissions(const Path&, const Perms, const PermOptions) const noexcept = 0;
 
     /// \brief If the path p refers to a symbolic link, returns a new path object which refers to the target of that
     /// symbolic link. Otherwise and on failure an error is reported.
@@ -122,12 +122,12 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
 
     /// \brief The file or empty directory identified by the path p is deleted as if by the POSIX remove. Symlinks are
     /// not followed (symlink is removed, not its target)
-    virtual ResultBlank Remove(const Path&) const noexcept = 0;
+    virtual Result<void> Remove(const Path&) const noexcept = 0;
 
     /// \brief  Deletes the contents of p (if it is a directory) and the contents of all its subdirectories,
     /// recursively, then deletes p itself as if by repeatedly applying the POSIX remove. Symlinks are not followed
     /// (symlink is removed, not its target).
-    virtual ResultBlank RemoveAll(const Path&) const noexcept = 0;
+    virtual Result<void> RemoveAll(const Path&) const noexcept = 0;
 
     /// \brief Determines the type and attributes of the filesystem object identified by p as if by POSIX stat (symlinks
     /// are followed to their targets).
@@ -149,21 +149,21 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
     virtual Result<Path> CurrentPath() const noexcept = 0;
 
     /// \brief Sets the current path.
-    virtual ResultBlank CurrentPath(const Path& path) const noexcept = 0;
+    virtual Result<void> CurrentPath(const Path& path) const noexcept = 0;
 
     /// @brief Creates a hard link.
-    virtual ResultBlank CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept = 0;
+    virtual Result<void> CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept = 0;
 
     /// @brief Creates a symbolic link.
-    virtual ResultBlank CreateSymlink(const Path& target, const Path& linkpath) const noexcept = 0;
+    virtual Result<void> CreateSymlink(const Path& target, const Path& linkpath) const noexcept = 0;
 
     /// @brief Creates a symbolic link to a directory.
     /// Note: Portable code should use CreateDirectorySymlink to create directory symlinks
     /// rather than CreateSymlink, even though there is no distinction on POSIX systems.
-    virtual ResultBlank CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept = 0;
+    virtual Result<void> CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept = 0;
 
     /// \brief Copies a symlink to another location.
-    virtual ResultBlank CopySymlink(const Path& from, const Path& dest) const noexcept = 0;
+    virtual Result<void> CopySymlink(const Path& from, const Path& dest) const noexcept = 0;
 
     /// @brief Returns hard link count.
     virtual Result<uint64_t> HardLinkCount(const Path& path) const noexcept = 0;

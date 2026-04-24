@@ -125,17 +125,17 @@ class "filesystem::FileFactoryFake" as FileFactoryFake #yellow {
 }
 
 class "filesystem::FileStream" as FileStream {
-  + Close(): ResultBlank
+  + Close(): Result<void>
 }
 
 class "filesystem::details::FileStreamImpl" as FileStreamImpl
 
 class "filesystem::details::StdioFileBuf" as StdioFileBuf {
-  + Close(): ResultBlank
+  + Close(): Result<void>
 }
 
 class "filesystem::details::AtomicFileBuf" as AtomicFileBuf {
-  + Close(): ResultBlank
+  + Close(): Result<void>
 }
 
 class "filesystem::details::StdioFilebufBase" as StdioFilebufBase {
@@ -158,12 +158,12 @@ class "filesystem::BadStringStreamCollection" as BadStringStreamCollection #yell
 class "os::ObjectSeam" as ObjectSeam2 #yellow
 
 interface "filesystem::IFileUtils" as IFileUtils {
-  + ChangeGroup(Path, group_name): ResultBlank
-  + CreateDirectory(Path, permissions): ResultBlank
-  + CreateDirectories(Path, permissions): ResultBlank
+  + ChangeGroup(Path, group_name): Result<void>
+  + CreateDirectory(Path, permissions): Result<void>
+  + CreateDirectories(Path, permissions): Result<void>
   + CreateTmpFileName(): Result<Path>
   + FileContentsAreIdentical(Path, Path): Result<bool>
-  + SyncDirectory(Path): ResultBlank
+  + SyncDirectory(Path): Result<void>
   + ValidateGroup(Path, group_name): Result<bool>
   --
   Note: Implements auxiliary functions not reflected in std::filesystem
