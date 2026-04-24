@@ -595,6 +595,9 @@ public:
     /// - value <-> error
     /// - error <-> error
     ///
+    // misc-no-recursion: The recursion is bounded to a maximum depth of 2. Thus neither stack nor
+    // runtime are growing beyond bounds
+    // NOLINTNEXTLINE(misc-no-recursion)
     void swap(expected& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
                                       std::is_nothrow_move_assignable<ValueType>::value &&
                                       std::is_nothrow_move_constructible<ErrorType>::value &&
