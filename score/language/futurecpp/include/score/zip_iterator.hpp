@@ -360,20 +360,16 @@ auto make_zip_range(Containers&&... containers) -> range_pair<ZipIteratorType>
 
 } // namespace score::cpp
 
-namespace std
-{
 template <std::size_t I, typename... Ts>
-struct tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
+struct std::tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
 {
     using type = std::tuple_element_t<I, std::tuple<Ts...>>;
 };
 
 template <typename... Ts>
-struct tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
+struct std::tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
     : public std::integral_constant<std::size_t, std::tuple_size<std::tuple<Ts...>>::value>
 {
 };
-
-} // namespace std
 
 #endif // SCORE_LANGUAGE_FUTURECPP_ZIP_ITERATOR_HPP
