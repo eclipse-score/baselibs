@@ -329,12 +329,9 @@ public:
     /// \brief Safe version of the direct value accessors. Uses provided default value, if internal value is not
     /// available.
     ///
-    /// \note As opposed to \sa value, the function returns a copy. To prevent editing a temporary value and thereby
-    /// possibly introducing a bug, is was made constant.
-    ///
     /// \sa value
     /// \return The internal value if available, otherwise return the provided default
-    constexpr const value_type value_or(const value_type& value) const { return this->has_value() ? **this : value; }
+    constexpr value_type value_or(const value_type& value) const { return this->has_value() ? **this : value; }
 
     /// \brief If *this contains a value, destroy that value as if by value().T::~T(). Otherwise, there are no
     /// effects.

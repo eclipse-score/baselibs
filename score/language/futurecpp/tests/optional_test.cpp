@@ -126,21 +126,6 @@ public:
 std::uint32_t move_only::ctor_counter = 0;
 std::uint32_t move_only::dtor_counter = 0;
 
-class is_const_member
-{
-public:
-    static std::uint32_t const_called;
-    static std::uint32_t non_const_called;
-
-    is_const_member() {}
-
-    void member() { non_const_called++; }
-
-    void member() const { const_called++; }
-};
-std::uint32_t is_const_member::const_called = 0;
-std::uint32_t is_const_member::non_const_called = 0;
-
 struct without_noexcept
 {
     without_noexcept() = default;
@@ -771,30 +756,6 @@ TEST(optional, manipulate)
     fixture.value() = 23;
 
     EXPECT_EQ(23, fixture.value());
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#9337998
-TEST(optional, value_or_test_constness)
-{
-    score::cpp::optional<is_const_member> fixture;
-
-    EXPECT_EQ(0, is_const_member::const_called);
-    EXPECT_EQ(0, is_const_member::non_const_called);
-
-    fixture.value_or(is_const_member()).member();
-    EXPECT_EQ(1, is_const_member::const_called);
-    EXPECT_EQ(0, is_const_member::non_const_called);
-
-    fixture = is_const_member();
-    fixture.value_or(is_const_member()).member();
-    EXPECT_EQ(2, is_const_member::const_called);
-    EXPECT_EQ(0, is_const_member::non_const_called);
-
-    is_const_member helper = fixture.value_or(is_const_member());
-    helper.member();
-    EXPECT_EQ(2, is_const_member::const_called);
-    EXPECT_EQ(1, is_const_member::non_const_called);
 }
 
 /// @testmethods TM_REQUIREMENT
