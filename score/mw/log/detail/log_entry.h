@@ -91,14 +91,14 @@ Justification:
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
 STRUCT_VISITABLE(LogEntry,
-                 app_id,
-                 ctx_id,
-                 payload,
-                 //  timestamp_steady_nsec,
-                 //  timestamp_system_nsec,
-                 num_of_args,
-                 //  header_buffer,
-                 log_level)
+                     app_id,
+                     ctx_id,
+                     payload,
+                     //  timestamp_steady_nsec,
+                     //  timestamp_system_nsec,
+                     num_of_args,
+                     //  header_buffer,
+                     log_level)
 // NOLINTEND(score-struct-usage-compliance) justified by design
 
 }  // namespace detail
