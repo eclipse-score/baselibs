@@ -94,9 +94,12 @@ constexpr T rotl(const T x, const int s) noexcept
     }
     else if (r > 0)
     {
+        // hicpp-signed-bitwise: Follows design specification: https://eel.is/c++draft/bit#rotate-4
+        // NOLINTNEXTLINE(hicpp-signed-bitwise)
         return static_cast<T>((x << r) | (x >> (bit_count - r))); // left rotation
     }
-
+    // hicpp-signed-bitwise: Follows design specification: https://eel.is/c++draft/bit#rotate-4
+    // NOLINTNEXTLINE(hicpp-signed-bitwise)
     return static_cast<T>((x >> -r) | (x << (bit_count + r))); // right rotation
 }
 
