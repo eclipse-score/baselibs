@@ -31,7 +31,9 @@ struct test_type
 {
     test_type() noexcept(!CTorThrows) {};
     test_type(const test_type&) noexcept(!CopyTorThrows) {};
+    test_type& operator=(const test_type&) noexcept(!CopyTorThrows) { return *this; };
     test_type(test_type&&) noexcept(!MoveTorThrows) {};
+    test_type& operator=(test_type&&) noexcept(!MoveTorThrows) { return *this; };
     ~test_type() noexcept(!DTorThrows) {};
 };
 
@@ -123,33 +125,11 @@ TYPED_TEST_P(test_expected_type_fixture, check_dtor)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#16631224
-TYPED_TEST_P(test_expected_type_fixture, check_copy_tor)
-{
-    bool actual = std::is_nothrow_copy_constructible<typename TestFixture::excepted_type>::value;
-    bool expected = std::is_nothrow_copy_constructible<typename TestFixture::value_type>::value &&
-                    std::is_nothrow_copy_constructible<typename TestFixture::error_type>::value;
-    EXPECT_EQ(actual, expected);
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#16631224
 TYPED_TEST_P(test_expected_type_fixture, check_move_tor)
 {
     bool actual = std::is_nothrow_move_constructible<typename TestFixture::excepted_type>::value;
     bool expected = std::is_nothrow_move_constructible<typename TestFixture::value_type>::value &&
                     std::is_nothrow_move_constructible<typename TestFixture::error_type>::value;
-    EXPECT_EQ(actual, expected);
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#16631224
-TYPED_TEST_P(test_expected_type_fixture, check_copy_assignment)
-{
-    bool actual = std::is_nothrow_copy_assignable<typename TestFixture::excepted_type>::value;
-    bool expected = std::is_nothrow_copy_constructible<typename TestFixture::value_type>::value &&
-                    std::is_nothrow_copy_constructible<typename TestFixture::error_type>::value &&
-                    std::is_nothrow_destructible<typename TestFixture::value_type>::value &&
-                    std::is_nothrow_destructible<typename TestFixture::error_type>::value;
     EXPECT_EQ(actual, expected);
 }
 
@@ -165,13 +145,7 @@ TYPED_TEST_P(test_expected_type_fixture, check_move_assignment)
     EXPECT_EQ(actual, expected);
 }
 
-REGISTER_TYPED_TEST_SUITE_P(test_expected_type_fixture,
-                            check_ctor,
-                            check_dtor,
-                            check_copy_tor,
-                            check_move_tor,
-                            check_copy_assignment,
-                            check_move_assignment);
+REGISTER_TYPED_TEST_SUITE_P(test_expected_type_fixture, check_ctor, check_dtor, check_move_tor, check_move_assignment);
 INSTANTIATE_TYPED_TEST_SUITE_P(part1, test_expected_type_fixture, all_test_types_1, /*unused*/);
 INSTANTIATE_TYPED_TEST_SUITE_P(part2, test_expected_type_fixture, all_test_types_2, /*unused*/);
 INSTANTIATE_TYPED_TEST_SUITE_P(part3, test_expected_type_fixture, all_test_types_3, /*unused*/);

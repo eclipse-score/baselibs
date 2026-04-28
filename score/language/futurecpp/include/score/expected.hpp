@@ -80,6 +80,306 @@ unexpected<std::decay_t<ErrorType>> make_unexpected(ErrorType&& e) noexcept(
     return unexpected<std::decay_t<ErrorType>>(std::forward<ErrorType>(e));
 }
 
+namespace detail
+{
+namespace expected
+{
+
+template <typename T, typename E, bool = std::is_trivially_destructible_v<T> && std::is_trivially_destructible_v<E>>
+struct destructor_base
+{
+    static_assert(std::is_trivially_destructible_v<T> && std::is_trivially_destructible_v<E>);
+
+    destructor_base() {}
+
+    // For performances reason this class is not using `std::variant` but implementing the storage as a raw union. This
+    // class takes care by code review to only read from the active member of the union. The union is only visible
+    // internally and not exposed to the user API.
+    // coverity[misra_cpp_2023_rule_12_3_1_violation : SUPPRESS]
+    union
+    {
+        /// Stored value.
+        T value_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+        /// Stored error.
+        E error_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+    };
+    /// Indicator if this instance holds a value.
+    bool has_value_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+};
+
+template <typename T, typename E>
+struct destructor_base<T, E, false>
+{
+    static_assert(!(std::is_trivially_destructible_v<T> && std::is_trivially_destructible_v<E>));
+
+    destructor_base() {}
+    destructor_base(const destructor_base&) = default;
+    destructor_base& operator=(const destructor_base&) = default;
+    destructor_base(destructor_base&&) = default;
+    destructor_base& operator=(destructor_base&&) = default;
+
+    ~destructor_base() noexcept(std::is_nothrow_destructible<T>::value && std::is_nothrow_destructible<E>::value)
+    {
+        if (has_value_)
+        {
+            value_.~T();
+        }
+        else
+        {
+            error_.~E();
+        }
+    }
+
+    // For performances reason this class is not using `std::variant` but implementing the storage as a raw union. This
+    // class takes care by code review to only read from the active member of the union. The union is only visible
+    // internally and not exposed to the user API.
+    // coverity[misra_cpp_2023_rule_12_3_1_violation : SUPPRESS]
+    union
+    {
+        /// Stored value.
+        T value_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+        /// Stored error.
+        E error_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+    };
+    /// Indicator if this instance holds a value.
+    bool has_value_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
+};
+
+template <typename T,
+          typename E,
+          bool = std::is_trivially_copy_constructible_v<T> && std::is_trivially_copy_constructible_v<E>>
+struct copy_base : public destructor_base<T, E>
+{
+    static_assert(std::is_trivially_copy_constructible_v<T> && std::is_trivially_copy_constructible_v<E>);
+};
+
+template <typename T, typename E>
+class copy_base<T, E, false> : public destructor_base<T, E>
+{
+    static_assert(!(std::is_trivially_copy_constructible_v<T> && std::is_trivially_copy_constructible_v<E>));
+
+public:
+    copy_base() = default;
+    copy_base& operator=(const copy_base&) = default;
+    copy_base(copy_base&&) = default;
+    copy_base& operator=(copy_base&&) = default;
+    ~copy_base() = default;
+
+    copy_base(const copy_base& rhs) : destructor_base<T, E>{}
+    {
+        static_assert(std::is_copy_constructible<T>::value && std::is_copy_constructible<E>::value);
+
+        this->has_value_ = rhs.has_value_;
+        if (rhs.has_value_)
+        {
+            static_cast<void>(::new (&this->value_) T{rhs.value_});
+        }
+        else
+        {
+            static_cast<void>(::new (&this->error_) E{rhs.error_});
+        }
+    }
+};
+
+template <typename T,
+          typename E,
+          bool = std::is_trivially_destructible_v<T>          //
+                 && std::is_trivially_copy_constructible_v<T> //
+                 && std::is_trivially_copy_assignable_v<T>    //
+                 && std::is_trivially_destructible_v<E>       //
+                 && std::is_trivially_copy_constructible_v<E> //
+                 && std::is_trivially_copy_assignable_v<E>>
+struct copy_assign_base : public copy_base<T, E>
+{
+    static_assert(std::is_trivially_destructible_v<T>          //
+                  && std::is_trivially_copy_constructible_v<T> //
+                  && std::is_trivially_copy_assignable_v<T>    //
+                  && std::is_trivially_destructible_v<E>       //
+                  && std::is_trivially_copy_constructible_v<E> //
+                  && std::is_trivially_copy_assignable_v<E>);
+};
+
+template <typename T, typename E>
+class copy_assign_base<T, E, false> : public copy_base<T, E>
+{
+    static_assert(!(std::is_trivially_destructible_v<T>          //
+                    && std::is_trivially_copy_constructible_v<T> //
+                    && std::is_trivially_copy_assignable_v<T>    //
+                    && std::is_trivially_destructible_v<E>       //
+                    && std::is_trivially_copy_constructible_v<E> //
+                    && std::is_trivially_copy_assignable_v<E>));
+
+public:
+    copy_assign_base() = default;
+    copy_assign_base(const copy_assign_base&) = default;
+    copy_assign_base(copy_assign_base&&) = default;
+    copy_assign_base& operator=(copy_assign_base&&) = default;
+    ~copy_assign_base() = default;
+
+    copy_assign_base& operator=(const copy_assign_base& rhs)
+    {
+        static_assert(std::is_copy_assignable<T>::value       //
+                      && std::is_copy_constructible<T>::value //
+                      && std::is_copy_assignable<E>::value    //
+                      && std::is_copy_constructible<E>::value //
+                      &&
+                      (std::is_nothrow_move_constructible<T>::value || std::is_nothrow_move_constructible<E>::value));
+
+        if (this->has_value_)
+        {
+            this->value_.~T();
+            if (rhs.has_value_)
+            {
+                static_cast<void>(::new (&this->value_) T{rhs.value_});
+            }
+            else
+            {
+                static_cast<void>(::new (&this->error_) E{rhs.error_});
+                this->has_value_ = false;
+            }
+        }
+        else
+        {
+            this->error_.~E();
+            if (rhs.has_value_)
+            {
+                static_cast<void>(::new (&this->value_) T{rhs.value_});
+                this->has_value_ = true;
+            }
+            else
+            {
+                static_cast<void>(::new (&this->error_) E{rhs.error_});
+            }
+        }
+        return *this;
+    }
+};
+
+template <typename T,
+          typename E,
+          bool = std::is_trivially_move_constructible_v<T> && std::is_trivially_move_constructible_v<E>>
+struct move_base : public copy_assign_base<T, E>
+{
+    static_assert(std::is_trivially_move_constructible_v<T> && std::is_trivially_move_constructible_v<E>);
+};
+
+template <typename T, typename E>
+class move_base<T, E, false> : public copy_assign_base<T, E>
+{
+    static_assert(!(std::is_trivially_move_constructible_v<T> && std::is_trivially_move_constructible_v<E>));
+
+public:
+    move_base() = default;
+    move_base(const move_base&) = default;
+    move_base& operator=(const move_base&) = default;
+    move_base& operator=(move_base&&) = default;
+    ~move_base() = default;
+
+    template <
+        typename U = T,
+        typename F = E,
+        std::enable_if_t<std::is_move_constructible<U>::value && std::is_move_constructible<F>::value, bool> = true>
+    move_base(move_base&& rhs) noexcept(std::is_nothrow_move_constructible<T>::value &&
+                                        std::is_nothrow_move_constructible<E>::value)
+        : copy_assign_base<T, E>{}
+    {
+        this->has_value_ = rhs.has_value_;
+        if (rhs.has_value_)
+        {
+            static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+        }
+        else
+        {
+            static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+        }
+    }
+};
+
+template <typename T,
+          typename E,
+          bool = std::is_trivially_destructible_v<T>          //
+                 && std::is_trivially_move_constructible_v<T> //
+                 && std::is_trivially_move_assignable_v<T>    //
+                 && std::is_trivially_destructible_v<E>       //
+                 && std::is_trivially_move_constructible_v<E> //
+                 && std::is_trivially_move_assignable_v<E>>
+struct move_assign_base : public move_base<T, E>
+{
+    static_assert(std::is_trivially_destructible_v<T>          //
+                  && std::is_trivially_move_constructible_v<T> //
+                  && std::is_trivially_move_assignable_v<T>    //
+                  && std::is_trivially_destructible_v<E>       //
+                  && std::is_trivially_move_constructible_v<E> //
+                  && std::is_trivially_move_assignable_v<E>);
+};
+
+template <typename T, typename E>
+class move_assign_base<T, E, false> : public move_base<T, E>
+{
+    static_assert(!(std::is_trivially_destructible_v<T>          //
+                    && std::is_trivially_move_constructible_v<T> //
+                    && std::is_trivially_move_assignable_v<T>    //
+                    && std::is_trivially_destructible_v<E>       //
+                    && std::is_trivially_move_constructible_v<E> //
+                    && std::is_trivially_move_assignable_v<E>));
+
+public:
+    move_assign_base() = default;
+    move_assign_base(const move_assign_base&) = default;
+    move_assign_base& operator=(const move_assign_base&) = default;
+    move_assign_base(move_assign_base&&) = default;
+    ~move_assign_base() = default;
+
+    template <typename U = T,
+              typename F = E,
+              std::enable_if_t<std::is_move_constructible<U>::value        //
+                                   && std::is_move_assignable<U>::value    //
+                                   && std::is_move_constructible<F>::value //
+                                   && std::is_move_assignable<F>::value    //
+                                   && (std::is_nothrow_move_constructible<U>::value ||
+                                       std::is_nothrow_move_constructible<F>::value) //
+                               ,
+                               bool> = true>
+    move_assign_base& operator=(move_assign_base&& rhs) noexcept(std::is_nothrow_move_assignable<T>::value &&
+                                                                 std::is_nothrow_move_constructible<T>::value &&
+                                                                 std::is_nothrow_move_assignable<E>::value &&
+                                                                 std::is_nothrow_move_constructible<E>::value &&
+                                                                 std::is_nothrow_destructible<T>::value &&
+                                                                 std::is_nothrow_destructible<E>::value)
+    {
+        if (this->has_value_)
+        {
+            this->value_.~T();
+            if (rhs.has_value_)
+            {
+                static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+            }
+            else
+            {
+                static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+                this->has_value_ = false;
+            }
+        }
+        else
+        {
+            this->error_.~E();
+            if (rhs.has_value_)
+            {
+                static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+                this->has_value_ = true;
+            }
+            else
+            {
+                static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+            }
+        }
+        return *this;
+    }
+};
+
+} // namespace expected
+} // namespace detail
+
 ///
 /// \brief A container for an expected value or an error.
 ///
@@ -91,8 +391,10 @@ unexpected<std::decay_t<ErrorType>> make_unexpected(ErrorType&& e) noexcept(
 /// \note This implementation follows loosely Andrei Alexandrescu's take on expected.
 ///
 template <typename ValueType, typename ErrorType>
-class expected
+class expected : private detail::expected::move_assign_base<ValueType, ErrorType>
 {
+    using base_t = detail::expected::move_assign_base<ValueType, ErrorType>;
+
     ///
     /// \brief A compile time evaluator to decide whether the universal reference ctor is enabled
     ///
@@ -123,9 +425,10 @@ public:
 
     /// \brief Default constructor. The instance is assumed to have a value.
     template <typename U = ValueType, typename = std::enable_if_t<std::is_default_constructible<U>::value>>
-    expected() noexcept(std::is_nothrow_default_constructible<ValueType>::value) : has_value_{true}
+    expected() noexcept(std::is_nothrow_default_constructible<ValueType>::value) : base_t{}
     {
-        static_cast<void>(::new (&value_) ValueType{});
+        this->has_value_ = true;
+        static_cast<void>(::new (&this->value_) ValueType{});
     }
 
     ///
@@ -142,9 +445,10 @@ public:
                                                    !std::is_convertible<DummyType&&, ValueType>::value>>
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     explicit constexpr expected(DummyType&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value)
-        : has_value_{true}
+        : base_t{}
     {
-        static_cast<void>(::new (&value_) ValueType{std::forward<DummyType>(rhs)});
+        this->has_value_ = true;
+        static_cast<void>(::new (&this->value_) ValueType{std::forward<DummyType>(rhs)});
     }
 
     ///
@@ -161,10 +465,10 @@ public:
                                                    std::is_convertible<DummyType&&, ValueType>::value>,
               typename = void>
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
-    constexpr expected(DummyType&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value)
-        : has_value_{true}
+    constexpr expected(DummyType&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value) : base_t{}
     {
-        static_cast<void>(::new (&value_) ValueType{std::forward<DummyType>(rhs)});
+        this->has_value_ = true;
+        static_cast<void>(::new (&this->value_) ValueType{std::forward<DummyType>(rhs)});
     }
 
     ///
@@ -173,10 +477,10 @@ public:
     /// \param rhs an instance of \ref unexpected that holds an error.
     ///
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
-    expected(const unexpected<ErrorType>& rhs) noexcept(std::is_nothrow_copy_constructible<ErrorType>::value)
-        : has_value_{false}
+    expected(const unexpected<ErrorType>& rhs) noexcept(std::is_nothrow_copy_constructible<ErrorType>::value) : base_t{}
     {
-        static_cast<void>(::new (&error_) ErrorType{rhs.error()});
+        this->has_value_ = false;
+        static_cast<void>(::new (&this->error_) ErrorType{rhs.error()});
     }
 
     ///
@@ -186,142 +490,10 @@ public:
     ///
     template <typename E = ErrorType, std::enable_if_t<std::is_move_constructible<E>::value, bool> = true>
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
-    expected(unexpected<ErrorType>&& rhs) noexcept(std::is_nothrow_move_constructible<ErrorType>::value)
-        : has_value_{false}
+    expected(unexpected<ErrorType>&& rhs) noexcept(std::is_nothrow_move_constructible<ErrorType>::value) : base_t{}
     {
-        static_cast<void>(::new (&error_) ErrorType{std::move(rhs).error()});
-    }
-
-    ///
-    /// \brief Copy constructor.
-    ///
-    /// \param rhs an instance of \ref expected that can hold either a value or an error.
-    ///
-    expected(const expected& rhs) noexcept(std::is_nothrow_copy_constructible<ValueType>::value &&
-                                           std::is_nothrow_copy_constructible<ErrorType>::value)
-        : has_value_{rhs.has_value()}
-    {
-        if (has_value())
-        {
-            static_cast<void>(::new (&value_) ValueType{rhs.value_});
-        }
-        else
-        {
-            static_cast<void>(::new (&error_) ErrorType{rhs.error_});
-        }
-    }
-
-    ///
-    /// \brief Move constructor.
-    ///
-    /// \tparam DummyType defaulted to ValueType. Used to delay template instantiation.
-    ///
-    /// \param rhs an instance of \ref expected that can hold either a value or an error.
-    ///
-    template <
-        typename V = ValueType,
-        typename E = ErrorType,
-        std::enable_if_t<std::is_move_constructible<V>::value && std::is_move_constructible<E>::value, bool> = true>
-    expected(expected&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
-                                      std::is_nothrow_move_constructible<ErrorType>::value)
-        : has_value_{rhs.has_value()}
-    {
-        if (has_value())
-        {
-            static_cast<void>(::new (&value_) ValueType{std::move(rhs).value_});
-        }
-        else
-        {
-            static_cast<void>(::new (&error_) ErrorType{std::move(rhs).error_});
-        }
-    }
-
-    ///
-    /// \brief Copy assignment operator.
-    ///
-    /// \tparam DummyType only needed to enable SFINAE in case ErrorType or ValueType do not meet our expectations.
-    ///
-    /// \param rhs an instance of \ref expected that can hold either a value or an error.
-    ///
-    /// \return \c *this
-    ///
-    expected& operator=(const expected& rhs) noexcept(std::is_nothrow_copy_constructible<ValueType>::value &&
-                                                      std::is_nothrow_copy_constructible<ErrorType>::value &&
-                                                      std::is_nothrow_destructible<ValueType>::value &&
-                                                      std::is_nothrow_destructible<ErrorType>::value)
-    {
-        if (has_value())
-        {
-            value_.~ValueType();
-            if (rhs.has_value())
-            {
-                static_cast<void>(::new (&value_) ValueType{rhs.value_});
-            }
-            else
-            {
-                static_cast<void>(::new (&error_) ErrorType{rhs.error_});
-                has_value_ = false;
-            }
-        }
-        else
-        {
-            error_.~ErrorType();
-            if (rhs.has_value())
-            {
-                static_cast<void>(::new (&value_) ValueType{rhs.value_});
-                has_value_ = true;
-            }
-            else
-            {
-                static_cast<void>(::new (&error_) ErrorType{rhs.error_});
-            }
-        }
-        return *this;
-    }
-
-    ///
-    /// \brief Move assignment operator.
-    ///
-    /// \param rhs an instance of \ref expected that can hold either a value or an error.
-    ///
-    /// \return \c *this
-    ///
-    template <
-        typename V = ValueType,
-        typename E = ErrorType,
-        std::enable_if_t<std::is_move_constructible<V>::value && std::is_move_constructible<E>::value, bool> = true>
-    expected& operator=(expected&& rhs) noexcept(std::is_nothrow_move_constructible<ValueType>::value &&
-                                                 std::is_nothrow_move_constructible<ErrorType>::value &&
-                                                 std::is_nothrow_destructible<ValueType>::value &&
-                                                 std::is_nothrow_destructible<ErrorType>::value)
-    {
-        if (has_value())
-        {
-            value_.~ValueType();
-            if (rhs.has_value())
-            {
-                static_cast<void>(::new (&value_) ValueType{std::move(rhs).value_});
-            }
-            else
-            {
-                static_cast<void>(::new (&error_) ErrorType{std::move(rhs).error_});
-                has_value_ = false;
-            }
-        }
-        else
-        {
-            error_.~ErrorType();
-            if (rhs.has_value())
-            {
-                static_cast<void>(::new (&value_) ValueType{std::move(rhs).value_});
-                has_value_ = true;
-            }
-            else
-            {
-                static_cast<void>(::new (&error_) ErrorType{std::move(rhs).error_});
-            }
-        }
-        return *this;
+        this->has_value_ = false;
+        static_cast<void>(::new (&this->error_) ErrorType{std::move(rhs).error()});
     }
 
     ///
@@ -340,14 +512,14 @@ public:
     {
         if (has_value())
         {
-            value_.~ValueType();
-            static_cast<void>(::new (&value_) ValueType{std::move(rhs)});
+            this->value_.~ValueType();
+            static_cast<void>(::new (&this->value_) ValueType{std::move(rhs)});
         }
         else
         {
-            error_.~ErrorType();
-            has_value_ = true;
-            static_cast<void>(::new (&value_) ValueType{std::move(rhs)});
+            this->error_.~ErrorType();
+            this->has_value_ = true;
+            static_cast<void>(::new (&this->value_) ValueType{std::move(rhs)});
         }
         return *this;
     }
@@ -366,14 +538,14 @@ public:
     {
         if (has_value())
         {
-            value_.~ValueType();
-            has_value_ = false;
+            this->value_.~ValueType();
+            this->has_value_ = false;
         }
         else
         {
-            error_.~ErrorType();
+            this->error_.~ErrorType();
         }
-        static_cast<void>(::new (&error_) ErrorType{error.error()});
+        static_cast<void>(::new (&this->error_) ErrorType{error.error()});
         return *this;
     }
 
@@ -391,138 +563,124 @@ public:
     {
         if (has_value())
         {
-            value_.~ValueType();
-            has_value_ = false;
+            this->value_.~ValueType();
+            this->has_value_ = false;
         }
         else
         {
-            error_.~ErrorType();
+            this->error_.~ErrorType();
         }
-        static_cast<void>(::new (&error_) ErrorType{std::move(error).error()});
+        static_cast<void>(::new (&this->error_) ErrorType{std::move(error).error()});
         return *this;
-    }
-
-    /// \brief Destructor that cleans up after either value or error.
-    ~expected() noexcept(std::is_nothrow_destructible<ValueType>::value &&
-                         std::is_nothrow_destructible<ErrorType>::value)
-    {
-        if (has_value())
-        {
-            value_.~ValueType();
-        }
-        else
-        {
-            error_.~ErrorType();
-        }
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     ValueType& operator*() &
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return value_;
+        return this->value_;
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     const ValueType& operator*() const&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return value_;
+        return this->value_;
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     ValueType&& operator*() &&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return std::move(value_);
+        return std::move(this->value_);
     }
 
     ///
     /// \brief Get a pointer to the stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     const ValueType&& operator*() const&&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return std::move(value_);
+        return std::move(this->value_);
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     const ValueType& value() const&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return value_;
+        return this->value_;
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     ValueType& value() &
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return value_;
+        return this->value_;
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     ValueType&& value() &&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return std::move(value_);
+        return std::move(this->value_);
     }
 
     ///
     /// \brief Get stored value.
     ///
     /// \pre this->has_value()
-    /// \return \ref expected::value_
+    /// \return reference to expected value
     ///
     const ValueType&& value() const&&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(has_value());
-        return std::move(value_);
+        return std::move(this->value_);
     }
 
     ///
     /// \brief Get a pointer to the stored value or die if error is stored instead.
     ///
-    /// \return pointer to \ref expected::value_
+    /// \return pointer to expected value
     ///
     ValueType* operator->() noexcept { return &**this; }
 
     ///
     /// \brief Get a pointer to the stored value or die if error is stored instead.
     ///
-    /// \return pointer to \ref expected::value_
+    /// \return pointer to expected value
     ///
     const ValueType* operator->() const noexcept { return &**this; }
 
@@ -530,62 +688,62 @@ public:
     /// \brief Get stored error.
     ///
     /// \pre !this->has_value()
-    /// \return \ref expected::error_
+    /// \return reference to unexpected error
     ///
     const ErrorType& error() const&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(!has_value());
-        return error_;
+        return this->error_;
     }
 
     ///
     /// \brief Get stored error.
     ///
     /// \pre !this->has_value()
-    /// \return \ref expected::error_
+    /// \return reference to unexpected error
     ///
     ErrorType& error() &
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(!has_value());
-        return error_;
+        return this->error_;
     }
 
     ///
     /// \brief Get stored error.
     ///
     /// \pre !this->has_value()
-    /// \return \ref expected::error_
+    /// \return reference to unexpected error
     ///
     ErrorType&& error() &&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(!has_value());
-        return std::move(error_);
+        return std::move(this->error_);
     }
 
     ///
     /// \brief Get stored error.
     ///
     /// \pre !this->has_value()
-    /// \return \ref expected::error_
+    /// \return reference to unexpected error
     ///
     const ErrorType&& error() const&&
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(!has_value());
-        return std::move(error_);
+        return std::move(this->error_);
     }
 
     ///
     /// \brief Check if there is a stored value.
     ///
-    /// \return true if \ref expected stores a \ref expected::value_ and false otherwise.
+    /// \return true if \ref expected stores an expected value and false otherwise.
     ///
-    inline bool has_value() const noexcept { return has_value_; }
+    inline bool has_value() const noexcept { return this->has_value_; }
 
     ///
     /// \brief Check if there is a stored value as an implicit conversion to bool.
-    /// \return true if \ref expected stores a \ref expected::value_ and false otherwise.
+    /// \return true if \ref expected stores an expected value and false otherwise.
     ///
-    explicit operator bool() const noexcept { return has_value_; }
+    explicit operator bool() const noexcept { return this->has_value_; }
 
     /// \brief Swap current instance with another.
     ///
@@ -610,7 +768,7 @@ public:
             if (rhs.has_value())
             {
                 using std::swap;
-                swap(value_, rhs.value_);
+                swap(this->value_, rhs.value_);
             }
             else
             {
@@ -622,34 +780,20 @@ public:
             if (!rhs.has_value())
             {
                 using std::swap;
-                swap(error_, rhs.error_);
+                swap(this->error_, rhs.error_);
             }
             else
             {
-                ErrorType t{std::move(error_)};
-                error_.~ErrorType();
-                static_cast<void>(::new (&value_) ValueType{std::move(rhs.value_)});
-                has_value_ = true;
+                ErrorType t{std::move(this->error_)};
+                this->error_.~ErrorType();
+                static_cast<void>(::new (&this->value_) ValueType{std::move(rhs.value_)});
+                this->has_value_ = true;
                 rhs.value_.~ValueType();
                 static_cast<void>(::new (&rhs.value_) ErrorType{std::move(t)});
                 rhs.has_value_ = false;
             }
         }
     }
-
-private:
-    // For performances reason this class is not using `std::variant` but implementing the storage as a raw union. This
-    // class takes care by code review to only read from the active member of the union. The union is only visible
-    // internally and not exposed to the user API.
-    // coverity[misra_cpp_2023_rule_12_3_1_violation : SUPPRESS]
-    union
-    {
-        /// Stored value.
-        ValueType value_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
-        /// Stored error.
-        ErrorType error_; // NOLINT(readability-identifier-naming) keep `_` to make clear it is a member variable
-    };
-    bool has_value_; ///< Indicator if this instance holds a value.
 };
 
 template <typename LhsV, typename LhsE, typename RhsV, typename RhsE>
