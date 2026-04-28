@@ -14,8 +14,10 @@
 #define SCORE_ANALYSIS_TRACING_COMMON_TYPES
 
 #include "score/language/safecpp/scoped_function/move_only_scoped_function.h"
-#include "score/memory/shared/shared_memory_resource.h"
 #include "score/result/result.h"
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <array>
 #include <cstdint>
 #include <memory>
@@ -23,6 +25,15 @@
 
 namespace score
 {
+namespace memory
+{
+namespace shared
+{
+class ManagedMemoryResource;
+class ISharedMemoryResource;
+}  // namespace shared
+}  // namespace memory
+
 namespace analysis
 {
 namespace tracing
