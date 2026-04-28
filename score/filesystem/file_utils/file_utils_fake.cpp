@@ -36,15 +36,11 @@ FileUtilsFake::FileUtilsFake(IStandardFilesystem& standard_filesystem, IFileFact
 
     ON_CALL(*this, ChangeGroup(_, An<const std::string&>())).WillByDefault(Return(error));
     ON_CALL(*this, ChangeGroup(_, An<gid_t>())).WillByDefault(Return(error));
-    ON_CALL(*this, CheckFileSystem(_)).WillByDefault(Return(error));
-    ON_CALL(*this, RepairFileSystem(_)).WillByDefault(Return(error));
     ON_CALL(*this, CreateDirectory(_, _)).WillByDefault(Invoke(&file_utils_, &FileUtils::CreateDirectory));
     ON_CALL(*this, CreateDirectories(_, _)).WillByDefault(Invoke(&file_utils_, &FileUtils::CreateDirectories));
     ON_CALL(*this, OpenUniqueFile(_, _)).WillByDefault(Return(ByMove(error)));
     ON_CALL(*this, FileContentsAreIdentical(_, _))
         .WillByDefault(Invoke(&file_utils_, &FileUtils::FileContentsAreIdentical));
-    ON_CALL(*this, FormatPartition(_)).WillByDefault(Return(error));
-    ON_CALL(*this, IsQnxCompatible(_)).WillByDefault(Return(false));
     ON_CALL(*this, SyncDirectory(_)).WillByDefault(Return(error));
     ON_CALL(*this, ValidateGroup(_, _)).WillByDefault(Return(error));
 }

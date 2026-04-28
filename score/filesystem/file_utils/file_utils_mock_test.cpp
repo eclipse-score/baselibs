@@ -27,12 +27,9 @@ TEST(FileUtilsMock, CheckReturnValues)
 
     EXPECT_EQ(Result<void>{}, unit.ChangeGroup({}, std::string{}));
     EXPECT_EQ(Result<void>{}, unit.ChangeGroup({}, 0));
-    EXPECT_EQ(Result<void>{}, unit.CheckFileSystem({}));
     EXPECT_EQ(Result<void>{}, unit.CreateDirectory({}, {}));
     EXPECT_EQ(Result<void>{}, unit.CreateDirectories({}, {}));
     EXPECT_EQ(Result<bool>{}, unit.FileContentsAreIdentical({}, {}));
-    EXPECT_EQ(Result<void>{}, unit.FormatPartition({}));
-    EXPECT_EQ(bool{}, unit.IsQnxCompatible({}));
     EXPECT_EQ(Result<void>{}, unit.SyncDirectory({}));
     EXPECT_EQ(Result<bool>{}, unit.ValidateGroup({}, {}));
 }
