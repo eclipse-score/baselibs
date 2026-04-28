@@ -221,28 +221,28 @@ public:
 
         if (this->has_value_)
         {
-            this->value_.~T();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{rhs.value_});
+                this->value_ = rhs.value_;
             }
             else
             {
+                this->value_.~T();
                 static_cast<void>(::new (&this->error_) E{rhs.error_});
                 this->has_value_ = false;
             }
         }
         else
         {
-            this->error_.~E();
             if (rhs.has_value_)
             {
+                this->error_.~E();
                 static_cast<void>(::new (&this->value_) T{rhs.value_});
                 this->has_value_ = true;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{rhs.error_});
+                this->error_ = rhs.error_;
             }
         }
         return *this;
@@ -343,28 +343,28 @@ public:
     {
         if (this->has_value_)
         {
-            this->value_.~T();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+                this->value_ = std::move(rhs).value_;
             }
             else
             {
+                this->value_.~T();
                 static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
                 this->has_value_ = false;
             }
         }
         else
         {
-            this->error_.~E();
             if (rhs.has_value_)
             {
+                this->error_.~E();
                 static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
                 this->has_value_ = true;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+                this->error_ = std::move(rhs).error_;
             }
         }
         return *this;
@@ -505,14 +505,13 @@ public:
     {
         if (has_value())
         {
-            this->value_.~T();
-            static_cast<void>(::new (&this->value_) T{std::move(rhs)});
+            this->value_ = std::move(rhs);
         }
         else
         {
             this->error_.~E();
-            this->has_value_ = true;
             static_cast<void>(::new (&this->value_) T{std::move(rhs)});
+            this->has_value_ = true;
         }
         return *this;
     }
@@ -531,13 +530,13 @@ public:
         if (has_value())
         {
             this->value_.~T();
+            static_cast<void>(::new (&this->error_) E{error.error()});
             this->has_value_ = false;
         }
         else
         {
-            this->error_.~E();
+            this->error_ = error.error();
         }
-        static_cast<void>(::new (&this->error_) E{error.error()});
         return *this;
     }
 
@@ -556,13 +555,13 @@ public:
         if (has_value())
         {
             this->value_.~T();
+            static_cast<void>(::new (&this->error_) E{std::move(error).error()});
             this->has_value_ = false;
         }
         else
         {
-            this->error_.~E();
+            this->error_ = std::move(error).error();
         }
-        static_cast<void>(::new (&this->error_) E{std::move(error).error()});
         return *this;
     }
 
