@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_HELPERS_H
-#define AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_HELPERS_H
+#ifndef SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_HELPERS_H
+#define SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_HELPERS_H
 
 #include "score/analysis/tracing/generic_trace_library/interface_types/error_code/error_code.h"
 #include "shared_memory_chunk.h"
@@ -139,4 +139,4 @@ std::size_t EstimateChunkListAllocationSize(const T& container)
 }  // namespace analysis
 }  // namespace score
 
-#endif  // AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_HELPERS_H
+#endif
