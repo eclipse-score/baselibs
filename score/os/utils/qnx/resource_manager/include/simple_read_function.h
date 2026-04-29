@@ -58,7 +58,7 @@ class SimpleReadFunction : public IReadFunction
     /* KW_SUPPRESS_START:MISRA.FUNC.VIRTUAL.UNUSEDPAR: size variable will be used in the derived class */
     // in case of error return error code according to
     // https://www.qnx.com/developers/docs/7.0.0/index.html#com.qnx.doc.neutrino.lib_ref/topic/e/errno.html
-    virtual score::ResultBlank preRead(off_t, std::size_t)
+    virtual score::Result<void> preRead(off_t, std::size_t)
     {
         return {};
     }
@@ -67,7 +67,7 @@ class SimpleReadFunction : public IReadFunction
     // to de-initializate the source of data
     // in case of error return error code according to
     // https://www.qnx.com/developers/docs/7.0.0/index.html#com.qnx.doc.neutrino.lib_ref/topic/e/errno.html
-    virtual score::ResultBlank postRead()
+    virtual score::Result<void> postRead()
     {
         return {};
     }

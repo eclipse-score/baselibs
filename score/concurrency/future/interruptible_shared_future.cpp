@@ -19,7 +19,7 @@ score::concurrency::InterruptibleSharedFuture<void>::InterruptibleSharedFuture(
 {
 }
 
-score::ResultBlank score::concurrency::InterruptibleSharedFuture<void>::Get(
+score::Result<void> score::concurrency::InterruptibleSharedFuture<void>::Get(
     const score::cpp::stop_token& stop_token) const noexcept
 {
     score::cpp::expected_blank<Error> return_code = this->Wait(stop_token);
@@ -28,6 +28,6 @@ score::ResultBlank score::concurrency::InterruptibleSharedFuture<void>::Get(
         return MakeUnexpected(return_code.error());
     }
 
-    const score::ResultBlank value = this->AccessState()->GetValue();
+    const score::Result<void> value = this->AccessState()->GetValue();
     return value;
 }

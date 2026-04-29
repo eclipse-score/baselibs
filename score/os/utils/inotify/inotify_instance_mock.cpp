@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/utils/inotify/inotify_instance_mock.h"
+#include <score/assert.hpp>
 
 namespace score
 {

@@ -48,7 +48,7 @@ class FloatingPointEnvironment
         FloatingPointEnvironment floating_point_environment{};
         const T result = calculation();
 
-        score::ResultBlank potential_error = floating_point_environment.Test();
+        score::Result<void> potential_error = floating_point_environment.Test();
         if (!potential_error.has_value())
         {
             return HandleError<T, return_mode>(score::MakeUnexpected<T>(potential_error.error()));
@@ -56,7 +56,7 @@ class FloatingPointEnvironment
         return result;
     }
 
-    score::ResultBlank Test() const noexcept;
+    score::Result<void> Test() const noexcept;
 
     void Clear() noexcept;
 };

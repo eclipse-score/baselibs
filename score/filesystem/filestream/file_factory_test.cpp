@@ -205,10 +205,8 @@ TEST_F(FileFactoryTest, ErrorOnFailingAtomicUpdate)
     ASSERT_TRUE(fs.standard->CreateDirectory(test_dir).has_value());
 
     auto stream = unit_.AtomicUpdate(test_dir, std::ios::out | std::ios::trunc);
-    ASSERT_TRUE(stream.has_value());
-    **stream << "Hallo";
-    auto close_result = (*stream)->Close();
-    EXPECT_FALSE(close_result.has_value());
+    ASSERT_FALSE(stream.has_value());
+    EXPECT_EQ(stream.error(), filesystem::ErrorCode::kNotImplemented);
 
     EXPECT_TRUE(fs.standard->RemoveAll(test_dir).has_value());
 }
@@ -265,7 +263,7 @@ TEST_F(FileFactoryTestWithFcntlMock, AtomicUpdateFileHandleFailedOnOpen)
     static constexpr auto kFaultyTargetFile{"path"};
     Path test_dir = test_tmpdir_ / kFaultyTargetFile;
 
-    auto result = unit_.AtomicUpdate(test_tmpdir_, std::ios_base::out);
+    auto result = unit_.AtomicUpdate(test_dir, std::ios_base::out);
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotOpenFileStream);
 }
@@ -364,6 +362,25 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateSucceedsWhenWriteAccessGranted)
 
     auto result = unit_.AtomicUpdate(test_filename, std::ios_base::out);
     ASSERT_TRUE(result.has_value());
+}
+
+TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsOnNonRegularFile)
+{
+    // stat returns a non-regular file (e.g. a directory)
+    auto set_mode = [](auto, auto& buffer, auto) {
+        buffer.st_mode = mode_t{S_IFDIR};
+        buffer.st_uid = ::getuid();
+        buffer.st_gid = ::getgid();
+        return score::cpp::expected_blank<os::Error>{};
+    };
+    EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));
+
+    static constexpr auto kTestFileName{"non_regular_file"};
+    Path test_filename = test_tmpdir_ / kTestFileName;
+
+    auto result = unit_.AtomicUpdate(test_filename, std::ios_base::out);
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), filesystem::ErrorCode::kNotImplemented);
 }
 
 TEST(FileFactoryHelpersTest, ComposeTempFilenameUsesAllParameters)

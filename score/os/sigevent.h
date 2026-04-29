@@ -44,11 +44,11 @@ class SigEvent : public ObjectSeam<SigEvent>
     SigEvent(SigEvent&&) = delete;
     SigEvent& operator=(SigEvent&&) = delete;
 
-    virtual ResultBlank SetNotificationType(const NotificationType notification_type) = 0;
-    virtual ResultBlank SetSignalNumber(const std::int32_t signal_number) = 0;
-    virtual ResultBlank SetSignalEventValue(const std::variant<int32_t, void*> signal_event_value) = 0;
-    virtual ResultBlank SetThreadCallback(const SigValCallback callback) = 0;
-    virtual ResultBlank SetThreadAttributes(pthread_attr_t& attr) = 0;
+    virtual Result<void> SetNotificationType(const NotificationType notification_type) = 0;
+    virtual Result<void> SetSignalNumber(const std::int32_t signal_number) = 0;
+    virtual Result<void> SetSignalEventValue(const std::variant<int32_t, void*> signal_event_value) = 0;
+    virtual Result<void> SetThreadCallback(const SigValCallback callback) = 0;
+    virtual Result<void> SetThreadAttributes(pthread_attr_t& attr) = 0;
     virtual const sigevent& GetSigevent() const = 0;
     virtual void ModifySigevent(const SigeventModifier& modifier) = 0;
     virtual void Reset() = 0;

@@ -19,6 +19,8 @@
 #include "score/os/stdlib.h"
 #include "score/os/unistd.h"
 
+#include <score/assert.hpp>
+
 #include <array>
 #include <cstdint>
 #include <sstream>
@@ -68,7 +70,7 @@ FileUtils::FileUtils(IStandardFilesystem& standard_filesystem, IFileFactory& fil
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept
+Result<void> FileUtils::CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept
 {
     const Result<filesystem::FileStatus> status = standard_filesystem_.Status(path);
     if (status.has_value())
@@ -102,12 +104,12 @@ ResultBlank FileUtils::CreateDirectory(const Path& path, const score::os::Stat::
 // Implicit call in .value(). Call does not issue terminate because of
 // previous check in algorithm.
 // coverity[autosar_cpp14_a15_5_3_violation]
-ResultBlank FileUtils::CreatePath(const Path& final_path,
-                                  const Path& cur_path,
-                                  const score::os::Stat::Mode perms,
-                                  const std::int64_t creation_delay_ns,
-                                  const std::int64_t creation_retry_factor,
-                                  std::uint32_t creation_retry_counter) const noexcept
+Result<void> FileUtils::CreatePath(const Path& final_path,
+                                   const Path& cur_path,
+                                   const score::os::Stat::Mode perms,
+                                   const std::int64_t creation_delay_ns,
+                                   const std::int64_t creation_retry_factor,
+                                   std::uint32_t creation_retry_counter) const noexcept
 {
     timespec creation_retry_delay{0, creation_delay_ns};
     // internal loop just to handle (accumulating across the whole path) retry attempts
@@ -146,7 +148,7 @@ ResultBlank FileUtils::CreatePath(const Path& final_path,
 // Implicit call in .value(). Call does not issue terminate because of
 // previous check in algorithm.
 // coverity[autosar_cpp14_a15_5_3_violation]
-ResultBlank FileUtils::CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept
+Result<void> FileUtils::CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept
 {
     // For the purpose of Ticket-172058 fix, we need to save the existing APIs,
     // thus we keep these values as predefined constants. The maximum accumulated delay for path creation is 140ms
@@ -197,7 +199,11 @@ ResultBlank FileUtils::CreateDirectories(const Path& path, const score::os::Stat
     return {};
 }
 
-ResultBlank FileUtils::ChangeGroup(const Path& path, const std::string& group_name) const noexcept
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
+Result<void> FileUtils::ChangeGroup(const Path& path, const std::string& group_name) const noexcept
 {
     std::lock_guard<std::mutex> guard{groupname_mutex_};
     // NOLINTNEXTLINE(score-banned-function): Banned because not thread safe, with mutex, caveat solved.
@@ -210,7 +216,7 @@ ResultBlank FileUtils::ChangeGroup(const Path& path, const std::string& group_na
     return ChangeGroup(path, gid);
 }
 
-ResultBlank FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const noexcept
+Result<void> FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const noexcept
 {
     const auto uid = os::Unistd::instance().getuid();
     const auto result = os::Unistd::instance().chown(path.CStr(), uid, group_id);
@@ -221,6 +227,10 @@ ResultBlank FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const
     return {};
 }
 
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 Result<bool> FileUtils::ValidateGroup(const Path& path, const std::string& group_name) const noexcept
 {
     std::lock_guard<std::mutex> guard{groupname_mutex_};
@@ -282,7 +292,7 @@ Result<std::pair<std::unique_ptr<std::iostream>, Path>> FileUtils::OpenUniqueFil
     return std::make_pair(std::move(file).value(), tmp_file_path);
 }
 
-ResultBlank FileUtils::SyncDirectory(const Path& dirname) const noexcept
+Result<void> FileUtils::SyncDirectory(const Path& dirname) const noexcept
 {
     // The reason for banning is, because it's error-prone to use. One should use abstractions e.g. provided by
     // the C++ standard library. Since this library exactly is such abstraction, we can use the OS function.
@@ -359,7 +369,11 @@ Result<bool> FileUtils::FileContentsAreIdentical(const Path& path1, const Path& 
     return IsFileContentIdentical(**file1, **file2);
 }
 
-ResultBlank FileUtils::CheckFileSystem(const Path& partition) const noexcept
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
+Result<void> FileUtils::CheckFileSystem(const Path& partition) const noexcept
 {
     const std::string cmd = std::string{"e2fsck -n "} + partition.Native();
     const auto res = os::Stdlib::instance().system_call(cmd);
@@ -370,7 +384,11 @@ ResultBlank FileUtils::CheckFileSystem(const Path& partition) const noexcept
     return {};
 }
 
-ResultBlank FileUtils::RepairFileSystem(const Path& partition) const noexcept
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
+Result<void> FileUtils::RepairFileSystem(const Path& partition) const noexcept
 {
     const std::string cmd = std::string{"e2fsck -p "} + partition.Native();
     const auto res = os::Stdlib::instance().system_call(cmd);
@@ -381,7 +399,11 @@ ResultBlank FileUtils::RepairFileSystem(const Path& partition) const noexcept
     return {};
 }
 
-ResultBlank FileUtils::FormatPartition(const Path& partition) const noexcept
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
+Result<void> FileUtils::FormatPartition(const Path& partition) const noexcept
 {
     // Reference: broken_link_c/issue/4757296
     const std::string mkfsCmd{"mkfs.ext2 -F -b 4096 -I 128 -O ^resize_inode,^large_file,^filetype,^dir_index "};

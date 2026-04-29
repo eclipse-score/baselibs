@@ -48,10 +48,10 @@ class FileUtilsTest : public ::testing::Test
 {
   public:
     // error constants
-    const ResultBlank no_error{};
-    const ResultBlank error_create_directory = MakeUnexpected(ErrorCode::kCouldNotCreateDirectory);
+    const Result<void> no_error{};
+    const Result<void> error_create_directory = MakeUnexpected(ErrorCode::kCouldNotCreateDirectory);
     const Result<FileStatus> error_is_directory = MakeUnexpected(filesystem::ErrorCode::kCouldNotRetrieveStatus);
-    const ResultBlank error_permissions = MakeUnexpected(filesystem::ErrorCode::kCouldNotChangePermissions);
+    const Result<void> error_permissions = MakeUnexpected(filesystem::ErrorCode::kCouldNotChangePermissions);
     const score::cpp::expected_blank<score::os::Error> os_no_error{};
     const score::cpp::expected_blank<score::os::Error> os_enoent = score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
     const score::cpp::expected<os::GroupBuffer, score::os::Error> os_getgrnam_enoent =

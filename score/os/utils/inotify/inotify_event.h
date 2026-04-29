@@ -68,12 +68,14 @@ class InotifyEvent
 bool operator==(const InotifyEvent& lhs, const InotifyEvent& rhs) noexcept;
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<os::InotifyEvent::ReadMask> : public std::true_type
+struct enable_bitmask_operators<::score::os::InotifyEvent::ReadMask> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_UTILS_INOTIFY_INOTIFY_EVENT_H

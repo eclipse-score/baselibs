@@ -14,6 +14,8 @@
 #include "score/json/internal/model/any.h"
 #include "score/overload.hpp"
 
+#include <score/assert.hpp>
+
 namespace score
 {
 namespace json

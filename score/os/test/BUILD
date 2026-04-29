@@ -348,7 +348,7 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:fcntl",
-        "@score_baselibs//score/utils:scoped_operation",
+        "@score_baselibs//score/scope_exit",
     ],
 )
 

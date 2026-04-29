@@ -171,14 +171,17 @@ static StaticDestructionGuard<MqueueImpl> nifty_counter_mqueue;
 
 }  // namespace impl
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Mqueue::OpenFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Mqueue::OpenFlag> : public std::true_type
 {
 };
 
 template <>
-struct enable_bitmask_operators<score::os::Mqueue::ModeFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Mqueue::ModeFlag> : public std::true_type
 {
 };
 

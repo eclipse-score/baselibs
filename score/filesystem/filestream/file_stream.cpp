@@ -12,7 +12,9 @@
  ********************************************************************************/
 #include "score/filesystem/filestream/file_stream.h"
 
-score::ResultBlank score::filesystem::FileStream::Close()
+#include <score/assert.hpp>
+
+score::Result<void> score::filesystem::FileStream::Close()
 {
     auto buf = rdbuf();
     if (buf != nullptr)

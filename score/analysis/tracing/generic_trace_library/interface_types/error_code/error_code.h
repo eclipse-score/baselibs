@@ -14,7 +14,7 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_ERROR_CODE_ERROR_CODE_H
 
 #include "score/result/error.h"
-#include <score/string_view.hpp>
+#include <string_view>
 
 namespace score
 {
@@ -64,8 +64,6 @@ enum class ErrorCode : score::result::ErrorCode
 
     kDaemonConnectionFailedFatal,             ///< Daemon connection failed (Fatal)
     kDaemonCommunicatorNotSupportedFatal,     ///< Daemon connection is not supported
-    kServerConnectionNameOpenFailedFatal,     ///< QNX name open failed (Fatal)
-    kDaemonTerminationDetectionFailedFatal,   ///< Daemon Termination detection failed (Fatal)
     kClientNotFoundRecoverable,               ///< Client not registered (Recoverable)
     kInvalidShmObjectHandleFatal,             ///< SHM Object handle found (Recoverable)
     kCallbackAlreadyRegisteredRecoverable,    ///< Callback already registered the client id (Recoverable)
@@ -83,9 +81,7 @@ enum class ErrorCode : score::result::ErrorCode
     kNoMoreSpaceForNewClientFatal,                    ///< Max Number of Clients allocated (Fatal)
     kNoMoreSpaceForNewShmObjectFatal,                 ///< Max Number of SHM objects allocated (Fatal)
 
-    kWrongMessageIdRecoverable,         ///< Wrong message id in request (Recoverable)
-    kWrongClientIdRecoverable,          ///< Wrong client id in response (Recoverable)
-    kClientNameAlreadyUsedRecoverable,  // Client name is already used by different process
+    kWrongMessageIdRecoverable,  ///< Wrong message id in request (Recoverable)
 
     kBadFileDescriptorFatal,
 

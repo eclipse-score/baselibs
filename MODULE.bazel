@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.0", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.1", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -84,17 +84,17 @@ bazel_dep(name = "google_benchmark", version = "1.9.5")
 bazel_dep(name = "boost.container", version = "1.83.0.bcr.4")
 bazel_dep(name = "boost.interprocess", version = "1.83.0.bcr.4")
 bazel_dep(name = "download_utils", version = "1.2.2")
-bazel_dep(name = "rules_cc", version = "0.2.16")
+bazel_dep(name = "rules_cc", version = "0.2.17")
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "3.0.0")
-bazel_dep(name = "score_process", version = "1.4.4")
-bazel_dep(name = "score_tooling", version = "1.1.2")
+bazel_dep(name = "score_docs_as_code", version = "4.0.3", dev_dependency = True)
+bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
+bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
 
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.8.3")
+bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
 
 PYTHON_VERSION = "3.12"
 
@@ -181,9 +181,9 @@ deb(
     visibility = ["//visibility:public"],
 )
 
-bazel_dep(name = "score_nlohmann_json", version = "3.11.3")
-
-bazel_dep(name = "bazel_skylib", version = "1.8.2")
+bazel_dep(name = "flatbuffers", version = "25.12.19")
+bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
 #############################################################
 #

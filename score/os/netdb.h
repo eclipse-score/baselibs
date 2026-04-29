@@ -61,12 +61,14 @@ class Netdb : public ObjectSeam<Netdb>
 };
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Netdb::NameFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Netdb::NameFlag> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_NETDB_H

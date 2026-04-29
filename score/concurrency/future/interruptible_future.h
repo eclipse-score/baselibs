@@ -335,7 +335,7 @@ class InterruptibleFuture<void> : protected score::concurrency::detail::BaseInte
      * - the token was set
      * - the promise was broken
      */
-    score::ResultBlank Get(const score::cpp::stop_token& stop_token) noexcept;
+    score::Result<void> Get(const score::cpp::stop_token& stop_token) noexcept;
 
     /**
      * Creates an InterruptibleSharedFuture associated with the shared state of this future.

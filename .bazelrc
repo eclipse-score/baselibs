@@ -51,6 +51,7 @@ build:bl-aarch64-linux --config=_bl_toolchain_common
 build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
 build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
 test:bl-aarch64-linux --config=_bl_common
+test:bl-aarch64-linux --test_timeout=300
 test:bl-aarch64-linux --run_under=//:qemu_aarch64
 
 
@@ -73,6 +74,7 @@ build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-
 build:bl-aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0
 build:bl-aarch64-qnx --extra_toolchains=@score_qnx_aarch64_ifs_toolchain//:ifs-aarch64-qnx-sdp_8.0.0
 test:bl-aarch64-qnx --config=_bl_common
+test:bl-aarch64-qnx --test_timeout=300
 test:bl-aarch64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:bl-aarch64-qnx --test_tag_filters=
 test:bl-aarch64-qnx --test_lang_filters=cc,rust

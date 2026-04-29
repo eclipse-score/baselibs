@@ -23,6 +23,7 @@
 #include "score/os/sys_poll_impl.h"
 #include "score/os/unistd.h"
 
+#include <score/assert.hpp>
 #include <score/utility.hpp>
 
 #include <gtest/gtest.h>

@@ -18,6 +18,9 @@ Checks: >
   readability-string-compare,
   readability-uniqueptr-delete-release,
 
+ExtraArgs:
+  - '-Wno-error=deprecated-declarations'
+
 CheckOptions:
   - key: misc-uniqueptr-reset-release.IncludeStyle
     value: "llvm"

@@ -13,7 +13,9 @@
 #include "score/mw/log/runtime.h"
 
 #include "score/mw/log/detail/empty_recorder.h"
+#ifdef KCONSOLE_LOGGING
 #include "score/mw/log/detail/text_recorder/text_recorder.h"
+#endif
 #include "score/mw/log/recorder_mock.h"
 
 #include "gtest/gtest.h"
@@ -105,7 +107,11 @@ TEST_F(RuntimeFixture, DefaultRecorderShallBeReturned)
 
     // When trying to read the current recorder
     // It shall be of type TextRecorder if KConsole enabled, otherwise empty recorder
+#ifdef KCONSOLE_LOGGING
     EXPECT_TRUE(IsRecorderOfType<TextRecorder>(Runtime::GetRecorder()));
+#else
+    EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(Runtime::GetRecorder()));
+#endif
 
     // Revert previously stored recorder:
     Runtime::SetRecorder(&recorder);

@@ -117,17 +117,19 @@ std::int32_t OperationFlagToInteger(const Fcntl::Operation op) noexcept;
 }  // namespace internal
 
 }  // namespace os
+   //
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Fcntl::Open> : public std::true_type
+struct enable_bitmask_operators<::score::os::Fcntl::Open> : public std::true_type
 {
 };
-
 template <>
-struct enable_bitmask_operators<score::os::Fcntl::Operation> : public std::true_type
+struct enable_bitmask_operators<::score::os::Fcntl::Operation> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_FCNTL_H

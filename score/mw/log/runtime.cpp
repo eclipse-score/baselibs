@@ -13,8 +13,8 @@
 #include "score/mw/log/runtime.h"
 
 #include "score/mw/log/detail/empty_recorder.h"
+#include "score/mw/log/detail/irecorder_factory.h"
 #include "score/mw/log/detail/thread_local_guard.h"
-#include "score/mw/log/irecorder_factory.h"
 
 #include "score/utils/meyer_singleton/meyer_singleton.h"
 
@@ -58,8 +58,14 @@ score::mw::log::Recorder& Runtime::GetRecorder() noexcept
     {
         return *instance.default_recorder_;
     }
+    // LCOV_EXCL_START : Defensive fallback when no recorder instance is available.
+    // - Runtime::Runtime() always creates a recorder via the recorder factory and stores it in default_recorder_.
+    // - SetRecorder() can only set recorder_instance_; it never clears default_recorder_.
+    // In normal operation the recorder factory always provides a recorder, so this
+    // path is not practically coverable in deterministic unit tests.
     //  Only as last resort, return static empty recorder:
     return singleton::MeyerSingleton<EmptyRecorder>::GetInstance();
+    // LCOV_EXCL_STOP
 }
 
 score::mw::log::Recorder& Runtime::GetFallbackRecorder() noexcept

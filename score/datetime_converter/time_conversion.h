@@ -13,7 +13,7 @@
 #ifndef SCORE_LIB_DATETIME_CONVERTER_TIME_CONVERSION_H
 #define SCORE_LIB_DATETIME_CONVERTER_TIME_CONVERSION_H
 
-#include <time.h> /* KW_SUPPRESS:MISRA.INCL.UNSAFE:providing conversion to timespec is purpose of this file */
+#include <time.h>
 #include <chrono>
 
 namespace score

@@ -1,0 +1,119 @@
+@startuml component_diagram
+
+skinparam componentStyle rectangle
+skinparam backgroundColor #FEFEFE
+skinparam component {
+    BackgroundColor<<always>> #D5E8D4
+    BorderColor<<always>> #82B366
+    BackgroundColor<<additive>> #DAE8FC
+    BorderColor<<additive>> #6C8EBF
+    BackgroundColor<<core>> #FFF2CC
+    BorderColor<<core>> #D6B656
+    BackgroundColor<<recorder>> #E1D5E7
+    BorderColor<<recorder>> #9673A6
+    BackgroundColor<<app>> #F8CECC
+    BorderColor<<app>> #B85450
+}
+skinparam note {
+    BackgroundColor #FFFFCC
+    BorderColor #999999
+}
+
+title **mw::log — Lightweight Selectable Backend Architecture**\nComponent Overview
+
+' === Application Layer ===
+package "Application Binary" <<app>> {
+    component "Application Code" as app <<app>> {
+        note right of app
+            #include "score/mw/log/logging.h"
+            LOG_INFO() << "message";
+        end note
+    }
+}
+
+' === Frontend Layer (public API) ===
+package "mw/log:frontend" <<always>> {
+    component "Logger" as logger <<always>>
+    component "LoggerContainer" as container <<always>>
+    component "LogStream" as stream <<always>>
+    component "Runtime\n(Meyers' Singleton)" as runtime <<always>>
+    component "IRecorderFactory\n(pure virtual)" as irecorder_factory <<core>>
+}
+
+' === Backend Infrastructure (always linked) ===
+package "mw/log:console  [alwayslink=True]" <<always>> {
+    component "gBackendCreators\n(std::array<FnPtr, 6>)\n---\nConstant-initialized\nZero-init at load time\nNo constructor / No destructor" as backend_table <<core>>
+    component "RegistryAwareRecorderFactory\n: IRecorderFactory" as registry_factory <<always>>
+    component "ConsoleRegistrant\n(static const)" as console_reg <<always>>
+    component "CreateRecorderFactory()\n[link-time injection]" as create_factory <<always>>
+}
+
+' === Additive Backend Plugins (optional, each alwayslink=True) ===
+package "Additive Backend Plugins" <<additive>> {
+    component "backend:file\nFileRegistrant" as file_reg <<additive>>
+    component "backend:remote\nRemoteRegistrant" as remote_reg <<additive>>
+    component "backend:slog\nSlogRegistrant\n(QNX only)" as slog_reg <<additive>>
+    component "backend:custom\nCustomRegistrant" as custom_reg <<additive>>
+}
+
+' === Recorder Implementations ===
+package "Recorder Implementations" <<recorder>> {
+    component "TextRecorder\n(Console)" as text_recorder <<always>>
+    component "FileRecorder\n(DLT File)" as file_recorder <<recorder>>
+    component "DataRouterRecorder\n(Remote DLT)" as dr_recorder <<recorder>>
+    component "SlogRecorder\n(QNX slog2)" as slog_recorder <<recorder>>
+    component "EmptyRecorder\n(No-op stub)" as empty_recorder <<recorder>>
+    component "CompositeRecorder\n(Multiplexer)" as composite <<recorder>>
+}
+
+' === Configuration ===
+package "Configuration" <<core>> {
+    component "TargetConfigReader" as config_reader <<core>>
+    component "Configuration" as config <<core>>
+}
+
+' === Relationships ===
+
+' App -> Frontend
+app --> logger : "LOG_xxx()"
+app --> stream
+logger --> runtime : "GetRecorder()"
+
+' Frontend -> Factory
+runtime --> create_factory : "CreateRecorderFactory()\n(link-time injection)"
+create_factory --> registry_factory : "returns"
+registry_factory --|> irecorder_factory : "implements"
+
+' Factory -> Backend Table
+registry_factory --> backend_table : "queries\ngBackendCreators[mode]"
+registry_factory --> config_reader : "reads config files"
+config_reader --> config : "produces"
+
+' Registrants -> Backend Table
+console_reg --> backend_table : "writes slot[0]\n(kConsole)"
+file_reg --> backend_table : "writes slot[1]\n(kFile)"
+remote_reg --> backend_table : "writes slot[2]\n(kRemote)"
+slog_reg --> backend_table : "writes slot[3]\n(kSystem)"
+custom_reg --> backend_table : "writes slot[4]\n(kCustom)"
+
+' Registrants -> Recorder Factories -> Recorders
+console_reg ..> text_recorder : "creates via\nConsoleRecorderFactory"
+file_reg ..> file_recorder : "creates via\nFileRecorderFactory"
+remote_reg ..> dr_recorder : "creates via\nRemoteDltRecorderFactory"
+slog_reg ..> slog_recorder : "creates via\nSlogRecorderFactory"
+
+' Factory -> Recorders
+registry_factory ..> composite : "wraps multiple\nrecorders"
+registry_factory ..> empty_recorder : "last resort\nfallback"
+
+' Legend
+legend bottom
+    |= Color |= Meaning |
+    | <back:#D5E8D4>  green  </back> | **Always linked** — part of mw/log:console |
+    | <back:#DAE8FC>  blue   </back> | **Additive plugin** — opt-in via Bazel deps |
+    | <back:#FFF2CC>  yellow </back> | **Core infrastructure** — backend table, config, interfaces |
+    | <back:#E1D5E7>  purple </back> | **Recorder implementations** — linked only when needed |
+    | <back:#F8CECC>  red    </back> | **Application code** — user binary |
+end legend
+
+@enduml

@@ -112,7 +112,9 @@ score::cpp::expected<std::int32_t, Error> MmanImpl::posix_typed_mem_get_info(con
     std::int32_t ret{::posix_typed_mem_get_info(fd, info)};
     if (ret != 0)
     {
-        return score::cpp::make_unexpected(Error::createFromErrno());
+        // As per QNX8 implementation ret value is error code EBADF Bad file descriptor
+        // https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/p/posix_typed_mem_get_info.html
+        return score::cpp::make_unexpected(Error::createFromErrno(ret));
     }
     return ret;
 }

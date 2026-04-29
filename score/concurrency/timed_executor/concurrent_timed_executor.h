@@ -18,6 +18,7 @@
 #include "score/concurrency/timed_executor/timed_executor.h"
 #include "score/concurrency/timed_executor/timed_task.h"
 
+#include <score/assert.hpp>
 #include <score/deque.hpp>
 #include <score/jthread.hpp>
 #include <score/memory.hpp>

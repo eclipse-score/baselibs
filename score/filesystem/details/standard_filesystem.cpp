@@ -26,6 +26,8 @@
 #include <sys/stat.h>
 #include <stack>
 
+#include <score/assert.hpp>
+
 // Remove after reproduction (Ticket-243648)
 #include <iostream>
 
@@ -41,7 +43,7 @@ namespace
 // not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
 // std::bad_optional_access should never be thrown. This is false positive.
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-score::ResultBlank CopyFileInternal(const Path& source, const Path& destination) noexcept
+score::Result<void> CopyFileInternal(const Path& source, const Path& destination) noexcept
 {
     auto source_file = IFileFactory::instance().Open(source, std::ios::binary | ::std::ios::in);
     auto destination_file = IFileFactory::instance().Open(destination, std::ios::binary | ::std::ios::out);
@@ -173,16 +175,16 @@ Result<bool> StandardFilesystem::Exists(const Path& path) const noexcept
     return MakeUnexpected(filesystem::ErrorCode::kCouldNotRetrieveStatus);
 }
 
-score::ResultBlank StandardFilesystem::CopyFile(const Path& from, const Path& to) const noexcept
+score::Result<void> StandardFilesystem::CopyFile(const Path& from, const Path& to) const noexcept
 {
     return this->CopyFile(from, to, CopyOptions::kNone);
 }
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-score::ResultBlank StandardFilesystem::CopyFile(const Path& from,
-                                              const Path& to,
-                                              const CopyOptions copy_option) const noexcept
+score::Result<void> StandardFilesystem::CopyFile(const Path& from,
+                                               const Path& to,
+                                               const CopyOptions copy_option) const noexcept
 {
     const auto from_status = Status(from);
     if ((!from_status.has_value()) || (from_status.value().Type() != FileType::kRegular))
@@ -208,10 +210,10 @@ score::ResultBlank StandardFilesystem::CopyFile(const Path& from,
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank StandardFilesystem::CopyKnownFileType(const score::filesystem::Path& from,
-                                                  const score::filesystem::Path& dest,
-                                                  const score::filesystem::CopyOptions copy_option,
-                                                  const Result<FileStatus>& dest_status) const noexcept
+Result<void> StandardFilesystem::CopyKnownFileType(const score::filesystem::Path& from,
+                                                   const score::filesystem::Path& dest,
+                                                   const score::filesystem::CopyOptions copy_option,
+                                                   const Result<FileStatus>& dest_status) const noexcept
 {
     // missing check for if equivalent
     if ((dest_status.value().Type() != FileType::kRegular) || (copy_option == CopyOptions::kNone))
@@ -249,7 +251,7 @@ ResultBlank StandardFilesystem::CopyKnownFileType(const score::filesystem::Path&
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-score::ResultBlank StandardFilesystem::CreateDirectory(const Path& path) const noexcept
+score::Result<void> StandardFilesystem::CreateDirectory(const Path& path) const noexcept
 {
     constexpr auto mode =
         os::Stat::Mode::kReadWriteExecUser | os::Stat::Mode::kReadWriteExecGroup | os::Stat::Mode::kReadWriteExecOthers;
@@ -284,7 +286,7 @@ score::ResultBlank StandardFilesystem::CreateDirectory(const Path& path) const n
     return MakeUnexpected(filesystem::ErrorCode::kCouldNotCreateDirectory);
 }
 
-score::ResultBlank StandardFilesystem::CreateDirectories(const Path& path) const noexcept
+score::Result<void> StandardFilesystem::CreateDirectories(const Path& path) const noexcept
 {
     const Path native_path = path.LexicallyNormal();
     if (native_path.Empty())
@@ -328,14 +330,14 @@ score::Result<FileTime> StandardFilesystem::LastWriteTime(const Path& path) cons
     return MakeUnexpected(filesystem::ErrorCode::kCouldNotRetrieveStatus);
 }
 
-score::ResultBlank StandardFilesystem::Permissions(const Path& path, const Perms permissions) const noexcept
+score::Result<void> StandardFilesystem::Permissions(const Path& path, const Perms permissions) const noexcept
 {
     return this->Permissions(path, permissions, PermOptions::kReplace);
 }
 
-score::ResultBlank StandardFilesystem::Permissions(const Path& path,
-                                                 const Perms permissions,
-                                                 const PermOptions options) const noexcept
+score::Result<void> StandardFilesystem::Permissions(const Path& path,
+                                                  const Perms permissions,
+                                                  const PermOptions options) const noexcept
 {
     if (!IsValid(options))
     {
@@ -387,7 +389,7 @@ score::ResultBlank StandardFilesystem::Permissions(const Path& path,
     return {};
 }
 
-score::ResultBlank StandardFilesystem::Remove(const Path& path) const noexcept
+score::Result<void> StandardFilesystem::Remove(const Path& path) const noexcept
 {
     const auto result = score::os::Stdio::instance().remove(path.CStr());
     if (!result.has_value())
@@ -398,9 +400,9 @@ score::ResultBlank StandardFilesystem::Remove(const Path& path) const noexcept
     return {};
 }
 
-score::ResultBlank StandardFilesystem::RemoveAll(const Path& path) const noexcept
+score::Result<void> StandardFilesystem::RemoveAll(const Path& path) const noexcept
 {
-    ResultBlank result{};
+    Result<void> result{};
 
     const Result<FileStatus> path_status = SymlinkStatus(path);
     if (!path_status.has_value())
@@ -427,9 +429,13 @@ score::ResultBlank StandardFilesystem::RemoveAll(const Path& path) const noexcep
     return result;
 }
 
-ResultBlank StandardFilesystem::RemoveContentFromExistingDirectory(const Path& path) const noexcept
+// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
+// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
+// std::bad_optional_access should never be thrown. This is false positive.
+// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
+Result<void> StandardFilesystem::RemoveContentFromExistingDirectory(const Path& path) const noexcept
 {
-    ResultBlank result{};
+    Result<void> result{};
 
     std::stack<Path> directories{};
     score::cpp::ignore = directories.emplace(path);
@@ -466,7 +472,7 @@ ResultBlank StandardFilesystem::RemoveContentFromExistingDirectory(const Path& p
 
     while (!directories.empty())
     {
-        const ResultBlank remove_result = Remove(directories.top());
+        const Result<void> remove_result = Remove(directories.top());
         if (!remove_result.has_value())
         {
             result = MakeUnexpected(filesystem::ErrorCode::kCouldNotRemoveFileOrDirectory, "Failed to remove folder.");
@@ -579,7 +585,7 @@ Result<Path> StandardFilesystem::CurrentPath() const noexcept
     return Path{current_path.value()};
 }
 
-ResultBlank StandardFilesystem::CurrentPath(const Path& path) const noexcept
+Result<void> StandardFilesystem::CurrentPath(const Path& path) const noexcept
 {
     if (!score::os::Unistd::instance().chdir(path.CStr()).has_value())
     {
@@ -588,7 +594,7 @@ ResultBlank StandardFilesystem::CurrentPath(const Path& path) const noexcept
     return {};
 }
 
-ResultBlank StandardFilesystem::CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept
+Result<void> StandardFilesystem::CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept
 {
     if (!score::os::Unistd::instance().link(oldpath.CStr(), newpath.CStr()).has_value())
     {
@@ -726,7 +732,7 @@ Result<Path> StandardFilesystem::Canonical(const Path& path) const noexcept
     return Path{realpath_res.value()};
 }
 
-ResultBlank StandardFilesystem::CreateSymlink(const Path& target, const Path& linkpath) const noexcept
+Result<void> StandardFilesystem::CreateSymlink(const Path& target, const Path& linkpath) const noexcept
 {
     if (!score::os::Unistd::instance().symlink(target.CStr(), linkpath.CStr()).has_value())
     {
@@ -760,14 +766,14 @@ Result<Path> StandardFilesystem::ReadSymlink(const Path& path) const noexcept
     return Path(buf.data());
 }
 
-ResultBlank StandardFilesystem::CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept
+Result<void> StandardFilesystem::CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept
 {
     return CreateSymlink(target, linkpath);
 }
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank StandardFilesystem::CopySymlink(const Path& from, const Path& dest) const noexcept
+Result<void> StandardFilesystem::CopySymlink(const Path& from, const Path& dest) const noexcept
 {
     const auto read_symlink_result = ReadSymlink(from);
     if (!read_symlink_result.has_value())

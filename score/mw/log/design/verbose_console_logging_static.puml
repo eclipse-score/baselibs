@@ -157,80 +157,20 @@ package "Mockable Part" as MockablePart {
     to its more complicated usage.
   end note
 
-  class "DataRouterRecorder" as DataRouterRecorder {
-  }
-
   class "TextRecorder" as TextRecorder {
-  }
-
-  class "FileRecorder" as FileRecorder {
   }
 
   class "EmptyRecorder" as EmptyRecorder {
   }
 
-  class "Configuration" as Configuration {
-  }
-
-  class "StatisticsReporter" as StatisticsReporter {
-  }
-
-  interface "score::mw::log::detail::Backend" as Backend {
-    + {abstract} ReserveSlot(): score::cpp::optional<SlotHandle>
-    + {abstract} FlushSlot(const SlotHandle&)
-    + {abstract} GetLogRecord(const SlotHandle&): LogRecord&
-  }
-
-  class "score::mw::log::detail::DataRouterBackend" as DataRouterBackend {
-    + ReserveSlot(): score::cpp::optional<SlotHandle>
-    + FlushSlot(const SlotHandle&): void
-    + GetLogRecord(const SlotHandle&): LogRecord&
-    --
-    buffer_: CircularAllocator<score::mw::log::detail::LogRecord>
-    message_client_: std::unique_ptr<DatarouterMessageClient>
-  }
-
-  note as N_DataRouterRecorder #red
-    For the time beeing,
-    DataRouterRecorder will not only be a facade
-    but contain DLT specific logic.
-    In this case calling
-    StartRecord() and StopRecord()
+  note as N_EmptyRecorder #orange
+    EmptyRecorder acts as /dev/null.
+    All log data is silently discarded.
+    Used as fallback when TextRecorder
+    initialization fails.
   end note
 
-  class "score::mw::log::detail::LogRecord" as LogRecord {
-    - logEntry_: LogEntry
-    - verbosePayload_: VerbosePayload
-    --
-    + getLogEntry(): LogEntry&
-    + getLogEntry: const LogEntry&
-    + getVerbosePayload(): detail::VerbosePayload&
-    + getVerbosePayload(): const detail::VerbosePayload&
-  }
-
-  class "TRACE_MACRO" as TRACE_MACRO {
-  }
-
-  class "LogEntry" as LogEntry {
-    + appId: dltid_t
-    + ctxId: dltid_t
-    + sessionId: dltid_t
-    + logLevel: uint8_t
-    + num_of_args: int8_t
-    + payload: std::string
-  }
-
-  class "score::mw::log::detail::VerbosePayload" as VerbosePayload {
-    - buffer_: std::reference_wrapper<ByteVector>
-    --
-    + VerbosePayload(std::size_t, std::string&)
-    + Put(const Byte*, const std::size_t): void
-    + Put(const ReserveCallback, const std::size_t): std::size_t
-    + GetSpan(): score::cpp::span<const std::uint8_t>
-    + Reset(): void
-    + WillOverflow(const std::size_t): bool
-    + RemainingCapacity(): std::size_t
-    + SetBuffer(ByteVector&): void
+  class "Console (stdout)" as Console {
   }
 
 }
@@ -261,23 +201,14 @@ LoggerContainer *-down-> Logger : owns
 ' RELATIONS - MOCKABLE PART
 ' ============================================================
 
-DataRouterRecorder .up.|> Recorder
 TextRecorder .up.|> Recorder
-FileRecorder .up.|> Recorder
 EmptyRecorder .up.|> Recorder
 
-DataRouterRecorder *-down-> Configuration : get application\nspecific config
-DataRouterRecorder *-down-> StatisticsReporter
-DataRouterRecorder *-down-> DataRouterBackend : << reserve and flush slots >>
+TextRecorder *-down-> TextFormat : formats log output
+TextRecorder *-down-> Console : writes to stdout
 
-DataRouterBackend .up.|> Backend
-DataRouterBackend *-down-> LogRecord : << creates and fills >>
+TextRecorder .right.> EmptyRecorder : fallback on failure
 
-LogRecord *-down-> LogEntry : << creates and fills >>
-LogRecord *-down-> VerbosePayload : << creates and fills >>
-
-TextFormat ..> Recorder : Log
-
-DataRouterBackend <-down- TRACE_MACRO : << on sync >>
+N_EmptyRecorder .. EmptyRecorder
 
 @enduml

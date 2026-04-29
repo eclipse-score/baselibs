@@ -19,6 +19,7 @@
 #include <limits>
 
 #include "score/overload.hpp"
+#include <score/assert.hpp>
 #include <cmath>
 
 namespace score

@@ -14,7 +14,7 @@
 
 #include "score/language/safecpp/safe_math/safe_math.h"
 
-#include <score/utility.hpp>
+#include <score/assert.hpp>
 #include <memory>
 namespace score
 {
@@ -337,7 +337,7 @@ template <template <class> class AtomicIndirectorType>
 // Suppress "AUTOSAR C++14 A8-4-10", The rule states: "A parameter shall be passed by reference if it can’t be NULL".
 // The whole algorithm by design here relied on address manipulation
 // coverity[autosar_cpp14_a8_4_10_violation]
-ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::MarkListEntryAsFree(const BufferBlock* meta)
+Result<void> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::MarkListEntryAsFree(const BufferBlock* meta)
 {
     // Validate list_entry_offset before using it to prevent out-of-bounds access
     if (!ValidateListEntryIndex(meta->list_entry_offset))
@@ -419,7 +419,7 @@ bool LocklessFlexibleCircularAllocator<AtomicIndirectorType>::ShouldResetBufferT
 }
 
 template <template <class> class AtomicIndirectorType>
-ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDeallocate()
+Result<void> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBlocksToDeallocate()
 {
     auto init_tail = buffer_queue_tail_.load();
     while (init_tail != buffer_queue_head_.load())
@@ -427,7 +427,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBloc
         auto current_block_result = GetValidatedBlock(init_tail);
         if (!current_block_result.has_value())
         {
-            return MakeUnexpected<score::Blank>(current_block_result.error());
+            return MakeUnexpected<void>(current_block_result.error());
         }
         BufferBlock* current_block = current_block_result.value();
         if (init_tail == 0U)
@@ -437,7 +437,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBloc
 
             if (!mark_list_entry_as_free_result.has_value())
             {
-                return MakeUnexpected<score::Blank>(mark_list_entry_as_free_result.error());
+                return MakeUnexpected<void>(mark_list_entry_as_free_result.error());
             }
         }
         // list_entry_offset is always set internally via controlled allocation paths, making invalid
@@ -455,14 +455,14 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::IterateBloc
                 // Check if FreeBlock encountered an error
                 if (!free_block_result.has_value())
                 {
-                    return MakeUnexpected<score::Blank>(free_block_result.error());
+                    return MakeUnexpected<void>(free_block_result.error());
                 }
                 auto init_tail_result = score::safe_math::Add(init_tail, current_block->block_length);
                 if (!init_tail_result.has_value())
                 {
                     // LCOV_EXCL_START init_tail and block_length are internally bounded by total_size_,
                     // so their sum cannot overflow std::uint32_t under normal operation
-                    return MakeUnexpected<score::Blank>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+                    return MakeUnexpected<void>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
                     // LCOV_EXCL_STOP
                 }
                 init_tail = init_tail_result.value();
@@ -485,8 +485,8 @@ template <template <class> class AtomicIndirectorType>
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
 // coverity[autosar_cpp14_a15_5_3_violation]
-ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(void* const addr,
-                                                                                const std::size_t) noexcept
+Result<void> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(void* const addr,
+                                                                                 const std::size_t) noexcept
 {
     // Validate bounds
     if (!IsInBounds(addr, 0U))
@@ -532,7 +532,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(
     auto mark_list_entry_as_free_result = MarkListEntryAsFree(meta);
     if (!mark_list_entry_as_free_result.has_value())
     {
-        return MakeUnexpected<score::Blank>(mark_list_entry_as_free_result.error());
+        return MakeUnexpected<void>(mark_list_entry_as_free_result.error());
     }
 
     auto is_requested_block_at_buffer_queue_tail_result = IsRequestedBlockAtBufferQueueTail(meta);
@@ -542,7 +542,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(
 
     if (!is_requested_block_at_buffer_queue_tail_result.has_value())  // LCOV_EXCL_BR_LINE not testable
     {
-        return MakeUnexpected<score::Blank>(is_requested_block_at_buffer_queue_tail_result.error());
+        return MakeUnexpected<void>(is_requested_block_at_buffer_queue_tail_result.error());
     }
     if (is_requested_block_at_buffer_queue_tail_result.value())
     {
@@ -550,7 +550,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(
 
         if (!iterate_blocks_to_deallocate_result.has_value())
         {
-            return MakeUnexpected<score::Blank>(iterate_blocks_to_deallocate_result.error());
+            return MakeUnexpected<void>(iterate_blocks_to_deallocate_result.error());
         }
     }
     // Note: If IsRequestedBlockAtBufferQueueTail() fails due to corruption, it returns false
@@ -561,7 +561,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::Deallocate(
 }
 
 template <template <class> class AtomicIndirectorType>
-ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(BufferBlock& current_block)
+Result<void> LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(BufferBlock& current_block)
 {
     for (uint8_t retries = 0U; retries < kMaxRetries; retries++)
     {
@@ -571,7 +571,7 @@ ResultBlank LocklessFlexibleCircularAllocator<AtomicIndirectorType>::FreeBlock(B
         {
             // LCOV_EXCL_START buffer_queue_tail and block_length are internally bounded by total_size_,
             // so their sum cannot overflow std::uint32_t under normal operation
-            return MakeUnexpected<score::Blank>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
+            return MakeUnexpected<void>(LocklessFlexibleAllocatorErrorCode::kOverFlowOccurred);
             // LCOV_EXCL_STOP
         }
         auto new_buffer_queue_tail = new_buffer_queue_tail_result.value();

@@ -404,19 +404,23 @@ TEST_P(SharedMemoryFactoryTest, FailureToCreateOrOpenSharedMemoryReturnsNullPtr)
 {
     InSequence sequence{};
     constexpr std::int32_t lock_file_descriptor = 1;
+    constexpr std::int32_t open_lock_file_descriptor = 10;
     constexpr bool is_read_write = true;
     const auto typed_memory_allocation_return_value = score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
     const bool typed_memory_parameter = GetParam();
 
     // Given that the shared memory resource cannot be created or opened:
 
-    // The lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // We successfully acquire the lock file for the first open attempt
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
 
     // And the shared memory region doesn't exist when we first try to open it
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_read_write);
+
+    // and the lock file is cleaned up after the failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // And we can create the lock file
     expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
@@ -432,13 +436,16 @@ TEST_P(SharedMemoryFactoryTest, FailureToCreateOrOpenSharedMemoryReturnsNullPtr)
     EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
     EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
-    // Then we fail to open the shared memory region again
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Then we fail to open the shared memory region again - acquire lock file for second open attempt
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
 
     // And the shared memory region also doesn't exist
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), true);
+
+    // and the lock file is cleaned up after the second failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // When creating or opening a shared memory region with CreateOrOpen via the SharedMemoryFactory
     auto created_or_opened_resource = SharedMemoryFactory::CreateOrOpen(
@@ -455,12 +462,16 @@ TEST_P(SharedMemoryFactoryTest, FailureToCreateOrOpenSharedMemoryReturnsNullPtr)
 TEST_F(SharedMemoryFactoryTest, FailureToOpenSharedMemoryReturnsNullPtr)
 {
     InSequence sequence{};
+    constexpr std::int32_t lock_file_descriptor = 10;
 
     // When the shared memory resource cannot be opened
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), true);
+
+    // and the lock file is cleaned up after the failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // When trying to open the shared memory region via the SharedMemoryFactory
     std::shared_ptr<ManagedMemoryResource> opened_resource =
@@ -717,13 +728,18 @@ TEST_P(SharedMemoryFactoryTest,
 
     const bool typed_memory_parameter = GetParam();
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    constexpr std::int32_t open_lock_file_descriptor = 10;
+
+    // Given that we successfully acquire the lock file for the open attempt
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
 
     // And the shared memory region also doesn't exist
     expectShmOpenReturns(
         TestValues::sharedMemorySegmentPath, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), true);
+
+    // and the lock file is cleaned up after the failed open attempt
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
 
     // A shared memory region will only be created once
     expectSharedMemorySuccessfullyCreated(
@@ -1092,9 +1108,9 @@ TEST_F(SharedMemoryFactoryDeathTest, FailingToInsertResourceIntoRegistryTerminat
     InSequence sequence{};
     constexpr bool is_read_write = false;
 
-    // Given that the lock file does not exist
-    expectOpenLockFileReturns(TestValues::sharedMemorySegmentLockPath,
-                              score::cpp::make_unexpected(Error::createFromErrno(ENOENT)));
+    // Given that we successfully acquire the lock file
+    constexpr std::int32_t lock_file_descriptor = 10;
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, lock_file_descriptor);
 
     // and the shared memory segment is opened.
     expectShmOpenReturns(TestValues::sharedMemorySegmentPath, kFileDescriptor, is_read_write);
@@ -1107,12 +1123,16 @@ TEST_F(SharedMemoryFactoryDeathTest, FailingToInsertResourceIntoRegistryTerminat
     // and the memory region is mapped into the process
     expectMmapReturns(reinterpret_cast<void*>(1), kFileDescriptor, is_read_write, true);
 
+    // and the lock file is cleaned up after Open completes
+    EXPECT_CALL(*unistd_mock_, close(lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+
     // and the memory region is mapped a second time by the additional call to mapMemoryIntroProcess
     expectMmapReturns(reinterpret_cast<void*>(1), -1, is_read_write, true);
 
     // and the memory region will not necessarily be safely unmapped on destruction (to hide gmock warning)
     EXPECT_CALL(*mman_mock_, munmap(_, _)).Times(AtMost(1));
-    EXPECT_CALL(*unistd_mock_, close(1)).Times(AtMost(1));
+    EXPECT_CALL(*unistd_mock_, close(kFileDescriptor)).Times(AtMost(1));
 
     // Given a resource that has been opened and added to the SharedMemoryFactory's internal map
     std::shared_ptr<SharedMemoryResource> opened_resource = std::dynamic_pointer_cast<SharedMemoryResource>(

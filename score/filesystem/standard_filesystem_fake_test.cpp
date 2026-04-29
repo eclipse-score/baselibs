@@ -14,6 +14,8 @@
 
 #include "score/filesystem/filestream/file_factory_fake.h"
 
+#include <score/assert.hpp>
+
 #include <gtest/gtest.h>
 
 #include <chrono>
@@ -647,7 +649,7 @@ TEST_F(FilesystemFakeFixture, CopyFile_ErrorWhileRemove)
     WriteFile("/tmp/from", "Hello World.");
     WriteFile("/tmp/to", "42");
     // Return error while Remove
-    const ResultBlank error_remove = MakeUnexpected(ErrorCode::kCouldNotRemoveFileOrDirectory);
+    const Result<void> error_remove = MakeUnexpected(ErrorCode::kCouldNotRemoveFileOrDirectory);
     EXPECT_CALL(unit_, Remove(Path{"/tmp/to"})).WillOnce(Return(error_remove));
 
     // When copying

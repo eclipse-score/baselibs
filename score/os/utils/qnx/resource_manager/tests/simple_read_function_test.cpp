@@ -169,7 +169,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_preRead)
 TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_read)
 {
     EXPECT_CALL(iofunc_mock, iofunc_read_verify).WillOnce(Return(score::cpp::blank()));
-    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::ResultBlank()));
+    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::Result<void>()));
     EXPECT_CALL(simple_read_function_mock, read)
         .WillOnce(Return(score::MakeUnexpected(score::os::ErrorCode::kInvalidArgument)));
 
@@ -197,7 +197,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_read)
 TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_post_read)
 {
     EXPECT_CALL(iofunc_mock, iofunc_read_verify).WillOnce(Return(score::cpp::blank()));
-    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::ResultBlank()));
+    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::Result<void>()));
     EXPECT_CALL(simple_read_function_mock, read).WillOnce(Return(0));
     EXPECT_CALL(simple_read_function_mock, postRead)
         .WillOnce(Return(score::MakeUnexpected(score::os::ErrorCode::kInvalidArgument)));
@@ -226,9 +226,9 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_post_read)
 TEST_F(SimpleReadFunctionTest, func_operator_returns_error_due_to_resmgr_msgwrite)
 {
     EXPECT_CALL(iofunc_mock, iofunc_read_verify).WillOnce(Return(score::cpp::blank()));
-    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::ResultBlank()));
+    EXPECT_CALL(simple_read_function_mock, preRead).WillOnce(Return(score::Result<void>()));
     EXPECT_CALL(simple_read_function_mock, read).WillOnce(Return(8));
-    EXPECT_CALL(simple_read_function_mock, postRead).WillOnce(Return(score::ResultBlank()));
+    EXPECT_CALL(simple_read_function_mock, postRead).WillOnce(Return(score::Result<void>()));
     EXPECT_CALL(resmgr_mock, resmgr_msgwrite)
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EPERM))));
     // simulate the error is occured so set errno with an error

@@ -167,17 +167,17 @@ class BaseInterruptibleFutureTest<void> : public BaseInterruptibleFutureTestBase
         promise.SetValue();
     }
 
-    void ExpectCorrectValue(const score::ResultBlank& actual_value_expected) const noexcept
+    void ExpectCorrectValue(const score::Result<void>& actual_value_expected) const noexcept
     {
         EXPECT_TRUE(actual_value_expected.has_value());
     }
 
     void PrepareScopedContinuationCallback()
     {
-        safecpp::MoveOnlyScopedFunction<void(score::ResultBlank&)> scoped_callback{scope_,
-                                                                                 [this](score::ResultBlank&) noexcept {
-                                                                                     this->invoked_++;
-                                                                                 }};
+        safecpp::MoveOnlyScopedFunction<void(score::Result<void>&)> scoped_callback{scope_,
+                                                                                  [this](score::Result<void>&) noexcept {
+                                                                                      this->invoked_++;
+                                                                                  }};
         this->future_->Then(std::move(scoped_callback));
     }
 

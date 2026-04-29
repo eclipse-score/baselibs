@@ -46,7 +46,7 @@ jobs:
               -//score/memory/shared:shared_memory_resource_open_test
               -//score/os/utils/inotify:unit_test
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
-    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@97ae51fa5f00e9a5d6ad05d3a542f339f627aacb
+    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@ac25d669e392955be86ac87cc7ce3a56e2a6b838
     permissions:
       contents: read
       pull-requests: read

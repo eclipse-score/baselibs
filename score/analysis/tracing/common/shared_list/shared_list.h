@@ -18,6 +18,7 @@
 #include "score/memory/shared/atomic_indirector.h"
 #include <cstdint>
 #include <list>
+#include <tuple>
 #include <type_traits>
 
 namespace score
@@ -146,7 +147,7 @@ class alignas(std::max_align_t) List
         {
             if (flexible_allocator_)  // LCOV_EXCL_BR_LINE not testable see comment above.
             {
-                score::cpp::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
+                std::ignore = flexible_allocator_->Deallocate(static_cast<void*>(node), sizeof(Node));
             }
         }
     }
@@ -388,12 +389,12 @@ class alignas(std::max_align_t) List
      * @param value The value to add.
      * @return A result indicating success or failure.
      */
-    score::ResultBlank push_back(const T& value)
+    score::Result<void> push_back(const T& value)
     {
         auto new_node = AllocateNewNode(value);
         if (!new_node.has_value())
         {
-            return score::MakeUnexpected<Blank>(new_node.error());
+            return score::MakeUnexpected<void>(new_node.error());
         }
         if (nullptr == ResolveOffset(AtomicIndirectorType<std::ptrdiff_t>::load(tail_offset_)))
         {
@@ -410,7 +411,7 @@ class alignas(std::max_align_t) List
             AtomicIndirectorType<std::ptrdiff_t>::store(tail_offset_, CalculateOffset(new_node.value()));
         }
         std::ignore = AtomicIndirectorType<std::size_t>::fetch_add(size_, 1UL);
-        return score::ResultBlank{};
+        return score::Result<void>{};
     }
 
     /**
@@ -421,7 +422,7 @@ class alignas(std::max_align_t) List
      * @return A result indicating success or failure.
      */
     template <typename... Args>
-    score::ResultBlank emplace_back(Args&&... args)
+    score::Result<void> emplace_back(Args&&... args)
     {
         T value(std::forward<Args>(args)...);
         return push_back(value);

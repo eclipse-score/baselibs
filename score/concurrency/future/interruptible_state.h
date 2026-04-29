@@ -284,7 +284,7 @@ template <>
 class InterruptibleState<void> final : public score::concurrency::detail::TypedBaseInterruptibleState
 {
   public:
-    using ScopedContinuationCallback = safecpp::MoveOnlyScopedFunction<void(score::ResultBlank&)>;
+    using ScopedContinuationCallback = safecpp::MoveOnlyScopedFunction<void(score::Result<void>&)>;
 
     static std::shared_ptr<InterruptibleState> Make()
     {
@@ -295,7 +295,7 @@ class InterruptibleState<void> final : public score::concurrency::detail::TypedB
 
     bool SetError(score::result::Error error);
 
-    score::ResultBlank& GetValue() noexcept;
+    score::Result<void>& GetValue() noexcept;
 
     void AddContinuationCallback(ScopedContinuationCallback callback);
 
@@ -303,7 +303,7 @@ class InterruptibleState<void> final : public score::concurrency::detail::TypedB
     void TriggerContinuations();
 
     using score::concurrency::detail::TypedBaseInterruptibleState::BaseInterruptibleState;
-    score::ResultBlank value_{};
+    score::Result<void> value_{};
 
     std::mutex continuation_callback_mutex_{};
     safecpp::Scope<> scope_{};

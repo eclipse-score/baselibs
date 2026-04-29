@@ -14,14 +14,7 @@
 #define SCORE_ANALYSIS_TRACING_GENERIC_TRACE_LIBRARY_INTERFACE_TYPES_CHUNK_LIST_SHM_DATA_CHUNK_LIST_H
 
 #include "score/analysis/tracing/common/canary_wrapper/canary_wrapper.h"
-#include "score/analysis/tracing/common/flexible_circular_allocator/custom_polymorphic_offset_ptr_allocator.h"
-#include "score/analysis/tracing/common/interface_types/shared_memory_chunk.h"
-#include "score/analysis/tracing/common/interface_types/shared_memory_location.h"
-#include "score/analysis/tracing/common/interface_types/types.h"
 #include "score/analysis/tracing/common/shared_list/shared_list.h"
-#include "score/memory/shared/managed_memory_resource.h"
-#include "score/memory/shared/vector.h"
-#include "score/result/result.h"
 #include <array>
 
 namespace score
@@ -82,18 +75,6 @@ class ShmDataChunkList
 
     /// @brief Get the underlying container
     std::array<SharedMemoryChunk, kMaxChunksPerOneTraceRequest>& GetList();
-
-    /// @brief Copy previously created ShmDataChunkList to shared-memory.
-    ///
-    /// @param memory_resource shared ptr with shared-memory resource where ChunkList will be placed.
-    /// @param handle shared-memory handle assigned by the daemon during region registration
-    ///
-    /// @return SharedMemoryLocation where vector with data is stored or error code if operation fails.
-    score::Result<SharedMemoryLocation> SaveToSharedMemory(
-        ResourcePointer memory_resource,
-        ShmObjectHandle handle,
-        std::shared_ptr<IFlexibleCircularAllocator> flexible_allocator);
-    // TODO: Refactor after container with memory resources will be ready
 
     /// @brief == operator overloading to check if two chunk list are equal or not
     ///
