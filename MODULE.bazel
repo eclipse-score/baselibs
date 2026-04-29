@@ -182,7 +182,7 @@ deb(
 )
 
 bazel_dep(name = "flatbuffers", version = "25.12.19")
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "score_nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
 #############################################################
