@@ -13,8 +13,8 @@
 #include "gtest/gtest.h"
 #ifdef VAJSON
 
-#include "amsr/json/util/number.h"
 #include "score/json/internal/parser/number_parser_test_suite.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
 #include "score/json/internal/parser/vajson/vajson_parser.h"
 
 #include <limits>
@@ -31,7 +31,7 @@ namespace
 template <typename T>
 std::optional<T> ParseNumberAs(const std::string& json_number)
 {
-    const auto result = amsr::json::JsonNumber::New(json_number).Value().As<T>();
+    const auto result = score::json::vajson::JsonNumber::New(json_number).value().As<T>();
     if (result.has_value())
     {
         return result.value();
@@ -220,6 +220,30 @@ TEST(Number, FloatingPointWithoutDecimalPoint)
 
     EXPECT_EQ(ParseNumberAs<float>("-18446744073709551615").value_or(-999), -18446744073709551615.0f);
     EXPECT_EQ(ParseNumberAs<double>("18446744073709551615").value_or(-999), 18446744073709551615.0);
+}
+
+TEST(Number, NearDoubleLimitsIsParsable)
+{
+    RecordProperty("Verifies", "5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Near-limit finite doubles are accepted across architectures.");
+    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+
+    EXPECT_TRUE(ParseNumberAs<double>("2.225073858507201383090e-308").has_value());
+    EXPECT_TRUE(ParseNumberAs<double>("1.797693134862315708145e+308").has_value());
+}
+
+TEST(Number, FloatingPointOverflowIsRejected)
+{
+    RecordProperty("Verifies", "5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Overflowing floating-point values are rejected.");
+    RecordProperty("TestType", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+
+    EXPECT_FALSE(ParseNumberAs<double>("1e309").has_value());
+    EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
 }
 
 INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, VajsonParser, /*unused*/);
