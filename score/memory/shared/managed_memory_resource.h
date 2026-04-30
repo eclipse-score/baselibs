@@ -65,6 +65,11 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
     ~ManagedMemoryResource() noexcept override = default;
 
     /**
+     * We need to return a raw pointer, since we need to convert this
+     * pointer into an OffsetPtr if it shall be stored in shared memory.
+     * @return MemoryResourceProxy* that identifies _this_ memory_resource.
+     */
+    /**
      * @brief Construct T allocating underlying MemoryResource
      * @tparam T The type that shall be constructed
      * @tparam Args The argument types
@@ -96,7 +101,7 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
      * @brief Get the start address of the memory region that this memory resource is managing
      * @return void* start address of memory resource (e.g. mmap result)
      */
-    virtual void* getBaseAddress() const noexcept = 0;
+    virtual const void* getBaseAddress() const noexcept = 0;
 
     /**
      * @brief Get the start address of the region available to a user of this memory resource.

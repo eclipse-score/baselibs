@@ -735,7 +735,7 @@ auto SharedMemoryResource::do_allocate(const std::size_t bytes, const std::size_
     return new_address_aligned;
 }
 
-auto SharedMemoryResource::getBaseAddress() const noexcept -> void*
+auto SharedMemoryResource::getBaseAddress() const noexcept -> const void*
 {
     // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class.".

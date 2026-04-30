@@ -44,14 +44,15 @@ class MyMemoryResource : public ManagedMemoryResource
     {
     }
 
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         MemoryResourceRegistry::getInstance().clear();
-        score::cpp::ignore = MemoryResourceRegistry::getInstance().insert_resource({memoryResourceId_, this});
+        score::cpp::ignore = MemoryResourceRegistry::getInstance().insert_resource(
+            {memoryResourceId_, const_cast<MyMemoryResource*>(this)});
         return &this->manager_;
     }
 
-    void* getBaseAddress() const noexcept override
+    const void* getBaseAddress() const noexcept override
     {
         return baseAddress_;
     }

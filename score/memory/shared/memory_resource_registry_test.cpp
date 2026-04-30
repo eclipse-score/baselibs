@@ -48,11 +48,11 @@ class BasicMemoryResource : public ManagedMemoryResource
           end_address_{reinterpret_cast<void*>(memory_range.second)}
     {
     }
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return nullptr;
     }
-    void* getBaseAddress() const noexcept override
+    const void* getBaseAddress() const noexcept override
     {
         return base_address_;
     }
@@ -97,11 +97,11 @@ class BoundsCheckBypassingMemoryResource : public ManagedMemoryResource
           end_address_{reinterpret_cast<void*>(memory_range.second)}
     {
     }
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return nullptr;
     }
-    void* getBaseAddress() const noexcept override
+    const void* getBaseAddress() const noexcept override
     {
         return base_address_;
     }
