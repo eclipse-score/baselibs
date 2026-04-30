@@ -236,12 +236,6 @@ cc_library(
     deps = [":futurecpp"],
 )
 
-cc_binary(
-    name = "expected_example",
-    srcs = ["examples/expected_example.cpp"],
-    deps = [":futurecpp"],
-)
-
 cc_library(
     name = "futurecpp_internal",
     testonly = True,

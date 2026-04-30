@@ -759,14 +759,6 @@ bool operator!=(const expected<LhsT, LhsE>& lhs, const expected<RhsT, RhsE>& rhs
 template <typename E>
 using expected_blank = expected<score::cpp::blank, E>;
 
-///
-/// \example ../examples/expected_example.cpp
-/// \brief An example usage of expected class.
-///
-/// This example showcases the usage of the expected class with a function that returns a value as well as with those
-/// that don't. In addition to that it shows the possibility to use different types for errors.
-///
-
 } // namespace score::cpp
 
 #endif // SCORE_LANGUAGE_FUTURECPP_EXPECTED_HPP
