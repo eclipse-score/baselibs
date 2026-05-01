@@ -11,8 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("//score/flatbuffers/bazel:codegen.bzl", "generate_cpp")
-load("//score/flatbuffers/bazel:tools.bzl", "generate_json_schema", "serialize_buffer")
+load("@rules_cc//cc:defs.bzl", "cc_test")
+load("@score_baselibs//score/flatbuffers/bazel:codegen.bzl", "generate_cpp")
+load("@score_baselibs//score/flatbuffers/bazel:tools.bzl", "generate_json_schema", "serialize_buffer")
 
 # Generate C++ header from FlatBuffer schema
 generate_cpp(
@@ -34,4 +35,20 @@ serialize_buffer(
     data = "demo_config.json",
     output = "demo_config.bin",
     schema = "demo.fbs",
+)
+
+# Demo test: loads demo_config.bin at runtime, verifies and reads the config
+# using filesystem and flatbufferscpp library.
+cc_test(
+    name = "demo_app",
+    srcs = [
+        "demo_app_test.cpp",
+        ":demo_component_config",
+    ],
+    data = [":demo_config_bin"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/flatbuffers:flatbufferscpp",
+    ],
 )
