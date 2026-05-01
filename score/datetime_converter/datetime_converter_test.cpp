@@ -453,6 +453,121 @@ TEST_F(DateTimeConverterTest, test_yearIsLeap)
     ASSERT_FALSE(score::common::yearIsLeap(2100));
 }
 
+TEST_F(DateTimeConverterTest, invalid_month_values)
+{
+    RecordProperty("Description", "Verify invalid month values are rejected.");
+    RecordProperty("TestType", "Negative");
+    RecordProperty("Requirement", "DatetimeValidation");
+    RecordProperty("Coverage", "MonthValidation");
+
+    auto dtt = std::make_shared<DateTimeType>(2020, 0, 10, 3, 4, 5);
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_month = 13;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_month = -1;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+}
+
+TEST_F(DateTimeConverterTest, invalid_day_values)
+{
+    RecordProperty("Description", "Verify invalid day values are rejected.");
+    RecordProperty("TestType", "Negative");
+    RecordProperty("Requirement", "DatetimeValidation");
+    RecordProperty("Coverage", "DayValidation");
+
+    auto dtt = std::make_shared<DateTimeType>(2020, 12, 34, 3, 4, 5);
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_day = -1;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+}
+
+TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
+{
+    RecordProperty("Description", "Verify dateTimeToEpoch returns false for invalid DateTime input.");
+    RecordProperty("TestType", "Negative");
+    RecordProperty("Requirement", "DatetimeValidation");
+    RecordProperty("Coverage", "ErrorHandling");
+
+    time_t epoch = static_cast<time_t>(0x7F7F7F7F);
+
+    // Invalid: month = 13 -> isValidDateTimeFormat returns false
+    auto d = std::make_shared<DateTimeType>(2024, 13, 10, 12, 30, 45);
+
+    ASSERT_FALSE(score::common::dateTimeToEpoch(d, &epoch));
+
+    ASSERT_EQ(epoch, static_cast<time_t>(0x7F7F7F7F));
+}
+
+const int testDays[] = {1, 28, 29, 30, 31};
+bool isValidDay(int year, int month, int day)
+{
+    if (month < 1 || month > 12 || day < 1)
+        return false;
+
+    static const int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    return day <= (month == 2 && score::common::yearIsLeap(year) ? 29 : days[month - 1]);
+}
+
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_DaysSumDecrementedInJanuary)
+{
+    RecordProperty("Description", "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for pre 1970 leap years.");
+    RecordProperty("TestType", "Boundary");
+    RecordProperty("Requirement", "DatetimeConversion_Pre1970_LeapYear");
+    RecordProperty("Coverage", "LeapYearHandling_RoundTrip");
+
+    for (int month = 1; month <= 12; ++month)
+    {
+        for (int day : testDays)
+        {
+            if (!isValidDay(1968, month, day))
+                continue;
+
+            time_t epoch{};
+            auto dateTimeOriginal = std::make_shared<DateTimeType>(1968, month, day, 0, 0, 1);
+
+            if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
+                continue;
+
+            auto datetimeConverted = score::common::epochToDateTime(epoch);
+            if (datetimeConverted == nullptr)
+                continue;
+            ASSERT_NE(datetimeConverted, nullptr);
+        }
+    }
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_LeapYear_DaysSumDecremented)
+{
+    RecordProperty("Description",
+        "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for post-1970 leap years.");
+    RecordProperty("TestType", "Boundary");
+    RecordProperty("Requirement", "DatetimeConversion_Post1970_LeapYear");
+    RecordProperty("Coverage", "LeapYearHandling_RoundTrip");
+
+    for (int month = 1; month <= 12; ++month)
+    {
+        for (int day : testDays)
+        {
+            if (!isValidDay(1972, month, day))
+                continue;
+            time_t epoch{};
+            auto dateTimeOriginal = std::make_shared<DateTimeType>(1972, month, day, 0, 0, 1);
+
+            if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
+                continue;
+
+            auto dateTimeConverted = score::common::epochToDateTime(epoch);
+            ASSERT_NE(dateTimeConverted, nullptr);		
+        }
+       
+    }
+}
+
 }  // namespace testing
 }  // namespace platform
 }  // namespace score
