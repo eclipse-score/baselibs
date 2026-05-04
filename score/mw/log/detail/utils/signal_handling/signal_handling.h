@@ -46,7 +46,6 @@ class SignalHandling
     static auto WithSigTermBlocked(score::os::Signal& signal, Func&& func) noexcept -> decltype(func())
     {
         const auto block_result = PThreadBlockSigTerm(signal);
-        std::ignore = block_result;
         auto result = func();
         const auto unblock_result = PThreadUnblockSigTerm(signal);
         std::ignore = unblock_result;

@@ -114,4 +114,4 @@ This transfer of ownership is important, since otherwise further dynamic memory 
 ## Library Dependencies
 
 A comprehensive list of library dependencies for mw::log can be queried using bazel via:
-`bazel query 'kind("cc_library", deps(//platform/aas/mw/log))'`
+`bazel query 'kind("cc_library", deps(@score_baselibs//score/mw/log))'`

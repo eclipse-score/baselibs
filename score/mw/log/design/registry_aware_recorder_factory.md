@@ -29,18 +29,18 @@ at runtime and gracefully falls back to console for any unavailable backend.
 > bazel query 'kind("cc_library", //score/mw/log/backend/...)' --output label
 > NOTE: console backend is not found here since its provided by default as `log:console` verify deps via:
 >
-> bazel query 'deps(//score/mw/log:console, 1)' --output label
+> bazel query 'deps(@score_baselibs//score/mw/log:console, 1)' --output label
 >
 > # Full bundle (including all supported backends)
-> bazel query 'deps(//score/mw/log:log, 1)' --output label
+> bazel query 'deps(@score_baselibs//score/mw/log:log, 1)' --output label
 > ```
 
 ### Minimal target (always required)
 
 | Bazel target | Provides |
 |---|---|
-| `//score/mw/log:minimal` | Frontend + stub backend — the minimum viable logging |
-| `//score/mw/log:frontend` | `Logger`, `LogStream`, `Runtime` (public API) |
+| `@score_baselibs//score/mw/log:minimal` | Frontend + stub backend — the minimum viable logging |
+| `@score_baselibs//score/mw/log:frontend` | `Logger`, `LogStream`, `Runtime` (public API) |
 
 ### Additive backend plugins (zero or more)
 
@@ -48,7 +48,7 @@ Each plugin uses `alwayslink = True` to ensure its static registrant is linked.
 
 | Bazel target | Backend | Condition |
 |---|---|---|
-| `//score/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
+| `@score_baselibs//score/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
 | `//score/mw/log/backend:file` | DLT file logging | `config_KFile_Logging` flag |
 | `//score/mw/log/backend:remote` | DataRouter remote DLT | `Remote_Logging` flag |
 | `//score/mw/log/backend:slog` | QNX slog2 | QNX only (`@platforms//os:qnx`) |
@@ -57,7 +57,7 @@ Each plugin uses `alwayslink = True` to ensure its static registrant is linked.
 
 | Bazel target | Includes |
 |---|---|
-| `//score/mw/log:log` | `:console` + `backend:file` + `backend:remote` + `backend:slog` (QNX only) |
+| `@score_baselibs//score/mw/log:log` | `:console` + `backend:file` + `backend:remote` + `backend:slog` (QNX only) |
 
 Three guarantees:
 
@@ -132,7 +132,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
-        "//score/mw/log:backend_table",
+        "@score_baselibs//score/mw/log:backend_table",
         "//path/to:my_recorder_factory",
     ],
     alwayslink = True,  # CRITICAL — ensures registration runs
@@ -145,7 +145,7 @@ cc_library(
 
 ### Step 4: Wire Into Applications
 
-Option A — All applications get it: Add your target to `//score/mw/log:log` deps.
+Option A — All applications get it: Add your target to `@score_baselibs//score/mw/log:log` deps.
 
 Option B — Opt-in only: Document the dep. Application owners add:
 ```python
@@ -159,14 +159,14 @@ deps += ["//score/mw/log/backend:my_backend"]
 ```python
 cc_library(
     name = "my_library",
-    deps = ["//score/mw/log:minimal"],
+    deps = ["@score_baselibs//score/mw/log:minimal"],
 )
 ```
 
 ```python
 cc_library(
     name = "my_library2",
-    deps = ["//score/mw/log:console"],
+    deps = ["@score_baselibs//score/mw/log:console"],
 )
 ```
 
@@ -202,14 +202,14 @@ and any additional backends if required. Otherwise you'll see an `error: undefin
 ```python
 cc_library(
     name = "my_library",
-    deps = ["//score/mw/log:frontend"],
+    deps = ["@score_baselibs//score/mw/log:frontend"],
 )
 
 cc_binary(
     name = "my_app",
     deps = [
         ":my_library",
-        "//score/mw/log:minimal", # must be provided
+        "@score_baselibs//score/mw/log:minimal", # must be provided
     ],
 )
 ```
@@ -219,7 +219,7 @@ cc_binary(
 ```python
 cc_binary(
     name = "my_existing_app",
-    deps = ["//score/mw/log:log"],  # All backends
+    deps = ["@score_baselibs//score/mw/log:log"],  # All backends
 )
 ```
 
@@ -264,7 +264,7 @@ in practice since each `LogMode` has a canonical backend.
 
 Q: Can a library add a backend plugin dep?
 A: It *can*, but it *shouldn't*. Backend selection is a binary-level decision. Libraries
-should depend on `//score/mw/log:console` (which provides the frontend API and
+should depend on `@score_baselibs//score/mw/log:console` (which provides the frontend API and
 console default). The application binary should declare which additional backends it needs.
 
 Q: What if I need logging during static initialization?

@@ -12,8 +12,6 @@
 
 [Limitations of Use](#limitations-of-use)
 
-[Bazel Targets](#bazel-targets)
-
 [Configuration](#configuration)
 
 [Logging modes](#logging-modes)
@@ -70,23 +68,6 @@ The AoUs are maintained in [Codebeamer](broken_link_c/share/f55e57bf89054000a975
 
 Logging is a best effort operation that shall ensure freedom from interference at all times.
 Log messages may be dropped if the available resources or the limits of the implementation are exceeded.
-
-## Bazel Targets
-
-Use the following targets to integrate `mw::log` into your application:
-
-| Target | Description |
-|---|---|
-| `@score_baselibs//mw/log` | Provides the frontend and console backend. Supports adding additional backends (file, remote, and slog on QNX). |
-| `@score_baselibs//mw/log:minimal` | Provides the frontend with a stub backend only. |
-| `@score_baselibs//mw/log:console` | Provides the frontend with the console backend — use this for minimum viable logging. |
-| `@score_logging//log/backend:file` | Adds DLT file logging as a backend plugin. |
-| `@score_logging//log/backend:remote` | Adds DataRouter remote DLT as a backend plugin. |
-| `@score_logging//log/backend:slog` | Adds QNX slog2 as a backend plugin. |
-
-See [registry_aware_recorder_factory.md](./design/registry_aware_recorder_factory.md) for a complete overview of all targets, usage examples, and guidance on adding new backends.
-
-> **Note:** If your application binary requires any backend other than console (e.g., remote DLT logging), you must add the corresponding backend target to your `deps` explicitly. In the future, `@score_baselibs//mw/log` will serve as the sole logging target. The integrator will be responsible for making the required backends available for each target platform, and `mw/log` will take care of loading them dynamically as shared libraries (.so). Until dynamic backend loading is supported, you must provide each backend dependency yourself.
 
 ## Configuration
 
@@ -185,9 +166,29 @@ And the following bazel dependency as well:
 
 ```bazel
 deps = [
-    "@score_logging//score/mw/log",
+    "@score_baselibs//score/mw/log:log",
 ],
 ```
+
+Note: This target bundles all supported logging backends, introducing additional dependencies determined by [feature flags](#feature-flags) configuration. For projects or targets requiring minimal footprint, depend exclusively on the logging minimal (includes stub backend only) target to avoid including unused backends and their transitive dependencies.
+
+```bazel
+deps = [
+    "@score_baselibs//score/mw/log:minimal",
+],
+```
+
+This approach ensures that only required dependencies are included per target, avoiding bloat from unused logging backends.
+
+Note: Test binaries that depend on frontend only library targets require an explicit backend implementation. For this you can provide either a stub backend like above or a basic console backend:
+
+```bazel
+deps = [
+    "@score_baselibs//score/mw/log:console",
+],
+```
+
+Few targets in [Baselibs](broken_link_g/swh/safe-posix-platform/tree/master/score/lib) use only the mw::log frontend in their library targets, maintaining self-containment and avoiding unnecessary dependencies. However users of those libraries could see linker errors while building binaries (cc_test/cc_binary) if a concrete backend is not provided. For this you can provide either a stub backend or a console backend (particularly useful for cc_test targets) or the `@score_baselibs//score/mw/log:log` as a dependency that includes all the backends depending on the [feature flags](#feature-flags) configuration.
 
 ### How to log something the most easy way?
 
@@ -376,7 +377,7 @@ cc_library(
     ],
     ...
     deps = [
-        "@score_logging//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log:log_stream",
     ],
 )
 ```
@@ -387,7 +388,7 @@ cc_library(
 cc_test(
     ...
     deps = [
-        "@score_logging//score/mw/log:log",
+        "@score_baselibs//score/mw/log:log",
     ],
 )
 ```
@@ -467,7 +468,7 @@ For `LogStream` usage there is the dependency in `BUILD` file necessary:
 
 ```bazel
 deps = [
-    "@score_logging//score/mw/log:log_stream",
+    "@score_baselibs//score/mw/log:log_stream",
 ],
 ```
 
@@ -501,7 +502,7 @@ cc_library(
     ],
     ...
     deps = [
-        "//platform/aas/ara/log",
+        "//score/ara/log",
     ],
 )
 ],
@@ -591,8 +592,8 @@ cc_library(
         ...
     ],
     deps = [
-        "//platform/aas/ara/core",
-        "@score_logging//score/mw/log:log_stream",
+        "//score/ara/core",
+        "@score_baselibs//score/mw/log:log_stream",
     ],
 )
 ```
