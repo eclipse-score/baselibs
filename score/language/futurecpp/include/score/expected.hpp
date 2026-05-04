@@ -84,7 +84,7 @@ struct destructor_base
 {
     static_assert(std::is_trivially_destructible_v<T> && std::is_trivially_destructible_v<E>);
 
-    destructor_base() {}
+    destructor_base() : has_value_{false} {}
 
     // For performances reason this class is not using `std::variant` but implementing the storage as a raw union. This
     // class takes care by code review to only read from the active member of the union. The union is only visible
@@ -106,7 +106,7 @@ struct destructor_base<T, E, false>
 {
     static_assert(!(std::is_trivially_destructible_v<T> && std::is_trivially_destructible_v<E>));
 
-    destructor_base() {}
+    destructor_base() : has_value_{false} {}
     destructor_base(const destructor_base&) = default;
     destructor_base& operator=(const destructor_base&) = default;
     destructor_base(destructor_base&&) = default;
