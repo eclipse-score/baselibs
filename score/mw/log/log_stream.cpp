@@ -38,6 +38,13 @@ LogStream::LogStream(Recorder& recorder,
     slot_ = recorder_.StartRecord(context_id_.GetStringView(), log_level_);
 }
 
+// Suppress "AUTOSAR C++14 A15-5-1": "All user-provided class destructors, deallocation functions,
+// move constructors, move assignment operators and swap functions shall not exit with an exception. A
+// noexcept exception specification shall be added to these functions as appropriate."
+// Rationale: The function is already marked noexcept. Although slot_.value() could theoretically throw
+// std::bad_optional_access, this exception cannot be reached because the call is guarded by has_value()
+// check, ensuring the optional contains a value before accessing it.
+// coverity[autosar_cpp14_a15_5_1_violation]
 LogStream::~LogStream() noexcept
 {
     if (slot_.has_value())
