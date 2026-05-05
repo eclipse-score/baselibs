@@ -14,6 +14,8 @@
 exports_files(
     [
         "test.fbs",
+        "test_versioned.fbs",
+        "test_versioned_wrong_placement.fbs",
         "invalid_data.json",
         "valid_data.json",
         "valid_data2.json",

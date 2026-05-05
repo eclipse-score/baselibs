@@ -22,6 +22,10 @@ def _generate_cpp_impl(ctx):
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
 
+    # Collect include directories from included .fbs files
+    include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
+    include_dirs = {files.dirname: True for files in include_files}
+
     # flatc generates <basename>_generated.h by default
     # Use temporary subdirectory based on target to avoid conflicts
     default_name = fbs_file.basename.replace(".fbs", "_generated.h")
@@ -81,11 +85,13 @@ def _generate_cpp_impl(ctx):
     args.add("--cpp")
     args.add("--cpp-std", "c++11")
     args.add("--scoped-enums")
+    for inc_dir in include_dirs:
+        args.add("-I", inc_dir)
     args.add("-o", generated_file.dirname)
     args.add(fbs_file.path)
 
     ctx.actions.run(
-        inputs = [fbs_file],
+        inputs = [fbs_file] + include_files,
         outputs = [generated_file],
         executable = flatc,
         arguments = [args],
@@ -110,23 +116,38 @@ generate_cpp = rule(
             mandatory = True,
             doc = "The name of the generated C++ header file",
         ),
+        "includes": attr.label_list(
+            allow_files = [".fbs"],
+            default = [],
+            doc = "Additional .fbs files required to resolve include directives in the schema.",
+        ),
         "_flatc": attr.label(
             default = "@flatbuffers//:flatc",
             executable = True,
             cfg = "exec",
             doc = "The flatc compiler (absolute path from flatbuffers repository)",
         ),
+        "_buffer_version_fbs": attr.label(
+            default = "@score_baselibs//score/flatbuffers/common:buffer_version.fbs",
+            allow_single_file = [".fbs"],
+            doc = "Automatically included buffer_version.fbs for common buffer version support.",
+        ),
     },
     doc = """Generates a C++ header file from a FlatBuffer schema (.fbs) file.
-    
+
     This rule uses the flatc compiler from the @flatbuffers repository with
     absolute paths, making it usable outside of this repository.
-    
+
+    @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
+    automatically. The schema must include buffer_version.fbs manually if it uses
+    the common buffer version (e.g. `include "buffer_version.fbs";`).
+
     Example:
         generate_cpp(
             name = "demo_flatbuffer",
             schema = "demo.fbs",
             output = "demo_config.h",
+            includes = ["some_other.fbs"],
         )
     """,
 )

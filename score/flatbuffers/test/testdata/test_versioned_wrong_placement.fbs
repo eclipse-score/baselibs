@@ -1,0 +1,71 @@
+/// Demo FlatBuffer schema for a component — WRONG version_info placement.
+/// This schema is intentionally incorrect: version_info is placed inside the
+/// nested AdvancedSettings table instead of as field 0 of the root table.
+/// FlatBuffers and the serialize_versioned_buffer rule will compile this
+/// without error, but GetBufferVersion / VerifyBufferVersion will fail
+/// because the universal reader looks for version_info at vtable slot 0 of
+/// the root table only.
+include "buffer_version.fbs";
+
+namespace my_component.demo;
+
+/// Generic enum for component run modes
+enum OperationMode:uint8 {
+    EVENT_DRIVEN = 0,
+    POLLING = 1,
+    PERIODIC = 2,
+}
+
+/// Union for flexible data types
+union DataPayloadUnion {
+    StringData,
+    BinaryData
+}
+
+table MyComponentConfig {
+    /// Component identification — occupies vtable slot 0 (field 0), no version_info here
+    component_name:string (required);
+    component_id:uint32; // Implicit default is 0
+
+    thread_pool_size:uint8 = 4; // Explicit default value
+    max_memory_mb:uint16 = 64;
+
+    /// Nested table
+    advanced_settings:AdvancedSettings (required);
+}
+
+table AdvancedSettings {
+    /// WRONG: version_info is buried inside a nested table, not the root table.
+    /// GetBufferVersion will return kVerificationFailed or zeros at runtime.
+    version_info:score.mw.flatbuffers.BufferVersion;
+
+    /// Enum example: operational mode (defaults to first enum value: EVENT_DRIVEN)
+    mode:OperationMode;
+
+    /// Vector examples
+    allowed_priorities:[uint8]; // Vector of primitives
+    feature_flags:[FeatureFlag]; // Vector of tables
+
+    /// Union example: flexible data payload
+    data:DataPayloadUnion;
+}
+
+/// Table used in vector
+table FeatureFlag {
+    name:string (required);
+    enabled:bool = false;
+}
+
+table StringData {
+    value:string;
+}
+
+table BinaryData {
+    value:[uint8];
+}
+
+// Root configuration object
+root_type MyComponentConfig;
+
+// Component specific file identifier
+file_identifier "DEMO";
