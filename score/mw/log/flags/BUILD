@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@bazel_skylib//lib:selects.bzl", "selects")
 load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
@@ -45,15 +46,44 @@ config_setting(
 )
 
 bool_flag(
-    name = "KDltTrace_Logging",
+    name = "use_dlt_trace",
     build_setting_default = False,
 )
 
 config_setting(
-    name = "DltTrace_Logging",
+    name = "config_use_dlt_trace",
     flag_values = {
-        ":KDltTrace_Logging": "True",
+        ":use_dlt_trace": "True",
     },
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)
+
+config_setting(
+    name = "config_not_use_dlt_trace",
+    flag_values = {
+        ":use_dlt_trace": "False",
+    },
+)
+
+selects.config_setting_group(
+    name = "dlt_trace_enabled",
+    match_all = [
+        ":Remote_Logging",
+        ":config_use_dlt_trace",
+    ],
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)
+
+selects.config_setting_group(
+    name = "datarouter_enabled",
+    match_all = [
+        ":Remote_Logging",
+        ":config_not_use_dlt_trace",
+    ],
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",
     ],
