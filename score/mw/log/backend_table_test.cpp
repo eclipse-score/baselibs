@@ -71,6 +71,11 @@ TEST(ModeToSlotIndexTest, CustomModeMapsToSlotFour)
     EXPECT_EQ(ModeToSlotIndex(LogMode::kCustom), 4U);
 }
 
+TEST(ModeToSlotIndexTest, DltTraceModeMapsToSlotFive)
+{
+    EXPECT_EQ(ModeToSlotIndex(LogMode::kDltTrace), 5U);
+}
+
 TEST(ModeToSlotIndexTest, InvalidModeReturnsSentinel)
 {
     EXPECT_EQ(ModeToSlotIndex(LogMode::kInvalid), kMaxBackendSlots);
