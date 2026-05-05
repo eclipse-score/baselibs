@@ -99,7 +99,7 @@ public:
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION(score::cpp::has_single_bit(alignment));
         const std::size_t s{internal_size(bytes)};
         const std::size_t a{internal_alignment(alignment)};
-        unlink(reinterpret_cast<const element*>(get_element(p, s)));
+        unlink(static_cast<const element*>(get_element(p, s)));
         resource->deallocate(p, s, a);
     }
 
