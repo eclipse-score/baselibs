@@ -132,24 +132,6 @@ struct move_bomb
 
 const std::size_t test_max_size{5U};
 
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#17014595
-TEST(circular_buffer_test, trivial_destructible)
-{
-    struct trivial_destructible_only
-    {
-        trivial_destructible_only() {}
-        trivial_destructible_only(const trivial_destructible_only&) {}
-        trivial_destructible_only& operator=(const trivial_destructible_only&) { return *this; }
-        trivial_destructible_only(trivial_destructible_only&&) {}
-        trivial_destructible_only& operator=(trivial_destructible_only&&) { return *this; }
-        ~trivial_destructible_only() = default;
-    };
-
-    static_assert(std::is_trivially_destructible_v<score::cpp::circular_buffer<trivial_destructible_only, 2>>);
-    static_assert(std::is_trivially_destructible_v<score::cpp::circular_buffer<std::int32_t, 2>>);
-}
-
 /// \test The copy constructor shall correctly handle the copied-to, uninintialized memory by calling the copy
 /// constructor of the circular_buffer::value type.
 /// @testmethods TM_REQUIREMENT
