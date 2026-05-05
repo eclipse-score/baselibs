@@ -25,15 +25,6 @@
 
 namespace score
 {
-namespace memory
-{
-namespace shared
-{
-class ManagedMemoryResource;
-class ISharedMemoryResource;
-}  // namespace shared
-}  // namespace memory
-
 namespace analysis
 {
 namespace tracing
@@ -130,12 +121,6 @@ enum class BindingType : std::uint8_t
     kVectorZeroCopy = 2,
     kUndefined = 3,
 };
-
-/// @brief Type used to store pointer to ManagedMemoryResource
-using ResourcePointer = std::shared_ptr<score::memory::shared::ManagedMemoryResource>;
-
-/// @brief Type used to store pointer to SharedMemoryResource
-using SharedResourcePointer = std::shared_ptr<score::memory::shared::ISharedMemoryResource>;
 
 /// Type used to store handle to shared-memory region, used to optimize data transfers
 using ShmObjectHandle = std::int32_t;
