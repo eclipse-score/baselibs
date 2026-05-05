@@ -337,6 +337,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockTwice)
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,
                                                        Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
+        ASSERT_TRUE(result.has_value());
         // unblock parent process.
         Signal(parent_pipe);
         // wait for parent process to finish.
@@ -375,6 +376,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockAndSharedLock)
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,
                                                        Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
+        ASSERT_TRUE(result.has_value());
         // unblock parent process.
         Signal(parent_pipe);
         // wait for parent process to finish.
@@ -413,6 +415,7 @@ TEST_F(FcntlImplTest, FlockSucceedsWhenTryToObtainSharedLockTwice)
         }};
         auto result = score::os::Fcntl::instance().flock(file_descriptor,
                                                        Fcntl::Operation::kLockShared | Fcntl::Operation::kLockNB);
+        ASSERT_TRUE(result.has_value());
         // unblock parent process.
         Signal(parent_pipe);
         // wait for parent process to finish.

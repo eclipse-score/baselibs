@@ -1202,6 +1202,7 @@ TEST_F(UnistdFixture, GetpwnamReturnsErrorIfPassInvalidUser)
     std::vector<char> buffer(kMaxBufferSize);
 
     const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
+    EXPECT_TRUE(val.has_value());
     EXPECT_EQ(result, nullptr);
 }
 
