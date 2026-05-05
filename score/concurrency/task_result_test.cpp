@@ -157,7 +157,7 @@ class TaskResultContinuationTest : public ::testing::Test
   public:
     typename T::TaskType Make()
     {
-        return std::move(T::Make(promise_));
+        return T::Make(promise_);
     }
 
     void ExpectCallNTimes(std::uint16_t n)
