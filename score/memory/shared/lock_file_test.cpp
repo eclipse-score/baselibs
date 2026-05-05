@@ -554,7 +554,8 @@ TEST_F(LockFileMoveFixture, LockFileShouldNotRemoveFileWhenMoveAssigningToItself
         ASSERT_TRUE(lock_file_result.has_value());
 
         // When we move assign the lock file to itself
-        lock_file_result.value() = std::move(lock_file_result.value());
+        auto* lock_file_ptr = &lock_file_result.value();
+        lock_file_result.value() = std::move(*lock_file_ptr);
 
         // Then the lock file won't be destroyed
         EXPECT_FALSE(close_called);

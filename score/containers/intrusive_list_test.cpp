@@ -552,7 +552,8 @@ TEST(IntrusiveList, MoveAssignmentTest)
     // NOLINTBEGIN(bugprone-use-after-move): testing correctness of implementation
 
     List list;
-    list = std::move(list);
+    auto* list_ptr = &list;
+    list = std::move(*list_ptr);
     CheckEmpty(list);
 
     List list_from;
@@ -562,7 +563,8 @@ TEST(IntrusiveList, MoveAssignmentTest)
     list = std::move(list_from);
     CheckEmpty(list_from);
     CheckNonEmpty(list, 1, front_back, front_back);
-    list = std::move(list);
+    list_ptr = &list;
+    list = std::move(*list_ptr);
     CheckNonEmpty(list, 1, front_back, front_back);
 
     ListElement front;
@@ -572,7 +574,8 @@ TEST(IntrusiveList, MoveAssignmentTest)
     list = std::move(list_from);
     CheckEmpty(list_from);
     CheckNonEmpty(list, 2, front, back);
-    list = std::move(list);
+    list_ptr = &list;
+    list = std::move(*list_ptr);
     CheckNonEmpty(list, 2, front, back);
 
     constexpr std::size_t num_elements = 6;
@@ -581,7 +584,8 @@ TEST(IntrusiveList, MoveAssignmentTest)
     list = std::move(list_from);
     CheckEmpty(list_from);
     CheckNonEmpty(list, num_elements, elements[0], elements[num_elements - 1]);
-    list = std::move(list);
+    list_ptr = &list;
+    list = std::move(*list_ptr);
     CheckNonEmpty(list, num_elements, elements[0], elements[num_elements - 1]);
     list.clear();
 

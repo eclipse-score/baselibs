@@ -126,7 +126,8 @@ TYPED_TEST(ScopeTest, CanMoveAssignToItselfWithNoAdverseEffects)
     DISABLE_WARNING_PUSH
     DISABLE_WARNING_SELF_MOVE
 
-    scope = std::move(scope);
+    auto* scope_ptr = &scope;
+    scope = std::move(*scope_ptr);
 
     DISABLE_WARNING_POP
 
