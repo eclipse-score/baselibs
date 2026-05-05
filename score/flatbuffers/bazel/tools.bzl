@@ -23,6 +23,10 @@ def _serialize_buffer_impl(ctx):
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
 
+    # Collect include directories from included .fbs files
+    include_files = ctx.files.includes
+    include_dirs = {files.dirname: True for files in include_files}
+
     # When converting JSON to binary, flatc generates a file named after the JSON file
     default_name = data_file.basename.replace(".json", ".bin")
     temp_subdir = "tmp_{}".format(ctx.label.name)
@@ -90,12 +94,14 @@ def _serialize_buffer_impl(ctx):
     args = ctx.actions.args()
     args.add("--binary")
     args.add("--strict-json")
+    for inc_dir in include_dirs:
+        args.add("-I", inc_dir)
     args.add("-o", generated_file.dirname)
     args.add(schema_file.path)
     args.add(data_file.path)
 
     ctx.actions.run(
-        inputs = [data_file, schema_file],
+        inputs = [data_file, schema_file] + include_files,
         outputs = [generated_file],
         executable = flatc,
         arguments = [args],
@@ -125,6 +131,11 @@ serialize_buffer = rule(
             mandatory = True,
             doc = "The name of the generated binary data file (should end with .bin)",
         ),
+        "includes": attr.label_list(
+            allow_files = [".fbs"],
+            default = [],
+            doc = "Additional .fbs files required to resolve include directives in the schema.",
+        ),
         "_flatc": attr.label(
             default = "@flatbuffers//:flatc",
             executable = True,
@@ -140,6 +151,7 @@ serialize_buffer = rule(
             data = "demo_data.json",
             schema = "demo.fbs",
             output = "demo_data.bin",
+            includes = ["some_other.fbs"],
         )
     """,
 )
@@ -152,6 +164,10 @@ def _serialize_multiple_buffers_impl(ctx):
 
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
+
+    # Collect include directories from included .fbs files
+    include_files = ctx.files.includes
+    include_dirs = {files.dirname: True for files in include_files}
 
     # Parse the data files dict and process each data file
     output_files = []
@@ -172,12 +188,14 @@ def _serialize_multiple_buffers_impl(ctx):
         args = ctx.actions.args()
         args.add("--binary")
         args.add("--strict-json")
+        for inc_dir in include_dirs:
+            args.add("-I", inc_dir)
         args.add("-o", generated_file.dirname)
         args.add(schema_file.path)
         args.add(data_file.path)
 
         ctx.actions.run(
-            inputs = [data_file, schema_file],
+            inputs = [data_file, schema_file] + include_files,
             outputs = [generated_file],
             executable = flatc,
             arguments = [args],
@@ -205,6 +223,11 @@ serialize_multiple_buffers = rule(
             mandatory = True,
             doc = "A mapping of input JSON file paths to output binary buffer file paths (e.g., {':demo_data.json': 'demo_data.bin', ':subdir/demo_data2.json': 'subdir/demo_data2.bin'})",
         ),
+        "includes": attr.label_list(
+            allow_files = [".fbs"],
+            default = [],
+            doc = "Additional .fbs files required to resolve include directives in the schema.",
+        ),
         "_flatc": attr.label(
             default = "@flatbuffers//:flatc",
             executable = True,
@@ -222,9 +245,193 @@ serialize_multiple_buffers = rule(
                 "demo_data.json": "demo_data.bin",
                 "subdir/demo_data2.json": "subdir/demo_data2.bin",
             },
+            includes = ["some_other.fbs"],
         )
     """,
 )
+
+def _inject_buffer_version_impl(ctx):
+    """Implementation of the _inject_buffer_version rule.
+
+    Runs inject_buffer_version.py to inject major/minor version fields into a JSON file.
+    The output is a patched copy of the input JSON, suitable for passing to
+    serialize_buffer as the data source.
+    """
+    data_file = ctx.file.data
+    patched_json = ctx.actions.declare_file(ctx.attr.output)
+
+    patch_args = ctx.actions.args()
+    patch_args.add("--input", data_file.path)
+    patch_args.add("--output", patched_json.path)
+    patch_args.add("--major", str(ctx.attr.major_version))
+    patch_args.add("--minor", str(ctx.attr.minor_version))
+
+    ctx.actions.run(
+        inputs = [data_file],
+        outputs = [patched_json],
+        executable = ctx.executable._inject_buffer_version,
+        arguments = [patch_args],
+        mnemonic = "PatchBufferVersion",
+        progress_message = "Patching version into %s" % data_file.short_path,
+    )
+
+    return [DefaultInfo(files = depset([patched_json]))]
+
+_inject_buffer_version = rule(
+    implementation = _inject_buffer_version_impl,
+    attrs = {
+        "data": attr.label(
+            allow_single_file = [".json"],
+            mandatory = True,
+            doc = "The JSON data file to patch with version information.",
+        ),
+        "output": attr.string(
+            mandatory = True,
+            doc = "The name of the patched JSON output file.",
+        ),
+        "major_version": attr.int(
+            mandatory = True,
+            doc = "Major version number to inject. Must be in [0, 65535] (uint16_t).",
+        ),
+        "minor_version": attr.int(
+            mandatory = True,
+            doc = "Minor version number to inject. Must be in [0, 65535] (uint16_t).",
+        ),
+        "_inject_buffer_version": attr.label(
+            default = "//score/flatbuffers/bazel:inject_buffer_version",
+            executable = True,
+            cfg = "exec",
+            doc = "The inject_buffer_version helper script for JSON version injection.",
+        ),
+    },
+    doc = "Injects major/minor version fields into a JSON file for use with serialize_versioned_buffer.",
+)
+
+def serialize_versioned_buffer(
+        name,
+        data,
+        schema,
+        output,
+        buffer_major_version,
+        buffer_minor_version,
+        includes = [],
+        **kwargs):
+    """Injects version information into a JSON file and serializes it to a binary FlatBuffer.
+
+    This macro composes _inject_buffer_version and serialize_buffer: it first injects the
+    given major/minor version into the JSON data file, then passes the patched
+    JSON to serialize_buffer for compilation.
+
+    Args:
+        name: Target name.
+        data: The JSON data file label to version-patch and serialize.
+        schema: The .fbs FlatBuffer schema file label. The schema must include
+            buffer_version.fbs manually (e.g. `include "buffer_version.fbs";`).
+        output: The name of the generated binary output file (should end with .bin).
+        buffer_major_version: Major version to inject (uint16_t, must be > 0 to have effect).
+        buffer_minor_version: Minor version to inject (uint16_t).
+        includes: Additional .fbs files required to resolve include directives in the schema.
+            @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always added
+            automatically and must not be listed here.
+        **kwargs: Additional arguments forwarded to serialize_buffer (e.g. visibility, tags).
+
+    Example:
+        serialize_versioned_buffer(
+            name = "demo_data",
+            data = "demo_data.json",
+            schema = "demo.fbs",
+            output = "demo_data.bin",
+            includes = ["some_other.fbs"],
+            buffer_major_version = 2,
+            buffer_minor_version = 3,
+        )
+    """
+    patched_name = name + "_patched_json"
+    patched_output = name + "_patched.json"
+
+    _inject_buffer_version(
+        name = patched_name,
+        data = data,
+        output = patched_output,
+        major_version = buffer_major_version,
+        minor_version = buffer_minor_version,
+        **kwargs
+    )
+
+    serialize_buffer(
+        name = name,
+        data = ":" + patched_name,
+        schema = schema,
+        output = output,
+        includes = ["@score_baselibs//score/flatbuffers/common:buffer_version.fbs"] + includes,
+        **kwargs
+    )
+
+def serialize_multiple_versioned_buffers(
+        name,
+        data_dict,
+        schema,
+        buffer_major_version,
+        buffer_minor_version,
+        includes = [],
+        **kwargs):
+    """Injects version information into multiple JSON files and serializes them to binary FlatBuffers.
+
+    This macro composes _inject_buffer_version and serialize_multiple_buffers: for each entry in
+    data_dict it creates an _inject_buffer_version target that injects the given major/minor version,
+    then passes all patched JSON files to serialize_multiple_buffers.
+
+    Args:
+        name: Target name.
+        data_dict: A dict mapping input JSON file labels to output binary file paths.
+        schema: The .fbs FlatBuffer schema file label. The schema must include
+            buffer_version.fbs manually (e.g. `include "buffer_version.fbs";`).
+        buffer_major_version: Major version to inject into every buffer (uint16_t).
+        buffer_minor_version: Minor version to inject into every buffer (uint16_t).
+        includes: Additional .fbs files required to resolve include directives in the schema.
+            @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always added
+            automatically and must not be listed here.
+        **kwargs: Additional arguments forwarded to serialize_multiple_buffers.
+
+    Example:
+        serialize_multiple_versioned_buffers(
+            name = "demo_data",
+            schema = "demo.fbs",
+            data_dict = {
+                "demo_data.json": "demo_data.bin",
+                "subdir/demo_data2.json": "subdir/demo_data2.bin",
+            },
+            includes = ["some_other.fbs"],
+            buffer_major_version = 1,
+            buffer_minor_version = 0,
+        )
+    """
+    patched_data_dict = {}
+
+    for data_label, output_path in data_dict.items():
+        # Derive a stable target name from the output path
+        safe_key = output_path.replace("/", "_").replace(".", "_")
+        patched_name = name + "_patched_" + safe_key
+        patched_output = name + "_patched_" + safe_key + ".json"
+
+        _inject_buffer_version(
+            name = patched_name,
+            data = data_label,
+            output = patched_output,
+            major_version = buffer_major_version,
+            minor_version = buffer_minor_version,
+            **kwargs
+        )
+
+        patched_data_dict[":" + patched_name] = output_path
+
+    serialize_multiple_buffers(
+        name = name,
+        schema = schema,
+        data_dict = patched_data_dict,
+        includes = ["@score_baselibs//score/flatbuffers/common:buffer_version.fbs"] + includes,
+        **kwargs
+    )
 
 def _generate_json_schema_impl(ctx):
     """Implementation of the generate_json_schema rule."""
@@ -234,6 +441,10 @@ def _generate_json_schema_impl(ctx):
 
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
+
+    # Collect include directories from included .fbs files
+    include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
+    include_dirs = {f.dirname: True for f in include_files}
 
     # When generating JSON schema, flatc generates a file named after the schema file
     default_name = schema_file.basename.replace(".fbs", ".schema.json")
@@ -259,11 +470,13 @@ def _generate_json_schema_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--jsonschema")
+    for inc_dir in include_dirs:
+        args.add("-I", inc_dir)
     args.add("-o", generated_file.dirname)
     args.add(schema_file.path)
 
     ctx.actions.run(
-        inputs = [schema_file],
+        inputs = [schema_file] + include_files,
         outputs = [generated_file],
         executable = flatc,
         arguments = [args],
@@ -288,20 +501,35 @@ generate_json_schema = rule(
             mandatory = True,
             doc = "The name of the generated JSON schema file (should end with .schema.json)",
         ),
+        "includes": attr.label_list(
+            allow_files = [".fbs"],
+            default = [],
+            doc = "Additional .fbs files required to resolve include directives in the schema.",
+        ),
         "_flatc": attr.label(
             default = "@flatbuffers//:flatc",
             executable = True,
             cfg = "exec",
             doc = "The flatc compiler (absolute path from flatbuffers repository)",
         ),
+        "_buffer_version_fbs": attr.label(
+            default = "@score_baselibs//score/flatbuffers/common:buffer_version.fbs",
+            allow_single_file = [".fbs"],
+            doc = "Automatically included buffer_version.fbs for common buffer version support.",
+        ),
     },
     doc = """Generates a JSON schema from a FlatBuffer schema.
+
+    @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
+    automatically. The schema must include buffer_version.fbs manually if it uses
+    the common buffer version (e.g. `include "buffer_version.fbs";`).
 
     Example:
         generate_json_schema(
             name = "demo_schema",
             schema = "demo.fbs",
             output = "demo.schema.json",
+            includes = ["some_other.fbs"],
         )
     """,
 )
