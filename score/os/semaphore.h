@@ -83,17 +83,19 @@ class Semaphore : public ObjectSeam<Semaphore>
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Semaphore::OpenFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Semaphore::OpenFlag> : public std::true_type
 {
 };
 
 template <>
-struct enable_bitmask_operators<score::os::Semaphore::ModeFlag> : public std::true_type
+struct enable_bitmask_operators<::score::os::Semaphore::ModeFlag> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_SEMAPHORE_H

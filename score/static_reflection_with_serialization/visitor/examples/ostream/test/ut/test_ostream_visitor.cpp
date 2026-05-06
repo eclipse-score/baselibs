@@ -44,7 +44,7 @@ TEST(ostream_visitor, basic)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test the basic types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
 
     EXPECT_EQ(test_to_string(char('A')), "A");
     EXPECT_EQ(test_to_string(5), "5");
@@ -84,7 +84,7 @@ TEST(ostream_visitor, compound)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test the compound types.");
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
 
     using namespace std;
 

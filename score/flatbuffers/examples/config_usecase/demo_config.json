@@ -1,0 +1,11 @@
+{
+  "component_name": "demo_component",
+  "component_id": 42,
+  "thread_pool_size": 4,
+  "max_memory_mb": 64,
+  "advanced_settings": {
+    "mode": "PERIODIC",
+    "allowed_priorities": [1, 2],
+    "feature_flags": [{"name": "enable_logging", "enabled": true}]
+  }
+}

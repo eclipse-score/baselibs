@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_H
-#define AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_H
+#ifndef SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_H
+#define SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_H
 
 #include "types.h"
 
@@ -39,4 +39,4 @@ static_assert(std::is_trivial<SharedMemoryLocation>::value == true, "SharedMemor
 }  // namespace analysis
 }  // namespace score
 
-#endif  // AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_LOCATION_H
+#endif

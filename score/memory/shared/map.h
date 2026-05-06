@@ -18,6 +18,9 @@
 #if defined(__linux__)
 #include <boost/container/scoped_allocator.hpp>
 #include <boost/interprocess/containers/map.hpp>
+// We need to include boost/tuple/tuple.hpp to circumvent a boost.container bug
+// See: https://github.com/boostorg/container/issues/335
+#include <boost/tuple/tuple.hpp>
 #endif  // __linux__
 
 #include <map>

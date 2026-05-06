@@ -69,9 +69,9 @@ struct consistency<type_map_entry<K, V>...>
     static constexpr T sum(const std::array<T, N>& v)
     {
         T result{};
-        for (size_t i{}; i < N; ++i)
+        for (const auto& i : v)
         {
-            result += v[i];
+            result += i;
         }
         return result;
     }

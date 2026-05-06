@@ -33,7 +33,7 @@ using ::testing::IsTrue;
 using ::testing::Ne;
 using ::testing::StrEq;
 
-/// Set of specialised template functions which allows creating a std::string, std::string_view, score::cpp::string_view or
+/// Set of specialised template functions which allows creating a std::string, std::string_view, or
 /// score::StringLiteral in a generic way, solely based on the template type. We use specialized template functions
 /// instead of overloading, since the signatures only differ in the return type.
 template <typename T>
@@ -56,12 +56,6 @@ std::string_view CreateUnderlyingString(const std::string_view string_view)
 }
 
 template <>
-score::cpp::string_view CreateUnderlyingString(const std::string_view string_view)
-{
-    return {string_view.data(), string_view.size()};
-}
-
-template <>
 score::StringLiteral CreateUnderlyingString(const std::string_view string_view)
 {
     return string_view.data();
@@ -75,14 +69,13 @@ class StringComparisonAdaptorFixture : public ::testing::Test
 
 // Gtest will run all tests in the StringComparisonAdaptorFixture once for every type, t, in MyTypes, such that
 // TypeParam == t for each run.
-using MyTypes = ::testing::Types<std::string, score::cpp::string_view, std::string_view, score::StringLiteral>;
+using MyTypes = ::testing::Types<std::string, std::string_view, score::StringLiteral>;
 TYPED_TEST_SUITE(StringComparisonAdaptorFixture, MyTypes, );
 
 TEST(StringComparisonAdaptorHelpersFixture, CreateUnderlyingStringReturnCorrectValues)
 {
     EXPECT_THAT(CreateUnderlyingString<std::string>("test_string"), "test_string");
     EXPECT_THAT(CreateUnderlyingString<std::string_view>("test_string").data(), StrEq("test_string"));
-    EXPECT_THAT(CreateUnderlyingString<score::cpp::string_view>("test_string").data(), StrEq("test_string"));
     EXPECT_THAT(CreateUnderlyingString<score::StringLiteral>("test_string"), StrEq("test_string"));
 }
 
@@ -181,7 +174,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
     std::string str{"a"};
     StringComparisonAdaptor adaptor{str};
 
-    score::cpp::string_view str_view{str};
+    std::string_view str_view{str};
     EXPECT_THAT(adaptor, Eq(str_view));
 }
 
@@ -196,7 +189,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringViewAndString)
 {
     std::string str{"a"};
-    score::cpp::string_view str_view{str};
+    std::string_view str_view{str};
     StringComparisonAdaptor adaptor{str_view};
 
     EXPECT_THAT(adaptor, Eq(str));
@@ -205,7 +198,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringViewAndCString)
 {
     std::string str{"a"};
-    score::cpp::string_view str_view{str};
+    std::string_view str_view{str};
     StringComparisonAdaptor adaptor{str_view};
 
     EXPECT_THAT(adaptor, Eq("a"));
@@ -224,7 +217,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenCSt
     StringComparisonAdaptor adaptor{"a"};
 
     std::string str{"a"};
-    score::cpp::string_view str_view{str};
+    std::string_view str_view{str};
     EXPECT_THAT(adaptor, Eq(str_view));
 }
 
@@ -234,7 +227,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringA
     StringComparisonAdaptor adaptor1{str1};
 
     std::string str2{"a"};
-    score::cpp::string_view str_view{str2};
+    std::string_view str_view{str2};
     StringComparisonAdaptor adaptor2{str_view};
     EXPECT_THAT(std::hash<StringComparisonAdaptor>{}(adaptor1), Eq(std::hash<StringComparisonAdaptor>{}(adaptor2)));
 }
@@ -251,7 +244,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringA
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringViewAndString)
 {
     std::string str1{"a"};
-    score::cpp::string_view str_view1{str1};
+    std::string_view str_view1{str1};
     StringComparisonAdaptor adaptor1{str_view1};
 
     std::string str2{"a"};
@@ -262,7 +255,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringV
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringViewAndCString)
 {
     std::string str1{"a"};
-    score::cpp::string_view str_view1{str1};
+    std::string_view str_view1{str1};
     StringComparisonAdaptor adaptor1{str_view1};
 
     StringComparisonAdaptor adaptor2{"a"};
@@ -283,7 +276,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualCString
     StringComparisonAdaptor adaptor1{"a"};
 
     std::string string{"a"};
-    score::cpp::string_view string_view{string};
+    std::string_view string_view{string};
     StringComparisonAdaptor string_view_adaptor{string_view};
     EXPECT_THAT(std::hash<StringComparisonAdaptor>{}(adaptor1),
                 Eq(std::hash<StringComparisonAdaptor>{}(string_view_adaptor)));

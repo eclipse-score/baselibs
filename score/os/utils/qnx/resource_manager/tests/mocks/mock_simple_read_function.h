@@ -33,8 +33,8 @@ class MockSimpleReadFunction final : public SimpleReadFunction
     MockSimpleReadFunction(const score::os::MockSimpleReadFunction& function) : SimpleReadFunction(function) {}
     MockSimpleReadFunction(ResMgr& mgr, IoFunc& iofunc) : SimpleReadFunction(mgr, iofunc) {}
     MOCK_METHOD((score::Result<size_t>), read, (const off_t offset, size_t nbytes, uint64_t& result), (override));
-    MOCK_METHOD((score::ResultBlank), preRead, (off_t offset, size_t size), (override));
-    MOCK_METHOD((score::ResultBlank), postRead, (), (override));
+    MOCK_METHOD((score::Result<void>), preRead, (off_t offset, size_t size), (override));
+    MOCK_METHOD((score::Result<void>), postRead, (), (override));
 };
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */

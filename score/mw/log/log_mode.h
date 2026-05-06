@@ -29,12 +29,13 @@ namespace mw
 ////
 enum class LogMode : uint8_t
 {
-    kRemote = 0x01,   ///< Sent remotely
-    kFile = 0x02,     ///< Save to file
-    kConsole = 0x04,  ///< Forward to console,
-    kSystem = 0x08,   ///< QNX: forward to slog,
-    kCustom = 0x10,   ///< Custom log mode,
-    kInvalid = 0xff   ///< Invalid log mode,
+    kRemote = 0x01,    ///< Sent remotely
+    kFile = 0x02,      ///< Save to file
+    kConsole = 0x04,   ///< Forward to console,
+    kSystem = 0x08,    ///< QNX: forward to slog,
+    kCustom = 0x10,    ///< Custom log mode,
+    kDltTrace = 0x20,  ///< DLT via Generic Trace Library,
+    kInvalid = 0xff    ///< Invalid log mode,
 };
 
 }  // namespace mw

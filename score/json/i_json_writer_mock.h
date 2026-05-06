@@ -25,19 +25,19 @@ namespace json
 class IJsonWriterMock : public IJsonWriter
 {
   public:
-    MOCK_METHOD(score::ResultBlank,
+    MOCK_METHOD(score::Result<void>,
                 ToFile,
                 (const score::json::Object& json_data,
                  const std::string_view& file_path,
                  std::shared_ptr<score::filesystem::IFileFactory> file_factory),
                 (override));
-    MOCK_METHOD(score::ResultBlank,
+    MOCK_METHOD(score::Result<void>,
                 ToFile,
                 (const score::json::List& json_data,
                  const std::string_view& file_path,
                  std::shared_ptr<score::filesystem::IFileFactory> file_factory),
                 (override));
-    MOCK_METHOD(score::ResultBlank,
+    MOCK_METHOD(score::Result<void>,
                 ToFile,
                 (const score::json::Any& json_data,
                  const std::string_view& file_path,

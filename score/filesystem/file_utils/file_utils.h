@@ -30,28 +30,24 @@ class FileUtils final : public IFileUtils
   public:
     FileUtils(IStandardFilesystem& standard_filesystem, IFileFactory& file_factory) noexcept;
 
-    ResultBlank ChangeGroup(const Path& path, const std::string& group_name) const noexcept override;
-    ResultBlank ChangeGroup(const Path& path, const gid_t group_id) const noexcept override;
-    ResultBlank CheckFileSystem(const Path& partition) const noexcept override;
-    ResultBlank RepairFileSystem(const Path& partition) const noexcept override;
-    ResultBlank CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
-    ResultBlank CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
+    Result<void> ChangeGroup(const Path& path, const std::string& group_name) const noexcept override;
+    Result<void> ChangeGroup(const Path& path, const gid_t group_id) const noexcept override;
+    Result<void> CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
+    Result<void> CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
     Result<std::pair<std::unique_ptr<std::iostream>, Path>> OpenUniqueFile(const Path& path,
                                                                            std::ios_base::openmode mode) const override;
     Result<bool> FileContentsAreIdentical(const Path& path1, const Path& path2) const noexcept override;
-    ResultBlank FormatPartition(const Path& partition) const noexcept override;
-    bool IsQnxCompatible(const Path& partition) const override;
-    ResultBlank SyncDirectory(const Path& dirname) const noexcept override;
+    Result<void> SyncDirectory(const Path& dirname) const noexcept override;
     Result<bool> ValidateGroup(const Path& path, const std::string& group_name) const noexcept override;
 
   private:
     Result<bool> FilesExist(const Path& path1, const Path& path2) const noexcept;
-    ResultBlank CreatePath(const Path& final_path,
-                           const Path& cur_path,
-                           const score::os::Stat::Mode perms,
-                           const std::int64_t creation_delay_ns,
-                           const std::int64_t creation_retry_factor,
-                           std::uint32_t creation_retry_counter) const noexcept;
+    Result<void> CreatePath(const Path& final_path,
+                            const Path& cur_path,
+                            const score::os::Stat::Mode perms,
+                            const std::int64_t creation_delay_ns,
+                            const std::int64_t creation_retry_factor,
+                            std::uint32_t creation_retry_counter) const noexcept;
 
     mutable std::mutex groupname_mutex_;
 

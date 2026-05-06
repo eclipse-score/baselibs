@@ -120,11 +120,11 @@ auto score::json::VajsonParser::OnKey(std::string_view key) noexcept -> score::j
     return score::json::vajson::ParserState::kRunning;
 }
 
+template <typename T>
 // Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
 // not be called implicitly". Since result.has_value() is checked before calling *result,
 // std::bad_optional_access should never be thrown. This is false positive.
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-template <typename T>
 auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult
 {
     auto result = Store(std::forward<T>(value));
@@ -138,8 +138,12 @@ auto score::json::VajsonParser::StartContainer(T&& value) noexcept -> score::jso
     }
     else
     {
-        // Justification: Using std::move or std::forward on a raw pointer does not provide any benefit
+        // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide
+        // any benefit.
+        // Justification for autosar_cpp14_a15_5_3: result will never be empty, thus *result will never
+        // throw std::bad_optional_access.
         // coverity[autosar_cpp14_a18_9_2_violation]
+        // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
         hierarchy_.push(*result);
     }
     return score::json::vajson::ParserState::kRunning;

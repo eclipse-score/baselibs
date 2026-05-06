@@ -32,7 +32,7 @@ score::safe_math::details::FloatingPointEnvironment::~FloatingPointEnvironment()
     Clear();
 }
 
-score::ResultBlank score::safe_math::details::FloatingPointEnvironment::Test() const noexcept
+score::Result<void> score::safe_math::details::FloatingPointEnvironment::Test() const noexcept
 {
     static_assert((math_errhandling & (MATH_ERREXCEPT | MATH_ERRNO)) != 0,
                   "At least one error reporting scheme must be supported");
@@ -79,7 +79,7 @@ score::ResultBlank score::safe_math::details::FloatingPointEnvironment::Test() c
         error_happened = (errno == ERANGE) || (errno == EDOM);
     }
 
-    return error_happened ? score::MakeUnexpected(ErrorCode::kUnknown) : score::ResultBlank{};
+    return error_happened ? score::MakeUnexpected(ErrorCode::kUnknown) : score::Result<void>{};
 }
 
 void score::safe_math::details::FloatingPointEnvironment::Clear() noexcept

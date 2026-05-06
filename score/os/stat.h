@@ -136,12 +136,14 @@ mode_t ModeToInteger(const Stat::Mode mode) noexcept;
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Stat::Mode> : public std::true_type
+struct enable_bitmask_operators<::score::os::Stat::Mode> : public std::true_type
 {
 };
-
 }  // namespace score
 
 #endif  // SCORE_LIB_OS_STAT_H

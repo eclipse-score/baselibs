@@ -83,10 +83,11 @@ TEST(thread_pool_queue_test, pop_GivenPopMayBlock_ExpectUnblockedWhenPush)
 
     thread_pool_queue<element> queue{};
 
-    score::cpp::jthread popper{[&queue, &v]() {
-        const element* const popped_value{queue.pop()};
-        EXPECT_TRUE((popped_value == nullptr) || (popped_value == &v));
-    }};
+    score::cpp::jthread popper{[&queue, &v]()
+                        {
+                            const element* const popped_value{queue.pop()};
+                            EXPECT_TRUE((popped_value == nullptr) || (popped_value == &v));
+                        }};
 
     queue.push(v);
 }
@@ -98,10 +99,11 @@ TEST(thread_pool_queue_test, pop_GivenPopMayBlock_ExpectUnblockedWhenTryToPush)
 
     thread_pool_queue<element> queue{};
 
-    score::cpp::jthread popper{[&queue, &v]() {
-        const element* const popped_value{queue.pop()};
-        EXPECT_TRUE((popped_value == nullptr) || (popped_value == &v));
-    }};
+    score::cpp::jthread popper{[&queue, &v]()
+                        {
+                            const element* const popped_value{queue.pop()};
+                            EXPECT_TRUE((popped_value == nullptr) || (popped_value == &v));
+                        }};
 
     while (!queue.try_to_push(v))
     {

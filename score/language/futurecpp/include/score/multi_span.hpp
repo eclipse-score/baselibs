@@ -1045,7 +1045,7 @@ protected:
     /// \param stride \ref offset representing the stride
     /// \param data raw data pointer
     ///
-    constexpr multi_span_base(const bounds_type& bnds, const offset_type& stride, pointer const data)
+    constexpr multi_span_base(const bounds_type& bnds, const offset_type& stride, const pointer data)
         : bnds_(bnds), srd_(stride), data_ptr_(data)
     {
     }
@@ -1062,7 +1062,14 @@ private:
 ///
 /// \brief Multi span (\ref multi_span_base)
 ///
-/// For a detailed explanation on the usage, please go to \ref score::cpp::multi_span.
+/// This implementation is based on the ISO C++ proposal Multidimensional bounds, offset and multi_span [1]
+/// by Mendakiewicz & Sutter, up to the last revision 7 of original proposal N3851 [2].
+///
+/// [1] http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4512.html
+/// [2] http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3851.pdf
+///
+/// Principles behind the proposal are the representation of a multidimensional array as a view over contiguous
+/// (or strided) data and the straightforward expression for multidimensional indexing into these arrays.
 ///
 /// \tparam T value type
 /// \tparam Rank rank of the \ref multi_span_base

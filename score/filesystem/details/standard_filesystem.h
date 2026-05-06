@@ -26,28 +26,28 @@ class StandardFilesystem final : public IStandardFilesystem
     Result<Path> Absolute(const Path& path) const noexcept override;
     Result<Path> Canonical(const Path& path) const noexcept override;
     Result<bool> Exists(const Path& path) const noexcept override;
-    ResultBlank CopyFile(const Path& from, const Path& to) const noexcept override;
-    ResultBlank CopyFile(const Path& from, const Path& to, const CopyOptions copy_option) const noexcept override;
-    ResultBlank CreateDirectory(const Path& path) const noexcept override;
-    ResultBlank CreateDirectories(const Path& path) const noexcept override;
+    Result<void> CopyFile(const Path& from, const Path& to) const noexcept override;
+    Result<void> CopyFile(const Path& from, const Path& to, const CopyOptions copy_option) const noexcept override;
+    Result<void> CreateDirectory(const Path& path) const noexcept override;
+    Result<void> CreateDirectories(const Path& path) const noexcept override;
     Result<FileTime> LastWriteTime(const Path&) const noexcept override;
-    ResultBlank Permissions(const Path& path, const Perms permissions) const noexcept override;
-    ResultBlank Permissions(const Path& path,
-                            const Perms permissions,
-                            const PermOptions options) const noexcept override;
+    Result<void> Permissions(const Path& path, const Perms permissions) const noexcept override;
+    Result<void> Permissions(const Path& path,
+                             const Perms permissions,
+                             const PermOptions options) const noexcept override;
     Result<Path> ReadSymlink(const Path& path) const noexcept override;
-    ResultBlank Remove(const Path& path) const noexcept override;
-    ResultBlank RemoveAll(const Path& path) const noexcept override;
+    Result<void> Remove(const Path& path) const noexcept override;
+    Result<void> RemoveAll(const Path& path) const noexcept override;
     Result<FileStatus> Status(const Path&) const noexcept override;
     Result<FileStatus> SymlinkStatus(const Path&) const noexcept override;
     Result<Path> TempDirectoryPath() const noexcept override;
     Result<Path> WeaklyCanonical(const Path& path) const noexcept override;
     Result<Path> CurrentPath() const noexcept override;
-    ResultBlank CurrentPath(const Path& path) const noexcept override;
-    ResultBlank CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept override;
-    ResultBlank CreateSymlink(const Path& target, const Path& linkpath) const noexcept override;
-    ResultBlank CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept override;
-    ResultBlank CopySymlink(const Path& from, const Path& dest) const noexcept override;
+    Result<void> CurrentPath(const Path& path) const noexcept override;
+    Result<void> CreateHardLink(const Path& oldpath, const Path& newpath) const noexcept override;
+    Result<void> CreateSymlink(const Path& target, const Path& linkpath) const noexcept override;
+    Result<void> CreateDirectorySymlink(const Path& target, const Path& linkpath) const noexcept override;
+    Result<void> CopySymlink(const Path& from, const Path& dest) const noexcept override;
     Result<uint64_t> HardLinkCount(const Path& path) const noexcept override;
     Result<bool> IsDirectory(const Path& path) const noexcept override;
     Result<bool> IsRegularFile(const Path& path) const noexcept override;
@@ -55,11 +55,11 @@ class StandardFilesystem final : public IStandardFilesystem
     Result<bool> IsEmpty(const Path& path) const noexcept override;
 
   private:
-    ResultBlank RemoveContentFromExistingDirectory(const Path& path) const noexcept;
-    ResultBlank CopyKnownFileType(const Path& from,
-                                  const Path& dest,
-                                  const CopyOptions copy_option,
-                                  const Result<FileStatus>& dest_status) const noexcept;
+    Result<void> RemoveContentFromExistingDirectory(const Path& path) const noexcept;
+    Result<void> CopyKnownFileType(const Path& from,
+                                   const Path& dest,
+                                   const CopyOptions copy_option,
+                                   const Result<FileStatus>& dest_status) const noexcept;
 };
 
 }  // namespace filesystem

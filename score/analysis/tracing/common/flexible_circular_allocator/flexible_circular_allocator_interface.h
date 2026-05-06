@@ -44,7 +44,7 @@ class IFlexibleCircularAllocator
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::Result<void*> Allocate(const std::size_t, const std::size_t alignment = alignment::kBlockSize) = 0;
 
-    virtual ResultBlank Deallocate(void* const, const std::size_t) = 0;
+    virtual Result<void> Deallocate(void* const, const std::size_t) = 0;
 
     virtual std::size_t GetAvailableMemory() noexcept = 0;
 

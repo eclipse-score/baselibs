@@ -60,12 +60,14 @@ class Inotify : public ObjectSeam<Inotify>
 };
 
 }  // namespace os
+}  // namespace score
 
+namespace score
+{
 template <>
-struct enable_bitmask_operators<score::os::Inotify::EventMask> : public std::true_type
+struct enable_bitmask_operators<::score::os::Inotify::EventMask> : public std::true_type
 {
 };
-
 }  // namespace score
 
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

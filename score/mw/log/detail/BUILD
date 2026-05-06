@@ -612,11 +612,13 @@ cc_unit_test_suites_for_host_and_qnx(
     test_suites_from_sub_packages = [
         "@score_baselibs//score/mw/log/detail/text_recorder:unit_tests",
         #"@score_baselibs//score/mw/log/detail/data_router:unit_tests",
+        #"@score_baselibs//score/mw/log/detail/dlt_trace:unit_tests",
         #"@score_baselibs//score/mw/log/detail/slog:unit_tests",
         #"@score_baselibs//score/mw/log/detail/wait_free_producer_queue:unit_tests",
         "@score_baselibs//score/mw/log/detail/wait_free_stack:unit_tests",
         #"@score_baselibs//score/mw/log/detail/common:unit_tests",
         #"@score_baselibs//score/mw/log/detail/file_recorder:unit_tests",
+        "@score_baselibs//score/mw/log/detail/utils/signal_handling:unit_tests",
     ],
     visibility = [
         "@score_baselibs//score/mw/log:__pkg__",

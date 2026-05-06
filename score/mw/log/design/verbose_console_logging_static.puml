@@ -1,0 +1,214 @@
+@startuml verbose_logging_static
+
+skinparam classBackgroundColor white
+skinparam classBorderColor black
+skinparam ArrowColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam packageStyle rectangle
+
+title This diagram only illustrates the use-case of verbose logging.
+
+' ============================================================
+' LEFT SIDE: NOT MOCKABLE PART
+' ============================================================
+
+package "Not Mockable Part" as NotMockablePart {
+
+  class "score::mw::LogLevel" as LogLevel <<enumeration>> {
+    kOff
+    kFatal
+    kError
+    kWarn
+    kInfo
+    kDebug
+    kVerbose
+  }
+
+  class "SlotHandle::RecorderIdentifier" as RecorderIdentifier {
+    + value: std::size_t
+  }
+
+  class "score::mw::log::SlotHandle" as SlotHandle {
+    - recorder_to_slot_: std::array<SlotIndex, kMaxRecorders>
+    - recorder_slot_available_: std::bitset<kMaxRecorders>
+    - selected_recorder_: RecorderIdentifier
+    --
+    + SlotHandle()
+    + SlotHandle(const SlotIndex)
+    + GetSlotOfSelectedRecorder(): SlotIndex
+    + GetSlot(const RecorderIdentifier): SlotIndex
+    + SetSlot(const SlotIndex, const RecorderIdentifier): void
+    + GetSelectedRecorder(): RecorderIdentifier
+    + SetSelectedRecorder(const RecorderIdentifier): void
+    + IsRecorderActive(const RecorderIdentifier): bool
+    + friend operator==(const SlotHandle& l_value, const SlotHandle& r_value): bool
+    + friend operator!=(const SlotHandle& l_value, const SlotHandle& r_value): bool
+    + kMaxRecorders: static constexpr std::size_t
+  }
+
+  class "score::mw::log::detail::Runtime" as Runtime {
+    - Runtime(Recorder* const recorder)
+    - {static} Instance(Recorder* const): Runtime&
+    - logger_container_instance_: LoggerContainer
+    - recorder_instance_: Recorder
+    - default_recorder_: std::unique_ptr<Recorder>
+    --
+    + {static} GetRecorder(): Recorder*
+    + {static} SetRecorder(Recorder*): void
+    + {static} GetLoggerContainer(): score::mw::log::LoggerContainer&
+  }
+
+  class "score::mw::LogStream" as LogStream {
+    - recorder_: Recorder&
+    - slot_handle_: score::cpp::optional<SlotHandle>
+    - context_id_: detail::LoggingIdentifier
+    - log_level_: LogLevel
+    - LogStream(Recorder&, const LogLevel, const std::string_view)
+    --
+    + LogStream(LogStream&&)
+    + Flush(): void
+  }
+
+  class "score::mw::log::detail::LogStreamFactory" as LogStreamFactory {
+    + {static} GetStream(LogLevel, ctxId: std::string_view = "DFLT"): LogStream
+  }
+
+  package "User-Facing API" as UserFacingAPI {
+    class "LoggingIdentifier" as LoggingIdentifier {
+    }
+
+    class "score::mw::Logger" as Logger {
+      - context_: LoggingIdentifier
+      --
+      + Logger(std::string_view ctxId)
+      + LogFatal(): LogStream
+      + LogError(): LogStream
+      + LogWarn(): LogStream
+      + LogInfo(): LogStream
+      + LogDebug(): LogStream
+      + LogVerbose(): LogStream
+      + WithLevel(const LogLevel): log::LogStream
+      + IsLogEnabled(const LogLevel): bool
+      + IsEnabled(const LogLevel): bool
+      + GetContext(): std::string_view
+    }
+
+    class "Free Functions" as FreeFunctions {
+      + score::mw::LogFatal(): LogStream
+      + score::mw::LogError(): LogStream
+      + score::mw::LogWarn(): LogStream
+      + score::mw::LogInfo(): LogStream
+      + score::mw::LogDebug(): LogStream
+      + score::mw::LogVerbose(): LogStream
+      + score::mw::LogFatal(std::string_view): LogStream
+      + score::mw::LogError(std::string_view): LogStream
+      + score::mw::LogWarn(std::string_view): LogStream
+      + score::mw::LogInfo(std::string_view): LogStream
+      + score::mw::LogDebug(std::string_view): LogStream
+      + score::mw::LogVerbose(std::string_view): LogStream
+      + score::mw::GetDefaultLogRecorder(): Recorder&
+      + score::mw::test::SetLogRecorder(score::mw::log::Recorder* const): void
+    }
+  }
+}
+
+' ============================================================
+' RIGHT SIDE: MOCKABLE PART
+' ============================================================
+
+package "Mockable Part" as MockablePart {
+  class "score::mw::log::LoggerContainer" as LoggerContainer {
+    - InsertNewLogger(const std::string_view): Logger&
+    - FindExistingLogger(const std::string_view): score::cpp::optional<std::reference_wrapper<Logger>>
+    - stack_: WaitFreeStack<Logger>
+    - default_logger_: Logger
+    --
+    + GetLogger(const std::string_view): Logger&
+    + GetCapacity(): size_t
+    + GetDefaultLogger(): Logger&
+  }
+
+  class "template <typename Element>\nscore::mw::log::detail::WaitFreeStack" as WaitFreeStack {
+    - elements_: std::vector<score::cpp::optional<Element>>
+    - elements_written_: std::vector<std::atomic_int>
+    - write_index_: AtomicIndex
+    - capacity_full_: AtomicBool
+    --
+    + WaitFreeStack(const size_t)
+    + TryPush(Element&&): score::cpp::optional<std::reference_wrapper<Element>>
+    + Find(const FindPredicate<Element>&): score::cpp::optional<std::reference_wrapper<Element>>
+  }
+
+  class "TextFormat" as TextFormat {
+  }
+
+  interface "score::mw::log::Recorder" as Recorder {
+    + Recorder()
+    + {abstract} StartRecord(context_id: std::string_view, LogLevel): score::cpp::optional<SlotHandle>
+    + {abstract} StopRecord(SlotHandle const&): void
+    + {abstract} Log(SlotHandle, std::uint8_t): void
+    + {abstract} Log(SlotHandle, std::int8_t): void
+  }
+
+  note as N_RecorderUsage #blue
+    A user is allowed to use the Recorder interface
+    for its abstraction. But its not recommended due
+    to its more complicated usage.
+  end note
+
+  class "TextRecorder" as TextRecorder {
+  }
+
+  class "EmptyRecorder" as EmptyRecorder {
+  }
+
+  note as N_EmptyRecorder #orange
+    EmptyRecorder acts as /dev/null.
+    All log data is silently discarded.
+    Used as fallback when TextRecorder
+    initialization fails.
+  end note
+
+  class "Console (stdout)" as Console {
+  }
+
+}
+
+' ============================================================
+' RELATIONS - NON-MOCKABLE PART
+' ============================================================
+
+LogStreamFactory <-down- Logger : uses
+LogStreamFactory <-down- FreeFunctions : uses
+LogStreamFactory -up-> LogStream : create
+SlotHandle *-up-> LogStream : owns
+LoggingIdentifier *-down-> Logger : owns
+
+' ============================================================
+' RELATIONS - CROSSING MOCKABLE BOUNDARY
+' ============================================================
+
+Runtime -down-> LogStreamFactory : get current\nrecorder
+Runtime -down-> FreeFunctions
+LogStream *-right-> Recorder : records data
+Runtime *-right-> Recorder : owns statically
+Runtime *-up-> LoggerContainer : owns
+LoggerContainer *-right-> WaitFreeStack : owns
+LoggerContainer *-down-> Logger : owns
+
+' ============================================================
+' RELATIONS - MOCKABLE PART
+' ============================================================
+
+TextRecorder .up.|> Recorder
+EmptyRecorder .up.|> Recorder
+
+TextRecorder *-down-> TextFormat : formats log output
+TextRecorder *-down-> Console : writes to stdout
+
+TextRecorder .right.> EmptyRecorder : fallback on failure
+
+N_EmptyRecorder .. EmptyRecorder
+
+@enduml

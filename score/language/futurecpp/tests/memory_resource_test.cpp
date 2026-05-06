@@ -426,7 +426,8 @@ TEST(PmrTest, ResourceApaptor_Construction)
     score::cpp::pmr::resource_adaptor<test_allocator<char>> ra{};
 
     bool was_hit = false;
-    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void* {
+    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void*
+    {
         was_hit = true;
         return nullptr;
     };
@@ -444,7 +445,8 @@ TEST(PmrTest, ResourceApaptor_CopyConstruction)
     score::cpp::pmr::resource_adaptor<test_allocator<char>> ra{ra_orig};
 
     bool was_hit = false;
-    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void* {
+    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void*
+    {
         was_hit = true;
         return nullptr;
     };
@@ -462,7 +464,8 @@ TEST(PmrTest, ResourceApaptor_MoveConstruction)
     score::cpp::pmr::resource_adaptor<test_allocator<char>> ra{std::move(ra_orig)};
 
     bool was_hit = false;
-    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void* {
+    mock_allocate = [&was_hit](std::size_t, std::size_t) -> void*
+    {
         was_hit = true;
         return nullptr;
     };
@@ -517,7 +520,8 @@ TEST(PmrTest, ResourceApaptor_AllocateDeallocate)
     constexpr std::size_t low_alignment = 8;
     static_assert(low_alignment < alignof(std::max_align_t));
     bool was_called = false;
-    mock_allocate = [&was_called](std::size_t size, std::size_t align) {
+    mock_allocate = [&was_called](std::size_t size, std::size_t align)
+    {
         EXPECT_EQ(size, 512 / sizeof(decltype(ra)::allocator_type::value_type));
         EXPECT_EQ(align, alignof(decltype(ra)::allocator_type::value_type));
         was_called = true;
@@ -537,7 +541,8 @@ TEST(PmrTest, ResourceApaptor_AllocateDeallocate)
     mock_allocate = nullptr;
     was_called = false;
 
-    mock_deallocate = [&was_called](void* ptr, std::size_t size, std::size_t align) {
+    mock_deallocate = [&was_called](void* ptr, std::size_t size, std::size_t align)
+    {
         std::uintptr_t iptr;
         std::memcpy(&iptr, &ptr, sizeof(ires));
         EXPECT_EQ(iptr, 42);
@@ -561,7 +566,8 @@ TEST(PmrTest, ResourceApaptor_AllocateZeroBytesDoesNotUnderflow)
 
     bool was_called = false;
     size_t allocated_bytes{};
-    mock_allocate = [&was_called, &allocated_bytes](std::size_t bytes, std::size_t) {
+    mock_allocate = [&was_called, &allocated_bytes](std::size_t bytes, std::size_t)
+    {
         was_called = true;
         allocated_bytes = bytes;
         void* ret;
@@ -592,7 +598,8 @@ TEST(PmrTest, ResourceApaptor_AllocateDeallocateExtendedAlignment)
 
     bool was_called = false;
     void* orig_ptr = nullptr;
-    mock_allocate = [&was_called, &orig_ptr](std::size_t size, std::size_t align) {
+    mock_allocate = [&was_called, &orig_ptr](std::size_t size, std::size_t align)
+    {
         EXPECT_EQ(size, 13);
         EXPECT_EQ(align, alignof(decltype(ra)::allocator_type::value_type));
         was_called = true;
@@ -609,7 +616,8 @@ TEST(PmrTest, ResourceApaptor_AllocateDeallocateExtendedAlignment)
     mock_allocate = nullptr;
     was_called = false;
 
-    mock_deallocate = [&was_called, orig_ptr](void* ptr, std::size_t size, std::size_t align) {
+    mock_deallocate = [&was_called, orig_ptr](void* ptr, std::size_t size, std::size_t align)
+    {
         EXPECT_EQ(ptr, orig_ptr);
         EXPECT_EQ(size, 13);
         EXPECT_EQ(align, alignof(decltype(ra)::allocator_type::value_type));
@@ -1552,9 +1560,8 @@ std::ptrdiff_t get_pool_index_spec(const std::size_t bytes, const std::size_t al
 {
     const auto it = std::find_if(std::begin(score::cpp::pmr::detail::unsynchronized_pool_resource_utils::block_sizes),
                                  std::end(score::cpp::pmr::detail::unsynchronized_pool_resource_utils::block_sizes),
-                                 [bytes, alignment](const std::size_t size) {
-                                     return (size >= bytes) && score::cpp::pmr::detail::is_aligned(size, alignment);
-                                 });
+                                 [bytes, alignment](const std::size_t size)
+                                 { return (size >= bytes) && score::cpp::pmr::detail::is_aligned(size, alignment); });
     return std::distance(std::begin(score::cpp::pmr::detail::unsynchronized_pool_resource_utils::block_sizes), it);
 }
 

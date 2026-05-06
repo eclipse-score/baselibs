@@ -170,4 +170,4 @@ constexpr T saturate_cast(U value) noexcept
 
 } // namespace score::cpp
 
-#endif
+#endif // SCORE_LANGUAGE_FUTURECPP_PRIVATE_NUMERIC_SATURATE_CAST_HPP

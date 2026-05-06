@@ -25,10 +25,10 @@ SigEventImpl::~SigEventImpl()
     raw_sigevent_ = sigevent{};
 }
 
-ResultBlank SigEventImpl::SetNotificationType(const SigEvent::NotificationType notification_type)
+Result<void> SigEventImpl::SetNotificationType(const SigEvent::NotificationType notification_type)
 {
     mw::log::LogDebug() << __func__ << "called";
-    ResultBlank result{};
+    Result<void> result{};
     switch (notification_type)
     {
         case SigEvent::NotificationType::kNone:
@@ -71,7 +71,7 @@ ResultBlank SigEventImpl::SetNotificationType(const SigEvent::NotificationType n
     return result;
 }
 
-ResultBlank SigEventImpl::SetSignalNumber(const std::int32_t signal_number)
+Result<void> SigEventImpl::SetSignalNumber(const std::int32_t signal_number)
 {
     mw::log::LogDebug() << __func__ << "called";
     if ((signal_number <= 0) || (signal_number >= NSIG))
@@ -83,7 +83,7 @@ ResultBlank SigEventImpl::SetSignalNumber(const std::int32_t signal_number)
     return {};
 }
 
-ResultBlank SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*> signal_event_value)
+Result<void> SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*> signal_event_value)
 {
     mw::log::LogDebug() << __func__ << "called";
     if (raw_sigevent_.sigev_notify == SIGEV_NONE)
@@ -112,7 +112,7 @@ ResultBlank SigEventImpl::SetSignalEventValue(const std::variant<int32_t, void*>
     return {};
 }
 
-ResultBlank SigEventImpl::SetThreadCallback(const SigValCallback callback)
+Result<void> SigEventImpl::SetThreadCallback(const SigValCallback callback)
 {
     mw::log::LogDebug() << __func__ << "called";
     // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
@@ -135,7 +135,7 @@ ResultBlank SigEventImpl::SetThreadCallback(const SigValCallback callback)
     return {};
 }
 
-ResultBlank SigEventImpl::SetThreadAttributes(pthread_attr_t& attr)
+Result<void> SigEventImpl::SetThreadAttributes(pthread_attr_t& attr)
 {
     mw::log::LogDebug() << __func__ << "called";
     // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be

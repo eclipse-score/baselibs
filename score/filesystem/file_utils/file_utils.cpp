@@ -70,7 +70,7 @@ FileUtils::FileUtils(IStandardFilesystem& standard_filesystem, IFileFactory& fil
 
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept
+Result<void> FileUtils::CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept
 {
     const Result<filesystem::FileStatus> status = standard_filesystem_.Status(path);
     if (status.has_value())
@@ -104,12 +104,12 @@ ResultBlank FileUtils::CreateDirectory(const Path& path, const score::os::Stat::
 // Implicit call in .value(). Call does not issue terminate because of
 // previous check in algorithm.
 // coverity[autosar_cpp14_a15_5_3_violation]
-ResultBlank FileUtils::CreatePath(const Path& final_path,
-                                  const Path& cur_path,
-                                  const score::os::Stat::Mode perms,
-                                  const std::int64_t creation_delay_ns,
-                                  const std::int64_t creation_retry_factor,
-                                  std::uint32_t creation_retry_counter) const noexcept
+Result<void> FileUtils::CreatePath(const Path& final_path,
+                                   const Path& cur_path,
+                                   const score::os::Stat::Mode perms,
+                                   const std::int64_t creation_delay_ns,
+                                   const std::int64_t creation_retry_factor,
+                                   std::uint32_t creation_retry_counter) const noexcept
 {
     timespec creation_retry_delay{0, creation_delay_ns};
     // internal loop just to handle (accumulating across the whole path) retry attempts
@@ -148,7 +148,7 @@ ResultBlank FileUtils::CreatePath(const Path& final_path,
 // Implicit call in .value(). Call does not issue terminate because of
 // previous check in algorithm.
 // coverity[autosar_cpp14_a15_5_3_violation]
-ResultBlank FileUtils::CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept
+Result<void> FileUtils::CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept
 {
     // For the purpose of Ticket-172058 fix, we need to save the existing APIs,
     // thus we keep these values as predefined constants. The maximum accumulated delay for path creation is 140ms
@@ -203,7 +203,7 @@ ResultBlank FileUtils::CreateDirectories(const Path& path, const score::os::Stat
 // not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
 // std::bad_optional_access should never be thrown. This is false positive.
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::ChangeGroup(const Path& path, const std::string& group_name) const noexcept
+Result<void> FileUtils::ChangeGroup(const Path& path, const std::string& group_name) const noexcept
 {
     std::lock_guard<std::mutex> guard{groupname_mutex_};
     // NOLINTNEXTLINE(score-banned-function): Banned because not thread safe, with mutex, caveat solved.
@@ -216,7 +216,7 @@ ResultBlank FileUtils::ChangeGroup(const Path& path, const std::string& group_na
     return ChangeGroup(path, gid);
 }
 
-ResultBlank FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const noexcept
+Result<void> FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const noexcept
 {
     const auto uid = os::Unistd::instance().getuid();
     const auto result = os::Unistd::instance().chown(path.CStr(), uid, group_id);
@@ -292,7 +292,7 @@ Result<std::pair<std::unique_ptr<std::iostream>, Path>> FileUtils::OpenUniqueFil
     return std::make_pair(std::move(file).value(), tmp_file_path);
 }
 
-ResultBlank FileUtils::SyncDirectory(const Path& dirname) const noexcept
+Result<void> FileUtils::SyncDirectory(const Path& dirname) const noexcept
 {
     // The reason for banning is, because it's error-prone to use. One should use abstractions e.g. provided by
     // the C++ standard library. Since this library exactly is such abstraction, we can use the OS function.
@@ -367,139 +367,6 @@ Result<bool> FileUtils::FileContentsAreIdentical(const Path& path1, const Path& 
 
     // compare
     return IsFileContentIdentical(**file1, **file2);
-}
-
-// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
-// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
-// std::bad_optional_access should never be thrown. This is false positive.
-// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::CheckFileSystem(const Path& partition) const noexcept
-{
-    const std::string cmd = std::string{"e2fsck -n "} + partition.Native();
-    const auto res = os::Stdlib::instance().system_call(cmd);
-    if (!res.has_value())
-    {
-        return MakeUnexpected(ErrorCode::kCorruptedFileSystem);
-    }
-    return {};
-}
-
-// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
-// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
-// std::bad_optional_access should never be thrown. This is false positive.
-// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::RepairFileSystem(const Path& partition) const noexcept
-{
-    const std::string cmd = std::string{"e2fsck -p "} + partition.Native();
-    const auto res = os::Stdlib::instance().system_call(cmd);
-    if (!res.has_value())
-    {
-        return MakeUnexpected(ErrorCode::kCorruptedFileSystem);
-    }
-    return {};
-}
-
-// Suppress "AUTOSAR C++14 A15-5-3" rule finding. This rule states: "The std::terminate() function shall
-// not be called implicitly". Since path_.has_value() is checked before calling path_.value(),
-// std::bad_optional_access should never be thrown. This is false positive.
-// coverity[autosar_cpp14_a15_5_3_violation : FALSE]
-ResultBlank FileUtils::FormatPartition(const Path& partition) const noexcept
-{
-    // Reference: broken_link_c/issue/4757296
-    const std::string mkfsCmd{"mkfs.ext2 -F -b 4096 -I 128 -O ^resize_inode,^large_file,^filetype,^dir_index "};
-    const std::string cmd = mkfsCmd + partition.Native();
-    const auto res = os::Stdlib::instance().system_call(cmd);
-    if (!res.has_value())
-    {
-        return MakeUnexpected(ErrorCode::kCouldNotFormatPartition);
-    }
-    return {};
-}
-
-namespace
-{
-constexpr std::string_view FILESYSTEM_FEATURES_OPTION = "Filesystem features:";
-// coverity[autosar_cpp14_a3_3_2_violation]: std::vector is required to use operator==
-const std::vector<std::string> QNX_COMPATIBLE_FEATURES{"ext_attr", "sparse_super"};
-
-std::vector<std::string> extractSortedFeatures(const std::string& featureLine)
-{
-    // LCOV_EXCL_BR_START caused by SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(featureLine.size() >= FILESYSTEM_FEATURES_OPTION.size());
-    // LCOV_EXCL_BR_STOP
-    // LCOV_EXCL_BR_START no obvious branches here, covered by FileUtilsTest_IsQnxCompatible.pass unit test
-    const std::string featuresWithoutHeader{featureLine, FILESYSTEM_FEATURES_OPTION.size()};
-    // LCOV_EXCL_BR_STOP
-    std::istringstream featureStream{featuresWithoutHeader};
-    std::vector<std::string> features{};
-    std::string feature{};
-    // LCOV_EXCL_BR_START true/false branches covered by FileUtilsTest_IsQnxCompatible.pass unit test
-    while (!(featureStream >> feature).fail())
-    // LCOV_EXCL_BR_STOP
-    {
-        features.push_back(feature);
-    }
-    std::sort(std::begin(features), std::end(features));
-    return features;
-}
-
-std::string getFsInfoCommand(const Path& partition, const Path& outputFile)
-{
-// necessary for platform-specific commands
-// can be fixed by adding a separate constexpr function
-// that will reduce readability
-// coverity[autosar_cpp14_a16_0_1_violation]
-#if defined(__QNX__)
-    // LCOV_EXCL_START covered by FileUtilsTest_IsQnxCompatible.pass unit test
-    const std::string FS_INFO_COMMAND = "dumpe2fs -h ";
-    // LCOV_EXCL_STOP
-// coverity[autosar_cpp14_a16_0_1_violation]
-#elif defined(__linux__)
-    const std::string FS_INFO_COMMAND = "tune2fs -l ";
-// coverity[autosar_cpp14_a16_0_1_violation]
-#else
-// coverity[autosar_cpp14_a16_0_1_violation]
-#error "Unsupported operating system"
-// coverity[autosar_cpp14_a16_0_1_violation]
-#endif
-    // LCOV_EXCL_BR_START no obvious branches here, covered by FileUtilsTest_IsQnxCompatible.pass unit test
-    return FS_INFO_COMMAND + partition.Native() + " > " + outputFile.Native();
-    // LCOV_EXCL_BR_STOP
-}
-}  // namespace
-
-bool FileUtils::IsQnxCompatible(const Path& partition) const
-{
-    auto tmpFile = OpenUniqueFile("/tmp/TmpFile-XXXXXX", std::ios::in);
-    if (!tmpFile.has_value())
-    {
-        return false;
-    }
-
-    const auto fsInfoCommand = getFsInfoCommand(partition, std::get<1>(tmpFile.value()));
-    const auto fsParamsRes = os::Stdlib::instance().system_call(fsInfoCommand);
-    if (!fsParamsRes.has_value())
-    {
-        return false;
-    }
-
-    auto fsInfoOutputStream = std::move(std::get<0>(tmpFile.value()));
-    if ((fsInfoOutputStream == nullptr) || (fsInfoOutputStream->fail()))
-    {
-        return false;
-    }
-    std::string fsInfoLine;
-    auto is_getLine_fail = (std::getline(*fsInfoOutputStream, fsInfoLine)).fail();
-    while (!is_getLine_fail)
-    {
-        if (fsInfoLine.rfind(FILESYSTEM_FEATURES_OPTION, 0u) == 0u)  // starts with
-        {
-            return extractSortedFeatures(fsInfoLine) == QNX_COMPATIBLE_FEATURES;
-        }
-        is_getLine_fail = (std::getline(*fsInfoOutputStream, fsInfoLine)).fail();
-    }
-
-    return false;
 }
 
 }  // namespace filesystem

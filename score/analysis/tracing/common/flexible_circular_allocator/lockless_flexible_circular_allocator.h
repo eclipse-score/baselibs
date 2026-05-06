@@ -35,7 +35,7 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
   public:
     LocklessFlexibleCircularAllocator(void* base_address, std::size_t size);
     score::Result<void*> Allocate(const std::size_t size, const std::size_t alignment_size) noexcept override;
-    ResultBlank Deallocate(void* const addr, const std::size_t) noexcept override;
+    Result<void> Deallocate(void* const addr, const std::size_t) noexcept override;
     std::size_t GetAvailableMemory() noexcept override;
     void GetTmdMemUsage(TmdStatistics& tmd_stats) noexcept override;
     void* GetBaseAddress() const noexcept override;
@@ -56,7 +56,7 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
 // coverity[autosar_cpp14_a16_0_1_violation]
 #endif
     std::uint32_t BufferQueueSize();
-    ResultBlank FreeBlock(BufferBlock& current_block);
+    Result<void> FreeBlock(BufferBlock& current_block);
     score::Result<std::uint32_t> AcquireListQueueEntry() noexcept;
     std::uint32_t GetListQueueNextHead(std::uint32_t current_head) const;
     score::Result<uint8_t*> AllocateWithWrapAround(std::uint32_t aligned_size, std::uint32_t list_entry_element_index);
@@ -64,9 +64,9 @@ class LocklessFlexibleCircularAllocator : public IFlexibleCircularAllocator
     bool ValidateListEntryIndex(const std::uint32_t& index) const;
     bool ResetBufferQueuTail();
     void ResetBufferTailAndClearGapAddress();
-    ResultBlank MarkListEntryAsFree(const BufferBlock* meta);
+    Result<void> MarkListEntryAsFree(const BufferBlock* meta);
     score::Result<bool> IsRequestedBlockAtBufferQueueTail(const BufferBlock* meta) const;
-    ResultBlank IterateBlocksToDeallocate();
+    Result<void> IterateBlocksToDeallocate();
     template <typename OffsetT>
     score::Result<uint8_t*> GetBufferPositionAt(OffsetT offset) const noexcept;
     score::Result<std::uint32_t> ValidateAndReserveMemory(std::size_t size, std::size_t alignment_size) noexcept;

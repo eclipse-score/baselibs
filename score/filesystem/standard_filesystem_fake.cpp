@@ -70,7 +70,7 @@ StandardFilesystemFake::StandardFilesystemFake()
     dirent_fake_mock_ = std::make_unique<os::MockGuard<DirentFake>>(*this);
 }
 
-ResultBlank StandardFilesystemFake::CreateRegularFile(const Path& path, const Perms permissions) const noexcept
+Result<void> StandardFilesystemFake::CreateRegularFile(const Path& path, const Perms permissions) const noexcept
 {
     const auto new_entry = CreateEntry(path, FileType::kRegular, permissions);
     if (!new_entry.has_value())
@@ -189,7 +189,7 @@ Result<std::shared_ptr<StandardFilesystemFake::Entry>> StandardFilesystemFake::D
     return entries_[name];
 }
 
-ResultBlank StandardFilesystemFake::Directory::Erase(const std::string& name) noexcept
+Result<void> StandardFilesystemFake::Directory::Erase(const std::string& name) noexcept
 {
     if (entries_.find(name) == entries_.end())
     {
@@ -214,8 +214,8 @@ std::list<std::string> StandardFilesystemFake::Directory::FileList() const noexc
     return list;
 }
 
-ResultBlank StandardFilesystemFake::Directory::AddHardLink(const std::string& name,
-                                                           const std::shared_ptr<Entry>& entry) noexcept
+Result<void> StandardFilesystemFake::Directory::AddHardLink(const std::string& name,
+                                                            const std::shared_ptr<Entry>& entry) noexcept
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(entry.get() != nullptr, "The entry for hard link should contain value.");
     if (entries_.find(name) != entries_.end())
@@ -294,7 +294,7 @@ Result<bool> StandardFilesystemFake::FakeExists(const Path& path) const noexcept
     return FindEntry(path).has_value();
 }
 
-ResultBlank StandardFilesystemFake::FakeCreateDirectory(const Path& path) const noexcept
+Result<void> StandardFilesystemFake::FakeCreateDirectory(const Path& path) const noexcept
 {
     const auto entry = FindEntry(path);
     if (entry.has_value())
@@ -317,7 +317,7 @@ ResultBlank StandardFilesystemFake::FakeCreateDirectory(const Path& path) const 
     return {};
 }
 
-ResultBlank StandardFilesystemFake::FakeCreateDirectories(const Path& path) const noexcept
+Result<void> StandardFilesystemFake::FakeCreateDirectories(const Path& path) const noexcept
 {
     const auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
@@ -353,7 +353,7 @@ Result<FileTime> StandardFilesystemFake::FakeLastWriteTime(const Path& path) con
     return entry.value()->GetLastWriteTime();
 }
 
-ResultBlank StandardFilesystemFake::CopyFileInternal(const Path& source, const Path& destination) const noexcept
+Result<void> StandardFilesystemFake::CopyFileInternal(const Path& source, const Path& destination) const noexcept
 {
     auto source_entry = FindEntry(source);
     const auto dest_exists_result = Exists(destination);
@@ -379,7 +379,7 @@ ResultBlank StandardFilesystemFake::CopyFileInternal(const Path& source, const P
     return {};
 }
 
-ResultBlank StandardFilesystemFake::FakeRemove(const Path& path) const noexcept
+Result<void> StandardFilesystemFake::FakeRemove(const Path& path) const noexcept
 {
     auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
@@ -409,7 +409,7 @@ ResultBlank StandardFilesystemFake::FakeRemove(const Path& path) const noexcept
     return MakeUnexpected(ErrorCode::kCouldNotRemoveFileOrDirectory);
 }
 
-ResultBlank StandardFilesystemFake::FakeRemoveAll(const Path& path) const noexcept
+Result<void> StandardFilesystemFake::FakeRemoveAll(const Path& path) const noexcept
 {
     auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
@@ -437,9 +437,9 @@ Result<FileStatus> StandardFilesystemFake::FakeStatus(const Path& path) const no
     return entry.value()->GetFileStatus();
 }
 
-ResultBlank StandardFilesystemFake::FakePermissions(const Path& path,
-                                                    const Perms perms,
-                                                    const PermOptions options) const noexcept
+Result<void> StandardFilesystemFake::FakePermissions(const Path& path,
+                                                     const Perms perms,
+                                                     const PermOptions options) const noexcept
 {
     auto entry = FindEntry(path);
     if (!entry.has_value())
@@ -491,7 +491,7 @@ Result<Path> StandardFilesystemFake::FakeCurrentPath() const noexcept
     return current_directory_;
 }
 
-ResultBlank StandardFilesystemFake::FakeSetCurrentPath(const Path& path) noexcept
+Result<void> StandardFilesystemFake::FakeSetCurrentPath(const Path& path) noexcept
 {
     const auto exists_result = Exists(path);
     if (exists_result.has_value() && exists_result.value())
@@ -528,7 +528,7 @@ score::Result<std::reference_wrapper<std::stringstream>> StandardFilesystemFake:
     return *entry->GetFile();
 }
 
-ResultBlank StandardFilesystemFake::FakeCreateHardLink(const Path& oldpath, const Path& newpath) noexcept
+Result<void> StandardFilesystemFake::FakeCreateHardLink(const Path& oldpath, const Path& newpath) noexcept
 {
     const auto& oldpath_entry_result = FindEntry(oldpath);
     if (!oldpath_entry_result.has_value())
@@ -632,9 +632,9 @@ Result<bool> StandardFilesystemFake::FakeIsEmpty(const Path& path) const noexcep
     return false;
 }
 
-score::ResultBlank StandardFilesystemFake::FakeCopyFile(const Path& from,
-                                                      const Path& dest,
-                                                      const CopyOptions copy_option) const noexcept
+score::Result<void> StandardFilesystemFake::FakeCopyFile(const Path& from,
+                                                       const Path& dest,
+                                                       const CopyOptions copy_option) const noexcept
 {
     const auto from_status = Status(from);
     if ((!from_status.has_value()) || (from_status.value().Type() != FileType::kRegular))

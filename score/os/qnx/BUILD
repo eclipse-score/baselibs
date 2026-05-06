@@ -157,6 +157,25 @@ cc_library(
 )
 
 cc_library(
+    name = "pathmgr",
+    srcs = [
+        "pathmgr.cpp",
+        "pathmgr_impl.cpp",
+    ],
+    hdrs = [
+        "pathmgr.h",
+        "pathmgr_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:object_seam",
+    ],
+)
+
+cc_library(
     name = "procmgr",
     srcs = [
         "procmgr.cpp",

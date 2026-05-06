@@ -207,7 +207,7 @@ class InterruptibleSharedFuture<void> : protected score::concurrency::detail::Ba
      * - the token was set
      * - the promise was broken
      */
-    score::ResultBlank Get(const score::cpp::stop_token& stop_token) const noexcept;
+    score::Result<void> Get(const score::cpp::stop_token& stop_token) const noexcept;
 
     // coverity[autosar_cpp14_a13_3_1_violation] addressed at BaseInterruptibleFuture::Then definition
     using BaseInterruptibleFuture::Then;

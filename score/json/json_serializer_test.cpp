@@ -69,8 +69,8 @@ struct CustomSerializable
 namespace score::json::test
 {
 
-// This one cannot be inside the unnamed namespace as we do not use the STRUCT_VISITABLE facility. This, however, makes
-// clang-tidy complain since we now have unused declarations. Outside the unnamed namespace, the compiler cannot
+// This one cannot be inside the unnamed namespace as we do not use the STRUCT_VISITABLE facility. This, however,
+// makes clang-tidy complain since we now have unused declarations. Outside the unnamed namespace, the compiler cannot
 // determine whether they're used and this silences clang-tidy.
 struct VisitableTypeWithCustomSerialization
 {
@@ -112,12 +112,12 @@ STRUCT_VISITABLE(TypeToSerialize, integer_val, string_val, nested_val)
 
 TEST(JsonSerializerTest, TestSerialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Test the serialization of a visitable structure and all its contents");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given an instance of a serializable struct
     TypeToSerialize unit{42, "Blubb", NestedType{43, true, {44, 45}}};
@@ -166,12 +166,12 @@ TEST(JsonSerializerTest, TestSerialization)
 
 TEST(JsonSerializerTest, TestDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description", "Test the deserialization of a visitable structure and all its contents");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that matches the structure of a serializable struct
     auto source = R"(
@@ -200,14 +200,14 @@ TEST(JsonSerializerTest, TestDeserialization)
 
 TEST(JsonSerializerTest, TestFailingDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Check whether the deserialization of a JSON that does not match a visitable structure fails with "
                    "the correct error code");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that does not match the structure of a serializable struct
     auto source = R"(
@@ -239,13 +239,13 @@ STRUCT_VISITABLE(TypeWithCustomSerializable, custom_type)
 
 TEST(JsonSerializerTest, UserProvidedDeserialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Test that the deserialization of a struct works that defines a custom deserialization scheme");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that matches the structure of a serializable struct with a custom serializable type
     auto source = R"(
@@ -264,13 +264,13 @@ TEST(JsonSerializerTest, UserProvidedDeserialization)
 
 TEST(JsonSerializerTest, UserProvidedSerialization)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description",
                    "Test that the serialization of a struct works that defines a custom serialization scheme");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given an instance of a serializable struct with a custom serializable type
     TypeWithCustomSerializable source{{{0x01, 0x03, 0x05, 0x07, 0x11}}};
@@ -298,7 +298,7 @@ STRUCT_VISITABLE(TypeWithOptionalValue, mandatory_val, never_ever_val, optional_
 
 TEST(JsonSerializerTest, DeserializeOptionalFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -306,7 +306,7 @@ TEST(JsonSerializerTest, DeserializeOptionalFields)
         "has a value in the JSON, the deserialization should work in a transparent way");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that matches the structure of a serializable struct with an optional field
     auto source = R"(
@@ -328,7 +328,7 @@ TEST(JsonSerializerTest, DeserializeOptionalFields)
 
 TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -337,7 +337,7 @@ TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
         "nullopt");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "1");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that matches the structure of a serializable struct with an optional field and the optional field
     // isn't set in the JSON
@@ -358,7 +358,7 @@ TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
 
 TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty(
         "Description",
@@ -366,7 +366,7 @@ TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
         "data for it. In this case, deserialization should fail with the correct error code");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that matches the structure of a serializable struct with a mandatory field and the mandatory field
     // is not set in the JSON
@@ -386,7 +386,7 @@ TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
 
 TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty(
         "Description",
@@ -394,7 +394,7 @@ TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
         "set to nullopt, the respective JSON attribute shall not be set at all");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given an instance of a serializable struct with an optional field that is not set
     TypeWithOptionalValue source{42, std::nullopt, std::nullopt};
@@ -410,13 +410,13 @@ TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
 
 TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty("Description",
                    "Verify that deserializing a struct does not work if the JSON is not an object but a number");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that is not an object
     auto source = ToJsonAny(std::string(R"(42)"));
@@ -431,14 +431,14 @@ TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
 
 TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty(
         "Description",
         "Verify that deserializing an attribute of an integer type fails if the JSON instead contains a float number");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a float number inside a field that expects an integer
     auto source = R"({
@@ -461,13 +461,13 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
 
 TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty("Description",
                    "Verify that deserializing an attribute of a bool type fails if the JSON instead contains a string");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a float number inside a field that expects an integer
     auto source = R"({
@@ -490,14 +490,14 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
 
 TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty("Description",
                    "Verify that deserializing an attribute of an integer type fails if the JSON instead contains a "
                    "string");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON with a string inside a field that expects an integer
     auto source = R"({
@@ -520,14 +520,14 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
 
 TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector will fail if the JSON does not contain an array as the value "
                    "for a given key");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that is not a list
     auto source = R"("Not a list")"_json;
@@ -542,14 +542,14 @@ TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
 
 TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
 {
-    RecordProperty("TestType", "Verification of the control flow and data flow");
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
     RecordProperty("Description",
                    "Verify that deserializing a vector of numbers won't work in case the JSON list contains other "
                    "entries than integers");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON list that contains a string and a number
     auto source = R"(["Not a number", 42])"_json;
@@ -564,13 +564,13 @@ TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
 
 TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameType)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector of numbers works if the JSON list contains only integers");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON list that contains only numbers
     auto source = R"([42, 43, 44])"_json;
@@ -585,13 +585,13 @@ TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameTyp
 
 TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing a vector of Any works even if the JSON list contains mixed types");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON list that contains a string and a number
     auto source = R"(["Not a number", 42])"_json;
@@ -612,12 +612,12 @@ TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
 
 TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Verify that optional values are added as JSON object keys if they contain a value");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given an instance of a serializable struct with an optional field that is set
     TypeWithOptionalValue source{42, std::nullopt, 43};
@@ -636,13 +636,13 @@ TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
 
 TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that deserializing an optional value fails if the enclosed type does not match");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "Error guessing");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Given a JSON that contains a string where an optional integer is expected
     auto source = R"({"mandatory_val": 42, "optional_val": [43]})"_json;
@@ -657,12 +657,12 @@ TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch
 
 TEST(JsonSerializerTest, SerializeConstantObjects)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
     RecordProperty("Description", "Verify that constant objects can be serialized");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a constant object
     const TypeToSerialize source{42, "Blubb", NestedType{43, false, {44, 45}}};
@@ -701,14 +701,14 @@ TEST(JsonSerializerTest, SerializeConstantObjects)
 
 TEST(JsonSerializerTest, UseCustomSerializationOnVisitableStruct)
 {
-    RecordProperty("TestType", "Interface test");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "JsonSerializer");
     RecordProperty("Description",
                    "This test verifies that the custom serialization function of a struct is used, even if the struct "
                    "is visitable using STRUCT_VISITABLE.");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
-    RecordProperty("DerivationTechnique", "Analyzing architecture and design");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given an instance of a visitable struct with a custom serialization function
     VisitableTypeWithCustomSerialization unit{1, "234"};

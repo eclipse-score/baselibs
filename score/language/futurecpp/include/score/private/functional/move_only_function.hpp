@@ -122,7 +122,7 @@ private:
     ///
     /// \tparam Callable Type of the callable that shall be stored
     template <typename Callable>
-    class wrapper : public wrapper_base
+    class wrapper final : public wrapper_base
     {
         template <typename U>
         using is_forwarding_ref_overload_for_wrapper = std::is_same<wrapper, score::cpp::remove_cvref_t<U>>;
@@ -141,12 +141,12 @@ private:
 
         ~wrapper() override = default;
 
-        ReturnType invoke(ArgTypes... args) const override
+        ReturnType invoke(ArgTypes... args) const final
         {
             return score::cpp::detail::invoke(callback_, std::forward<ArgTypes>(args)...);
         }
 
-        wrapper_base* relocate(void* destination) override
+        wrapper_base* relocate(void* destination) final
         {
             return ::new (destination) wrapper<Callable>{std::move(this->callback_)};
         }

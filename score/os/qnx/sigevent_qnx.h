@@ -28,11 +28,11 @@ class SigEventQnx : public SigEvent
     SigEventQnx(SigEventQnx&&) = delete;
     SigEventQnx& operator=(SigEventQnx&&) = delete;
     // extend the SigEvent abstract class
-    ResultBlank SetNotificationType(const NotificationType notification_type) override = 0;
-    ResultBlank SetSignalNumber(const std::int32_t signal_number) override = 0;
-    ResultBlank SetSignalEventValue(const std::variant<int, void*> signal_event_value) override = 0;
-    ResultBlank SetThreadCallback(const SigValCallback callback) override = 0;
-    ResultBlank SetThreadAttributes(pthread_attr_t& attr) override = 0;
+    Result<void> SetNotificationType(const NotificationType notification_type) override = 0;
+    Result<void> SetSignalNumber(const std::int32_t signal_number) override = 0;
+    Result<void> SetSignalEventValue(const std::variant<int, void*> signal_event_value) override = 0;
+    Result<void> SetThreadCallback(const SigValCallback callback) override = 0;
+    Result<void> SetThreadAttributes(pthread_attr_t& attr) override = 0;
     const sigevent& GetSigevent() const override = 0;
     void ModifySigevent(const SigeventModifier& modifier) override = 0;
     void Reset() override = 0;

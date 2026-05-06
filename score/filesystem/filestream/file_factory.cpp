@@ -39,8 +39,9 @@ constexpr std::int32_t kSystemTicksDigitsLength = 8;
 constexpr std::uint32_t kSystemTicksDigitsCropMask = 100'000'000U;
 
 }  // namespace
-// coverity[autosar_cpp14_a15_5_3_violation]: Memory allocation failure extremely unlikely for small temp filename
-// generation
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Memory allocation failure extremely unlikely for small temp filename generation.
+// coverity[autosar_cpp14_a15_5_3_violation]: see above
 std::string ComposeTempFilename(std::string_view original_filename,
                                 std::size_t thread_id_hash,
                                 std::uint64_t timestamp) noexcept
@@ -150,9 +151,9 @@ inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
     return gid;
 }
 
-ResultBlank AdjustOwnership(const Path& temp_path,
-                            const details::IdentityMetadata& metadata,
-                            const AtomicUpdateOwnershipFlags ownership_flag)
+Result<void> AdjustOwnership(const Path& temp_path,
+                             const details::IdentityMetadata& metadata,
+                             const AtomicUpdateOwnershipFlags ownership_flag)
 {
     const uid_t uid = ExtractUid(metadata, ownership_flag);
     const gid_t gid = ExtractGid(metadata, ownership_flag);
@@ -196,6 +197,10 @@ Result<int> OpenFileHandle(const Path& path,
 Result<IdentityMetadata> GetIdentityMetadata(const Path& path)
 {
     os::StatBuffer buffer{};
+    // Intentionally resolve symlinks (stat, not lstat): if path is a symlink to a regular file, we retrieve the
+    // target's metadata. This allows AtomicUpdate to accept symlinks pointing to regular files while obtaining the
+    // correct permissions and ownership to apply to the replacement file. The symlink itself will be replaced by a
+    // regular file during the final rename — see AtomicUpdate for details.
     const auto result = os::Stat::instance().stat(path.CStr(), buffer, true);
     if (!result.has_value())
     {
@@ -269,6 +274,11 @@ Result<std::unique_ptr<FileStream>> FileFactory::AtomicUpdate(const Path& path,
     auto temp_path = path.ParentPath();
     temp_path /= rand_filename;
 
+    // Retrieve metadata of the target file. If path is a symlink, this follows the symlink and retrieves the
+    // metadata of the target. The subsequent rename() in AtomicFileBuf::Close() will then replace the symlink
+    // directory entry (not its target) with the new regular file. This is intentional: it prevents uncontrolled
+    // writes through symlinks to locations outside the expected filesystem, while preserving the target's
+    // permissions and ownership on the replacement file.
     const auto metadata = details::GetIdentityMetadata(path);
     const auto create_mode = ExtractMode(metadata);
 

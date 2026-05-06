@@ -25,7 +25,6 @@
 namespace score::memory
 {
 
-/// @brief Adapter to make a std::string within a container comparable with an score::cpp::string_view
 class StringComparisonAdaptor
 {
   public:
@@ -50,11 +49,6 @@ class StringComparisonAdaptor
     // NOLINTNEXTLINE(google-explicit-constructor): IMPLICIT CONVERSION JUSTIFICATION
     StringComparisonAdaptor(std::string&& str);
     StringComparisonAdaptor& operator=(std::string&& str);
-
-    /// @brief Constructors for string view
-    // NOLINTNEXTLINE(google-explicit-constructor): IMPLICIT CONVERSION JUSTIFICATION
-    StringComparisonAdaptor(const score::cpp::string_view& score_future_cpp_str_view);
-    StringComparisonAdaptor& operator=(const score::cpp::string_view& score_future_cpp_str_view);
 
     /// @brief Constructors for std::string view
     // NOLINTNEXTLINE(google-explicit-constructor): IMPLICIT CONVERSION JUSTIFICATION
@@ -110,7 +104,7 @@ class hash<score::memory::StringComparisonAdaptor>
     size_t operator()(const score::memory::StringComparisonAdaptor& k) const noexcept
     {
         const auto as_string_view = k.GetAsStringView();
-        return std::hash<score::cpp::string_view>{}(as_string_view);
+        return std::hash<std::string_view>{}(as_string_view);
     }
 };
 

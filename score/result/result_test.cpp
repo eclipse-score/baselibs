@@ -142,7 +142,7 @@ TEST_F(TypeTraitsTests, IsResultVIsTrueIfIsTemplatedResult)
 
 TEST_F(TypeTraitsTests, IsResultVIsTrueIfIsResultBlank)
 {
-    EXPECT_TRUE(IsResultV<ResultBlank>);
+    EXPECT_TRUE(IsResultV<Result<void>>);
 }
 
 TEST_F(TypeTraitsTests, IsResultVIsFalseIfIsNoResult)

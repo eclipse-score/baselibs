@@ -34,8 +34,8 @@ TEST_P(FlagToIntegerTests, ConvertFlag)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FlagToIntegerTests Convert Flag");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto flag = std::get<0>(GetParam());
     auto expected = std::get<1>(GetParam());
@@ -76,8 +76,8 @@ TEST(FlagToIntegerTests, MultipleFlagsConversion)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FlagToIntegerTests Multiple Flags Conversion");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto combinedFlags = Glob::Flag::kAppend | Glob::Flag::kNoCheck | Glob::Flag::kPeriod;
     Glob::FlagType expected = GLOB_APPEND | GLOB_NOCHECK | GLOB_PERIOD;

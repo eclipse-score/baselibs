@@ -30,8 +30,8 @@ TEST(TimeImplTest, ClockSettimeFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_MONOTONIC, &new_time);
@@ -54,8 +54,8 @@ TEST(TimeImplTest, ClockGetTimeSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Time Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec get_time{};
 
@@ -73,8 +73,8 @@ TEST(TimeImplTest, GettimeFailsWithInvalidClockId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Gettime Fails With Invalid Clock Id");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec get_time{};
     constexpr auto kInvalidClockId{-1};
@@ -88,8 +88,8 @@ TEST(TimeImplTest, ClockSettimeSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_REALTIME, &new_time);
@@ -114,8 +114,8 @@ TEST(TimeImplTest, ClockGetResSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec get_res{};
 
@@ -133,8 +133,8 @@ TEST(TimeImplTest, ClockGetResFailsWithInvalidClockId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Fails With Invalid Clock Id");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct timespec get_res{};
     constexpr auto kInvalidClockId{-1};
@@ -148,8 +148,8 @@ TEST(TimeImplTest, LocaltimeRSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Localtime RSuccess");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto current_time = std::chrono::system_clock::now();
     const std::time_t current_time_t{std::chrono::system_clock::to_time_t(current_time)};
@@ -180,8 +180,8 @@ TEST(TimeImplTest, TimerCreateAndDeleteSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies TimeImplTest Timer Create And Delete Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -201,8 +201,8 @@ TEST(TimeImplTest, TimerCreateFailsWithInvalidClockId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Create Fails With Invalid Clock Id");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -218,8 +218,8 @@ TEST(TimeImplTest, TimerDeleteFailsWithInvalidTimerId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Delete Fails With Invalid Timer Id");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     // create an invalid timer_t by using a value that's unlikely to be valid
     timer_t invalid_timerid{};
@@ -234,8 +234,8 @@ TEST(TimeImplTest, TimerSettimeSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -263,8 +263,8 @@ TEST(TimeImplTest, TimerSettimeFailsWithInvalidTimerId)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Fails With Invalid Timer Id");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t invalid_timerid{};
     std::memset(&invalid_timerid, 0xFF, sizeof(timer_t));
@@ -284,8 +284,8 @@ TEST(TimeImplTest, ClockGetCpuClockIdSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t clock_id{};
     const pid_t current_pid = 1;
@@ -305,8 +305,8 @@ TEST(TimeImplTest, ClockGetCpuClockIdFailsWithInvalidPid)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Failure with Invalid Pid");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t clock_id{};
     const pid_t current_pid = -1;
@@ -320,8 +320,8 @@ TEST(TimeImplTest, TimerCreateWithNullEvent)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With Null Event success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
 
@@ -336,8 +336,8 @@ TEST(TimeImplTest, RelativeZeroTimerCreationSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the relative timer creation with zero it_value disarms the timer");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -372,8 +372,8 @@ TEST(TimeImplTest, PeriodicTimerCreationSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the periodic timer creation is successful");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -420,8 +420,8 @@ TEST(TimeImplTest, TimerExpiresAtCorrectTime)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Timer Expires At Correct Time");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -467,8 +467,8 @@ TEST(TimeImplTest, TimerWithSigEvThreadNotificationIsSuccessful)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With SIGEV_THREAD notification is successful");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -498,8 +498,8 @@ TEST(TimeImplTest, TimerWithSigEvSignalNotificationIsSuccessful)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With SIGEV_SIGNAL notification is successful");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -528,6 +528,122 @@ TEST(TimeImplTest, TimerWithSigEvSignalNotificationIsSuccessful)
     const int signal_received = sigtimedwait(&mask, nullptr, &timeout);
     // Verify that we received the expected signal
     EXPECT_EQ(signal_received, SIGUSR1);
+
+    Time::instance().timer_delete(timerid);
+}
+
+TEST(TimeImplTest, ClockGetCpuClockIdWithCurrentProcess)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Success With Current Process Pid Zero");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+
+    // POSIX specifies that pid 0 refers to the calling process.
+    // This is more portable than using pid 1 (init), which may not be accessible
+    // on all systems or under all privilege levels.
+    clockid_t clock_id{};
+    const pid_t calling_process{0};
+
+    const auto result = Time::instance().clock_getcpuclockid(calling_process, clock_id);
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), 0);
+
+    // Verify the returned clock_id is usable
+    struct timespec ts{};
+    const auto gettime_result = Time::instance().clock_gettime(clock_id, &ts);
+    EXPECT_TRUE(gettime_result.has_value());
+}
+
+TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verifies Timer Settime Success With Absolute Time Flag");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+
+    timer_t timerid{};
+    sigevent event{};
+    event.sigev_notify = SIGEV_NONE;
+
+    const auto create_result = Time::instance().timer_create(CLOCK_REALTIME, &event, &timerid);
+    ASSERT_TRUE(create_result.has_value());
+
+    // Get current absolute time and compute an expiration 200ms in the future
+    struct timespec now{};
+    Time::instance().clock_gettime(CLOCK_REALTIME, &now);
+
+    itimerspec new_value{};
+    new_value.it_value.tv_sec = now.tv_sec;
+    new_value.it_value.tv_nsec = now.tv_nsec + 200000000L;  // +200ms
+    if (new_value.it_value.tv_nsec >= 1000000000L)
+    {
+        new_value.it_value.tv_nsec -= 1000000000L;
+        new_value.it_value.tv_sec += 1;
+    }
+    new_value.it_interval.tv_sec = 0;
+    new_value.it_interval.tv_nsec = 0;
+
+    // TIMER_ABSTIME: treat it_value as an absolute CLOCK_REALTIME timestamp
+    const auto settime_result = Time::instance().timer_settime(timerid, TIMER_ABSTIME, &new_value, nullptr);
+    EXPECT_TRUE(settime_result.has_value());
+    EXPECT_EQ(settime_result.value(), 0);
+
+    // Verify the timer is armed with a remaining time <= 200ms
+    itimerspec current_value{};
+    const std::int32_t gettime_result = ::timer_gettime(timerid, &current_value);
+    EXPECT_EQ(gettime_result, 0);
+    const auto remaining_ns = (current_value.it_value.tv_sec * 1000000000L) + current_value.it_value.tv_nsec;
+    EXPECT_GT(remaining_ns, 0);           // Timer is armed
+    EXPECT_LE(remaining_ns, 200000000L);  // Remaining time <= 200ms
+
+    Time::instance().timer_delete(timerid);
+}
+
+TEST(TimeImplTest, TimerSettimeOldValueReflectsPreviousArming)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verifies Timer Settime Old Value Reflects Previous Arming");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+
+    timer_t timerid{};
+    sigevent event{};
+    event.sigev_notify = SIGEV_NONE;
+
+    const auto create_result = Time::instance().timer_create(CLOCK_REALTIME, &event, &timerid);
+    ASSERT_TRUE(create_result.has_value());
+
+    // Arm the timer with a long expiration so it is still live when we re-arm
+    itimerspec first_value{};
+    first_value.it_value.tv_sec = 10;  // 10 seconds — well beyond the test duration
+    first_value.it_value.tv_nsec = 0;
+    first_value.it_interval.tv_sec = 0;
+    first_value.it_interval.tv_nsec = 0;
+
+    const auto first_settime = Time::instance().timer_settime(timerid, 0, &first_value, nullptr);
+    ASSERT_TRUE(first_settime.has_value());
+
+    // Re-arm immediately; ovalue must reflect the remaining time of the first arming
+    itimerspec second_value{};
+    second_value.it_value.tv_sec = 1;
+    second_value.it_value.tv_nsec = 0;
+    second_value.it_interval.tv_sec = 0;
+    second_value.it_interval.tv_nsec = 0;
+
+    itimerspec old_value{};
+    const auto second_settime = Time::instance().timer_settime(timerid, 0, &second_value, &old_value);
+    EXPECT_TRUE(second_settime.has_value());
+    EXPECT_EQ(second_settime.value(), 0);
+
+    // ovalue must report that the previous timer had ~10s remaining (at least 8s to allow for scheduling jitter)
+    const std::int64_t remaining_ns =
+        (static_cast<std::int64_t>(old_value.it_value.tv_sec) * 1000000000L) + old_value.it_value.tv_nsec;
+    EXPECT_GT(remaining_ns, 8000000000LL);   // > 8 seconds remaining
+    EXPECT_LE(remaining_ns, 10100000000LL);  // <= 10.1s (kernel may round up to its timer resolution)
 
     Time::instance().timer_delete(timerid);
 }

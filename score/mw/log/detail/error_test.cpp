@@ -49,6 +49,7 @@ INSTANTIATE_TEST_SUITE_P(ErrorCodes,
                                            Error::kReceiverInitializationError,
                                            Error::kUnlinkSharedMemoryError,
                                            Error::kFailedToSendMessageToDatarouter,
+                                           Error::kFailedToCreateMessagePassingClient,
                                            Error::kFailedToSetLoggerThreadName,
                                            Error::kSetSharedMemoryPermissionsError,
                                            Error::kShutdownDuringInitialization,
@@ -59,8 +60,8 @@ TEST_P(LogDetailErrorFixture, EachErrorShallReturnNonEmptyMessage)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of raising the error codes with a specific error message.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto error_code = ReturnError(GetParam());
     EXPECT_GT(error_code.Message().size(), 0);
@@ -70,8 +71,8 @@ TEST(LgDetailErrorUnknown, TestUnknownError)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of raising the error codes with a specific error message.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto error_code_out_of_range =
         LogDetailErrorFixture::ReturnError(static_cast<Error>(std::numeric_limits<score::result::ErrorCode>::max()));

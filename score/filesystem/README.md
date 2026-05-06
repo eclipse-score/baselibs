@@ -133,7 +133,7 @@ public:
 
 TEST_F(FooTest, SomeTest)
 {
-    EXPECT_CALL(*filesystem_mock_, CreateDirectory).WillOnce(Return(ResultBlank{}));
+    EXPECT_CALL(*filesystem_mock_, CreateDirectory).WillOnce(Return(Result<void>{}));
 
     unit_.Bar();
     ...

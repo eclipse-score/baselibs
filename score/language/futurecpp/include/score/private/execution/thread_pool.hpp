@@ -97,10 +97,11 @@ public:
                          const name_hint& name = name_hint{""},
                          const score::cpp::pmr::polymorphic_allocator<>& allocator = {})
         : sync_point_{count.value()}
-        , worker_count_{[worker_count = count.value()]() {
-            SCORE_LANGUAGE_FUTURECPP_PRECONDITION(worker_count > 0);
-            return static_cast<std::uint32_t>(worker_count);
-        }()}
+        , worker_count_{[worker_count = count.value()]()
+                        {
+                            SCORE_LANGUAGE_FUTURECPP_PRECONDITION(worker_count > 0);
+                            return static_cast<std::uint32_t>(worker_count);
+                        }()}
         , push_index_{0U}
         , queues_{worker_count_, allocator}
         , threads_{allocator}
@@ -109,9 +110,11 @@ public:
 
         for (std::uint32_t i{0U}; i < worker_count_; ++i)
         {
-            // NOLINTNEXTLINE(performance-unnecessary-value-param)
-            static_cast<void>(threads_.emplace_back(
-                stack_size, name, [this, index = i](const score::cpp::stop_token token) { work(token, index); }));
+            static_cast<void>(threads_.emplace_back(stack_size,
+                                                    name,
+                                                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                                                    [this, index = i](const score::cpp::stop_token token)
+                                                    { work(token, index); }));
         }
 
         SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(worker_count_ == queues_.size());
