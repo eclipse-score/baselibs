@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -14,29 +14,23 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = "libfsnotify",
-    linkopts = [
-        "-lfsnotify",
+    name = "sha256digest",
+    srcs = [
+        "sha256digest.cpp",
     ],
-    target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//:__subpackages__"],
-)
-
-cc_library(
-    name = "libsecpolev",
-    linkopts = [
-        "-lsecpolev",
+    hdrs = [
+        "sha256digest.h",
     ],
-    target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//:__subpackages__"],
-)
-
-cc_library(
-    name = "openssl",
-    linkopts = [
-        "-lssl",
-        "-lcrypto",
+    features = [
+        "treat_warnings_as_errors",
+        "additional_warnings",
+        "strict_warnings",
     ],
-    target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//:__subpackages__"],
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    deps = [
+        "@score_baselibs//score/hash/code/core",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result",
+    ],
 )
