@@ -234,5 +234,9 @@
   {
     "version": "pr-177",
     "url": "https://eclipse-score.github.io/baselibs/pr-177/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-170-d32964ac7f239b5c821b6ee0c470a228479ff9c4",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-170-d32964ac7f239b5c821b6ee0c470a228479ff9c4/"
   }
 ]
