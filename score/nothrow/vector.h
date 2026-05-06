@@ -15,7 +15,7 @@
 
 #include "score/nothrow/container_error.h"
 #include "score/nothrow/memory_resource.h"
-#include "score/nothrow/pointer_box.h"
+#include "score/nothrow/pointer_slot.h"
 
 #include "score/result/result.h"
 
@@ -40,11 +40,11 @@ namespace score::nothrow
 ///   `ContainerErrorCode::kOutOfMemory` (`Create*`, `PushBack*`, `EmplaceBack*`,
 ///   `Insert*`, `Reserve*`, `Resize*`, `ShrinkToFit*`, `Clone*`).
 /// - Not copyable. Use Clone() for explicit deep copies.
-/// - Storage pointer type is injected via PointerPolicy::Ptr (default: score::nothrow::OffsetBox).
+/// - Storage pointer type is injected via PointerPolicy::Ptr (default: score::nothrow::OffsetSlot).
 ///
 /// @tparam T Element type.
 /// @tparam Allocator Allocator type, defaults to score::nothrow::PolymorphicAllocator<T>.
-template <typename T, typename Allocator = PolymorphicAllocator<T>, typename PointerPolicy = OffsetBoxPolicy>
+template <typename T, typename Allocator = PolymorphicAllocator<T>, typename PointerPolicy = OffsetSlotPolicy>
 class Vector
 {
   public:
@@ -893,7 +893,7 @@ class Vector
 
 template <typename T,
           typename Allocator = PolymorphicAllocator<T>,
-          typename PointerPolicy = OffsetBoxPolicy>
+          typename PointerPolicy = OffsetSlotPolicy>
 using VectorBase = Vector<T, Allocator, PointerPolicy>;
 
 }  // namespace score::nothrow

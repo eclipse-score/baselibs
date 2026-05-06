@@ -95,30 +95,30 @@ class ScopedOffsetPtrBoundsChecking
     bool previous_{};
 };
 
-using RawBoxPolicy = score::nothrow::RawBoxPolicy;
-using OffsetBoxPolicy = score::nothrow::OffsetBoxPolicy;
+using RawSlotPolicy = score::nothrow::RawSlotPolicy;
+using OffsetSlotPolicy = score::nothrow::OffsetSlotPolicy;
 
-using RawBoxInnerVector =
-    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, RawBoxPolicy>;
-using RawBoxNestedVector = score::nothrow::Vector<RawBoxInnerVector,
-                                                  score::nothrow::PolymorphicAllocator<RawBoxInnerVector>,
-                                                  RawBoxPolicy>;
-using OffsetBoxInnerVector =
-    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, OffsetBoxPolicy>;
-using OffsetBoxNestedVector = score::nothrow::Vector<OffsetBoxInnerVector,
-                                                     score::nothrow::PolymorphicAllocator<OffsetBoxInnerVector>,
-                                                     OffsetBoxPolicy>;
+using RawSlotInnerVector =
+    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, RawSlotPolicy>;
+using RawSlotNestedVector = score::nothrow::Vector<RawSlotInnerVector,
+                                                  score::nothrow::PolymorphicAllocator<RawSlotInnerVector>,
+                                                  RawSlotPolicy>;
+using OffsetSlotInnerVector =
+    score::nothrow::Vector<int, score::nothrow::PolymorphicAllocator<int>, OffsetSlotPolicy>;
+using OffsetSlotNestedVector = score::nothrow::Vector<OffsetSlotInnerVector,
+                                                     score::nothrow::PolymorphicAllocator<OffsetSlotInnerVector>,
+                                                     OffsetSlotPolicy>;
 
-using RawBoxMap = score::nothrow::Map<int,
+using RawSlotMap = score::nothrow::Map<int,
                                      int,
                                      std::less<int>,
                                      score::nothrow::PolymorphicAllocator<std::pair<const int, int>>,
-                                     RawBoxPolicy>;
-using OffsetBoxMap = score::nothrow::Map<int,
+                                     RawSlotPolicy>;
+using OffsetSlotMap = score::nothrow::Map<int,
                                          int,
                                          std::less<int>,
                                          score::nothrow::PolymorphicAllocator<std::pair<const int, int>>,
-                                         OffsetBoxPolicy>;
+                                         OffsetSlotPolicy>;
 
 #if defined(__linux__)
 template <typename T>
@@ -314,24 +314,24 @@ score::memory::shared::Vector<score::memory::shared::Vector<int>> MakeMemoryShar
     return data;
 }
 
-RawBoxNestedVector MakeRawBoxNestedVector()
+RawSlotNestedVector MakeRawSlotNestedVector()
 {
-    auto outer = RawBoxNestedVector::CreateWithCapacityOrAbort(kOuterSize);
+    auto outer = RawSlotNestedVector::CreateWithCapacityOrAbort(kOuterSize);
     for (std::size_t i = 0U; i < kOuterSize; ++i)
     {
-        auto inner = RawBoxInnerVector::CreateOrAbort(kInnerSize);
+        auto inner = RawSlotInnerVector::CreateOrAbort(kInnerSize);
         std::iota(inner.begin(), inner.end(), 0);
         outer.PushBackOrAbort(std::move(inner));
     }
     return outer;
 }
 
-OffsetBoxNestedVector MakeOffsetBoxNestedVector()
+OffsetSlotNestedVector MakeOffsetSlotNestedVector()
 {
-    auto outer = OffsetBoxNestedVector::CreateWithCapacityOrAbort(kOuterSize);
+    auto outer = OffsetSlotNestedVector::CreateWithCapacityOrAbort(kOuterSize);
     for (std::size_t i = 0U; i < kOuterSize; ++i)
     {
-        auto inner = OffsetBoxInnerVector::CreateOrAbort(kInnerSize);
+        auto inner = OffsetSlotInnerVector::CreateOrAbort(kInnerSize);
         std::iota(inner.begin(), inner.end(), 0);
         outer.PushBackOrAbort(std::move(inner));
     }
@@ -388,9 +388,9 @@ score::memory::shared::Map<int, int>* MakeMemorySharedMapInResourceFromEntries(
     return data;
 }
 
-RawBoxMap MakeRawBoxMap()
+RawSlotMap MakeRawSlotMap()
 {
-    auto data = RawBoxMap::CreateOrAbort();
+    auto data = RawSlotMap::CreateOrAbort();
     for (const auto& [key, value] : GetMapPattern().entries())
     {
         data.EmplaceOrAbort(key, value);
@@ -398,9 +398,9 @@ RawBoxMap MakeRawBoxMap()
     return data;
 }
 
-OffsetBoxMap MakeOffsetBoxMap()
+OffsetSlotMap MakeOffsetSlotMap()
 {
-    auto data = OffsetBoxMap::CreateOrAbort();
+    auto data = OffsetSlotMap::CreateOrAbort();
     for (const auto& [key, value] : GetMapPattern().entries())
     {
         data.EmplaceOrAbort(key, value);
@@ -446,9 +446,9 @@ std::map<int, int> MakeStdMapFromEntries(const std::vector<std::pair<int, int>>&
     return data;
 }
 
-RawBoxMap MakeRawBoxMapFromEntries(const std::vector<std::pair<int, int>>& entries)
+RawSlotMap MakeRawSlotMapFromEntries(const std::vector<std::pair<int, int>>& entries)
 {
-    auto data = RawBoxMap::CreateOrAbort();
+    auto data = RawSlotMap::CreateOrAbort();
     for (const auto& [key, value] : entries)
     {
         data.EmplaceOrAbort(key, value);
@@ -456,9 +456,9 @@ RawBoxMap MakeRawBoxMapFromEntries(const std::vector<std::pair<int, int>>& entri
     return data;
 }
 
-OffsetBoxMap MakeOffsetBoxMapFromEntries(const std::vector<std::pair<int, int>>& entries)
+OffsetSlotMap MakeOffsetSlotMapFromEntries(const std::vector<std::pair<int, int>>& entries)
 {
-    auto data = OffsetBoxMap::CreateOrAbort();
+    auto data = OffsetSlotMap::CreateOrAbort();
     for (const auto& [key, value] : entries)
     {
         data.EmplaceOrAbort(key, value);
@@ -486,9 +486,9 @@ void BM_StdVector_RandomAccess(benchmark::State& state)
 }
 
 /// score::nothrow::Vector with direct-pointer policy.
-void BM_RawBoxVector_RandomAccess(benchmark::State& state)
+void BM_RawSlotVector_RandomAccess(benchmark::State& state)
 {
-    auto data = MakeRawBoxNestedVector();
+    auto data = MakeRawSlotNestedVector();
     const auto& pattern = GetAccessPattern();
 
     for (auto _ : state)
@@ -503,9 +503,9 @@ void BM_RawBoxVector_RandomAccess(benchmark::State& state)
 }
 
 /// score::nothrow::Vector with relocatable offset-pointer policy.
-void BM_OffsetBoxVector_RandomAccess(benchmark::State& state)
+void BM_OffsetSlotVector_RandomAccess(benchmark::State& state)
 {
-    auto data = MakeOffsetBoxNestedVector();
+    auto data = MakeOffsetSlotNestedVector();
     const auto& pattern = GetAccessPattern();
 
     for (auto _ : state)
@@ -596,12 +596,12 @@ void BM_StdMap_RandomBuild(benchmark::State& state)
 }
 
 /// score::nothrow::Map random-order build with direct-pointer policy.
-void BM_RawBoxMap_RandomBuild(benchmark::State& state)
+void BM_RawSlotMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
     for (auto _ : state)
     {
-        auto data = RawBoxMap::CreateOrAbort();
+        auto data = RawSlotMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -611,12 +611,12 @@ void BM_RawBoxMap_RandomBuild(benchmark::State& state)
 }
 
 /// score::nothrow::Map random-order build with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_RandomBuild(benchmark::State& state)
+void BM_OffsetSlotMap_RandomBuild(benchmark::State& state)
 {
     const auto& entries = GetMapPattern().entries();
     for (auto _ : state)
     {
-        auto data = OffsetBoxMap::CreateOrAbort();
+        auto data = OffsetSlotMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -709,9 +709,9 @@ void BM_StdMap_RandomAccess(benchmark::State& state)
 }
 
 /// score::nothrow::Map randomized key lookup with direct-pointer policy.
-void BM_RawBoxMap_RandomAccess(benchmark::State& state)
+void BM_RawSlotMap_RandomAccess(benchmark::State& state)
 {
-    const auto data = MakeRawBoxMap();
+    const auto data = MakeRawSlotMap();
     const auto& lookup_keys = GetMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -726,9 +726,9 @@ void BM_RawBoxMap_RandomAccess(benchmark::State& state)
 }
 
 /// score::nothrow::Map randomized key lookup with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_RandomAccess(benchmark::State& state)
+void BM_OffsetSlotMap_RandomAccess(benchmark::State& state)
 {
-    const auto data = MakeOffsetBoxMap();
+    const auto data = MakeOffsetSlotMap();
     const auto& lookup_keys = GetMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -820,9 +820,9 @@ void BM_StdMap_Iterate(benchmark::State& state)
 }
 
 /// score::nothrow::Map begin->end iteration with direct-pointer policy.
-void BM_RawBoxMap_Iterate(benchmark::State& state)
+void BM_RawSlotMap_Iterate(benchmark::State& state)
 {
-    const auto data = MakeRawBoxMap();
+    const auto data = MakeRawSlotMap();
     for (auto _ : state)
     {
         std::int64_t sum = 0;
@@ -836,9 +836,9 @@ void BM_RawBoxMap_Iterate(benchmark::State& state)
 }
 
 /// score::nothrow::Map begin->end iteration with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Iterate(benchmark::State& state)
+void BM_OffsetSlotMap_Iterate(benchmark::State& state)
 {
-    const auto data = MakeOffsetBoxMap();
+    const auto data = MakeOffsetSlotMap();
     for (auto _ : state)
     {
         std::int64_t sum = 0;
@@ -927,12 +927,12 @@ void BM_StdMap_Internal_InsertRebalance(benchmark::State& state)
 }
 
 /// Focused insert/rebalance path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_InsertRebalance(benchmark::State& state)
+void BM_RawSlotMap_Internal_InsertRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().sorted_entries();
     for (auto _ : state)
     {
-        auto data = RawBoxMap::CreateOrAbort();
+        auto data = RawSlotMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -942,12 +942,12 @@ void BM_RawBoxMap_Internal_InsertRebalance(benchmark::State& state)
 }
 
 /// Focused insert/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_InsertRebalance(benchmark::State& state)
+void BM_OffsetSlotMap_Internal_InsertRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().sorted_entries();
     for (auto _ : state)
     {
-        auto data = OffsetBoxMap::CreateOrAbort();
+        auto data = OffsetSlotMap::CreateOrAbort();
         for (const auto& [key, value] : entries)
         {
             data.EmplaceOrAbort(key, value);
@@ -1040,9 +1040,9 @@ void BM_StdMap_Internal_Find(benchmark::State& state)
 }
 
 /// Focused find path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_Find(benchmark::State& state)
+void BM_RawSlotMap_Internal_Find(benchmark::State& state)
 {
-    const auto data = MakeRawBoxMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto data = MakeRawSlotMapFromEntries(GetFocusedMapPattern().random_entries());
     const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -1057,9 +1057,9 @@ void BM_RawBoxMap_Internal_Find(benchmark::State& state)
 }
 
 /// Focused find path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_Find(benchmark::State& state)
+void BM_OffsetSlotMap_Internal_Find(benchmark::State& state)
 {
-    const auto data = MakeOffsetBoxMapFromEntries(GetFocusedMapPattern().random_entries());
+    const auto data = MakeOffsetSlotMapFromEntries(GetFocusedMapPattern().random_entries());
     const auto& lookup_keys = GetFocusedMapPattern().lookup_keys();
     for (auto _ : state)
     {
@@ -1151,13 +1151,13 @@ void BM_StdMap_Internal_EraseRebalance(benchmark::State& state)
 }
 
 /// Focused erase/rebalance path for score::nothrow::Map with direct-pointer policy.
-void BM_RawBoxMap_Internal_EraseRebalance(benchmark::State& state)
+void BM_RawSlotMap_Internal_EraseRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().random_entries();
     const auto& erase_keys = GetFocusedMapPattern().erase_keys();
     for (auto _ : state)
     {
-        auto data = MakeRawBoxMapFromEntries(entries);
+        auto data = MakeRawSlotMapFromEntries(entries);
         std::size_t erased = 0U;
         for (const int key : erase_keys)
         {
@@ -1169,13 +1169,13 @@ void BM_RawBoxMap_Internal_EraseRebalance(benchmark::State& state)
 }
 
 /// Focused erase/rebalance path for score::nothrow::Map with relocatable offset-pointer policy.
-void BM_OffsetBoxMap_Internal_EraseRebalance(benchmark::State& state)
+void BM_OffsetSlotMap_Internal_EraseRebalance(benchmark::State& state)
 {
     const auto& entries = GetFocusedMapPattern().random_entries();
     const auto& erase_keys = GetFocusedMapPattern().erase_keys();
     for (auto _ : state)
     {
-        auto data = MakeOffsetBoxMapFromEntries(entries);
+        auto data = MakeOffsetSlotMapFromEntries(entries);
         std::size_t erased = 0U;
         for (const int key : erase_keys)
         {
@@ -1263,8 +1263,8 @@ void BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance(benchmark::State& 
 }
 // --- Benchmark registration (ordered output) ---
 BENCHMARK(BM_StdVector_RandomAccess);
-BENCHMARK(BM_RawBoxVector_RandomAccess);
-BENCHMARK(BM_OffsetBoxVector_RandomAccess);
+BENCHMARK(BM_RawSlotVector_RandomAccess);
+BENCHMARK(BM_OffsetSlotVector_RandomAccess);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessVector_RandomAccess);
 #endif  // __linux__
@@ -1272,8 +1272,8 @@ BENCHMARK(BM_MemorySharedVector_NoBoundsCheck_RandomAccess);
 BENCHMARK(BM_MemorySharedVector_BoundsChecked_RandomAccess);
 
 BENCHMARK(BM_StdMap_RandomBuild);
-BENCHMARK(BM_RawBoxMap_RandomBuild);
-BENCHMARK(BM_OffsetBoxMap_RandomBuild);
+BENCHMARK(BM_RawSlotMap_RandomBuild);
+BENCHMARK(BM_OffsetSlotMap_RandomBuild);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_RandomBuild);
 #endif  // __linux__
@@ -1281,8 +1281,8 @@ BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomBuild);
 BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomBuild);
 
 BENCHMARK(BM_StdMap_RandomAccess);
-BENCHMARK(BM_RawBoxMap_RandomAccess);
-BENCHMARK(BM_OffsetBoxMap_RandomAccess);
+BENCHMARK(BM_RawSlotMap_RandomAccess);
+BENCHMARK(BM_OffsetSlotMap_RandomAccess);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_RandomAccess);
 #endif  // __linux__
@@ -1290,8 +1290,8 @@ BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_RandomAccess);
 BENCHMARK(BM_MemorySharedMap_BoundsChecked_RandomAccess);
 
 BENCHMARK(BM_StdMap_Iterate);
-BENCHMARK(BM_RawBoxMap_Iterate);
-BENCHMARK(BM_OffsetBoxMap_Iterate);
+BENCHMARK(BM_RawSlotMap_Iterate);
+BENCHMARK(BM_OffsetSlotMap_Iterate);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Iterate);
 #endif  // __linux__
@@ -1299,8 +1299,8 @@ BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Iterate);
 BENCHMARK(BM_MemorySharedMap_BoundsChecked_Iterate);
 
 BENCHMARK(BM_StdMap_Internal_InsertRebalance);
-BENCHMARK(BM_RawBoxMap_Internal_InsertRebalance);
-BENCHMARK(BM_OffsetBoxMap_Internal_InsertRebalance);
+BENCHMARK(BM_RawSlotMap_Internal_InsertRebalance);
+BENCHMARK(BM_OffsetSlotMap_Internal_InsertRebalance);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_InsertRebalance);
 #endif  // __linux__
@@ -1308,8 +1308,8 @@ BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance);
 BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance);
 
 BENCHMARK(BM_StdMap_Internal_Find);
-BENCHMARK(BM_RawBoxMap_Internal_Find);
-BENCHMARK(BM_OffsetBoxMap_Internal_Find);
+BENCHMARK(BM_RawSlotMap_Internal_Find);
+BENCHMARK(BM_OffsetSlotMap_Internal_Find);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_Find);
 #endif  // __linux__
@@ -1317,8 +1317,8 @@ BENCHMARK(BM_MemorySharedMap_NoBoundsCheck_Internal_Find);
 BENCHMARK(BM_MemorySharedMap_BoundsChecked_Internal_Find);
 
 BENCHMARK(BM_StdMap_Internal_EraseRebalance);
-BENCHMARK(BM_RawBoxMap_Internal_EraseRebalance);
-BENCHMARK(BM_OffsetBoxMap_Internal_EraseRebalance);
+BENCHMARK(BM_RawSlotMap_Internal_EraseRebalance);
+BENCHMARK(BM_OffsetSlotMap_Internal_EraseRebalance);
 #if defined(__linux__)
 BENCHMARK(BM_BoostInterprocessMap_Internal_EraseRebalance);
 #endif  // __linux__

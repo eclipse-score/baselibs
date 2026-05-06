@@ -1,8 +1,8 @@
-# OffsetBox vs OffsetPtr Benchmark
+# OffsetSlot vs OffsetPtr Benchmark
 
 ## Overview
 
-Measures the operational overhead of `OffsetBox<T>` pointer semantics (offset arithmetic,
+Measures the operational overhead of `OffsetSlot<T>` pointer semantics (offset arithmetic,
 bounds checking) for:
 
 - nested `Vector<Vector<int>>` random access, compared to raw `T*` pointers in `std::vector`
@@ -10,7 +10,7 @@ bounds checking) for:
   random-order build, randomized key lookup and begin→end iteration
 
 The benchmark uses a 1000×1000 nested vector with 100,000 random `(i, j)` element accesses.
-The random access pattern prevents the CPU from caching resolved OffsetBox base addresses
+The random access pattern prevents the CPU from caching resolved OffsetSlot base addresses
 in registers, exercising the full offset-arithmetic path on every dereference.
 
 Map workload configuration:
@@ -27,7 +27,7 @@ Map workload configuration:
 ```bash
 bazel build -c opt \
   --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
-  //score/nothrow:pointer_box_benchmark
+  //score/nothrow:pointer_slot_benchmark
 ```
 
 > **Note:** The `--per_file_copt` flag relaxes strict compiler warnings for external
@@ -37,7 +37,7 @@ bazel build -c opt \
 **Run:**
 
 ```bash
-bazel-bin/score/nothrow/pointer_box_benchmark
+bazel-bin/score/nothrow/pointer_slot_benchmark
 ```
 
 Or build and run in one step:
@@ -45,7 +45,7 @@ Or build and run in one step:
 ```bash
 bazel run -c opt \
   --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
-  //score/nothrow:pointer_box_benchmark
+  //score/nothrow:pointer_slot_benchmark
 ```
 
 **Run only vector + map family comparisons (excluding `*_Internal_*`):**
@@ -53,8 +53,8 @@ bazel run -c opt \
 ```bash
 bazel run -c opt \
   --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
-  //score/nothrow:pointer_box_benchmark -- \
-  --benchmark_filter='^BM_(StdVector_RandomAccess|MemorySharedVector_(NoBoundsCheck|BoundsChecked)_RandomAccess|RawBoxVector_RandomAccess|OffsetBoxVector_RandomAccess|BoostInterprocessVector_RandomAccess|StdMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|MemorySharedMap_(NoBoundsCheck|BoundsChecked)_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|RawBoxMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|OffsetBoxMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|BoostInterprocessMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance)))$' \
+  //score/nothrow:pointer_slot_benchmark -- \
+  --benchmark_filter='^BM_(StdVector_RandomAccess|MemorySharedVector_(NoBoundsCheck|BoundsChecked)_RandomAccess|RawSlotVector_RandomAccess|OffsetSlotVector_RandomAccess|BoostInterprocessVector_RandomAccess|StdMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|MemorySharedMap_(NoBoundsCheck|BoundsChecked)_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|RawSlotMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|OffsetSlotMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance))|BoostInterprocessMap_(RandomBuild|RandomAccess|Iterate|Internal_(InsertRebalance|Find|EraseRebalance)))$' \
   --benchmark_min_time=0.05s
 ```
 
@@ -64,7 +64,7 @@ bazel run -c opt \
 bazel build -c opt \
   --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' \
   --per_file_copt='.*@-O3,-Wno-error=maybe-uninitialized' \
-  //score/nothrow:pointer_box_benchmark
+  //score/nothrow:pointer_slot_benchmark
 ```
 
 ## Benchmark Variants
@@ -72,8 +72,8 @@ bazel build -c opt \
 Naming convention used in this benchmark:
 
 - `Std*`: standard library baseline (`std::vector`, `std::map`)
-- `RawBox*`: `score::nothrow::*` with direct-pointer policy (`RawBoxPolicy`)
-- `OffsetBox*`: `score::nothrow::*` with relocatable offset-pointer policy
+- `RawSlot*`: `score::nothrow::*` with direct-pointer policy (`RawSlotPolicy`)
+- `OffsetSlot*`: `score::nothrow::*` with relocatable offset-pointer policy
 - `BoostInterprocess*` (linux): `boost::interprocess` containers using `offset_ptr` allocators over `managed_heap_memory`
 - `MemoryShared*`: `score::memory::shared::*` implementation family
 
@@ -88,44 +88,44 @@ pre-built.
 | Benchmark | What it measures |
 |---|---|
 | `BM_StdVector_RandomAccess` | Baseline: `std::vector<std::vector<int>>` with raw `T*` pointers |
-| `BM_RawBoxVector_RandomAccess` | `score::nothrow::Vector` with direct-pointer policy (`RawBoxPolicy`) |
-| `BM_OffsetBoxVector_RandomAccess` | `score::nothrow::Vector` with relocatable offset-pointer policy |
+| `BM_RawSlotVector_RandomAccess` | `score::nothrow::Vector` with direct-pointer policy (`RawSlotPolicy`) |
+| `BM_OffsetSlotVector_RandomAccess` | `score::nothrow::Vector` with relocatable offset-pointer policy |
 | `BM_BoostInterprocessVector_RandomAccess` | (linux) `boost::interprocess::vector<vector<int>>` with `offset_ptr` over heap-backed segment manager |
-| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | `score::memory::shared::Vector` OffsetBox offset-arithmetic overhead only (global bounds check disabled) |
-| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | `score::memory::shared::Vector` OffsetBox offset arithmetic + bounds validation |
+| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | `score::memory::shared::Vector` `OffsetPtr` offset-arithmetic overhead only (global bounds check disabled) |
+| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | `score::memory::shared::Vector` `OffsetPtr` offset arithmetic + bounds validation |
 | `BM_StdMap_RandomBuild` | Baseline: `std::map<int,int>` random-order insertion |
-| `BM_RawBoxMap_RandomBuild` | `score::nothrow::Map<int,int>` with direct-pointer policy |
-| `BM_OffsetBoxMap_RandomBuild` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy |
+| `BM_RawSlotMap_RandomBuild` | `score::nothrow::Map<int,int>` with direct-pointer policy |
+| `BM_OffsetSlotMap_RandomBuild` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy |
 | `BM_BoostInterprocessMap_RandomBuild` | (linux) `boost::interprocess::map<int,int>` random-order insertion |
 | `BM_MemorySharedMap_NoBoundsCheck_RandomBuild` | `score::memory::shared::Map<int,int>` random-order insertion (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_RandomBuild` | `score::memory::shared::Map<int,int>` random-order insertion (global bounds check enabled) |
 | `BM_StdMap_RandomAccess` | Baseline: `std::map<int,int>` randomized key lookup |
-| `BM_RawBoxMap_RandomAccess` | `score::nothrow::Map<int,int>` with direct-pointer policy randomized key lookup |
-| `BM_OffsetBoxMap_RandomAccess` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy randomized key lookup |
+| `BM_RawSlotMap_RandomAccess` | `score::nothrow::Map<int,int>` with direct-pointer policy randomized key lookup |
+| `BM_OffsetSlotMap_RandomAccess` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy randomized key lookup |
 | `BM_BoostInterprocessMap_RandomAccess` | (linux) `boost::interprocess::map<int,int>` randomized key lookup |
 | `BM_MemorySharedMap_NoBoundsCheck_RandomAccess` | `score::memory::shared::Map<int,int>` randomized key lookup (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_RandomAccess` | `score::memory::shared::Map<int,int>` randomized key lookup (global bounds check enabled) |
 | `BM_StdMap_Iterate` | Baseline: `std::map<int,int>` begin→end iteration |
-| `BM_RawBoxMap_Iterate` | `score::nothrow::Map<int,int>` with direct-pointer policy begin→end iteration |
-| `BM_OffsetBoxMap_Iterate` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy begin→end iteration |
+| `BM_RawSlotMap_Iterate` | `score::nothrow::Map<int,int>` with direct-pointer policy begin→end iteration |
+| `BM_OffsetSlotMap_Iterate` | `score::nothrow::Map<int,int>` with relocatable offset-pointer policy begin→end iteration |
 | `BM_BoostInterprocessMap_Iterate` | (linux) `boost::interprocess::map<int,int>` begin→end iteration |
 | `BM_MemorySharedMap_NoBoundsCheck_Iterate` | `score::memory::shared::Map<int,int>` begin→end iteration (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_Iterate` | `score::memory::shared::Map<int,int>` begin→end iteration (global bounds check enabled) |
 | `BM_StdMap_Internal_InsertRebalance` | Focused std::map insert/rebalance path using ascending insert order |
-| `BM_RawBoxMap_Internal_InsertRebalance` | Focused score::nothrow::Map insert/rebalance path using ascending insert order |
-| `BM_OffsetBoxMap_Internal_InsertRebalance` | Focused score::nothrow::Map (OffsetBox policy) insert/rebalance path |
+| `BM_RawSlotMap_Internal_InsertRebalance` | Focused score::nothrow::Map insert/rebalance path using ascending insert order |
+| `BM_OffsetSlotMap_Internal_InsertRebalance` | Focused score::nothrow::Map (OffsetSlot policy) insert/rebalance path |
 | `BM_BoostInterprocessMap_Internal_InsertRebalance` | (linux) focused boost::interprocess::map insert/rebalance path |
 | `BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance` | Focused score::memory::shared::Map insert/rebalance path (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance` | Focused score::memory::shared::Map insert/rebalance path (global bounds check enabled) |
 | `BM_StdMap_Internal_Find` | Focused std::map find hot path over randomized successful lookups |
-| `BM_RawBoxMap_Internal_Find` | Focused score::nothrow::Map find hot path over randomized successful lookups |
-| `BM_OffsetBoxMap_Internal_Find` | Focused score::nothrow::Map (OffsetBox policy) find hot path |
+| `BM_RawSlotMap_Internal_Find` | Focused score::nothrow::Map find hot path over randomized successful lookups |
+| `BM_OffsetSlotMap_Internal_Find` | Focused score::nothrow::Map (OffsetSlot policy) find hot path |
 | `BM_BoostInterprocessMap_Internal_Find` | (linux) focused boost::interprocess::map find hot path |
 | `BM_MemorySharedMap_NoBoundsCheck_Internal_Find` | Focused score::memory::shared::Map find path (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_Internal_Find` | Focused score::memory::shared::Map find path (global bounds check enabled) |
 | `BM_StdMap_Internal_EraseRebalance` | Focused std::map erase/rebalance path using randomized erase order |
-| `BM_RawBoxMap_Internal_EraseRebalance` | Focused score::nothrow::Map erase/rebalance path using randomized erase order |
-| `BM_OffsetBoxMap_Internal_EraseRebalance` | Focused score::nothrow::Map (OffsetBox policy) erase/rebalance path |
+| `BM_RawSlotMap_Internal_EraseRebalance` | Focused score::nothrow::Map erase/rebalance path using randomized erase order |
+| `BM_OffsetSlotMap_Internal_EraseRebalance` | Focused score::nothrow::Map (OffsetSlot policy) erase/rebalance path |
 | `BM_BoostInterprocessMap_Internal_EraseRebalance` | (linux) focused boost::interprocess::map erase/rebalance path |
 | `BM_MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance` | Focused score::memory::shared::Map erase/rebalance path (global bounds check disabled) |
 | `BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance` | Focused score::memory::shared::Map erase/rebalance path (global bounds check enabled) |
@@ -137,7 +137,7 @@ Measured on host `marlin` with benchmark context:
 - 16 logical CPUs @ ~5135 MHz
 - L3 cache: 16 MiB
 - `cpu_scaling_enabled: true`
-- build: `bazel run -c opt --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' //score/nothrow:pointer_box_benchmark`
+- build: `bazel run -c opt --per_file_copt='external/.*@-Wno-undef,-Wno-suggest-attribute=format,-Wno-error' //score/nothrow:pointer_slot_benchmark`
 - runtime flags: `--benchmark_min_time=0.3s --benchmark_repetitions=3 --benchmark_report_aggregates_only=true`
 
 Element type: `int` (4 bytes) in `Vector<Vector<int>>` with 1000×1000 elements and 100,000 random accesses.
@@ -146,130 +146,130 @@ Element type: `int` (4 bytes) in `Vector<Vector<int>>` with 1000×1000 elements 
 
 | Benchmark | Mean CPU (ns) |
 |---|---:|
-| `BM_StdVector_RandomAccess` | 131,711 |
-| `BM_RawBoxVector_RandomAccess` | 132,329 |
-| `BM_OffsetBoxVector_RandomAccess` | 150,584 |
-| `BM_BoostInterprocessVector_RandomAccess` | 203,596 |
-| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | 5,513,105 |
-| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | 23,635,204 |
-| `BM_StdMap_RandomBuild` | 838,515 |
-| `BM_RawBoxMap_RandomBuild` | 895,846 |
-| `BM_OffsetBoxMap_RandomBuild` | 1,200,038 |
-| `BM_BoostInterprocessMap_RandomBuild` | 9,334,875 |
-| `BM_MemorySharedMap_NoBoundsCheck_RandomBuild` | 18,847,630 |
-| `BM_MemorySharedMap_BoundsChecked_RandomBuild` | 80,401,934 |
-| `BM_StdMap_RandomAccess` | 3,446,061 |
-| `BM_RawBoxMap_RandomAccess` | 3,368,458 |
-| `BM_OffsetBoxMap_RandomAccess` | 7,293,329 |
-| `BM_BoostInterprocessMap_RandomAccess` | 10,963,653 |
-| `BM_MemorySharedMap_NoBoundsCheck_RandomAccess` | 101,729,710 |
-| `BM_MemorySharedMap_BoundsChecked_RandomAccess` | 467,278,508 |
-| `BM_StdMap_Iterate` | 48,081 |
-| `BM_RawBoxMap_Iterate` | 47,621 |
-| `BM_OffsetBoxMap_Iterate` | 75,444 |
-| `BM_BoostInterprocessMap_Iterate` | 119,128 |
-| `BM_MemorySharedMap_NoBoundsCheck_Iterate` | 1,955,376 |
-| `BM_MemorySharedMap_BoundsChecked_Iterate` | 8,576,551 |
-| `BM_StdMap_Internal_InsertRebalance` | 180,522 |
-| `BM_RawBoxMap_Internal_InsertRebalance` | 124,064 |
-| `BM_OffsetBoxMap_Internal_InsertRebalance` | 138,851 |
-| `BM_BoostInterprocessMap_Internal_InsertRebalance` | 5,829,919 |
-| `BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance` | 15,055,574 |
-| `BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance` | 67,239,602 |
-| `BM_StdMap_Internal_Find` | 2,952,186 |
-| `BM_RawBoxMap_Internal_Find` | 2,783,739 |
-| `BM_OffsetBoxMap_Internal_Find` | 5,395,071 |
-| `BM_BoostInterprocessMap_Internal_Find` | 9,154,297 |
-| `BM_MemorySharedMap_NoBoundsCheck_Internal_Find` | 92,126,468 |
-| `BM_MemorySharedMap_BoundsChecked_Internal_Find` | 428,074,707 |
-| `BM_StdMap_Internal_EraseRebalance` | 505,060 |
-| `BM_RawBoxMap_Internal_EraseRebalance` | 582,973 |
-| `BM_OffsetBoxMap_Internal_EraseRebalance` | 747,941 |
-| `BM_BoostInterprocessMap_Internal_EraseRebalance` | 6,831,710 |
-| `BM_MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance` | 15,482,016 |
-| `BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance` | 66,203,230 |
+| `BM_StdVector_RandomAccess` | 111,631 |
+| `BM_RawSlotVector_RandomAccess` | 112,542 |
+| `BM_OffsetSlotVector_RandomAccess` | 125,386 |
+| `BM_BoostInterprocessVector_RandomAccess` | 175,150 |
+| `BM_MemorySharedVector_NoBoundsCheck_RandomAccess` | 4,132,046 |
+| `BM_MemorySharedVector_BoundsChecked_RandomAccess` | 19,381,986 |
+| `BM_StdMap_RandomBuild` | 903,817 |
+| `BM_RawSlotMap_RandomBuild` | 922,110 |
+| `BM_OffsetSlotMap_RandomBuild` | 1,160,195 |
+| `BM_BoostInterprocessMap_RandomBuild` | 8,313,924 |
+| `BM_MemorySharedMap_NoBoundsCheck_RandomBuild` | 17,858,405 |
+| `BM_MemorySharedMap_BoundsChecked_RandomBuild` | 77,908,034 |
+| `BM_StdMap_RandomAccess` | 3,316,251 |
+| `BM_RawSlotMap_RandomAccess` | 3,187,163 |
+| `BM_OffsetSlotMap_RandomAccess` | 6,708,715 |
+| `BM_BoostInterprocessMap_RandomAccess` | 10,673,484 |
+| `BM_MemorySharedMap_NoBoundsCheck_RandomAccess` | 98,084,979 |
+| `BM_MemorySharedMap_BoundsChecked_RandomAccess` | 452,350,010 |
+| `BM_StdMap_Iterate` | 48,513 |
+| `BM_RawSlotMap_Iterate` | 47,639 |
+| `BM_OffsetSlotMap_Iterate` | 71,813 |
+| `BM_BoostInterprocessMap_Iterate` | 113,081 |
+| `BM_MemorySharedMap_NoBoundsCheck_Iterate` | 1,875,049 |
+| `BM_MemorySharedMap_BoundsChecked_Iterate` | 8,247,345 |
+| `BM_StdMap_Internal_InsertRebalance` | 221,707 |
+| `BM_RawSlotMap_Internal_InsertRebalance` | 134,369 |
+| `BM_OffsetSlotMap_Internal_InsertRebalance` | 157,464 |
+| `BM_BoostInterprocessMap_Internal_InsertRebalance` | 4,852,561 |
+| `BM_MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance` | 14,645,197 |
+| `BM_MemorySharedMap_BoundsChecked_Internal_InsertRebalance` | 65,883,342 |
+| `BM_StdMap_Internal_Find` | 2,886,804 |
+| `BM_RawSlotMap_Internal_Find` | 2,752,042 |
+| `BM_OffsetSlotMap_Internal_Find` | 5,289,642 |
+| `BM_BoostInterprocessMap_Internal_Find` | 9,178,041 |
+| `BM_MemorySharedMap_NoBoundsCheck_Internal_Find` | 90,707,088 |
+| `BM_MemorySharedMap_BoundsChecked_Internal_Find` | 422,901,546 |
+| `BM_StdMap_Internal_EraseRebalance` | 556,448 |
+| `BM_RawSlotMap_Internal_EraseRebalance` | 607,222 |
+| `BM_OffsetSlotMap_Internal_EraseRebalance` | 771,740 |
+| `BM_BoostInterprocessMap_Internal_EraseRebalance` | 5,986,049 |
+| `BM_MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance` | 15,106,480 |
+| `BM_MemorySharedMap_BoundsChecked_Internal_EraseRebalance` | 65,559,348 |
 
 ### Ratio summary (vs std baseline in each family)
 
 | Comparison | Ratio |
 |---|---:|
-| `RawBoxVector_RandomAccess / StdVector_RandomAccess` | 1.00× |
-| `OffsetBoxVector_RandomAccess / StdVector_RandomAccess` | 1.14× |
-| `BoostInterprocessVector_RandomAccess / StdVector_RandomAccess` | 1.55× |
-| `MemorySharedVector_NoBoundsCheck / StdVector_RandomAccess` | 41.86× |
-| `MemorySharedVector_BoundsChecked / StdVector_RandomAccess` | 179.45× |
-| `RawBoxMap_RandomBuild / StdMap_RandomBuild` | 1.07× |
-| `OffsetBoxMap_RandomBuild / StdMap_RandomBuild` | 1.43× |
-| `BoostInterprocessMap_RandomBuild / StdMap_RandomBuild` | 11.13× |
-| `MemorySharedMap_NoBoundsCheck_RandomBuild / StdMap_RandomBuild` | 22.48× |
-| `MemorySharedMap_BoundsChecked_RandomBuild / StdMap_RandomBuild` | 95.89× |
-| `RawBoxMap_RandomAccess / StdMap_RandomAccess` | 0.98× |
-| `OffsetBoxMap_RandomAccess / StdMap_RandomAccess` | 2.12× |
-| `BoostInterprocessMap_RandomAccess / StdMap_RandomAccess` | 3.18× |
-| `MemorySharedMap_NoBoundsCheck_RandomAccess / StdMap_RandomAccess` | 29.52× |
-| `MemorySharedMap_BoundsChecked_RandomAccess / StdMap_RandomAccess` | 135.60× |
-| `RawBoxMap_Iterate / StdMap_Iterate` | 0.99× |
-| `OffsetBoxMap_Iterate / StdMap_Iterate` | 1.57× |
-| `BoostInterprocessMap_Iterate / StdMap_Iterate` | 2.48× |
-| `MemorySharedMap_NoBoundsCheck_Iterate / StdMap_Iterate` | 40.67× |
-| `MemorySharedMap_BoundsChecked_Iterate / StdMap_Iterate` | 178.38× |
-| `RawBoxMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 0.69× |
-| `OffsetBoxMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 0.77× |
-| `BoostInterprocessMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 32.29× |
-| `MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 83.40× |
-| `MemorySharedMap_BoundsChecked_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 372.47× |
-| `RawBoxMap_Internal_Find / StdMap_Internal_Find` | 0.94× |
-| `OffsetBoxMap_Internal_Find / StdMap_Internal_Find` | 1.83× |
-| `BoostInterprocessMap_Internal_Find / StdMap_Internal_Find` | 3.10× |
-| `MemorySharedMap_NoBoundsCheck_Internal_Find / StdMap_Internal_Find` | 31.21× |
-| `MemorySharedMap_BoundsChecked_Internal_Find / StdMap_Internal_Find` | 145.00× |
-| `RawBoxMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 1.15× |
-| `OffsetBoxMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 1.48× |
-| `BoostInterprocessMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 13.53× |
-| `MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 30.65× |
-| `MemorySharedMap_BoundsChecked_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 131.08× |
+| `RawSlotVector_RandomAccess / StdVector_RandomAccess` | 1.01× |
+| `OffsetSlotVector_RandomAccess / StdVector_RandomAccess` | 1.12× |
+| `BoostInterprocessVector_RandomAccess / StdVector_RandomAccess` | 1.57× |
+| `MemorySharedVector_NoBoundsCheck / StdVector_RandomAccess` | 37.02× |
+| `MemorySharedVector_BoundsChecked / StdVector_RandomAccess` | 173.63× |
+| `RawSlotMap_RandomBuild / StdMap_RandomBuild` | 1.02× |
+| `OffsetSlotMap_RandomBuild / StdMap_RandomBuild` | 1.28× |
+| `BoostInterprocessMap_RandomBuild / StdMap_RandomBuild` | 9.20× |
+| `MemorySharedMap_NoBoundsCheck_RandomBuild / StdMap_RandomBuild` | 19.76× |
+| `MemorySharedMap_BoundsChecked_RandomBuild / StdMap_RandomBuild` | 86.20× |
+| `RawSlotMap_RandomAccess / StdMap_RandomAccess` | 0.96× |
+| `OffsetSlotMap_RandomAccess / StdMap_RandomAccess` | 2.02× |
+| `BoostInterprocessMap_RandomAccess / StdMap_RandomAccess` | 3.22× |
+| `MemorySharedMap_NoBoundsCheck_RandomAccess / StdMap_RandomAccess` | 29.58× |
+| `MemorySharedMap_BoundsChecked_RandomAccess / StdMap_RandomAccess` | 136.40× |
+| `RawSlotMap_Iterate / StdMap_Iterate` | 0.98× |
+| `OffsetSlotMap_Iterate / StdMap_Iterate` | 1.48× |
+| `BoostInterprocessMap_Iterate / StdMap_Iterate` | 2.33× |
+| `MemorySharedMap_NoBoundsCheck_Iterate / StdMap_Iterate` | 38.65× |
+| `MemorySharedMap_BoundsChecked_Iterate / StdMap_Iterate` | 170.00× |
+| `RawSlotMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 0.61× |
+| `OffsetSlotMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 0.71× |
+| `BoostInterprocessMap_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 21.89× |
+| `MemorySharedMap_NoBoundsCheck_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 66.06× |
+| `MemorySharedMap_BoundsChecked_Internal_InsertRebalance / StdMap_Internal_InsertRebalance` | 297.16× |
+| `RawSlotMap_Internal_Find / StdMap_Internal_Find` | 0.95× |
+| `OffsetSlotMap_Internal_Find / StdMap_Internal_Find` | 1.83× |
+| `BoostInterprocessMap_Internal_Find / StdMap_Internal_Find` | 3.18× |
+| `MemorySharedMap_NoBoundsCheck_Internal_Find / StdMap_Internal_Find` | 31.42× |
+| `MemorySharedMap_BoundsChecked_Internal_Find / StdMap_Internal_Find` | 146.49× |
+| `RawSlotMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 1.09× |
+| `OffsetSlotMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 1.39× |
+| `BoostInterprocessMap_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 10.76× |
+| `MemorySharedMap_NoBoundsCheck_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 27.15× |
+| `MemorySharedMap_BoundsChecked_Internal_EraseRebalance / StdMap_Internal_EraseRebalance` | 117.82× |
 
 ### Current takeaways
 
-- Benchmarks are listed in regular scenario order (VectorRandomAccess, MapRandomBuild, MapRandomAccess, MapIterate, then map internal microbenchmarks), and within every scenario use a consistent container order: Std, RawBox, OffsetBox, BoostInterprocess (linux), MemoryShared NoBoundsCheck, MemoryShared BoundsChecked.
-- For fair container-to-container comparison, use the `NoBoundsCheck` rows: `score::memory::shared` is still ~22–83× slower than `std` across these scenarios (including internal microbenchmarks).
+- Benchmarks are listed in regular scenario order (VectorRandomAccess, MapRandomBuild, MapRandomAccess, MapIterate, then map internal microbenchmarks), and within every scenario use a consistent container order: Std, RawSlot, OffsetSlot, BoostInterprocess (linux), MemoryShared NoBoundsCheck, MemoryShared BoundsChecked.
+- For fair container-to-container comparison, use the `NoBoundsCheck` rows: `score::memory::shared` is still ~20–66× slower than `std` across these scenarios (including internal microbenchmarks).
 - `score::memory::shared::Map` now includes both no-bounds-check and bounds-checked variants across map scenarios and internal microbenchmarks using the same bounded resource configuration.
 - `BoostInterprocess` is now directly included in all benchmark scenarios and ratio rows. Resource/heap setup is excluded from timing in all `MemoryShared` and `BoostInterprocess` benchmarks for fair comparison with `Std` and `nothrow`.
-- `RawBox` is near/at parity for map lookup and iteration, and faster in focused insert/rebalance and find microbenchmarks.
-- `RawBoxMap` random build remains slightly slower than `std::map`.
-- `RawBoxMap` erase/rebalance remains slower than `std::map` and is the primary remaining gap.
+- `RawSlot` is near/at parity for map lookup and iteration, and faster in focused insert/rebalance and find microbenchmarks.
+- `RawSlotMap` random build remains slightly slower than `std::map`.
+- `RawSlotMap` erase/rebalance remains slower than `std::map` and is the primary remaining gap.
 - `score::memory::shared::*` remains far slower in this benchmark, especially for random map access and vector random access.
 
 ### Cross-validation with independent implementation
 
-An independent OffsetBox Vector implementation
+An independent OffsetSlot Vector implementation
 ([TrivialityInversion](https://github.com/jmd-emermern/TrivialityInversion), same
 `intptr_t`-based inline approach) shows comparable results on the same hardware using
 CMake Release builds (`-O3`):
 
-| Element type | `std::vector` | OffsetBox Vector | Overhead |
+| Element type | `std::vector` | OffsetSlot Vector | Overhead |
 |---|---|---|---|
 | `uint8_t` | 1.10 ms | 1.24 ms | ~12% |
 | `uint32_t` | 1.38 ms | 1.49 ms | ~8% |
 | `uint64_t` | 3.13 ms | 3.35 ms | ~7% |
 
 The overhead varies by element size (smaller elements → higher relative overhead, likely
-due to the constant per-access OffsetBox conversion cost being larger relative to the
+due to the constant per-access OffsetSlot conversion cost being larger relative to the
 cheaper cache-line loads for small elements).
 
 ### Summary
 
-| Configuration | Inline OffsetBox overhead | Cross-TU OffsetBox overhead |
+| Configuration | Inline OffsetSlot overhead | Cross-TU OffsetPtr overhead |
 |---|---|---|
-| Bazel `-O2` (default) | ~1–14% | ~22–83× (NoBoundsCheck), up to ~372× (BoundsChecked) |
+| Bazel `-O2` (default) | ~1–14% | ~20–66× (NoBoundsCheck), up to ~297× (BoundsChecked) |
 | CMake `-O3` (cross-validation) | ~7–12% | n/a |
 
 **Key findings:**
 
-- **The existing `score::memory::shared` OffsetBox is ~22–83× in NoBoundsCheck mode and up to ~372× in BoundsChecked mode** depending on container path,
+- **The existing `score::memory::shared::OffsetPtr` implementation is ~20–66× in NoBoundsCheck mode and up to ~297× in BoundsChecked mode** depending on container path,
   dominated by cross-translation-unit call barriers in `pointer_arithmetic_util.cpp` and
   the `uintptr_t` round-trip pattern that destroys pointer provenance for the optimizer.
-- **A header-inline OffsetBox reduces overhead to ~1–14%** vs raw pointers. The `intptr_t`-based
+- **A header-inline OffsetSlot reduces overhead to ~1–14%** vs raw pointers. The `intptr_t`-based
   offset computation is fully visible to the compiler, allowing it to optimize through the
   pointer reconstruction. This confirms that the overhead is not inherent to relative pointers
   but caused by the implementation strategy.
@@ -280,7 +280,7 @@ cheaper cache-line loads for small elements).
 
 ## Analysis: Root Cause of score::memory::shared::OffsetPtr Overhead
 
-The large overhead in the current implementation (~22–83× in no-bounds mode and up to ~372× in bounds-checked mode) is not inherent to the concept of relative pointers. It is caused by the
+The large overhead in the current implementation (~20–66× in no-bounds mode and up to ~297× in bounds-checked mode) is not inherent to the concept of relative pointers. It is caused by the
 implementation strategy chosen to avoid using built-in pointer arithmetic between unrelated
 objects, and to quarantine the remaining pointer/integer mapping behind optimization barriers.
 
@@ -289,7 +289,7 @@ objects, and to quarantine the remaining pointer/integer mapping behind optimiza
 `OffsetPtr<T>` stores a byte offset from its own address to the target object. To reconstruct
 the target pointer, it must compute `this_address + offset`. However, direct pointer arithmetic
 (`ptr + n`) is only well-defined within an array or one past its end (C++ [expr.add]). The
-OffsetBox and its target are in different allocations, so direct pointer arithmetic would be UB.
+`OffsetPtr` object and its target are in different allocations, so direct pointer arithmetic would be UB.
 
 ### The chosen solution: cast through `uintptr_t`
 
@@ -355,12 +355,12 @@ If not, the mapping falls into the standard's "otherwise implementation-defined"
 The `score::nothrow` and `score::memory::shared` designs differ fundamentally in how they handle
 this constraint.
 
-#### `score::nothrow::OffsetBox` — identity round-trip only
+#### `score::nothrow::OffsetSlot` — identity round-trip only
 
 The `score::nothrow` design cleanly separates two concerns:
 
-1. **OffsetBox: pointer identity preservation.** The OffsetBox only stores and reproduces
-   pointers. Within a single process, the `this` address of the OffsetBox is unchanged
+1. **OffsetSlot: pointer identity preservation.** The OffsetSlot only stores and reproduces
+   pointers. Within a single process, the `this` address of the OffsetSlot is unchanged
    between construction and conversion:
 
    ```cpp
@@ -382,11 +382,11 @@ The `score::nothrow` design cleanly separates two concerns:
 
    ```cpp
    // Copy construction — converts source to T* first, then computes fresh offset:
-   OffsetBox(const OffsetBox& other)
+   OffsetSlot(const OffsetSlot& other)
        : offset_{intptr_t(static_cast<T*>(other)) - intptr_t(this)} {}
 
    // Assignment — same pattern:
-   OffsetBox& operator=(const OffsetBox& other) {
+   OffsetSlot& operator=(const OffsetSlot& other) {
        offset_ = intptr_t(static_cast<T*>(other)) - intptr_t(this);
        return *this;
    }
@@ -394,8 +394,8 @@ The `score::nothrow` design cleanly separates two concerns:
 
    The source's conversion `static_cast<T*>(other)` follows the same identity-round-trip
    argument. The destination then stores a fresh offset relative to its own address. At no
-   point is an offset value copied between two OffsetBox instances — the raw pointer is always
-   the transfer medium, and each OffsetBox independently reconstructs its pointee by returning
+   point is an offset value copied between two OffsetSlot instances — the raw pointer is always
+   the transfer medium, and each OffsetSlot independently reconstructs its pointee by returning
    to the original pointer value.
 
 2. **Vector: array pointer arithmetic.** All element-level operations (`data[i]`, `data + n`,
@@ -403,8 +403,8 @@ The `score::nothrow` design cleanly separates two concerns:
    operating within an allocated array, so this is well-defined pointer arithmetic per
    [expr.add].
 
-These two concerns never cross: OffsetBox never does array arithmetic, and Vector never does
-offset-based pointer reconstruction. Because `OffsetBox` only needs the standard's
+These two concerns never cross: OffsetSlot never does array arithmetic, and Vector never does
+offset-based pointer reconstruction. Because `OffsetSlot` only needs the standard's
 pointer-to-integer-to-same-pointer guarantee, it does not need an optimization barrier for
 semantic correctness.
 
@@ -440,8 +440,8 @@ mapping more defined; they just make miscompilation less likely on mainstream co
 #### Shared memory: out of scope for the standard
 
 The C++ standard makes no assumptions about shared memory. When a different process maps a
-shared memory region and accesses an OffsetBox stored there, the OffsetBox's `this` address
-differs from the original process. From the reading process's perspective, the OffsetBox is
+shared memory region and accesses an OffsetSlot stored there, the OffsetSlot's `this` address
+differs from the original process. From the reading process's perspective, the OffsetSlot is
 simply constructed (via the copy constructor or equivalent) with values that produce a valid
 pointer *within that process's address space*. This is a platform concern, not a language
 concern — both designs handle it equivalently.

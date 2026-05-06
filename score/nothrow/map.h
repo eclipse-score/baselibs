@@ -15,7 +15,7 @@
 
 #include "score/nothrow/container_error.h"
 #include "score/nothrow/memory_resource.h"
-#include "score/nothrow/pointer_box.h"
+#include "score/nothrow/pointer_slot.h"
 
 #include "score/result/result.h"
 
@@ -47,14 +47,14 @@ namespace score::nothrow
 ///   `GetOrInsertDefault`, `Clone`) return `score::Result*` with
 ///   `ContainerErrorCode::kOutOfMemory`; `*OrAbort` variants abort instead.
 /// - Not copyable. Use Clone() for explicit deep copies.
-/// - Tree links are injected via PointerPolicy::NullablePtr (default: score::nothrow::NullableOffsetBox).
+/// - Tree links are injected via PointerPolicy::NullablePtr (default: score::nothrow::NullableOffsetSlot).
 ///
 /// The tree is AVL-balanced to provide O(log n) insert/find/erase in the worst case.
 template <typename Key,
           typename T,
           typename Compare = std::less<Key>,
           typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
-          typename PointerPolicy = OffsetBoxPolicy>
+          typename PointerPolicy = OffsetSlotPolicy>
 class Map
 {
     struct Node;
@@ -1560,7 +1560,7 @@ template <typename Key,
           typename T,
           typename Compare = std::less<Key>,
           typename Allocator = PolymorphicAllocator<std::pair<const Key, T>>,
-          typename PointerPolicy = OffsetBoxPolicy>
+          typename PointerPolicy = OffsetSlotPolicy>
 using MapBase = Map<Key, T, Compare, Allocator, PointerPolicy>;
 
 }  // namespace score::nothrow

@@ -10,30 +10,30 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_NOTHROW_POINTER_BOX_H
-#define SCORE_NOTHROW_POINTER_BOX_H
+#ifndef SCORE_NOTHROW_POINTER_SLOT_H
+#define SCORE_NOTHROW_POINTER_SLOT_H
 
 #include <cstdint>
 
 namespace score::nothrow
 {
 
-/// @brief Stores a pointer as offset from the `OffsetBox` object address.
+/// @brief Stores a pointer as offset from the `OffsetSlot` object address.
 ///
 /// Deviation from raw pointers: persisted representation is relative, which is
 /// suitable for relocatable/shared-memory layouts in one process.
 template <typename T>
-class OffsetBox
+class OffsetSlot
 {
   public:
-    OffsetBox(T const* const pointer) noexcept
+    OffsetSlot(T const* const pointer) noexcept
         : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}
     {
     }
 
-    OffsetBox(const OffsetBox& other) noexcept : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)} {}
+    OffsetSlot(const OffsetSlot& other) noexcept : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)} {}
 
-    OffsetBox& operator=(const OffsetBox& other) noexcept
+    OffsetSlot& operator=(const OffsetSlot& other) noexcept
     {
         offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
         return *this;
@@ -63,22 +63,22 @@ class OffsetBox
 };
 
 template <typename T>
-class NullableOffsetBox
+class NullableOffsetSlot
 {
   public:
-    /// @brief Like `OffsetBox`, but preserves a `nullptr` state explicitly.
-    NullableOffsetBox(T const* const pointer) noexcept
+    /// @brief Like `OffsetSlot`, but preserves a `nullptr` state explicitly.
+    NullableOffsetSlot(T const* const pointer) noexcept
         : offset_from_this_{PointerToInteger(pointer) - PointerToInteger(this)}, is_nullptr_{pointer == nullptr}
     {
     }
 
-    NullableOffsetBox(const NullableOffsetBox& other) noexcept
+    NullableOffsetSlot(const NullableOffsetSlot& other) noexcept
         : offset_from_this_{PointerToInteger(other.get()) - PointerToInteger(this)},
           is_nullptr_{other.get() == nullptr}
     {
     }
 
-    NullableOffsetBox& operator=(const NullableOffsetBox& other) noexcept
+    NullableOffsetSlot& operator=(const NullableOffsetSlot& other) noexcept
     {
         offset_from_this_ = PointerToInteger(other.get()) - PointerToInteger(this);
         is_nullptr_ = other.get() == nullptr;
@@ -116,15 +116,15 @@ class NullableOffsetBox
 };
 
 template <typename T>
-class RawBox
+class RawSlot
 {
   public:
     /// @brief Minimal wrapper that stores a raw pointer unchanged.
-    RawBox(T const* const pointer) noexcept : pointer_{pointer} {}
+    RawSlot(T const* const pointer) noexcept : pointer_{pointer} {}
 
-    RawBox(const RawBox& other) noexcept = default;
+    RawSlot(const RawSlot& other) noexcept = default;
 
-    RawBox& operator=(const RawBox& other) noexcept = default;
+    RawSlot& operator=(const RawSlot& other) noexcept = default;
 
     T* get() noexcept { return const_cast<T*>(pointer_); }
 
@@ -134,28 +134,28 @@ class RawBox
     const T* pointer_{nullptr};
 };
 
-struct OffsetBoxPolicy
+struct OffsetSlotPolicy
 {
     /// Offset-encoded non-null pointer storage.
     template <typename T>
-    using Ptr = OffsetBox<T>;
+    using Ptr = OffsetSlot<T>;
 
     /// Offset-encoded nullable pointer storage.
     template <typename T>
-    using NullablePtr = NullableOffsetBox<T>;
+    using NullablePtr = NullableOffsetSlot<T>;
 };
 
-struct RawBoxPolicy
+struct RawSlotPolicy
 {
     /// Raw pointer storage for non-null pointers.
     template <typename T>
-    using Ptr = RawBox<T>;
+    using Ptr = RawSlot<T>;
 
     /// Raw pointer storage for nullable pointers.
     template <typename T>
-    using NullablePtr = RawBox<T>;
+    using NullablePtr = RawSlot<T>;
 };
 
 }  // namespace score::nothrow
 
-#endif  // SCORE_NOTHROW_POINTER_BOX_H
+#endif  // SCORE_NOTHROW_POINTER_SLOT_H

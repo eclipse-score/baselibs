@@ -3,8 +3,8 @@
 `score::nothrow` provides nothrow substitutes for standard C++ containers and memory resources, with pluggable pointer storage policies:
 
 - `score::nothrow::MemoryResource` / `score::nothrow::PolymorphicAllocator<T>` follow the overall model of `std::pmr::memory_resource` and `std::pmr::polymorphic_allocator`. Their primary purpose is providing a **nothrow allocation interface** that returns `nullptr` on failure, which is the contract expected by `score::nothrow` containers.
-- `score::nothrow::OffsetBox<T>` / `score::nothrow::NullableOffsetBox<T>` provide relative-pointer storage semantics (pointer box with offset encoding).
-- `score::nothrow::RawBox<T>` provides identity-encoded pointer boxes for policy-based container experiments and benchmarks.
+- `score::nothrow::OffsetSlot<T>` / `score::nothrow::NullableOffsetSlot<T>` provide relative-pointer storage semantics (pointer slot with offset encoding).
+- `score::nothrow::RawSlot<T>` provides identity-encoded pointer slots for policy-based container experiments and benchmarks.
 
 This README focuses on **deviations and guarantees**, not on re-documenting standard APIs.
 
@@ -27,16 +27,16 @@ Additional deviations from `std::pmr`:
 - Individual `deallocate()` calls are no-ops; use `release()` to reclaim the full buffer.
 - All pointer state uses raw pointers (process-local).
 
-## Pointer box design
+## Pointer slot design
 
-Pointer boxes are encoding wrappers that control how raw pointers are stored inside container nodes. The container is agnostic to the encoding — it only calls `.get()` to recover the raw pointer. A `PointerPolicy` selects which box family to use:
+Pointer slots are encoding wrappers that control how raw pointers are stored inside container nodes. The container is agnostic to the encoding — it only calls `.get()` to recover the raw pointer. A `PointerPolicy` selects which slot family to use:
 
-- `OffsetBoxPolicy` uses `OffsetBox<T>` / `NullableOffsetBox<T>` (offset-from-this encoding).
-- `RawBoxPolicy` uses `RawBox<T>` for both `Ptr` and `NullablePtr` (identity encoding).
+- `OffsetSlotPolicy` uses `OffsetSlot<T>` / `NullableOffsetSlot<T>` (offset-from-this encoding).
+- `RawSlotPolicy` uses `RawSlot<T>` for both `Ptr` and `NullablePtr` (identity encoding).
 
-### OffsetBox design focus
+### OffsetSlot design focus
 
-`score::nothrow::OffsetBox` is designed around a strict round-trip invariant:
+`score::nothrow::OffsetSlot` is designed around a strict round-trip invariant:
 
 1. On construction, state is captured using integer arithmetic derived from the provided raw pointer and `this`.
 2. On conversion back to `T*` / `T const*`, the original pointer value is reconstructed by inverse integer arithmetic.
@@ -88,8 +88,8 @@ The general pattern of containers planned in `score::nothrow` is:
   - An aborting variant with PascalCase naming and `OrAbort` suffix, returning the original value category and aborting on failure. These shall be used when an out-of-memory situation is algorithmically impossible, for example because the user prepared the memory resource in the same scope as using the container. Returning results would require a user to implement untestable error handling. Use of these functions implies asserting that memory is sufficient, and failure would be correctly classified as a bug and result in abort.
 - Member functions provided as error handling derivatives described above are not provided with their standard library signature.
 - Pointer members in container state are persisted via the selected pointer policy:
-  default `score::nothrow::OffsetBoxPolicy` uses `OffsetBox` / `NullableOffsetBox`,
-  while `score::nothrow::RawBoxPolicy` uses `RawBox` for both pointer aliases.
+  default `score::nothrow::OffsetSlotPolicy` uses `OffsetSlot` / `NullableOffsetSlot`,
+  while `score::nothrow::RawSlotPolicy` uses `RawSlot` for both pointer aliases.
 - Pointer parameters, type aliases, and local variables follow the standard/raw-pointer style where possible; wrapping/unwrapping is used only for persisted container state.
 - All containers use `score::nothrow::PolymorphicAllocator` as default allocator.
 - Error propagation uses `score::nothrow::ContainerErrorCode` and `MakeError(...)`.
@@ -209,14 +209,14 @@ first, making `ReturnMode` a consistent vocabulary type across the whole
 
 ### `score::nothrow::Vector`
 
-Default policy stores vector backing storage via `score::nothrow::OffsetBox`.
-Alternative policies can inject direct wrappers (for example `RawBoxPolicy`).
+Default policy stores vector backing storage via `score::nothrow::OffsetSlot`.
+Alternative policies can inject direct wrappers (for example `RawSlotPolicy`).
 No allocated memory is represented by `capacity == 0` rather than `nullptr`.
 
 ### `score::nothrow::Map`
 
 Tree links (`left`, `right`, `parent`) are persisted through
-`PointerPolicy::NullablePtr` (default: `score::nothrow::NullableOffsetBox`).
+`PointerPolicy::NullablePtr` (default: `score::nothrow::NullableOffsetSlot`).
 In this representation, `nullptr` is the explicit "no child" state used for
 leaf boundaries and empty-link traversal.
 

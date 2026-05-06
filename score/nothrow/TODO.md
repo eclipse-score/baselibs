@@ -5,17 +5,17 @@
 This branch validates performance and architecture boundaries by comparing
 explicit pointer policies:
 
-- `OffsetBoxPolicy` (`OffsetBox` / `NullableOffsetBox`)
-- `RawBoxPolicy` (`RawBox` for both aliases)
+- `OffsetSlotPolicy` (`OffsetSlot` / `NullableOffsetSlot`)
+- `RawSlotPolicy` (`RawSlot` for both aliases)
 
-The branch now also injects pointer boxes into container internals via
+The branch now also injects pointer slots into container internals via
 `PointerPolicy`:
 
-- `score::nothrow::Map<..., PointerPolicy = OffsetBoxPolicy>`
-- `score::nothrow::Vector<..., PointerPolicy = OffsetBoxPolicy>`
+- `score::nothrow::Map<..., PointerPolicy = OffsetSlotPolicy>`
+- `score::nothrow::Vector<..., PointerPolicy = OffsetSlotPolicy>`
 
 This keeps default behavior unchanged while enabling controlled experiments with
-alternative pointer boxes.
+alternative pointer slots.
 
 ## Next optimization tasks
 
