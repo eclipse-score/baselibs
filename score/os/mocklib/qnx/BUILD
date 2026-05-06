@@ -107,6 +107,20 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "pathmgr_mock",
+    testonly = True,
+    srcs = ["mock_pathmgr.cpp"],
+    hdrs = ["mock_pathmgr.h"],
+    features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/os/qnx:pathmgr",
+    ],
+)
+
 # Link-time seam that replaces ::procmgr_daemon with a gmock-controlled fake.
 # Link this into test binaries that need to exercise ProcMgrImpl::procmgr_daemon
 # while keeping the QNX syscall out of the picture.

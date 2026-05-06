@@ -30,8 +30,8 @@ TEST(Error, CanMakeError)
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Use MakeError() to create Error instance.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kParsingError);
@@ -44,8 +44,8 @@ TEST(Error, CanMakeErrorWithUserMessage)
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Use MakeError() with error message to create Error instance.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     std::string_view userMessage{"User message"};
@@ -59,8 +59,8 @@ TEST(Error, CanGetMessageForWrongType)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from WrongType error.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kWrongType);
@@ -75,8 +75,8 @@ TEST(Error, CanGetMessageForKeyNotFound)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from KeyNotFound error.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kKeyNotFound);
@@ -91,8 +91,8 @@ TEST(Error, CanGetMessageForParsingError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from ParsingError error.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kParsingError);
@@ -107,8 +107,8 @@ TEST(Error, CanGetMessageForInvalidFilePath)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from InvalidFilePath error.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kInvalidFilePath);
@@ -123,8 +123,8 @@ TEST(Error, CanGetMessageForUnknownError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from UnknownError.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(Error::kUnknownError);
@@ -139,8 +139,8 @@ TEST(Error, CanGetMessageForUndefinedError)
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Get error message from UndefinedError.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of equivalence classes and boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
     RecordProperty("Priority", "3");
 
     score::result::Error error = score::json::MakeError(static_cast<Error>(-1));

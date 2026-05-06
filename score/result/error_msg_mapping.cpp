@@ -10,7 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
 #include "score/result/error_msg_mapping.h"
 
 extern "C" void LibResultErrorDomainGetMessageForErrorCode(const score::result::ErrorDomain& domain,

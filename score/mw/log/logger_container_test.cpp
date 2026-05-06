@@ -42,8 +42,8 @@ TEST(LoggerContainerTests, WhenRequestingNonExistingNewLoggerItShallBeInsertedAn
     RecordProperty(
         "Description",
         "Verifies the ability of requesting non-existing new logger shall be inserted and returned to the caller.");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("TestType", "requirements-based"); // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     LoggerContainer unit;
     EXPECT_EQ(unit.GetLogger(kContext1).GetContext(), kContext1);
 }
@@ -53,8 +53,8 @@ TEST(LoggerContainerTests, WhenGetingDefaultLoggerShallGetDLFTContextID)
     RecordProperty("ParentRequirement", "SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that when getting a default logger it shall get DFLT context id.");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("TestType", "requirements-based"); // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     LoggerContainer unit;
     EXPECT_EQ(unit.GetDefaultLogger().GetContext(), kDefaultContext);
 }
@@ -66,8 +66,8 @@ TEST(LoggerContainerTests, WhenRequestingAlreadyExistingLoggerShallBeReturnedWit
     RecordProperty(
         "Description",
         "Verifies that when requesting already existing logger shall be returned without inserting new logger.");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("TestType", "requirements-based"); // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     LoggerContainer unit;
     EXPECT_EQ(unit.GetLogger(kContext1).GetContext(), kContext1);
     EXPECT_EQ(unit.GetLogger(kContext1).GetContext(), kContext1);
@@ -80,8 +80,8 @@ TEST(LoggerContainerTests, WhenLoggerContainerIsFullShallGetDefaultContextWhenNe
     RecordProperty(
         "Description",
         "Verifies that when logger container is full shall get default context when new logger is requested.");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("TestType", "requirements-based"); // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     // Expecting a log record of level verbose
     LoggerContainer unit;
     std::vector<std::string> contexts_vector(unit.GetCapacity());
@@ -119,8 +119,8 @@ TEST(LoggerContainerTests, WhenTwoThreadsRequestSameLoggerShallBeOnlyOneExisting
     RecordProperty(
         "Description",
         "Verifies that when two threads request the same logger it shall be only one existing in logger container.");
-    RecordProperty("TestType", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("TestType", "requirements-based"); // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     LoggerContainer unit;
 
     std::thread t1(LoggerRequester1, std::ref(unit));

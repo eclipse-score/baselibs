@@ -15,7 +15,7 @@
 
 #include "score/result/error.h"
 
-#include "score/optional.hpp"
+#include <score/optional.hpp>
 
 namespace score
 {

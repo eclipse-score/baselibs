@@ -42,8 +42,8 @@ using ::testing::Return;
 TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenMaxQueueLengthReached)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that QueueSender::Push() would return false if queue is full and pushing into the "
@@ -76,8 +76,8 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenMaxQueueLengthReached)
 TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenQueueObjectDoesNotExist)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that QueueSender::Push() would return false "
@@ -106,8 +106,8 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenQueueObjectDoesNotExist)
 TEST(SynchronizedQueue, CallPopForEmptyQueue)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that SynchronizedQueue::Pop() would return nullopt if queue is empty");
@@ -134,8 +134,8 @@ TEST(SynchronizedQueue, CallPopForEmptyQueue)
 TEST(SynchronizedQueue, CallPushWhenPopIsWaitingForTimeout)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that SynchronizedQueue::Pop() would return the value "
@@ -177,8 +177,8 @@ TEST(SynchronizedQueue, CallPushWhenPopIsWaitingForTimeout)
 TEST(SynchronizedQueue, CallPushWithConstValueWhenPopIsWaitingForTimeout)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that SynchronizedQueue::Pop() would return the value "
@@ -220,8 +220,8 @@ TEST(SynchronizedQueue, CallPushWithConstValueWhenPopIsWaitingForTimeout)
 TEST(SynchronizedQueue, CallPushAndPopAtForNoneEmptyQueue)
 {
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This test check that SynchronizedQueue::Pop() would return the value "
@@ -275,8 +275,8 @@ TEST(SynchronizedQueue, MakeStressTestForPushingFromMultipleThreads)
     const std::size_t max_queue_length = num_threads * num_values_per_thread;
 
     RecordProperty("ASIL", "QM");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Analysis of boundary values");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Verifies", "::score::platform::aas::lib::concurrency::SynchronizedQueue");
     RecordProperty("Description",
                    "This is a smoke test where test 3 threads are created and each of them pushes 100 values "

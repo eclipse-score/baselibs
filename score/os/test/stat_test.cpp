@@ -28,8 +28,8 @@ TEST(StatImpl, StatRegularFile)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Stat Regular File");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_file"};
     const auto fd = ::open(filename, O_CREAT | O_RDWR, 0644);
@@ -49,8 +49,8 @@ TEST(StatImpl, StatSymbolicLink)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Stat Symbolic Link");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_file"};
     const auto fd = ::open(filename, O_CREAT | O_RDWR, 0644);
@@ -69,8 +69,8 @@ TEST(StatImpl, StatNonExistentFile)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Stat Non Existent File");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const char* non_existent_file = "nonexistent/file";
     struct StatBuffer buf;
@@ -87,8 +87,8 @@ TEST(StatImpl, fstatSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl fstat Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_file"};
     const auto fd = ::open(filename, O_CREAT | O_RDONLY, 0644);
@@ -105,8 +105,8 @@ TEST(StatImpl, fstatFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl fstat Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto fd = -1;
     struct StatBuffer buf;
@@ -118,8 +118,8 @@ TEST(StatImpl, MkdirFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Mkdir Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const char* directory = "/hd/src";
     Stat::Mode mode = Stat::Mode::kUnknown;
@@ -137,8 +137,8 @@ TEST(StatImpl, MkdirSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Mkdir Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const char* directory = "directory";
     Stat::Mode mode = Stat::Mode::kReadWriteExecUser;
@@ -157,8 +157,8 @@ TEST(StatImpl, ChmodSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Chmod Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_test_file"};
     const auto fd = ::open(filename, O_CREAT | O_WRONLY, 0644);
@@ -179,8 +179,8 @@ TEST(StatImpl, ChmodFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Chmod Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{""};
     Stat::Mode mode = Stat::Mode::kUnknown;
@@ -194,8 +194,8 @@ TEST(StatImpl, FchmodSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Fchmod Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_test_file"};
     const auto fd = ::open(filename, O_CREAT | O_WRONLY, 0644);
@@ -216,8 +216,8 @@ TEST(StatImpl, FchmodFailure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Fchmod Failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto fd = -1;
 
@@ -230,8 +230,8 @@ TEST(StatImpl, FchmodatSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Fchmodat Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const char* file_name = "my_directory";
     int fd = open(file_name, O_CREAT, S_IRWXU | S_IRWXG | S_IRWXO);
@@ -249,8 +249,8 @@ TEST(StatImpl, FchmodatErrorNoFollowSymlinks)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Fchmodat Error No Follow Symlinks");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     constexpr auto filename{"stat_test_file"};
     const auto fd = ::open(filename, O_CREAT | O_RDWR, 0644);
@@ -268,8 +268,8 @@ TEST(StatImpl, DefaultObjectAllocationIsNotNull)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl Default Object Allocation Is Not Null");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = score::os::Stat::Default();
     EXPECT_NE(result, nullptr);
@@ -280,8 +280,8 @@ TEST(StatImpl, PMRDefaultShallReturnImplInstance)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatImpl PMRDefault Shall Return Impl Instance");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Stat::Default(memory_resource);

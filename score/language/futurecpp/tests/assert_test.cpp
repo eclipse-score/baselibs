@@ -58,7 +58,8 @@ TEST_F(assert_test_class, get_assertion_handler)
 /// @requirement CB-#42723425
 TEST_F(assert_test_class, assertion_failed_invokes_active_handler)
 {
-    const auto handler = [](handler_parameters const& param) {
+    const auto handler = [](handler_parameters const& param)
+    {
         ASSERT_EQ(param.file, std::string("file"));
         ASSERT_EQ(param.line, 42);
         ASSERT_EQ(param.function, std::string("func"));

@@ -10,7 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
 #include "score/result/error_msg_mapping.h"
 #include "score/result/dummy_error_code.h"
 

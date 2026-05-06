@@ -36,9 +36,7 @@ constexpr auto is_maplike_container_impl(const C&) -> std::true_type
     return {};
 }
 template <typename T>
-struct is_maplike_container : decltype(is_maplike_container_impl(std::declval<T>()))
-{
-};
+struct is_maplike_container : decltype(is_maplike_container_impl(std::declval<T>())){};
 
 } // namespace detail
 } // namespace score::cpp

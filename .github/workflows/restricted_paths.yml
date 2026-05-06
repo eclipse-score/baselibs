@@ -1,0 +1,64 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Restricted Paths Check
+permissions:
+  contents: read
+  pull-requests: read
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize]
+jobs:
+  check-restricted-paths:
+    name: Restricted file changes
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Detect changes in restricted paths
+        uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          list-files: json
+          filters: |
+            restricted:
+              - 'score/analysis/**'
+              - 'score/concurrency/**'
+              - 'score/containers/**'
+              - 'score/datetime_converter/**'
+              - 'score/filesystem/**'
+              - 'score/json/**'
+              - 'score/language/futurecpp/**'
+              - 'score/language/safecpp/**'
+              - 'score/memory/**'
+              - 'score/mw/**'
+              - 'score/network/**'
+              - 'score/os/**'
+              - 'score/quality/compiler_warnings/**'
+              - 'score/scope_exit/**'
+              - 'score/static_reflection_with_serialization/**'
+              - 'score/string_manipulation/**'
+              - 'score/utils/**'
+      - name: Block PR if restricted files are changed
+        if: steps.filter.outputs.restricted == 'true'
+        env:
+          RESTRICTED_FILES: ${{ steps.filter.outputs.restricted_files }}
+        run: |
+          FILES=$(echo "$RESTRICTED_FILES" | jq -r '.[]')
+          echo "::error::This PR modifies restricted paths that are not allowed to be changed directly. Changes to restricted paths follow a separate process: they must first be integrated into the internal codebase and then exported back. Please contact @4og for guidance on how to proceed."
+          echo ""
+          echo "$FILES" | while read -r file; do
+            echo "::error file=${file},line=1::${file} is in a restricted path"
+          done
+          exit 1

@@ -45,6 +45,7 @@ py_unittest_qnx_test(
         ":thread_ctl_test",
         ":inout_test",
         ":mman_test",
+        ":pathmgr_test",
         ":fs_crypto_test",
         ":fs_crypto_impl_test",
         ":pcap_test",
@@ -55,6 +56,22 @@ py_unittest_qnx_test(
         "@score_baselibs//score/os/utils/qnx/resource_manager:unit_tests_qnx",
     ],
     visibility = ["//visibility:public"],  # platform_only
+)
+
+cc_test(
+    name = "pathmgr_test",
+    srcs = ["pathmgr_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = [
+        "manual",  # to disable using as host unit test in CI
+        "unit",
+    ],
+    target_compatible_with = ["@platforms//os:qnx"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os/mocklib/qnx:pathmgr_mock",
+        "@score_baselibs//score/os/qnx:pathmgr",
+    ],
 )
 
 cc_test(

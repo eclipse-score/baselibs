@@ -109,7 +109,7 @@ struct mask_backend<std::int32_t>
 
     static bool SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept
     {
-        return (_mm_movemask_epi8(v) & (1 << (4U * i))) != 0;
+        return (static_cast<std::uint32_t>(_mm_movemask_epi8(v)) & (1U << (4U * i))) != 0U;
     }
 
     static type SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE logical_not(const type v) noexcept
@@ -147,7 +147,7 @@ struct mask_backend<float>
 
     static bool SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept
     {
-        return (_mm_movemask_ps(v) & (1 << i)) != 0;
+        return (static_cast<std::uint32_t>(_mm_movemask_ps(v)) & (1U << i)) != 0U;
     }
 
     static type SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE logical_not(const type v) noexcept { return _mm_cmpeq_ps(v, _mm_setzero_ps()); }
@@ -180,7 +180,7 @@ struct mask_backend<double>
 
     static bool SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE extract(const type v, const std::size_t i) noexcept
     {
-        return (_mm_movemask_pd(v) & (1 << i)) != 0;
+        return (static_cast<std::uint32_t>(_mm_movemask_pd(v)) & (1U << i)) != 0U;
     }
 
     static type SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE logical_not(const type v) noexcept { return _mm_cmpeq_pd(v, _mm_setzero_pd()); }

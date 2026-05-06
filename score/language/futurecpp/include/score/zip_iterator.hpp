@@ -250,20 +250,28 @@ public:
     template <typename I = zip_iterator_impl, typename = std::enable_if_t<detail::is_random_access_iterator<I>::value>>
     zip_iterator_impl& operator+=(const difference_type n)
     {
-        score::cpp::for_each_tuple_element(current_iterators_, [n](auto& iter) {
-            using actual_difference_type = typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
-            iter += narrow_cast<actual_difference_type>(n);
-        });
+        score::cpp::for_each_tuple_element(
+            current_iterators_,
+            [n](auto& iter)
+            {
+                using actual_difference_type =
+                    typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
+                iter += narrow_cast<actual_difference_type>(n);
+            });
         return *this;
     }
 
     template <typename I = zip_iterator_impl, typename = std::enable_if_t<detail::is_random_access_iterator<I>::value>>
     zip_iterator_impl& operator-=(const difference_type n)
     {
-        score::cpp::for_each_tuple_element(current_iterators_, [n](auto& iter) {
-            using actual_difference_type = typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
-            iter -= narrow_cast<actual_difference_type>(n);
-        });
+        score::cpp::for_each_tuple_element(
+            current_iterators_,
+            [n](auto& iter)
+            {
+                using actual_difference_type =
+                    typename std::iterator_traits<std::decay_t<decltype(iter)>>::difference_type;
+                iter -= narrow_cast<actual_difference_type>(n);
+            });
         return *this;
     }
 
@@ -352,20 +360,16 @@ auto make_zip_range(Containers&&... containers) -> range_pair<ZipIteratorType>
 
 } // namespace score::cpp
 
-namespace std
-{
 template <std::size_t I, typename... Ts>
-struct tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
+struct std::tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
 {
     using type = std::tuple_element_t<I, std::tuple<Ts...>>;
 };
 
 template <typename... Ts>
-struct tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
+struct std::tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
     : public std::integral_constant<std::size_t, std::tuple_size<std::tuple<Ts...>>::value>
 {
 };
-
-} // namespace std
 
 #endif // SCORE_LANGUAGE_FUTURECPP_ZIP_ITERATOR_HPP

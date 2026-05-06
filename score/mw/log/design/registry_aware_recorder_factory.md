@@ -22,12 +22,25 @@ at runtime and gracefully falls back to console for any unavailable backend.
 
 ## 2. Targets at a Glance
 
-### Minimal target
+> In order to verify locally, run:
+> ```bash
+>
+> # All available backend plugins
+> bazel query 'kind("cc_library", //score/mw/log/backend/...)' --output label
+> NOTE: console backend is not found here since its provided by default as `log:console` verify deps via:
+>
+> bazel query 'deps(//score/mw/log:console, 1)' --output label
+>
+> # Full bundle (including all supported backends)
+> bazel query 'deps(//score/mw/log:log, 1)' --output label
+> ```
+
+### Minimal target (always required)
 
 | Bazel target | Provides |
 |---|---|
-| `//platform/aas/mw/log` | Frontend + console backend — the minimum viable logging |
-| `//platform/aas/mw/log:minimal` | Frontend + stub backend |
+| `//score/mw/log:minimal` | Frontend + stub backend — the minimum viable logging |
+| `//score/mw/log:frontend` | `Logger`, `LogStream`, `Runtime` (public API) |
 
 ### Additive backend plugins (zero or more)
 
@@ -35,15 +48,21 @@ Each plugin uses `alwayslink = True` to ensure its static registrant is linked.
 
 | Bazel target | Backend | Condition |
 |---|---|---|
-| `//platform/aas/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
+| `//score/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
 | `//score/mw/log/backend:file` | DLT file logging | `config_KFile_Logging` flag |
 | `//score/mw/log/backend:remote` | DataRouter remote DLT | `Remote_Logging` flag |
 | `//score/mw/log/backend:slog` | QNX slog2 | QNX only (`@platforms//os:qnx`) |
 
-Guarantees:
+### Full bundle
 
-1. Any deps on `mw/log:log` OR `mw/log` gets console logging as default with additive backend capability.
-2. Any deps on `mw/log:minimal` gets stub logging as default with additive backend capability.
+| Bazel target | Includes |
+|---|---|
+| `//score/mw/log:log` | `:console` + `backend:file` + `backend:remote` + `backend:slog` (QNX only) |
+
+Three guarantees:
+
+1. Any deps on `mw/log:minimal` gets stub logging as default with additive backend capability.
+2. Any deps on `mw/log:console` gets console logging as default with additive backend capability.
 3. Additive composition: Adding `backend:file` doesn't conflict with backend `:console` or `backend:remote`.
 4. Graceful fallback: Requesting a mode whose backend isn't linked falls back to console backend and if that fails to stub (`/dev/null`).
 
@@ -113,7 +132,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
-        "//platform/aas/mw/log:backend_table",
+        "//score/mw/log:backend_table",
         "//path/to:my_recorder_factory",
     ],
     alwayslink = True,  # CRITICAL — ensures registration runs
@@ -126,7 +145,7 @@ cc_library(
 
 ### Step 4: Wire Into Applications
 
-Option A — All applications get it: Add your target to `//platform/aas/mw/log:log` deps.
+Option A — All applications get it: Add your target to `//score/mw/log:log` deps.
 
 Option B — Opt-in only: Document the dep. Application owners add:
 ```python
@@ -140,14 +159,14 @@ deps += ["//score/mw/log/backend:my_backend"]
 ```python
 cc_library(
     name = "my_library",
-    deps = ["//platform/aas/mw/log:minimal"],
+    deps = ["//score/mw/log:minimal"],
 )
 ```
 
 ```python
 cc_library(
     name = "my_library2",
-    deps = ["//platform/aas/mw/log:console"],
+    deps = ["//score/mw/log:console"],
 )
 ```
 
@@ -183,14 +202,14 @@ and any additional backends if required. Otherwise you'll see an `error: undefin
 ```python
 cc_library(
     name = "my_library",
-    deps = ["//platform/aas/mw/log:frontend"],
+    deps = ["//score/mw/log:frontend"],
 )
 
 cc_binary(
     name = "my_app",
     deps = [
         ":my_library",
-        "//platform/aas/mw/log:minimal", # must be provided
+        "//score/mw/log:minimal", # must be provided
     ],
 )
 ```
@@ -200,7 +219,7 @@ cc_binary(
 ```python
 cc_binary(
     name = "my_existing_app",
-    deps = ["//platform/aas/mw/log:log"],  # All backends
+    deps = ["//score/mw/log:log"],  # All backends
 )
 ```
 
@@ -245,13 +264,8 @@ in practice since each `LogMode` has a canonical backend.
 
 Q: Can a library add a backend plugin dep?
 A: It *can*, but it *shouldn't*. Backend selection is a binary-level decision. Libraries
-should depend on `@score_baselibs//mw/log` (which provides the frontend API and
+should depend on `//score/mw/log:console` (which provides the frontend API and
 console default). The application binary should declare which additional backends it needs.
-NOTE: In the future, `@score_baselibs//mw/log` will serve as the sole logging target.
-The integrator will be responsible for making the required backends available for each
-target platform, and `mw/log` will take care of loading them dynamically as shared
-libraries (.so). Until dynamic backend loading is supported, you must provide each
-backend dependency yourself.
 
 Q: What if I need logging during static initialization?
 A: This is unsupported and fragile. The backend table may be only partially populated.

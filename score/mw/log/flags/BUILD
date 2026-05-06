@@ -22,7 +22,7 @@ bool_flag(
 config_setting(
     name = "Remote_Logging",
     flag_values = {
-        ":KRemote_Logging": "False",
+        ":KRemote_Logging": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",
@@ -38,6 +38,21 @@ config_setting(
     name = "Custom_Logging",
     flag_values = {
         ":KCustom_Logging": "True",
+    },
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)
+
+bool_flag(
+    name = "KDltTrace_Logging",
+    build_setting_default = False,
+)
+
+config_setting(
+    name = "DltTrace_Logging",
+    flag_values = {
+        ":KDltTrace_Logging": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

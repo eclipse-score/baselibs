@@ -78,7 +78,7 @@ TEST_F(PcapFixture, PcapOpenLiveSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Open Live Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
 }
@@ -89,7 +89,7 @@ TEST_F(PcapFixture, PcapOpenLiveFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Open Live Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = pcap_->pcap_open_live("invalid_device", kSnapLenTooLarge, 1, kPacketBufferDelay, errbuf_.data());
     EXPECT_FALSE(result.has_value());
@@ -101,7 +101,7 @@ TEST_F(PcapFixture, PcapOpenDeadSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Open Dead Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = pcap_->pcap_open_dead(DLT_EN10MB, kSnapLenSmall);
     ASSERT_TRUE(result.has_value());
@@ -114,7 +114,7 @@ TEST_F(PcapFixture, PcapLoopSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Loop Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
 
@@ -139,7 +139,7 @@ TEST_F(PcapFixture, PcapBreakloopSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Breakloop Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_breakloop(good_pcap_);
@@ -152,7 +152,7 @@ TEST_F(PcapFixture, PcapCloseSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Close Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_close(good_pcap_);
@@ -166,7 +166,7 @@ TEST_F(PcapFixture, PcapGeterrSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Geterr Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_geterr(good_pcap_);
@@ -179,7 +179,7 @@ TEST_F(PcapFixture, PcapBreakloopFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Breakloop Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = pcap_->pcap_breakloop(nullptr);
     EXPECT_FALSE(result.has_value());
@@ -191,7 +191,7 @@ TEST_F(PcapFixture, PcapCloseFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Close Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = pcap_->pcap_close(nullptr);
     EXPECT_FALSE(result.has_value());
@@ -203,7 +203,7 @@ TEST_F(PcapFixture, PcapGeterrWithNullPcap)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Geterr With Null Pcap");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     auto result = pcap_->pcap_geterr(nullptr);
     EXPECT_FALSE(result.has_value());
@@ -215,7 +215,7 @@ TEST_F(PcapFixture, PcapLoopFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Loop Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     pcap_->pcap_close(good_pcap_);
@@ -230,7 +230,7 @@ TEST_F(PcapFixture, PcapCompileSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Compile Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -246,7 +246,7 @@ TEST_F(PcapFixture, PcapCompileFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Compile Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -262,7 +262,7 @@ TEST_F(PcapFixture, PcapCompileFailure2)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Compile Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     bpf_u_int32 net = 0;
@@ -277,7 +277,7 @@ TEST_F(PcapFixture, PcapCompileFailure3)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Compile Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -292,7 +292,7 @@ TEST_F(PcapFixture, PcapSetFilterSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Set Filter Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -310,7 +310,7 @@ TEST_F(PcapFixture, PcapSetFilterFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Set Filter Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -324,7 +324,7 @@ TEST_F(PcapFixture, PcapSetFilterFailure2)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Set Filter Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_setfilter(good_pcap_, nullptr);
@@ -337,7 +337,7 @@ TEST_F(PcapFixture, PcapFreeCodeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Free Code Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     struct bpf_program fp;
@@ -356,7 +356,7 @@ TEST_F(PcapFixture, PcapFreeCodeFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Free Code Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_freecode(nullptr);
@@ -369,7 +369,7 @@ TEST_F(PcapFixture, PcapDumpOpenSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Open Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     std::string fname{"/tmp/vlan73.pcap"};
@@ -383,7 +383,7 @@ TEST_F(PcapFixture, PcapDumpOpenFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Open Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     std::string fname{"/tmp/vlan73.pcap"};
@@ -397,7 +397,7 @@ TEST_F(PcapFixture, PcapDumpOpenFailure2)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Open Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_dump_open(good_pcap_, nullptr);
@@ -410,7 +410,7 @@ TEST_F(PcapFixture, PcapDumpOpenFailure3)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Open Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     std::string fname{"/file_cant_be_created.pcap"};
@@ -424,7 +424,7 @@ TEST_F(PcapFixture, PcapDumpSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     std::string fname{"/tmp/vlan73.pcap"};
@@ -454,7 +454,7 @@ TEST_F(PcapFixture, PcapDumpFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     pcap_pkthdr dummyHdr = {};
@@ -479,7 +479,7 @@ TEST_F(PcapFixture, PcapDumpFailure2)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     u_char user[5] = {0x11, 0x22, 0x33, 0x44, 0x55};
@@ -500,7 +500,7 @@ TEST_F(PcapFixture, PcapDumpFailure3)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     u_char user[5] = {0x11, 0x22, 0x33, 0x44, 0x55};
@@ -520,7 +520,7 @@ TEST_F(PcapFixture, PcapDumpCloseSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Close Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     std::string fname{"/tmp/vlan73.pcap"};
@@ -535,7 +535,7 @@ TEST_F(PcapFixture, PcapDumpCloseFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Pcap Dump Close Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     GetMeADevice();
     auto result = pcap_->pcap_dump_close(nullptr);

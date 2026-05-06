@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_CHUNK_H
-#define AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_CHUNK_H
+#ifndef SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_CHUNK_H
+#define SCORE_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_CHUNK_H
 
 #include "score/analysis/tracing/common/canary_wrapper/canary_wrapper.h"
 #include "shared_memory_location.h"
@@ -50,4 +50,4 @@ bool operator==(const SharedMemoryChunk& lhs, const SharedMemoryChunk& rhs) noex
 }  // namespace analysis
 }  // namespace score
 
-#endif  // AAS_ANALYSIS_TRACING_COMMON_SHARED_MEMORY_CHUNK_H
+#endif

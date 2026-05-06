@@ -382,8 +382,8 @@ void implicit_conversion_test(To);
 /// @requirement CB-#9338069
 TEST(span, OneDimensionalPointerSize_Explicit)
 {
-    const auto test = [](auto to, float* p, std::size_t s) -> decltype(implicit_conversion_test<decltype(to)>({p, s})) {
-    };
+    const auto test =
+        [](auto to, float* p, std::size_t s) -> decltype(implicit_conversion_test<decltype(to)>({p, s})) {};
 
     static_assert(std::is_invocable_v<decltype(test), span<float>, float*, std::size_t>);
     static_assert(!std::is_invocable_v<decltype(test), span<float, 3U>, float*, std::size_t>);

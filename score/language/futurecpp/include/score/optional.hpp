@@ -230,16 +230,6 @@ public:
         return *this;
     }
 
-    optional(const optional&) = default;
-    optional(optional&&) = default;
-    optional& operator=(const optional&) = default;
-    optional& operator=(optional&&) = default;
-
-    /// \brief Destruct an optional.
-    ///
-    /// When the optional holds a value, this value will be destructed as well.
-    ~optional() {}
-
     /// \brief Constructs the contained value in-place
     ///
     /// \warning If *this already contains a value it is destroyed
@@ -339,12 +329,9 @@ public:
     /// \brief Safe version of the direct value accessors. Uses provided default value, if internal value is not
     /// available.
     ///
-    /// \note As opposed to \sa value, the function returns a copy. To prevent editing a temporary value and thereby
-    /// possibly introducing a bug, is was made constant.
-    ///
     /// \sa value
     /// \return The internal value if available, otherwise return the provided default
-    constexpr const value_type value_or(const value_type& value) const { return this->has_value() ? **this : value; }
+    constexpr value_type value_or(const value_type& value) const { return this->has_value() ? **this : value; }
 
     /// \brief If *this contains a value, destroy that value as if by value().T::~T(). Otherwise, there are no
     /// effects.

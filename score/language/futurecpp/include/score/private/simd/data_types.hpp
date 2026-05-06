@@ -291,7 +291,9 @@ public:
 
     basic_mask() = delete;
     basic_mask(const basic_mask&) = delete;
+    basic_mask(basic_mask&&) = delete;
     basic_mask& operator=(const basic_mask&) = delete;
+    basic_mask& operator=(basic_mask&&) = delete;
     ~basic_mask() = delete;
 };
 
@@ -427,18 +429,19 @@ public:
                                           && std::is_convertible_v<R, span<const U, size()>>   //
                                           >>
     SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE basic_vec(R&& range, vector_aligned_tag)
-        : v_{[](auto&& r) {
-            SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((score::cpp::bit_cast<std::uintptr_t>(r.data()) % alignment_v<basic_vec>) == 0U);
+        : v_{[](auto&& r)
+             {
+                 SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG((score::cpp::bit_cast<std::uintptr_t>(r.data()) % alignment_v<basic_vec>) == 0U);
 
-            if constexpr (std::is_same_v<value_type, U>)
-            {
-                return Abi::impl::load_aligned(r.data());
-            }
-            else
-            {
-                return native_abi<U>::impl::convert(native_abi<U>::impl::load_aligned(r.data()), value_type{});
-            }
-        }(std::forward<R>(range))}
+                 if constexpr (std::is_same_v<value_type, U>)
+                 {
+                     return Abi::impl::load_aligned(r.data());
+                 }
+                 else
+                 {
+                     return native_abi<U>::impl::convert(native_abi<U>::impl::load_aligned(r.data()), value_type{});
+                 }
+             }(std::forward<R>(range))}
     {
         static_assert(std::is_integral_v<U> || std::is_floating_point_v<U>, "U not a vectorizable type");
     }
@@ -456,16 +459,17 @@ public:
                                           && std::is_convertible_v<R, span<const U, size()>>   //
                                           >>
     SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE basic_vec(R&& range, element_aligned_tag = {})
-        : v_{[](auto&& r) {
-            if constexpr (std::is_same_v<value_type, U>)
-            {
-                return Abi::impl::load(r.data());
-            }
-            else
-            {
-                return native_abi<U>::impl::convert(native_abi<U>::impl::load(r.data()), value_type{});
-            }
-        }(std::forward<R>(range))}
+        : v_{[](auto&& r)
+             {
+                 if constexpr (std::is_same_v<value_type, U>)
+                 {
+                     return Abi::impl::load(r.data());
+                 }
+                 else
+                 {
+                     return native_abi<U>::impl::convert(native_abi<U>::impl::load(r.data()), value_type{});
+                 }
+             }(std::forward<R>(range))}
     {
         static_assert(std::is_integral_v<U> || std::is_floating_point_v<U>, "U not a vectorizable type");
     }
@@ -640,7 +644,9 @@ public:
 
     basic_vec() = delete;
     basic_vec(const basic_vec&) = delete;
+    basic_vec(basic_vec&&) = delete;
     basic_vec& operator=(const basic_vec&) = delete;
+    basic_vec& operator=(basic_vec&&) = delete;
     ~basic_vec() = delete;
 };
 
@@ -684,8 +690,8 @@ inline basic_vec<T, Abi> SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE clamp(const
 /// \brief The class abstracts the notion of selecting elements of a given object of a data-parallel type.
 ///
 /// [parallel] 9.5 ff
-// NOLINTNEXTLINE(cppcoreguidelines-special-member-functions) Follows literaly the C++ standard
 template <typename M, typename T>
+// NOLINTNEXTLINE(cppcoreguidelines-special-member-functions) Follows literaly the C++ standard
 class where_expression
 {
     static_assert(detail::is_basic_mask_v<M>, "M not a basic_mask type");
@@ -702,8 +708,9 @@ public:
     where_expression& operator=(const where_expression&) = delete;
 
     /// \brief Replace the elements of value with the elements of x for elements where mask is true.
+    // misc-unconventional-assign-operator: follows specification.
     template <typename U>
-    void SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE operator=(U&& x) && noexcept
+    void SCORE_LANGUAGE_FUTURECPP_SIMD_ALWAYS_INLINE operator=(U&& x) && noexcept // NOLINT(misc-unconventional-assign-operator)
     {
         static_assert(std::is_same<const T, const std::remove_reference_t<U>>::value, "x must be of type T");
         v_ = T{impl::blend(static_cast<typename impl::type>(v_),
