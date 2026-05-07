@@ -31,7 +31,7 @@ Abstract
 
 We propose adding support for JSON parsing via the automotive established parser VaJson within S-CORE.
 
-This component request describes a json parser to be used within applications of the Eclipse S-CORE project.
+This component request describes a JSON parser to be used within applications of the Eclipse S-CORE project.
 
 This requests adds VaJson, a SAX-based JSON parser for Eclipse S-CORE applications that enables parsing of JSON data for configuration and data exchange.
 
@@ -58,9 +58,9 @@ Its API is familiar in automotive projects, making integration easier and reduci
 Specification
 =============
 
-Vajson fully meets all generic requirements outlined in https://github.com/eclipse-score/score/blob/main/docs/modules/baselibs/json/docs/requirements/index.rst.
+VaJson fully meets all generic requirements outlined in [ADD REFERENCE TO COMMON JSON REQUIREMENTS ONCE MIGRATION IS COMPLETE].
 
-In addition, Vajson satisfies the extended requirements specified in https://github.com/eclipse-score/score/pull/2358/files (docs/modules/baselibs/json/docs/vajson/requirements/index.rst).
+In addition, VaJson satisfies the extended requirements specified in :ref:`vajson-requirements`
 The extended requirements are also listed here below.
 
 - JSON Validation
@@ -74,9 +74,6 @@ The extended requirements are also listed here below.
 
 - Unicode Support
 	VaJson shall decode and encode UTF-8 strings.
-
-- Binary Content Support
-	VaJson shall allow plain binary content and binary strings represented as JSON values.
 
 
 Backwards Compatibility
@@ -143,10 +140,6 @@ How to Teach This
 
 - Update baselibs/README.md
 	Clearly display configuration options for JSON parsing. The new component introduces multiple backend solutions, and users need visibility into available configurations.
-
-
-- Use the inc_json incubation repo
-	Add user documentation inside inc_json/README.md to explain usage, integration steps, and best practices for the new JSON parsing backend.
 
 
 Rejected Ideas

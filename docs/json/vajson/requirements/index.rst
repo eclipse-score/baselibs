@@ -12,6 +12,8 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
+.. _vajson-requirements:
+
 Requirements
 ============
 
@@ -61,13 +63,3 @@ These additional features are captured as requirements in the following section.
    vaJson shall provide support for UTF-8 encoded strings.
    UTF-8 encoded strings shall be decoded and encoded by vaJson.
 
-.. comp_req:: Binary Content Support
-   :id: comp_req__vajson__binary_content
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
-   :status: valid
-
-   vaJson shall allow for plain binary content and binary strings.
-   Both types are represented as JSON values and handled accordingly (i.e., they must follow the JSON specification for values).
