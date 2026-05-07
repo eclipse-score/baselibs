@@ -19,6 +19,8 @@ on:
     branches:
       - main
     types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
 jobs:
   check-restricted-paths:
     name: Restricted file changes
@@ -51,7 +53,7 @@ jobs:
               - 'score/string_manipulation/**'
               - 'score/utils/**'
       - name: Block PR if restricted files are changed
-        if: steps.filter.outputs.restricted == 'true'
+        if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
         env:
           RESTRICTED_FILES: ${{ steps.filter.outputs.restricted_files }}
         run: |
