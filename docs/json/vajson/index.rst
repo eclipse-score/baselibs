@@ -161,4 +161,5 @@ Footnotes
 
 .. toctree::
 
+   architecture/index.rst
    requirements/index.rst

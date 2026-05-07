@@ -27,6 +27,7 @@ These additional features are captured as requirements in the following section.
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
+   :belongs_to: comp__baselibs_vajson
 
    vaJson shall provide a service to check the well-formedness of JSON data.
    Errors shall be reported including the error reason and the location in the JSON document for malformed JSON and invalid schemata (user-defined errors).
@@ -38,6 +39,7 @@ These additional features are captured as requirements in the following section.
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
+   :belongs_to: comp__baselibs_vajson
 
    vaJson shall provide a service to ignore trailing commas and accept hexadecimal integers.
 
@@ -48,6 +50,7 @@ These additional features are captured as requirements in the following section.
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
+   :belongs_to: comp__baselibs_vajson
 
    vaJson shall provide a service to listen to events for every parsed JSON item.
    The user shall be notified for every simple type directly, and for every complex type using start and end events.
@@ -59,6 +62,7 @@ These additional features are captured as requirements in the following section.
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
+   :belongs_to: comp__baselibs_vajson
 
    vaJson shall provide support for UTF-8 encoded strings.
    UTF-8 encoded strings shall be decoded and encoded by vaJson.
