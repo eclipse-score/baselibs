@@ -50,7 +50,7 @@ cc_library(
         "hash_calculator_mock.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/common",
     ],
@@ -81,5 +81,5 @@ cc_unit_test_suites_for_host_and_qnx(
     test_suites_from_sub_packages = [
         "@score_baselibs//score/hash/code/core/factory/impl:unit_tests",
     ],
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
 )

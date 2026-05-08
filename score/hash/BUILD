@@ -24,7 +24,7 @@ cc_library(
     name = "hash",
     features = COMPILER_WARNING_FEATURES,
     visibility = [
-        "//visibility:public",  # platform_only
+        "//visibility:public",
     ],
     deps = [
         "@score_baselibs//score/hash/code/core/factory/impl:crc_variant",
@@ -35,7 +35,7 @@ cc_library(
     name = "safe_hash",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/core/factory/impl:safe_crc_variant",
     ],
@@ -45,7 +45,7 @@ cc_library(
     name = "hash_mock",
     testonly = True,
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/core:hash_cal_mock",
         "@score_baselibs//score/hash/code/core/factory:factory_mock",
@@ -60,5 +60,5 @@ cc_unit_test_suites_for_host_and_qnx(
         "@score_baselibs//score/hash/code/crc:unit_tests",
         "@score_baselibs//score/hash/code/openssl:unit_tests",
     ],
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
 )

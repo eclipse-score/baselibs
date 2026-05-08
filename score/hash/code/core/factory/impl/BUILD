@@ -13,13 +13,25 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
-load(":custom.bzl", "load_custom_targets", "load_custom_test_suites")
 
 COMPILER_WARNING_FEATURES = [
     "treat_warnings_as_errors",
     "strict_warnings",
     "additional_warnings",
 ]
+
+cc_library(
+    name = "factory_headers",
+    hdrs = [
+        "hash_calculator_factory.h",
+        "safe_hash_calculator_factory.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@score_baselibs//score/hash/code/core/factory",
+        "@score_baselibs//score/hash/code/openssl:openssl_cal",
+    ],
+)
 
 cc_library(
     name = "hash_impl_ieee",
@@ -57,8 +69,13 @@ cc_library(
     ],
 )
 
-# Other options:
-# "@score_baselibs//score/hash/code/core/factory/impl:hash_impl_autosar"
+# Extension point:
+# `crc_variant` and `safe_crc_variant` are provided as extension points,
+# meaning that one may replace them with custom implementations that
+# provide different polynomials. To do so, define alternate `cc_library`
+# targets that reuse the generic CRC implementation pattern from
+# `//score/hash/code/crc:crc_ieee`, provide the desired polynomial
+# configuration, and override these two targets in `.bazelrc`.
 label_flag(
     name = "crc_variant",
     build_setting_default = ":hash_impl_ieee",
@@ -67,8 +84,6 @@ label_flag(
     ],
 )
 
-# Other options:
-# "@score_baselibs//score/hash/code/core/factory/impl:safe_hash_impl_autosar"
 label_flag(
     name = "safe_crc_variant",
     build_setting_default = ":safe_hash_impl_ieee",
@@ -96,8 +111,6 @@ cc_test(
 
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
-    cc_unit_tests = [":unit_test"] + load_custom_test_suites(),
-    visibility = ["//visibility:public"],  # platform_only
+    cc_unit_tests = [":unit_test"],
+    visibility = ["//visibility:public"],
 )
-
-load_custom_targets()

@@ -78,5 +78,5 @@ cc_test(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [":unit_test"],
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
 )
