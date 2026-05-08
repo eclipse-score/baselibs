@@ -38,7 +38,6 @@ jobs:
               - 'score/analysis/**'
               - 'score/concurrency/**'
               - 'score/containers/**'
-              - 'score/datetime_converter/**'
               - 'score/filesystem/**'
               - 'score/json/**'
               - 'score/language/futurecpp/**'
