@@ -21,6 +21,7 @@ cc_library(
     hdrs = [
         "crc32_ieee.h",
         "i_crc32.h",
+        "lookup_table.h",
     ],
     features = [
         "treat_warnings_as_errors",

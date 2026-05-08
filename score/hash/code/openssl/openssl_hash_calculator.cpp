@@ -61,7 +61,7 @@ Result<OpensslHashCalculator> OpensslHashCalculator::Create(const HashAlgorithm 
 
         case HashAlgorithm::kNone:
         case HashAlgorithm::kCrc32:
-        case HashAlgorithm::kCrc32Unused:
+        case HashAlgorithm::kCrc32Autosar:
         case HashAlgorithm::kLast:
         default:
             mw::log::LogError() << "OpensslHashCalculator::Unknown digest algorithm";

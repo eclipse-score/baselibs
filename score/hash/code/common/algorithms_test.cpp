@@ -124,7 +124,7 @@ TEST(HashIdentify, CorrectSizes)
 {
     const auto expected_sizes_bytes = std::map<const HashAlgorithm, const std::uint8_t>{
         {HashAlgorithm::kCrc32, 4},
-        {HashAlgorithm::kCrc32Unused, 4},
+        {HashAlgorithm::kCrc32Autosar, 4},
         {HashAlgorithm::kSha1, 20},
         {HashAlgorithm::kSha256, 32},
         {HashAlgorithm::kSha384, 48},
@@ -154,8 +154,8 @@ TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
     EXPECT_CALL(recorder_, LogStringView(_, {"CRC32:"}));
     EXPECT_CALL(recorder_, LogStringView(_, {"Crc32"}));
 
-    EXPECT_CALL(recorder_, LogStringView(_, {"CRC32 UNUSED:"}));
-    EXPECT_CALL(recorder_, LogStringView(_, {"Crc32Unused"}));
+    EXPECT_CALL(recorder_, LogStringView(_, {"CRC32 AUTOSAR:"}));
+    EXPECT_CALL(recorder_, LogStringView(_, {"Crc32Autosar"}));
 
     EXPECT_CALL(recorder_, LogStringView(_, {"SHA-1:"}));
     EXPECT_CALL(recorder_, LogStringView(_, {"Sha1"}));
@@ -181,7 +181,7 @@ TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
     EXPECT_CALL(recorder_, LogStringView(_, {"}"}));
 
     mw::log::LogInfo() << "CRC32:" << HashAlgorithm::kCrc32;
-    mw::log::LogInfo() << "CRC32 UNUSED:" << HashAlgorithm::kCrc32Unused;
+    mw::log::LogInfo() << "CRC32 AUTOSAR:" << HashAlgorithm::kCrc32Autosar;
     mw::log::LogInfo() << "SHA-1:" << HashAlgorithm::kSha1;
     mw::log::LogInfo() << "SHA-256:" << HashAlgorithm::kSha256;
     mw::log::LogInfo() << "SHA-384:" << HashAlgorithm::kSha384;

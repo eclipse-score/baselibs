@@ -110,7 +110,7 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32UnusedNotSupportedInIeeeVar
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
 
-    auto result = unit.CalculateHash(HashAlgorithm::kCrc32Unused, data);
+    auto result = unit.CalculateHash(HashAlgorithm::kCrc32Autosar, data);
 
     EXPECT_FALSE(result.has_value());
 }

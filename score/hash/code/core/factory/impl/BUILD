@@ -22,6 +22,19 @@ COMPILER_WARNING_FEATURES = [
 ]
 
 cc_library(
+    name = "factory_headers",
+    hdrs = [
+        "hash_calculator_factory.h",
+        "safe_hash_calculator_factory.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@score_baselibs//score/hash/code/core/factory",
+        "@score_baselibs//score/hash/code/openssl:openssl_cal",
+    ],
+)
+
+cc_library(
     name = "hash_impl_ieee",
     srcs = [
         "hash_calculator_factory_ieee.cpp",
