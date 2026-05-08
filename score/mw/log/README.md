@@ -659,7 +659,7 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
   bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/detail/flags:KConsole_Logging=False
   ```
 
-  * Enable DLT Trace as remote backend
+  * Enable DLTv2 support for remote backend
 
   ```bash
   bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/flags:experimental_dltv2_backend=True
