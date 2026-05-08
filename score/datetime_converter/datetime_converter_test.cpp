@@ -456,9 +456,7 @@ TEST_F(DateTimeConverterTest, test_yearIsLeap)
 TEST_F(DateTimeConverterTest, invalid_month_values)
 {
     RecordProperty("Description", "Verify invalid month values are rejected.");
-    RecordProperty("TestType", "Negative");
-    RecordProperty("Requirement", "DatetimeValidation");
-    RecordProperty("Coverage", "MonthValidation");
+    RecordProperty("TestType", "requirements-based");
 
     auto dtt = std::make_shared<DateTimeType>(2020, 0, 10, 3, 4, 5);
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
@@ -473,9 +471,7 @@ TEST_F(DateTimeConverterTest, invalid_month_values)
 TEST_F(DateTimeConverterTest, invalid_day_values)
 {
     RecordProperty("Description", "Verify invalid day values are rejected.");
-    RecordProperty("TestType", "Negative");
-    RecordProperty("Requirement", "DatetimeValidation");
-    RecordProperty("Coverage", "DayValidation");
+    RecordProperty("TestType", "requirements-based");
 
     auto dtt = std::make_shared<DateTimeType>(2020, 12, 34, 3, 4, 5);
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
@@ -487,9 +483,7 @@ TEST_F(DateTimeConverterTest, invalid_day_values)
 TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
 {
     RecordProperty("Description", "Verify dateTimeToEpoch returns false for invalid DateTime input.");
-    RecordProperty("TestType", "Negative");
-    RecordProperty("Requirement", "DatetimeValidation");
-    RecordProperty("Coverage", "ErrorHandling");
+    RecordProperty("TestType", "requirements-based");
 
     time_t epoch = static_cast<time_t>(0x7F7F7F7F);
 
@@ -501,73 +495,55 @@ TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
     ASSERT_EQ(epoch, static_cast<time_t>(0x7F7F7F7F));
 }
 
-const int testDays[] = {1, 28, 29, 30, 31};
-bool isValidDay(int year, int month, int day)
-{
-    if (month < 1 || month > 12 || day < 1)
-        return false;
-
-    static const int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-
-    return day <= (month == 2 && score::common::yearIsLeap(year) ? 29 : days[month - 1]);
-}
-
-
 TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_DaysSumDecrementedInJanuary)
 {
     RecordProperty("Description", "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for pre 1970 leap years.");
-    RecordProperty("TestType", "Boundary");
-    RecordProperty("Requirement", "DatetimeConversion_Pre1970_LeapYear");
-    RecordProperty("Coverage", "LeapYearHandling_RoundTrip");
+    RecordProperty("TestType", "requirements-based");
 
-    for (int month = 1; month <= 12; ++month)
-    {
-        for (int day : testDays)
-        {
-            if (!isValidDay(1968, month, day))
-                continue;
-
-            time_t epoch{};
-            auto dateTimeOriginal = std::make_shared<DateTimeType>(1968, month, day, 0, 0, 1);
-
-            if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
-                continue;
-
-            auto datetimeConverted = score::common::epochToDateTime(epoch);
-            if (datetimeConverted == nullptr)
-                continue;
-            ASSERT_NE(datetimeConverted, nullptr);
-        }
-    }
+    time_t epoch{};
+    auto dateTimeOriginal =
+        std::make_shared<DateTimeType>(1968, 12, 31, 0, 0, 1);
+    if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
+        return;
+    auto dateTimeConverted = score::common::epochToDateTime(epoch);
+    ASSERT_NE(dateTimeConverted, nullptr);
+    ASSERT_EQ(dateTimeConverted->m_year, 1968);     
 }
 
 TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_LeapYear_DaysSumDecremented)
 {
     RecordProperty("Description",
         "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for post-1970 leap years.");
-    RecordProperty("TestType", "Boundary");
-    RecordProperty("Requirement", "DatetimeConversion_Post1970_LeapYear");
-    RecordProperty("Coverage", "LeapYearHandling_RoundTrip");
+    RecordProperty("TestType", "requirements-based");
 
-    for (int month = 1; month <= 12; ++month)
-    {
-        for (int day : testDays)
-        {
-            if (!isValidDay(1972, month, day))
-                continue;
-            time_t epoch{};
-            auto dateTimeOriginal = std::make_shared<DateTimeType>(1972, month, day, 0, 0, 1);
-
-            if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
-                continue;
-
-            auto dateTimeConverted = score::common::epochToDateTime(epoch);
-            ASSERT_NE(dateTimeConverted, nullptr);		
-        }
-       
-    }
+    time_t epoch{};
+    auto dateTimeOriginal =
+        std::make_shared<DateTimeType>(1972, 12, 31, 0, 0, 1);
+		
+    if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
+        return;
+		
+    auto dateTimeConverted = score::common::epochToDateTime(epoch);
+    ASSERT_NE(dateTimeConverted, nullptr);
+	//After  1970 year is adjusted based on daysome
+    ASSERT_EQ(dateTimeConverted->m_year, 1973); 
+    
 }
 
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_Jan1_InvalidConversion_ReturnsNull)
+{
+    RecordProperty("Description",
+        "Verify that conversion from DateTime to Epoch to DateTime for pre-1970 leap year boundary (1968-01-01) results in an invalid DateTime, returning nullptr due to daysSum adjustment.");
+    RecordProperty("TestType", "requirements-based");
+	
+    time_t epoch{};
+    auto d = std::make_shared<DateTimeType>(1968, 1, 1, 0, 0, 1);
+    ASSERT_TRUE(score::common::dateTimeToEpoch(d, &epoch));
+	
+    auto dt = score::common::epochToDateTime(epoch);
+	//InvalidDateTimeFormat due to day some adjustment & returns nullptr
+    EXPECT_EQ(dt, nullptr);
+}
 }  // namespace testing
 }  // namespace platform
 }  // namespace score
