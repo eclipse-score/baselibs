@@ -32,7 +32,7 @@ In addition, the following VaJson-specific requirements apply:
 .. comp_req:: JSON Validation
    :id: comp_req__vajson__validation
    :reqtype: Functional
-   :security: YES
+   :security: NO
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
@@ -75,3 +75,17 @@ In addition, the following VaJson-specific requirements apply:
    :belongs_to: comp__baselibs_vajson
 
    VaJson shall encode and decode UTF-8 encoded strings.
+
+Safety Impact
+=============
+
+.. comp_req:: VaJson library ASIL level
+   :id: comp_req__vajson__asil
+   :reqtype: Functional
+   :security: NO
+   :safety: ASIL_B
+   :satisfies: feat_req__baselibs__json_library
+   :status: valid
+   :belongs_to: comp__baselibs_vajson
+
+   The VaJson library shall be ASIL-B compliant.
