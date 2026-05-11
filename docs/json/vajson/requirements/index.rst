@@ -11,14 +11,23 @@
    #
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
+.. document:: VaJson Requirements
+    :id: doc__vajson_requirements
+    :status: draft
+    :safety: ASIL_B
+    :security: YES
+    :realizes: wp__requirements_comp
 
 .. _vajson-requirements:
 
 Requirements
 ============
 
-In addition to the common JSON requirements shared by the different backends (such as "vajson" and ""nlohmann_json"), "vajson" offers extended capabilities.
-These additional features are captured as requirements in the following section.
+VaJson needs to implement some of the general requirements defined for the JSON module, particularly:
+* :need:`comp_req__json__deserialization`
+* :need:`comp_req__json__user_format`
+
+In addition, the following component-specific requirements apply to VaJson:
 
 .. comp_req:: JSON Validation
    :id: comp_req__vajson__validation
@@ -29,11 +38,11 @@ These additional features are captured as requirements in the following section.
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   vaJson shall provide a service to check the well-formedness of JSON data.
-   Errors shall be reported including the error reason and the location in the JSON document for malformed JSON and invalid schemata (user-defined errors).
+   VaJson checks the well-formedness of JSON data.
+   Errors shall be reported including the error reason and the location in the JSON document for malformed JSON.
 
-.. comp_req:: JSON Deserialization RFC extensions
-   :id: comp_req__vajson__deserialization_rfc_ext
+.. comp_req:: JSON Deserialization RFC extension trailing commas
+   :id: comp_req__vajson__trailing_commas
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
@@ -41,10 +50,10 @@ These additional features are captured as requirements in the following section.
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   vaJson shall provide a service to ignore trailing commas and accept hexadecimal integers.
+   VaJson shall ignore trailing commas. This is an extension to RFC 8259.
 
-.. comp_req:: JSON Event Callbacks
-   :id: comp_req__vajson__event_callbacks
+.. comp_req:: JSON Deserialization RFC extension hexadecimal integers
+   :id: comp_req__vajson__hex_integers
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
@@ -52,8 +61,7 @@ These additional features are captured as requirements in the following section.
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   vaJson shall provide a service to listen to events for every parsed JSON item.
-   The user shall be notified for every simple type directly, and for every complex type using start and end events.
+   VaJson shall accept hexadecimal integers. This is an extension to RFC 8259.
 
 .. comp_req:: Unicode Support
    :id: comp_req__vajson__unicode
@@ -64,6 +72,4 @@ These additional features are captured as requirements in the following section.
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   vaJson shall provide support for UTF-8 encoded strings.
-   UTF-8 encoded strings shall be decoded and encoded by vaJson.
-
+   VaJson shall encode and decode UTF-8 encoded strings

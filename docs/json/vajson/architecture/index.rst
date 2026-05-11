@@ -12,6 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
+.. document:: VaJson Architecture
+    :id: doc__vajson_architecture
+    :status: draft
+    :safety: ASIL_B
+    :security: YES
+    :realizes: wp__component_arch
+
 VaJson Component Architecture
 =============================
 

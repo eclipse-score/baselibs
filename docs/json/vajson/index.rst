@@ -58,9 +58,12 @@ Its API is familiar in automotive projects, making integration easier and reduci
 Specification
 =============
 
-VaJson fully meets all generic requirements outlined in [ADD REFERENCE TO COMMON JSON REQUIREMENTS ONCE MIGRATION IS COMPLETE].
+VaJson meets the generic requirements for a JSON deserialization library.
 
-In addition, VaJson satisfies the extended requirements specified in :ref:`vajson-requirements`
+* :need:`comp_req__json__deserialization`
+* :need:`comp_req__json__user_format`
+
+In addition, VaJson satisfies the extended requirements specified in :need:`doc__vajson_requirements`
 The extended requirements are also listed here below.
 
 - JSON Validation
@@ -68,9 +71,6 @@ The extended requirements are also listed here below.
 
 -  JSON Deserialization RFC extensions
 	VaJson shall parse JSON data according to RFC8259 from files and character buffers. The parser shall ignore trailing commas and accept hexadecimal integers.
-
-- JSON Event Callbacks
-	VaJson shall support event-driven parsing, notifying the user for each simple type and providing start/end events for complex types.
 
 - Unicode Support
 	VaJson shall decode and encode UTF-8 strings.
@@ -120,19 +120,15 @@ Safety-relevant component.
 
 **Safety Related Functionality Required From Other Components**
 
-- This component requires common types/API functionality that is safe.
-   This includes base functionality like error handling, STL-functionality (eg. safe version of std::vector, std::span...) and aborts.
+The Assumptions of Use which apply to the JSON modules public interface also apply to VaJson:
 
-- This component requires general OS related functionality that is safe.
-   This includes functionality for converting integers between host and network and acquiring endianness of the system (For FEAT_REQ__vajson__binary_content).
-
-- This component requires conversions of primitive types to strings that is safe.
-   Note: It's under investigation if this can be provided in the feature request.
+* :need:`aou_req__json__data_integrity`
+* :need:`aou_req__json__access_control`
 
 License Impact
 ==============
 
-[How could the copyright impacted by the license of the new contribution?]
+None. VaJson was previously released under a commercial license, but is now open sourced under the Apache License Version 2.0.
 
 
 How to Teach This
