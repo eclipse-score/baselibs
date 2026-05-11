@@ -17,6 +17,7 @@
 
 #include "gtest/gtest.h"
 
+#include <algorithm>
 #include <fstream>
 #include <string>
 
