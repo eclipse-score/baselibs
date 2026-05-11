@@ -15,8 +15,6 @@
 VaJson
 ######
 
-.. note:: Document header
-
 .. document:: vajson
    :id: doc__vajson
    :status: valid
@@ -135,7 +133,7 @@ How to Teach This
 =================
 
 - Update baselibs/README.md
-	Clearly display configuration options for JSON parsing. The new component introduces multiple backend solutions, and users need visibility into available configurations.
+	Clearly displays configuration options for JSON parsing. The new component introduces an additional backend solution, and users need to be aware of available configurations.
 
 
 Rejected Ideas

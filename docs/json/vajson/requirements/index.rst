@@ -11,14 +11,13 @@
    #
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
+
 .. document:: VaJson Requirements
     :id: doc__vajson_requirements
     :status: draft
     :safety: ASIL_B
     :security: YES
     :realizes: wp__requirements_comp
-
-.. _vajson-requirements:
 
 Requirements
 ============
