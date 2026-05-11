@@ -22,23 +22,24 @@
 Requirements
 ============
 
-VaJson needs to implement some of the general requirements defined for the JSON module, particularly:
+VaJson implements the following generic JSON module requirements:
+
 * :need:`comp_req__json__deserialization`
 * :need:`comp_req__json__user_format`
 
-In addition, the following component-specific requirements apply to VaJson:
+In addition, the following VaJson-specific requirements apply:
 
 .. comp_req:: JSON Validation
    :id: comp_req__vajson__validation
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :satisfies: feat_req__baselibs__json_library
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
    VaJson checks the well-formedness of JSON data.
-   Errors shall be reported including the error reason and the location in the JSON document for malformed JSON.
+   Errors shall include the reason and location in the JSON document for malformed JSON.
 
 .. comp_req:: JSON Deserialization RFC extension trailing commas
    :id: comp_req__vajson__trailing_commas
@@ -49,7 +50,8 @@ In addition, the following component-specific requirements apply to VaJson:
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   VaJson shall ignore trailing commas. This is an extension to RFC 8259.
+   VaJson shall ignore trailing commas.
+   This behavior extends RFC 8259.
 
 .. comp_req:: JSON Deserialization RFC extension hexadecimal integers
    :id: comp_req__vajson__hex_integers
@@ -60,7 +62,8 @@ In addition, the following component-specific requirements apply to VaJson:
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   VaJson shall accept hexadecimal integers. This is an extension to RFC 8259.
+   VaJson shall accept hexadecimal integers.
+   This behavior extends RFC 8259.
 
 .. comp_req:: Unicode Support
    :id: comp_req__vajson__unicode
@@ -71,4 +74,4 @@ In addition, the following component-specific requirements apply to VaJson:
    :status: valid
    :belongs_to: comp__baselibs_vajson
 
-   VaJson shall encode and decode UTF-8 encoded strings
+   VaJson shall encode and decode UTF-8 encoded strings.

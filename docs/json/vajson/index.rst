@@ -27,7 +27,7 @@ VaJson
 Abstract
 ========
 
-We propose adding support for JSON parsing via the automotive established parser VaJson within S-CORE.
+This component request proposes adding VaJson as a JSON parser backend for Eclipse S-CORE.
 
 This component request describes a JSON parser to be used within applications of the Eclipse S-CORE project.
 
@@ -37,20 +37,23 @@ This requests adds VaJson, a SAX-based JSON parser for Eclipse S-CORE applicatio
 Motivation
 ==========
 
-VaJson provides a safety-qualified JSON parser designed for automotive environments. It has passed ASIL D compliance within Vector, offering safety artifacts that significantly reduce the effort required to adapt to S-CORE qualification processes. Its API follows automotive standards, ensuring easier integration, consistent practices, and lower risk compared to non-qualified alternatives.
+VaJson provides a safety-qualified JSON parser designed for automotive environments.
+It has passed Vector's internal ASIL D qualification process and comes with supporting safety artifacts.
 
-The VaJson source code successfully passed Vector’s internal ASIL D compliance process, demonstrating adherence to the highest automotive safety standards. Artifacts produced during this process—such as the safety manual, safety analysis, cybersecurity analysis, and detailed design—combined with ASIL-D qualified code, provide a strong foundation for simplifying adaptation to S-CORE’s internal qualification requirements.
+Artifacts such as the safety manual, safety analysis, cybersecurity analysis, and detailed design significantly reduce the effort needed to adapt the component to S-CORE qualification processes.
+Its API follows established automotive patterns, which improves integration consistency and reduces project risk.
 
 
 
 Rationale
 =========
 
-VaJson was chosen because it is already ASIL D qualified (within Vector processes) and comes with complete safety and cybersecurity artifacts. This reduces the effort to meet S-CORE internal processes.
+VaJson was selected because it already has ASIL D qualification evidence (within Vector processes) and includes safety and cybersecurity artifacts.
+This reduces the effort to satisfy S-CORE internal process requirements.
 
-The parser uses a SAX-based design, which is efficient for embedded systems and avoids high memory usage.
+The SAX-based design is efficient for embedded systems and avoids the memory overhead of fully materialized document models.
 
-Its API is familiar in automotive projects, making integration easier and reducing risk compared to introducing a new or generic parser.
+Its API style is familiar in automotive projects, making adoption easier and less risky than introducing a new or generic parser.
 
 
 Specification
@@ -61,23 +64,18 @@ VaJson meets the generic requirements for a JSON deserialization library.
 * :need:`comp_req__json__deserialization`
 * :need:`comp_req__json__user_format`
 
-In addition, VaJson satisfies the extended requirements specified in :need:`doc__vajson_requirements`
-The extended requirements are also listed here below.
+In addition, VaJson satisfies the extended requirements defined in :need:`doc__vajson_requirements`:
 
-- JSON Validation
-	VaJson shall provide a service to check the well-formedness of JSON data. Errors must include the reason and location in the document for malformed JSON and invalid schemata.
+* :need:`comp_req__vajson__validation`
+* :need:`comp_req__vajson__trailing_commas`
+* :need:`comp_req__vajson__hex_integers`
+* :need:`comp_req__vajson__unicode`
 
--  JSON Deserialization RFC extensions
-	VaJson shall parse JSON data according to RFC8259 from files and character buffers. The parser shall ignore trailing commas and accept hexadecimal integers.
+Backward Compatibility
+======================
 
-- Unicode Support
-	VaJson shall decode and encode UTF-8 strings.
-
-
-Backwards Compatibility
-=======================
-
-VaJson will be integrated as an optional backend through the existing S-CORE JSON wrapper. Users can configure which JSON backend to use (e.g., VaJson or nlohmann), ensuring no breaking changes to existing functionality.
+VaJson is integrated as an optional backend through the existing S-CORE JSON wrapper.
+Users can select the JSON backend (for example, VaJson or nlohmann), so existing functionality remains backward compatible.
 
 
 Security Impact
@@ -86,21 +84,25 @@ Security Impact
 Potential security concerns and mitigations for VaJson:
 
 - Malformed JSON Attacks
-	Threat: Supplying intentionally malformed or deeply nested JSON to cause excessive CPU or memory consumption.
-	Mitigation: Handled by design within VaJson. VaJson uses a SAX-based streaming parser, which detects malformed JSON during parsing and prevents full processing of invalid input.
+
+  Threat: Supplying intentionally malformed or deeply nested JSON to cause excessive CPU or memory consumption.
+  Mitigation: Handled by design in VaJson. The SAX-based streaming parser detects malformed input during parsing and stops processing invalid data early.
 
 - Schema Abuse
-	Threat: Using oversized keys/values or unexpected schema elements to bypass validation or trigger buffer overflows.
-	Mitigation: Handled by design within VaJson. Input size and structure are validated during parsing.
+
+  Threat: Using oversized keys/values or unexpected schema elements to bypass validation or trigger buffer overflows.
+  Mitigation: Handled by design in VaJson. Input size and structure are validated during parsing.
 
 
 
 Safety Impact
 =============
 
-A full safety analysis for VaJson exists in an external format and addresses all identified concerns with appropriate measures. Example:
+A full safety analysis for VaJson exists in an external format and addresses all identified concerns with appropriate measures.
+Example:
 
 FM-VaJson-NumberConversion
+
 Details: Number conversion from textual JSON representation to a numerical value could change the value.
 Effect: Incorrect numerical values may violate safety requirements.
 Measure: Use only well-known standard library functions for number conversion, verified through unit testing.
@@ -133,7 +135,9 @@ How to Teach This
 =================
 
 - Update baselibs/README.md
-	Clearly displays configuration options for JSON parsing. The new component introduces an additional backend solution, and users need to be aware of available configurations.
+
+  Clearly document the available JSON parser configuration options.
+  This component introduces an additional backend, so users must understand the selectable configurations.
 
 
 Rejected Ideas
@@ -145,8 +149,10 @@ None.
 Open Issues
 ===========
 
-- S-CORE process compliance and Vectors role
-	The task of adapting the new component to be S-CORE process compliant is currently unassigned, and Vector will not create the required S-CORE process documentation (e.g., safety and security analysis).
+- S-CORE process compliance and Vector's role
+
+  The task of adapting the new component to be S-CORE-process-compliant is currently unassigned.
+  Vector will not create the required S-CORE process documentation (for example, safety and security analysis).
 
 
 Footnotes
