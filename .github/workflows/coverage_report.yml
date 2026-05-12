@@ -24,7 +24,7 @@ on:
   workflow_call:
 jobs:
   coverage-report:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
@@ -50,6 +50,7 @@ jobs:
           genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat" \
             -o=cpp_coverage \
             --show-details \
+            --source-directory="$(bazel info execution_root)" \
             --legend \
             --function-coverage \
             --branch-coverage
