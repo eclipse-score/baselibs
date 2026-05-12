@@ -188,6 +188,7 @@ git_override(
     commit = "cbeca1a3b42a98acae7fce4499409ecc2b447feb",
     remote = "https://github.com/eclipse-score/nlohmann_json.git",
 )
+
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
 #############################################################
