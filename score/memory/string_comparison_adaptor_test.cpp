@@ -15,7 +15,6 @@
 #include "score/memory/string_literal.h"
 
 #include <score/assert.hpp>
-#include <score/string_view.hpp>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -104,7 +103,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, GetStringViewReturnsValidStringView)
     const auto underlying_string = CreateUnderlyingString<TypeParam>("a");
     StringComparisonAdaptor adaptor{underlying_string};
 
-    EXPECT_THAT(adaptor.GetAsStringView(), Eq(score::cpp::string_view{"a"}));
+    EXPECT_THAT(adaptor.GetAsStringView(), Eq(std::string_view{"a"}));
 }
 
 TYPED_TEST(StringComparisonAdaptorFixture, ComparisonReturnsTrueForSameContent)

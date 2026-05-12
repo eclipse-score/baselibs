@@ -15,18 +15,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "generic_trace_api_header",
+    name = "generic_trace_api",
     hdrs = ["generic_trace_api.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library:__pkg__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/mock:__pkg__",
+        "@score_baselibs//score/analysis/tracing/generic_trace_library/stub_implementation:__pkg__",
     ],
     deps = [
-        ":meta_info",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score_baselibs//score/language/futurecpp",
+        ":trace_library_interface",
     ],
 )
 
@@ -40,9 +39,9 @@ cc_library(
     ],
     deps = [
         ":meta_info",
+        "@score_baselibs//score/analysis/tracing/common/interface_types:generic_trace_api_types",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
         "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score_baselibs//score/concurrency",
         "@score_baselibs//score/language/futurecpp",
     ],
 )

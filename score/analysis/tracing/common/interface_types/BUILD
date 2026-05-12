@@ -29,7 +29,6 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
-        "@score_baselibs//score/memory/shared",
         "@score_baselibs//score/result",
     ],
 )
@@ -45,23 +44,6 @@ cc_library(
     ],
     deps = [
         ":generic_trace_api_types",
-    ],
-)
-
-cc_library(
-    name = "shared_memory_location_helpers",
-    srcs = ["shared_memory_location_helpers.cpp"],
-    hdrs = ["shared_memory_location_helpers.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/analysis/tracing:__subpackages__",
-    ],
-    deps = [
-        ":generic_trace_api_types",
-        ":shared_memory_chunk",
-        ":shared_memory_location",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
     ],
 )
 

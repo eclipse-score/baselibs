@@ -45,14 +45,15 @@ config_setting(
 )
 
 bool_flag(
-    name = "KDltTrace_Logging",
+    name = "experimental_dltv2_backend",
     build_setting_default = False,
 )
 
 config_setting(
-    name = "DltTrace_Logging",
+    name = "config_use_dltv2_trace",
     flag_values = {
-        ":KDltTrace_Logging": "True",
+        ":KRemote_Logging": "True",
+        ":experimental_dltv2_backend": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

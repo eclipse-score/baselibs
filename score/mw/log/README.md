@@ -73,20 +73,20 @@ Log messages may be dropped if the available resources or the limits of the impl
 
 ## Bazel Targets
 
-Use the following targets to integrate `mw::log` into your application:
+Following targets are available to integrate `mw::log` into your application:
 
 | Target | Description |
 |---|---|
-| `@score_baselibs//mw/log` | Provides the frontend and console backend. Supports adding additional backends (file, remote, and slog on QNX). |
-| `@score_baselibs//mw/log:minimal` | Provides the frontend with a stub backend only. |
-| `@score_baselibs//mw/log:console` | Provides the frontend with the console backend — use this for minimum viable logging. |
-| `@score_logging//log/backend:file` | Adds DLT file logging as a backend plugin. |
-| `@score_logging//log/backend:remote` | Adds DataRouter remote DLT as a backend plugin. |
-| `@score_logging//log/backend:slog` | Adds QNX slog2 as a backend plugin. |
+| `@score_baselibs//score/mw/log` | mw/log bundle target - Supports adding additional backends (file, remote, and slog on QNX). |
+| `@score_baselibs//score/mw/log:minimal` | Provides the frontend with a stub backend. |
+| `@score_baselibs//score/mw/log:console` | Provides the frontend with the console backend — use this for minimum viable logging. |
+| `//score/mw/log/backend:file` | Adds DLT file logging as a backend plugin. |
+| `//score/mw/log/backend:remote` | Adds DataRouter remote DLT as a backend plugin. |
+| `//score/mw/log/backend:slog` | Adds QNX slog2 as a backend plugin. |
 
 See [registry_aware_recorder_factory.md](./design/registry_aware_recorder_factory.md) for a complete overview of all targets, usage examples, and guidance on adding new backends.
 
-> **Note:** If your application binary requires any backend other than console (e.g., remote DLT logging), you must add the corresponding backend target to your `deps` explicitly. In the future, `@score_baselibs//mw/log` will serve as the sole logging target. The integrator will be responsible for making the required backends available for each target platform, and `mw/log` will take care of loading them dynamically as shared libraries (.so). Until dynamic backend loading is supported, you must provide each backend dependency yourself.
+> **Note:** If your application binary requires any backend other than console (e.g., remote DLT logging), you must add the corresponding backend target to your `deps` explicitly. In the future, `@score_baselibs//mw/log` will serve as the sole logging target. The integrator will be responsible for making the required backends available for each target platform, and `mw/log` will take care of loading them dynamically as shared libraries (.so). Until dynamic backend loading is supported (score/issues/2848), you must provide each backend dependency yourself.
 
 ## Configuration
 
@@ -185,7 +185,7 @@ And the following bazel dependency as well:
 
 ```bazel
 deps = [
-    "@score_logging//score/mw/log",
+    "@score_baselibs//score/mw/log",
 ],
 ```
 
@@ -376,7 +376,7 @@ cc_library(
     ],
     ...
     deps = [
-        "@score_logging//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log:log_stream",
     ],
 )
 ```
@@ -387,7 +387,7 @@ cc_library(
 cc_test(
     ...
     deps = [
-        "@score_logging//score/mw/log:log",
+        "@score_baselibs//score/mw/log:log",
     ],
 )
 ```
@@ -467,7 +467,7 @@ For `LogStream` usage there is the dependency in `BUILD` file necessary:
 
 ```bazel
 deps = [
-    "@score_logging//score/mw/log:log_stream",
+    "@score_baselibs//score/mw/log:log_stream",
 ],
 ```
 
@@ -501,7 +501,7 @@ cc_library(
     ],
     ...
     deps = [
-        "//platform/aas/ara/log",
+        "//score/ara/log",
     ],
 )
 ],
@@ -591,8 +591,8 @@ cc_library(
         ...
     ],
     deps = [
-        "//platform/aas/ara/core",
-        "@score_logging//score/mw/log:log_stream",
+        "//score/ara/core",
+        "@score_baselibs//score/mw/log:log_stream",
     ],
 )
 ```
@@ -636,6 +636,7 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
 - **KFile_Logging** : for enabling/disabling KFile log mode, by default is enabled.
 - **KConsole_Logging** : for enabling/disabling KConsole log mode, by default is enabled.
 - **KRemote_Logging** : for enabling/disabling KRemote log mode, but this additionally requires a daemon process that gathers log mesages and forwards them to external systems for Analysis. E.g.: datarouter (DLT daemon)
+- **experimental_dltv2_backend** : when enabled, the KRemote backend uses the DLT Trace (Generic Trace Library) implementation instead of the DataRouter backend. Default is disabled (DataRouter is used).
 
 ### Building mw::log with/out feature flags.
 
@@ -655,6 +656,12 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
 
   ```bash
   bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/detail/flags:KConsole_Logging=False
+  ```
+
+  * Enable DLTv2 support for remote backend
+
+  ```bash
+  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/flags:experimental_dltv2_backend=True
   ```
 
 For build or test you can enable/disable log mode.

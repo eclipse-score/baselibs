@@ -61,17 +61,17 @@ StringComparisonAdaptor& StringComparisonAdaptor::operator=(const score::StringL
 // Since we don't throw exceptions, it's not possible that the variant can return true from valueless_by_exception and
 // therefore not possible that std::visit throws an exception.
 // coverity[autosar_cpp14_a15_5_3_violation]
-score::cpp::string_view StringComparisonAdaptor::GetAsStringView() const noexcept
+std::string_view StringComparisonAdaptor::GetAsStringView() const noexcept
 {
     return std::visit(score::cpp::overload(
                           [](std::string_view variant) noexcept {
-                              return score::cpp::string_view{variant.data(), variant.size()};
+                              return variant;
                           },
                           [](const std::string& variant) noexcept {
-                              return score::cpp::string_view{variant};
+                              return std::string_view{variant};
                           },
                           [](const score::StringLiteral& variant) noexcept {
-                              return score::cpp::string_view{variant};
+                              return std::string_view{variant};
                           }),
                       str_);
 }

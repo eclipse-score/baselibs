@@ -29,6 +29,10 @@ namespace score
 namespace os
 {
 
+#ifndef __RCVID_T_SIZE
+using rcvid_t = int;
+#endif
+
 class Dispatch : public ObjectSeam<Dispatch>
 {
   public:
@@ -172,6 +176,9 @@ class Dispatch : public ObjectSeam<Dispatch>
     virtual score::cpp::expected_blank<score::os::Error> pulse_detach(dispatch_t* const dpp,
                                                              const std::int32_t code,
                                                              const std::int32_t flags) const noexcept = 0;
+
+    virtual score::cpp::expected<std::int32_t, score::os::Error> msg_deliver_event(rcvid_t recvid, const sigevent* client_event)
+        const noexcept = 0;
 
     Dispatch() = default;
     virtual ~Dispatch() = default;
