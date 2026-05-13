@@ -207,10 +207,12 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
             }
         }
     }
-
+    /*moving computation of leapyear outside the loop as year is not chnanging at this point and computing repeatedly in the iteration for same year is of no value add. */ 
+    
+    bool isLeapYear = yearIsLeap(dateTime->m_year);
     for (std::int16_t i = 1; i < 13; i++)
     {
-        if (yearIsLeap(dateTime->m_year))
+        if (isLeapYear)
         {
             if (daysSum < DAYS_UNTIL_MONTHS_LEAP_YEAR[i])
             {
