@@ -158,7 +158,7 @@ TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
 {
     TestStream ts{"Does not matter"};
 
-    ASSERT_DEATH(ts.ops.ReadString(""), "JsonOps::ReadString: Cannot check for empty string");
+    ASSERT_DEATH(score::cpp::ignore = ts.ops.ReadString(""), "JsonOps::ReadString: Cannot check for empty string");
 }
 
 /*!

@@ -76,7 +76,7 @@ template <typename E>
 // copy assignment operators.
 // NOLINTBEGIN(cppcoreguidelines-special-member-functions): shall be implicitly declared as per the C++23 standard.
 // coverity[autosar_cpp14_a12_0_1_violation]
-class unexpected : impl::base_unexpected
+class [[nodiscard]] unexpected : impl::base_unexpected
 // NOLINTEND(cppcoreguidelines-special-member-functions): shall be implicitly declared as per the C++23 standard.
 {
   public:
@@ -115,16 +115,16 @@ class unexpected : impl::base_unexpected
     // NOLINTNEXTLINE(performance-noexcept-move-constructor) qualification from the move assignment operator of E.
     constexpr unexpected& operator=(unexpected&&) = default;
 
-    constexpr const E& error() const& noexcept
+    [[nodiscard]] constexpr const E& error() const& noexcept
     {
         return value_;
     }
-    constexpr E& error() & noexcept
+    [[nodiscard]] constexpr E& error() & noexcept
     {
         // coverity[autosar_cpp14_a9_3_1_violation] by design
         return value_;
     }
-    constexpr const E&& error() const&& noexcept
+    [[nodiscard]] constexpr const E&& error() const&& noexcept
     {
         // Suppress AUTOSAR C++14 A18-9-3" rule violations. The rule states "The std::move shall not be used on objects
         // declared const or const&." the move operation on a const object does not cause unintended behavior it ensures
@@ -132,7 +132,7 @@ class unexpected : impl::base_unexpected
         // coverity[autosar_cpp14_a18_9_3_violation]
         return std::move(value_);
     }
-    constexpr E&& error() && noexcept
+    [[nodiscard]] constexpr E&& error() && noexcept
     {
         return std::move(value_);
     }
@@ -208,7 +208,7 @@ unexpected(E) -> unexpected<E>;
 #endif
 
 template <typename T, typename E>
-class SPP_EXPECTED_NODISCARD expected : impl::base_expected
+class [[nodiscard]] expected : impl::base_expected
 {
     // Suppress "AUTOSAR C++14 A5-1-7" rule finding. This rule states: "A lambda shall not be an operand to decltype or
     // typeid". False-positive, at this point "decltype" is not used with lambda.
@@ -1031,7 +1031,7 @@ class SPP_EXPECTED_NODISCARD expected : impl::base_expected
 };
 
 template <typename E>
-class SPP_EXPECTED_NODISCARD expected<void, E> : impl::base_expected
+class [[nodiscard]] expected<void, E> : impl::base_expected
 {
     // Suppress "AUTOSAR C++14 A5-1-7" rule finding. This rule states: "A lambda shall not be an operand to decltype or
     // typeid". False-positive, at this point "decltype" is not used with lambda.
