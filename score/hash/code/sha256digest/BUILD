@@ -27,7 +27,7 @@ cc_library(
         "strict_warnings",
     ],
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/core",
         "@score_baselibs//score/language/futurecpp",

@@ -13,8 +13,12 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
-load(":custom.bzl", "load_custom_targets", "load_custom_test_suites")
 
+# lookup_table is a generic implementation of the CRC algorithm.
+# If one needs to provide different polynomials, one can directly inherit
+# from this target and use the `label_flag` at:
+# score/hash/code/core/factory/impl/BUILD
+# For providing the extended version as a replacement for `(safe_)crc_variant`.
 cc_library(
     name = "crc_ieee",
     srcs = ["crc32_ieee.cpp"],
@@ -29,10 +33,7 @@ cc_library(
         "additional_warnings",
     ],
     tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/hash:__pkg__",
-        "@score_baselibs//score/hash/code/core/factory/impl:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/core",
     ],
@@ -76,8 +77,6 @@ cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
         ":unit_test_ieee",
-    ] + load_custom_test_suites(),
+    ],
     visibility = ["//visibility:public"],  # platform_only
 )
-
-load_custom_targets()
