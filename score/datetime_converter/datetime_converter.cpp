@@ -231,7 +231,7 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
             }
         }
     }
-
+ 
     dateTime->m_second = static_cast<std::int8_t>(epoch % SECONDS_PER_MINUTE);
     epoch = epoch - dateTime->m_second;
     epoch = epoch / SECONDS_PER_MINUTE;
