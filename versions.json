@@ -306,5 +306,9 @@
   {
     "version": "pr-193",
     "url": "https://eclipse-score.github.io/baselibs/pr-193/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-193-ee9aefae7548101711e4de4ab4bbdc24151dc4fe",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-193-ee9aefae7548101711e4de4ab4bbdc24151dc4fe/"
   }
 ]
