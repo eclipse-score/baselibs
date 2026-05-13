@@ -92,6 +92,7 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 bazel_dep(name = "score_docs_as_code", version = "4.0.3", dev_dependency = True)
 bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
+bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
 
 ## Configure the python toolchain
 

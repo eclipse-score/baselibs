@@ -18,6 +18,7 @@ load(":qemu.bzl", "qemu_aarch64")
 
 docs(
     data = [
+        "@score_platform//:needs_json",
         "@score_process//:needs_json",
     ],
     source_dir = "docs",
