@@ -17,7 +17,7 @@ and hash algorithm.
 In order to avoid the user knowing which implementation to use, we introduce a factory that allows easy creation of
 hashes, or the hash calculator.
 
-![Static Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/hash/design/ClassDiagram.uxf)
+<img alt="Static Design" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/hash/design/ClassDiagram.puml">
 
 # CRC32 implementation
 
