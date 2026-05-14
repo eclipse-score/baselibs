@@ -7,3 +7,6 @@ compile_commands.json
 # docs build artifacts
 _build
 docs/ubproject.toml
+
+# coverage
+cpp_coverage

@@ -10,12 +10,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 cc_library(
     name = "flatbufferscpp",
     srcs = [
-        "src/idl_parser.cpp",
+        "details/idl_parser.cpp",
     ],
     hdrs = [
         "@flatbuffers//:include/flatbuffers/allocator.h",
@@ -37,4 +38,45 @@ cc_library(
     ],
     strip_include_prefix = "/include",
     visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "flatbufferutils",
+    srcs = [
+        "details/load_buffer.cpp",
+        "details/load_buffer_internal.hpp",
+    ],
+    hdrs = [
+        "load_buffer.hpp",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/os:fcntl",
+        "@score_baselibs//score/os:stat",
+        "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/result",
+    ],
+)
+
+cc_test(
+    name = "load_buffer_unit_test",
+    srcs = ["details/load_buffer_test.cpp"],
+    tags = ["unit"],
+    deps = [
+        ":flatbufferutils",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os/mocklib:fcntl_mock",
+        "@score_baselibs//score/os/mocklib:stat_mock",
+        "@score_baselibs//score/os/mocklib:unistd_mock",
+    ],
+)
+
+cc_test(
+    name = "load_buffer_test",
+    srcs = ["test/load_buffer_test.cpp"],
+    deps = [
+        ":flatbufferutils",
+        "@googletest//:gtest_main",
+    ],
 )

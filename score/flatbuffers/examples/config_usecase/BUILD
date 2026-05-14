@@ -50,5 +50,6 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/filesystem",
         "@score_baselibs//score/flatbuffers:flatbufferscpp",
+        "@score_baselibs//score/flatbuffers:flatbufferutils",
     ],
 )
