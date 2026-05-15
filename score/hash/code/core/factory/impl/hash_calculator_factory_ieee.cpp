@@ -61,7 +61,7 @@ Result<std::unique_ptr<IHashCalculator>> HashCalculatorFactory::CreateHashCalcul
                 std::make_unique<OpensslHashCalculator>(std::move(*digest)));
             break;
         }
-        case HashAlgorithm::kCrc32Unused:
+        case HashAlgorithm::kCrc32Autosar:
         case HashAlgorithm::kNone:
         case HashAlgorithm::kLast:
         default:

@@ -29,7 +29,7 @@ cc_library(
         "openssl_hash_calculator.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/common",
         "@score_baselibs//score/hash/code/core",

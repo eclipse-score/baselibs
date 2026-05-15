@@ -27,8 +27,8 @@ score::cpp::optional<std::uint8_t> HashSizeInBytes(const HashAlgorithm algorithm
         case HashAlgorithm::kCrc32:
             hashSizeInBytes = kCrc32Size;
             break;
-        case HashAlgorithm::kCrc32Unused:
-            hashSizeInBytes = kCrc32UnusedSize;
+        case HashAlgorithm::kCrc32Autosar:
+            hashSizeInBytes = kCrc32AutosarSize;
             break;
         case HashAlgorithm::kSha1:
             hashSizeInBytes = kSha1Size;
@@ -71,7 +71,7 @@ HashAlgorithm IdentifyHash(std::string_view hash_string) noexcept
     switch (hash_string.length())
     {
         case kCrc32Size * 2U:
-            // there's no way to distinguish between kCrc32 and kCrc32Unused based on the bytes alone
+            // there's no way to distinguish between kCrc32 and kCrc32Autosar based on the bytes alone
             identifiedHash = HashAlgorithm::kCrc32;
             break;
         case kSha1Size * 2U:
@@ -100,7 +100,7 @@ HashAlgorithm IdentifyHash(std::size_t hash_size_in_bytes) noexcept
     switch (hash_size_in_bytes)
     {
         case kCrc32Size:
-            // there's no way to distinguish between kCrc32 and kCrc32Unused based on the bytes alone
+            // there's no way to distinguish between kCrc32 and kCrc32Autosar based on the bytes alone
             identifiedHash = HashAlgorithm::kCrc32;
             break;
         case kSha1Size:
