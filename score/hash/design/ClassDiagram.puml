@@ -1,0 +1,123 @@
+@startuml ClassDiagram
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Enums
+enum HashAlgorithm {
+}
+
+' Classes
+class Hash {
+  + operator==(Hash): bool
+  + GetBytes(): amp::span<const std::uint8_t>
+  --
+  - kind_: HashAlgorithm
+  - raw_hash_: amp::static_vector<std::uint8_t, kMaxDigestSize>
+}
+
+interface IHashCalculatorFactory {
+  + CreateHashCalculator(const HashAlgorithm algorithm): std::unique_ptr<IHashCalculator>
+  + CalculateHash(HashAlgorithm, const amp::span<std::uint8_t>): Result<Hash>
+  + CalculateHash(HashAlgorithm, std::istream&): Result<Hash>
+}
+
+class HashCalculatorFactory {
+}
+
+class SafeHashCalculatorFactory {
+  Note: This class supports fewer digest types. However, it is
+  guaranteed that all created digest implementations are usable
+  in ASIL qualified code.
+}
+
+interface IHashCalculator {
+  +Update(data: const amp::span<const std::uint8_t>): ResultBlank
+  +UpdateFromStream(input: std::istream&): ResultBlank
+  +Finalize(): Hash
+}
+
+interface ICrc32HashCalculator {
+  +GetChecksum() : std::uint_fast32_t
+}
+
+class Crc32HashCalculator <<italic>> {
+  -checksum_: std::uint_fast32_t
+}
+
+class "LookupTable<ReversePolynom>" as LookupTable {
+  kTableSize = 256
+  ..
+  LookupTable()
+  operator[](index: int): std::uint8_t
+  --
+  table_: uint_fast32_t[kTableSize]
+}
+
+class Sha256Digest {
+  -buffer_: MessageBuffer
+  -hash_: std::array<std::uint32_t, kHashSize>
+  -message_len_: std::uint64_t
+}
+
+class "MessageBuffer<T, N>" as MessageBuffer {
+  +using SizeType = std::uint8_t
+  +MessageBuffer()
+  +size()
+  +clear()
+  +push_back(const T&)
+  +operator[]
+  +fill_from(amp::span<const T>)
+  --
+  -buffer_: atd::array<T, N>
+  -size_: SizeType
+}
+
+interface IOpensslLib {
+  using StructDigest = ::EVP_MD
+  using StructDigestCtx = ::EVP_MD_CTX
+  using Engine = ::ENGINE
+  --
+  +DigestAlgoSha1() const: const StructDigest*
+  +DigestAlgoSha256() const: const StructDigest*
+  +DigestAlgoSha384() const: const StructDigest*
+  +DigestAlgoSha512() const: const StructDigest*
+  +CreateDigestCtx() const: StructDigestCtx*
+  +InitDigestCtx(ctx: StructDigestCtx* , type: const StructDigest*,impl:  Engine* ) const: std::int32_t
+  +UpdateDigestCtx(ctx: StructDigestCtx* , data: const void*,count:  std::size_t ) const: std::int32_t
+  +FinalizeDigestValue(ctx: StructDigestCtx* , digest_value: unsigned char* ,digest_size: unsigned int* ) const: std::int32_t
+  +ResetDigestCtx(ctx: StructDigestCtx* ) const: void
+}
+
+class OpensslLibImpl {
+}
+
+class OpensslHashCalculator {
+  -message_digest_context_: StructDigestCtx
+  -message_digest_value_: std::array<std::uint8_t, kMaxDigestSize>
+  --
+  +Create( algorithm: types::HashAlgorithm, openssl: const IOpensslLib&): Result<HashCalculator>
+}
+
+' Relationships
+IHashCalculatorFactory <|.. HashCalculatorFactory : implements
+IHashCalculatorFactory <|.. SafeHashCalculatorFactory : implements
+
+HashCalculatorFactory ..> IHashCalculator : create
+SafeHashCalculatorFactory ..> IHashCalculator : create
+
+IHashCalculatorFactory ..> Hash : create
+
+IHashCalculator <|-- ICrc32HashCalculator : extends
+IHashCalculator <|-- OpensslHashCalculator : implements
+IHashCalculator <|-- Sha256Digest : implements
+
+ICrc32HashCalculator <|-- Crc32HashCalculator : implements
+
+Crc32HashCalculator --> LookupTable : «uses»
+
+Sha256Digest o-- MessageBuffer : composition
+
+OpensslHashCalculator --> IOpensslLib : uses
+IOpensslLib <|.. OpensslLibImpl : implements
+
+@enduml
