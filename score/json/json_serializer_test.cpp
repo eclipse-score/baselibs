@@ -419,7 +419,7 @@ TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
     RecordProperty("DerivationTechnique", "requirements-analysis"); // architecture
 
     // Given a JSON that is not an object
-    auto source = R"(42)"_json;
+    auto source = ToJsonAny(std::string(R"(42)"));
 
     // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
