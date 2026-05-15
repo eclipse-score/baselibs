@@ -29,7 +29,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7e109c9e97670ec621adaea1c21721c18212a96d
+        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7b265b4accb24997dcb0de449c34d23853709f57
       - name: Install lcov
         run: |
           sudo apt-get update
