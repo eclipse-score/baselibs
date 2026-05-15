@@ -184,7 +184,13 @@ deb(
 )
 
 bazel_dep(name = "flatbuffers", version = "25.12.19")
-bazel_dep(name = "nlohmann_json", version = "3.11.3")
+bazel_dep(name = "score_nlohmann_json", version = "3.12.0-tsf.1")
+git_override(
+    module_name = "score_nlohmann_json",
+    commit = "cbeca1a3b42a98acae7fce4499409ecc2b447feb",
+    remote = "https://github.com/eclipse-score/nlohmann_json.git",
+)
+
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
 #############################################################
