@@ -137,20 +137,6 @@ register_toolchains(
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(
-    name = "acl-deb",
-    build = "//third_party/acl:acl.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.2.52-3build1_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
-    name = "acl-deb-aarch64",
-    build = "//third_party/acl:acl.BUILD",
-    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.2.52-3build1_arm64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
     name = "valgrind-deb",
     build = "//third_party/valgrind:valgrind.BUILD",
     urls = ["https://archive.ubuntu.com/ubuntu/pool/main/v/valgrind/valgrind_3.15.0-1ubuntu9.1_amd64.deb"],
@@ -181,6 +167,26 @@ deb(
     build = "//third_party/libcap2:libcap2.BUILD",
     urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/libc/libcap2/libcap-dev_2.25-1.2_arm64.deb"],
     visibility = ["//visibility:public"],
+)
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "bazel_attr",
+    build_file = "//third_party/attr:attr.BUILD",
+    patch_args = ["-p1"],
+    patches = ["//third_party/attr:attr.patch"],
+    strip_prefix = "attr-2.5.2",
+    urls = ["https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz"],
+)
+
+http_archive(
+    name = "bazel_acl",
+    build_file = "//third_party/acl:acl.BUILD",
+    patch_args = ["-p1"],
+    patches = ["//third_party/acl:acl.patch"],
+    strip_prefix = "acl-2.3.2",
+    urls = ["https://download.savannah.gnu.org/releases/acl/acl-2.3.2.tar.gz"],
 )
 
 bazel_dep(name = "flatbuffers", version = "25.12.19")

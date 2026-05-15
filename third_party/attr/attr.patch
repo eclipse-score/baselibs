@@ -1,0 +1,54 @@
+diff --git a/bazel/configs/linux/config.h b/bazel/configs/linux/config.h
+new file mode 100644
+index 0000000..a0dac0e
+--- /dev/null
++++ b/bazel/configs/linux/config.h
+@@ -0,0 +1,47 @@
++
++
++#ifndef ATTR_CONFIG_H
++#define ATTR_CONFIG_H
++
++#define HAVE_CONFIG_H 1
++
++#define PACKAGE "attr"
++#define PACKAGE_NAME "attr"
++#define PACKAGE_VERSION "2.5.2"
++#define VERSION "2.5.2"
++
++/* Headers */
++#define HAVE_ERRNO_H 1
++#define HAVE_FCNTL_H 1
++#define HAVE_LIMITS_H 1
++#define HAVE_STDDEF_H 1
++#define HAVE_STDINT_H 1
++#define HAVE_STDLIB_H 1
++#define HAVE_STRING_H 1
++#define HAVE_SYS_STAT_H 1
++#define HAVE_SYS_TYPES_H 1
++#define HAVE_SYS_XATTR_H 1
++#define HAVE_UNISTD_H 1
++
++/* Functions */
++#define HAVE_GETXATTR 1
++#define HAVE_LGETXATTR 1
++#define HAVE_FGETXATTR 1
++
++#define HAVE_SETXATTR 1
++#define HAVE_LSETXATTR 1
++#define HAVE_FSETXATTR 1
++
++#define HAVE_LISTXATTR 1
++#define HAVE_LLISTXATTR 1
++#define HAVE_FLISTXATTR 1
++
++#define HAVE_REMOVEXATTR 1
++#define HAVE_LREMOVEXATTR 1
++#define HAVE_FREMOVEXATTR 1
++
++/* Linux behavior */
++#define HAVE_VISIBILITY_ATTRIBUTE 1
++#define EXPORT __attribute__ ((visibility ("default"))) extern
++
++#endif /* ATTR_CONFIG_H */
+\ No newline at end of file

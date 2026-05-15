@@ -1,0 +1,83 @@
+diff --git a/bazel/configs/linux/config.h b/bazel/configs/linux/config.h
+new file mode 100644
+index 0000000..e7c5ff6
+--- /dev/null
++++ b/bazel/configs/linux/config.h
+@@ -0,0 +1,41 @@
++#ifndef ACL_CONFIG_H
++#define ACL_CONFIG_H
++
++#define HAVE_CONFIG_H 1
++
++#define PACKAGE "acl"
++#define PACKAGE_NAME "acl"
++#define PACKAGE_VERSION "2.3.2"
++#define VERSION "2.3.2"
++
++/* Headers */
++#define HAVE_ERRNO_H 1
++#define HAVE_FCNTL_H 1
++#define HAVE_LIMITS_H 1
++#define HAVE_STDARG_H 1
++#define HAVE_STDDEF_H 1
++#define HAVE_STDINT_H 1
++#define HAVE_STDLIB_H 1
++#define HAVE_STRING_H 1
++#define HAVE_SYS_ACL_H 1
++#define HAVE_SYS_STAT_H 1
++#define HAVE_SYS_TYPES_H 1
++#define HAVE_UNISTD_H 1
++
++/* Functions */
++#define HAVE_FCHMOD 1
++#define HAVE_FCHOWN 1
++#define HAVE_GETXATTR 1
++#define HAVE_FGETXATTR 1
++#define HAVE_SETXATTR 1
++#define HAVE_FSETXATTR 1
++#define HAVE_LISTXATTR 1
++#define HAVE_FLISTXATTR 1
++#define HAVE_REMOVEXATTR 1
++#define HAVE_FREMOVEXATTR 1
++
++/* Linux behavior */
++#define HAVE_VISIBILITY_ATTRIBUTE 1
++#define EXPORT __attribute__ ((visibility ("default"))) extern
++
++#endif /* ACL_CONFIG_H */
+diff --git a/include/acl.h b/include/acl.h
+index 710bf31..4edc471 100644
+--- a/include/acl.h
++++ b/include/acl.h
+@@ -21,6 +21,7 @@
+ #define __SYS_ACL_H
+ 
+ #include <sys/types.h>
++#include "config.h"
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff --git a/libacl/acl_get_fd.c b/libacl/acl_get_fd.c
+index 089ec79..ff930ca 100644
+--- a/libacl/acl_get_fd.c
++++ b/libacl/acl_get_fd.c
+@@ -24,6 +24,7 @@
+ #include <unistd.h>
+ #include <stdio.h>
+ #include <sys/xattr.h>
++#include <alloca.h>
+ #include "libacl.h"
+ #include "__acl_from_xattr.h"
+ 
+diff --git a/libacl/acl_get_file.c b/libacl/acl_get_file.c
+index 4a86d1a..f062bf2 100644
+--- a/libacl/acl_get_file.c
++++ b/libacl/acl_get_file.c
+@@ -19,6 +19,7 @@
+ */
+ 
+ #include "config.h"
++#include <alloca.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <unistd.h>

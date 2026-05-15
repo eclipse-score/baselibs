@@ -242,15 +242,14 @@ TEST_F(AclTestFixture, AclToTextToReturnErrorIfPassInvalidAcl)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "QM");
     RecordProperty("Description", "ACL shall return error if pass invalid ACL");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
-    auto* result = ::acl_get_file("", ACL_TYPE_ACCESS);
     ssize_t len{0};
-    auto res = unit_.acl_to_text(result, &len);
-    ASSERT_FALSE(res.has_value());
 
-    ::acl_free(result);
+    auto res = unit_.acl_to_text(nullptr, &len);
+
+    ASSERT_FALSE(res.has_value());
 }
 
 // Test to set fd return error if invalid parameters are passed
