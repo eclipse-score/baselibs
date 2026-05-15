@@ -400,11 +400,18 @@ score::cpp::expected<char*, score::os::Error> AclInstance::acl_to_text(const Acl
                                                               ssize_t* const len_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
+    if ((acl == nullptr) || (len_p == nullptr))
+    {
+        errno = EINVAL;
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+
     auto* const acl_text = ::acl_to_text(acl, len_p);
     if (acl_text == nullptr)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
+
     return acl_text;
 }
 
