@@ -29,9 +29,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7e109c9e97670ec621adaea1c21721c18212a96d
+        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7b265b4accb24997dcb0de449c34d23853709f57
       - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.18.0
+        uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.job }}
