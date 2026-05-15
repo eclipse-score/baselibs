@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 alias(
-    name = "acl",
-    actual = "@bazel_acl//:acl",
+    name = "attr",
+    actual = "@bazel_attr//:attr",
     visibility = ["//:__subpackages__"],
 )

@@ -11,7 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-""" Bazel BUILD file for the ACL library.
+""" The BUILD file for the bazel_attr module. This module provides a C library for 
+    extended attributes (xattr) on Linux. It includes a configuration header and
+    the source files for the library. The library is built as a static library and
+    is visible to other modules. The configuration header is selected based on the
+    platform, and the library depends on the platforms and rules_cc modules.
 """
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
@@ -27,20 +31,12 @@ cc_library(
 )
 
 cc_library(
-    name = "acl_h",
-    hdrs = ["include/acl.h"],
-    copts = [
-        '-DEXPORT=__attribute__((visibility("default"))) extern',
+    name = "attr_h",
+    hdrs = [
+        "include/attributes.h",
+        "include/libattr.h",
     ],
-    include_prefix = "sys",
-    includes = ["include"],
-    strip_include_prefix = "include",
-)
-
-cc_library(
-    name = "libacl_h",
-    hdrs = ["include/libacl.h"],
-    include_prefix = "acl",
+    include_prefix = "attr",
     includes = ["include"],
     strip_include_prefix = "include",
 )
@@ -48,41 +44,34 @@ cc_library(
 cc_library(
     name = "includes",
     hdrs = [
-        "include/acl_ea.h",
+        "include/error_context.h",
         "include/misc.h",
+        "include/nls.h",
         "include/walk_tree.h",
     ],
     includes = ["include"],
 )
 
 cc_library(
-    name = "acl",
-    srcs = glob(["libacl/*c"]) + [
-        "libmisc/high_water_alloc.c",
-        "libmisc/next_line.c",
-        "libmisc/quote.c",
-        "libmisc/uid_gid_lookup.c",
-        "libmisc/unquote.c",
-        "libmisc/walk_tree.c",
+    name = "attr",
+    srcs = [
+        "libattr/libattr.c",
     ],
-    hdrs = glob(["libacl/*h"]),
+    hdrs = [
+        "libattr/libattr.h",
+    ],
     copts = [
-        "-include libacl/perm_copy.h",
-        "-include",
-        "config.h",
-        "-Wno-error=missing-prototypes",
+        "-DSYSCONFDIR=\\\"$(location :xattr.conf)\\\"",
         "-Wno-error=cast-qual",
-        "-Wno-error=int-conversion",
-        "-Wno-error=implicit-function-declaration",
+        "-Wno-error=missing-prototypes",
     ],
-    includes = ["libacl"],
+    data = [":xattr.conf"],
+    includes = ["libattr"],
     linkstatic = True,
     visibility = ["//visibility:public"],
     deps = [
-        ":acl_h",
+        ":attr_h",
         ":config",
         ":includes",
-        ":libacl_h",
-        "@bazel_attr//:attr",
     ],
 )
