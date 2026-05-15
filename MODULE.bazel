@@ -96,7 +96,8 @@ bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
 
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
+bazel_dep(name = "rules_python", version = "1.8.3",
+dev_dependency = True)
 
 PYTHON_VERSION = "3.12"
 
