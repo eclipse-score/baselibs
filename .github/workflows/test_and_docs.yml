@@ -24,6 +24,8 @@ on:
       - main
   merge_group:
     types: [checks_requested]
+  release:
+    types: [created]
 jobs:
   docs-verify:
     uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@c1c90b1a82a1fab0fc202979dde6686b2162d5a8 # v0.0.0
