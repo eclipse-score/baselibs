@@ -16,21 +16,18 @@ permissions:
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-  push:
-    branches:
-      - main
   merge_group:
     types: [checks_requested]
 jobs:
   formatting-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@c1c90b1a82a1fab0fc202979dde6686b2162d5a8 # v0.0.0
+    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@7b265b4accb24997dcb0de449c34d23853709f57
   clang-format:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.18.0
+        uses: bazel-contrib/setup-bazel@0.19.0
         with:
           bazelisk-cache: true
           disk-cache: ${{ github.job }}
