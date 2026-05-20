@@ -37,5 +37,6 @@ Summary
    :caption: Contents:
 
    json/index.rst
+   test_traceability.rst
 
 

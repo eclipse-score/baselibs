@@ -73,6 +73,13 @@ jobs:
         run: |
           # Test that baselibs works when consumed as an external module dependency
           cd examples/integration && bazel build //... && bazel mod deps --lockfile_mode=update
+      - name: Upload JUnit XML test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bazel-testxml-${{ matrix.bazel-config }}
+          path: bazel-testlogs/**/test.xml
+          if-no-files-found: warn
       - name: Upload test logs on failure
         if: failure()
         uses: actions/upload-artifact@v7
