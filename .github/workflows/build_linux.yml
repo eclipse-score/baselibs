@@ -75,7 +75,7 @@ jobs:
           cd examples/integration && bazel build //... && bazel mod deps --lockfile_mode=update
       - name: Upload JUnit XML test reports
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: junit-xml-reports
           path: bazel-testlogs/**/*.xml

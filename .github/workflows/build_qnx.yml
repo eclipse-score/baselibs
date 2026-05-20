@@ -62,7 +62,7 @@ jobs:
       score-qnx-password: ${{ secrets.SCORE_QNX_PASSWORD }}
     steps:
       - name: Upload JUnit XML
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: junit-xml-qnx
           path: bazel-testlogs/**/*.xml
