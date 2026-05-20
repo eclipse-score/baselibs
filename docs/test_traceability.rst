@@ -30,3 +30,8 @@ Unlinked Test Cases
 .. needtable::
    :types: testcase
    :filter: not partially_verifies and not fully_verifies
+
+JUnit XML Upload
+-----------------
+
+This workflow now uploads JUnit XML test reports as artifacts for traceability analysis.
