@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_parser.h"
 
+#include "score/json/json_parser.h"
+
 auto score::json::VajsonParser::FromFile(const std::string_view file_path) -> score::Result<score::json::Any>
 {
     score::Result<score::json::Any> result = MakeUnexpected(Error::kParsingError);
@@ -184,4 +186,17 @@ auto score::json::VajsonParser::OnUnexpectedEvent() noexcept -> score::json::vaj
     // We set this equal to a failed user validation, since a missing callback means we do not support this type.
     return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
         score::json::vajson::JsonErrc::kUserValidationFailed);
+}
+
+// Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
+// Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
+// coverity[autosar_cpp14_a15_5_3_violation]
+auto score::json::JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<score::json::Any>
+{
+    return score::json::VajsonParser::FromFile(file_path);
+}
+
+auto score::json::JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> score::Result<score::json::Any>
+{
+    return score::json::VajsonParser::FromBuffer(buffer);
 }
