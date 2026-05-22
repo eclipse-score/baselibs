@@ -1,0 +1,83 @@
+@startuml
+
+hide empty members
+
+package "amsr" {
+  package "json" {
+
+    class JsonParser {
+    }
+
+    class StartObjectParser {}
+
+    class EndObjectParser {}
+
+    class StartArrayParser {}
+
+    class EndArrayParser {}
+
+    class JsonData {}
+
+
+
+    package "internal" {
+      Interface VirtualParser {}
+
+      class StructureParser<VirtualParser> {}
+      class StructureParserBase<logic> {}
+
+      class CompositionParser<VirtualParser> {}
+      class CompositionParser {}
+      class ArrayParser {}
+      class BinaryParser {}
+      class BoolParser {}
+      class KeyParser {}
+      class NumberParser {}
+      class ObjectParser {}
+      class StringParser {}
+      CompositionParser --> BinaryParser
+      CompositionParser --> ArrayParser
+      CompositionParser --> ObjectParser
+      CompositionParser --> KeyParser
+      CompositionParser --> NumberParser
+      CompositionParser --> StringParser
+      CompositionParser --> BoolParser
+    }
+
+    package "v2" {
+      class SingleArrayParser {}
+      class SingleObjectParser {}
+    }
+
+    JsonParser --> CompositionParser
+    JsonParser --> StartObjectParser
+    JsonParser --> EndObjectParser
+    JsonParser --> StartArrayParser
+    JsonParser --> EndArrayParser
+    JsonParser --> JsonData
+
+    StartObjectParser --|> VirtualParser
+    EndObjectParser --|> VirtualParser
+    StartArrayParser --|> VirtualParser
+    EndArrayParser --|> VirtualParser
+    BinaryParser --|> VirtualParser
+    BoolParser --|> VirtualParser
+    KeyParser --|> VirtualParser
+    NumberParser --|> VirtualParser
+    StringParser --|> VirtualParser
+
+    CompositionParser --|> VirtualParser
+    CompositionParser --> JsonData
+
+    VirtualParser --> StructureParser
+
+    StructureParser --> JsonData
+    StructureParser --|> StructureParserBase
+    StructureParser --> VirtualParser
+    ArrayParser --|> SingleArrayParser
+
+    ObjectParser --|> SingleObjectParser
+  }
+}
+
+@enduml

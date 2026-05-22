@@ -1,0 +1,70 @@
+@startuml
+hide empty members
+
+package "amsr" {
+  package stream {
+    class InputStream {}
+  }
+
+  package "json" {
+    enum JsonErrc {
+      kNotInitialized
+      kInvalidJson,
+      kUserValidationFailed,
+      kStreamFailure
+    }
+
+
+    class NumberParser {}
+
+    class JsonNumber {}
+
+    enum EncodingType {
+      kNone
+      kUtf8
+    }
+
+    package Reader {
+    }
+
+    package Writer {
+    }
+
+    class JsonData {}
+
+    class DepthCounter {}
+    class JsonErrorDomain {}
+    class JsonException {}
+
+    package "internal" {
+      class JsonOps {
+        + JsonOps(JsonData& json_data)
+      }
+      class Ref<JsonData> {}
+      class OptChar {}
+    }
+  }
+}
+
+JsonNumber --> NumberParser
+
+Reader -down-> JsonNumber
+Reader -down-> JsonErrorDomain
+Reader -down-> JsonErrc
+Reader -down-> JsonData
+
+Writer -down-> JsonErrorDomain
+Writer -down-> EncodingType
+
+JsonOps --> Ref
+Ref --> JsonData
+JsonData --> Ref
+JsonOps --> JsonData
+JsonOps --> OptChar
+
+JsonData --> InputStream
+JsonData --> DepthCounter
+JsonData --> JsonErrorDomain
+JsonErrorDomain --> JsonException
+
+@enduml
