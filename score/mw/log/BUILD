@@ -63,13 +63,13 @@ cc_library(
         "@score_baselibs//score/mw/log/detail:recorder_interface",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
         "@score_baselibs//score/result",
-        "@score_baselibs//score/utils/meyer_singleton",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
         ":log_stream",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",  #Ticket-222244
+        "@score_baselibs//score/utils/meyer_singleton",
     ],
 )
 

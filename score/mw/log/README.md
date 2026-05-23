@@ -636,7 +636,7 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
 - **KFile_Logging** : for enabling/disabling KFile log mode, by default is enabled.
 - **KConsole_Logging** : for enabling/disabling KConsole log mode, by default is enabled.
 - **KRemote_Logging** : for enabling/disabling KRemote log mode, but this additionally requires a daemon process that gathers log mesages and forwards them to external systems for Analysis. E.g.: datarouter (DLT daemon)
-- **experimental_dltv2_backend** : when enabled, the KRemote backend uses the DLT Trace (Generic Trace Library) implementation instead of the DataRouter backend. Default is disabled (DataRouter is used).
+- **shm_dma_enabled** : when enabled, the KRemote backend uses Generic Trace Library (GTL) implementation that supports shared memory (Shm) with Direct Memory Access (DMA) capability. When disabled, only POSIX Shm is used.
 
 ### Building mw::log with/out feature flags.
 
@@ -658,10 +658,10 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
   bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/detail/flags:KConsole_Logging=False
   ```
 
-  * Enable DLTv2 support for remote backend
+  * Enable Shm transport with DMA capabilty for remote backend
 
   ```bash
-  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/flags:experimental_dltv2_backend=True
+  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/flags:shm_dma_enabled=True
   ```
 
 For build or test you can enable/disable log mode.

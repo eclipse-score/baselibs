@@ -83,6 +83,8 @@ test:bl-aarch64-qnx --test_lang_filters=cc,rust
 coverage --features=coverage
 coverage --combined_report=lcov
 coverage --cache_test_results=no
+coverage --copt=-fprofile-update=atomic
+coverage --linkopt=-fprofile-update=atomic
 
 # Sanitizer configuration for C++
 test:asan_ubsan_lsan --features=asan

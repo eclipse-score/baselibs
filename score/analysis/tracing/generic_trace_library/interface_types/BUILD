@@ -68,7 +68,6 @@ cc_library(
     deps = [
         ":type_definitions",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory:string_literal",
     ],
 )
 

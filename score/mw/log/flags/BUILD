@@ -45,15 +45,15 @@ config_setting(
 )
 
 bool_flag(
-    name = "experimental_dltv2_backend",
+    name = "shm_dma_enabled",
     build_setting_default = False,
 )
 
 config_setting(
-    name = "config_use_dltv2_trace",
+    name = "config_use_shm_dma_enabled",
     flag_values = {
         ":KRemote_Logging": "True",
-        ":experimental_dltv2_backend": "True",
+        ":shm_dma_enabled": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

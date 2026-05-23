@@ -60,4 +60,5 @@ jobs:
         with:
           name: ${{ github.event.repository.name }}_cpp_coverage_report
           path: cpp_coverage/
+          include-hidden-files: true
           retention-days: 10

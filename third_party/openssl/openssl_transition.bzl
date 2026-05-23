@@ -14,36 +14,44 @@
 """User-defined transition for building OpenSSL with relaxed compiler settings.
 
 OpenSSL is a C library that uses GNU extensions and patterns that trigger
-warnings under strict C11 compilation. This transition:
-  - Switches the C standard to gnu11 (required for OpenSSL's GNU extensions)
-  - Suppresses warnings that OpenSSL legitimately triggers but are irrelevant
-    to our codebase's quality standards
+warnings under strict compilation settings. This transition adjusts the
+active toolchain features rather than injecting raw compiler flags, making
+it portable across all integrated toolchains:
+
+  - Enables  "gnu11"            so the toolchain applies the GNU C11 dialect
+                                 required by OpenSSL's GNU extensions.
+  - Disables "minimal_warnings", "strict_warnings", "warnings_as_errors"
+                                 so OpenSSL's legitimate warning patterns do
+                                 not cause build failures.
+
+Each toolchain translates these feature names into its own concrete flags,
+keeping this transition platform-agnostic.
 
 The transition is applied only to the non-QNX case (see BUILD), since QNX
 uses a separately maintained OpenSSL target.
 """
 
-_OPENSSL_EXTRA_COPTS = [
-    "-std=gnu11",
-    "-Wno-discarded-qualifiers",
-    "-Wno-cast-qual",
-    "-Wno-format",
-    "-Wno-format-nonliteral",
-    "-Wno-redundant-decls",
-    "-Wno-suggest-attribute=format",
-    "-Wno-bad-function-cast",
-    "-Wno-implicit-function-declaration",
+_FEATURES_TO_DISABLE = [
+    "minimal_warnings",
+    "strict_warnings",
+    "warnings_as_errors",
 ]
 
 def _openssl_transition_impl(settings, attr):
+    current = list(settings["//command_line_option:features"])
+    updated = []
+    for f in current:
+        if f not in _FEATURES_TO_DISABLE:
+            updated.append(f)
+    updated.append("gnu11")
     return {
-        "//command_line_option:copt": list(settings["//command_line_option:copt"]) + _OPENSSL_EXTRA_COPTS,
+        "//command_line_option:features": updated,
     }
 
 _openssl_transition = transition(
     implementation = _openssl_transition_impl,
-    inputs = ["//command_line_option:copt"],
-    outputs = ["//command_line_option:copt"],
+    inputs = ["//command_line_option:features"],
+    outputs = ["//command_line_option:features"],
 )
 
 def _openssl_library_impl(ctx):
