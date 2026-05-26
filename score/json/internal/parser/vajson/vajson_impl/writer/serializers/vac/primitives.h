@@ -1,0 +1,131 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+/*!        \file
+ *        \brief  A collection of serializers for libVac primitive data types.
+ *
+ *      \details  Provides serializers for std::string, std::string_view, and std::uint8_t types.
+ *
+ *********************************************************************************************************************/
+
+#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
+#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
+
+/**********************************************************************************************************************
+ *  INCLUDES
+ *********************************************************************************************************************/
+#include <cstdint>
+#include <string>
+#include <string_view>
+#include <utility>
+
+#include "amsr/json/util/types.h"
+#include "amsr/json/writer/types/basic_types.h"
+
+namespace amsr {
+namespace json {
+/*!
+ * \brief           Forward declaration for the GenericValueSerializer
+ *
+ * \vprivate        component private
+ */
+template <typename Return>
+class GenericValueSerializer;
+
+/*!
+ * \brief           Serializes a string value directly
+ * \vpublic
+ *
+ * \tparam          Next
+ *                  type of serializer.
+ * \param[in]       serializer
+ *                  instance to write into.
+ * \param[in]       string
+ *                  to serialize.
+ * \return          The succeeding serializer.
+ *
+ * \context         ANY
+ * \pre             -
+ * \threadsafe      FALSE
+ * \reentrant       FALSE
+ * \synchronous     -
+ * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
+ * \spec
+ * requires true;
+ * \endspec
+ */
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, std::string const& string) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << JString(string);
+}
+
+/*!
+ * \brief           Serializes a string value directly
+ * \vpublic
+ *
+ * \tparam          Next
+ *                  type of serializer.
+ * \param[in]       serializer
+ *                  instance to write into.
+ * \param[in]       string
+ *                  to serialize.
+ * \return          The succeeding serializer.
+ *
+ * \context         ANY
+ * \pre             -
+ * \threadsafe      FALSE
+ * \reentrant       FALSE
+ * \synchronous     -
+ * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
+ * \spec
+ * requires true;
+ * \endspec
+ */
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, ::std::string_view string) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << JString(string);
+}
+
+/*!
+ * \brief           Serializes a std::uint8_t value directly
+ * \vpublic
+ *
+ * \tparam          Next
+ *                  type of serializer.
+ * \param[in]       serializer
+ *                  instance to write into.
+ * \param[in]       byte
+ *                  to serialize.
+ * \return          The succeeding serializer.
+ *
+ * \context         ANY
+ * \pre             -
+ * \threadsafe      FALSE
+ * \reentrant       FALSE
+ * \synchronous     -
+ * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
+ * \spec
+ * requires true;
+ * \endspec
+ */
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, ::std::uint8_t byte) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << static_cast<std::uint16_t>(byte);
+}
+
+}  // namespace json
+}  // namespace amsr
+
+#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
