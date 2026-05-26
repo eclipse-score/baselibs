@@ -151,10 +151,6 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
     time_t daysSum = (epoch / SECONDS_PER_DAY) + 1;
     if (before1970)
     {
-        if (yearIsLeap(dateTime->m_year) && ((daysSum * -1) < DAYS_UNTIL_MONTHS[1]))
-        {
-            --daysSum;
-        }
         daysSum = DAYS_PER_YEAR + daysSum - 1;
         if (yearIsLeap(dateTime->m_year))
         {
@@ -200,7 +196,7 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
         }
         else
         {
-            if (daysSum >= DAYS_PER_YEAR)
+            if (daysSum > DAYS_PER_YEAR)
             {
                 dateTime->m_year = dateTime->m_year + 1;
                 daysSum = daysSum - DAYS_PER_YEAR;

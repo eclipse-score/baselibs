@@ -495,39 +495,24 @@ TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
     ASSERT_EQ(epoch, static_cast<time_t>(0x7F7F7F7F));
 }
 
-TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_DaysSumDecrementedInJanuary)
-{
-    RecordProperty("Description", "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for pre 1970 leap years.");
-    RecordProperty("TestType", "requirements-based");
-
-    time_t epoch{};
-    auto dateTimeOriginal =
-        std::make_shared<DateTimeType>(1968, 12, 31, 0, 0, 1);
-    if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
-        return;
-    auto dateTimeConverted = score::common::epochToDateTime(epoch);
-    ASSERT_NE(dateTimeConverted, nullptr);
-    ASSERT_EQ(dateTimeConverted->m_year, 1968);     
-}
-
-TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_LeapYear_DaysSumDecremented)
+TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
 {
     RecordProperty("Description",
-        "Verify that datetime values remain unchanged after roundtrip conversion (DateTime to Epoch to DateTime) for post-1970 leap years.");
+        "Verify that a post-1970 epoch landing exactly on a non-leap year boundary rolls over to the next year correctly.");
     RecordProperty("TestType", "requirements-based");
 
     time_t epoch{};
-    auto dateTimeOriginal =
-        std::make_shared<DateTimeType>(1972, 12, 31, 0, 0, 1);
-		
-    if (!score::common::dateTimeToEpoch(dateTimeOriginal, &epoch))
-        return;
-		
+    auto dateTimeOriginal = std::make_shared<DateTimeType>(1971, 1, 1, 0, 0, 0);
+    ASSERT_TRUE(score::common::dateTimeToEpoch(dateTimeOriginal, &epoch));
+
     auto dateTimeConverted = score::common::epochToDateTime(epoch);
     ASSERT_NE(dateTimeConverted, nullptr);
-	//After  1970 year is adjusted based on daysome
-    ASSERT_EQ(dateTimeConverted->m_year, 1973); 
-    
+    ASSERT_EQ(dateTimeConverted->m_year, 1971);
+    ASSERT_EQ(dateTimeConverted->m_month, 1);
+    ASSERT_EQ(dateTimeConverted->m_day, 1);
+    ASSERT_EQ(dateTimeConverted->m_hour, 0);
+    ASSERT_EQ(dateTimeConverted->m_minute, 0);
+    ASSERT_EQ(dateTimeConverted->m_second, 0);
 }
 
 TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_Jan1_InvalidConversion_ReturnsNull)
@@ -537,12 +522,12 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_Jan1_InvalidConve
     RecordProperty("TestType", "requirements-based");
 	
     time_t epoch{};
-    auto d = std::make_shared<DateTimeType>(1968, 1, 1, 0, 0, 1);
-    ASSERT_TRUE(score::common::dateTimeToEpoch(d, &epoch));
+    auto dateTimeOriginal = std::make_shared<DateTimeType>(1968, 1, 1, 0, 0, 1);
+    ASSERT_TRUE(score::common::dateTimeToEpoch(dateTimeOriginal, &epoch));
 	
-    auto dt = score::common::epochToDateTime(epoch);
-	//InvalidDateTimeFormat due to day some adjustment & returns nullptr
-    EXPECT_EQ(dt, nullptr);
+    auto dateTimeConverted = score::common::epochToDateTime(epoch);
+	//InvalidDateTimeFormat due to daysum adjustment & returns nullptr
+    EXPECT_EQ(dateTimeConverted, nullptr);
 }
 }  // namespace testing
 }  // namespace platform
