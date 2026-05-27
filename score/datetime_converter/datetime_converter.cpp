@@ -17,6 +17,22 @@ namespace score
 namespace common
 {
 
+std::int8_t daysInMonth(const std::int16_t year, const std::int8_t month)
+{
+    if (month == 2)
+    {
+        const bool isLeapYear = (((year % 4) == 0) && (((year % 100) != 0) || ((year % 400) == 0)));
+        return isLeapYear ? 29 : 28;
+    }
+
+    if ((month == 4) || (month == 6) || (month == 9) || (month == 11))
+    {
+        return 30;
+    }
+
+    return 31;
+}
+
 int16_t leapYearsSince1970(const int16_t year)
 {
     int16_t numOfLeapYears = (((year - 1969) / 4) - ((year - 1901) / 100)) + ((year - 1601) / 400);
@@ -70,24 +86,7 @@ bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime)
         return false;
     }
 
-    if (dateTime->m_month == 2)
-    {
-        if (yearIsLeap(dateTime->m_year))
-        {
-            return (dateTime->m_day <= 29);
-        }
-        else
-        {
-            return (dateTime->m_day <= 28);
-        }
-    }
-
-    if (dateTime->m_month == 4 || dateTime->m_month == 6 || dateTime->m_month == 9 || dateTime->m_month == 11)
-    {
-        return (dateTime->m_day <= 30);
-    }
-
-    return true;
+    return (dateTime->m_day <= daysInMonth(dateTime->m_year, dateTime->m_month));
 };
 
 bool dateTimeToEpoch(const std::shared_ptr<DateTimeType> dateTime, time_t* epoch)
@@ -258,6 +257,18 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
         {
             dateTime->m_hour = dateTime->m_hour - HOURS_PER_DAY;
             dateTime->m_day++;
+        }
+
+        if (dateTime->m_day > daysInMonth(dateTime->m_year, dateTime->m_month))
+        {
+            dateTime->m_day = 1;
+            dateTime->m_month++;
+
+            if (dateTime->m_month > 12)
+            {
+                dateTime->m_month = 1;
+                dateTime->m_year++;
+            }
         }
     }
 

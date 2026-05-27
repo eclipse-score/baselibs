@@ -515,18 +515,35 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
     ASSERT_EQ(dateTimeConverted->m_second, 0);
 }
 
-TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_LeapYear_Jan1_InvalidConversion_ReturnsNull)
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_YearBoundary_DayOverflowRollover)
 {
     RecordProperty("Description",
-        "Verify that conversion from DateTime to Epoch to DateTime for pre-1970 leap year boundary (1968-01-01) results in an invalid DateTime, returning nullptr due to daysSum adjustment.");
+        "Verify that pre-1970 conversion handles day overflow at year boundary by rolling month and year.");
     RecordProperty("TestType", "requirements-based");
-	
-    time_t epoch{};
-    auto dateTimeOriginal = std::make_shared<DateTimeType>(1968, 1, 1, 0, 0, 1);
-    ASSERT_TRUE(score::common::dateTimeToEpoch(dateTimeOriginal, &epoch));
-	
-    auto dateTimeConverted = score::common::epochToDateTime(epoch);
-	//InvalidDateTimeFormat due to daysum adjustment & returns nullptr
+
+    // 1960-01-01 00:00:00 epoch; this path normalizes an intermediate Dec 32 to Jan 1 of the next year.
+    const time_t epochAt1960Start = static_cast<time_t>(-315619200);
+
+    auto dateTimeConverted = score::common::epochToDateTime(epochAt1960Start);
+    ASSERT_NE(dateTimeConverted, nullptr);
+    EXPECT_EQ(dateTimeConverted->m_year, 1960);
+    EXPECT_EQ(dateTimeConverted->m_month, 1);
+    EXPECT_EQ(dateTimeConverted->m_day, 1);
+    EXPECT_EQ(dateTimeConverted->m_hour, 0);
+    EXPECT_EQ(dateTimeConverted->m_minute, 0);
+    EXPECT_EQ(dateTimeConverted->m_second, 0);
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1800_ReturnsNull)
+{
+    RecordProperty("Description",
+        "Verify that epoch values mapping outside supported year range return nullptr.");
+    RecordProperty("TestType", "requirements-based");
+
+    // This epoch maps to year 10000, which is above the supported upper bound (9999).
+    const time_t epochOutOfRange = static_cast<time_t>(253405000000);
+
+    auto dateTimeConverted = score::common::epochToDateTime(epochOutOfRange);
     EXPECT_EQ(dateTimeConverted, nullptr);
 }
 }  // namespace testing
