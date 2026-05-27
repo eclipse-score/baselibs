@@ -11,23 +11,20 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 /*!        \file
- *        \brief  A collection of all available serializers.
+ *        \brief  A collection of serializers for native libVac types.
  *
- *      \details  Provides serializers for native JSON, libVac & STL/STD types.
- *          \unit Serializer
- *    \complexity The sum metrics of unit is high. It includes multiple template classes, which could be put into
- *                separate units. But the classes are closely related, and splitting the unit up into smaller pieces
- *                would not make it simpler.
+ *      \details  Single include for all libVac types.
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_H_
+#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_
+#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include "amsr/json/writer/serializers/stl.h"
-#include "amsr/json/writer/serializers/vac.h"
+#include "score/json/internal/writer/vajson/writer/serializers/vac/primitives.h"
+#include "score/json/internal/writer/vajson/writer/serializers/vac/sequence_containers.h"
+#include "score/json/internal/writer/vajson/writer/serializers/vac/variant.h"
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_H_
+#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_

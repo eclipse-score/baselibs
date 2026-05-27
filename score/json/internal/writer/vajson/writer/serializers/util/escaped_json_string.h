@@ -26,9 +26,9 @@
 #include <string_view>
 #include <utility>
 
-#include "amsr/json/util/types.h"
-#include "amsr/json/writer/serializers/structures/serializer.h"
-#include "amsr/json/writer/types/basic_types.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
 namespace amsr {
 namespace json {
@@ -142,37 +142,37 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
     switch (std::char_traits<char>::to_int_type(ch)) {
       case std::char_traits<char>::to_int_type('"'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\")", 1);
+        os.write("\\\"", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\\'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\\)", 1);
+        os.write("\\\\", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\b'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\b)", 1);
+        os.write("\\b", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\f'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\f)", 1);
+        os.write("\\f", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\n'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\n)", 1);
+        os.write("\\n", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\r'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\r)", 1);
+        os.write("\\r", 2);
         break;
       }
       case std::char_traits<char>::to_int_type('\t'): {
         // VCA_VAJSON_OUTPUTSTREAM
-        os.write(R"(\t)", 1);
+        os.write("\\t", 2);
         break;
       }
       default:

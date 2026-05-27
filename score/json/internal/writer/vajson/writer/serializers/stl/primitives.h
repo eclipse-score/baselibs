@@ -28,8 +28,8 @@
 #include <type_traits>
 #include <utility>
 
-#include "amsr/json/util/types.h"
-#include "amsr/json/writer/types/basic_types.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
 namespace amsr {
 namespace json {

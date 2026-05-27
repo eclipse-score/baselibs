@@ -21,13 +21,13 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include "amsr/json/util/types.h"
-#include "amsr/json/writer/serializers/structures/serializer.h"
-#include "amsr/json/writer/serializers/util/escaped_json_string.h"
-#include "amsr/json/writer/serializers/util/length_serializer.h"
-#include "amsr/json/writer/types/array_type.h"
-#include "amsr/json/writer/types/basic_types.h"
-#include "amsr/json/writer/types/object_type.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/length_serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {
@@ -175,11 +175,12 @@ class KeySerializer final {
     this->WriteComma();
 
     // VCA_VAJSON_OUTPUTSTREAM
-    this->os_.get().Put('k');
+    this->os_.get().put('k');
     // VCA_VAJSON_OUTPUTSTREAM
     internal::SerializeLength(this->os_.get(), key.GetLength());
     // VCA_VAJSON_OUTPUTSTREAM
-    this->os_.get().Write(key.GetValue());
+    const auto value = key.GetValue();
+    this->os_.get().write(value.data(), value.size());
 
     return Next(this->os_.get());
   }
@@ -204,7 +205,7 @@ class KeySerializer final {
   void WriteComma() const noexcept {
     if (this->serializer_state_ == SerializerState::kNonEmpty) {
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put(',');
+      this->os_.get().put(',');
     }
   }
 

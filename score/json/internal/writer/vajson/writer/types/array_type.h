@@ -28,10 +28,8 @@
 #include <type_traits>
 #include <utility>
 
-#include "amsr/json/writer/serializers/stl/primitives.h"
-#include "amsr/json/writer/serializers/structures/serializer.h"
-#include "amsr/json/writer/serializers/vac/primitives.h"
-#include "amsr/json/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
 namespace amsr {
 namespace json {

@@ -21,7 +21,8 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include "amsr/json/writer/serializers/structures/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
 
 namespace amsr {
 namespace json {
@@ -52,11 +53,11 @@ auto GenericValueSerializer<Return>::operator<<(JObjectType<Fn> object) && noexc
     static_assert(std::is_same<ReturnType, KeySerializer>::value, "Cannot close object in current state");
 
     // VCA_VAJSON_OUTPUTSTREAM
-    this->os_.get().Put('{');
+    this->os_.get().put('{');
     // VCA_VAJSON_OUTPUTSTREAM
     static_cast<void>(object.fn(ObjectStart(this->os_.get())));
     // VCA_VAJSON_OUTPUTSTREAM
-    this->os_.get().Put('}');
+    this->os_.get().put('}');
   });
 }
 

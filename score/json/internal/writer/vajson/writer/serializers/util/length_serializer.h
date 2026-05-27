@@ -23,7 +23,8 @@
  *********************************************************************************************************************/
 #include <array>
 #include <cstdint>
-#include "amsr/json/writer/serializers/structures/serializer.h"
+
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 
 namespace amsr {
 namespace json {

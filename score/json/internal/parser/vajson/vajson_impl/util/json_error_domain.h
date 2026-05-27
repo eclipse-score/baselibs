@@ -286,4 +286,14 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
 }  // namespace json
 }  // namespace score
 
+namespace amsr
+{
+namespace json
+{
+
+using score::json::vajson::AssertCondition;
+
+}  // namespace json
+}  // namespace amsr
+
 #endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H_

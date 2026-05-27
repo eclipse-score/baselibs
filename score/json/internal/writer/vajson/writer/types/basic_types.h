@@ -28,7 +28,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "amsr/json/util/types.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 
 namespace amsr {
 namespace json {
@@ -149,25 +149,6 @@ class JKeyType final {
  * \endspec
  */
 constexpr auto JKey(std::string_view s) noexcept -> JKeyType { return JKeyType{s}; }
-
-/*!
- * \brief           Serializes a Key value
- * \vpublic
- * \param[in]       s
- *                  Key to serialize.
- * \return          The serializable key type.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- *
- * \synchronous     -
- * \spec
- * requires true;
- * \endspec
- */
-constexpr auto JKey(std::string const& s) noexcept -> JKeyType { return JKey(std::string_view{s}); }
 
 /*!
  * \brief           Serializes a Key value
@@ -486,25 +467,6 @@ class JStringType final {
  * \endspec
  */
 constexpr auto JString(std::string_view s) noexcept -> JStringType { return JStringType(s); }
-
-/*!
- * \brief           Serializes a String value
- * \vpublic
- *
- * \param[in]       s
- *                  String to serialize.
- * \return          The serializable string type.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- * \synchronous     -
- * \spec
- * requires true;
- * \endspec
- */
-inline auto JString(std::string const& s) noexcept -> JStringType { return JString(std::string_view{s}); }
 
 /*!
  * \brief           Serializes a String value

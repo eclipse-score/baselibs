@@ -11,42 +11,74 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 /*!        \file
- *        \brief  A collection of serializers for STD sequence containers.
+ *        \brief  A collection of serializers for libVac sequence containers.
  *
- *      \details  Provides serializers for std::array, std::vector, and std::deque types.
+ *      \details  Provides serializers for score::cpp::span, score::cpp::static_vector
+ *                types.
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_SEQUENCE_CONTAINERS_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_SEQUENCE_CONTAINERS_H_
+#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_
+#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <array>
-#include <deque>
-#include <type_traits>
 #include <utility>
-#include <vector>
-#include "amsr/json/writer/types/array_type.h"
+
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
+
+#include "score/span.hpp"
+#include "score/vector.hpp"
+
+#include "score/static_vector.h"
 
 namespace amsr {
 namespace json {
 
 /*!
- * \brief           Serializes an array of serializable elements
+ * \brief           Serializes an array view of serializable elements
  * \vpublic
  *
- * \tparam          Next
- *                  type of serializer.
+ * \tparam          Serializer
+ *                  Type of serializer.
  * \tparam          Value
  *                  Type of value.
- * \tparam          N
- *                  Size of the array.
  * \param[in]       serializer
  *                  instance to write into.
- * \param[in]       array
+ * \param[in]       view
  *                  to serialize.
+ * \return          The succeeding serializer.
+ *
+ * \context         ANY
+ * \pre             -
+ * \threadsafe      FALSE
+ * \reentrant       FALSE
+ * \synchronous     -
+ * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
+ * \spec
+ * requires true;
+ * \endspec
+ */
+template <typename Serializer, typename Value>
+auto operator<<(Serializer&& serializer, ::score::cpp::span<Value> const& view) noexcept -> typename Serializer::Next {
+  return std::forward<Serializer>(serializer) << JArray(view);
+}
+
+/*!
+ * \brief           Serializes a vector of serializable elements
+ * \vpublic
+ *
+ * \tparam          Serializer
+ *                  Type of serializer.
+ * \tparam          Value
+ *                  Type of value.
+ * \tparam          Alloc
+ *                  Vector allocator.
+ * \param[in,out]   serializer
+ *                  instance to write into.
+ * \param[in]       vector
+ *                  Data to serialize.
  * \return          The succeeding serializer.
  *
  * \context         ANY
@@ -60,18 +92,18 @@ namespace json {
  * requires true;
  * \endspec
  */
-template <typename Next, typename Value, std::size_t N>
-auto operator<<(GenericValueSerializer<Next>&& serializer, std::array<Value, N> const& array) noexcept ->
-    typename GenericValueSerializer<Next>::Next {
-  return std::move(serializer) << JArray(array);
+template <typename Serializer, typename Value, typename Alloc>
+auto operator<<(Serializer&& serializer, ::score::cpp::pmr::vector<Value, Alloc> const& vector) noexcept ->
+    typename Serializer::Next {
+  return std::forward<Serializer>(serializer) << JArray(vector);
 }
 
 /*!
- * \brief           Serializes a vector of serializable elements
+ * \brief           Serializes a static vector of serializable elements
  * \vpublic
  *
- * \tparam          Next
- *                  type of serializer.
+ * \tparam          Serializer
+ *                  Type of serializer.
  * \tparam          Value
  *                  Type of value.
  * \tparam          Alloc
@@ -86,53 +118,19 @@ auto operator<<(GenericValueSerializer<Next>&& serializer, std::array<Value, N> 
  * \pre             -
  * \threadsafe      FALSE
  * \reentrant       FALSE
- *
  * \synchronous     -
  * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
  * \spec
  * requires true;
  * \endspec
  */
-template <typename Next, typename Value, typename Alloc>
-auto operator<<(GenericValueSerializer<Next>&& serializer, std::vector<Value, Alloc> const& vector) noexcept ->
-    typename GenericValueSerializer<Next>::Next {
-  return std::move(serializer) << JArray(vector);
-}
-
-/*!
- * \brief           Serializes a deque of serializable elements
- * \vpublic
- *
- * \tparam          Next
- *                  type of serializer.
- * \tparam          Value
- *                  Type of value.
- * \tparam          Alloc
- *                  Type of allocator.
- * \param[in]       serializer
- *                  instance to write into.
- * \param[in]       deque
- *                  to serialize.
- * \return          The succeeding serializer.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- *
- * \synchronous     -
- * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
- * \spec
- * requires true;
- * \endspec
- */
-template <typename Next, typename Value, typename Alloc>
-auto operator<<(GenericValueSerializer<Next>&& serializer, std::deque<Value, Alloc> const& deque) noexcept ->
-    typename GenericValueSerializer<Next>::Next {
-  return std::move(serializer) << JArray(deque);
+template <typename Serializer, typename Value, typename Alloc>
+auto operator<<(Serializer&& serializer, ::score::cpp::static_vector<Value, Alloc> const& vector) noexcept ->
+    typename Serializer::Next {
+  return std::forward<Serializer>(serializer) << JArray(vector);
 }
 
 }  // namespace json
 }  // namespace amsr
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_SEQUENCE_CONTAINERS_H_
+#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_

@@ -25,8 +25,9 @@
  *********************************************************************************************************************/
 #include <limits>
 #include <string>
-#include "amsr/json/util/types.h"
-#include "amsr/msra_always_assert.h"
+
+#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 
 namespace amsr {
 namespace json {
@@ -45,7 +46,7 @@ namespace internal {
  * \endspec
  */
 inline auto ConvertLength(std::size_t const length) noexcept -> std::uint32_t {
-  msra_always_assert(length <= std::numeric_limits<std::uint32_t>::max());
+  AssertCondition(length <= std::numeric_limits<std::uint32_t>::max(), "Length exceeds std::uint32_t range.");
 
   // VECTOR NCL AutosarC++17_10-A4.7.1: MD_JSON_AutosarC++17_10-A4.7.1_truncating_cast
   // VECTOR NL AutosarC++17_10-M0.3.1: MD_JSON_AutosarC++17_10-M0.3.1_OOB
@@ -77,7 +78,7 @@ class JBinType final {
    * requires true;
    * \endspec
    */
-  constexpr explicit JBinType(score::cpp::span<char const> b) noexcept : value_(b) {}
+  explicit JBinType(score::cpp::span<char const> b) noexcept : value_(b) {}
 
   /*!
    * \brief           Returns the contained value
@@ -131,7 +132,7 @@ class JBinType final {
  * requires true;
  * \endspec
  */
-constexpr auto JBin(score::cpp::span<char const> b) noexcept -> JBinType { return JBinType{b}; }
+inline auto JBin(score::cpp::span<char const> b) noexcept -> JBinType { return JBinType{b}; }
 
 /*!
  * \brief           A binary string type
@@ -210,27 +211,6 @@ class JBinStringType final {
  * \endspec
  */
 constexpr auto JBinString(StringView s) noexcept -> JBinStringType { return JBinStringType{s}; }
-
-/*!
- * \brief           Serializes a string as binary
- * \vpublic
- *
- * \param[in]       s
- *                  The string to serialize.
- * \return          The serializable string value.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- * \synchronous     -
- * \spec
- * requires true;
- * \endspec
- */
-inline auto JBinString(std::string const& s) noexcept -> JBinStringType {
-  return JBinString(std::string_view{s});
-}
 
 /*!
  * \brief           Serializes a string as binary
@@ -328,25 +308,6 @@ class JBinKeyType final {
  * \endspec
  */
 constexpr auto JBinKey(StringView s) noexcept -> JBinKeyType { return JBinKeyType{s}; }
-
-/*!
- * \brief           Serializes a key as binary
- * \vpublic
- *
- * \param[in]       s
- *                  The key to serialize.
- * \return          The serializable key value.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- * \synchronous     -
- * \spec
- * requires true;
- * \endspec
- */
-inline auto JBinKey(std::string const& s) noexcept -> JBinKeyType { return JBinKey(std::string_view{s}); }
 
 /*!
  * \brief           Serializes a key as binary

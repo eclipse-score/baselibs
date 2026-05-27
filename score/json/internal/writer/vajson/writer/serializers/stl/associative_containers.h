@@ -28,8 +28,8 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include "amsr/json/writer/types/array_type.h"
-#include "amsr/json/writer/types/object_type.h"
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {

@@ -22,7 +22,8 @@
  *********************************************************************************************************************/
 #include <functional>
 #include <ostream>
-#include "amsr/json/util/types.h"
+
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 
 namespace amsr {
 namespace json {

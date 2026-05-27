@@ -27,16 +27,15 @@
 #include <charconv>
 #include <system_error>
 
-#include "score/language/futurecpp/charconv.hpp"
-#include "amsr/json/util/json_error_domain.h"
-#include "amsr/json/util/types.h"
-#include "amsr/json/writer/serializers/structures/serializer.h"
-#include "amsr/json/writer/serializers/util/escaped_json_string.h"
-#include "amsr/json/writer/serializers/util/length_serializer.h"
-#include "amsr/json/writer/types/array_type.h"
-#include "amsr/json/writer/types/basic_types.h"
-#include "amsr/json/writer/types/bin_types.h"
-#include "amsr/json/writer/types/object_type.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/length_serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/writer/types/bin_types.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {
@@ -177,12 +176,12 @@ class GenericValueSerializer final {
    */
   // VECTOR NCL AutosarC++17_10-M9.3.3: MD_JSON_AutosarC++17_10-M9.3.3_logical_const
   auto operator<<(JBoolType b) && noexcept -> Next {
-    score::safecpp::zstring_view const value{b.value ? "true" : "false"};
+    const std::string_view value{b.value ? "true" : "false"};
     // NOLINTNEXTLINE(whitespace/line_length)
     // VECTOR NL AutosarC++17_10-M8.5.1: MD_JSON_AutosarC++17_10-M8.5.1_use_of_possibly_unintialized_value_false_positive
     return this->Serialize([this, value]() noexcept {
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().write(value.data(), value.size());
+      this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
     });
   }
 
@@ -213,17 +212,13 @@ class GenericValueSerializer final {
       std::array<char, 64> buffer{};
       T value = static_cast<T>(number.GetValue());
       
-      // Convert number to string using std::to_chars
-      score::cpp::to_chars_result conversion_result{score::cpp::to_chars(buffer.data(), buffer.data() + buffer.size(), value)};
-      
-      AssertCondition(ec == std::errc{},
+      const auto conversion_result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value);
+
+      AssertCondition(conversion_result.ec == std::errc{},
                       "GenericValueSerializer: Could not convert number to textual representation.");
 
-      // Create a span from the buffer to the end of written data
-      score::cpp::span<char const> result_span{buffer.data(), static_cast<std::size_t>(ptr - buffer.data())};
-      
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().write(result_span.data(), result_span.size());
+      this->os_.get().write(buffer.data(), static_cast<std::streamsize>(conversion_result.ptr - buffer.data()));
     });
   }
 
@@ -253,11 +248,11 @@ class GenericValueSerializer final {
   auto operator<<(JStringType string) && noexcept -> Next {
     return this->Serialize([this, string]() noexcept {
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put('"');
+      this->os_.get().put('"');
       // VCA_VAJSON_OUTPUTSTREAM
       this->os_.get() << internal::EscapedJsonString(string);
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put('"');
+      this->os_.get().put('"');
     });
   }
 
@@ -293,7 +288,7 @@ class GenericValueSerializer final {
       internal::SerializeLength(this->os_.get(), string.GetLength());
       // VCA_VAJSON_OUTPUTSTREAM
       auto const& value = string.GetValue();
-      this->os_.get().write(value.data(), value.size());
+      this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
     });
   }
 
@@ -326,10 +321,10 @@ class GenericValueSerializer final {
   auto operator<<(JArrayType<Fn> tuple) && noexcept -> Next {
     return this->Serialize([this, tuple]() noexcept {
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put('[');
+      this->os_.get().put('[');
       static_cast<void>(tuple.fn(ArrayStart(this->os_.get())));
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put(']');
+      this->os_.get().put(']');
     });
   }
 
@@ -365,7 +360,7 @@ class GenericValueSerializer final {
       internal::SerializeLength(this->os_.get(), bin.GetLength());
       // VCA_VAJSON_OUTPUTSTREAM
       auto const& value = bin.GetValue();
-      this->os_.get().write(value.data(), value.size());
+      this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
     });
   }
 
@@ -414,7 +409,7 @@ class GenericValueSerializer final {
   auto Serialize(Fn&& fn) const noexcept -> Next {
     if (this->serializer_state_ == SerializerState::kNonEmpty) {
       // VCA_VAJSON_OUTPUTSTREAM
-      this->os_.get().Put(',');
+      this->os_.get().put(',');
     }
     std::forward<Fn>(fn)();
     return Next(this->os_.get(), SerializerState::kNonEmpty);

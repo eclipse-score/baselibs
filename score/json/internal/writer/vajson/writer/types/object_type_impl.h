@@ -22,9 +22,10 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include <utility>
-#include "amsr/json/writer/serializers/structures/generic_value_serializer.h"
-#include "amsr/json/writer/serializers/structures/serializer.h"
-#include "amsr/json/writer/types/object_type.h"
+
+#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {

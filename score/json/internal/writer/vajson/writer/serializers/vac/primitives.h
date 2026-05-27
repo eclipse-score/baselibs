@@ -11,42 +11,45 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 /*!        \file
- *        \brief  A collection of serializers for libVac sequence containers.
+ *        \brief  A collection of serializers for libVac primitive data types.
  *
- *      \details  Provides serializers for score::cpp::span, score::cpp::static_vector
- *                types.
+ *      \details  Provides serializers for std::string, std::string_view, and std::uint8_t types.
  *
  *********************************************************************************************************************/
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_
+#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
+#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
+#include <cstdint>
+#include <string>
+#include <string_view>
 #include <utility>
 
-#include "amsr/json/writer/types/array_type.h"
-
-#include "score/span.hpp"
-#include "score/vector.hpp"
-
-#include "score/static_vector.h"
+#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
 namespace amsr {
 namespace json {
+/*!
+ * \brief           Forward declaration for the GenericValueSerializer
+ *
+ * \vprivate        component private
+ */
+template <typename Return>
+class GenericValueSerializer;
 
 /*!
- * \brief           Serializes an array view of serializable elements
+ * \brief           Serializes a string value directly
  * \vpublic
  *
- * \tparam          Serializer
- *                  Type of serializer.
- * \tparam          Value
- *                  Type of value.
+ * \tparam          Next
+ *                  type of serializer.
  * \param[in]       serializer
  *                  instance to write into.
- * \param[in]       view
+ * \param[in]       string
  *                  to serialize.
  * \return          The succeeding serializer.
  *
@@ -60,57 +63,21 @@ namespace json {
  * requires true;
  * \endspec
  */
-template <typename Serializer, typename Value>
-auto operator<<(Serializer&& serializer, ::score::cpp::span<Value> const& view) noexcept -> typename Serializer::Next {
-  return std::forward<Serializer>(serializer) << JArray(view);
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, std::string const& string) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << JString(string);
 }
 
 /*!
- * \brief           Serializes a vector of serializable elements
+ * \brief           Serializes a string value directly
  * \vpublic
  *
- * \tparam          Serializer
- *                  Type of serializer.
- * \tparam          Value
- *                  Type of value.
- * \tparam          Alloc
- *                  Vector allocator.
- * \param[in,out]   serializer
- *                  instance to write into.
- * \param[in]       vector
- *                  Data to serialize.
- * \return          The succeeding serializer.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- *
- * \synchronous     -
- * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
- * \spec
- * requires true;
- * \endspec
- */
-template <typename Serializer, typename Value, typename Alloc>
-auto operator<<(Serializer&& serializer, ::score::cpp::pmr::vector<Value, Alloc> const& vector) noexcept ->
-    typename Serializer::Next {
-  return std::forward<Serializer>(serializer) << JArray(vector);
-}
-
-/*!
- * \brief           Serializes a static vector of serializable elements
- * \vpublic
- *
- * \tparam          Serializer
- *                  Type of serializer.
- * \tparam          Value
- *                  Type of value.
- * \tparam          Alloc
- *                  Type of allocator.
+ * \tparam          Next
+ *                  type of serializer.
  * \param[in]       serializer
  *                  instance to write into.
- * \param[in]       vector
+ * \param[in]       string
  *                  to serialize.
  * \return          The succeeding serializer.
  *
@@ -124,13 +91,41 @@ auto operator<<(Serializer&& serializer, ::score::cpp::pmr::vector<Value, Alloc>
  * requires true;
  * \endspec
  */
-template <typename Serializer, typename Value, typename Alloc>
-auto operator<<(Serializer&& serializer, ::score::cpp::static_vector<Value, Alloc> const& vector) noexcept ->
-    typename Serializer::Next {
-  return std::forward<Serializer>(serializer) << JArray(vector);
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, ::std::string_view string) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << JString(string);
+}
+
+/*!
+ * \brief           Serializes a std::uint8_t value directly
+ * \vpublic
+ *
+ * \tparam          Next
+ *                  type of serializer.
+ * \param[in]       serializer
+ *                  instance to write into.
+ * \param[in]       byte
+ *                  to serialize.
+ * \return          The succeeding serializer.
+ *
+ * \context         ANY
+ * \pre             -
+ * \threadsafe      FALSE
+ * \reentrant       FALSE
+ * \synchronous     -
+ * \trace           DSGN-JSON-Writer-Serializable-Data-Structures
+ * \spec
+ * requires true;
+ * \endspec
+ */
+template <typename Next>
+auto operator<<(GenericValueSerializer<Next>&& serializer, ::std::uint8_t byte) noexcept ->
+    typename GenericValueSerializer<Next>::Next {
+  return std::move(serializer) << static_cast<std::uint16_t>(byte);
 }
 
 }  // namespace json
 }  // namespace amsr
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_SEQUENCE_CONTAINERS_H_
+#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_PRIMITIVES_H_
