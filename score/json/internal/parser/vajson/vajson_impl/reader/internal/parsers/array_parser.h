@@ -65,7 +65,7 @@ class ArrayParser final : public v2::SingleArrayParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnElement() noexcept -> ParserResult final
+    auto OnElement() noexcept -> ParserResult override final
     {
 
         return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](void) noexcept {

@@ -67,7 +67,7 @@ class KeyParser final : public VirtualParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnKey(StringView key) noexcept -> ParserResult final
+    auto OnKey(StringView key) noexcept -> ParserResult override final
     {
 
         return this->fn_(key).transform([](void) noexcept {
@@ -82,7 +82,7 @@ class KeyParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    auto OnUnexpectedEvent() noexcept -> ParserResult override final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a key.");
     }

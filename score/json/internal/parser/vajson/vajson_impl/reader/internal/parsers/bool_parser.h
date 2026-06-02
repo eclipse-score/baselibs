@@ -68,7 +68,7 @@ class BoolParser final : public VirtualParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnBool(bool v) noexcept -> ParserResult final
+    auto OnBool(bool v) noexcept -> ParserResult override final
     {
 
         return score::Result<void>{std::forward<Fn>(this->fn_)(v)}.transform([](void) noexcept {
@@ -83,7 +83,7 @@ class BoolParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    auto OnUnexpectedEvent() noexcept -> ParserResult override final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a boolean.");
     }

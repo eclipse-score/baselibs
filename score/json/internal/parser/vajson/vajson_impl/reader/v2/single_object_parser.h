@@ -77,7 +77,7 @@ class SingleObjectParser : public v2::Parser
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    auto OnStartObject() noexcept -> ParserResult final
+    auto OnStartObject() noexcept -> ParserResult override final
     {
         return this->validator_.Enter();
     }
@@ -94,7 +94,7 @@ class SingleObjectParser : public v2::Parser
     /// - Check if inside an object:
     ///   - Call the Finalize callback and return its Result.
     /// \endinternal
-    auto OnEndObject(std::size_t) noexcept -> ParserResult final
+    auto OnEndObject(std::size_t) noexcept -> ParserResult override final
     {
         return this->validator_.Leave().and_then([this](ParserState state) noexcept {
             return this->Finalize().transform([&state](void) noexcept {

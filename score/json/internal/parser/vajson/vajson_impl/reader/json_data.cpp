@@ -205,6 +205,8 @@ auto JsonData::Restore() noexcept -> Result<void>
  * - If the first three bytes of the document are the UTF-8 BOM:
  *   - Set the encoding type.
  *   - Move the stream buffer past the BOM.
+ * - If the stream is too short for a BOM check:
+ *   - Ensure the stream state is cleared and position is restored.
  * \endinternal
  */
 void JsonData::ParseBom() noexcept
@@ -223,6 +225,14 @@ void JsonData::ParseBom() noexcept
             // It worked, so it was a utf-8 BOM.
             encoding_ = EncodingType::kUtf8;
         }
+    }
+    else
+    {
+        // ReadString failed (e.g., stream shorter than BOM).
+        // Ensure stream is in a usable state for subsequent parsing.
+        auto& stream = this->stream_.get();
+        stream.clear(stream.rdstate() & ~(std::ios::failbit | std::ios::eofbit));
+        stream.seekg(0, std::ios::beg);
     }
 }
 

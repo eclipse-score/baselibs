@@ -84,7 +84,7 @@ class JsonErrorDomain final : public ErrorDomain
     /// - Otherwise:
     ///   - Return "unknown error".
     /// \endinternal
-    auto MessageFor(const Errc& error_code) const noexcept -> std::string_view final
+    auto MessageFor(const Errc& error_code) const noexcept -> std::string_view override final
     {
         Errc errc{error_code};
         constexpr static std::array<std::string_view, 6> kMessages{{

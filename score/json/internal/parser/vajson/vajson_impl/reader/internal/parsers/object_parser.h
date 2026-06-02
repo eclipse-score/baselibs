@@ -72,7 +72,7 @@ class ObjectParser final : public v2::SingleObjectParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnKey(std::string_view key) noexcept -> ParserResult final
+    auto OnKey(std::string_view key) noexcept -> ParserResult override final
     {
 
         return std::forward<Fn>(this->fn_)(key).transform([](void) noexcept {

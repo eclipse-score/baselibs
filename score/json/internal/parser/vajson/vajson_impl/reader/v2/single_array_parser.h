@@ -76,7 +76,7 @@ class SingleArrayParser : public v2::Parser
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    auto OnStartArray() noexcept -> ParserResult final
+    auto OnStartArray() noexcept -> ParserResult override final
     {
         return this->validator_
             .Enter()
@@ -103,7 +103,7 @@ class SingleArrayParser : public v2::Parser
     /// - Otherwise:
     ///   - Return an error.
     /// \endinternal
-    auto OnEndArray(std::size_t) noexcept -> ParserResult final
+    auto OnEndArray(std::size_t) noexcept -> ParserResult override final
     {
         return this->validator_.Leave().and_then([this](ParserState state) noexcept {
             return Finalize().transform([&state](void) noexcept {
@@ -129,7 +129,7 @@ class SingleArrayParser : public v2::Parser
     ///   - On success, take a new snapshot, because the value could be followed by another value, and increase the
     ///   index.
     /// \endinternal
-    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    auto OnUnexpectedEvent() noexcept -> ParserResult override final
     {
         return MakeResult(this->validator_.IsInside(),
                           {JsonErrc::kUserValidationFailed, "Expected to parse an array of elements."})
