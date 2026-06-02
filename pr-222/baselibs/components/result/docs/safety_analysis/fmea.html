@@ -484,7 +484,7 @@
                   
   <section id="fmea-failure-modes-and-effects-analysis">
 <h1>FMEA (Failure Modes and Effects Analysis)<a class="headerlink" href="#fmea-failure-modes-and-effects-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-eb16280f">
+<div class="need_container docutils container" id="SNCB-ed7ad793">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__result_fmea">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -623,7 +623,7 @@
 <section id="fmea">
 <h2>FMEA<a class="headerlink" href="#fmea" title="Link to this heading">#</a></h2>
 <p>For all identified applicable failure initiators, the FMEA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-8d0f9df1">
+<div class="need_container docutils container" id="SNCB-08b3ba94">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__error_code">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -645,7 +645,7 @@
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span><span class="needs_spacer">, </span><span class="needs_data">result_lib</span></span></span></div>
 <div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">When retrieving error information, the error code is returned as a domain-agnostic integer. If the user interprets this code under a different error domain than the one that produced it, the error is misidentified, potentially leading to incorrect error reaction.</span></span></div>
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">CO_01_01</span></span></div>
-<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data">https://github.com/eclipse-score/score/issues/2880</span></span></div>
+<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2880">score#2880</a><em>; </em></span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_dyn__baselibs__result" title="comp_saf_fmea__result__error_code">comp_arc_dyn__baselibs__result</a></span></span></div>
@@ -672,7 +672,7 @@ An Assumption of Use shall ensure the user verifies the error domain before inte
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a1cccc21">
+<div class="need_container docutils container" id="SNCB-18a6c424">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__error_message_life">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -694,7 +694,7 @@ An Assumption of Use shall ensure the user verifies the error domain before inte
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span><span class="needs_spacer">, </span><span class="needs_data">result_lib</span></span></span></div>
 <div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">The error message provided during error construction is stored as a non-owning reference. If the referenced data is no longer valid when the user retrieves the error message, accessing it results in undefined behavior.</span></span></div>
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">MF_01_05</span></span></div>
-<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data">https://github.com/eclipse-score/score/issues/2880</span></span></div>
+<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2880">score#2880</a><em>; </em></span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../requirements/index.html#aou_req__result__resource_lifetime" title="comp_saf_fmea__result__error_message_life">aou_req__result__resource_lifetime</a></span></span></div>
@@ -723,7 +723,7 @@ or a separate AoU should be established for it.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-70b49b0c">
+<div class="need_container docutils container" id="SNCB-37bd8615">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__unchecked">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -771,7 +771,7 @@ the program will deterministically terminate. The provided Assumptions of Use re
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-eb04b890">
+<div class="need_container docutils container" id="SNCB-e5ef1543">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__stop_user">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
