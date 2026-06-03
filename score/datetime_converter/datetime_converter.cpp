@@ -17,6 +17,21 @@ namespace score
 namespace common
 {
 
+std::int8_t daysInMonth(const std::int16_t year, const std::int8_t month)
+{
+    if (month == 2)
+    {
+        return yearIsLeap(year) ? 29 : 28;
+    }
+
+    if ((month == 4) || (month == 6) || (month == 9) || (month == 11))
+    {
+        return 30;
+    }
+
+    return 31;
+}
+
 int16_t leapYearsSince1970(const int16_t year)
 {
     int16_t numOfLeapYears = (((year - 1969) / 4) - ((year - 1901) / 100)) + ((year - 1601) / 400);
@@ -70,24 +85,7 @@ bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime)
         return false;
     }
 
-    if (dateTime->m_month == 2)
-    {
-        if (yearIsLeap(dateTime->m_year))
-        {
-            return (dateTime->m_day <= 29);
-        }
-        else
-        {
-            return (dateTime->m_day <= 28);
-        }
-    }
-
-    if (dateTime->m_month == 4 || dateTime->m_month == 6 || dateTime->m_month == 9 || dateTime->m_month == 11)
-    {
-        return (dateTime->m_day <= 30);
-    }
-
-    return true;
+    return (dateTime->m_day <= daysInMonth(dateTime->m_year, dateTime->m_month));
 };
 
 bool dateTimeToEpoch(const std::shared_ptr<DateTimeType> dateTime, time_t* epoch)
@@ -151,10 +149,6 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
     time_t daysSum = (epoch / SECONDS_PER_DAY) + 1;
     if (before1970)
     {
-        if (yearIsLeap(dateTime->m_year) && ((daysSum * -1) < DAYS_UNTIL_MONTHS[1]))
-        {
-            --daysSum;
-        }
         daysSum = DAYS_PER_YEAR + daysSum - 1;
         if (yearIsLeap(dateTime->m_year))
         {
@@ -200,7 +194,7 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
         }
         else
         {
-            if (daysSum >= DAYS_PER_YEAR)
+            if (daysSum > DAYS_PER_YEAR)
             {
                 dateTime->m_year = dateTime->m_year + 1;
                 daysSum = daysSum - DAYS_PER_YEAR;
@@ -262,6 +256,18 @@ std::shared_ptr<DateTimeType> epochToDateTime(time_t epoch)
         {
             dateTime->m_hour = dateTime->m_hour - HOURS_PER_DAY;
             dateTime->m_day++;
+        }
+
+        if (dateTime->m_day == daysInMonth(dateTime->m_year, dateTime->m_month) + 1)
+        {
+            dateTime->m_day = 1;
+            dateTime->m_month++;
+
+            if (dateTime->m_month == 13)
+            {
+                dateTime->m_month = 1;
+                dateTime->m_year++;
+            }
         }
     }
 
