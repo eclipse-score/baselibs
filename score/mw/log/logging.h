@@ -152,6 +152,12 @@ log::Recorder& GetDefaultLogRecorder() noexcept;
 /// \details In a normal case the user does not want to use this API. It is only exposed e.g. for testing purposes
 void SetLogRecorder(score::mw::log::Recorder* const recorder) noexcept;
 
+/// \brief Ensures the logging runtime singleton is initialized.
+/// \details Call before creating any static object that relies on logging, to prevent
+///          static initialization order issues. Safe to call multiple times.
+/// \thread-safe
+void InitializeRuntime() noexcept;
+
 }  // namespace log
 }  // namespace mw
 }  // namespace score
