@@ -120,6 +120,19 @@ cc_library(
 )
 
 cc_library(
+    name = "vajson_json_writer_impl",
+    srcs = ["vajson_json_writer.cpp"],
+    hdrs = ["vajson_json_writer.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":writer_interface",
+        "@score_baselibs//score/json/internal/writer/vajson:vajson_serialize",
+    ],
+)
+
+cc_library(
     name = "json",
     features = COMPILER_WARNING_FEATURES,
     tags = ["FUSA"],
