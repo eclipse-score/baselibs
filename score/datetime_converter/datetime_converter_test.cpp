@@ -453,6 +453,99 @@ TEST_F(DateTimeConverterTest, test_yearIsLeap)
     ASSERT_FALSE(score::common::yearIsLeap(2100));
 }
 
+TEST_F(DateTimeConverterTest, invalid_month_values)
+{
+    RecordProperty("Description", "Verify invalid month values are rejected.");
+    RecordProperty("TestType", "requirements-based");
+
+    auto dtt = std::make_shared<DateTimeType>(2020, 0, 10, 3, 4, 5);
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_month = 13;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_month = -1;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+}
+
+TEST_F(DateTimeConverterTest, invalid_day_values)
+{
+    RecordProperty("Description", "Verify invalid day values are rejected.");
+    RecordProperty("TestType", "requirements-based");
+
+    auto dtt = std::make_shared<DateTimeType>(2020, 12, 34, 3, 4, 5);
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
+    dtt->m_day = -1;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+}
+
+TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
+{
+    RecordProperty("Description", "Verify dateTimeToEpoch returns false for invalid DateTime input.");
+    RecordProperty("TestType", "requirements-based");
+
+    time_t epoch = static_cast<time_t>(0x7F7F7F7F);
+
+    // Invalid: month = 13 -> isValidDateTimeFormat returns false
+    auto d = std::make_shared<DateTimeType>(2024, 13, 10, 12, 30, 45);
+
+    ASSERT_FALSE(score::common::dateTimeToEpoch(d, &epoch));
+
+    ASSERT_EQ(epoch, static_cast<time_t>(0x7F7F7F7F));
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
+{
+    RecordProperty("Description",
+        "Verify that a post-1970 epoch landing exactly on a non-leap year boundary rolls over to the next year correctly.");
+    RecordProperty("TestType", "requirements-based");
+
+    time_t epoch{};
+    auto dateTimeOriginal = std::make_shared<DateTimeType>(1971, 1, 1, 0, 0, 0);
+    ASSERT_TRUE(score::common::dateTimeToEpoch(dateTimeOriginal, &epoch));
+
+    auto dateTimeConverted = score::common::epochToDateTime(epoch);
+    ASSERT_NE(dateTimeConverted, nullptr);
+    ASSERT_EQ(dateTimeConverted->m_year, 1971);
+    ASSERT_EQ(dateTimeConverted->m_month, 1);
+    ASSERT_EQ(dateTimeConverted->m_day, 1);
+    ASSERT_EQ(dateTimeConverted->m_hour, 0);
+    ASSERT_EQ(dateTimeConverted->m_minute, 0);
+    ASSERT_EQ(dateTimeConverted->m_second, 0);
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_YearBoundary_DayOverflowRollover)
+{
+    RecordProperty("Description",
+        "Verify that pre-1970 conversion handles day overflow at year boundary by rolling month and year.");
+    RecordProperty("TestType", "requirements-based");
+
+    // 1960-01-01 00:00:00 epoch; this path normalizes an intermediate Dec 32 to Jan 1 of the next year.
+    const time_t epochAt1960Start = static_cast<time_t>(-315619200);
+
+    auto dateTimeConverted = score::common::epochToDateTime(epochAt1960Start);
+    ASSERT_NE(dateTimeConverted, nullptr);
+    EXPECT_EQ(dateTimeConverted->m_year, 1960);
+    EXPECT_EQ(dateTimeConverted->m_month, 1);
+    EXPECT_EQ(dateTimeConverted->m_day, 1);
+    EXPECT_EQ(dateTimeConverted->m_hour, 0);
+    EXPECT_EQ(dateTimeConverted->m_minute, 0);
+    EXPECT_EQ(dateTimeConverted->m_second, 0);
+}
+
+TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1800_ReturnsNull)
+{
+    RecordProperty("Description",
+        "Verify that epoch values mapping outside supported year range return nullptr.");
+    RecordProperty("TestType", "requirements-based");
+
+    // This epoch maps to year 10000, which is above the supported upper bound (9999).
+    const time_t epochOutOfRange = static_cast<time_t>(253405000000);
+
+    auto dateTimeConverted = score::common::epochToDateTime(epochOutOfRange);
+    EXPECT_EQ(dateTimeConverted, nullptr);
+}
 }  // namespace testing
 }  // namespace platform
 }  // namespace score
