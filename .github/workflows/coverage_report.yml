@@ -26,10 +26,11 @@ jobs:
   coverage-report:
     runs-on: ubuntu-24.04
     steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7b265b4accb24997dcb0de449c34d23853709f57
       - name: Install lcov
         run: |
           sudo apt-get update

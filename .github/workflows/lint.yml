@@ -26,6 +26,9 @@ jobs:
   clang-tidy:
     runs-on: ubuntu-latest
     steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Setup Bazel

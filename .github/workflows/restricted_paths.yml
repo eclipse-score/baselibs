@@ -44,7 +44,6 @@ jobs:
               - 'score/language/futurecpp/**'
               - 'score/language/safecpp/aborts_upon_exception/**'
               - 'score/language/safecpp/coverage_termination_handler/**'
-              - 'score/language/safecpp/safe_math/**'
               - 'score/language/safecpp/test/**'
               - 'score/memory/**/!(string_comparison_adaptor|string_literal)*'
               - 'score/mw/**'
