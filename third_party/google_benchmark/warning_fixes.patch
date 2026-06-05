@@ -50,3 +50,16 @@ index aa1d97e..a4d7600 100644
                unit);
      } else {
        printer(Out, COLOR_DEFAULT, " %s=%s%s", c.first.c_str(), s.c_str(), unit);
+diff --git a/src/sysinfo.cc b/src/sysinfo.cc
+index a863b28..78addd3 100644
+--- a/src/sysinfo.cc
++++ b/src/sysinfo.cc
+@@ -394,7 +394,7 @@ std::vector<CPUInfo::CacheInfo> GetCacheSizesWindows() {
+   }
+   return res;
+ }
+-#elif BENCHMARK_OS_QNX
++#elif defined(BENCHMARK_OS_QNX)
+ std::vector<CPUInfo::CacheInfo> GetCacheSizesQNX() {
+   std::vector<CPUInfo::CacheInfo> res;
+   struct cacheattr_entry* cache = SYSPAGE_ENTRY(cacheattr);
