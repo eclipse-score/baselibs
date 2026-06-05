@@ -1,0 +1,52 @@
+diff --git a/src/colorprint.cc b/src/colorprint.cc
+index 523dd8e..7f62cc8 100644
+--- a/src/colorprint.cc
++++ b/src/colorprint.cc
+@@ -164,7 +164,7 @@ void ColorPrintf(std::ostream& out, LogColor color, const char* fmt,
+ }
+ 
+ bool IsColorTerminal() {
+-#if BENCHMARK_OS_WINDOWS
++#ifdef BENCHMARK_OS_WINDOWS
+   // On Windows the TERM variable is usually not set, but the
+   // console there does support colors.
+   return 0 != _isatty(_fileno(stdout));
+diff --git a/src/console_reporter.cc b/src/console_reporter.cc
+index aa1d97e..a4d7600 100644
+--- a/src/console_reporter.cc
++++ b/src/console_reporter.cc
+@@ -130,14 +130,14 @@ void ConsoleReporter::PrintHeader(const Run& run) {
+ 
+ BENCHMARK_EXPORT
+ void ConsoleReporter::PrintRunData(const Run& result) {
+-  typedef void(PrinterFn)(std::ostream&, LogColor, const char*, ...);
++  typedef void PrinterFn(std::ostream&, LogColor, const char*, ...) __attribute__((format(printf, 3, 4)));
+   auto& Out = GetOutputStream();
+   PrinterFn* printer = (output_options_ & OO_Color) != 0
+                            ? static_cast<PrinterFn*>(ColorPrintf)
+                            : IgnoreColorPrint;
+   auto name_color =
+       (result.report_big_o || result.report_rms) ? COLOR_BLUE : COLOR_GREEN;
+-  printer(Out, name_color, "%-*s ", name_field_width_,
++  printer(Out, name_color, "%-*s ", static_cast<int>(name_field_width_),
+           result.benchmark_name().c_str());
+ 
+   if (internal::SkippedWithError == result.skipped) {
+@@ -177,7 +177,7 @@ void ConsoleReporter::PrintRunData(const Run& result) {
+   }
+ 
+   if (!result.report_big_o && !result.report_rms) {
+-    printer(Out, COLOR_CYAN, "%10lld", result.iterations);
++    printer(Out, COLOR_CYAN, "%10lld", static_cast<long long>(result.iterations));
+   }
+ 
+   for (const auto& c : result.counters) {
+@@ -196,7 +196,7 @@ void ConsoleReporter::PrintRunData(const Run& result) {
+       }
+     }
+     if ((output_options_ & OO_Tabular) != 0) {
+-      printer(Out, COLOR_DEFAULT, " %*s%s", cNameLen - strlen(unit), s.c_str(),
++      printer(Out, COLOR_DEFAULT, " %*s%s", static_cast<int>(cNameLen - strlen(unit)), s.c_str(),
+               unit);
+     } else {
+       printer(Out, COLOR_DEFAULT, " %s=%s%s", c.first.c_str(), s.c_str(), unit);
