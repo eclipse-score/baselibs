@@ -38,8 +38,20 @@ Justification:
   pointer into gBackendCreators[]. The target array is constant-initialized (zero-init
   at load time), so it is valid before this constructor runs. The registrant struct itself
   is trivially destructible. This follows the established pattern used by Runtime::Instance().
+Deviation from Rule M0-1-3:
+- A project shall not contain unused variables.
+Deviation from Rule M0-1-9:
+- There shall be no dead code.
+Justification:
+- The variable IS used via its constructor's side effect during static initialization.
+  BackendRegistrant's constructor registers the CreateConsoleRecorder function pointer into
+  gBackendCreators[] at program startup. The variable itself doesn't need to be referenced
+  elsewhere - its purpose is fulfilled by the constructor's execution. This is an intentional
+  static registration pattern.
 */
-// coverity[autosar_cpp14_a3_3_2_violation]
+// coverity[autosar_cpp14_a3_3_2_violation] See above
+// coverity[autosar_cpp14_m0_1_3_violation] See above
+// coverity[autosar_cpp14_m0_1_9_violation] See above
 const BackendRegistrant kConsoleRegistrant{LogMode::kConsole, &CreateConsoleRecorder};
 
 }  // namespace

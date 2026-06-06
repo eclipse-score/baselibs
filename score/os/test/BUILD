@@ -28,6 +28,7 @@ test_suite(
         ":capability_test",
         ":cpuid_test",
         ":dirent_test",
+        ":dlfcn_impl_test",
         ":errno_test",
         ":fcntl_test",
         ":file_stream_test",
@@ -69,6 +70,7 @@ py_unittest_qnx_test(
         ":asil_qm_test",
         ":capability_test",
         ":cpuid_test",
+        ":dlfcn_impl_test",
         ":dirent_test",
         ":errno_test",
         ":fcntl_test",
@@ -774,5 +776,18 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:version",
+    ],
+)
+
+cc_test(
+    name = "dlfcn_impl_test",
+    srcs = ["dlfcn_impl_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os:dlfcn",
     ],
 )

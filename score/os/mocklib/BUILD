@@ -209,6 +209,17 @@ cc_library(
 )
 
 cc_library(
+    name = "dlfcn_mock",
+    testonly = True,
+    hdrs = ["dlfcn_mock.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/os:dlfcn",
+    ],
+)
+
+cc_library(
     name = "statvfs_mock",
     testonly = True,
     srcs = ["statvfsmock.cpp"],

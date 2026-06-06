@@ -574,11 +574,11 @@ TEST_F(LogStreamFixture, CanLogPtrToNonConstChar)
     Unit() << value.data();
 }
 
-TEST_F(LogStreamFixture, CanLogStringLiteral)
+TEST_F(LogStreamFixture, CanLogStringView)
 {
     RecordProperty("ParentRequirement", "SCR-1633236");
     RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Verifies the ability of logging string literal value.");
+    RecordProperty("Description", "Verifies the ability of logging string View value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     // Given a value we want to log
@@ -591,11 +591,11 @@ TEST_F(LogStreamFixture, CanLogStringLiteral)
     Unit() << value;
 }
 
-TEST_F(LogStreamFixture, WhenTryToLogEmptyStringLiteralShallNotLog)
+TEST_F(LogStreamFixture, WhenTryToLogEmptyStringViewShallNotLog)
 {
     RecordProperty("ParentRequirement", "SCR-1633236, SCR-1016719");
     RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Verifies that in case of empty string literal we shall expect no logs.");
+    RecordProperty("Description", "Verifies that in case of empty string View we shall expect no logs.");
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     // Given a value we want to log

@@ -16,8 +16,6 @@
 #include "score/mw/log/detail/integer_representation.h"
 #include "score/mw/log/log_types.h"
 
-#include "score/memory/string_literal.h"
-
 #include "score/span.hpp"
 
 #include <algorithm>
@@ -68,109 +66,109 @@ struct GetFormatSpecifier
 template <>
 struct GetFormatSpecifier<const float, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%f ";
+    static constexpr const char* kValue = "%f ";
 };
 
 template <>
 struct GetFormatSpecifier<const double, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%f ";
+    static constexpr const char* kValue = "%f ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral kValue = "%hhx ";
+    static constexpr const char* kValue = "%hhx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral kValue = "%hho ";
+    static constexpr const char* kValue = "%hho ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint8_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%hhu ";
+    static constexpr const char* kValue = "%hhu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%hu ";
+    static constexpr const char* kValue = "%hu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral kValue = "%hx ";
+    static constexpr const char* kValue = "%hx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint16_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral kValue = "%ho ";
+    static constexpr const char* kValue = "%ho ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%u ";
+    static constexpr const char* kValue = "%u ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral kValue = "%x ";
+    static constexpr const char* kValue = "%x ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint32_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral kValue = "%o ";
+    static constexpr const char* kValue = "%o ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%lu ";
+    static constexpr const char* kValue = "%lu ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kHex>
 {
-    static constexpr score::StringLiteral kValue = "%lx ";
+    static constexpr const char* kValue = "%lx ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::uint64_t, IntegerRepresentation::kOctal>
 {
-    static constexpr score::StringLiteral kValue = "%lo ";
+    static constexpr const char* kValue = "%lo ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int8_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%hhi ";
+    static constexpr const char* kValue = "%hhi ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int16_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%hi ";
+    static constexpr const char* kValue = "%hi ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int32_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%i ";
+    static constexpr const char* kValue = "%i ";
 };
 
 template <>
 struct GetFormatSpecifier<const std::int64_t, IntegerRepresentation::kDecimal>
 {
-    static constexpr score::StringLiteral kValue = "%li ";
+    static constexpr const char* kValue = "%li ";
 };
 
 template <IntegerRepresentation i, typename T, typename PT>
@@ -180,7 +178,7 @@ void PutFormattedNumber(PT& payload, const T data) noexcept
         if (!buffer.empty())  // LCOV_EXCL_BR_LINE: lcov complains about lots of uncovered branches here, it is not
                               // convenient/related to this condition.
         {
-            constexpr score::StringLiteral kFormat = GetFormatSpecifier<const T, i>::kValue;
+            constexpr const char* kFormat = GetFormatSpecifier<const T, i>::kValue;
             using FormatType = std::conditional_t<std::is_same_v<std::remove_reference_t<T>, float>, double, T>;
             const auto written =
                 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg) safe to use std::snprintf

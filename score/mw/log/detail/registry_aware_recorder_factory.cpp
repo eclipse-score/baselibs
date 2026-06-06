@@ -119,12 +119,12 @@ std::unique_ptr<Recorder> RegistryAwareRecorderFactory::CreateFromConfiguration(
         return CreateWithConsoleLoggingOnly(memory_resource);
     }
 
-    auto config_reader = std::make_unique<TargetConfigReader>(
+    TargetConfigReader config_reader{
         std::make_unique<ConfigurationFileDiscoverer>(score::os::Path::Default(memory_resource),
                                                       score::os::Stdlib::Default(memory_resource),
-                                                      score::os::Unistd::Default(memory_resource)));
+                                                      score::os::Unistd::Default(memory_resource))};
 
-    const auto result = config_reader->ReadConfig();
+    const auto result = config_reader.ReadConfig();
 
     if (!result.has_value())
     {

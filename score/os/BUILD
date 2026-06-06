@@ -583,6 +583,25 @@ cc_library(
 )
 
 cc_library(
+    name = "dlfcn",
+    srcs = [
+        "dlfcn_impl.cpp",
+    ],
+    hdrs = [
+        "dlfcn.h",
+        "dlfcn_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":errno",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_library(
     name = "string",
     srcs = [
         "string.cpp",
