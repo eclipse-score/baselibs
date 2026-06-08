@@ -451,7 +451,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:public"],  # platform_only
     deps = [
         "@score_baselibs//score/os:errno",
     ],

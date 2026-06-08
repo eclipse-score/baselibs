@@ -50,9 +50,7 @@ cc_library(
         "additional_warnings",
         "strict_warnings",
     ],
-    # The visibility is not public because it is still work in progress and
-    # not ready to be used.
-    visibility = [":__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":ipv4_address",
         "@score_baselibs//score/language/futurecpp",
