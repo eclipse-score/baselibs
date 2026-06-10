@@ -30,6 +30,7 @@ jobs:
           - bazel-config: bl-x86_64-qnx
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
@@ -37,21 +38,26 @@ jobs:
               -//score/memory/shared:shared_memory_resource_open_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
+              -//src/containers:tests
           - bazel-config: bl-aarch64-qnx
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/memory/shared:shared_memory_factory_test
               -//score/memory/shared:shared_memory_resource_open_test
               -//score/os/utils/inotify:unit_test
+              -//src/containers:tests
+              -//src/pal:tests
+              -//src/thread:tests
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
     uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@af347722c7ae3ed85518895c11268d96ac728f62
     permissions:
       contents: read
       pull-requests: read
     with:
-      bazel-target: "//score/..."
+      bazel-target: "//score/... //src/..."
       bazel-config: ${{ matrix.bazel-config }}
       bazel-test-target: ${{ matrix.bazel-test-target }}
       credential-helper: ".github/tools/qnx_credential_helper.py"

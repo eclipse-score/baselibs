@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <score/string_view.hpp>
+#include <string_view>
 
 namespace score::memory::shared
 {
@@ -28,7 +28,7 @@ constexpr const char lorem_ipsum_str[] =
     "magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo "
     "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
     "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-constexpr score::cpp::string_view lorem_ipsum{lorem_ipsum_str, sizeof(lorem_ipsum_str)};
+constexpr std::string_view lorem_ipsum{lorem_ipsum_str, sizeof(lorem_ipsum_str)};
 
 TEST(StringTest, StringUsesProvidedMemoryResource)
 {

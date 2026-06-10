@@ -13,7 +13,6 @@
 #ifndef SCORE_LIB_MEMORY_SHARED_POLYMORPHICOFFSETPTRALLOCATOR_H
 #define SCORE_LIB_MEMORY_SHARED_POLYMORPHICOFFSETPTRALLOCATOR_H
 
-#include "score/language/safecpp/safe_math/details/multiplication/multiplication.h"
 #include "score/memory/shared/memory_resource_proxy.h"
 #include "score/memory/shared/offset_ptr.h"
 

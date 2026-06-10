@@ -31,15 +31,17 @@ jobs:
       matrix:
         include:
           - bazel-config: bl-x86_64-linux
-            bazel-build-target: "//score/..."
+            bazel-build-target: "//score/... //src/..."
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
             bazel-test-extra-flags: ""
           - bazel-config: bl-aarch64-linux
-            bazel-build-target: "//score/..."
+            bazel-build-target: "//score/... //src/..."
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/test:acl_test
               -//score/os/test:errno_test

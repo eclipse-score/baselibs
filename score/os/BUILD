@@ -593,7 +593,9 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
     deps = [
         ":errno",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
