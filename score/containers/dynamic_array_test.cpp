@@ -14,7 +14,6 @@
 
 #include "score/containers/test/allocator_test_type_helpers.h"
 #include "score/containers/test/container_test_types.h"
-#include "score/containers/test/custom_allocator_mock.h"
 
 #include "score/memory/shared/fake/my_memory_resource.h"
 #include "score/memory/shared/polymorphic_offset_ptr_allocator.h"
@@ -341,7 +340,8 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithT
     };
 
     // Since a std::exception is thrown by std::allocator_traits<Allocator>::allocate(), rather than by an AMP
-    // assertion / precondition, we capture this using the gtest framework instead of SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED.
+    // assertion / precondition, we capture this using the gtest framework instead of
+    // SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED.
     EXPECT_THROW(initialise_dynamic_array(), std::exception);
 }
 

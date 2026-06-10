@@ -17,18 +17,26 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "custom_allocator_mock",
+    name = "mockable_allocator",
     testonly = True,
-    srcs = ["custom_allocator_mock.cpp"],
-    hdrs = ["custom_allocator_mock.h"],
+    srcs = [
+        "mockable_allocator.cpp",
+        "mockable_pointer.cpp",
+        "mockable_pointer_mock_guard.cpp",
+        "pointer_spy_mock.cpp",
+    ],
+    hdrs = [
+        "mockable_allocator.h",
+        "mockable_pointer.h",
+        "mockable_pointer_mock_guard.h",
+        "pointer_spy_mock.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "@score_baselibs//score/containers:__subpackages__",
     ],
     deps = [
         "@googletest//:gtest_main",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:offset_ptr",
     ],
 )
 

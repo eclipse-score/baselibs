@@ -10,4 +10,4 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/containers/test/custom_allocator_mock.h"
+#include "score/containers/test/mockable_allocator.h"
