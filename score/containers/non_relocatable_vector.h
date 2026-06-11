@@ -308,7 +308,7 @@ auto NonRelocatableVector<ElementType, Allocator>::emplace_back(Args&&... args) 
         "Capacity of vector set in constructor has already been reached. Cannot emplace another element.");
 
     auto* current_storage_pointer = detail::to_address(non_relocatable_vector_);
-    std::advance(current_storage_pointer, size_);
+    std::advance(current_storage_pointer, static_cast<difference_type>(size_));
     std::allocator_traits<Allocator>::construct(alloc_, current_storage_pointer, std::forward<Args>(args)...);
     size_ += 1U;
     return *current_storage_pointer;
