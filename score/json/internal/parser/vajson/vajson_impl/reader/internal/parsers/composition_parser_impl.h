@@ -77,15 +77,6 @@ auto CompositionParser<Mixin>::String(Fn fn) noexcept -> CallableReturnsResult<F
 
 template <typename Mixin>
 template <typename Fn>
-auto CompositionParser<Mixin>::Binary(Fn fn) noexcept -> CallableReturnsResult<Fn, Bytes, R>
-{
-    static_assert(ReturnsResultVoid<Fn, Bytes>::value, "Must return score::Result<void>");
-
-    return BinaryParser(this->doc_, std::forward<Fn>(fn)).SubParse();
-}
-
-template <typename Mixin>
-template <typename Fn>
 auto CompositionParser<Mixin>::Array(Fn fn) noexcept -> CallableReturnsResult<Fn, std::size_t, R>
 {
     static_assert(ReturnsResultVoid<Fn, std::size_t>::value, "Must return score::Result<void>");
