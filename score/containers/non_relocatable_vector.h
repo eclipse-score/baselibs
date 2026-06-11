@@ -109,15 +109,14 @@ class NonRelocatableVector
     // coverity[autosar_cpp14_a11_3_1_violation]
     friend class test::NonRelocatableVectorAttorney<ElementType, Allocator>;
 
-    using ptr_index_type =
-        typename std::pointer_traits<typename std::allocator_traits<Allocator>::pointer>::difference_type;
-
   public:
     using value_type = ElementType;
     using reference = ElementType&;
     using const_reference = const ElementType&;
     using iterator = ElementType*;
     using const_iterator = const ElementType*;
+    using difference_type =
+        typename std::pointer_traits<typename std::allocator_traits<Allocator>::pointer>::difference_type;
     using size_type = std::size_t;
 
     /// \brief Constructor which reserves memory for the provided number of elements
@@ -334,7 +333,7 @@ inline ElementType& NonRelocatableVector<ElementType, Allocator>::at(const size_
     // coverity[autosar_cpp14_a9_3_1_violation]
     // coverity[autosar_cpp14_m7_5_1_violation]
     // coverity[autosar_cpp14_m7_5_2_violation]
-    return *(std::next(non_relocatable_vector_, static_cast<ptr_index_type>(index)));
+    return *(std::next(non_relocatable_vector_, static_cast<difference_type>(index)));
 }
 
 template <typename ElementType, typename Allocator>
@@ -353,7 +352,7 @@ inline const ElementType& NonRelocatableVector<ElementType, Allocator>::at(const
     // coverity[autosar_cpp14_a3_8_1_violation]
     // coverity[autosar_cpp14_m7_5_1_violation]
     // coverity[autosar_cpp14_m7_5_2_violation]
-    return *(std::next(non_relocatable_vector_, static_cast<ptr_index_type>(index)));
+    return *(std::next(non_relocatable_vector_, static_cast<difference_type>(index)));
 }
 
 template <typename ElementType, typename Allocator>
@@ -497,7 +496,7 @@ inline auto NonRelocatableVector<ElementType, Allocator>::GetLastElement(const p
     // cast is safe due to 0 check
     // coverity[autosar_cpp14_m5_0_9_violation]
     auto last_element_fancy_pointer =
-        std::next(dynamic_array, static_cast<ptr_index_type>(non_relocatable_vector_size - 1U));
+        std::next(dynamic_array, static_cast<difference_type>(non_relocatable_vector_size - 1U));
     return ::score::containers::detail::to_address(last_element_fancy_pointer);
 }
 
