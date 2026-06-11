@@ -498,5 +498,9 @@
   {
     "version": "pr-264",
     "url": "https://eclipse-score.github.io/baselibs/pr-264/"
+  },
+  {
+    "version": "pr-265",
+    "url": "https://eclipse-score.github.io/baselibs/pr-265/"
   }
 ]
