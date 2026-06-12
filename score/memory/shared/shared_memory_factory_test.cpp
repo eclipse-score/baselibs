@@ -1145,4 +1145,43 @@ TEST_F(SharedMemoryFactoryDeathTest, FailingToInsertResourceIntoRegistryTerminat
     EXPECT_DEATH(resource_attorney.mapMemoryIntoProcess(), ".*");
 }
 
+TEST_F(SharedMemoryFactoryTest, OpenWithInterVmPathReturnsNullptr)
+{
+    // Given a shared memory path using the inter-VM prefix
+    const std::string inter_vm_path{"/intervm-shared-shmem/lola-data-0000000000004660-00001"};
+
+    // When opening shared memory using this path
+    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    const auto result = SharedMemoryFactory::Open(inter_vm_path, false);
+    EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(SharedMemoryFactoryTest, CreateWithInterVmPathReturnsNullptr)
+{
+    // Given a shared memory path using the inter-VM prefix
+    const std::string inter_vm_path{"/intervm-shared-shmem/lola-ctl-0000000000004660-00001-b"};
+
+    // When creating shared memory using this path
+    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    const auto result = SharedMemoryFactory::Create(
+        inter_vm_path, [](std::shared_ptr<ISharedMemoryResource>) {}, kSharedMemorySize, {}, false);
+    EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(SharedMemoryFactoryTest, CreateOrOpenWithInterVmPathReturnsNullptr)
+{
+    // Given a shared memory path using the inter-VM prefix
+    const std::string inter_vm_path{"/intervm-shared-shmem/lola-methods-0000000000004660-00001-00002-00003"};
+
+    // When creating or opening shared memory using this path
+    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    const auto result = SharedMemoryFactory::CreateOrOpen(
+        inter_vm_path,
+        [](std::shared_ptr<ISharedMemoryResource>) {},
+        kSharedMemorySize,
+        SharedMemoryResource::AccessControl{{}, {}},
+        false);
+    EXPECT_EQ(result, nullptr);
+}
+
 }  // namespace score::memory::shared::test
