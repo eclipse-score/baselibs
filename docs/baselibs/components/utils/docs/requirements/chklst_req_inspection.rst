@@ -15,7 +15,7 @@
 
 .. document:: Utils Requirements Inspection Checklist
    :id: doc__utils_req_inspection
-   :status: draft
+   :status: valid
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_inspect
@@ -33,10 +33,10 @@ Conduct
 
 As described in the concept :need:`doc_concept__wp_inspections` the following "inspection roles" are expected to be filled:
 
-- content responsible (author): <contributor/committer explicitly named here, who is the main author, as can be seen in config mgt tooling>
-- reviewer: <contributor/committer explicitly named here, who is the main content reviewer, must be different from content responsible>
-- moderator: <committer explicitly named here, who is is the safety manager, security manager or quality manager initiating the inspection>
-- test expert: <one of the reviewers explicitly named here, to cover REQ_08_01 as described>
+- content responsible (author): `<https://github.com/ssingh2099>`_
+- reviewer: `<https://github.com/mihajlo-k>`_
+- moderator: `<https://github.com/aschemmel-tech>`_
+- test expert: `<https://github.com/rahulthakre29>`_
 
 Checklist
 ---------
