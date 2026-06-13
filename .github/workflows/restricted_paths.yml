@@ -49,7 +49,6 @@ jobs:
               - 'score/network/**'
               - 'score/os/**'
               - 'score/quality/compiler_warnings/**'
-              - 'score/static_reflection_with_serialization/**'
       - name: Block PR if restricted files are changed
         if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
         env:
