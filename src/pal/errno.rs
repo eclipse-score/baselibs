@@ -13,11 +13,23 @@
 
 //! Unified `errno` access.
 
+use crate::c_int;
+
 #[cfg(target_os = "linux")]
-use libc::__errno_location as errno_ptr;
+extern "C" {
+    pub fn __errno_location() -> *mut c_int;
+}
 
 #[cfg(target_os = "nto")]
-use libc::__get_errno_ptr as errno_ptr;
+extern "C" {
+    pub fn __get_errno_ptr() -> *mut c_int;
+}
+
+#[cfg(target_os = "linux")]
+use __errno_location as errno_ptr;
+
+#[cfg(target_os = "nto")]
+use __get_errno_ptr as errno_ptr;
 
 /// Current errno value.
 pub fn errno() -> crate::c_int {

@@ -23,6 +23,5 @@ edition.workspace = true
 path = "lib.rs"
 
 [dependencies]
-libc.workspace = true
 containers.workspace = true
 score_log.workspace = true

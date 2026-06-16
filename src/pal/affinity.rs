@@ -14,15 +14,31 @@
 //! Affinity handling differs between Linux and QNX.
 //! Module ensures similar behavior between both OSes.
 
-use crate::errno;
+use crate::{c_int, errno};
 use containers::fixed_capacity::FixedCapacityVec;
 use score_log::ScoreDebug;
 
 #[cfg(target_os = "linux")]
-use libc::{cpu_set_t, sched_getaffinity, sched_setaffinity};
+#[repr(C)]
+pub struct cpu_set_t {
+    #[cfg(all(target_pointer_width = "32", not(target_arch = "x86_64")))]
+    bits: [u32; 32],
+    #[cfg(not(all(target_pointer_width = "32", not(target_arch = "x86_64"))))]
+    bits: [u64; 16],
+}
+
+#[cfg(target_os = "linux")]
+extern "C" {
+    pub fn sched_getaffinity(pid: crate::pid_t, cpusetsize: crate::size_t, cpuset: *mut cpu_set_t) -> c_int;
+    pub fn sched_setaffinity(pid: crate::pid_t, cpusetsize: crate::size_t, cpuset: *const cpu_set_t) -> c_int;
+}
 
 #[cfg(target_os = "nto")]
-use libc::{ThreadCtl, _NTO_TCTL_RUNMASK_GET_AND_SET_INHERIT};
+const _NTO_TCTL_RUNMASK_GET_AND_SET_INHERIT: u32 = 10;
+#[cfg(target_os = "nto")]
+extern "C" {
+    pub fn ThreadCtl(__cmd: c_int, __data: *mut crate::c_void) -> c_int;
+}
 
 const MAX_CPU_NUM: usize = 1024;
 const CPU_MASK_SIZE: usize = MAX_CPU_NUM / (u8::BITS as usize);
