@@ -534,5 +534,9 @@
   {
     "version": "pr-274",
     "url": "https://eclipse-score.github.io/baselibs/pr-274/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-186-956c02cad149aef9b8b8fe0791682d1e31060330",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-186-956c02cad149aef9b8b8fe0791682d1e31060330/"
   }
 ]
