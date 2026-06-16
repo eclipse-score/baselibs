@@ -36,7 +36,7 @@ constexpr std::uint8_t kSha256Size{32U};
 constexpr std::uint8_t kSha384Size{48U};
 constexpr std::uint8_t kSha512Size{64U};
 constexpr std::uint8_t kCrc32Size{4U};
-constexpr std::uint8_t kCrc32UnusedSize{4U};
+constexpr std::uint8_t kCrc32AutosarSize{4U};
 
 /// Cryptographic hash algorithm
 /* KW_SUPPRESS_START:UNUSED.STYLE.SINGLE_STMT_PER_LINE:this is a declaration of an enum; putting this on a single */
@@ -49,7 +49,7 @@ enum class HashAlgorithm : std::uint8_t
     kSha384,
     kSha512,
     kCrc32,
-    kCrc32Unused,
+    kCrc32Autosar,
     kLast
 };
 
@@ -67,8 +67,8 @@ inline score::mw::log::LogStream& operator<<(score::mw::log::LogStream& stream, 
         case HashAlgorithm::kCrc32:
             modifiedStream << "Crc32";
             break;
-        case HashAlgorithm::kCrc32Unused:
-            modifiedStream << "Crc32Unused";
+        case HashAlgorithm::kCrc32Autosar:
+            modifiedStream << "Crc32Autosar";
             break;
         case HashAlgorithm::kSha1:
             modifiedStream << "Sha1";

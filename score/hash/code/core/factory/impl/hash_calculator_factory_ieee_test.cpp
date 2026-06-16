@@ -104,13 +104,13 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateCrc32)
     EXPECT_EQ(hash_result_crc32.value(), (Hash{HashAlgorithm::kCrc32, expected_crc32}));
 }
 
-TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32UnusedNotSupportedInIeeeVariant)
+TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32AutosarNotSupportedInIeeeVariant)
 {
     TypeParam unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
 
-    auto result = unit.CalculateHash(HashAlgorithm::kCrc32Unused, data);
+    auto result = unit.CalculateHash(HashAlgorithm::kCrc32Autosar, data);
 
     EXPECT_FALSE(result.has_value());
 }
@@ -119,7 +119,7 @@ REGISTER_TYPED_TEST_SUITE_P(HashCalculatorFactoryCreationTest,
                             HashCalculatorFactorySuccessTest,
                             CalculateSha256,
                             CalculateCrc32,
-                            Crc32UnusedNotSupportedInIeeeVariant);
+                            Crc32AutosarNotSupportedInIeeeVariant);
 using Factories = ::testing::Types<HashCalculatorFactory, SafeHashCalculatorFactory>;
 
 INSTANTIATE_TYPED_TEST_SUITE_P(WorkingDigests, HashCalculatorFactoryCreationTest, Factories, );
