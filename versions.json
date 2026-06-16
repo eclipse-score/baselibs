@@ -538,5 +538,9 @@
   {
     "version": "gh-readonly-queue/main/pr-186-956c02cad149aef9b8b8fe0791682d1e31060330",
     "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-186-956c02cad149aef9b8b8fe0791682d1e31060330/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-270-41b4af6b955ab550809558233e82e4df609ad8d5",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-270-41b4af6b955ab550809558233e82e4df609ad8d5/"
   }
 ]
