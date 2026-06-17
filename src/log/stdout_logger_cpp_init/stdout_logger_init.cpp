@@ -66,9 +66,8 @@ void StdoutLoggerBuilder::SetAsDefaultLogger() noexcept
     size_t context_size{0};
     if (context_)
     {
-        auto value{context_.value()};
-        context_ptr = value.c_str();
-        context_size = value.size();
+        context_ptr = context_.value().c_str();
+        context_size = context_.value().size();
     }
 
     const bool* show_module{show_module_ ? &show_module_.value() : nullptr};
