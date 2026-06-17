@@ -17,7 +17,7 @@ namespace score
 namespace common
 {
 
-std::int8_t daysInMonth(const std::int16_t year, const std::int8_t month)
+static std::int8_t daysInMonth(const std::int16_t year, const std::int8_t month)
 {
     if (month == 2)
     {

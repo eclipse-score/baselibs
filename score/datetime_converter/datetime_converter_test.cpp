@@ -534,10 +534,10 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_YearBoundary_DayOverflowRo
     EXPECT_EQ(dateTimeConverted->m_second, 0);
 }
 
-TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1800_ReturnsNull)
+TEST_F(DateTimeConverterTest, EpochToDateTime_OutOfRangeUpperBound_ReturnsNullptr)
 {
     RecordProperty("Description",
-        "Verify that epoch values mapping outside supported year range return nullptr.");
+        "Verify that epoch values mapping above the supported year range return nullptr.");
     RecordProperty("TestType", "requirements-based");
 
     // This epoch maps to year 10000, which is above the supported upper bound (9999).
