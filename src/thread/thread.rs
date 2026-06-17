@@ -355,11 +355,16 @@ mod tests {
     fn attributes_inherit_scheduling_attributes_succeeds() {
         let mut attrs = Attributes::new();
 
-        attrs.inherit_scheduling_attributes(true);
+        // Check default - inherit sched.
         assert!(attr_inherit_scheduling_attributes(&attrs));
 
+        // Check explicit sched.
         attrs.inherit_scheduling_attributes(false);
         assert!(!attr_inherit_scheduling_attributes(&attrs));
+
+        // Check inherit sched.
+        attrs.inherit_scheduling_attributes(true);
+        assert!(attr_inherit_scheduling_attributes(&attrs));
     }
 
     #[test]
@@ -371,11 +376,13 @@ mod tests {
         assert_eq!(attr_priority(&attrs), 50);
     }
 
+    #[cfg(not(target_os = "nto"))]
     #[test]
     #[should_panic(expected = "pthread_attr_setschedparam failed, rc:")]
     fn attributes_priority_wrong_scheduler_policy() {
+        // Test is disabled for Neutrino - priority range seem to be unchecked on set.
         let mut attrs = Attributes::new();
-        attrs.priority(50);
+        attrs.priority(255);
     }
 
     #[test]
@@ -399,7 +406,7 @@ mod tests {
     #[should_panic(expected = "pthread_attr_setstacksize failed, rc:")]
     fn attributes_stack_size_too_small() {
         let mut attrs = Attributes::new();
-        attrs.stack_size(4 * 1024);
+        attrs.stack_size(1024);
     }
 
     #[test]

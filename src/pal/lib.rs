@@ -60,6 +60,7 @@ pub struct sched_param {
 }
 
 extern "C" {
+    pub fn sysconf(__name: c_int) -> c_long;
     pub fn pthread_self() -> pthread_t;
     pub fn pthread_join(native: pthread_t, value: *mut *mut c_void) -> c_int;
     pub fn pthread_attr_init(attr: *mut pthread_attr_t) -> c_int;
@@ -92,4 +93,7 @@ pub const SCHED_FIFO: c_int = 1;
 pub const SCHED_RR: c_int = 2;
 
 pub const PTHREAD_INHERIT_SCHED: c_int = 0;
+#[cfg(target_os = "linux")]
 pub const PTHREAD_EXPLICIT_SCHED: c_int = 1;
+#[cfg(target_os = "nto")]
+pub const PTHREAD_EXPLICIT_SCHED: c_int = 2;

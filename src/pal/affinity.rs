@@ -40,6 +40,9 @@ extern "C" {
     pub fn ThreadCtl(__cmd: c_int, __data: *mut crate::c_void) -> c_int;
 }
 
+#[cfg(target_os = "nto")]
+pub const _SC_NPROCESSORS_ONLN: c_int = 91;
+
 const MAX_CPU_NUM: usize = 1024;
 const CPU_MASK_SIZE: usize = MAX_CPU_NUM / (u8::BITS as usize);
 
@@ -142,29 +145,50 @@ impl From<CpuSet> for cpu_set_t {
 #[repr(C)]
 #[derive(Clone, Copy)]
 struct NtoCpuSet {
-    // Expected to always be set to `32` - see comment above.
-    size: i32,
-    run_mask: [u32; 32],
-    // Expected to always be zeroed - left unaltered.
-    inherit_mask: [u32; 32],
+    // `ThreadCtl` data internal representation.
+    // `size` must be determined based on number of CPU, with max allowed value equal to 32.
+    // [ size: i32 | run_mask: size * u32 | inherit_mask: size * u32 ]
+    data: [u32; 1 + 32 + 32],
 }
 
 #[cfg(target_os = "nto")]
 impl NtoCpuSet {
-    fn new(mask: [u32; 32]) -> Self {
-        Self {
-            size: 32,
-            run_mask: mask,
-            inherit_mask: [0; 32],
-        }
+    fn new() -> Self {
+        // Get number of CPUs.
+        let num_cpus = unsafe { crate::sysconf(_SC_NPROCESSORS_ONLN) } as u32;
+        assert!(
+            num_cpus >= 1 && num_cpus <= MAX_CPU_NUM as u32,
+            "number of CPUs in the system out of expected range: {num_cpus}"
+        );
+
+        // Get number of elements and set it at 0.
+        let size = (num_cpus - 1) / u32::BITS + 1;
+        let mut data = [0; _];
+        data[0] = size;
+
+        Self { data }
+    }
+
+    fn run_mask(&self) -> &[u32] {
+        let size = self.data[0] as usize;
+        &self.data[1..1 + size]
+    }
+
+    fn run_mask_mut(&mut self) -> &mut [u32] {
+        let size = self.data[0] as usize;
+        &mut self.data[1..1 + size]
     }
 }
 
 #[cfg(target_os = "nto")]
 impl From<NtoCpuSet> for CpuSet {
     fn from(value: NtoCpuSet) -> Self {
-        // SAFETY: CPU mask layout and size is ensured.
-        let mask = unsafe { core::mem::transmute(value.run_mask) };
+        // Reorient data from array of u32 to array of u8.
+        let mut mask = [0u8; CPU_MASK_SIZE];
+        for (i, &word) in value.run_mask().iter().enumerate() {
+            const CHUNK_SIZE: usize = i32::BITS as usize / 8;
+            mask[i * CHUNK_SIZE..i * CHUNK_SIZE + CHUNK_SIZE].copy_from_slice(&word.to_le_bytes());
+        }
         Self { mask }
     }
 }
@@ -172,9 +196,19 @@ impl From<NtoCpuSet> for CpuSet {
 #[cfg(target_os = "nto")]
 impl From<CpuSet> for NtoCpuSet {
     fn from(value: CpuSet) -> Self {
-        // SAFETY: CPU mask layout and size is ensured.
-        let run_mask = unsafe { core::mem::transmute(value.mask) };
-        Self::new(run_mask)
+        // Reorient data from array of u8 to array of u32.
+        let mut nto_cpu_set = Self::new();
+        let size = nto_cpu_set.data[0] as usize;
+        let used_bytes = size * (u32::BITS as usize / 8);
+        assert!(
+            value.mask[used_bytes..].iter().all(|&b| b == 0),
+            "provided CpuSet contains CPU IDs out of range for NtoCpuSet in this configuration"
+        );
+
+        for (i, chunk) in value.mask[..used_bytes].chunks_exact(4).enumerate() {
+            nto_cpu_set.run_mask_mut()[i] = u32::from_le_bytes(chunk.try_into().expect("chunk is 4 bytes"));
+        }
+        nto_cpu_set
     }
 }
 
@@ -236,7 +270,7 @@ pub fn get_affinity() -> FixedCapacityVec<usize> {
 
     #[cfg(target_os = "nto")]
     {
-        let mut native_cpu_set = NtoCpuSet::new([0; _]);
+        let mut native_cpu_set = NtoCpuSet::new();
         // SAFETY:
         // Native CPU set is properly initialized.
         // `NtoCpuSet` layout must be as expected by `ThreadCtl`.
