@@ -34,9 +34,9 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson
 
    VaJson checks the well-formedness of JSON data.
    Errors shall include the reason and location in the JSON document for malformed JSON.
@@ -46,9 +46,9 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson
 
    VaJson shall ignore trailing commas.
    This behavior extends RFC 8259.
@@ -58,9 +58,9 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson
 
    VaJson shall accept hexadecimal integers.
    This behavior extends RFC 8259.
@@ -70,9 +70,9 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson
 
    VaJson shall encode and decode UTF-8 encoded strings.
 
@@ -84,8 +84,8 @@ Safety Impact
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson
 
    The VaJson library shall be ASIL-B compliant.

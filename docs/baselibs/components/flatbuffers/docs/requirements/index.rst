@@ -114,9 +114,9 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide functionality to serialize data into the FlatBuffers binary format.
 
@@ -129,9 +129,9 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide functionality to read FlatBuffers binary data.
 
@@ -143,9 +143,9 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a verification mechanism to validate the structural well-formedness of a FlatBuffers buffer.
 
@@ -161,9 +161,9 @@ Buffer Identification and Versioning
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in buffer identification mechanism consisting
    of a major version, a minor version, and a 4-character identifier.
@@ -173,9 +173,9 @@ Buffer Identification and Versioning
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in version check mechanism that validates
    the major version, minor version, and 4-character identifier of a FlatBuffers buffer.
@@ -188,9 +188,9 @@ Safety Impact
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers library shall be ASIL-B compliant for C++ and Rust language support.
 

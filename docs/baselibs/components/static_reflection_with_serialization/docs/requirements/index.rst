@@ -28,8 +28,8 @@ Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
@@ -40,8 +40,8 @@ Requirements
    :reqtype: Interface
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
@@ -52,8 +52,8 @@ Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
@@ -64,8 +64,8 @@ Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
@@ -76,8 +76,8 @@ Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
@@ -88,8 +88,8 @@ Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
-   :belongs_to: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
 
