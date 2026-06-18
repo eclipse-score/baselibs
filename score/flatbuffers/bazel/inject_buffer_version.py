@@ -14,9 +14,9 @@
 
 """Patches a JSON data file with buffer version information.
 
-This script is invoked by the serialize_buffer Bazel rule to inject
+This script is invoked by e.g. serialize_versioned_buffer Bazel macro to inject
 major_version and minor_version into the user's JSON data file before
-flatc serialization. The version is stored as a 'version' object at
+flatc serialization. The version is stored as a 'version_info' object at
 the top level of the JSON.
 
 Usage:
@@ -59,6 +59,10 @@ def main():
     data["version_info"] = {
         "major_version": args.major,
         "minor_version": args.minor,
+        # NOTE: This value must be kept in sync with the type_marker constant in
+        # version_reader.cpp. Changing it here without updating version_reader.cpp
+        # (or vice versa) will cause buffer version validation to fail at runtime.
+        "type_marker": "BV",
     }
 
     with open(args.output, "w") as f:

@@ -21,5 +21,5 @@ FlatBuffers Component Architecture
    :id: comp__baselibs_flatbuffers
    :security: YES
    :safety:  ASIL_B
-   :status: invalid
+   :status: valid
    :belongs_to: feat__baselibs

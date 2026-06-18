@@ -18,43 +18,47 @@ union DataPayloadUnion {
 
 table MyComponentConfig {
     /// Buffer version — MUST be field 0 for universal buffer identification
-    version_info:score.flatbuffers.BufferVersion;
+    version_info:score.flatbuffers.BufferVersion (id:0);
 
     /// Component identification
-    component_name:string (required);
-    component_id:uint32; // Implicit default is 0
+    component_name:string (required, id:1);
+    component_id:uint32 (id:2); // Implicit default is 0
 
-    thread_pool_size:uint8 = 4; // Explicit default value
-    max_memory_mb:uint16 = 64;
+    thread_pool_size:uint8 = 4 (id:3); // Explicit default value
+    max_memory_mb:uint16 = 64 (id:4);
 
     /// Nested table
-    advanced_settings:AdvancedSettings (required);
+    advanced_settings:AdvancedSettings (required, id:5);
 }
 
 table AdvancedSettings {
     /// Enum example: operational mode (defaults to first enum value: EVENT_DRIVEN)
-    mode:OperationMode;
+    mode:OperationMode (id:0);
 
     /// Vector examples
-    allowed_priorities:[uint8]; // Vector of primitives
-    feature_flags:[FeatureFlag]; // Vector of tables
+    allowed_priorities:[uint8] (id:1); // Vector of primitives
+    feature_flags:[FeatureFlag] (id:2); // Vector of tables
 
     /// Union example: flexible data payload
-    data:DataPayloadUnion;
+    // Unions with explicit IDs consume two consecutive field IDs: flatc
+    // auto-generates the type-tag field (data_type) and assigns it id:3,
+    // while the union value field (data) gets id:4. id:3 must therefore not
+    // be assigned to any other field.
+    data:DataPayloadUnion (id:4);
 }
 
 /// Table used in vector
 table FeatureFlag {
-    name:string (required);
-    enabled:bool = false;
+    name:string (required, id:0);
+    enabled:bool = false (id:1);
 }
 
 table StringData {
-    value:string;
+    value:string (id:0);
 }
 
 table BinaryData {
-    value:[uint8];
+    value:[uint8] (id:0);
 }
 
 // Root configuration object

@@ -315,6 +315,7 @@ def serialize_versioned_buffer(
         buffer_major_version,
         buffer_minor_version,
         includes = [],
+        tags = [],
         **kwargs):
     """Injects version information into a JSON file and serializes it to a binary FlatBuffer.
 
@@ -328,12 +329,20 @@ def serialize_versioned_buffer(
         schema: The .fbs FlatBuffer schema file label. The schema must include
             buffer_version.fbs manually (e.g. `include "buffer_version.fbs";`).
         output: The name of the generated binary output file (should end with .bin).
-        buffer_major_version: Major version to inject (uint16_t, must be > 0 to have effect).
+        buffer_major_version: Major version to inject (uint16_t).
         buffer_minor_version: Minor version to inject (uint16_t).
         includes: Additional .fbs files required to resolve include directives in the schema.
             @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always added
             automatically and must not be listed here.
-        **kwargs: Additional arguments forwarded to serialize_buffer (e.g. visibility, tags).
+        tags: Tags forwarded to both the intermediate and final targets. Must be forwarded
+            to the intermediate because tags like "manual" control wildcard build inclusion:
+            without it, `bazel build //...` would build the intermediate even when the
+            final target is excluded.
+        **kwargs: Additional standard Bazel attributes (e.g. visibility, testonly,
+            deprecation, target_compatible_with) forwarded only to the final
+            serialize_buffer target. Constraint attributes and testonly need not be set on
+            the intermediate: Bazel propagates incompatibility transitively, and testonly
+            only restricts who may depend on a testonly target (not what it depends on).
 
     Example:
         serialize_versioned_buffer(
@@ -355,7 +364,8 @@ def serialize_versioned_buffer(
         output = patched_output,
         major_version = buffer_major_version,
         minor_version = buffer_minor_version,
-        **kwargs
+        visibility = ["//visibility:private"],
+        tags = tags,
     )
 
     serialize_buffer(
@@ -364,6 +374,7 @@ def serialize_versioned_buffer(
         schema = schema,
         output = output,
         includes = ["@score_baselibs//score/flatbuffers/common:buffer_version.fbs"] + includes,
+        tags = tags,
         **kwargs
     )
 
@@ -374,6 +385,7 @@ def serialize_multiple_versioned_buffers(
         buffer_major_version,
         buffer_minor_version,
         includes = [],
+        tags = [],
         **kwargs):
     """Injects version information into multiple JSON files and serializes them to binary FlatBuffers.
 
@@ -391,7 +403,16 @@ def serialize_multiple_versioned_buffers(
         includes: Additional .fbs files required to resolve include directives in the schema.
             @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always added
             automatically and must not be listed here.
-        **kwargs: Additional arguments forwarded to serialize_multiple_buffers.
+        tags: Tags forwarded to both the intermediate and final targets. Must be forwarded
+            to the intermediates because tags like "manual" control wildcard build inclusion:
+            without it, `bazel build //...` would build the intermediates even when the
+            final target is excluded.
+        **kwargs: Additional standard Bazel attributes (e.g. visibility, testonly,
+            deprecation, target_compatible_with) forwarded only to the final
+            serialize_multiple_buffers target. Constraint attributes and testonly need not
+            be set on the intermediates: Bazel propagates incompatibility transitively, and
+            testonly only restricts who may depend on a testonly target (not what it
+            depends on).
 
     Example:
         serialize_multiple_versioned_buffers(
@@ -420,7 +441,8 @@ def serialize_multiple_versioned_buffers(
             output = patched_output,
             major_version = buffer_major_version,
             minor_version = buffer_minor_version,
-            **kwargs
+            visibility = ["//visibility:private"],
+            tags = tags,
         )
 
         patched_data_dict[":" + patched_name] = output_path
@@ -430,6 +452,7 @@ def serialize_multiple_versioned_buffers(
         schema = schema,
         data_dict = patched_data_dict,
         includes = ["@score_baselibs//score/flatbuffers/common:buffer_version.fbs"] + includes,
+        tags = tags,
         **kwargs
     )
 

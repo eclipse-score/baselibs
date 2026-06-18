@@ -61,4 +61,14 @@ table BinaryData {
 root_type MyComponentConfig;
 
 // Component specific file identifier
-file_identifier "DEMO";
+// Range of printable ASCII characters
+// 0x20 (space)
+// 0x21 (!)
+// 0x22 (")
+// 0x23 (#)
+// ...
+// 0x7B ({)
+// 0x7C (|)
+// 0x7D (})
+// 0x7E (~)
+file_identifier " !\"#";

@@ -2,7 +2,7 @@
 /// This schema is intentionally incorrect: version_info is placed inside the
 /// nested AdvancedSettings table instead of as field 0 of the root table.
 /// FlatBuffers and the serialize_versioned_buffer rule will compile this
-/// without error, but GetBufferVersion / VerifyBufferVersion will fail
+/// without error, but score::flatbuffers::GetVersion / VerifyVersion will fail
 /// because the universal reader looks for version_info at vtable slot 0 of
 /// the root table only.
 include "buffer_version.fbs";
@@ -36,8 +36,8 @@ table MyComponentConfig {
 
 table AdvancedSettings {
     /// WRONG: version_info is buried inside a nested table, not the root table.
-    /// GetBufferVersion will return kVerificationFailed or zeros at runtime.
-    version_info:score.mw.flatbuffers.BufferVersion;
+    /// GetVersion / VerifyVersion will return kVerificationFailed or zeros at runtime.
+    version_info:score.flatbuffers.BufferVersion;
 
     /// Enum example: operational mode (defaults to first enum value: EVENT_DRIVEN)
     mode:OperationMode;

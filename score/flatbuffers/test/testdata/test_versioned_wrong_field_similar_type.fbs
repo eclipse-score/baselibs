@@ -17,7 +17,10 @@ union DataPayloadUnion {
 }
 
 table MyComponentConfig {
-    /// Buffer version — MUST be field 0 for universal buffer identification
+    /// Similar struct as BufferVersion — occupies vtable slot 0 (field 0), no version_info here
+    similar_to_version_info:StructurallySimilarToBufferVersion;
+
+    /// Buffer version — Should have been in slot 0 (field 0)
     version_info:score.flatbuffers.BufferVersion;
 
     /// Component identification
@@ -41,6 +44,12 @@ table AdvancedSettings {
 
     /// Union example: flexible data payload
     data:DataPayloadUnion;
+}
+
+table StructurallySimilarToBufferVersion {
+    some_string:string;
+    some_val1:uint16;
+    some_val2:uint16;
 }
 
 /// Table used in vector

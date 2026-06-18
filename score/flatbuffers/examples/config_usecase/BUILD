@@ -41,6 +41,7 @@ serialize_buffer(
 # using filesystem and flatbufferscpp library.
 cc_test(
     name = "demo_app",
+    size = "small",
     srcs = [
         "demo_app_test.cpp",
         ":demo_component_config",

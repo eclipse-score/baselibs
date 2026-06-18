@@ -17,11 +17,13 @@ union DataPayloadUnion {
 }
 
 table MyComponentConfig {
-    /// Buffer version — MUST be field 0 for universal buffer identification
+    /// Component identification — occupies vtable slot 0 (field 0), no version_info here
+    component_name:string (required);
+
+    /// Buffer version — Should have been in slot 0 (field 0)
     version_info:score.flatbuffers.BufferVersion;
 
     /// Component identification
-    component_name:string (required);
     component_id:uint32; // Implicit default is 0
 
     thread_pool_size:uint8 = 4; // Explicit default value
