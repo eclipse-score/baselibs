@@ -29,8 +29,8 @@ TEST(VajsonParser, CanParseObjectHexadecimalNumber)
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "parse hex value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based"); // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    this->RecordProperty("TestType", "requirements-based");                // requirements test
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::string buffer_json_hex{R"(
         {
@@ -68,6 +68,44 @@ TEST(VajsonParser, CanParseObjectHexadecimalNumber)
 
     // Then the correct value is returned
     EXPECT_EQ(value, 0xdd);
+}
+
+TEST(VajsonParser, CanParseTwoByteBuffer)
+{
+    this->RecordProperty("Verifies", "SCR-5310867");
+    this->RecordProperty("ASIL", "B");
+    this->RecordProperty("Description",
+                         "parse a two-byte JSON object from a buffer shorter than the 3-byte UTF-8 BOM");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    // Given a valid JSON buffer of exactly 2 bytes (shorter than BOM)
+    auto root = VajsonParser::FromBuffer("{}");
+
+    // Then parsing succeeds and returns an empty object
+    ASSERT_TRUE(root.has_value());
+    auto obj = root->As<Object>();
+    ASSERT_TRUE(obj.has_value());
+    EXPECT_TRUE(obj->get().empty());
+}
+
+TEST(VajsonParser, CanParseBufferWithUtf8Bom)
+{
+    this->RecordProperty("Verifies", "SCR-5310867");
+    this->RecordProperty("ASIL", "B");
+    this->RecordProperty("Description",
+                         "parse a JSON buffer prefixed with a UTF-8 BOM, ensuring BOM is consumed correctly");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    // Given a JSON buffer with a UTF-8 BOM prefix
+    std::string bom_json{"\xEF\xBB\xBF{\"key\": 123}"};
+    auto root = VajsonParser::FromBuffer(bom_json);
+
+    // Then parsing succeeds and the value is correct
+    ASSERT_TRUE(root.has_value());
+    auto value = GetValueOfObject<std::uint64_t>(root.value(), "key");
+    EXPECT_EQ(value, 123U);
 }
 
 INSTANTIATE_TYPED_TEST_SUITE_P(Test, ParserTest, VajsonParser, /*unused*/);

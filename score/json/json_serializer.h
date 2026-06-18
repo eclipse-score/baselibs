@@ -21,6 +21,7 @@
 #include <static_reflection_with_serialization/visitor/visit.h>
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <optional>
 #include <utility>

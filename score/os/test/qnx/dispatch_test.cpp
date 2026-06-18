@@ -276,6 +276,20 @@ TEST_F(DispatchMockTest, message_attach)
         kNoDispatch, noAttr, kPrivateMessageTypeFirst, kPrivateMessageTypeLast, noHandler, noHandle);
 }
 
+TEST_F(DispatchMockTest, msg_deliver_event)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Msg Deliver Event");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+
+    constexpr sigevent* no_event{nullptr};
+
+    EXPECT_CALL(dispatchmock, msg_deliver_event);
+    score::os::Dispatch::instance().msg_deliver_event(kInvalidId, no_event);
+}
+
 // Tests of the real stuff
 
 TEST(DispatchTest, name_attach_to_invalid_path_fails)

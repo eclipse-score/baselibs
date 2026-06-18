@@ -18,7 +18,7 @@
 /// Build and run via Bazel:
 ///   bazel test //demo_config_usecase:demo_app
 
-#include "score/filesystem/filestream/file_factory.h"
+#include "score/flatbuffers/load_buffer.hpp"
 // Generated C++ accessor header produced by generate_cpp() – depends on flatbufferscpp
 #include "score/flatbuffers/examples/config_usecase/component_config.h"
 
@@ -36,20 +36,13 @@ TEST(DemoAppTest, LoadsAndVerifiesBuffer)
     // Step 1: Load the binary FlatBuffer file from disk (standard file I/O)
     // -------------------------------------------------------------------------
     const std::string_view bin_path = "score/flatbuffers/examples/config_usecase/demo_config.bin";
-
-    /// TODO: Replace with planned binary file loading utility.
-
-    score::filesystem::FileFactory file_factory{};
-    auto open_result = file_factory.Open(score::filesystem::Path{bin_path}, std::ios::binary | std::ios::in);
-    ASSERT_TRUE(open_result.has_value()) << "Failed to open binary config from '" << bin_path << "'";
-
-    auto& stream = *open_result.value();
-    std::vector<char> buffer{std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>()};
+    const auto buffer = score::flatbuffers::LoadBuffer(bin_path);
+    ASSERT_TRUE(buffer.has_value()) << buffer.error().ToString();
 
     // -------------------------------------------------------------------------
     // Step 2: Verify buffer integrity (flatbuffercpp / FlatBuffers verifier)
     // -------------------------------------------------------------------------
-    flatbuffers::Verifier verifier(reinterpret_cast<const uint8_t*>(buffer.data()), buffer.size());
+    flatbuffers::Verifier verifier(buffer.value().data(), buffer.value().size());
 
     ASSERT_TRUE(my_component::demo::VerifyMyComponentConfigBuffer(verifier))
         << "FlatBuffer verification failed for '" << bin_path << "'";
@@ -57,7 +50,8 @@ TEST(DemoAppTest, LoadsAndVerifiesBuffer)
     // -------------------------------------------------------------------------
     // Step 3: Access config values via the generated flatbuffercpp API
     // -------------------------------------------------------------------------
-    const my_component::demo::MyComponentConfig* config = my_component::demo::GetMyComponentConfig(buffer.data());
+    const my_component::demo::MyComponentConfig* config =
+        my_component::demo::GetMyComponentConfig(buffer.value().data());
 
     ASSERT_NE(config, nullptr);
     EXPECT_EQ(config->component_name()->str(), "demo_component");

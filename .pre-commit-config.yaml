@@ -38,4 +38,6 @@ repos:
         files: \.(c|cpp|h|hpp)$
       - id: clang-tidy
         args: ["--config-file=.clang-tidy-minimal", "-p=$(pwd)", "--warnings-as-errors=*"]
-        exclude: '_test\.cpp$'
+        # load_buffer_internal.hpp is a private header with no compile commands, so clang-tidy will fail on it.
+        # The header is still checked via load_buffer.cpp.
+        exclude: '(_test\.cpp|load_buffer_internal\.hpp)$'

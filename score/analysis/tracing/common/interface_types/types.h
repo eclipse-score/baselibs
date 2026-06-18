@@ -14,8 +14,10 @@
 #define SCORE_ANALYSIS_TRACING_COMMON_TYPES
 
 #include "score/language/safecpp/scoped_function/move_only_scoped_function.h"
-#include "score/memory/shared/shared_memory_resource.h"
 #include "score/result/result.h"
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <array>
 #include <cstdint>
 #include <memory>
@@ -119,12 +121,6 @@ enum class BindingType : std::uint8_t
     kVectorZeroCopy = 2,
     kUndefined = 3,
 };
-
-/// @brief Type used to store pointer to ManagedMemoryResource
-using ResourcePointer = std::shared_ptr<score::memory::shared::ManagedMemoryResource>;
-
-/// @brief Type used to store pointer to SharedMemoryResource
-using SharedResourcePointer = std::shared_ptr<score::memory::shared::ISharedMemoryResource>;
 
 /// Type used to store handle to shared-memory region, used to optimize data transfers
 using ShmObjectHandle = std::int32_t;
