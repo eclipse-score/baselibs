@@ -56,6 +56,7 @@ cc_library(
     includes = [
         "include",
     ],
+    tags = ["FFI"],
     deps = [
         "@score_baselibs//score/filesystem",
         "@score_baselibs//score/language/futurecpp",
