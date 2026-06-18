@@ -18,7 +18,7 @@
 #include "score/result/error_code.h"
 #include "score/result/error_domain.h"
 
-#include <score/string_view.hpp>
+#include <string_view>
 
 namespace score
 {
