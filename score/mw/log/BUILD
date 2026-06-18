@@ -99,6 +99,14 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "plugin_api",
+    hdrs = ["plugin_api.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],  # platform_only  # Allows visibility to plugin registrants in other repositories
+)
+
 # backend registration API for backend registrants
 cc_library(
     name = "backend_table",
@@ -442,6 +450,19 @@ cc_test(
     ],
 )
 
+cc_test(
+    name = "plugin_api_test",
+    srcs = ["plugin_api_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":plugin_api",
+        "@googletest//:gtest_main",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
@@ -454,6 +475,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":logger_container_test",
         ":logger_test",
         ":logging_test",
+        ":plugin_api_test",
         ":runtime_test",
         ":runtime_test_instance_fallback",
         ":runtime_test_without_pointer_initialization",

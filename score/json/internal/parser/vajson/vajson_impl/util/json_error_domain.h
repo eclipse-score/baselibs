@@ -246,9 +246,43 @@ inline auto MakeResult(bool value, ErrorCode error) noexcept -> score::Result<vo
     return value ? score::Result<void>{} : score::MakeUnexpected<void>(MakeError(error, ""));
 }
 
+/// \brief           Creates a Result from a boolean value
+/// \param[in]       value
+///                  to check.
+/// \param[in]       error
+///                  Specific error code.
+/// \return          The empty Result if true, or the specified error.
+/// \pre             -
+/// \context         ANY
+/// \threadsafe      FALSE
+/// \reentrant       FALSE
+/// \internal
+/// - If the value is true:
+///   - Return an empty Result.
+/// - Otherwise:
+///   - Return an Error created from the given arguments.
+/// \endinternal
 inline auto MakeResult(bool value, score::result::Error error) noexcept -> score::Result<void>
 {
     return value ? score::Result<void>{} : score::MakeUnexpected<void>(error);
+}
+/// \brief           Creates a Result from an Optional
+///     \tparam          T
+///                  Type of Optional.
+/// \param[in]       value
+///                  to check.
+/// \param[in]       error
+///                  Specific error code.
+/// \return          The empty Result if true, or the specified error.
+/// \pre             -
+/// \context         ANY
+/// \threadsafe      FALSE
+/// \reentrant       FALSE
+template <typename T>
+inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -> Result<T>
+{
+    // VCA_VAJSON_EXTERNAL_CALL
+    return value.has_value() ? Result<T>{value.value()} : score::MakeUnexpected<T>(error);
 }
 
 /// \brief           Assert that a condition holds

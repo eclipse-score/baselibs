@@ -1,0 +1,12 @@
+[package]
+name = "log_builtin"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+score_log.workspace = true
+stdout_logger.workspace = true
+
+[lints]
+workspace = true

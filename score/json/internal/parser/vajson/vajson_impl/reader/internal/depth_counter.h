@@ -436,7 +436,7 @@ class DepthCounter final
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a comma.");
+            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Missing comma.");
         }
         else
         {

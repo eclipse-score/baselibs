@@ -43,14 +43,11 @@ jobs:
               - 'score/json/internal/!(parser|model)/**'
               - 'score/language/futurecpp/**'
               - 'score/language/safecpp/aborts_upon_exception/**'
-              - 'score/language/safecpp/coverage_termination_handler/**'
               - 'score/language/safecpp/test/**'
               - 'score/memory/**/!(string_comparison_adaptor|string_literal)*'
               - 'score/mw/**'
               - 'score/network/**'
               - 'score/os/**'
-              - 'score/quality/compiler_warnings/**'
-              - 'score/static_reflection_with_serialization/**'
       - name: Block PR if restricted files are changed
         if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
         env:

@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2026 Contributors to the Eclipse Foundation
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -10,11 +10,21 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-# Use this macro for loading internal targets.
-# The `custom.bzl` files are not imported from the open-source repository.
-# Therefore, targets defined here are not affected between syncs.
-def load_custom_targets(name = "custom_targets"):
-    pass
 
-def load_custom_test_suites(name = "custom_test_suites"):
-    return []
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "elementary",
+    srcs = glob(["**/*.rs"]),
+    edition = "2021",
+    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "tests",
+    crate = "elementary",
+    tags = [
+        "unit_tests",
+        "ut",
+    ],
+)

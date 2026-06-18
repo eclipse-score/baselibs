@@ -74,8 +74,7 @@ TEST(VajsonParser, CanParseTwoByteBuffer)
 {
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description",
-                         "parse a two-byte JSON object from a buffer shorter than the 3-byte UTF-8 BOM");
+    this->RecordProperty("Description", "parse a two-byte JSON object from a buffer shorter than the 3-byte UTF-8 BOM");
     this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "boundary-value-analysis");
 

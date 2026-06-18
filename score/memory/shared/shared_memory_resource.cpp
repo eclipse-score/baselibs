@@ -11,7 +11,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/memory/shared/shared_memory_resource.h"
-#include "score/language/safecpp/safe_math/details/addition_subtraction/addition_subtraction.h"
 #include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/memory/shared/memory_resource_proxy.h"
 #include "score/memory/shared/memory_resource_registry.h"
@@ -37,7 +36,6 @@
 #include <score/assert.hpp>
 #include <score/hash.hpp>
 #include <score/move_only_function.hpp>
-#include <score/string_view.hpp>
 #include <score/utility.hpp>
 #include <cerrno>
 

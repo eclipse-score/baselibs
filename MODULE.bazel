@@ -87,6 +87,14 @@ bazel_dep(name = "download_utils", version = "1.2.2")
 bazel_dep(name = "rules_cc", version = "0.2.17")
 bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
+## Configure the Rust toolchain
+
+bazel_dep(name = "rules_rust", version = "0.68.1-score")
+bazel_dep(name = "score_rust_policies", version = "0.0.5")
+bazel_dep(name = "score_crates", version = "0.0.6")
+
+bazel_dep(name = "score_toolchains_rust", version = "0.8.0", dev_dependency = True)
+
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "4.3.0", dev_dependency = True)

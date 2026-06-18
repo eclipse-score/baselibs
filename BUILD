@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2024 Contributors to the Eclipse Foundation
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -13,7 +13,8 @@
 
 load("@score_bazel_tools_cc//quality:defs.bzl", "clang_format_config", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
-load("@score_tooling//:defs.bzl", "copyright_checker", "use_format_targets")
+load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
+load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
 docs(
@@ -30,7 +31,9 @@ copyright_checker(
         ".github",
         "bazel",
         "docs",
+        "examples",
         "score",
+        "src",
         "third_party",
         "//:BUILD",
         "//:MODULE.bazel",
@@ -39,6 +42,52 @@ copyright_checker(
     config = "@score_tooling//cr_checker/resources:config",
     exclusion = "//:cr_checker_exclusion",
     template = "@score_tooling//cr_checker/resources:templates",
+    visibility = ["//visibility:public"],
+)
+
+# Needed for Dash tool to check python dependency licenses.
+# This is a workaround to filter out local packages from the Cargo.lock file.
+# The tool is intended for third-party content.
+genrule(
+    name = "filtered_cargo_lock",
+    srcs = ["Cargo.lock"],
+    outs = ["Cargo.lock.filtered"],
+    cmd = """
+    awk '
+    BEGIN { skip = 0; data = "" }
+    /^\\[\\[package\\]\\]/ {
+        if (data != "" && !skip) print data;
+        skip = 1;
+        data = $$0;
+        next;
+    }
+    data != "" { data = data "\\n" $$0 }
+    # any package that has a "source = " line will not be skipped.
+    /^source = / { skip = 0 }
+    END { if (data != "" && !skip) print data }
+    ' $(location Cargo.lock) > $@
+    """,
+)
+
+dash_license_checker(
+    src = ":filtered_cargo_lock",
+    file_type = "",  # let it auto-detect based on project_config
+    project_config = PROJECT_CONFIG,
+    visibility = ["//visibility:public"],
+)
+
+rust_coverage_report(
+    name = "rust_coverage",
+    bazel_configs = [
+        "ferrocene-coverage",
+    ],
+    query = 'kind("rust_test", //src/...) except //src/log/score_log_fmt_macro:tests',
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "rust_coverage_report",
+    actual = ":rust_coverage",
     visibility = ["//visibility:public"],
 )
 

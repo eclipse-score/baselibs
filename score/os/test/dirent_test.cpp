@@ -144,17 +144,19 @@ TEST_F(DirentTest, ReadDirEnd)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
-    RecordProperty("Description", "Read dir shall return success for valid dir");
+    RecordProperty("Description", "Read dir shall return success with nullptr at end of directory");
 
     DIR* dir_ptr = ::opendir(temp_dir_.c_str());
     ASSERT_NE(dir_ptr, nullptr);
 
-    while (unit.readdir(dir_ptr).has_value())
+    auto dirent_result = unit.readdir(dir_ptr);
+    while (dirent_result.has_value() && (dirent_result.value() != nullptr))
     {
+        dirent_result = unit.readdir(dir_ptr);
     }
 
-    auto dirent_result = unit.readdir(dir_ptr);
-    EXPECT_FALSE(dirent_result.has_value());
+    EXPECT_TRUE(dirent_result.has_value());
+    EXPECT_EQ(dirent_result.value(), nullptr);
 
     ::closedir(dir_ptr);
 }

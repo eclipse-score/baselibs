@@ -20,7 +20,6 @@ cc_library(
         "reader/internal/parsers/structure_parser_base.cpp",
         "reader/internal/parsers/virtual_parser.cpp",
         "reader/json_data.cpp",
-        "reader/json_parser.cpp",
     ],
     hdrs = [
         "reader.h",
@@ -41,7 +40,6 @@ cc_library(
         "reader/internal/parsers/structure_parser_impl.h",
         "reader/internal/parsers/virtual_parser.h",
         "reader/json_data.h",
-        "reader/json_parser.h",
         "reader/parser.h",
         "reader/parser_state.h",
         "reader/single_array_parser.h",
@@ -58,6 +56,7 @@ cc_library(
     includes = [
         "include",
     ],
+    tags = ["FFI"],
     deps = [
         "@score_baselibs//score/filesystem",
         "@score_baselibs//score/language/futurecpp",
