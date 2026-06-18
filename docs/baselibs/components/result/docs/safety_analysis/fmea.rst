@@ -26,10 +26,9 @@ FMEA (Failure Modes and Effects Analysis)
 Failure Mode List
 -----------------
 
-Fault Models for sequence diagrams
-  .. list-table:: Fault Models for sequence diagrams
-     :header-rows: 1
-     :widths: 10,20,10,20
+.. list-table:: Fault Models for sequence diagrams
+    :header-rows: 1
+    :widths: 10,20,10,20
 
     * - ID
       - Failure Mode
