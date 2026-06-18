@@ -582,5 +582,9 @@
   {
     "version": "pr-283",
     "url": "https://eclipse-score.github.io/baselibs/pr-283/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-280-bc2279ec716c73c82d9d6d67575a7b87a1faf1d2",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-280-bc2279ec716c73c82d9d6d67575a7b87a1faf1d2/"
   }
 ]
