@@ -61,6 +61,7 @@ cc_library(
     deps = [
         "//score/flatbuffers:flatbufferscpp",
         "//score/flatbuffers/common:buffer_version_envelope",
+        "//score/flatbuffers/common:buffer_version_generated_bare",
         "@score_baselibs//score/filesystem",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/os:fcntl",

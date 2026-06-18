@@ -1,0 +1,85 @@
+/// Versioned variant of the demo component config schema.
+///
+/// Follows the common buffer identification convention:
+///   - includes buffer_version.fbs
+///   - declares version_info:score.flatbuffers.BufferVersion as the FIRST field
+///     of the root table (vtable slot 0)
+///
+/// The binary buffer is produced by serialize_versioned_buffer, which injects
+/// the major/minor version into the JSON data before calling flatc --binary.
+/// At runtime, score::flatbuffers::VerifyVersion() reads the embedded version
+/// and compares it against the caller-supplied BufferVersionInfo.
+///
+/// Explicit field IDs (id: N) are used throughout this schema.
+/// Benefits: field order in the .fbs source can be changed freely without
+/// breaking binary compatibility with buffers produced by older schema versions,
+/// because the vtable slot is determined by the id attribute, not by declaration
+/// order.  This makes schema evolution safer: new fields can be inserted anywhere
+/// and deprecated fields can be removed without affecting existing binaries.
+
+include "buffer_version.fbs";
+
+namespace my_component.demo;
+
+/// Generic enum for component run modes
+enum OperationMode:uint8 {
+    EVENT_DRIVEN = 0,
+    POLLING = 1,
+    PERIODIC = 2,
+}
+
+/// Union for flexible data types
+union DataPayloadUnion {
+    StringData,
+    BinaryData
+}
+
+table MyComponentConfig {
+    /// MUST be field 0 – required by the universal buffer identification convention.
+    version_info:score.flatbuffers.BufferVersion (id: 0);
+
+    /// Component identification
+    component_name:string (required, id: 1);
+    component_id:uint32 (id: 2); // Implicit default is 0
+
+    thread_pool_size:uint8 = 4 (id: 3); // Explicit default value
+    max_memory_mb:uint16 = 64 (id: 4);
+
+    /// Nested table
+    advanced_settings:AdvancedSettings (required, id: 5);
+}
+
+table AdvancedSettings {
+    /// Enum example: operational mode (defaults to first enum value: EVENT_DRIVEN)
+    mode:OperationMode (id: 0);
+
+    /// Vector examples
+    allowed_priorities:[uint8] (id: 1); // Vector of primitives
+    feature_flags:[FeatureFlag] (id: 2); // Vector of tables
+
+    /// Union example: flexible data payload
+    /// Note: unions occupy two consecutive IDs – one for the type discriminator
+    /// and one for the value offset.  data_type takes id: 3, data takes id: 4.
+    data:DataPayloadUnion (id: 4);
+}
+
+/// Table used in vector
+table FeatureFlag {
+    name:string (required, id: 0);
+    enabled:bool = false (id: 1);
+}
+
+table StringData {
+    value:string (id: 0);
+}
+
+table BinaryData {
+    value:[uint8] (id: 0);
+}
+
+// Root configuration object
+root_type MyComponentConfig;
+
+// Component specific file identifier – distinct from the unversioned "DEMO"
+// so that VerifyVersion can distinguish the two buffer formats.
+file_identifier "DEMO";

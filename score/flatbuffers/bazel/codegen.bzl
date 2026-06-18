@@ -75,7 +75,10 @@ def _generate_cpp_impl(ctx):
     #
     # --no-includes (NOT USED)
     #   Don't generate include statements for included schemas.
-    #   DECISION: Not used - includes are standard practice for dependent schemas
+    #   DECISION: Not used - suppressing the #include directives does NOT inline or generate
+    #   the dependent types.  The generated code still references types from included schemas
+    #   (e.g. score::flatbuffers::BufferVersion) so the dependency must be satisfied by the
+    #   consumer anyway, just without the generated header's guidance.
     #
     # --cpp-include (NOT USED)
     #   Add custom #include in generated file (e.g., --cpp-include "my_custom_include.h").
@@ -141,6 +144,27 @@ generate_cpp = rule(
     @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
     automatically. The schema must include buffer_version.fbs manually if it uses
     the common buffer version (e.g. `include "buffer_version.fbs";`).
+
+    Included schema headers are NOT generated automatically
+    -------------------------------------------------------
+    flatc only generates a C++ header for the schema passed directly to it.
+    Schemas referenced via `include` directives are used for type resolution at
+    compile time but their corresponding `*_generated.h` headers are NOT emitted
+    as side-effects of this rule.
+
+    The generated header will still contain `#include "<dependency>_generated.h"`
+    directives for every included schema.  Those headers must therefore be made
+    available separately:
+
+    * For `buffer_version.fbs` (the standard version envelope): the header is
+      already available via
+      `@score_baselibs//score/flatbuffers/common:buffer_version_generated_bare`,
+      which is re-exported by `@score_baselibs//score/flatbuffers:flatbufferutils`.
+      Any target that depends on `flatbufferutils` automatically inherits it and
+      no extra dep is needed.
+
+    * For any other included schema: create a separate `generate_cpp` target for
+      that schema and add it to the `deps` of the consuming `cc_*` target.
 
     Example:
         generate_cpp(

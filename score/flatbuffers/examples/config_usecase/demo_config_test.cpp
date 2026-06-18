@@ -11,18 +11,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-/// @file demo_app_test.cpp
-/// @brief Demonstrates loading and reading a FlatBuffer binary config
-///        using flatbufferscpp (FlatBuffers C++ API)
-///
-/// Build and run via Bazel:
-///   bazel test //demo_config_usecase:demo_app
+/// @file demo_config_test.cpp
+/// @brief Demonstrates loading of a FlatBuffer binary config and reading the config fields.
 
 #include "score/flatbuffers/load_buffer.hpp"
-// Generated C++ accessor header produced by generate_cpp() – depends on flatbufferscpp
+// Generated C++ accessor header produced by generate_cpp() for demo.fbs
 #include "score/flatbuffers/examples/config_usecase/component_config.h"
 
-// FlatBuffers verifier (part of flatbufferscpp / @flatbuffers headers)
 #include "flatbuffers/verifier.h"
 
 #include <gtest/gtest.h>
@@ -40,15 +35,15 @@ TEST(DemoAppTest, LoadsAndVerifiesBuffer)
     ASSERT_TRUE(buffer.has_value()) << buffer.error().ToString();
 
     // -------------------------------------------------------------------------
-    // Step 2: Verify buffer integrity (flatbuffercpp / FlatBuffers verifier)
+    // Step 2: Verify structural integrity of the FlatBuffer
     // -------------------------------------------------------------------------
     flatbuffers::Verifier verifier(buffer.value().data(), buffer.value().size());
 
     ASSERT_TRUE(my_component::demo::VerifyMyComponentConfigBuffer(verifier))
-        << "FlatBuffer verification failed for '" << bin_path << "'";
+        << "FlatBuffer structural verification failed for '" << bin_path << "'";
 
     // -------------------------------------------------------------------------
-    // Step 3: Access config values via the generated flatbuffercpp API
+    // Step 3: Access config values via the generated APIs
     // -------------------------------------------------------------------------
     const my_component::demo::MyComponentConfig* config =
         my_component::demo::GetMyComponentConfig(buffer.value().data());

@@ -49,3 +49,14 @@ cc_library(
         "//score/flatbuffers:flatbufferscpp",
     ],
 )
+
+# Exposes buffer_version_generated.h as a bare #include "buffer_version_generated.h".
+# Required by schemas that include buffer_version.fbs: flatc emits a relative
+# #include "buffer_version_generated.h" in their generated C++ header.
+cc_library(
+    name = "buffer_version_generated_bare",
+    hdrs = [":gen_buffer_version_h"],
+    strip_include_prefix = "/score/flatbuffers/common",
+    visibility = ["//visibility:public"],
+    deps = ["//score/flatbuffers:flatbufferscpp"],
+)
