@@ -97,7 +97,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.8.0", dev_dependency = Tr
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "4.3.0", dev_dependency = True)
+bazel_dep(name = "score_docs_as_code", version = "4.4.1", dev_dependency = True)
 bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
@@ -105,6 +105,12 @@ git_override(
     module_name = "score_platform",
     commit = "10f59a1f8611bad2a3a8fa9068a0a3c06d870fa1",
     remote = "https://github.com/eclipse-score/score",
+)
+
+# FIXME: To be removed after https://github.com/eclipse-score/baselibs/issues/266 is resolved
+single_version_override(
+    module_name = "grpc-java",
+    version = "1.70.0",
 )
 
 ## Configure the python toolchain
