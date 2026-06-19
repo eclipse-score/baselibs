@@ -1,0 +1,61 @@
+@startuml log_interface
+
+package log <<component>> {
+    +enum Level <<enum>> {
+        Fatal
+        Error
+        Warn
+        Info
+        Debug
+        Trace
+    }
+
+    +enum LevelFilter <<enum>> {
+        Off
+        Fatal
+        Error
+        Warn
+        Info
+        Debug
+        Trace
+    }
+
+    class score_log <<module>> {
+        +set_global_logger(logger: Box<dyn Log>) : Result<(), SetLoggerError>
+        +set_max_level(level: LevelFilter) : ()
+        +max_level() : LevelFilter
+        +global_logger() : &'static dyn Log
+
+        +log!(context: &str, level: Level, ...) : ()
+        +log_enabled!(context: &str, level: Level) : bool
+        +fatal!(...) : ()
+        +error!(...) : ()
+        +warn!(...) : ()
+        +info!(...) : ()
+        +debug!(...) : ()
+        +trace!(...) : ()
+    }
+
+    class score_log_fmt_macro <<module>> {
+        +score_log_format_args!(format_string: &str, args...) : Arguments<'_>
+    }
+
+    package score_log_fmt {
+        +interface ScoreDebug <<trait>> {
+            +fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) : Result
+        }
+
+        class score_log_fmt <<module>> {
+            +write(output: &mut dyn ScoreWrite, args: Arguments<'_>) : Result
+
+            +score_write!(format_string: &str, args...) : Result
+        }
+    }
+
+    score_log -- Level
+    score_log -- LevelFilter
+    score_log -- score_log_fmt_macro
+    score_log -right- score_log_fmt
+}
+
+@enduml
