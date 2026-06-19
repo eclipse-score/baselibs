@@ -97,7 +97,7 @@ score::cpp::pmr::string Hash::ToString() const
     return hex_repr;
 }
 
-Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const score::cpp::string_view& hex_repr)
+Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const std::string_view& hex_repr)
 {
     const score::cpp::optional<std::uint8_t> exp_size = HashSizeInCharacters(algorithm);
 

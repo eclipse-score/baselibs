@@ -119,7 +119,8 @@ enum class BindingType : std::uint8_t
     kLoLa = kFirst,
     kVector = 1,
     kVectorZeroCopy = 2,
-    kUndefined = 3,
+    kDlt = 3,
+    kUndefined = 4,
 };
 
 /// Type used to store handle to shared-memory region, used to optimize data transfers
