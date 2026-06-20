@@ -31,9 +31,9 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a mechanism to abort the program upon C++ exception allocation,
    allowing users to prevent any exception object from being created and hence to guarantee that
@@ -47,9 +47,9 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide arithmetic operations
    (addition, subtraction, multiplication, division, negation, absolute value, type casting, and comparison operations)
@@ -61,9 +61,9 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide scope-bound callable wrappers that prevent resource leaks.
 
@@ -72,9 +72,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a view type which guarantees that an underlying character sequence is guaranteed to be null-terminated.
    Such views type's underlying character sequence shall not be possible to get modified via such view type's methods.
@@ -84,9 +84,9 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a lock-free atomic addition operation for integral types with overflow detection.
 
@@ -98,9 +98,9 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__maintainable_design
+   :derived_from: feat_req__baselibs__maintainable_design
    :status: valid
-   :belongs_to: comp__baselibs_safecpp
+   :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a mechanism which automatically registers a termination handler
    which ensures that code coverage data is also persisted upon any process exit (e.g. during gtest's Death Tests).

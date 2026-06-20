@@ -31,10 +31,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall provide an error handling mechanism that enables functions to return either successful values ("Get Value") or error information ("Get Error") without using C++ exceptions.
 
@@ -43,10 +43,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__result_library
+   :derived_from: feat_req__baselibs__result_library
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall provide a "Set Result" operation that accepts either a successful value of type T or an Error object.
 
@@ -55,10 +55,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall support user-defined error domains and error codes.
 
@@ -67,10 +67,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall enforce compile-time type safety for error handling operations.
 
@@ -79,10 +79,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall provide conversion utilities to transform Result objects into std::optional<T> types. The conversion shall require explicit handling of error cases before discarding error information, ensuring that errors cannot be silently ignored.
 
@@ -94,10 +94,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall provide deterministic behavior with no dynamic memory allocation.
 
@@ -106,10 +106,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
-   :belongs_to: comp__baselibs_result
+   :satisfied_by: comp__baselibs_result
 
    The Result library shall operate without throwing C++ exceptions.
 

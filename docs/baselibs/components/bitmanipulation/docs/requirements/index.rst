@@ -34,9 +34,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
    :status: valid
-   :belongs_to: comp__baselibs_bit_manipulation
+   :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
    The bit manipulation component shall provide an API for setting, clearing, toggling, and checking individual bits for any integral type up to 64 bits, returning boolean success status.
@@ -46,9 +46,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
    :status: valid
-   :belongs_to: comp__baselibs_bit_manipulation
+   :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
    The bit manipulation component shall provide an API for extracting and setting bytes and half-bytes for any integral type up to 64 bits, returning boolean success status.
@@ -58,9 +58,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
    :status: valid
-   :belongs_to: comp__baselibs_bit_manipulation
+   :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
    The bit manipulation library shall provide type-safe bitmask operations for scoped enumeration types.
@@ -70,9 +70,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__bitmanipulation, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_bit_manipulation
+   :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
    The bit manipulation functions shall validate input parameters against bounds and, on out-of-bounds access, shall leave the target value unmodified and return false.
@@ -85,9 +85,9 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
-   :belongs_to: comp__baselibs_bit_manipulation
+   :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
    The bit manipulation API shall be header-only and not require external dependencies.

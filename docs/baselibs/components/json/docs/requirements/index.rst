@@ -30,9 +30,9 @@ General Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The JSON-Library shall provide a service to deserialize JSON data according to RFC8259, i.e.
    parse and check for well-formedness.
@@ -42,9 +42,9 @@ General Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The JSON-Library shall provide a service to serialize user format into JSON data according to RFC8259.
 
@@ -53,9 +53,9 @@ General Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The JSON-Library shall return parsed data in a compatible user format.
 
@@ -69,9 +69,9 @@ User friendly API for information exchange
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library, feat_req__baselibs__consistent_apis
+   :derived_from: feat_req__baselibs__json_library, feat_req__baselibs__consistent_apis
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The public API shall support the idioms of the programming language it is written in.
 
@@ -80,9 +80,9 @@ User friendly API for information exchange
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The public API shall use core infrastructure of its programming language and accompanying standard libraries,
    whenever possible and meaningful.
@@ -94,9 +94,9 @@ User friendly API for information exchange
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The public API shall enforce strict type compatibility. When a user requests a value, the API shall
    validate that the requested return type is compatible with the type and value of the stored JSON data.
@@ -111,9 +111,9 @@ Full testability for the user facing API
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The public API of the library shall support dependency injection with test doubles.
 
@@ -127,9 +127,9 @@ Safety Impact
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__json_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__json_library, feat_req__baselibs__safety
    :status: valid
-   :belongs_to: comp__baselibs_json
+   :satisfied_by: comp__baselibs_json
 
    The JSON library shall be ASIL-B compliant.
 
