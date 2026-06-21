@@ -37,5 +37,5 @@ Summary
    :caption: Contents:
 
    json/index.rst
-
+   nothrow/index.rst
 
