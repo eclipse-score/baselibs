@@ -26,6 +26,7 @@ Components
 Overview
 ==========
 
+- :need:`doc__abi_compatible_data_types`: ABI-compatible data types for zero-copy inter-process communication between C++ and Rust.
 - :need:`doc__bitmanipulation`: Utilities for bit manipulation.
 - :need:`doc__concurrency`: Provides a generic interface to execute any C++ callable in a parallel context,
   supporting various execution strategies (e.g., thread pool, timed execution), thread safety,
