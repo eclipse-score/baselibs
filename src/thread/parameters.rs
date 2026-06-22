@@ -148,9 +148,14 @@ mod tests {
 
     #[test]
     fn scheduler_policy_min_max_priority() {
+        #[cfg(target_os = "linux")]
+        const FIFO_MAX_PRIORITY: i32 = 99;
+        #[cfg(target_os = "nto")]
+        const FIFO_MAX_PRIORITY: i32 = 253;
+
         let policy = SchedulerPolicy::Fifo;
         assert_eq!(policy.priority_min(), 1);
-        assert_eq!(policy.priority_max(), 99);
+        assert_eq!(policy.priority_max(), FIFO_MAX_PRIORITY);
     }
 
     #[test]
@@ -179,7 +184,7 @@ mod tests {
     #[should_panic(expected = "priority is not in allowed range for the scheduler policy")]
     fn scheduler_parameters_new_priority_out_of_range() {
         let policy = SchedulerPolicy::Other;
-        let priority = 1;
+        let priority = 255;
         let _ = SchedulerParameters::new(policy, priority);
     }
 
