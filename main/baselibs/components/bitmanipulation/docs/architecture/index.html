@@ -378,6 +378,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">bitmanipulation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -484,7 +485,7 @@
                   
   <section id="bitmanipulation-component-architecture">
 <h1>Bitmanipulation Component Architecture<a class="headerlink" href="#bitmanipulation-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-cbf03afb">
+<div class="need_container docutils container" id="SNCB-44020af4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -503,7 +504,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/architecture_design/architecture_workproducts.html#wp__component_arch">wp__component_arch</a></span></span></div>
 </span></div>
 </div>
@@ -532,7 +534,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-d923ede7">
+<div class="need_container docutils container" id="SNCB-22280a07">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -552,6 +554,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_bit_manipulation</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
 <div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__bit_manipulation" title="comp__baselibs_bit_manipulation">comp_arc_sta__baselibs__bit_manipulation</a></span></span></div>
@@ -581,7 +584,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-322de85e">
+<div class="need_container docutils container" id="SNCB-bc8fb7fa">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -600,7 +603,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_bit_manipulation" title="comp_arc_sta__baselibs__bit_manipulation">comp__baselibs_bit_manipulation</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bit_operations" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bit_operations</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__byte_operations" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__byte_operations</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bitmask_operators" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bitmask_operators</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bounds_safety" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bounds_safety</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__header_only" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__header_only</a></span></span></div>
 <div class="line">violated_by: <span class="violates"><span><a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__no_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__no_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__late_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__late_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__constraints" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__constraints</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__wrong_input" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__wrong_input</a></span></span></div>
@@ -630,7 +634,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-f0b969cd">
+<div class="need_container docutils container" id="SNCB-103fdcb3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -649,7 +653,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -672,7 +677,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c9ff5493">
+<div class="need_container docutils container" id="SNCB-25d4f6e1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__clear_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -691,7 +696,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -714,7 +720,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2c2891cb">
+<div class="need_container docutils container" id="SNCB-e94a27cb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__toggle_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -733,7 +739,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -756,7 +763,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-72371e1c">
+<div class="need_container docutils container" id="SNCB-ffc310fe">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__test_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -775,7 +782,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -798,7 +806,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-14b5aa4b">
+<div class="need_container docutils container" id="SNCB-b60f4b4c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_byte">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -817,7 +825,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -840,7 +849,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-bad02841">
+<div class="need_container docutils container" id="SNCB-9142e913">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__extract_byte">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -859,7 +868,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_manipulation">logic_arc_int__baselibs__bit_manipulation</a></span></span></div>
 </span></div>
 </div>
@@ -882,7 +892,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e9837d7c">
+<div class="need_container docutils container" id="SNCB-140bf794">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_or">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -901,7 +911,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_mask_operator">logic_arc_int__baselibs__bit_mask_operator</a></span></span></div>
 </span></div>
 </div>
@@ -924,7 +935,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d251cdba">
+<div class="need_container docutils container" id="SNCB-ce41659a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_and">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -943,7 +954,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_mask_operator">logic_arc_int__baselibs__bit_mask_operator</a></span></span></div>
 </span></div>
 </div>
@@ -966,7 +978,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-7ae18458">
+<div class="need_container docutils container" id="SNCB-7c891067">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_xor">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -985,7 +997,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_mask_operator">logic_arc_int__baselibs__bit_mask_operator</a></span></span></div>
 </span></div>
 </div>
@@ -1008,7 +1021,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e434fb10">
+<div class="need_container docutils container" id="SNCB-7c687959">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_not">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1027,7 +1040,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_mask_operator">logic_arc_int__baselibs__bit_mask_operator</a></span></span></div>
 </span></div>
 </div>
@@ -1050,7 +1064,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a531fe3e">
+<div class="need_container docutils container" id="SNCB-0fb6a40c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_assignmnt">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1069,7 +1083,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__bit_mask_operator">logic_arc_int__baselibs__bit_mask_operator</a></span></span></div>
 </span></div>
 </div>
