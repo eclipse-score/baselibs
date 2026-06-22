@@ -380,7 +380,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "pthread_attr_setschedparam failed, rc:")]
     fn attributes_priority_wrong_scheduler_policy() {
-        // Test is disabled for Neutrino - priority range seem to be unchecked on set.
+        // Test is disabled for Neutrino - priority range seems to be unchecked on set.
         let mut attrs = Attributes::new();
         attrs.priority(255);
     }

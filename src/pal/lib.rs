@@ -21,9 +21,9 @@ mod errno;
 pub use affinity::{get_affinity, set_affinity, CpuSet};
 pub use errno::errno;
 
-pub type c_int = i32;
-pub type c_long = i64;
-pub type c_ulong = u64;
+pub type c_int = core::ffi::c_int;
+pub type c_long = core::ffi::c_long;
+pub type c_ulong = core::ffi::c_ulong;
 pub type size_t = usize;
 pub type c_void = core::ffi::c_void;
 pub type pid_t = i32;
