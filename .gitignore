@@ -3,6 +3,7 @@ examples/integration/bazel-*
 user.bazelrc
 .cache
 compile_commands.json
+target/
 
 # docs build artifacts
 _build

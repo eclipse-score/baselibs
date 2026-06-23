@@ -21,7 +21,6 @@ rust_library(
     deps = [
         "//src/containers",
         "//src/log/score_log",
-        "@score_crates//:libc",
     ],
 )
 

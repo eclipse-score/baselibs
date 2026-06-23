@@ -97,13 +97,13 @@ bazel_dep(name = "score_toolchains_rust", version = "0.8.0", dev_dependency = Tr
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "4.4.1", dev_dependency = True)
-bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
+bazel_dep(name = "score_docs_as_code", version = "4.5.0", dev_dependency = True)
+bazel_dep(name = "score_process", version = "1.6.0", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
 bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
 git_override(
     module_name = "score_platform",
-    commit = "10f59a1f8611bad2a3a8fa9068a0a3c06d870fa1",
+    commit = "7d16a47714a59b6d803f3bbce7168bec074b960d",
     remote = "https://github.com/eclipse-score/score",
 )
 
