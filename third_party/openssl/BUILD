@@ -21,6 +21,7 @@ load("//third_party/openssl:openssl_transition.bzl", "openssl_library")
 label_flag(
     name = "openssl_crypto_impl",
     build_setting_default = "@openssl//:crypto",
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 
