@@ -35,10 +35,8 @@ namespace visitor
 template <typename SizeType = uint64_t>
 struct size_helper
 {
-    /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
     static_assert(std::is_arithmetic<SizeType>::value, "Size type should be arithmetic");
     static_assert(!std::is_const<SizeType>::value, "Size type should not be const");
-    /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
     /*
       1 - It's not a POD type because of initialization of member variables.
       2 - Maintaining compatibility and avoiding performance overhead outweighs POD Type (class) based design for
@@ -57,19 +55,15 @@ struct size_helper
     SizeType string_offset{0UL};
 };
 
-/* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
 template <typename SizeType,
           typename T,
           std::enable_if_t<(!std::is_pointer<std::decay_t<T>>::value) && (!std::is_class<std::decay_t<T>>::value),
                            std::int32_t> = 0>
-/* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 inline void visit_as(size_helper<SizeType>& v, T&&)
 {
     static_assert(sizeof(std::decay_t<T>) <= std::numeric_limits<SizeType>::max(), "size of T too large");
-    /* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
     const auto new_size = v.out + static_cast<SizeType>(sizeof(std::decay_t<T>));
     // There is no benefit of writing unit test to cover the TRUE case of this condition, it will not have any
     // expectation or assertion because the function will return gracefully without any return values or even
@@ -92,18 +86,12 @@ inline void visit_as(size_helper<SizeType>& v, T&& t)
     V::visit(v, t);
 }
 
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 template <typename SizeType, typename S, typename... Args>
 inline void visit_as_struct(size_helper<SizeType>& v, S&&, Args&&... args)
 {
-    /* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
     // pre-C++17 parameter pack folding idiom
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE: intentionally */
     using expander = std::int32_t[];
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE: intentionally */
-    /* KW_SUPPRESS_START:MISRA.COMMA: False positive: correct usage of comma. */
     std::ignore = expander{(score::common::visitor::visit(v, std::forward<Args>(args)), 0)...};
-    /* KW_SUPPRESS_END:MISRA.COMMA: False positive: correct usage of comma. */
 }
 
 template <typename SizeType, typename T1, typename T2>
@@ -133,11 +121,9 @@ inline void visit_tuple_continue(size_helper<SizeType>& v, const T& t, Args&&...
     visit_tuple_continue(v, std::forward<Args>(args)...);
 }
 
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 template <typename SizeType, typename... T, std::size_t... I>
 inline void visit_tuple_start(size_helper<SizeType>& v, const std::tuple<T...>& t, std::index_sequence<I...>)
 {
-    /* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
     visit_tuple_continue(v, std::get<I>(t)...);
 }
 
@@ -252,12 +238,10 @@ inline void visit_as(size_helper<SizeType>& v, const std::array<T, N>& t)
 }
 
 template <typename SizeType, typename T, size_t N>
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE: intentionally */
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
 inline void visit_as(size_helper<SizeType>& v, const T (&t)[N])
 {
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE: intentionally */
     for (size_t i = 0; i < N; ++i)
     {
         score::common::visitor::visit(v, t[i]);
