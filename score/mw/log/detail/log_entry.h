@@ -36,7 +36,7 @@ Deviation from Rule M11-0-1:
 Justification:
 - Maintaining compatibility and avoiding performance overhead outweighs POD Type (class) based design for this
   particular struct. The Type is simple and does not require invariance (interface OR custom behavior) as per the
-  design. Moreover the type is used with STRUCT_TRACEABLE for serialization purpose
+  design. Moreover the type is used with SCORE_STRUCT_TRACEABLE for serialization purpose
 */
 // coverity[autosar_cpp14_m11_0_1_violation]
 struct LogEntry
@@ -82,7 +82,7 @@ Deviation from Rule A0-1-1:
 - A project shall not contain instances of non-volatile variables being given values that are not subsequently used.
 
 Justification:
-- we need to use STRUCT_VISITABLE here and create an instance of LogEntry
+- we need to use SCORE_STRUCT_VISITABLE here and create an instance of LogEntry
 - to get the size of LogEntry for serialization purpose
 */
 // coverity[autosar_cpp14_a18_9_4_violation]
@@ -90,7 +90,7 @@ Justification:
 // coverity[autosar_cpp14_a11_0_2_violation]
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-STRUCT_VISITABLE(LogEntry,
+SCORE_STRUCT_VISITABLE(LogEntry,
                      app_id,
                      ctx_id,
                      payload,
