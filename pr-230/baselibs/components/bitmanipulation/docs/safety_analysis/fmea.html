@@ -378,6 +378,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">bitmanipulation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -484,7 +485,7 @@
                   
   <section id="fmea-failure-modes-and-effects-analysis">
 <h1>FMEA (Failure Modes and Effects Analysis)<a class="headerlink" href="#fmea-failure-modes-and-effects-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-b4aaca06">
+<div class="need_container docutils container" id="SNCB-357e8ddc">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_fmea">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -503,7 +504,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/safety_analysis/safety_analysis_workproducts.html#wp__sw_component_fmea">wp__sw_component_fmea</a></span></span></div>
 </span></div>
 </div>
@@ -529,7 +531,7 @@
 <section id="failure-mode-list">
 <h2>Failure Mode List<a class="headerlink" href="#failure-mode-list" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 24 </span><span class="caption-text">Fault Models for sequence diagrams</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Table 25 </span><span class="caption-text">Fault Models for sequence diagrams</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 16.7%" />
 <col style="width: 33.3%" />
@@ -626,7 +628,7 @@
 <section id="fmea">
 <h2>FMEA<a class="headerlink" href="#fmea" title="Link to this heading">#</a></h2>
 <p>For all identified applicable failure initiators, the FMEA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-e7061a4a">
+<div class="need_container docutils container" id="SNCB-0304c970">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__bitmanipulation__no_return">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -650,6 +652,7 @@
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">MF_01_01,MF_01_06,EX_01_04</span></span></div>
 <div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2837">score#2837</a><em>; </em></span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__error_reaction">aou_req__platform__error_reaction</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__bit_manipulation" title="comp_saf_fmea__bitmanipulation__no_return">comp_arc_sta__baselibs__bit_manipulation</a></span></span></div>
@@ -676,7 +679,7 @@ return is needed.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-dceac428">
+<div class="need_container docutils container" id="SNCB-ddaaa8b8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__bitmanipulation__late_return">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -699,6 +702,7 @@ return is needed.</p></td>
 <div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">Bitmanipulation is executed too late or stalls, so there may be violation of its safety requirements.</span></span></div>
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">MF_01_02,EX_01_06</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__bit_manipulation" title="comp_saf_fmea__bitmanipulation__late_return">comp_arc_sta__baselibs__bit_manipulation</a></span></span></div>
@@ -723,7 +727,7 @@ return is needed.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-075b11c0">
+<div class="need_container docutils container" id="SNCB-112e3894">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__bitmanipulation__constraints">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -746,6 +750,7 @@ return is needed.</p></td>
 <div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">If constraints are violated there may be out-of bounds memory corruption.</span></span></div>
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">CO_01_01,CO_01_02</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bounds_safety" title="comp_saf_fmea__bitmanipulation__constraints">comp_req__bitmanipulation__bounds_safety</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__bit_manipulation" title="comp_saf_fmea__bitmanipulation__constraints">comp_arc_sta__baselibs__bit_manipulation</a></span></span></div>
@@ -770,7 +775,7 @@ return is needed.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-aa259185">
+<div class="need_container docutils container" id="SNCB-c15f19d5">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__bitmanipulation__wrong_input">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -793,6 +798,7 @@ return is needed.</p></td>
 <div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">If enums are wrongly defined, the expectation of what bit(s) are set will not be met.</span></span></div>
 <div class="line"><span class="needs_fault_id"><span class="needs_label">fault_id: </span><span class="needs_data">MF_01_05</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../requirements/index.html#aou_req__bitmanipulation__enum_constraints" title="comp_saf_fmea__bitmanipulation__wrong_input">aou_req__bitmanipulation__enum_constraints</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__bit_manipulation" title="comp_saf_fmea__bitmanipulation__wrong_input">comp_arc_sta__baselibs__bit_manipulation</a></span></span></div>
