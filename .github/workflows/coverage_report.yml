@@ -32,27 +32,33 @@ jobs:
           level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Install lcov
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lcov
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
-      - name: Run Bazel Coverage
+      # Evaluation of the llvm-cov coverage + justification solution ported from
+      # eclipse-score/communication#549. C++ coverage is produced with the LLVM
+      # toolchain (source-based instrumentation) instead of gcov+genhtml, over the
+      # whole //score tree (issue #289).
+      #
+      # A few tests are excluded because they are incompatible with llvm-cov
+      # source-based instrumentation (they pass under the old gcov flow):
+      #   - aborts_upon_exception:* abort/death tests, where the immediate abort()
+      #     races with llvm-cov continuous-mode counter writeback.
+      #   - safe_math floating_point_environment_test, where the injected counter
+      #     code perturbs the floating-point status flags the test inspects.
+      #   - os network_interface_test, which reports a leaked mock at the
+      #     instrumentation-altered exit path.
+      - name: Run llvm-cov Coverage
         run: |
-          bazel coverage --config=bl-x86_64-linux -- //score/... \
-          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+          bazel coverage --config=bl-cov-x86_64-linux -- //score/... \
+            -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test \
+            -//score/language/safecpp/aborts_upon_exception:abortsuponexception_lib_test \
+            -//score/language/safecpp/safe_math/details:floating_point_environment_test \
+            -//score/os/linux/utils/test:network_interface_test
       - name: Generate HTML Coverage Report
         run: |
-          genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat" \
-            -o=cpp_coverage \
-            --show-details \
-            --source-directory="$(bazel info execution_root)" \
-            --legend \
-            --function-coverage \
-            --branch-coverage
+          bazel run //quality/coverage:generate_coverage_html
         shell: bash
       - name: Upload Coverage Artifacts
         uses: actions/upload-artifact@v6

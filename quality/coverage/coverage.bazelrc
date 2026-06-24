@@ -1,0 +1,91 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+#
+# LLVM source-based C++ coverage for baselibs (config: bl-cov-x86_64-linux).
+#
+# This evaluates the llvm-cov coverage + justification solution introduced in
+# eclipse-score/communication#549. Unlike the default `--config=bl-x86_64-linux`
+# build (which uses the GCC 12.2.0 toolchain), llvm-cov source-based coverage
+# requires building C++ with the LLVM/clang toolchain. The config below composes
+# the baselibs stub + toolchain settings with the LLVM toolchain and a plain
+# (non GCC-pinned) Linux platform so that toolchain resolution selects clang.
+#
+# Usage:
+#   bazel coverage --config=bl-cov-x86_64-linux //score/...
+#   bazel run //quality/coverage:generate_coverage_html
+
+# --- Settings shared with the Rust (ferrocene) coverage flow -----------------
+coverage --cache_test_results=no
+coverage --combined_report=lcov
+
+# --- C++ llvm-cov build/toolchain composition --------------------------------
+# Reuse the baselibs stub flags (build settings + warning features) and the
+# common toolchain settings, but target a plain Linux platform and register the
+# LLVM cc-toolchain at higher priority so clang is selected instead of GCC.
+coverage:bl-cov-x86_64-linux --config=_bl_stub
+coverage:bl-cov-x86_64-linux --config=_bl_toolchain_common
+coverage:bl-cov-x86_64-linux --config=_bl_common
+# Coverage builds the whole //score tree with clang, which raises warnings (for
+# example -Wdeprecated-declarations) that would otherwise be treated as errors.
+# Two distinct features turn warnings into errors here: "warnings_as_errors" from
+# the stub config and "treat_warnings_as_errors" set per target via
+# COMPILER_WARNING_FEATURES. Disable both so the coverage build does not fail on
+# pre-existing warnings.
+coverage:bl-cov-x86_64-linux --features=-warnings_as_errors
+coverage:bl-cov-x86_64-linux --features=-treat_warnings_as_errors
+coverage:bl-cov-x86_64-linux --platforms=@score_bazel_platforms//:x86_64-linux
+coverage:bl-cov-x86_64-linux --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+coverage:bl-cov-x86_64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+
+# --- C++ llvm-cov coverage configuration -------------------------------------
+# NOTE: --experimental_use_llvm_covmap (required for llvm-cov) causes Bazel to
+# instrument ALL targets regardless of --instrumentation_filter. The actual
+# source filtering happens in the merger/reporter via --ignore-filename-regex.
+# The instrumentation_filter is kept for documentation purposes and in case this
+# Bazel limitation is fixed in the future.
+coverage:bl-cov-x86_64-linux --cxxopt=-O0
+coverage:bl-cov-x86_64-linux --instrumentation_filter="^//score[/:]"
+coverage:bl-cov-x86_64-linux --experimental_generate_llvm_lcov
+coverage:bl-cov-x86_64-linux --experimental_use_llvm_covmap
+
+# Use llvm-cov directly for HTML report generation instead of genhtml/lcov.
+# The custom merger (per-test) receives profraw files and produces a zip with
+# profdata + metadata. The custom reporter (final) merges all profdata and
+# generates the combined HTML report.
+coverage:bl-cov-x86_64-linux --coverage_output_generator=//quality/coverage/llvm_cov:merger
+coverage:bl-cov-x86_64-linux --coverage_report_generator=//quality/coverage/llvm_cov:reporter_wrapper
+coverage:bl-cov-x86_64-linux --experimental_fetch_all_coverage_outputs
+
+# Override GENERATE_LLVM_LCOV to keep raw profraw files instead of converting to
+# LCOV. The custom merger handles profraw -> profdata -> HTML directly.
+coverage:bl-cov-x86_64-linux --test_env=GENERATE_LLVM_LCOV=0
+# Suppress the default gcov path since we use llvm-cov directly.
+coverage:bl-cov-x86_64-linux --test_env=COVERAGE_GCOV_PATH=/usr/bin/true
+
+# These compile time options are required to cover abnormal termination cases.
+# In GCC one can use `__gcov_dump()`, but this does not work with LLVM. LLVM
+# provides these compile-time options in combination with a specific profile
+# setting which is enabled in bazel via `LLVM_PROFILE_CONTINUOUS_MODE`.
+coverage:bl-cov-x86_64-linux --test_env=LLVM_PROFILE_CONTINUOUS_MODE=1
+coverage:bl-cov-x86_64-linux --cxxopt=-mllvm
+coverage:bl-cov-x86_64-linux --cxxopt=-runtime-counter-relocation
+
+# By default Bazel creates for each library a *.so for its tests. If a header is
+# used by multiple *.so files and these *.so files have different instrumentation
+# (production code has, test has not) a conflict arises which one to use when
+# calculating coverage. Then the first object is used, and it is pure luck if it
+# contains the correct data or not. Even worse, small changes can change the
+# order and then lead to big coverage gaps. All these problems do not arise if no
+# dynamic libs are used. Thus, we rather take bigger build times and binaries in
+# advance for correct data.
+coverage:bl-cov-x86_64-linux --dynamic_mode=off
