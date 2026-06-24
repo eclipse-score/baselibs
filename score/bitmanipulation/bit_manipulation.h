@@ -82,7 +82,7 @@ class Byte
     /// \return A HalfByte. For byte 0b11010010, will return 0b00001101
     constexpr HalfByte UpperHalfByte() const
     {
-        return HalfByte{static_cast<std::uint8_t>(static_cast<std::uint32_t>(repr) >> 4U)};
+        return HalfByte{static_cast<std::uint8_t>(static_cast<std::uint32_t>(repr) >> 4U)};  // COV_JUSTIFIED upper-half-byte-constexpr-only
     }
 
     /// \brief Obtain the lower half of the byte as a HalfByte type
