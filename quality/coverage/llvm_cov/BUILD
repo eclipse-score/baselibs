@@ -27,6 +27,7 @@ py_binary(
         "//:MODULE.bazel",
         "@llvm_toolchain//:llvm-cov",
         "@llvm_toolchain//:llvm-profdata",
+        "@llvm_toolchain_llvm//:bin/llvm-cxxfilt",
     ],
     deps = ["@rules_python//python/runfiles"],
 )

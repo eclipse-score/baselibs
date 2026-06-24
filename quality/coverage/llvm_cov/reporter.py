@@ -55,6 +55,9 @@ def main() -> None:
     # Get llvm tools via runfiles.
     r = Runfiles.Create()
     llvm_bin_path = Path(r.Rlocation("llvm_toolchain/llvm-cov"))
+    # llvm-cxxfilt is not exposed by @llvm_toolchain; take it from the underlying
+    # @llvm_toolchain_llvm distribution where the real binaries live.
+    cxxfilt_path = r.Rlocation("llvm_toolchain_llvm/bin/llvm-cxxfilt")
 
     # Merge all profdata files.
     merged_profdata = Path.cwd() / "merged_coverage.profdata"
@@ -78,6 +81,7 @@ def main() -> None:
         "coverage_args": coverage_args,
         "filter_regexes": sorted(filter_regexes),
         "workspace_root": workspace_root,
+        "cxxfilt_path": cxxfilt_path,
     }
 
     # Generate HTML report.
@@ -129,6 +133,7 @@ def run_llvm_cov_show(
     filter_regexes: List[str],
     workspace_root: str,
     output_format: str,
+    cxxfilt_path: str = None,
     html_report_dir: Path = None,
 ) -> subprocess.CompletedProcess:
     """Run llvm-cov show."""
@@ -142,9 +147,8 @@ def run_llvm_cov_show(
         "--show-region-summary=0",
     ]
 
-    cxxfilt = llvm_bin_path.parent / "llvm-cxxfilt"
-    if cxxfilt.exists():
-        cmd.append(f"--Xdemangler={cxxfilt}")
+    if cxxfilt_path and Path(cxxfilt_path).exists():
+        cmd.append(f"--Xdemangler={cxxfilt_path}")
 
     for regex in filter_regexes:
         adjusted = regex.replace("/proc/self/cwd/", workspace_root)
