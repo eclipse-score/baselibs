@@ -113,16 +113,3 @@ Composition Parser
     In order to use the class and the provided convenience methods, a user defined class must inherit from
     CompositionParser and provide its own type as the template argument.
     This way, the public methods of CompositionParser are available in the child class.
-
-
-Method Based Parser
--------------------
-
-.. DesignFeature:: DSGN-JSON-Reader-Method-Based-Parser
-    :trace: DSGN-Concept-Fluent-Interface
-
-    The class JsonParser provides an interface that allows to parse JSON documents by calling specific methods for each
-    expected element.
-    It provides methods for every possible JSON element as well as convenience methods for JSON arrays of a known type,
-    e.g. an array of strings.
-    The fluent interface allows for method chaining.

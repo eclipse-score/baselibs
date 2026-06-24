@@ -36,25 +36,6 @@ Templates and Polymorphism
   Disadvantages:
   - There may be a performance impact due to virtual method table (VMU) organization
 
-Fluent Interface
-================
-
-  .. Concept:: DSGN-Concept-Fluent-Interface
-
-  The interface of the class JsonParser is fluent as it can be used by method chaining:
-
-  .. code-block:: c++
-
-    JsonParser parser{data};
-    parser
-      .StartObject()
-      .Key("key1")
-      .Number<std::uint8_t>(...)
-      ...
-
-  Each method returns a reference to itself, allowing the next method call to be appended.
-  The class holds an internal state machine to keep track of its error state.
-  Subsequent method calls are only executed if no error occurred before.
 
 Parser Mixins
 =============
