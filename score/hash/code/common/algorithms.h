@@ -25,11 +25,7 @@ namespace score
 namespace hash
 {
 
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR:constexpr must be initialized */
-/* KW_SUPPRESS_START:UNUSED.STYLE.SINGLE_STMT_PER_LINE:this is a declaration with a literal expression*/
 constexpr std::size_t kMaxDigestSize{64U};
-/* KW_SUPPRESS_END:UNUSED.STYLE.SINGLE_STMT_PER_LINE */
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR */
 
 constexpr std::uint8_t kSha1Size{20U};
 constexpr std::uint8_t kSha256Size{32U};
@@ -39,8 +35,6 @@ constexpr std::uint8_t kCrc32Size{4U};
 constexpr std::uint8_t kCrc32AutosarSize{4U};
 
 /// Cryptographic hash algorithm
-/* KW_SUPPRESS_START:UNUSED.STYLE.SINGLE_STMT_PER_LINE:this is a declaration of an enum; putting this on a single */
-/* line harms readability */
 enum class HashAlgorithm : std::uint8_t
 {
     kNone = 0,

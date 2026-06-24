@@ -80,6 +80,7 @@ cc_library(
         ":types",
         ":user_permission",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/os/utils/acl",
     ],
 )
 

@@ -35,7 +35,6 @@ jobs:
           list-files: json
           filters: |
             restricted:
-              - 'score/concurrency/**'
               - 'score/containers/**'
               - 'score/filesystem/**'
               - 'score/json/!(*parser*)'

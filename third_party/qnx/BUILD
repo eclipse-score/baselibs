@@ -19,6 +19,7 @@ cc_library(
         "-lfsnotify",
     ],
     target_compatible_with = ["@platforms//os:qnx"],
+    tags = ["third_party_FUSA"],
     visibility = ["//:__subpackages__"],
 )
 

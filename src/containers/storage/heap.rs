@@ -142,10 +142,15 @@ mod tests {
     use super::*;
     use elementary::{HeapAllocator, GLOBAL_ALLOCATOR};
 
+    // Type used by all tests.
+    type T = u64;
+    // Equals to 1GB. Tests might fail for runners with <1GB.
+    const LARGE_CAP: u32 = (i32::MAX as u32 / size_of::<T>() as u32) / 2;
+    // Capacity test cases.
+    const CAP_CASES: [u32; 7] = [0, 1, 2, 3, 4, 5, LARGE_CAP];
+
     #[test]
     fn subslice() {
-        type T = u64;
-
         fn run_test(capacity: u32) {
             let instance = Heap::<T, _>::new(capacity, &GLOBAL_ALLOCATOR);
 
@@ -171,15 +176,13 @@ mod tests {
             }
         }
 
-        for cap in [0, 1, 2, 3, 4, 5, i32::MAX as u32 / size_of::<T>() as u32] {
+        for cap in CAP_CASES {
             run_test(cap);
         }
     }
 
     #[test]
     fn subslice_mut() {
-        type T = u64;
-
         fn run_test(capacity: u32) {
             let mut instance = Heap::<T, HeapAllocator>::new(capacity, &GLOBAL_ALLOCATOR);
 
@@ -205,15 +208,13 @@ mod tests {
             }
         }
 
-        for cap in [0, 1, 2, 3, 4, 5, i32::MAX as u32 / size_of::<T>() as u32] {
+        for cap in CAP_CASES {
             run_test(cap);
         }
     }
 
     #[test]
     fn element() {
-        type T = u64;
-
         fn run_test(capacity: u32) {
             let instance = Heap::<T, HeapAllocator>::new(capacity, &GLOBAL_ALLOCATOR);
 
@@ -240,15 +241,13 @@ mod tests {
             }
         }
 
-        for cap in [0, 1, 2, 3, 4, 5, i32::MAX as u32 / size_of::<T>() as u32] {
+        for cap in CAP_CASES {
             run_test(cap);
         }
     }
 
     #[test]
     fn element_mut() {
-        type T = u64;
-
         fn run_test(capacity: u32) {
             let mut instance = Heap::<T, HeapAllocator>::new(capacity, &GLOBAL_ALLOCATOR);
 
@@ -275,7 +274,7 @@ mod tests {
             }
         }
 
-        for cap in [0, 1, 2, 3, 4, 5, i32::MAX as u32 / size_of::<T>() as u32] {
+        for cap in CAP_CASES {
             run_test(cap);
         }
     }

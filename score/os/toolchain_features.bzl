@@ -11,24 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-
-rust_library(
-    name = "pal",
-    srcs = glob(["**/*.rs"]),
-    edition = "2021",
-    visibility = ["//src:__subpackages__"],
-    deps = [
-        "//src/containers",
-        "//src/log/score_log",
-    ],
-)
-
-rust_test(
-    name = "tests",
-    crate = "pal",
-    tags = [
-        "unit_tests",
-        "ut",
-    ],
-)
+COMPILER_WARNING_FEATURES = [
+    "treat_warnings_as_errors",
+    "strict_warnings",
+    "additional_warnings",
+    "strict_warnings_no_error",
+]

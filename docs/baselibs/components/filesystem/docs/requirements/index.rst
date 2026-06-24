@@ -31,9 +31,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide filesystem API based on the C++ standardization.
 
@@ -42,9 +42,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide type-safe utilities for path construction and manipulation.
 
@@ -53,9 +53,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide directory iterator types for traversing directory contents.
 
@@ -64,9 +64,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide functionality for reading from and writing to files, including buffered I/O operations.
 
@@ -75,9 +75,9 @@ Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The public API of the library shall support dependency injection with test doubles.
 
@@ -88,9 +88,9 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide additional file utility functions, such as temporary file handling and file comparison.
 
@@ -99,9 +99,9 @@ Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
-   :belongs_to: comp__baselibs_filesystem
+   :satisfied_by: comp__baselibs_filesystem
 
    The Filesystem library shall provide mock and fake implementations for unit testing and validation.
 

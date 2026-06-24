@@ -24,9 +24,7 @@ namespace common
 namespace visitor
 {
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Char used as a byte representation. */
 using Byte = char;
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Char used as a byte representation. */
 
 struct log_alloc_t
 {
@@ -63,10 +61,8 @@ class logging_serializer
         {
             return static_cast<offset_t>(0);  // LCOV_EXCL_LINE
         }
-        /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: Intended */
         // coverity[autosar_cpp14_a5_2_4_violation]
         return impl::serialize(t, reinterpret_cast<std::uint8_t* const>(data), static_cast<offset_t>(size));
-        /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: Intended */
     }
     template <typename T>
     static deserialization_result_t deserialize(const std::uint8_t* const data, const size_t size, T& t)
@@ -91,12 +87,8 @@ class logging_serializer
             return deserialization_result_t{
                 true /* out of bounds */, false /* invalid format */, false /* zero offset */};
         }
-        /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: Intended */
-        /* KW_SUPPRESS_START: MISRA.CAST.CONST: False positive: constness is preserved. */
         // coverity[autosar_cpp14_a5_2_4_violation]
         return impl::deserialize(reinterpret_cast<const std::uint8_t* const>(data), static_cast<offset_t>(size), t);
-        /* KW_SUPPRESS_END: MISRA.CAST.CONST: False positive: constness is preserved. */
-        /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: Intended */
     }
     template <typename T>
     static offset_t serialize_size(const T& t)
@@ -117,10 +109,8 @@ using logging_serialized_descriptor = serialized_descriptor_t<log_alloc_t, T>;
 template <typename T>
 inline std::string logger_memcpy(const T& t)
 {
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: Intended */
     // coverity[autosar_cpp14_a5_2_4_violation]
     return std::string(reinterpret_cast<const Byte*>(&t), sizeof(T));
-    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: Intended */
 }
 
 inline std::string logger_pack_string(const std::string& str)
@@ -152,11 +142,8 @@ inline auto logger_type_info()
             const auto strsize = static_cast<std::size_t>(std::distance(payload_.first, payload_.second));
             return sizeof(uint32_t) + strsize;
         }
-        /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: False positive: local variable 'size' does not hide method name
-         * 'size()'. */
         void copy(Byte* const data, const std::size_t size) const
         {
-            /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: False positive: local variable does not hide method name. */
             if (size >= sizeof(uint32_t))
             {
                 const auto strsize = static_cast<std::size_t>(std::distance(payload_.first, payload_.second));
@@ -166,13 +153,11 @@ inline auto logger_type_info()
                     auto intsize = static_cast<uint32_t>(strsize);
                     // needed to copy data to the target location
                     std::ignore = memcpy(data, &intsize, sizeof(uint32_t));
-                    /* KW_SUPPRESS_START:MISRA.PTR.ARITH:Needed to get offset from this location */
                     // needed to copy data to the target location and arithmetic used to get offset from this location
                     // tolerated per design
                     score::cpp::span<Byte> dataSpan{static_cast<Byte*>(data),
                                              static_cast<typename score::cpp::span<Byte*>::size_type>(size)};
                     std::ignore = memcpy(dataSpan.subspan(sizeof(uint32_t)).data(), payload_.first, strsize);
-                    /* KW_SUPPRESS_END:MISRA.PTR.ARITH:Needed to get offset from this location */
                 }
                 else
                 {
@@ -182,12 +167,8 @@ inline auto logger_type_info()
             }
         }
 
-        /* KW_SUPPRESS_START: MISRA.USE.EXPANSION: False positive: it is not macro. */
       private:
-        /* KW_SUPPRESS_END: MISRA.USE.EXPANSION: False positive: it is not macro. */
-        /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
         const std::pair<const Byte*, const Byte*> payload_;
-        /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
     };
 
     return Typeinfo();
