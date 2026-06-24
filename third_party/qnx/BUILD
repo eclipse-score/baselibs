@@ -18,8 +18,8 @@ cc_library(
     linkopts = [
         "-lfsnotify",
     ],
-    target_compatible_with = ["@platforms//os:qnx"],
     tags = ["third_party_FUSA"],
+    target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//:__subpackages__"],
 )
 

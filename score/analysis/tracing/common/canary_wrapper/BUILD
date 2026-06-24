@@ -20,6 +20,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing:__subpackages__",
+        "//score/analysis/tracing:__subpackages__",
     ],
 )

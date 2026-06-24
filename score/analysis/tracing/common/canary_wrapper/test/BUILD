@@ -23,8 +23,8 @@ cc_test(
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     deps = [
+        "//score/analysis/tracing/common/canary_wrapper",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/analysis/tracing/common/canary_wrapper",
     ],
 )
 
@@ -33,5 +33,5 @@ cc_unit_test_suites_for_host_and_qnx(
     cc_unit_tests = [
         ":canary_wrapper_test",
     ],
-    visibility = ["@score_baselibs//score/analysis/tracing:__subpackages__"],
+    visibility = ["//score/analysis/tracing:__subpackages__"],
 )
