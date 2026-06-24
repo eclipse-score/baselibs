@@ -3,7 +3,7 @@
 Structural
 **********
 
-*Vector Adaptive Json* (vaJson) is a library that provides utilities to create streaming JSON serializer & deserializer.
+vaJson is a library that provides utilities to create streaming JSON serializer & deserializer.
 
 The ``Reader`` subcomponent provides utilities to deserialize/read JSON files.
 The ``Writer`` subcomponent provides utilities to serialize/write JSON files.
