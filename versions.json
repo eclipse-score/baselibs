@@ -670,5 +670,9 @@
   {
     "version": "pr-297",
     "url": "https://eclipse-score.github.io/baselibs/pr-297/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-296-5a0f694fa876b9886232ac792aafa52f57bbf8a2",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-296-5a0f694fa876b9886232ac792aafa52f57bbf8a2/"
   }
 ]
