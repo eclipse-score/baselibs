@@ -23,6 +23,7 @@
 #include "score/os/qnx/mman_impl.h"
 #endif
 
+#include "score/assert.hpp"
 #include "score/expected.hpp"
 
 #include <sys/mman.h>
