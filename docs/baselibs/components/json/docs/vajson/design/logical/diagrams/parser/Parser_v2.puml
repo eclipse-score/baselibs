@@ -1,8 +1,9 @@
 @startuml
 hide empty members
 set namespaceSeparator ::
-namespace amsr {
+namespace score {
 namespace json {
+namespace vajson {
 
    class LevelValidator {}
 
@@ -24,13 +25,13 @@ namespace json {
       class Parser {}
 
       SingleArrayParser --|> Parser
-      SingleArrayParser --> amsr::json::LevelValidator
+      SingleArrayParser --> score::json::vajson::LevelValidator
 
       SingleObjectParser --|> Parser
-      SingleObjectParser --> amsr::json::LevelValidator
+      SingleObjectParser --> score::json::vajson::LevelValidator
 
-      Parser --|> amsr::json::CompositionParser
-      Parser --> amsr::json::JsonData
+      Parser --|> score::json::vajson::CompositionParser
+      Parser --> score::json::vajson::JsonData
    }
 
    CompositionParser --|> VirtualParser
@@ -46,6 +47,7 @@ namespace json {
    JsonOps --> JsonData
    JsonOps --> OptChar
 
+}
 }
 }
 

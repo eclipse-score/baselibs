@@ -179,7 +179,7 @@ JsonParser
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package "json" {
 
         class JsonParser {
@@ -264,43 +264,9 @@ Parser
     @startuml
     hide empty members
 
-    package amsr {
+    package score {
       package json {
-        package v1 {
-
-          class Parser<Child> {}
-
-        }
-
-        class CompositionParser<StrictParser<Child>> {}
-
-        class StrictParser<Child> {}
-
-        class StructureParser<StrictParser<Child>> {}
-
-        class JsonData {}
-
-        Parser --|> CompositionParser
-        Parser --> JsonData
-
-        CompositionParser --|> StrictParser
-        CompositionParser --> JsonData
-
-        StrictParser --> StructureParser
-
-        StructureParser --> JsonData
-        StructureParser --|> StructureParserBase
-        StructureParser --> StrictParser
-      }
-    }
-
-    @enduml
-
-    @startuml
-    hide empty members
-
-    package amsr {
-      package json {
+        package vajson {
         package v2 {
 
           class Parser {}
@@ -326,6 +292,7 @@ Parser
         StructureParser --> JsonData
         StructureParser --|> StructureParserBase
         StructureParser --> VirtualParser
+        }
       }
     }
 
@@ -339,30 +306,32 @@ StrictParser
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package "json" {
-        class StrictParser<Child> {
-          + StrictParser(JsonData&)
-          + auto Parse() -> Result<void>
-          + auto SubParse() -> ParserResult
-          + auto OnNull() -> ParserResult
-          + auto OnBool(bool) -> ParserResult
-          + auto OnNumber(util::JsonNumber) -> ParserResult
-          + auto OnString(CStringView) -> ParserResult
-          + {static} auto OnBinaryString(StringView) -> ParserResult
-          + auto OnKey(CStringView) -> ParserResult
-          + {static} auto OnBinaryKey(StringView) -> ParserResult
-          + auto OnStartObject() -> ParserResult
-          + auto OnEndObject(std::size_t) -> ParserResult
-          + auto OnStartArray() -> ParserResult
-          + auto OnEndArray(std::size_t) -> ParserResult
-          + {static} auto OnBinary(Bytes) -> ParserResult
-          + {static} auto OnUnexpectedEvent() -> ParserResult
+        package "vajson" {
+          class StrictParser<Child> {
+            + StrictParser(JsonData&)
+            + auto Parse() -> Result<void>
+            + auto SubParse() -> ParserResult
+            + auto OnNull() -> ParserResult
+            + auto OnBool(bool) -> ParserResult
+            + auto OnNumber(util::JsonNumber) -> ParserResult
+            + auto OnString(CStringView) -> ParserResult
+            + {static} auto OnBinaryString(StringView) -> ParserResult
+            + auto OnKey(CStringView) -> ParserResult
+            + {static} auto OnBinaryKey(StringView) -> ParserResult
+            + auto OnStartObject() -> ParserResult
+            + auto OnEndObject(std::size_t) -> ParserResult
+            + auto OnStartArray() -> ParserResult
+            + auto OnEndArray(std::size_t) -> ParserResult
+            + {static} auto OnBinary(Bytes) -> ParserResult
+            + {static} auto OnUnexpectedEvent() -> ParserResult
 
-          # auto GetCurrentKey() const -> CStringView
-        }
+            # auto GetCurrentKey() const -> CStringView
+          }
 
         class StructureParser<StrictParser>
+        }
       }
     }
 
@@ -377,8 +346,9 @@ VirtualParser
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package "json" {
+        package "vajson" {
         class VirtualParser {
           + VirtualParser(JsonData&)
           + virtual auto Parse() -> Result<void>
@@ -407,6 +377,7 @@ VirtualParser
         }
 
         class StructureParser<VirtualParser>
+        }
       }
     }
 
@@ -421,21 +392,23 @@ StructureParser
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package "json" {
-        class StructureParser<Implementer> {
-          + StructureParser(Implementer&, JsonData&)
-          + auto SubParse() -> ParserResult
+        package "vajson" {
+          class StructureParser<Implementer> {
+            + StructureParser(Implementer&, JsonData&)
+            + auto SubParse() -> ParserResult
+          }
+          class StructureParserBase<logic> {
+          + auto Parse() -> Result<void>
+          }
+
+          class OptChar {}
+
+          class JsonOps {}
+
+          class JsonData {}
         }
-        class StructureParserBase<logic> {
-        + auto Parse() -> Result<void>
-        }
-
-        class OptChar {}
-
-        class JsonOps {}
-
-        class JsonData {}
       }
     }
 
@@ -456,8 +429,9 @@ CompositionParser
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package "json" {
+        package "vajson" {
         class CompositionParser<Mixin> {
           + CompositionParser(JsonData&)
           + auto Key<Fn>(Fn) -> CallableReturnsNoResult<Fn, StringView, R>
@@ -505,6 +479,7 @@ CompositionParser
         class VirtualParser {}
 
         class JsonData{}
+        }
       }
     }
 
@@ -536,36 +511,9 @@ Single Level Parser
     @startuml
     hide empty members
 
-    namespace amsr {
+    namespace score {
       namespace json {
-        namespace v1 {
-          class SingleArrayParser<Child> {
-            + SingleArrayParser(JsonData&)
-            + auto OnStartArray() -> ParserResult
-            + auto OnEndArray(std::size_t) -> ParserResult
-            + auto OnUnexpectedEvent() -> ParserResult
-            + auto GetIndex() const -> std::size_t
-
-            # {static} auto Finalize() -> ara::core::Result<void>
-          }
-
-          class SingleObjectParser<Child> {
-            + SingleObjectParser(JsonData&, bool)
-            + auto OnStartObject() -> ParserResult
-            + auto OnEndObject(std::size_t) -> ParserResult
-            + {static} auto OnUnexpectedEvent() -> ParserResult
-
-            # {static} auto Finalize() -> ara::core::Result<void>
-          }
-
-          class Parser<Child> {}
-
-          SingleArrayParser --|> Parser
-          SingleArrayParser --> amsr.json.LevelValidator
-
-          SingleObjectParser --|> Parser
-          SingleObjectParser --> amsr.json.LevelValidator
-        }
+        namespace vajson {
 
         namespace v2 {
           class SingleArrayParser {
@@ -591,14 +539,15 @@ Single Level Parser
           class Parser {}
 
           SingleArrayParser --|> Parser
-          SingleArrayParser --> amsr.json.LevelValidator
+          SingleArrayParser --> score.json.vajson.LevelValidator
 
           SingleObjectParser --|> Parser
-          SingleObjectParser --> amsr.json.LevelValidator
+          SingleObjectParser --> score.json.vajson.LevelValidator
         }
 
         class LevelValidator {}
 
+        }
       }
     }
 
@@ -612,7 +561,7 @@ JsonData
     @startuml
     hide empty members
 
-    package "amsr" {
+    package "score" {
       package stream {
         class InputStream {}
       }
@@ -647,39 +596,41 @@ Util
     @startuml
     hide empty members
 
-      package "amsr" {
+      package "score" {
         package "json" {
-          enum JsonErrc {
-            kNotInitialized
-            kInvalidJson,
-            kUserValidationFailed,
-            kStreamFailure
+          package "vajson" {
+            enum JsonErrc {
+              kNotInitialized
+              kInvalidJson,
+              kUserValidationFailed,
+              kStreamFailure
+            }
+
+            class JsonErrorDomain {}
+
+            class NumberParser {}
+
+            class JsonNumber {
+              + {static} auto New(StringView view) -> Result<JsonNumber>
+              + auto TryAs<T>() const -> ara::core::Result<T>
+              + auto As()<bool> const -> Optional<bool>
+              + auto As()<vac::language::byte> const -> Optional<vac::language::byte>
+              + auto As()<T> const -> Optional<T>
+              + auto As()<JsonNumber> const -> Optional<JsonNumber>
+              + auto Convert<Fn>(Fn&& parser) const -> decltype(parser(std::declval<StringView>()))
+            }
+
+            enum EncodingType {
+              kNone
+              kUtf8
+            }
+
+          package Reader {
           }
 
-          class JsonErrorDomain {}
-
-          class NumberParser {}
-
-          class JsonNumber {
-            + {static} auto New(StringView view) -> Result<JsonNumber>
-            + auto TryAs<T>() const -> ara::core::Result<T>
-            + auto As()<bool> const -> Optional<bool>
-            + auto As()<vac::language::byte> const -> Optional<vac::language::byte>
-            + auto As()<T> const -> Optional<T>
-            + auto As()<JsonNumber> const -> Optional<JsonNumber>
-            + auto Convert<Fn>(Fn&& parser) const -> decltype(parser(std::declval<StringView>()))
+          package Writer {
           }
-
-          enum EncodingType {
-            kNone
-            kUtf8
           }
-
-        package Reader {
-        }
-
-        package Writer {
-        }
         }
       }
 

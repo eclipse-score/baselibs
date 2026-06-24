@@ -1,12 +1,13 @@
 @startuml
 hide empty members
 
-package "amsr" {
+package "score" {
   package stream {
     class InputStream {}
   }
 
   package "json" {
+  package "vajson" {
     enum JsonErrc {
       kNotInitialized
       kInvalidJson,
@@ -43,6 +44,7 @@ package "amsr" {
       class Ref<JsonData> {}
       class OptChar {}
     }
+  }
   }
 }
 

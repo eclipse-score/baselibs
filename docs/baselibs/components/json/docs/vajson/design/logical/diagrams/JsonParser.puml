@@ -2,8 +2,9 @@
 
 hide empty members
 
-package "amsr" {
+package "score" {
   package "json" {
+    package "vajson" {
 
     class JsonParser {
     }
@@ -77,6 +78,7 @@ package "amsr" {
     ArrayParser --|> SingleArrayParser
 
     ObjectParser --|> SingleObjectParser
+    }
   }
 }
 
