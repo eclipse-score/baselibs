@@ -20,9 +20,9 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing/generic_trace_library:__pkg__",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/mock:__pkg__",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/stub_implementation:__pkg__",
+        "//score/analysis/tracing/generic_trace_library:__pkg__",
+        "//score/analysis/tracing/generic_trace_library/mock:__pkg__",
+        "//score/analysis/tracing/generic_trace_library/stub_implementation:__pkg__",
     ],
     deps = [
         ":trace_library_interface",
@@ -35,14 +35,14 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing/generic_trace_library:__subpackages__",
+        "//score/analysis/tracing/generic_trace_library:__subpackages__",
     ],
     deps = [
         ":meta_info",
-        "@score_baselibs//score/analysis/tracing/common/interface_types:generic_trace_api_types",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score_baselibs//score/language/futurecpp",
+        "//score/analysis/tracing/common/interface_types:generic_trace_api_types",
+        "//score/analysis/tracing/generic_trace_library/interface_types/chunk_list",
+        "//score/analysis/tracing/generic_trace_library/interface_types/error_code",
+        "//score/language/futurecpp",
     ],
 )
 
@@ -63,11 +63,11 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing:__subpackages__",
+        "//score/analysis/tracing:__subpackages__",
     ],
     deps = [
         ":type_definitions",
-        "@score_baselibs//score/language/futurecpp",
+        "//score/language/futurecpp",
     ],
 )
 
@@ -83,9 +83,9 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis/tracing:__subpackages__",
+        "//score/analysis/tracing:__subpackages__",
     ],
     deps = [
-        "@score_baselibs//score/language/futurecpp",
+        "//score/language/futurecpp",
     ],
 )
