@@ -23,6 +23,18 @@ Architecture Inspection Checklist
    :security: YES
    :realizes: wp__sw_arch_verification
 
+.. arch_chklst:: Baselibs Feature Architecture Checklist
+   :id: arch_chklst__baselibs__feat_arc
+   :status: valid
+   :checklist: doc__baselibs_arc_inspection
+   :sha256: d4b78cf8cb0de247fd88a152d4c02ddd92b1f0d086d65beffbc25bc124cf63c6
+
+   This checklist pins the reviewed state of the baselibs feature architecture
+   (Bazel target ``//:baselibs_feature_arch``). Build
+   ``//:baselibs_feat_arch_checklist`` to validate that the architecture has not
+   changed since the inspection documented in
+   :need:`doc__baselibs_arc_inspection`.
+
 Purpose
 -------
 

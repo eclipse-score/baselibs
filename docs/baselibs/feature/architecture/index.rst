@@ -113,7 +113,7 @@ Static Architecture
 Logical Interfaces
 ------------------
 
-The Baselibs feature exposes the following logical interfaces:
+The Baselibs feature exposes the following lqogical interfaces:
 
 .. needtable::
    :style: table

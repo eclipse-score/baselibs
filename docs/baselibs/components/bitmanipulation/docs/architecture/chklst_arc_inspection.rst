@@ -20,6 +20,18 @@
    :security: YES
    :realizes: wp__sw_arch_verification
 
+.. arch_chklst:: Bitmanipulation Component Architecture Checklist
+   :id: arch_chklst__bitmanipulation__comp_arc
+   :status: valid
+   :checklist: doc__bitmanipulation_arc_inspection
+   :sha256: 3b96ff6b4807128b47c0bf252a803eee7fa9291cb89f33684f52d0b43ce04f9f
+
+   This checklist pins the reviewed state of the bitmanipulation component
+   architecture (Bazel target ``//:bitmanipulation_comp_arch``). Build
+   ``//:bitmanipulation_arch_checklist`` to validate that the architecture has
+   not changed since the inspection documented in
+   :need:`doc__bitmanipulation_arc_inspection`.
+
 Architecture Inspection Checklist
 =================================
 

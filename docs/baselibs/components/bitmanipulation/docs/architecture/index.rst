@@ -150,3 +150,6 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :included_by: logic_arc_int__baselibs__bit_mask_operator
+
+.. needextend:: docname is not None and "bitmanipulation" in docname and "architecture" in docname and type in ["comp_arc_sta", "comp_arc_dyn"]
+   :+tags: baselibs, bitmanipulation

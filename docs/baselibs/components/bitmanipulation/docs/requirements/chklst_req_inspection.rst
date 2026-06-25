@@ -21,6 +21,19 @@
    :realizes: wp__requirements_inspect
 
 
+.. req_chklst:: Bitmanipulation Component Requirements Checklist
+   :id: req_chklst__bitmanipulation__comp_req
+   :status: valid
+   :checklist: doc__bitmanipulation_req_inspection
+   :sha256: 4e990bbdb56b8e7cb895d6064eb502f5e4ee3b4198950a1e5ffa740ba0aea51f
+
+   This checklist pins the reviewed state of the bitmanipulation component
+   requirements (Bazel target ``//:bitmanipulation_comp_reqs``). Build
+   ``//:bitmanipulation_req_checklist`` to validate that the requirements have
+   not changed since the inspection documented in
+   :need:`doc__bitmanipulation_req_inspection`.
+
+
 Requirement Inspection Checklist
 ================================
 
