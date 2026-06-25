@@ -37,7 +37,7 @@ jobs:
             restricted:
               - 'score/containers/**'
               - 'score/filesystem/**'
-              - 'score/json/!(*parser*)'
+              - 'score/json/!(*parser*|*serializer*)'
               - 'score/json/!(internal)/**/*'
               - 'score/json/internal/!(parser|model)/**'
               - 'score/language/futurecpp/**'
