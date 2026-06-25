@@ -30,14 +30,18 @@ Because the map manages its own free-list pool over the inline buffer, it is bou
    `sizeof(ShmType)`, placement-constructs a `BoundedContainers<int, ...>`, writes
    vector/map data, then `fork`/`execl`s the child binary (passed as `argv[1]`).
 2. **Child** (`shm_child.cpp`): maps the same region — at a *different* virtual address —
-   reads both containers, appends and sorts vector elements, and **updates map values
-   in place**.
+   reads both containers, appends and sorts vector elements, **updates existing map values
+   in place**, and **inserts new map entries**.
 3. **Parent** observes the child's modifications after it exits.
 
-Cross-process *map mutation* is the key capability here: the child writes into a `Map`
-that the parent constructed, in a different address space, and the parent sees the result.
+Cross-process *map mutation* is the key capability here. The child both updates and grows a
+`Map` that the parent constructed, in a different address space, and the parent sees the
+result. The inserts are the stronger case: each one allocates a fresh node from the map's
+free-list pool, which lives inside the shared segment — so the child performs **node
+allocation that the parent then reads** (the map grows from 3 to 5 entries in the demo).
 This is only possible because there is no allocator/resource object to relocate — the map's
-node links, pool base, and free-list head are all offsets or indices.
+node links, pool base, and free-list head are all offsets or indices, valid at any mapping
+address.
 
 > **Note:** position-independence is not concurrency safety. This example shares the
 > segment *sequentially* — the parent `waitpid`s for the child, so only one process touches
