@@ -25,8 +25,6 @@ namespace score
 namespace hash
 {
 
-/* KW_SUPPRESS_START:UNUSED.STYLE.SINGLE_STMT_PER_LINE: we do want to define an enum on multiple lines */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: false positive, this is not a variable definition, so ODR doesn't apply */
 enum class ErrorCode : score::result::ErrorCode
 {
     kCouldNotCreateDigest,
@@ -38,16 +36,8 @@ enum class ErrorCode : score::result::ErrorCode
     kStreamError,
     kUnknownError,
 };
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR */
-/* KW_SUPPRESS_END:UNUSED.STYLE.SINGLE_STMT_PER_LINE */
 
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: FP: noexcept is a keyword and not an identifier, so ODR doesn't apply */
-/* KW_SUPPRESS_START:UNUSED.STYLE.SINGLE_STMT_PER_LINE: False positive, this is exactly one statement */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: False positive, noexcept is not an identifier */
 score::result::Error MakeError(const score::hash::ErrorCode code, const std::string_view user_message = "") noexcept;
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
-/* KW_SUPPRESS_END:UNUSED.STYLE.SINGLE_STMT_PER_LINE */
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR */
 
 }  // namespace hash
 }  // namespace score
