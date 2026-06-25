@@ -14,7 +14,7 @@
 
 #include "score/optional.hpp"
 
-#include "score/quality/compiler_warnings/warnings.h"
+#include "platform/aas/quality/compiler_warnings/warnings.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"

@@ -360,8 +360,8 @@ cc_test(
     tags = ["unit"],
     deps = [
         ":log_data_types",
+        "//platform/aas/quality/compiler_warnings",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 

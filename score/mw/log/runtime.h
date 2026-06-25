@@ -13,7 +13,7 @@
 #ifndef SCORE_MW_LOG_RUNTIME_H
 #define SCORE_MW_LOG_RUNTIME_H
 
-#include "score/utils/meyer_singleton/meyer_singleton.h"
+#include "platform/aas/lib/utils/meyer_singleton/meyer_singleton.h"
 #include "score/mw/log/logger_container.h"
 #include "score/mw/log/recorder.h"
 

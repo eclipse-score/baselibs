@@ -68,8 +68,8 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":log_stream",
+        "//platform/aas/lib/utils/meyer_singleton",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",  #Ticket-222244
-        "@score_baselibs//score/utils/meyer_singleton",
     ],
 )
 

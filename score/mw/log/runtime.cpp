@@ -16,7 +16,7 @@
 #include "score/mw/log/detail/irecorder_factory.h"
 #include "score/mw/log/detail/thread_local_guard.h"
 
-#include "score/utils/meyer_singleton/meyer_singleton.h"
+#include "platform/aas/lib/utils/meyer_singleton/meyer_singleton.h"
 
 namespace score
 {
