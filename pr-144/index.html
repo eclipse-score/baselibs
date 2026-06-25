@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Baselibs Documentation &#8212; S-CORE Baselibs  documentation</title>
+    <title>Base Libraries &#8212; S-CORE Baselibs  documentation</title>
   
   
   
@@ -32,17 +32,17 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="_static/css/score.css?v=6e51530f" />
-    <link rel="stylesheet" type="text/css" href="_static/css/score_needs.css?v=1f5dae2a" />
-    <link rel="stylesheet" type="text/css" href="_static/css/score_design.css?v=d9fd870c" />
+    <link rel="stylesheet" type="text/css" href="_static/css/score.css?v=bb63a8e1" />
+    <link rel="stylesheet" type="text/css" href="_static/css/score_needs.css?v=82a1844f" />
+    <link rel="stylesheet" type="text/css" href="_static/css/score_design.css?v=8048e6ee" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
@@ -73,6 +73,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Feature" href="baselibs/feature/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -155,6 +156,26 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/feature/index.html">
+    Feature
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/module/index.html">
+    Module Documents
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/components/index.html">
+    Components
+  </a>
+</li>
+
   </ul>
 </nav></div>
       
@@ -266,6 +287,26 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/feature/index.html">
+    Feature
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/module/index.html">
+    Module Documents
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="baselibs/components/index.html">
+    Components
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -352,24 +393,45 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="baselibs-documentation">
-<h1>Baselibs Documentation<a class="headerlink" href="#baselibs-documentation" title="Link to this heading">#</a></h1>
-<p>Welcome to the Baselibs documentation. This repository contains the foundational base libraries, providing essential components and utilities.</p>
+  <section id="base-libraries">
+<h1>Base Libraries<a class="headerlink" href="#base-libraries" title="Link to this heading">#</a></h1>
+<p>This repository is the <a class="reference external" href="https://eclipse.dev/score/">Eclipse S-CORE</a> implementation of the <a class="reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/index.html">Base Libraries feature</a>.
+It provides foundational libraries for use across the S-CORE platform, offering common functionality that ensures consistent implementations,
+reduces code duplication, and promotes interoperability between components.</p>
+<p>Libraries are developed following the <a class="reference external" href="https://github.com/eclipse-score/process_description">Eclipse S-CORE Process Description</a>
+at ISO 26262 integrity levels from QM up to ASIL-B, depending on their intended use cases.</p>
+<p>For build instructions, usage examples, and configuration options, refer to the <a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/main/README.md">README</a> in the <a class="reference external" href="https://github.com/eclipse-score/baselibs">eclipse-score/baselibs</a> repository.</p>
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#purpose" id="id1">Purpose</a></p></li>
-<li><p><a class="reference internal" href="#summary" id="id2">Summary</a></p></li>
+<li><p><a class="reference internal" href="#documentation-structure" id="id1">Documentation Structure</a></p>
+<ul>
+<li><p><a class="reference internal" href="#feature" id="id2">Feature</a></p></li>
+<li><p><a class="reference internal" href="#module" id="id3">Module</a></p></li>
+<li><p><a class="reference internal" href="#components" id="id4">Components</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
-<section id="purpose">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Purpose</a><a class="headerlink" href="#purpose" title="Link to this heading">#</a></h2>
-<p>Provide a set of base libraries for C++ applications, ensuring reliability and performance across various platforms.</p>
+<div class="toctree-wrapper compound">
+</div>
+<section id="documentation-structure">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Documentation Structure</a><a class="headerlink" href="#documentation-structure" title="Link to this heading">#</a></h2>
+<section id="feature">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Feature</a><a class="headerlink" href="#feature" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="baselibs/feature/index.html"><span class="doc">Feature documentation</span></a> covers the feature-level definition of Base Libraries,
+including architecture and safety planning artifacts.</p>
 </section>
-<section id="summary">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
-<p><strong>Library:</strong> <cite>Score Baselib</cite></p>
-<p><strong>Type:</strong> C++ Base Libraries</p>
+<section id="module">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Module</a><a class="headerlink" href="#module" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="baselibs/module/index.html"><span class="doc">Module documentation</span></a> covers the module-level view of Base Libraries,
+including architecture, safety management documents, and the user manual.</p>
+</section>
+<section id="components">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Components</a><a class="headerlink" href="#components" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="baselibs/components/index.html"><span class="doc">Components documentation</span></a> provides detailed documentation for each
+individual library component, including requirements, architecture, and design decisions.</p>
+</section>
 </section>
 </section>
 
@@ -383,6 +445,15 @@
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="right-next"
+       href="baselibs/feature/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Feature</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -402,8 +473,12 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-structure">Documentation Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature">Feature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module">Module</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
