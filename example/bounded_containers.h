@@ -14,36 +14,36 @@
 #define SCORE_SHM_EXAMPLE_BOUNDED_CONTAINERS_H
 
 #include "score/nothrow/map.h"
-#include "score/nothrow/monotonic_buffer_resource.h"
 #include "score/nothrow/vector.h"
 
 #include <cstddef>
 #include <functional>
-#include <utility>
 
 namespace score::nothrow::example
 {
 
 /// @brief A self-contained Vector+Map bundle suitable for shared-memory placement.
 ///
-/// The vector uses CreateWithBuffer() with inline storage.
-/// The map uses a MonotonicBufferResource whose storage is also inline.
+/// Both containers are provisioned from inline buffers via CreateWithBuffer():
+/// the vector treats its buffer as fixed capacity, and the map carves nodes from
+/// its buffer with an internal free-list pool (bounded, and reused on erase).
 ///
-/// This keeps all container state and backing storage within the same shared-memory object.
+/// No allocator or memory resource is involved, so there is no vtable, no raw
+/// upstream pointer, and no process-local singleton to relocate: with the
+/// default offset pointer policy the whole bundle is self-contained and
+/// position-independent across mappings of the same shared-memory object.
 ///
 /// @tparam T Vector element type.
 /// @tparam VectorCapacity Maximum vector elements.
-/// @tparam MapBufferBytes Number of bytes reserved for map node allocations.
-template <typename T, std::size_t VectorCapacity, std::size_t MapBufferBytes>
+/// @tparam MapNodeCount Maximum live map entries.
+template <typename T, std::size_t VectorCapacity, std::size_t MapNodeCount>
 struct BoundedContainers
 {
-    using MapAllocator = PolymorphicAllocator<std::pair<const int, int>>;
-    using MapType = Map<int, int, std::less<int>, MapAllocator>;
+    using MapType = Map<int, int, std::less<int>>;
 
     BoundedContainers() noexcept
         : vector{Vector<T>::CreateWithBuffer(vector_buffer, sizeof(vector_buffer))},
-          map_resource{map_buffer, sizeof(map_buffer), GetNullMemoryResource()},
-          map{MapType::CreateOrAbort(std::less<int>{}, MapAllocator{&map_resource})}
+          map{MapType::CreateWithBuffer(map_buffer, sizeof(map_buffer))}
     {
     }
 
@@ -54,9 +54,8 @@ struct BoundedContainers
     ~BoundedContainers() = default;
 
     alignas(T) std::byte vector_buffer[VectorCapacity * sizeof(T)];
-    alignas(std::max_align_t) std::byte map_buffer[MapBufferBytes];
+    alignas(MapType::cell_alignment()) std::byte map_buffer[MapType::required_bytes(MapNodeCount)];
     Vector<T> vector;
-    MonotonicBufferResource map_resource;
     MapType map;
 };
 

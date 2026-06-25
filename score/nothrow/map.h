@@ -352,6 +352,60 @@ class Map
         return std::move(created).value();
     }
 
+    /// @brief Creates a Map backed by externally owned storage; no allocator is used.
+    ///
+    /// Node memory is carved from @p buffer by an internal free-list pool and is
+    /// reused on erase. The map is bounded to `bytes / cell_size()` live nodes;
+    /// inserts beyond that fail with `ContainerErrorCode::kOutOfMemory` (or abort
+    /// in `*OrAbort` variants), exactly like the allocator-backed paths.
+    ///
+    /// @param buffer Storage region; must be aligned to `cell_alignment()`, must
+    ///        outlive the map, and (for shared-memory use with an offset pointer
+    ///        policy) must reside in the same mapped block as the map object.
+    /// @param bytes Size of @p buffer in bytes.
+    static Map CreateWithBuffer(void* const buffer,
+                                const size_type bytes,
+                                key_compare compare = key_compare{}) noexcept
+    {
+        Map map{allocator_type{}, std::move(compare)};
+        const size_type count = bytes / sizeof(PoolCell);
+        PoolCell* const cells = static_cast<PoolCell*>(buffer);
+        for (size_type index = 0U; index < count; ++index)
+        {
+            cells[index].next_free =
+                ((index + 1U) < count) ? static_cast<std::uint32_t>(index + 1U) : kNoCell;
+        }
+        map.cells_ = cells;
+        map.capacity_ = static_cast<std::uint32_t>(count);
+        map.free_head_ = (count == 0U) ? kNoCell : 0U;
+        map.uses_buffer_ = true;
+        return map;
+    }
+
+    /// @brief True if this map was created with `CreateWithBuffer`.
+    [[nodiscard]] bool uses_buffer() const noexcept
+    {
+        return uses_buffer_;
+    }
+
+    /// @brief Bytes occupied by a single pooled node (the `CreateWithBuffer` unit).
+    [[nodiscard]] static constexpr size_type cell_size() noexcept
+    {
+        return sizeof(PoolCell);
+    }
+
+    /// @brief Required alignment for a `CreateWithBuffer` storage region.
+    [[nodiscard]] static constexpr size_type cell_alignment() noexcept
+    {
+        return alignof(PoolCell);
+    }
+
+    /// @brief Buffer size needed to hold @p node_count nodes in `CreateWithBuffer`.
+    [[nodiscard]] static constexpr size_type required_bytes(const size_type node_count) noexcept
+    {
+        return node_count * sizeof(PoolCell);
+    }
+
     Map(const Map&) = delete;
     Map& operator=(const Map&) = delete;
 
@@ -361,12 +415,21 @@ class Map
           root_{other.root_},
           leftmost_{other.leftmost_},
           rightmost_{other.rightmost_},
-          size_{other.size_}
+          size_{other.size_},
+          cells_{other.cells_},
+          free_head_{other.free_head_},
+          capacity_{other.capacity_},
+          uses_buffer_{other.uses_buffer_}
     {
         other.root_ = nullable_ptr<Node>{nullptr};
         other.leftmost_ = nullable_ptr<Node>{nullptr};
         other.rightmost_ = nullable_ptr<Node>{nullptr};
         other.size_ = 0U;
+        // Leave `other` a valid but empty pool: any further insert fails cleanly
+        // rather than silently falling back to the (inert) allocator.
+        other.cells_ = nullable_ptr<PoolCell>{nullptr};
+        other.free_head_ = kNoCell;
+        other.capacity_ = 0U;
     }
 
     Map& operator=(Map&& other) noexcept
@@ -380,11 +443,18 @@ class Map
             leftmost_ = other.leftmost_;
             rightmost_ = other.rightmost_;
             size_ = other.size_;
+            cells_ = other.cells_;
+            free_head_ = other.free_head_;
+            capacity_ = other.capacity_;
+            uses_buffer_ = other.uses_buffer_;
 
             other.root_ = nullable_ptr<Node>{nullptr};
             other.leftmost_ = nullable_ptr<Node>{nullptr};
             other.rightmost_ = nullable_ptr<Node>{nullptr};
             other.size_ = 0U;
+            other.cells_ = nullable_ptr<PoolCell>{nullptr};
+            other.free_head_ = kNoCell;
+            other.capacity_ = 0U;
         }
         return *this;
     }
@@ -921,6 +991,21 @@ class Map
         }
     };
 
+    /// @brief One node-sized cell of a `CreateWithBuffer` pool.
+    ///
+    /// While free, the cell holds the index of the next free cell (intrusive
+    /// free list); while in use, it holds a placement-constructed `Node`. The
+    /// cell stores raw bytes rather than a `Node` member so it stays trivial and
+    /// node lifetime is managed explicitly. Both members start at offset 0, so a
+    /// `Node*` reinterpreted as `PoolCell*` recovers the owning cell.
+    union PoolCell
+    {
+        std::uint32_t next_free;
+        alignas(Node) std::byte storage[sizeof(Node)];
+    };
+
+    static constexpr std::uint32_t kNoCell = std::numeric_limits<std::uint32_t>::max();
+
     struct InsertPosition
     {
         Node* parent{nullptr};
@@ -954,9 +1039,44 @@ class Map
         }
     }
 
+    /// @brief Pops raw node storage from the buffer pool, or nullptr if exhausted.
+    Node* PoolAllocate() noexcept
+    {
+        if (free_head_ == kNoCell)
+        {
+            return nullptr;
+        }
+        PoolCell* const cells = cells_.get();
+        const std::uint32_t index = free_head_;
+        free_head_ = cells[index].next_free;
+        return reinterpret_cast<Node*>(&cells[index].storage[0]);
+    }
+
+    /// @brief Returns a node's cell to the buffer pool's free list.
+    void PoolFree(Node* const node) noexcept
+    {
+        PoolCell* const cells = cells_.get();
+        // Both union members start at offset 0, so the Node lives at the cell base.
+        const auto index = static_cast<std::uint32_t>(reinterpret_cast<PoolCell*>(node) - cells);
+        cells[index].next_free = free_head_;
+        free_head_ = index;
+    }
+
     template <typename ValueArg>
     score::Result<Node*> AllocateNode(Node* parent, ValueArg&& value) noexcept
     {
+        if (uses_buffer_)
+        {
+            Node* const node = PoolAllocate();
+            if (node == nullptr)
+            {
+                return score::Result<Node*>{score::unexpect,
+                                            MakeError(ContainerErrorCode::kOutOfMemory, "Map pool exhausted")};
+            }
+            ::new (static_cast<void*>(node)) Node(parent, std::forward<ValueArg>(value));
+            return node;
+        }
+
         node_allocator_type node_allocator = CreateNodeAllocator(allocator_);
         Node* const node = std::allocator_traits<node_allocator_type>::allocate(node_allocator, 1U);
         if (node == nullptr)
@@ -972,6 +1092,18 @@ class Map
     template <typename... Args>
     score::Result<Node*> AllocateNodeEmplace(Node* parent, Args&&... args) noexcept
     {
+        if (uses_buffer_)
+        {
+            Node* const node = PoolAllocate();
+            if (node == nullptr)
+            {
+                return score::Result<Node*>{score::unexpect,
+                                            MakeError(ContainerErrorCode::kOutOfMemory, "Map pool exhausted")};
+            }
+            ::new (static_cast<void*>(node)) Node(parent, std::in_place, std::forward<Args>(args)...);
+            return node;
+        }
+
         node_allocator_type node_allocator = CreateNodeAllocator(allocator_);
         Node* const node = std::allocator_traits<node_allocator_type>::allocate(node_allocator, 1U);
         if (node == nullptr)
@@ -987,6 +1119,13 @@ class Map
 
     void DestroyNode(Node* node) noexcept
     {
+        if (uses_buffer_)
+        {
+            node->~Node();
+            PoolFree(node);
+            return;
+        }
+
         node_allocator_type node_allocator = CreateNodeAllocator(allocator_);
         std::allocator_traits<node_allocator_type>::destroy(node_allocator, node);
         std::allocator_traits<node_allocator_type>::deallocate(node_allocator, node, 1U);
@@ -1554,6 +1693,14 @@ class Map
     nullable_ptr<Node> leftmost_{nullptr};
     nullable_ptr<Node> rightmost_{nullptr};
     size_type size_{0U};
+
+    // Buffer-pool state, used only when created via CreateWithBuffer(). The cell
+    // base is stored through the pointer policy (offset-encoded by default) and
+    // the head/capacity are indices, so a buffer-backed map is relocatable.
+    nullable_ptr<PoolCell> cells_{nullptr};
+    std::uint32_t free_head_{kNoCell};
+    std::uint32_t capacity_{0U};
+    bool uses_buffer_{false};
 };
 
 template <typename Key,

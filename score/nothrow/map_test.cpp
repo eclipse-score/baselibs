@@ -2048,5 +2048,101 @@ TEST(MapDeathTest, EraseByIteratorAbortsOnForeignIterator)
     EXPECT_DEATH(map.erase(other.cbegin()), "");
 }
 
+TEST(Map, CreateWithBufferStartsEmpty)
+{
+    using BufMap = Map<int, int>;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(4U)];
+    BufMap map = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+
+    EXPECT_TRUE(map.uses_buffer());
+    EXPECT_TRUE(map.empty());
+    EXPECT_EQ(map.size(), 0U);
+}
+
+TEST(Map, CreateWithBufferInsertsAndFinds)
+{
+    using BufMap = Map<int, int>;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(8U)];
+    BufMap map = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+
+    ASSERT_TRUE(map.Insert({3, 30}).has_value());
+    ASSERT_TRUE(map.Insert({1, 10}).has_value());
+    ASSERT_TRUE(map.Insert({2, 20}).has_value());
+    EXPECT_EQ(map.size(), 3U);
+
+    auto found = map.find(2);
+    ASSERT_NE(found, map.end());
+    EXPECT_EQ(found->second, 20);
+
+    std::vector<int> keys;
+    for (const auto& entry : map)
+    {
+        keys.push_back(entry.first);
+    }
+    EXPECT_EQ(keys, (std::vector<int>{1, 2, 3}));
+}
+
+TEST(Map, CreateWithBufferBoundsAtCapacity)
+{
+    using BufMap = Map<int, int>;
+    constexpr std::size_t kNodes = 3U;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(kNodes)];
+    BufMap map = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+
+    for (int key = 0; key < static_cast<int>(kNodes); ++key)
+    {
+        ASSERT_TRUE(map.Insert({key, key}).has_value());
+    }
+
+    auto overflow = map.Insert({99, 99});
+    ASSERT_FALSE(overflow.has_value());
+    EXPECT_EQ(overflow.error(), ContainerErrorCode::kOutOfMemory);
+    EXPECT_EQ(map.size(), kNodes);
+}
+
+TEST(Map, CreateWithBufferReusesFreedNodes)
+{
+    using BufMap = Map<int, int>;
+    constexpr std::size_t kNodes = 3U;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(kNodes)];
+    BufMap map = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+
+    for (int key = 0; key < static_cast<int>(kNodes); ++key)
+    {
+        ASSERT_TRUE(map.Insert({key, key}).has_value());
+    }
+    ASSERT_FALSE(map.Insert({99, 99}).has_value());  // pool full
+
+    EXPECT_EQ(map.erase(1), 1U);                      // frees one cell
+    ASSERT_TRUE(map.Insert({42, 420}).has_value());   // cell reused
+    EXPECT_EQ(map.at(42), 420);
+    EXPECT_FALSE(map.Insert({100, 100}).has_value()); // full again
+}
+
+TEST(Map, CreateWithBufferMoveConstructionKeepsContents)
+{
+    using BufMap = Map<int, int>;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(4U)];
+    BufMap source = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+    ASSERT_TRUE(source.Insert({5, 50}).has_value());
+    ASSERT_TRUE(source.Insert({6, 60}).has_value());
+
+    BufMap moved = std::move(source);
+    EXPECT_TRUE(moved.uses_buffer());
+    EXPECT_EQ(moved.size(), 2U);
+    EXPECT_EQ(moved.at(5), 50);
+    EXPECT_EQ(moved.at(6), 60);
+}
+
+TEST(MapDeathTest, InsertOrAbortAbortsWhenBufferExhausted)
+{
+    using BufMap = Map<int, int>;
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(1U)];
+    BufMap map = BufMap::CreateWithBuffer(buffer, sizeof(buffer));
+
+    map.InsertOrAbort({1, 1});
+    EXPECT_DEATH(map.InsertOrAbort({2, 2}), "");
+}
+
 }  // namespace
 }  // namespace score::nothrow
