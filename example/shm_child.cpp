@@ -82,12 +82,22 @@ static void child(const int request_pipe, const int response_pipe)
     std::sort(shm_ptr->vector.begin(), shm_ptr->vector.end());
     print("Child", shm_ptr->vector);
 
-    // Mutate map data in-place (no new inserts => no allocator pressure).
+    // Mutate existing map values in-place.
     std::cerr << "Child: updating map values..." << std::endl;
     for (auto it = shm_ptr->map.begin(); it != shm_ptr->map.end(); ++it)
     {
         it->second += 1;
     }
+    print("Child", shm_ptr->map);
+
+    // Insert new entries. Each insert allocates a fresh node from the map's
+    // free-list pool, which lives inside the shared segment -- so this is
+    // cross-process allocation: the nodes the child creates here are visible to
+    // the parent once it remaps the (unchanged) segment. The pool is bounded to
+    // MapNodeCount nodes; InsertOrAbort aborts if it is exhausted.
+    std::cerr << "Child: inserting two new map entries..." << std::endl;
+    shm_ptr->map.InsertOrAbort({29, 290});
+    shm_ptr->map.InsertOrAbort({31, 310});
     print("Child", shm_ptr->map);
 
     // Signal parent by closing response pipe
