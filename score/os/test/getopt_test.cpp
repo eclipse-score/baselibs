@@ -26,8 +26,8 @@ TEST(GetOptTest, GetoptTestSuccess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Getopt Test Success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     optind = 1;
     char program_name[] = "GetoptSuccess";
@@ -51,8 +51,8 @@ TEST(GetOptTest, GetOptLong)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Get Opt Long");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     optind = 1;
     char program_name[] = "GetOptLong";
@@ -95,8 +95,8 @@ TEST(GetOptTest, GetoptTestFailureUnknownOption)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Getopt Test Failure Unknown Option");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     optind = 1;
     char program_name[] = "GetoptSuccess";
@@ -117,8 +117,8 @@ TEST(GetOptTest, GetoptindTest)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Getoptind Test");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     optind = 4;
     EXPECT_EQ(score::os::Getopt::instance().getoptind(), 4);
@@ -129,8 +129,8 @@ TEST(GetOptTest, GetopterrTest)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Getopterr Test");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     opterr = 5;
     EXPECT_EQ(score::os::Getopt::instance().getopterr(), 5);
@@ -141,8 +141,8 @@ TEST(GetOptTest, GetoptoptTest)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "GetOptTest Getoptopt Test");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     optopt = 3;
     EXPECT_EQ(score::os::Getopt::instance().getoptopt(), 3);

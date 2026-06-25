@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "acl",
@@ -579,6 +579,27 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
+    ],
+)
+
+cc_library(
+    name = "dlfcn",
+    srcs = [
+        "dlfcn_impl.cpp",
+    ],
+    hdrs = [
+        "dlfcn.h",
+        "dlfcn_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [
+        ":errno",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 

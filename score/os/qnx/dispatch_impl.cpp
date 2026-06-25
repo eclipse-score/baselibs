@@ -370,6 +370,17 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::pulse_detach(dispatch
     return {};
 }
 
+score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::msg_deliver_event(rcvid_t rcvid,
+                                                                            const sigevent* event) const noexcept
+{
+    const std::int32_t res = ::MsgDeliverEvent(rcvid, event);
+    if (res == -1)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return res;
+}
+
 }  // namespace os
 }  // namespace score
 

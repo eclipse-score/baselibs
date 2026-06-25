@@ -829,20 +829,20 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define DDAD_CONCATENATE2(A, B) A##B
+#define CONCATENATE2(A, B) A##B
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for Concatenation.
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define DDAD_CONCATENATE(A, B) DDAD_CONCATENATE2(A, B)
+#define CONCATENATE(A, B) CONCATENATE2(A, B)
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for Concatenation.
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define STRUCT_VISITABLE(S, ...) DDAD_CONCATENATE(STRUCT_VISITABLE, COUNT_VARARGS(__VA_ARGS__))(S, __VA_ARGS__)
+#define STRUCT_VISITABLE(S, ...) CONCATENATE(STRUCT_VISITABLE, COUNT_VARARGS(__VA_ARGS__))(S, __VA_ARGS__)
 
 
 #endif  // SCORE_COMMON_VISITOR_INCLUDE_VISITOR_VISIT_AS_STRUCT_H

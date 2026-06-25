@@ -155,6 +155,11 @@ class MockDispatch : public Dispatch
                 pulse_detach,
                 (dispatch_t * dpp, std::int32_t code, std::int32_t flags),
                 (const, noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+                msg_deliver_event,
+                (rcvid_t rcvid, const sigevent* event),
+                (const, noexcept, override));
 };
 
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */

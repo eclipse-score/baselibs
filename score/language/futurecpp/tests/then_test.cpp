@@ -358,7 +358,8 @@ TEST(then, then_GivenInvocableReturnsConstRValue_ExpectArgumentIsPerfectlyForwar
 /// @requirement CB-#40946837
 TEST(then, then_GivenMultipleInvocationsOnSameSender_ExpectSameResultBecauseSenderIsCopied)
 {
-    auto invocable = [v = 0]() mutable {
+    auto invocable = [v = 0]() mutable
+    {
         v += 1;
         return v;
     };

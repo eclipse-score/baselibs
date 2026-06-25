@@ -27,12 +27,11 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/analysis:__subpackages__",
+        "//score/analysis:__subpackages__",
     ],
     deps = [
-        "@score_baselibs//score/analysis/tracing/common/flexible_circular_allocator:lockless_flexible_circular_allocator_factory",
-        "@score_baselibs//score/analysis/tracing/common/shared_list",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types/error_code",
-        "@score_baselibs//score/language/futurecpp",
+        "//score/analysis/tracing/common/interface_types:shared_memory_chunk",
+        "//score/analysis/tracing/generic_trace_library/interface_types/error_code",
+        "//score/language/futurecpp",
     ],
 )

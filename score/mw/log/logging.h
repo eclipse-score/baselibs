@@ -147,6 +147,13 @@ LogStream LogVerbose(const std::string_view context_id) noexcept;
 /// \return The currently process global configured Recorder
 log::Recorder& GetDefaultLogRecorder() noexcept;
 
+/// \brief Returns the process global fallback Recorder
+///
+/// \details This API is primarily exposed for testing purposes and to allow early initialization of the fallback
+/// recorder.
+/// \return The process global fallback Recorder
+log::Recorder& GetFallbackLogRecorder() noexcept;
+
 /// \brief Set a given Recorder as the process global configured Recorder for all log messages
 ///
 /// \details In a normal case the user does not want to use this API. It is only exposed e.g. for testing purposes

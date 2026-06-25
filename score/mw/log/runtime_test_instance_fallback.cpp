@@ -48,8 +48,8 @@ TEST(RuntimeTest, RuntimeInitializationWithoutPointer)
     RecordProperty("Description",
                    "This suite only exists to test the first branch of the runtime initialization. Since this is "
                    "static state we need a separate binary for this.");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     Runtime::SetRecorder(nullptr, nullptr);
     // Do not add additional tests here, but in runtime_test.cpp.

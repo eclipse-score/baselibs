@@ -19,9 +19,13 @@ cc_library(
     srcs = ["trace_library_mock.cpp"],
     hdrs = ["trace_library_mock.h"],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//score/analysis/tracing/generic_trace_library:__pkg__",
+        "//score/analysis/tracing/generic_trace_library/test:__subpackages__",
+    ],
     deps = [
+        "//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api",
+        "//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/stub_implementation",
     ],
 )

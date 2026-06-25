@@ -346,7 +346,8 @@ TEST(bind_front, mutable_arg)
 /// @requirement CB-#62587763
 TEST(bind_front, mutable_callable)
 {
-    auto f = [x = 0](int n) mutable {
+    auto f = [x = 0](int n) mutable
+    {
         const int res{x};
         x += n;
         return res;
@@ -580,7 +581,8 @@ TEST(bind_back, mutable_arg)
 /// @requirement CB-#62590909
 TEST(bind_back, mutable_callable)
 {
-    auto f = [x = 0](int n) mutable {
+    auto f = [x = 0](int n) mutable
+    {
         const int res{x};
         x += n;
         return res;

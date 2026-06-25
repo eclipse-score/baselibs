@@ -49,11 +49,9 @@ public:
     {
         static_assert(std::is_invocable_v<FD&, BoundArgs&..., CallArgs...>);
 
-        return std::apply(
-            [&](BoundArgs&... bound_args) -> decltype(auto) {
-                return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...);
-            },
-            args_);
+        return std::apply([&](BoundArgs&... bound_args) -> decltype(auto)
+                          { return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...); },
+                          args_);
     }
 
     template <typename... CallArgs>
@@ -62,11 +60,9 @@ public:
     {
         static_assert(std::is_invocable_v<const FD&, const BoundArgs&..., CallArgs...>);
 
-        return std::apply(
-            [&](const BoundArgs&... bound_args) -> decltype(auto) {
-                return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...);
-            },
-            args_);
+        return std::apply([&](const BoundArgs&... bound_args) -> decltype(auto)
+                          { return std::invoke(f_, bound_args..., std::forward<CallArgs>(call_args)...); },
+                          args_);
     }
 
     template <typename... CallArgs>
@@ -76,9 +72,8 @@ public:
         static_assert(std::is_invocable_v<FD, BoundArgs..., CallArgs...>);
 
         return std::apply(
-            [&](BoundArgs&&... bound_args) -> decltype(auto) {
-                return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...);
-            },
+            [&](BoundArgs&&... bound_args) -> decltype(auto)
+            { return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...); },
             std::move(args_));
     }
 
@@ -89,9 +84,8 @@ public:
         static_assert(std::is_invocable_v<const FD, const BoundArgs..., CallArgs...>);
 
         return std::apply(
-            [&](const BoundArgs&&... bound_args) -> decltype(auto) {
-                return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...);
-            },
+            [&](const BoundArgs&&... bound_args) -> decltype(auto)
+            { return std::invoke(std::move(f_), std::move(bound_args)..., std::forward<CallArgs>(call_args)...); },
             std::move(args_));
     }
 

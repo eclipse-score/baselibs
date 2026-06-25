@@ -1036,7 +1036,8 @@ TEST(simd_vec, ConvertIntToFloat)
 /// @requirement CB-#18398050
 TEST(simd_vec, ConvertCharToFloat)
 {
-    const auto seq = []() {
+    const auto seq = []()
+    {
         std::array<std::uint8_t, rebind<float, score::cpp::simd::vec<std::uint8_t>>::type::size()> v;
         std::iota(v.begin(), v.end(), 1U);
         return v;

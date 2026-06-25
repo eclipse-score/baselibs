@@ -1,0 +1,15 @@
+[package]
+name = "stdout_logger"
+version.workspace = true
+authors.workspace = true
+readme.workspace = true
+edition.workspace = true
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+score_log.workspace = true
+
+[lints]
+workspace = true

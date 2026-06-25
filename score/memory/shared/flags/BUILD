@@ -15,7 +15,11 @@ load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
 bool_flag(
     name = "use_typedshmd",
-    build_setting_default = True,
+    build_setting_default = False,
+    visibility = [
+        "@score_baselibs//score/analysis/tracing/daemon/flags:__pkg__",
+        "@score_baselibs//score/memory/shared/flags:__pkg__",
+    ],
 )
 
 config_setting(

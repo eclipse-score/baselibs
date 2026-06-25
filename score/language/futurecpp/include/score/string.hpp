@@ -56,15 +56,13 @@ string to_string(const double value, memory_resource* const resource);
 } // namespace pmr
 } // namespace score::cpp
 
-namespace std
-{
 // More recent standard libraries already provide
 // `template<typename A> struct hash<std::basic_string<char, std::char_traits<char>, A>>`
 // for arbitrary allocators A, but our currently used standard library doesn't, which is why we
 // have to define them ourselves.
 // \{
 template <>
-struct hash<score::cpp::pmr::string>
+struct std::hash<score::cpp::pmr::string>
 {
     std::size_t operator()(const score::cpp::pmr::string& s) const noexcept
     {
@@ -72,7 +70,7 @@ struct hash<score::cpp::pmr::string>
     }
 };
 template <>
-struct hash<score::cpp::pmr::u16string>
+struct std::hash<score::cpp::pmr::u16string>
 {
     std::size_t operator()(const score::cpp::pmr::u16string& s) const noexcept
     {
@@ -80,7 +78,7 @@ struct hash<score::cpp::pmr::u16string>
     }
 };
 template <>
-struct hash<score::cpp::pmr::u32string>
+struct std::hash<score::cpp::pmr::u32string>
 {
     std::size_t operator()(const score::cpp::pmr::u32string& s) const noexcept
     {
@@ -88,7 +86,7 @@ struct hash<score::cpp::pmr::u32string>
     }
 };
 template <>
-struct hash<score::cpp::pmr::wstring>
+struct std::hash<score::cpp::pmr::wstring>
 {
     std::size_t operator()(const score::cpp::pmr::wstring& s) const noexcept
     {
@@ -96,7 +94,5 @@ struct hash<score::cpp::pmr::wstring>
     }
 };
 // \}
-
-} // namespace std
 
 #endif // SCORE_LANGUAGE_FUTURECPP_STRING_HPP

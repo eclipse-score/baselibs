@@ -44,17 +44,6 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     /// \details Also changes the owner of the file to the real user.
     virtual Result<void> ChangeGroup(const Path& path, const gid_t group_id) const noexcept = 0;
 
-    /// \brief Check if filesystem is corrupted
-    /// \param   partition   device to check (e.g. /dev/mmcblk0p1)
-    /// \return  true        if not corrupted
-    ///          false       if corrupted
-    virtual Result<void> CheckFileSystem(const Path& partition) const noexcept = 0;
-
-    /// \brief Do automatic filesystem repair
-    /// \param   partition   device to repair (e.g. /dev/mmcblk0p1)
-    /// @return Returns either success @ref Result<void>, or error @ref ErrorCode
-    virtual Result<void> RepairFileSystem(const Path& partition) const noexcept = 0;
-
     /// \brief Creates the directory p as if by POSIX mkdir() with a second argument of perms.
     /// The parent directory must already exist.
     /// If the function fails because p resolves to an existing directory, no error is reported.
@@ -76,19 +65,6 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     /// Returns true if the contents of the file are identical, false if file contents are not identical.
     /// \note Returns an error if the file does not exist or cannot be opened.
     virtual Result<bool> FileContentsAreIdentical(const Path& path1, const Path& path2) const noexcept = 0;
-
-    ///  \brief Format partition to EXT2 with QNX compatible settings.
-    ///  Large files and inode resize are disabled.
-    ///  \param   partition   device to format (e.g. /dev/mmcblk0p1)
-    ///  \return  true        if succeeded
-    ///           false       if failed
-    virtual Result<void> FormatPartition(const Path& partition) const noexcept = 0;
-
-    ///  \brief Check if device filesystem is QNX compatible
-    ///  \param   partition   device to check (e.g. /dev/mmcblk0p1)
-    ///  \return  true        if compatible
-    ///           false       if not compatible
-    virtual bool IsQnxCompatible(const Path& partition) const = 0;
 
     /// \brief Synchronizes directory entries (filenames, inodes, etc.).
     /// Can be used to ensure that a newly created file entry is fully synchronized with disk

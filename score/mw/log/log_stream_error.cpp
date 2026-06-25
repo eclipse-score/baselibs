@@ -12,14 +12,12 @@
  ********************************************************************************/
 #include "score/mw/log/log_stream.h"
 
-#include "score/result/error.h"
-
 // Suppress "AUTOSAR C++14 A13-2-2", The rule states: "A binary arithmetic operator and a bitwise operator shall return
 // a “prvalue”." The code with '<<' is not a left shift operator but an overload for logging the respective types. code
 // analysis tools tend to assume otherwise hence a false positive.
 // coverity[autosar_cpp14_a13_2_2_violation]
-score::mw::log::LogStream& score::result::operator<<(score::mw::log::LogStream& log_stream,
-                                                 const score::result::Error& error) noexcept
+score::mw::log::LogStream& score::mw::log::operator<<(score::mw::log::LogStream& log_stream,
+                                                  const score::result::Error& error) noexcept
 {
     log_stream << "Error ";
     log_stream << error.Message();
@@ -33,8 +31,8 @@ score::mw::log::LogStream& score::result::operator<<(score::mw::log::LogStream& 
 }
 
 // coverity[autosar_cpp14_a13_2_2_violation]
-score::mw::log::LogStream&& score::result::operator<<(score::mw::log::LogStream&& log_stream,
-                                                  const score::result::Error& error) noexcept
+score::mw::log::LogStream&& score::mw::log::operator<<(score::mw::log::LogStream&& log_stream,
+                                                   const score::result::Error& error) noexcept
 {
     // Suppress "AUTOSAR C++14 A18-9-2" rule findings. This rule stated: "Forwarding values to other functions shall be
     // done via: (1) std::move if the value is an rvalue reference, (2) std::forward if the value is forwarding

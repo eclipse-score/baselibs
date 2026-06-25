@@ -1237,7 +1237,7 @@ class Remove : public FilesystemFixture
             }
             else
             {
-                return score::cpp::make_unexpected(score::os::Error::createFromErrno(0));
+                return static_cast<struct dirent*>(nullptr);
             }
         };
         EXPECT_CALL(*dirent_mock_, readdir(_)).WillRepeatedly(Invoke(return_entries));

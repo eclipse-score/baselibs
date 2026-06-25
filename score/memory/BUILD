@@ -51,14 +51,12 @@ cc_library(
         "string_comparison_adaptor.h",
     ],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = ["@score_baselibs//score/language/futurecpp"],
     tags = ["FFI"],
     visibility = [
         "//visibility:public",
     ],
-    deps = [
-        ":string_literal",
-        "@score_baselibs//score/language/futurecpp",
-    ],
+    deps = [":string_literal"],
 )
 
 cc_library(

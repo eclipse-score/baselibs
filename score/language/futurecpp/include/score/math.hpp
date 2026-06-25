@@ -284,7 +284,10 @@ inline double exp(Integer num)
 /// \tparam T Floating point type.
 /// \param base The base for the power operation.
 /// \return Power of base to N. Might return nan/inf/-inf.
+// misc-no-recursion: The recursion is bounded to a depth of O(log2(N)) steps where N is limited to 6, resulting in a
+// maximum depth of 4. Thus neither stack nor runtime are growing beyond bounds.
 template <const std::uint32_t N, typename T>
+// NOLINTNEXTLINE(misc-no-recursion)
 inline T int_pow(T base)
 {
     static_assert(N <= 6, "N must be less than or equal to 6");

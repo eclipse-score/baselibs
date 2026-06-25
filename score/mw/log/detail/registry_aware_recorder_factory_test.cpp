@@ -23,6 +23,10 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <score/utility.hpp>
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
 #include <type_traits>
 
 namespace score
@@ -78,6 +82,23 @@ class RegistryAwareRecorderFactoryTest : public ::testing::Test
 class RegistryAwareRecorderFactoryConfigFixture : public RegistryAwareRecorderFactoryTest
 {
   public:
+    void SetUp() override
+    {
+        RegistryAwareRecorderFactoryTest::SetUp();
+        score::cpp::ignore = unsetenv("MW_LOG_CONFIG_FILE");
+    }
+
+    void TearDown() override
+    {
+        score::cpp::ignore = unsetenv("MW_LOG_CONFIG_FILE");
+        if (!temp_path_.empty())
+        {
+            score::cpp::ignore = std::remove(temp_path_.c_str());
+            temp_path_.clear();
+        }
+        RegistryAwareRecorderFactoryTest::TearDown();
+    }
+
     std::unique_ptr<Recorder> CreateFromConfiguration() noexcept
     {
         auto config_reader_mock = std::make_unique<TargetConfigReaderMock>();
@@ -100,8 +121,18 @@ class RegistryAwareRecorderFactoryConfigFixture : public RegistryAwareRecorderFa
         SetTargetConfigReaderResult(config);
     }
 
+    void SetupTempConfigFile(const std::string& json_content)
+    {
+        temp_path_ = "/tmp/registry_aware_recorder_factory_test.json";
+        std::ofstream file(temp_path_);
+        file << json_content;
+        file.close();
+        score::cpp::ignore = setenv("MW_LOG_CONFIG_FILE", temp_path_.c_str(), 1);
+    }
+
   protected:
     score::Result<Configuration> config_result_;
+    std::string temp_path_;
 };
 
 TEST(CreateRecorderFactoryTest, CreateRecorderFactoryReturnsNonNullFactory)
@@ -212,7 +243,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConfigurationWithConfigReaderM
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will return empty recorder in case of configuration error.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto config_reader_mock = std::make_unique<TargetConfigReaderMock>();
     score::cpp::pmr::memory_resource* null_memory_resource = nullptr;
@@ -227,7 +258,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConfigurationErrorShallFallbac
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will return text recorder in case of configuration error.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     SetTargetConfigReaderResult(score::MakeUnexpected(Error::kConfigurationFilesNotFound));
     auto recorder = CreateFromConfiguration();
@@ -248,7 +279,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, NoRecorderConfiguredShallRetur
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory can return empty recorder if no recorder is configured.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     SetConfigurationWithLogMode({});
 
@@ -262,7 +293,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConsoleConfiguredShallReturnCo
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory can create ConsoleRecorder if console is configured.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     SetConfigurationWithLogMode({LogMode::kConsole});
     auto recorder = CreateFromConfiguration();
@@ -283,7 +314,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, InvalidLogModeShallReturnEmpty
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will create EmptyRecorder in case of invalid log mode.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     SetConfigurationWithLogMode({LogMode::kInvalid});
     auto recorder = CreateFromConfiguration();
@@ -296,7 +327,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, OutOfRangeLogModeShallReturnEm
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will create EmptyRecorder in case of out of range log mode.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     const LogMode out_of_range_log_mode = static_cast<LogMode>(240);
 
@@ -312,7 +343,7 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, MultipleLogModesShallReturnCom
     RecordProperty("Description",
                    "RecorderFactory shall create CompositeRecorder in case of multiple log mode is configured.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     // Clear and register two fake backends to be independent of flag combinations.
     gBackendCreators.fill(nullptr);
@@ -343,12 +374,204 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, CreateRecorderFromLogModeMemor
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Recorder created using LogMode will return empty recorder in case of memory error.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     score::cpp::pmr::memory_resource* null_memory_resource = nullptr;
     Configuration config{};
     auto recorder =
         RegistryAwareRecorderFactory{}.CreateRecorderFromLogMode(LogMode::kConsole, config, null_memory_resource);
+    EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture, CreateFromConfigurationFallsBackToConsoleWhenConfigFilesNotFound)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "CreateFromConfiguration(memory_resource) falls back to console when no config files are found.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    // MW_LOG_CONFIG_FILE is unset and no default config files exist in the test sandbox.
+    // This exercises the !result.has_value() TRUE branch -> CreateWithConsoleLoggingOnly.
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    EXPECT_NE(recorder, nullptr);
+    if (IsBackendAvailable(LogMode::kConsole))
+    {
+        EXPECT_TRUE(IsRecorderOfType<TextRecorder>(recorder));
+    }
+    else
+    {
+        EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+    }
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture,
+       CreateFromConfigurationWithConsoleModeParsesConfigAndReturnsSingleRecorder)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "CreateFromConfiguration creates a single console recorder when kConsole mode is configured.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    SetupTempConfigFile(R"({"logMode": "kConsole"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    EXPECT_NE(recorder, nullptr);
+    if (IsBackendAvailable(LogMode::kConsole))
+    {
+        EXPECT_TRUE(IsRecorderOfType<TextRecorder>(recorder));
+    }
+    else
+    {
+        EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+    }
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture,
+       CreateFromConfigurationWithUnavailableModeConsoleAvailableFallsBackToConsole)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "CreateFromConfiguration falls back to console when the requested log mode is unavailable.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    // kFile is not registered in this test binary, so IsBackendAvailable(kFile) returns false.
+    gBackendCreators[ModeToSlotIndex(LogMode::kFile)] = nullptr;
+
+    SetupTempConfigFile(R"({"logMode": "kFile"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    EXPECT_NE(recorder, nullptr);
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kFile));
+    if (IsBackendAvailable(LogMode::kConsole))
+    {
+        EXPECT_TRUE(IsRecorderOfType<TextRecorder>(recorder));
+    }
+    else
+    {
+        EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+    }
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture,
+       CreateFromConfigurationWithNoAvailableBackendAndNoConsoleReturnsEmptyRecorder)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty(
+        "Description",
+        "CreateFromConfiguration falls through to CreateWithConsoleLoggingOnly when recorders list is empty.");
+    RecordProperty("TestingTechnique", "Boundary test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    gBackendCreators.fill(nullptr);
+
+    SetupTempConfigFile(R"({"logMode": "kFile"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kFile));
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kConsole));
+    EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture,
+       CreateFromConfigurationWithMultipleAvailableModesReturnsCompositeRecorder)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "CreateFromConfiguration creates CompositeRecorder when multiple log modes are configured and "
+                   "available.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    // Clear and register both backends explicitly to be independent of build flag combinations.
+    gBackendCreators.fill(nullptr);
+
+    RegisterBackend(
+        LogMode::kFile,
+        [](const detail::Configuration& /*config*/, score::cpp::pmr::memory_resource* /*mem*/) -> std::unique_ptr<Recorder> {
+            return std::make_unique<EmptyRecorder>();
+        });
+
+    RegisterBackend(
+        LogMode::kConsole,
+        [](const detail::Configuration& /*config*/, score::cpp::pmr::memory_resource* /*mem*/) -> std::unique_ptr<Recorder> {
+            return std::make_unique<EmptyRecorder>();
+        });
+
+    SetupTempConfigFile(R"({"logMode": "kConsole|kFile"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    ASSERT_TRUE(IsRecorderOfType<CompositeRecorder>(recorder));
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture,
+       CreateFromConfigurationAvailableBackendReturningNullRecorderResultsInEmpty)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "CreateFromConfiguration skips a recorder when the backend creator returns nullptr.");
+    RecordProperty("TestingTechnique", "Boundary test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    RegisterBackend(
+        LogMode::kFile,
+        [](const detail::Configuration& /*config*/, score::cpp::pmr::memory_resource* /*mem*/) -> std::unique_ptr<Recorder> {
+            return nullptr;
+        });
+    // Clear console so the fallback path also returns nullptr -> recorders stays empty.
+    gBackendCreators[ModeToSlotIndex(LogMode::kConsole)] = nullptr;
+
+    SetupTempConfigFile(R"({"logMode": "kFile"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    // kFile returns nullptr -> not added -> recorders empty -> CreateWithConsoleLoggingOnly
+    // -> console not registered -> EmptyRecorder.
+    EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
+}
+
+TEST_F(RegistryAwareRecorderFactoryConfigFixture, CreateFromConfigurationConsoleFallbackCreatorReturningNullIsSkipped)
+{
+    RecordProperty("Requirement", "SCR-861534");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "CreateFromConfiguration skips console fallback recorder when its creator returns nullptr.");
+    RecordProperty("TestingTechnique", "Boundary test");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+
+    // kFile not available -> else branch -> console fallback -> console creator returns nullptr -> not added.
+    gBackendCreators[ModeToSlotIndex(LogMode::kFile)] = nullptr;
+    RegisterBackend(
+        LogMode::kConsole,
+        [](const detail::Configuration& /*config*/, score::cpp::pmr::memory_resource* /*mem*/) -> std::unique_ptr<Recorder> {
+            return nullptr;
+        });
+
+    SetupTempConfigFile(R"({"logMode": "kFile"})");
+
+    RegistryAwareRecorderFactory factory;
+    auto recorder = factory.CreateFromConfiguration(score::cpp::pmr::get_default_resource());
+
+    // Console fallback returns nullptr -> not added -> recorders empty -> CreateWithConsoleLoggingOnly
+    // -> console returns nullptr -> EmptyRecorder.
     EXPECT_TRUE(IsRecorderOfType<EmptyRecorder>(recorder));
 }
 

@@ -89,9 +89,8 @@ TYPED_TEST_SUITE(container_test_random_access, RaTestTypes, /*unused*/);
 
 TYPED_TEST_SUITE(general_zip_iterator_test, GeneralZipTestTypes, /*unused*/);
 
-const auto make_zip_iterator_begin = [](auto... iterators) {
-    return score::cpp::make_zip_range(score::cpp::make_range_pair(iterators, iterators)...).begin();
-};
+const auto make_zip_iterator_begin = [](auto... iterators)
+{ return score::cpp::make_zip_range(score::cpp::make_range_pair(iterators, iterators)...).begin(); };
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#18579441

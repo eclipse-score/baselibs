@@ -42,7 +42,7 @@ namespace detail
 /// \tparam MemberType The type of the member which should be bound
 /// \tparam MemberPtr Non-type template parameter of the pointer to data member
 ///
-template <typename Iterator, typename MemberType, MemberType std::iterator_traits<Iterator>::value_type::*MemberPtr>
+template <typename Iterator, typename MemberType, MemberType std::iterator_traits<Iterator>::value_type::* MemberPtr>
 class member_iterator
 {
     /// extracted class that the member refers to

@@ -197,6 +197,10 @@ Result<int> OpenFileHandle(const Path& path,
 Result<IdentityMetadata> GetIdentityMetadata(const Path& path)
 {
     os::StatBuffer buffer{};
+    // Intentionally resolve symlinks (stat, not lstat): if path is a symlink to a regular file, we retrieve the
+    // target's metadata. This allows AtomicUpdate to accept symlinks pointing to regular files while obtaining the
+    // correct permissions and ownership to apply to the replacement file. The symlink itself will be replaced by a
+    // regular file during the final rename — see AtomicUpdate for details.
     const auto result = os::Stat::instance().stat(path.CStr(), buffer, true);
     if (!result.has_value())
     {
@@ -270,6 +274,11 @@ Result<std::unique_ptr<FileStream>> FileFactory::AtomicUpdate(const Path& path,
     auto temp_path = path.ParentPath();
     temp_path /= rand_filename;
 
+    // Retrieve metadata of the target file. If path is a symlink, this follows the symlink and retrieves the
+    // metadata of the target. The subsequent rename() in AtomicFileBuf::Close() will then replace the symlink
+    // directory entry (not its target) with the new regular file. This is intentional: it prevents uncontrolled
+    // writes through symlinks to locations outside the expected filesystem, while preserving the target's
+    // permissions and ownership on the replacement file.
     const auto metadata = details::GetIdentityMetadata(path);
     const auto create_mode = ExtractMode(metadata);
 

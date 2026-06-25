@@ -22,7 +22,7 @@ bool_flag(
 config_setting(
     name = "Remote_Logging",
     flag_values = {
-        ":KRemote_Logging": "False",
+        ":KRemote_Logging": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",
@@ -38,6 +38,22 @@ config_setting(
     name = "Custom_Logging",
     flag_values = {
         ":KCustom_Logging": "True",
+    },
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+)
+
+bool_flag(
+    name = "shm_dma_enabled",
+    build_setting_default = False,
+)
+
+config_setting(
+    name = "config_use_shm_dma_enabled",
+    flag_values = {
+        ":KRemote_Logging": "True",
+        ":shm_dma_enabled": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

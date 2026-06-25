@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 exports_files(["capability.h"])
 
@@ -151,6 +151,25 @@ cc_library(
     ],
     deps = [
         "//third_party/libpcap",
+        "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:object_seam",
+    ],
+)
+
+cc_library(
+    name = "pathmgr",
+    srcs = [
+        "pathmgr.cpp",
+        "pathmgr_impl.cpp",
+    ],
+    hdrs = [
+        "pathmgr.h",
+        "pathmgr_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:object_seam",
     ],
@@ -432,7 +451,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:public"],  # platform_only
     deps = [
         "@score_baselibs//score/os:errno",
     ],

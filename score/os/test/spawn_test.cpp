@@ -47,8 +47,8 @@ TEST_F(SpawnTest, posix_spawnattr_setflags_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setflags_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int16_t set_flags{POSIX_SPAWN_SETSIGDEF};
 
@@ -66,8 +66,8 @@ TEST_F(SpawnTest, posix_spawnattr_getflags_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getflags_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int16_t set_flags{POSIX_SPAWN_SETSIGDEF};
     ASSERT_EQ(::posix_spawnattr_setflags(&attr, set_flags), 0);
@@ -84,8 +84,8 @@ TEST(SpawnImpl, posix_spawnattr_getflags_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getflags_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int16_t set_flags{POSIX_SPAWN_SETSIGDEF};
     posix_spawnattr_t attr;
@@ -105,8 +105,8 @@ TEST_F(SpawnTest, posix_spawnattr_setflags_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setflags_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto invalid_flag{-1};
     const auto result = score::os::Spawn::instance().posix_spawnattr_setflags(&attr, invalid_flag);
@@ -122,8 +122,8 @@ TEST_F(SpawnTest, posix_spawnattr_sigsetdefault_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_sigsetdefault_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -144,8 +144,8 @@ TEST_F(SpawnTest, posix_spawnattr_getsigdefault_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getsigdefault_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -165,8 +165,8 @@ TEST(SpawnImpl, posix_spawnattr_setsigdefault_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setsigdefault_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -185,8 +185,8 @@ TEST(SpawnImpl, posix_spawnattr_getsigdefault_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getsigdefault_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -209,8 +209,8 @@ TEST_F(SpawnTest, posix_spawnattr_setsigmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setsigmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -231,8 +231,8 @@ TEST_F(SpawnTest, posix_spawnattr_getsigmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getsigmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -252,8 +252,8 @@ TEST(SpawnImpl, posix_spawnattr_setsigmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setsigmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -272,8 +272,8 @@ TEST(SpawnImpl, posix_spawnattr_getsigmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getsigmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -296,8 +296,8 @@ TEST_F(SpawnTest, posix_spawnattr_setpgroup_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setpgroup_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{4};
     ASSERT_EQ(::posix_spawnattr_setflags(&attr, POSIX_SPAWN_SETPGROUP), 0);
@@ -316,8 +316,8 @@ TEST_F(SpawnTest, posix_spawnattr_getpgroup_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getpgroup_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{4};
     ASSERT_TRUE(score::os::Spawn::instance().posix_spawnattr_setflags(&attr, POSIX_SPAWN_SETPGROUP).has_value());
@@ -335,8 +335,8 @@ TEST(SpawnImpl, posix_spawnattr_setpgroup_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setpgroup_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{4};
     posix_spawnattr_t attr;
@@ -352,8 +352,8 @@ TEST(SpawnImpl, posix_spawnattr_getpgroup_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getpgroup_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -369,8 +369,8 @@ TEST_F(SpawnTest, posix_spawnattr_setschedparam_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setschedparam_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct sched_param set_param;
     set_param.sched_priority = 4;
@@ -388,8 +388,8 @@ TEST_F(SpawnTest, posix_spawnattr_getschedparam_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getschedparam_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     struct sched_param set_param;
     set_param.sched_priority = 4;
@@ -407,8 +407,8 @@ TEST(SpawnImpl, posix_spawnattr_setschedparam_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setschedparam_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -425,8 +425,8 @@ TEST(SpawnImpl, posix_spawnattr_getschedparam_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getschedparam_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -442,8 +442,8 @@ TEST_F(SpawnTest, posix_spawnattr_setschedpolicy_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setschedpolicy_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int32_t set_policy{1};
     ASSERT_EQ(::posix_spawnattr_setflags(&attr, POSIX_SPAWN_SETSCHEDULER), 0);
@@ -462,8 +462,8 @@ TEST_F(SpawnTest, posix_spawnattr_getschedpolicy_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getschedpolicy_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int32_t set_policy{1};
     ASSERT_EQ(::posix_spawnattr_setflags(&attr, POSIX_SPAWN_SETSCHEDULER), 0);
@@ -481,8 +481,8 @@ TEST(SpawnImpl, posix_spawnattr_getschedpolicy_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getschedpolicy_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int32_t set_policy{1};
     posix_spawnattr_t attr;
@@ -502,8 +502,8 @@ TEST_F(SpawnTest, posix_spawnattr_setschedpolicy_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setschedpolicy_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::int32_t get_policy{};
     ASSERT_EQ(::posix_spawnattr_getschedpolicy(&attr, &get_policy), 0);
@@ -519,8 +519,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_init_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_init_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     const auto result = score::os::Spawn::instance().posix_spawn_file_actions_init(&file_actions);
@@ -535,8 +535,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_destroy_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_destroy_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     ASSERT_EQ(::posix_spawn_file_actions_init(&file_actions), 0);
@@ -551,8 +551,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_addclose_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_addclose_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     ASSERT_EQ(::posix_spawn_file_actions_init(&file_actions), 0);
@@ -565,8 +565,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_addopen_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_addopen_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     ASSERT_EQ(::posix_spawn_file_actions_init(&file_actions), 0);
@@ -587,8 +587,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_addclose_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_addclose_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     ASSERT_EQ(::posix_spawn_file_actions_init(&file_actions), 0);
@@ -606,8 +606,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_addopen_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_addopen_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     const std::int32_t new_fd{3};
@@ -623,8 +623,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_adddup2_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_adddup2_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     ASSERT_EQ(::posix_spawn_file_actions_init(&file_actions), 0);
@@ -645,8 +645,8 @@ TEST(SpawnImpl, posix_spawn_file_actions_adddup2_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawn_file_actions_adddup2_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawn_file_actions_t file_actions;
     const std::int32_t filedes{};
@@ -660,8 +660,8 @@ TEST_F(SpawnTest, Spawn_succcess)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest Spawn_succcess");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{0};
     char path[] = "/bin/ls";
@@ -685,8 +685,8 @@ TEST_F(SpawnTest, Spawn_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest Spawn_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{-1};
     char path[] = "/bin/ls";
@@ -704,8 +704,8 @@ TEST_F(SpawnTest, Spawnp_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest Spawnp_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{0};
     char path[] = "/bin/ls";
@@ -729,8 +729,8 @@ TEST_F(SpawnTest, Spawnp_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest Spawnp_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     pid_t pid{-1};
     char path[] = "/bin/ls";
@@ -749,8 +749,8 @@ TEST_F(SpawnTest, posix_spawnattr_setxflags_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setxflags_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_flags{POSIX_SPAWN_SETSIGMASK};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setxflags(&attr, set_flags);
@@ -767,8 +767,8 @@ TEST_F(SpawnTest, posix_spawnattr_getxflags_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getxflags_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_flags{POSIX_SPAWN_SETSIGMASK};
     ASSERT_EQ(::posix_spawnattr_setxflags(&attr, set_flags), 0);
@@ -785,8 +785,8 @@ TEST(SpawnImpl, posix_spawnattr_setxflags_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setxflags_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_flags{POSIX_SPAWN_SETSIGMASK};
 
@@ -803,8 +803,8 @@ TEST(SpawnImpl, posix_spawnattr_getxflags_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getxflags_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -821,8 +821,8 @@ TEST_F(SpawnTest, pthread_spawnattr_getrunmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getrunmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint64_t set_runmask{1};
     ASSERT_EQ(::pthread_spawnattr_setrunmask_np(&attr, set_runmask), 0);
@@ -839,8 +839,8 @@ TEST_F(SpawnTest, pthread_spawnattr_setrunmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setrunmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint64_t set_runmask{1};
     const auto set_result = score::os::Spawn::instance().pthread_spawnattr_setrunmask_np(&attr, set_runmask);
@@ -857,8 +857,8 @@ TEST(SpawnImpl, pthread_spawnattr_setrunmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setrunmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint64_t set_runmask{1};
 
@@ -875,8 +875,8 @@ TEST(SpawnImpl, pthread_spawnattr_getrunmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getrunmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -893,8 +893,8 @@ TEST_F(SpawnTest, posix_spawnattr_getrunmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getrunmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_runmask{1};
     ASSERT_EQ(::posix_spawnattr_setrunmask(&attr, set_runmask), 0);
@@ -911,8 +911,8 @@ TEST_F(SpawnTest, posix_spawnattr_setrunmask_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setrunmask_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_runmask{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setrunmask(&attr, set_runmask);
@@ -929,8 +929,8 @@ TEST(SpawnImpl, posix_spawnattr_setrunmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setrunmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_runmask{1};
 
@@ -947,8 +947,8 @@ TEST(SpawnImpl, posix_spawnattr_getrunmask_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getrunmask_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -965,8 +965,8 @@ TEST_F(SpawnTest, posix_spawnattr_setsigignore_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setsigignore_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -990,8 +990,8 @@ TEST_F(SpawnTest, posix_spawnattr_getsigignore_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getsigignore_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t set_sigset;
     ::sigemptyset(&set_sigset);
@@ -1014,8 +1014,8 @@ TEST(SpawnImpl, posix_spawnattr_setsigignore_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setsigignore_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1033,8 +1033,8 @@ TEST(SpawnImpl, posix_spawnattr_getsigignore_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getsigignore_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1051,8 +1051,8 @@ TEST_F(SpawnTest, posix_spawnattr_setstackmax_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setstackmax_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_size{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setstackmax(&attr, set_size);
@@ -1069,8 +1069,8 @@ TEST_F(SpawnTest, posix_spawnattr_getstackmax_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getstackmax_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_size{1};
     ASSERT_EQ(::posix_spawnattr_setstackmax(&attr, set_size), 0);
@@ -1087,8 +1087,8 @@ TEST(SpawnImpl, posix_spawnattr_setstackmax_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setstackmax_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1104,8 +1104,8 @@ TEST(SpawnImpl, posix_spawnattr_getstackmax_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getstackmax_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1123,8 +1123,8 @@ TEST_F(SpawnTest, posix_spawnattr_setnode_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setnode_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_node{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setnode(&attr, set_node);
@@ -1141,8 +1141,8 @@ TEST_F(SpawnTest, posix_spawnattr_getnode_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getnode_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_node{1};
     ASSERT_EQ(::posix_spawnattr_setnode(&attr, set_node), 0);
@@ -1159,8 +1159,8 @@ TEST(SpawnImpl, posix_spawnattr_setnode_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setnode_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1176,8 +1176,8 @@ TEST(SpawnImpl, posix_spawnattr_getnode_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getnode_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1193,8 +1193,8 @@ TEST_F(SpawnTest, posix_spawnattr_setcred_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setcred_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const uid_t set_uid{1};
     const gid_t set_gid{1};
@@ -1214,8 +1214,8 @@ TEST_F(SpawnTest, posix_spawnattr_getcred_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getcred_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const uid_t set_uid{1};
     const gid_t set_gid{1};
@@ -1235,8 +1235,8 @@ TEST(SpawnImpl, posix_spawnattr_setcred_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setcred_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1253,8 +1253,8 @@ TEST(SpawnImpl, posix_spawnattr_getcred_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getcred_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     const uid_t set_uid{1};
@@ -1276,8 +1276,8 @@ TEST_F(SpawnTest, posix_spawnattr_settypeid_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_settypeid_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_type_id{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_settypeid(&attr, set_type_id);
@@ -1294,8 +1294,8 @@ TEST_F(SpawnTest, posix_spawnattr_gettypeid_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_gettypeid_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_type_id{1};
     ASSERT_EQ(::posix_spawnattr_settypeid(&attr, set_type_id), 0);
@@ -1312,8 +1312,8 @@ TEST(SpawnImpl, posix_spawnattr_settypeid_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_settypeid_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1329,8 +1329,8 @@ TEST(SpawnImpl, posix_spawnattr_gettypeid_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_gettypeid_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     const std::uint32_t set_type_id{1};
@@ -1349,8 +1349,8 @@ TEST_F(SpawnTest, posix_spawnattr_setasid_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setasid_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::uint32_t set_asid{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setasid(&attr, set_asid);
@@ -1363,8 +1363,8 @@ TEST(SpawnImpl, posix_spawnattr_setasid_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setasid_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1380,8 +1380,8 @@ TEST_F(SpawnTest, posix_spawnattr_setaslr_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setaslr_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const posix_spawnattr_aslr_t set_aslr = {};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setaslr(&attr, set_aslr);
@@ -1398,8 +1398,8 @@ TEST_F(SpawnTest, posix_spawnattr_getaslr_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_getaslr_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const posix_spawnattr_aslr_t set_aslr = {};
     ASSERT_EQ(::posix_spawnattr_setaslr(&attr, set_aslr), 0);
@@ -1416,8 +1416,8 @@ TEST(SpawnImpl, posix_spawnattr_setaslr_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setaslr_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1433,8 +1433,8 @@ TEST(SpawnImpl, posix_spawnattr_getaslr_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_getaslr_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     const posix_spawnattr_aslr_t set_aslr = {};
@@ -1452,8 +1452,8 @@ TEST_F(SpawnTest, posix_spawnattr_setcwd_np_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest posix_spawnattr_setcwd_np_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int32_t dirfd{1};
     const auto result = score::os::Spawn::instance().posix_spawnattr_setcwd_np(&attr, dirfd);
@@ -1466,8 +1466,8 @@ TEST(SpawnImpl, posix_spawnattr_setcwd_np_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnImpl posix_spawnattr_setcwd_np_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     posix_spawnattr_t attr;
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
@@ -1483,8 +1483,8 @@ TEST_F(SpawnTest, spawn_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest spawn_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::int32_t fd_count{0};
     const std::int32_t* fd_map{nullptr};
@@ -1506,8 +1506,8 @@ TEST_F(SpawnTest, spawn_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest spawn_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     char path[] = "/nonexistent/executable";
     std::int32_t fd_count{0};
@@ -1525,8 +1525,8 @@ TEST_F(SpawnTest, spawnp_success)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest spawnp_success");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::int32_t fd_count{0};
     const std::int32_t* fd_map{nullptr};
@@ -1548,8 +1548,8 @@ TEST_F(SpawnTest, spawnp_failure)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SpawnTest spawnp_failure");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     char file[] = "/nonexistent/executable";
     std::int32_t fd_count{0};

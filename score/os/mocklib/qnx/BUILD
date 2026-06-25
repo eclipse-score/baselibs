@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "channel_mock",
@@ -104,6 +104,20 @@ cc_library(
     deps = [
         "@googletest//:gtest",
         "@score_baselibs//score/os/qnx:procmgr",
+    ],
+)
+
+cc_library(
+    name = "pathmgr_mock",
+    testonly = True,
+    srcs = ["mock_pathmgr.cpp"],
+    hdrs = ["mock_pathmgr.h"],
+    features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/os/qnx:pathmgr",
     ],
 )
 

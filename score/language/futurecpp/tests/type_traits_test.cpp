@@ -459,8 +459,8 @@ TEST(is_not_equal_comparable, when_used_with_notequal_and_non_notequal_comparabl
 /// @requirement CB-#17769132
 TEST(has_operator_pre_increment, when_used_with_incrementable_and_non_incrementable_types)
 {
-    static_assert(!score::cpp::has_operator_pre_increment<decltype(
-                      std::declval<non_iterable_with_void_begin_end_type>().begin())>::value);
+    static_assert(!score::cpp::has_operator_pre_increment<
+                  decltype(std::declval<non_iterable_with_void_begin_end_type>().begin())>::value);
     static_assert(score::cpp::has_operator_pre_increment<decltype(std::declval<std::array<float, 2UL>>().begin())>::value);
     static_assert(score::cpp::has_operator_pre_increment_v<iterable_type<double>::iterator>);
     static_assert(score::cpp::has_operator_pre_increment<int>::value);
@@ -482,8 +482,8 @@ TEST(has_operator_indirection, when_used_with_dereferenceable_and_non_dereferenc
 /// @requirement CB-#17770107
 TEST(is_legacy_input_iterator, when_used_with_non_iterator_type)
 {
-    static_assert(!score::cpp::detail::is_legacy_input_iterator<decltype(
-                      std::declval<non_iterable_with_void_begin_end_type>().begin())>::value);
+    static_assert(!score::cpp::detail::is_legacy_input_iterator<
+                  decltype(std::declval<non_iterable_with_void_begin_end_type>().begin())>::value);
     static_assert(!score::cpp::detail::is_legacy_input_iterator<int>::value);
 }
 

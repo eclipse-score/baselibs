@@ -21,6 +21,7 @@
 #include <static_reflection_with_serialization/visitor/visit.h>
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <optional>
 #include <utility>
@@ -267,9 +268,9 @@ class JsonSerializer
 };
 
 /// This is the definition of the base case which assumes it is a visitable structure. For a structure to be visitable,
-/// the macro STRUCT_VISITABLE has to be used and all the attributes that shall be serializable or deserializable need
-/// to be passed. It then serializes and deserializes all attributes of the struct in the sequence of their appearance
-/// in the STRUCT_VISITABLE macro.
+/// the macro STRUCT_VISITABLE has to be used and all the attributes that shall be serializable or deserializable
+/// need to be passed. It then serializes and deserializes all attributes of the struct in the sequence of their
+/// appearance in the STRUCT_VISITABLE macro.
 ///
 /// This specialization is only used if the visitable type does _not_ have ToAny and/or FromAny. If at least one of
 /// these methods is present, the general case is used which forwards the call to these methods of the type.

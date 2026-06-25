@@ -27,8 +27,6 @@ class FileUtilsMock : public IFileUtils
   public:
     MOCK_METHOD(Result<void>, ChangeGroup, (const Path&, const std::string&), (const, noexcept, override));
     MOCK_METHOD(Result<void>, ChangeGroup, (const Path&, const gid_t), (const, noexcept, override));
-    MOCK_METHOD(Result<void>, CheckFileSystem, (const Path&), (const, noexcept, override));
-    MOCK_METHOD(Result<void>, RepairFileSystem, (const Path&), (const, noexcept, override));
     MOCK_METHOD(Result<void>, CreateDirectory, (const Path&, const score::os::Stat::Mode), (const, noexcept, override));
     MOCK_METHOD(Result<void>, CreateDirectories, (const Path&, const score::os::Stat::Mode), (const, noexcept, override));
     MOCK_METHOD((Result<std::pair<std::unique_ptr<std::iostream>, Path>>),
@@ -36,8 +34,6 @@ class FileUtilsMock : public IFileUtils
                 (const Path&, std::ios_base::openmode),
                 (const, noexcept, override));
     MOCK_METHOD(Result<bool>, FileContentsAreIdentical, (const Path&, const Path&), (const, noexcept, override));
-    MOCK_METHOD(Result<void>, FormatPartition, (const Path&), (const, noexcept, override));
-    MOCK_METHOD(bool, IsQnxCompatible, (const Path&), (const, noexcept, override));
     MOCK_METHOD(Result<void>, SyncDirectory, (const Path&), (const, noexcept, override));
     MOCK_METHOD(Result<bool>, ValidateGroup, (const Path&, const std::string&), (const, noexcept, override));
 };

@@ -39,8 +39,8 @@ TEST_F(FtwMockTest, ftw)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FtwMockTest ftw");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     EXPECT_CALL(ftwmock, ftw);
     ftwmock.ftw("/invalid_path", nullptr, 0);
@@ -58,8 +58,8 @@ TEST(FtwTest, ftw_walk)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FtwTest ftw_walk");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::unique_ptr<score::os::Ftw> ftw_object = std::make_unique<score::os::FtwPosix>();
     constexpr auto dir_path = "/tmp/ftw_dir";
@@ -73,8 +73,8 @@ TEST(FtwTest, ftw_fail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "FtwTest ftw_fail");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::unique_ptr<score::os::Ftw> ftw_object = std::make_unique<score::os::FtwPosix>();
     constexpr auto dir_path = "/tmp/ftw_invalid_dir";

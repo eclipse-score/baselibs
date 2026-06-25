@@ -130,7 +130,9 @@ TEST(jthread_test, construct_with_stack_size)
     GTEST_SKIP() << "test relies on non-available QNX functions";
 #else
     constexpr score::cpp::jthread::stack_size_hint expected_stack_size{1'024 * 1'024};
-    score::cpp::jthread t{expected_stack_size, [expected_stack_size] {
+    score::cpp::jthread t{expected_stack_size,
+                   [expected_stack_size]
+                   {
                        pthread_attr_t attr;
                        EXPECT_EQ(pthread_getattr_np(pthread_self(), &attr), 0); // not available in QNX
                        std::size_t actual_stack_size{0};
@@ -147,7 +149,9 @@ TEST(jthread_test, construct_with_stack_size)
 TEST(jthread_test, construct_with_stack_size_and_stop_token)
 {
     constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
-    score::cpp::jthread t{stack_size, [](const score::cpp::stop_token& stop_token) {
+    score::cpp::jthread t{stack_size,
+                   [](const score::cpp::stop_token& stop_token)
+                   {
                        while (!stop_token.stop_requested())
                        {
                            std::this_thread::yield();
@@ -170,7 +174,9 @@ TEST(jthread_test, construct_with_max_stack_size_fails)
 TEST(jthread_test, construct_with_name)
 {
     const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{score::cpp::jthread::name_hint{name}, [] {
+    score::cpp::jthread t{score::cpp::jthread::name_hint{name},
+                   []
+                   {
                        EXPECT_EQ(get_this_thread_name(),
                                  std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
                    }};
@@ -181,7 +187,9 @@ TEST(jthread_test, construct_with_name)
 TEST(jthread_test, construct_with_name_and_stop_token)
 {
     const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{score::cpp::jthread::name_hint{name}, [](const score::cpp::stop_token&) {
+    score::cpp::jthread t{score::cpp::jthread::name_hint{name},
+                   [](const score::cpp::stop_token&)
+                   {
                        EXPECT_EQ(get_this_thread_name(),
                                  std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
                    }};
@@ -193,7 +201,10 @@ TEST(jthread_test, construct_with_stack_size_and_name)
 {
     constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
     const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{stack_size, score::cpp::jthread::name_hint{name}, [] {
+    score::cpp::jthread t{stack_size,
+                   score::cpp::jthread::name_hint{name},
+                   []
+                   {
                        EXPECT_EQ(get_this_thread_name(),
                                  std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
                    }};
@@ -205,7 +216,10 @@ TEST(jthread_test, construct_with_stack_size_and_name_and_stop_token)
 {
     constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
     const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{stack_size, score::cpp::jthread::name_hint{name}, [](const score::cpp::stop_token&) {
+    score::cpp::jthread t{stack_size,
+                   score::cpp::jthread::name_hint{name},
+                   [](const score::cpp::stop_token&)
+                   {
                        EXPECT_EQ(get_this_thread_name(),
                                  std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
                    }};
@@ -331,10 +345,12 @@ TEST(jthread_test, auto_join)
     std::atomic<bool> has_joined{false};
 
     {
-        score::cpp::jthread thread([&has_joined]() {
-            std::this_thread::yield();
-            has_joined.store(true);
-        });
+        score::cpp::jthread thread(
+            [&has_joined]()
+            {
+                std::this_thread::yield();
+                has_joined.store(true);
+            });
     }
 
     EXPECT_TRUE(has_joined.load());
@@ -346,13 +362,15 @@ TEST(jthread_test, stop_via_stop_token)
 {
     std::atomic<bool> has_stopped{false};
 
-    score::cpp::jthread thread([&has_stopped](const score::cpp::stop_token& stop_token) {
-        while (!stop_token.stop_requested())
+    score::cpp::jthread thread(
+        [&has_stopped](const score::cpp::stop_token& stop_token)
         {
-            std::this_thread::yield();
-        }
-        has_stopped.store(true);
-    });
+            while (!stop_token.stop_requested())
+            {
+                std::this_thread::yield();
+            }
+            has_stopped.store(true);
+        });
 
     EXPECT_TRUE(thread.joinable());
     EXPECT_FALSE(has_stopped.load());

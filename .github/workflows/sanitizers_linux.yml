@@ -13,6 +13,7 @@
 name: Bazel Sanitizers (Linux)
 permissions:
   contents: read
+  actions: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -26,17 +27,15 @@ jobs:
   linux-sanitizers:
     runs-on: ubuntu-latest
     steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7e109c9e97670ec621adaea1c21721c18212a96d
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.18.0
+      - name: Setup Bazel Cache
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.job }}
-          repository-cache: true
-          cache-save: ${{ github.event_name == 'push' }}
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel Test with Sanitizers
         run: |
           bazel test --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/... \

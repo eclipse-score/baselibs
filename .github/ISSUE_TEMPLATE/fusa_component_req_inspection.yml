@@ -1,0 +1,66 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: "Component Requirements Inspection"
+description: Tracks the formal S-CORE Component Requirements Inspection for a component.
+title: "Component Requirements Inspection - <component>"
+labels: ["safety-inspection"]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component Name
+      description: The name of the component whose requirements are being inspected.
+      placeholder: e.g. json
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Description
+
+        This issue tracks the formal Component Requirements Inspection for the component specified above, according to the S-CORE process.
+
+        The inspection validates that the component's requirements meet quality, completeness, and testability criteria before the work product is marked as `inspected`.
+
+        References:
+        - [S-CORE Inspection Conduct](https://eclipse-score.github.io/process_description/main/general_concepts/score_review_concept.html#inspection-conduct)
+        - [Inspection Checklist Template](https://eclipse-score.github.io/module_template/main/score/component_example/docs/requirements/chklst_req_inspection.html)
+
+        ---
+
+        ## Checklist
+
+        ### Moderator (Safety, Security or Quality Manager)
+        - [ ] Create the inspection PR in `eclipse-score/baselibs` with the inspection checklist (opening it sets the requirements in scope to `inspected`) and link it to this issue via `Fixes #<issue-number>` in the PR description
+        - [ ] Assign Reviewer(s), one of whom acts as Test Expert; communicate scope and deadline
+        - [ ] Incorporate reviewer findings as commits into the inspection PR
+        - [ ] Ensure all checklist items are documented with pass/fail verdicts in PR comments
+        - [ ] After all required reviewers and the CODEOWNER approve, merge the PR
+
+        ### Reviewer(s)
+        - [ ] Review all component requirements against each inspection checklist item; one reviewer acts as Test Expert for testability (REQ_08_01)
+        - [ ] For each failing item, link a GitHub issue in `eclipse-score/baselibs` to track/document the required correction (use an existing issue or open a new one that covers all findings)
+        - [ ] Add findings as PR comments (pass or fail, with rationale and link to correction issue where applicable)
+        - [ ] Set verdict to "Request Changes" if findings exist, otherwise "Approve" (the author cannot review their own PR)
+        - [ ] Re-review after the author addresses findings; update verdict accordingly
+
+        ### Content Responsible (Author)
+        - [ ] Analyze all findings and linked correction issues documented in the PR
+        - [ ] Respond to each finding with an explanation or a proposed correction
+        - [ ] Commit corrections to address all findings
+        - [ ] Request re-review from the Reviewer(s)
+        - [ ] Address any follow-up comments until all reviewers approve
+
+        > **Note:** Eclipse contributors cannot push to the inspection branch directly. Findings must be added as PR comments; the Moderator incorporates them as commits.
+        >
+        > **Note:** Anyone modifying an inspected requirement afterwards must remove its `inspected` tag.

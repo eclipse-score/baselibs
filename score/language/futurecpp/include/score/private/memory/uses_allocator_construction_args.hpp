@@ -103,13 +103,15 @@ uses_allocator_construction_args_pair(const Alloc& alloc, std::piecewise_constru
     using Second = typename T::second_type;
     return std::make_tuple(std::piecewise_construct,
                            score::cpp::apply(
-                               [&alloc](auto&&... args) {
+                               [&alloc](auto&&... args)
+                               {
                                    return score::cpp::detail::uses_allocator_construction_args<First>(
                                        alloc, std::forward<decltype(args)>(args)...);
                                },
                                std::forward<U>(u)),
                            score::cpp::apply(
-                               [&alloc](auto&&... args) {
+                               [&alloc](auto&&... args)
+                               {
                                    return score::cpp::detail::uses_allocator_construction_args<Second>(
                                        alloc, std::forward<decltype(args)>(args)...);
                                },

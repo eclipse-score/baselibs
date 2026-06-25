@@ -54,7 +54,8 @@ TEST(spin_mutex_test, lock_unlock_GivenParallelCountingThreads_ExpectCountIsIncr
     score::cpp::execution::detail::spin_mutex m{};
 
     std::int32_t count{};
-    auto atomic_count = [&l, &m, &count]() {
+    auto atomic_count = [&l, &m, &count]()
+    {
         l.arrive_and_wait();
         for (std::int32_t i{}; i < 10000; ++i)
         {

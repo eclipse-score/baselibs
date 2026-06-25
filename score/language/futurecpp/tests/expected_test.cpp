@@ -69,7 +69,31 @@ public:
     non_default_constructible_type() = delete;
 };
 
-} // namespace
+class non_trivial
+{
+public:
+    non_trivial() : num_{0} {}
+    non_trivial(int num) : num_{num} {}
+    non_trivial(const non_trivial& other) : num_{other.num_} {}
+    non_trivial& operator=(const non_trivial& other)
+    {
+        num_ = other.num_;
+        return *this;
+    }
+    non_trivial(non_trivial&& other) : num_{other.num_} {}
+    non_trivial& operator=(non_trivial&& other)
+    {
+        num_ = other.num_;
+        return *this;
+    }
+    ~non_trivial() {}
+
+    int num() const { return num_; }
+    bool operator==(const non_trivial& other) const { return num_ == other.num_; }
+
+private:
+    int num_;
+};
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#16630920
@@ -135,6 +159,230 @@ TEST(UnexpectedTest, MakeUnexpected)
     non_movable_type non_movable_value{42};
     score::cpp::unexpected<non_movable_type> unexpected_non_movable_value{score::cpp::make_unexpected(non_movable_value)};
     EXPECT_EQ(unexpected_non_movable_value.error(), 42);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, trivial)
+{
+    static_assert(std::is_trivially_copy_constructible_v<score::cpp::expected<int, int>>);
+    static_assert(std::is_trivially_copy_assignable_v<score::cpp::expected<int, int>>);
+    static_assert(std::is_trivially_move_constructible_v<score::cpp::expected<int, int>>);
+    static_assert(std::is_trivially_move_assignable_v<score::cpp::expected<int, int>>);
+    static_assert(std::is_trivially_destructible_v<score::cpp::expected<int, int>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, trivial_copy_constructible)
+{
+    struct trivial_copy_only
+    {
+        trivial_copy_only() {}
+        trivial_copy_only(const trivial_copy_only&) = default;
+        trivial_copy_only& operator=(const trivial_copy_only&) { return *this; }
+        trivial_copy_only(trivial_copy_only&&) {}
+        trivial_copy_only& operator=(trivial_copy_only&&) { return *this; }
+        // keep it trivial because otherwise copy constructible trait will be false. See the note on cppreference:
+        // https://en.cppreference.com/w/cpp/types/is_copy_constructible.html
+        //
+        // "Same applies to is_trivially_copy_constructible, which, in these implementations, also requires that the
+        // destructor is trivial:
+        // [GCC bug 51452](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=51452),
+        // [LWG issue 2116](https://cplusplus.github.io/LWG/issue2116).
+        ~trivial_copy_only() = default;
+    };
+
+    static_assert(std::is_trivially_copy_constructible_v<score::cpp::expected<trivial_copy_only, trivial_copy_only>>);
+    static_assert(!std::is_trivially_copy_constructible_v<score::cpp::expected<non_trivial, trivial_copy_only>>);
+    static_assert(!std::is_trivially_copy_constructible_v<score::cpp::expected<trivial_copy_only, non_trivial>>);
+    static_assert(!std::is_trivially_copy_constructible_v<score::cpp::expected<non_trivial, non_trivial>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, trivial_move_constructible)
+{
+    struct trivial_move_only
+    {
+        trivial_move_only() {}
+        trivial_move_only(const trivial_move_only&) {}
+        trivial_move_only& operator=(const trivial_move_only&) { return *this; }
+        trivial_move_only(trivial_move_only&&) = default;
+        trivial_move_only& operator=(trivial_move_only&&) { return *this; }
+        // same argument to keep it trivial as in `TrivialCopyOnly`
+        ~trivial_move_only() = default;
+    };
+
+    static_assert(std::is_trivially_move_constructible_v<score::cpp::expected<trivial_move_only, trivial_move_only>>);
+    static_assert(!std::is_trivially_move_constructible_v<score::cpp::expected<non_trivial, trivial_move_only>>);
+    static_assert(!std::is_trivially_move_constructible_v<score::cpp::expected<trivial_move_only, non_trivial>>);
+    static_assert(!std::is_trivially_move_constructible_v<score::cpp::expected<non_trivial, non_trivial>>);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, trivial_copy_assignable)
+{
+
+    struct trivial_copy_assignable
+    {
+        trivial_copy_assignable() {}
+        trivial_copy_assignable(const trivial_copy_assignable&) = default;
+        trivial_copy_assignable& operator=(const trivial_copy_assignable&) = default;
+        trivial_copy_assignable(trivial_copy_assignable&&) {}
+        trivial_copy_assignable& operator=(trivial_copy_assignable&&) { return *this; }
+        ~trivial_copy_assignable() = default;
+    };
+
+    static_assert(std::is_trivially_copy_assignable_v<score::cpp::expected<trivial_copy_assignable, trivial_copy_assignable>>);
+
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) {}
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() = default;
+        };
+
+        using trivial_t = trivial_copy_assignable;
+        using non_trivial_t = not_trivial_copy_assignable;
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) { return *this; }
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() = default;
+        };
+
+        using trivial_t = trivial_copy_assignable;
+        using non_trivial_t = not_trivial_copy_assignable;
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+    {
+        struct not_trivial_copy_assignable
+        {
+            not_trivial_copy_assignable() {}
+            not_trivial_copy_assignable(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable& operator=(const not_trivial_copy_assignable&) = default;
+            not_trivial_copy_assignable(not_trivial_copy_assignable&&) {}
+            not_trivial_copy_assignable& operator=(not_trivial_copy_assignable&&) { return *this; }
+            ~not_trivial_copy_assignable() {}
+        };
+
+        using trivial_t = trivial_copy_assignable;
+        using non_trivial_t = not_trivial_copy_assignable;
+
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_copy_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, trivial_move_assignable)
+{
+    struct trivial_move_assignable
+    {
+        trivial_move_assignable() {}
+        trivial_move_assignable(const trivial_move_assignable&) {}
+        trivial_move_assignable& operator=(const trivial_move_assignable&) { return *this; }
+        trivial_move_assignable(trivial_move_assignable&&) = default;
+        trivial_move_assignable& operator=(trivial_move_assignable&&) = default;
+        ~trivial_move_assignable() = default;
+    };
+
+    static_assert(std::is_trivially_move_assignable_v<score::cpp::expected<trivial_move_assignable, trivial_move_assignable>>);
+
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) = default;
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) { return *this; }
+            ~not_trivial_move_assignable() = default;
+        };
+
+        using trivial_t = trivial_move_assignable;
+        using non_trivial_t = not_trivial_move_assignable;
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) {}
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) = default;
+            ~not_trivial_move_assignable() = default;
+        };
+
+        using trivial_t = trivial_move_assignable;
+        using non_trivial_t = not_trivial_move_assignable;
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+    {
+        struct not_trivial_move_assignable
+        {
+            not_trivial_move_assignable() {}
+            not_trivial_move_assignable(const not_trivial_move_assignable&) {}
+            not_trivial_move_assignable& operator=(const not_trivial_move_assignable&) { return *this; }
+            not_trivial_move_assignable(not_trivial_move_assignable&&) = default;
+            not_trivial_move_assignable& operator=(not_trivial_move_assignable&&) = default;
+            ~not_trivial_move_assignable() {}
+        };
+
+        using trivial_t = trivial_move_assignable;
+        using non_trivial_t = not_trivial_move_assignable;
+
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<trivial_t, non_trivial_t>>);
+        static_assert(!std::is_trivially_move_assignable_v<score::cpp::expected<non_trivial_t, trivial_t>>);
+    }
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTestt, trivial_destructible)
+{
+    struct trivial_destructible
+    {
+        trivial_destructible() {}
+        trivial_destructible(const trivial_destructible&) {}
+        trivial_destructible& operator=(const trivial_destructible&) { return *this; }
+        trivial_destructible(trivial_destructible&&) {}
+        trivial_destructible& operator=(trivial_destructible&&) { return *this; }
+        ~trivial_destructible() = default;
+    };
+
+    static_assert(std::is_trivially_destructible_v<score::cpp::expected<trivial_destructible, trivial_destructible>>);
+    static_assert(!std::is_trivially_destructible_v<score::cpp::expected<non_trivial, trivial_destructible>>);
+    static_assert(!std::is_trivially_destructible_v<score::cpp::expected<trivial_destructible, non_trivial>>);
+    static_assert(!std::is_trivially_destructible_v<score::cpp::expected<non_trivial, non_trivial>>);
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -311,6 +559,48 @@ TEST(ExpectedTest, InitFromOtherExpected)
     EXPECT_EQ(val.value(), 42);
 }
 
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, InitFromOtherExpectedNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val_init{42};
+    score::cpp::expected<non_trivial, int> val{val_init};
+    ASSERT_TRUE(val.has_value());
+    ASSERT_TRUE(static_cast<bool>(val));
+    EXPECT_EQ(val.value(), 42);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, InitFromOtherUnexpectedNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val_init{score::cpp::make_unexpected(42)};
+    score::cpp::expected<non_trivial, int> val{val_init};
+    ASSERT_FALSE(val.has_value());
+    ASSERT_FALSE(static_cast<bool>(val));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, InitMoveFromOtherExpectedNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val_init{42};
+    score::cpp::expected<non_trivial, int> val{std::move(val_init)};
+    ASSERT_TRUE(val.has_value());
+    ASSERT_TRUE(static_cast<bool>(val));
+    EXPECT_EQ(val.value(), 42);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, InitMoveFromOtherUnexpectedNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val_init{score::cpp::make_unexpected(42)};
+    score::cpp::expected<non_trivial, int> val{std::move(val_init)};
+    ASSERT_FALSE(val.has_value());
+    ASSERT_FALSE(static_cast<bool>(val));
+}
+
 namespace
 {
 struct bool_convertible
@@ -418,6 +708,34 @@ TEST(ExpectedTest, CopyAssign)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#16631224
+TEST(ExpectedTest, CopyAssignNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val{42};
+    const score::cpp::expected<non_trivial, int> temp_expected_23{23};
+    const score::cpp::expected<non_trivial, int> temp_unexpected_23{score::cpp::make_unexpected(23)};
+    const score::cpp::expected<non_trivial, int> temp_unexpected_42{score::cpp::make_unexpected(42)};
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 42);
+    // Assign expected <- expected
+    val = temp_expected_23;
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 23);
+    // Assign expected <- unexpected
+    val = temp_unexpected_23;
+    ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error(), 23);
+    // Assign unexpected <- unexpected
+    val = temp_unexpected_42;
+    ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error(), 42);
+    // Assign unexpected <- expected
+    val = temp_expected_23;
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 23);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
 TEST(ExpectedTest, MoveAssign)
 {
     score::cpp::expected<non_copyable_type, int> val{non_copyable_type{42}};
@@ -437,6 +755,31 @@ TEST(ExpectedTest, MoveAssign)
     EXPECT_EQ(val.error(), 42);
     // Assign unexpected <- expected
     val = score::cpp::expected<non_copyable_type, int>{non_copyable_type{23}};
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 23);
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#16631224
+TEST(ExpectedTest, MoveAssignNonTrivial)
+{
+    score::cpp::expected<non_trivial, int> val{42};
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 42);
+    // Assign expected <- expected
+    val = score::cpp::expected<non_trivial, int>{23};
+    ASSERT_TRUE(val.has_value());
+    EXPECT_EQ(val.value(), 23);
+    // Assign expected <- unexpected
+    val = score::cpp::expected<non_trivial, int>{score::cpp::make_unexpected(23)};
+    ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error(), 23);
+    // Assign unexpected <- unexpected
+    val = score::cpp::expected<non_trivial, int>{score::cpp::make_unexpected(42)};
+    ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error(), 42);
+    // Assign unexpected <- expected
+    val = score::cpp::expected<non_trivial, int>{23};
     ASSERT_TRUE(val.has_value());
     EXPECT_EQ(val.value(), 23);
 }
@@ -901,3 +1244,5 @@ TEST(ExpectedTest, ValueTypeAndErrorType)
     ASSERT_TRUE((std::is_same_v<type_2::value_type, char>));
     ASSERT_TRUE((std::is_same_v<type_2::error_type, float>));
 }
+
+} // namespace

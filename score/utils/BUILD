@@ -12,20 +12,8 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
-
-cc_library(
-    name = "scoped_operation",
-    hdrs = ["src/scoped_operation.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "//visibility:public",  # platform_only
-    ],
-    deps = ["@score_baselibs//score/language/futurecpp"],
-)
 
 cc_library(
     name = "base64",
@@ -59,21 +47,10 @@ cc_test(
     ],
 )
 
-cc_gtest_unit_test(
-    name = "scoped_operation_test",
-    srcs = ["test/scoped_operation_test.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    deps = [
-        ":scoped_operation",
-        "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
-    ],
-)
-
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":base64_unit_test",
-        ":scoped_operation_test",
     ],
     test_suites_from_sub_packages = [
         "@score_baselibs//score/utils/meyer_singleton:unit_test_suite",

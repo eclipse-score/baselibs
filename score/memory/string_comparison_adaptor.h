@@ -15,8 +15,6 @@
 
 #include "score/memory/string_literal.h"
 
-#include <score/string_view.hpp>
-
 #include <functional>
 #include <string>
 #include <string_view>
@@ -65,7 +63,7 @@ class StringComparisonAdaptor
 
     /// @brief Gets a string view of the content
     /// @return The content as string_view
-    score::cpp::string_view GetAsStringView() const noexcept;
+    std::string_view GetAsStringView() const noexcept;
 
   private:
     std::variant<std::string_view, std::string, score::StringLiteral> str_;

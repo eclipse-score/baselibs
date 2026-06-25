@@ -32,15 +32,11 @@ class FileUtils final : public IFileUtils
 
     Result<void> ChangeGroup(const Path& path, const std::string& group_name) const noexcept override;
     Result<void> ChangeGroup(const Path& path, const gid_t group_id) const noexcept override;
-    Result<void> CheckFileSystem(const Path& partition) const noexcept override;
-    Result<void> RepairFileSystem(const Path& partition) const noexcept override;
     Result<void> CreateDirectory(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
     Result<void> CreateDirectories(const Path& path, const score::os::Stat::Mode perms) const noexcept override;
     Result<std::pair<std::unique_ptr<std::iostream>, Path>> OpenUniqueFile(const Path& path,
                                                                            std::ios_base::openmode mode) const override;
     Result<bool> FileContentsAreIdentical(const Path& path1, const Path& path2) const noexcept override;
-    Result<void> FormatPartition(const Path& partition) const noexcept override;
-    bool IsQnxCompatible(const Path& partition) const override;
     Result<void> SyncDirectory(const Path& dirname) const noexcept override;
     Result<bool> ValidateGroup(const Path& path, const std::string& group_name) const noexcept override;
 

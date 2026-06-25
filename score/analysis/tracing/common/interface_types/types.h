@@ -14,8 +14,10 @@
 #define SCORE_ANALYSIS_TRACING_COMMON_TYPES
 
 #include "score/language/safecpp/scoped_function/move_only_scoped_function.h"
-#include "score/memory/shared/shared_memory_resource.h"
 #include "score/result/result.h"
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <array>
 #include <cstdint>
 #include <memory>
@@ -64,43 +66,6 @@ struct GlobalTraceContextId
     TraceContextId context_id_;
 };
 
-struct TmdStatistics
-{
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    std::size_t tmd_total;
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    std::size_t tmd_max;
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    std::size_t tmd_average;
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    std::pair<std::uint32_t, bool> tmd_allocate_retry_cntr_res;
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    std::pair<std::uint32_t, bool> tmd_allocate_call_cntr_res;
-    // Suppress "AUTOSAR C++14 A9-6-1" rule finding. This rule states: "Data types used for interfacing with
-    // hardware or conforming to communication protocols shall be trivial, standard-layout and only contain members
-    // of types with defined sizes.".
-    // client_pid is a system-defined identifier used for OS process handling inside the same ECU (IPC).
-    // No external communication interface is provided.
-    // coverity[autosar_cpp14_a9_6_1_violation]
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    pid_t client_pid;
-    // Suppress "AUTOSAR C++14 A9-6-1" rule finding. This rule states: "Data types used for interfacing with
-    // hardware or conforming to communication protocols shall be trivial, standard-layout and only contain members
-    // of types with defined sizes.".
-    // tmd_alloc_rate is used for internal calculations only inside the same ECU, not interfacing with external
-    // hardware or communication protocols.
-    // coverity[autosar_cpp14_a9_6_1_violation]
-    // No harm to define it as public
-    // coverity[autosar_cpp14_m11_0_1_violation]
-    float tmd_alloc_rate;
-};
-
 inline bool operator==(const GlobalTraceContextId& lhs, const GlobalTraceContextId& rhs) noexcept
 {
     return (lhs.client_id_ == rhs.client_id_) && (lhs.context_id_ == rhs.context_id_);
@@ -117,14 +82,9 @@ enum class BindingType : std::uint8_t
     kLoLa = kFirst,
     kVector = 1,
     kVectorZeroCopy = 2,
-    kUndefined = 3,
+    kDlt = 3,
+    kUndefined = 4,
 };
-
-/// @brief Type used to store pointer to ManagedMemoryResource
-using ResourcePointer = std::shared_ptr<score::memory::shared::ManagedMemoryResource>;
-
-/// @brief Type used to store pointer to SharedMemoryResource
-using SharedResourcePointer = std::shared_ptr<score::memory::shared::ISharedMemoryResource>;
 
 /// Type used to store handle to shared-memory region, used to optimize data transfers
 using ShmObjectHandle = std::int32_t;

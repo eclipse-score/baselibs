@@ -35,6 +35,8 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":json_builder",
+        "@nlohmann_json//:json",
+        "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
         "@score_nlohmann_json//:json",

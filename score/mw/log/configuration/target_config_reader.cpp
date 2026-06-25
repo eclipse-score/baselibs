@@ -15,7 +15,6 @@
 #include "score/callback.hpp"
 #include "score/json/json_parser.h"
 #include "score/memory/split_string_view.h"
-#include "score/memory/string_literal.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/initialization_reporter.h"
 
@@ -33,22 +32,22 @@ namespace detail
 namespace
 {
 
-constexpr StringLiteral kEcuIdKey{"ecuId"};
-constexpr StringLiteral kAppIdKey{"appId"};
-constexpr StringLiteral kAppDescriptionKey{"appDesc"};
-constexpr StringLiteral kLogFilePathKey{"logFilePath"};
-constexpr StringLiteral kLogModeKey{"logMode"};
-constexpr StringLiteral kLogLevelKey{"logLevel"};
-constexpr StringLiteral kLogLevelThresholdConsoleKey{"logLevelThresholdConsole"};
-constexpr StringLiteral kContextConfigsKey{"contextConfigs"};
-constexpr StringLiteral kContextNameKey{"name"};
-constexpr StringLiteral kStackBufferSizeKey{"stackBufferSize"};
-constexpr StringLiteral kRingBufferSizeKey{"ringBufferSize"};
-constexpr StringLiteral kOverwriteOnFullKey{"overwriteOnFull"};
-constexpr StringLiteral kNumberOfSlotsKey{"numberOfSlots"};
-constexpr StringLiteral kSlotSizeBytesKey{"slotSizeBytes"};
-constexpr StringLiteral kDatarouterUidKey{"datarouterUid"};
-constexpr StringLiteral kDynamicDatarouterIdentifiersKey{"dynamicDatarouterIdentifiers"};
+constexpr std::string_view kEcuIdKey{"ecuId"};
+constexpr std::string_view kAppIdKey{"appId"};
+constexpr std::string_view kAppDescriptionKey{"appDesc"};
+constexpr std::string_view kLogFilePathKey{"logFilePath"};
+constexpr std::string_view kLogModeKey{"logMode"};
+constexpr std::string_view kLogLevelKey{"logLevel"};
+constexpr std::string_view kLogLevelThresholdConsoleKey{"logLevelThresholdConsole"};
+constexpr std::string_view kContextConfigsKey{"contextConfigs"};
+constexpr std::string_view kContextNameKey{"name"};
+constexpr std::string_view kStackBufferSizeKey{"stackBufferSize"};
+constexpr std::string_view kRingBufferSizeKey{"ringBufferSize"};
+constexpr std::string_view kOverwriteOnFullKey{"overwriteOnFull"};
+constexpr std::string_view kNumberOfSlotsKey{"numberOfSlots"};
+constexpr std::string_view kSlotSizeBytesKey{"slotSizeBytes"};
+constexpr std::string_view kDatarouterUidKey{"datarouterUid"};
+constexpr std::string_view kDynamicDatarouterIdentifiersKey{"dynamicDatarouterIdentifiers"};
 
 // Suppress Coverity warning because:
 // 1. 'constexpr' cannot be used with std::unordered_map.
@@ -90,7 +89,7 @@ template <typename ResultType, typename AsType = ResultType>
 class GetElementAsImpl;
 
 template <typename ResultType, typename AsType = ResultType>
-auto GetElementAs(const score::json::Object& obj, const StringLiteral key) noexcept
+auto GetElementAs(const score::json::Object& obj, const std::string_view key) noexcept
 {
     // To prevent using function template specializations, we use class template specialization in the implementation of
     // GetElementAs()
@@ -101,7 +100,7 @@ template <typename ResultType, typename AsType>
 class GetElementAsImpl
 {
   public:
-    static score::Result<ResultType> GetElementAs(const score::json::Object& obj, const StringLiteral key) noexcept
+    static score::Result<ResultType> GetElementAs(const score::json::Object& obj, const std::string_view key) noexcept
     {
         const auto find_result = obj.find(key);
         if (find_result == obj.end())
@@ -115,7 +114,7 @@ class GetElementAsImpl
 
 template <typename T>
 score::Result<std::reference_wrapper<const T>> GetElementAsRef(const score::json::Object& obj,
-                                                             const StringLiteral key) noexcept
+                                                             const std::string_view key) noexcept
 {
     return GetElementAs<std::reference_wrapper<const T>, T>(obj, key);
 }
@@ -128,7 +127,7 @@ template <typename T>
 // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<void> GetElementAndThen(const score::json::Object& obj,
-                                    const StringLiteral key,
+                                    const std::string_view key,
                                     GetElementCallback<T> update) noexcept
 {
     const auto parser_result = GetElementAs<T>(obj, key);
@@ -260,7 +259,7 @@ class GetElementAsImpl<LogLevel>
     // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
     // std::terminate() will not  implicitly be called from GetElementAs as it declared as noexcept.
     // coverity[autosar_cpp14_a15_5_3_violation]
-    static score::Result<LogLevel> GetElementAs(const score::json::Object& obj, const StringLiteral key) noexcept
+    static score::Result<LogLevel> GetElementAs(const score::json::Object& obj, const std::string_view key) noexcept
     {
         const auto string_result = GetElementAsImpl<std::string_view>::GetElementAs(obj, key);
         if (string_result.has_value() == false)

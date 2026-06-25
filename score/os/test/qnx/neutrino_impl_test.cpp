@@ -30,7 +30,7 @@ TEST_F(NeutrinoImplFixture, ThreadCtlTestReturnsError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Thread Ctl Test returns Error");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::int32_t cmd = 0xFFFFFFFF;
     std::int32_t data = 10;
@@ -46,7 +46,7 @@ TEST_F(NeutrinoImplFixture, ThreadCtlGetThreadNme)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Thread Ctl Get Thread Nme");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::int32_t valid_cmd{_NTO_TCTL_NAME};
     struct _thread_name thread_name{};
@@ -68,7 +68,7 @@ TEST_F(NeutrinoImplFixture, InterruptAttachAndDetachTest)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Interrupt Attach And Detach Test");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::uint64_t timeout{0U};
     std::int32_t intr{10};
@@ -105,7 +105,7 @@ TEST_F(NeutrinoImplFixture, ChannelCreateDeprecatedSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Create Deprecated Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::uint32_t valid_flags{0U};
     const auto result = neutrino_.ChannelCreate(valid_flags);
@@ -119,7 +119,7 @@ TEST_F(NeutrinoImplFixture, ChannelCreateDeprecatedFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Create Deprecated Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto invalid_flags{std::numeric_limits<std::uint32_t>::max()};
     const auto result = neutrino_.ChannelCreate(invalid_flags);
@@ -134,7 +134,7 @@ TEST_F(NeutrinoImplFixture, ChannelCreateSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Create Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result = neutrino_.ChannelCreate(Neutrino::ChannelFlag::kDisconnect);
     ASSERT_TRUE(result.has_value());
@@ -146,7 +146,7 @@ TEST_F(NeutrinoImplFixture, ChannelCreateFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Create Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto result =
         neutrino_.ChannelCreate(static_cast<Neutrino::ChannelFlag>(std::numeric_limits<std::uint32_t>::max()));
@@ -160,7 +160,7 @@ TEST_F(NeutrinoImplFixture, ChannelDestroySuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Destroy Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto channel_id = neutrino_.ChannelCreate(Neutrino::ChannelFlag::kDisconnect);
     ASSERT_TRUE(channel_id.has_value());
@@ -175,7 +175,7 @@ TEST_F(NeutrinoImplFixture, ChannelDestroyFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Channel Destroy Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const std::int32_t failed_channel_id = 0;
     const auto destroy_result = neutrino_.ChannelDestroy(failed_channel_id);
@@ -188,7 +188,7 @@ TEST_F(NeutrinoImplFixture, ClockAdjustSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Adjust Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t clockid{CLOCK_REALTIME};
     const auto tick_nsec{500000000};
@@ -210,7 +210,7 @@ TEST_F(NeutrinoImplFixture, ClockAdjust_Failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Adjust Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t invalid_clockid{-1};
     _clockadjust new_adjust{0, 0};
@@ -227,7 +227,7 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Deprecated Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t clockid{CLOCK_REALTIME};
     std::int32_t flags{0};
@@ -262,7 +262,7 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Deprecated Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     clockid_t clockid{-1};
     std::int32_t flags{0};
@@ -287,7 +287,7 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::unique_ptr<score::os::SigEvent> signal_event1 = std::make_unique<score::os::SigEventQnxImpl>();
     std::chrono::milliseconds min_sleep{2};
@@ -329,7 +329,7 @@ TEST_F(NeutrinoImplFixture, TimerTimeoutFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test TimerTimeout Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     std::unique_ptr<score::os::SigEvent> signal_event = nullptr;
     std::chrono::milliseconds ntime{2};
@@ -350,7 +350,7 @@ TEST_F(NeutrinoImplFixture, ClockCyclesMonotonicity)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Cycles Monotonicity");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto start = neutrino_.ClockCycles();
     const auto end = neutrino_.ClockCycles();
@@ -363,7 +363,7 @@ TEST_F(NeutrinoImplFixture, ClockCyclesElapsedTime)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Cycles Elapsed Time");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     const auto start = neutrino_.ClockCycles();
     for (volatile int i = 0; i < 1000000; ++i)
@@ -378,7 +378,7 @@ TEST_F(NeutrinoImplFixture, ClockIdSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Id Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
     pid_t pid = ::getpid();
     int32_t tid = ::gettid();
 
@@ -393,7 +393,7 @@ TEST_F(NeutrinoImplFixture, ClockIdFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Clock Id Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
     pid_t invalid_pid{0};
     int32_t invalid_tid{-1};
 

@@ -4,5 +4,10 @@
 # Syntax: https://help.github.com/articles/about-codeowners/
 
 # default owners
-* @castler @hoe-jo @LittleHuba @ramceb @nradakovic @4og
+* @antonkri @4og
 
+/* @antonkri @4og @pawelrutkaq @arkjedrz
+/.github @antonkri @4og @pawelrutkaq @arkjedrz
+/docs @antonkri @4og @aschemmel-tech
+/examples @antonkri @4og @pawelrutkaq @arkjedrz
+/src @antonkri @4og @pawelrutkaq @arkjedrz

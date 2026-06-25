@@ -49,8 +49,8 @@ TEST(ObjectSeamTest, CopyConstructor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Constructor");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MockObject mock("Testing Copy");
     TestableBase<MockObject> b1;
@@ -66,8 +66,8 @@ TEST(ObjectSeamTest, MoveConstructor)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Constructor");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MockObject mock("Testing Move");
     TestableBase<MockObject> b1;
@@ -84,8 +84,8 @@ TEST(ObjectSeamTest, CopyAssignment)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Assignment");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MockObject mock("Testing Copy Assignment");
     TestableBase<MockObject> b1;
@@ -102,8 +102,8 @@ TEST(ObjectSeamTest, MoveAssignment)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Assignment");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MockObject mock("Testing Move Assignment");
     TestableBase<MockObject> b1;

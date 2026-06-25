@@ -18,6 +18,7 @@ cc_library(
     linkopts = [
         "-lfsnotify",
     ],
+    tags = ["third_party_FUSA"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//:__subpackages__"],
 )
@@ -26,6 +27,16 @@ cc_library(
     name = "libsecpolev",
     linkopts = [
         "-lsecpolev",
+    ],
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//:__subpackages__"],
+)
+
+cc_library(
+    name = "openssl",
+    linkopts = [
+        "-lssl",
+        "-lcrypto",
     ],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//:__subpackages__"],

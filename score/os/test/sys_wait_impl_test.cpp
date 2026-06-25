@@ -51,8 +51,8 @@ TEST(SysWaitImplTest, Wait)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Wait");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::os::SysWaitImpl syswait;
     pid_t cpid = 0;
@@ -72,8 +72,8 @@ TEST(SysWaitImplTest, WaitFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Wait Fail");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::os::SysWait& syswait = score::os::SysWait::instance();
     int status;
@@ -86,8 +86,8 @@ TEST(SysWaitImplTest, Waitpid)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Waitpid");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::os::SysWait& syswait = score::os::SysWait::instance();
     pid_t cpid = 0;
@@ -107,8 +107,8 @@ TEST(SysWaitImplTest, WaitpidFail)
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SysWaitImplTest Waitpid Fail");
-    RecordProperty("TestType", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     score::os::SysWaitImpl syswait;
     pid_t cpid = 0;

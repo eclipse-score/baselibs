@@ -81,15 +81,18 @@ TEST(overload_test, implicit_conversion)
 TEST(overload_test, stateful)
 {
     auto visitor = score::cpp::overload(
-        [](int) -> int {
+        [](int) -> int
+        {
             static int i{0};
             return ++i;
         },
-        [](double) -> int {
+        [](double) -> int
+        {
             static int i{0};
             return ++i;
         },
-        [](long) -> int {
+        [](long) -> int
+        {
             static int i{0};
             return ++i;
         });

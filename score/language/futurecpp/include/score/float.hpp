@@ -48,10 +48,12 @@ constexpr bool equals(const T lhs_begin,
                       const typename std::iterator_traits<T>::value_type max_rel_diff =
                           std::numeric_limits<typename std::iterator_traits<T>::value_type>::epsilon())
 {
-    return std::equal(
-        lhs_begin, lhs_end, rhs_begin, rhs_end, [max_rel_diff](const auto lhs_elem, const auto rhs_elem) -> bool {
-            return score::cpp::equals(lhs_elem, rhs_elem, max_rel_diff);
-        });
+    return std::equal(lhs_begin,
+                      lhs_end,
+                      rhs_begin,
+                      rhs_end,
+                      [max_rel_diff](const auto lhs_elem, const auto rhs_elem) -> bool
+                      { return score::cpp::equals(lhs_elem, rhs_elem, max_rel_diff); });
 }
 
 /// \brief Checks two iterables containing floats for equality, considering the machine precision

@@ -39,7 +39,6 @@ struct skip_deserialize
 {
 };
 
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 template <typename A, typename S, typename T>
 inline void serialize(const T& /*unused*/, serializer_helper<A>& /*unused*/, skip_deserialize_serialized<S>& /*unused*/)
 {
@@ -67,7 +66,6 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, const skip_deserialize<T
 {
     return skip_deserialize_serialized_descriptor<A, T>();
 }
-/* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 
 // This is supposed to be a guard protecting against incompatibilities between the payload layout
 // of the original serialized type and the payload layout of the corresponding types containing

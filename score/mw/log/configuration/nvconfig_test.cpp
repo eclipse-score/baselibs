@@ -98,7 +98,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValues)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Logging libraries use static configuration based on .json files.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
     auto result = NvConfigFactory::CreateAndInit(JsonPath());
     ASSERT_TRUE(result.has_value());  // Verify config was created successfully
     auto& nvc1 = result.value();
@@ -129,7 +129,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsExpectedValuesWithOtherFile)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Logging libraries use static configuration based on .json files.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(JsonPath2());
     ASSERT_TRUE(result.has_value());  // Verify config was created successfully
@@ -165,7 +165,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenEmptyFile)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing a general empty file.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(EmptyFile());
     ASSERT_FALSE(result.has_value());  // error parse because it is a general empty file
@@ -178,7 +178,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorOpenWhenGivenPathToNonExistentFile)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ara::log shall discard configuration files that are not found.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(WrongJsonPath());
     ASSERT_FALSE(result.has_value());  // error parse because the file doesn't exist
@@ -191,7 +191,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsOkWhenGivenEmptyJsonFile)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of parsing an empty JSON file.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(EmptyJson());
     EXPECT_TRUE(result.has_value());  // ok because this json file doesn't have items
@@ -204,7 +204,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfEmptyObject)
     RecordProperty("Description",
                    "Verifies the inability of parsing JSON file that has array instead of JSON object as a root node.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(EmptyJsonObject());
     ASSERT_FALSE(result.has_value());  // array instead of json object as one of the values
@@ -217,7 +217,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorParseIfThereIsSomethingElseInstedOf
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing a JSON file that does not have object as value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(ErrorParse1Path());
     ASSERT_FALSE(result.has_value());  // aray instead of json object as one of the values
@@ -232,7 +232,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfCtxidValuePairDoesntExists
         "Description",
         "Verifies the inability of parsing JSON file that misses ctxid key-value pair for one of the objects.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(ErrorContent1Path());
     ASSERT_FALSE(result.has_value());  // ctxid key-value pair is missing in one of the objects
@@ -247,7 +247,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfAppidValuePairDoesntExists
         "Description",
         "Verifies the inability of parsing JSON file that misses appid key-value pair for one of the objects.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(ErrorContent2Path());
     ASSERT_FALSE(result.has_value());  // appid key-value pair is missing in one of the objects
@@ -261,7 +261,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorContentIfIdValuePairDoesntExistsFor
     RecordProperty("Description",
                    "Verifies the inability of parsing JSON file that misses id key-value pair for one of the objects.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(ErrorContent3Path());
     ASSERT_FALSE(result.has_value());  // id key-value pair is missing in one of the objects
@@ -274,7 +274,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsErrorIfIdDataTypeIsWrong)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the inability of parsing JSON file that has wrong id value.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(ErrorContentWrongIdValue());
     ASSERT_FALSE(result.has_value());  // wrong ID data type (string instead of int).
@@ -288,7 +288,7 @@ TEST_F(NonVerboseConfig, NvConfigReturnsNullptrForNonExistentTypeName)
     RecordProperty("Description",
                    "Verifies that getDltMsgDesc returns nullptr when type name is not found in configuration.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     auto result = NvConfigFactory::CreateAndInit(JsonPath());
     ASSERT_TRUE(result.has_value());  // Verify config was created successfully
@@ -305,7 +305,7 @@ TEST_F(NonVerboseConfig, CreateEmptyReturnsValidEmptyConfig)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that CreateEmpty creates a valid NvConfig with no message descriptors.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "Analysis of requirements");
+    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
 
     // Create an empty configuration
     NvConfig empty_config = NvConfigFactory::CreateEmpty();

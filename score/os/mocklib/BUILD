@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "acl_mock",
@@ -205,6 +205,19 @@ cc_library(
     deps = [
         "@googletest//:gtest",
         "@score_baselibs//score/os:stdlib",
+    ],
+)
+
+cc_library(
+    name = "dlfcn_mock",
+    testonly = True,
+    hdrs = ["dlfcn_mock.h"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/os:dlfcn",
     ],
 )
 

@@ -13,6 +13,7 @@
 name: Bazel Build (Linux)
 permissions:
   contents: read
+  actions: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -31,32 +32,32 @@ jobs:
       matrix:
         include:
           - bazel-config: bl-x86_64-linux
-            bazel-build-target: "//score/..."
+            bazel-build-target: "//score/... //src/..."
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
             bazel-test-extra-flags: ""
           - bazel-config: bl-aarch64-linux
-            bazel-build-target: "//score/..."
+            bazel-build-target: "//score/... //src/..."
             bazel-test-target: >-
               //score/...
+              //src/...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
     steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7e109c9e97670ec621adaea1c21721c18212a96d
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.18.0
+      - name: Setup Bazel Cache
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.job }}_${{ matrix.bazel-config }}
-          repository-cache: true
-          cache-save: ${{ github.event_name == 'push' }}
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.bazel-config }}
       - name: Install QEMU
         if: matrix.bazel-config == 'bl-aarch64-linux'
         run: |
@@ -68,6 +69,11 @@ jobs:
       - name: Bazel Test
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
+      - name: Bazel test integration as module
+        if: matrix.bazel-config == 'bl-x86_64-linux'
+        run: |
+          # Test that baselibs works when consumed as an external module dependency
+          cd examples/integration && bazel build //... && bazel mod deps --lockfile_mode=update
       - name: Upload test logs on failure
         if: failure()
         uses: actions/upload-artifact@v7

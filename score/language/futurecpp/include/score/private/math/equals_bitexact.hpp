@@ -37,8 +37,9 @@ namespace score::cpp
 /// \param lhs First float value that is compared.
 /// \param rhs Second float value that is compared.
 /// \return True, if the two floats compare bit exact, false otherwise.
+// performance-unnecessary-value-param: T is specified as floating point type, thus performance is not suffering
 template <typename T>
-constexpr bool equals_bitexact(const T lhs, const T rhs) noexcept
+constexpr bool equals_bitexact(const T lhs, const T rhs) noexcept // NOLINT(performance-unnecessary-value-param)
 {
 #if defined(__GNUC__) || defined(__clang__)
 #pragma GCC diagnostic push

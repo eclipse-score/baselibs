@@ -170,7 +170,8 @@ TEST(LatchTest, GivenCountIsThree_WhenArrivedByThreeThreads_ThenAllThreadsObserv
 
     std::atomic<bool> shared_state{false};
 
-    auto count_down = [&] {
+    auto count_down = [&]
+    {
         latch.arrive_and_wait();
         EXPECT_TRUE(shared_state);
     };

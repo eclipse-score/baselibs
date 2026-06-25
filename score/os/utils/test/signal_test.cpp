@@ -101,7 +101,7 @@ TEST_F(SignalTest, IsNotAMemberWorks)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest is Not AMember Works");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t sigset{};
     const auto val = unit_->SigIsMember(sigset, SIGUSR1);
@@ -115,7 +115,7 @@ TEST_F(SignalTest, CheckIfSigSetIsEmptyWorks)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Check If Sig Set Is Empty Works");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t sigset{};
     auto val = unit_->SigAddSet(sigset, SIGUSR1);
@@ -136,7 +136,7 @@ TEST_F(SignalTest, GetCurrentBlockedSignals)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Get Current Blocked Signals");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     BlockSignal(SIGUSR1);
 
@@ -155,7 +155,7 @@ TEST_F(SignalTest, IsSignalBlocked)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Is Signal Blocked");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     BlockSignal(SIGUSR1);
 
@@ -172,7 +172,7 @@ TEST_F(SignalTest, PthreadSigMask)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Pthread Sig Mask");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MakeSignalTriggerBool(SIGUSR1);
 
@@ -204,7 +204,7 @@ TEST_F(SignalTest, PthreadSigMaskReturnsOldSet)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Pthread Sig Mask Returns Old Set");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MakeSignalTriggerBool(SIGUSR1);
 
@@ -238,7 +238,7 @@ TEST_F(SignalTest, SendSelfSigTerm)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Send Self Sig Term");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MakeSignalTriggerBool(SIGTERM);
 
@@ -252,7 +252,7 @@ TEST_F(SignalTest, SigAction)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Sig Action");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     static bool triggered = false;
     struct sigaction sig_handler;
@@ -283,7 +283,7 @@ TEST_F(SignalTest, Kill)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Kill");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     MakeSignalTriggerBool(SIGTERM);
 
@@ -297,7 +297,7 @@ TEST_F(SignalTest, SigFillSetWorks)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Sig Fill Set Works");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t sigset{};
     auto val = unit_->SigFillSet(sigset);
@@ -314,7 +314,7 @@ TEST_F(SignalTest, AddTerminationSignalWorks)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SignalTest Add Termination Signal Works");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "Generation and analysis of equivalence classes");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
 
     sigset_t sigset{};
     auto val = unit_->AddTerminationSignal(sigset);
