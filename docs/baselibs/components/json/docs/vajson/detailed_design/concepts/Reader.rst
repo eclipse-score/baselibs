@@ -1,7 +1,8 @@
 Templates and Polymorphism
 ==========================
 
-.. Concept:: DSGN-Concept-Polymorphism
+..
+  Concept:: DSGN-Concept-Polymorphism
 
   There are two parser interfaces available, one using static polymorphism and another one using dynamic polymorphism.
 
@@ -40,7 +41,8 @@ Templates and Polymorphism
 Parser Mixins
 =============
 
-  .. Concept:: DSGN-Concept-Parser-Mixins
+..
+  Concept:: DSGN-Concept-Parser-Mixins
 
   The class CompositionParser is intended to provide pre-defined parser functions to an existing class for commonly
   occurring JSON elements (single values and compounds).

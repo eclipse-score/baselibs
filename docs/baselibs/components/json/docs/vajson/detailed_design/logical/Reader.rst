@@ -1,7 +1,8 @@
 Reader
 ======
 
-.. LogicalUnit:: JsonParser
+..
+    LogicalUnit:: JsonParser
     :trace: DSGN-JSON-Reader-Deserialization, DSGN-JSON-Reader-Composition-Parser, DSGN-JSON-Reader-Method-Based-Parser
 
     Contains all logic of the JsonParser.
@@ -73,7 +74,8 @@ Reader
 
     .. uml:: diagrams/JsonParser.puml
 
-.. LogicalUnit:: Parser
+..
+    LogicalUnit:: Parser
     :trace: DSGN-JSON-Reader-Deserialization, DSGN-JSON-Reader-Encoding, DSGN-JSON-Reader-Data-Items,
             DSGN-JSON-Reader-Error-Reporting
 
@@ -117,7 +119,8 @@ Reader
     .. uml:: diagrams/parser/Parser_v1.puml
     .. uml:: diagrams/parser/Parser_v2.puml
 
-.. LogicalUnit:: Util
+..
+    LogicalUnit:: Util
     :trace: DSGN-JSON-Reader-Deserialization, DSGN-JSON-Reader-Encoding, DSGN-JSON-Reader-Number-Formatting
 
     .. Unit:: JsonData
