@@ -18,6 +18,7 @@ cc_library(
     linkopts = [
         "-lsecpol",
     ],
+    tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//:__subpackages__"],
 )
