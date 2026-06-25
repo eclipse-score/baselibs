@@ -9,6 +9,6 @@ Logical
 ..
   Component:: vaJson
 
-  .. toctree::
+.. toctree::
 
-      Reader.rst
+  Reader.rst
