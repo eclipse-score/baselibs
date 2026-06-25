@@ -367,6 +367,14 @@ class Map
                                 const size_type bytes,
                                 key_compare compare = key_compare{}) noexcept
     {
+        // A buffer not aligned to cell_alignment() is a caller precondition
+        // violation: the pooled nodes would be misaligned. Trap it like other
+        // contract violations rather than returning an error.
+        if ((reinterpret_cast<std::uintptr_t>(buffer) % alignof(PoolCell)) != 0U)
+        {
+            std::abort();
+        }
+
         Map map{allocator_type{}, std::move(compare)};
         const size_type count = bytes / sizeof(PoolCell);
         PoolCell* const cells = static_cast<PoolCell*>(buffer);

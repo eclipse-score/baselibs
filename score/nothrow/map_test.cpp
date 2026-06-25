@@ -2144,5 +2144,15 @@ TEST(MapDeathTest, InsertOrAbortAbortsWhenBufferExhausted)
     EXPECT_DEATH(map.InsertOrAbort({2, 2}), "");
 }
 
+TEST(MapDeathTest, CreateWithBufferAbortsOnMisalignedBuffer)
+{
+    using BufMap = Map<int, int>;
+    static_assert(BufMap::cell_alignment() > 1U, "test relies on a non-trivial cell alignment");
+
+    // Over-allocate and deliberately offset by one byte to break alignment.
+    alignas(BufMap::cell_alignment()) std::byte buffer[BufMap::required_bytes(2U) + 1U];
+    EXPECT_DEATH(std::ignore = BufMap::CreateWithBuffer(buffer + 1, BufMap::required_bytes(1U)), "");
+}
+
 }  // namespace
 }  // namespace score::nothrow
