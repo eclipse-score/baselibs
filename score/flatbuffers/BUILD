@@ -80,3 +80,16 @@ cc_test(
         "@googletest//:gtest_main",
     ],
 )
+
+cc_test(
+    name = "flatbuffers_cpp_library_test",
+    testonly = True,
+    srcs = [
+        "details/flatfbuffer_allocator_test.cpp",
+    ],
+    deps = [
+        ":flatbufferscpp",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+    ],
+)
