@@ -268,10 +268,10 @@ class DelayedTaskFactory
         using DelayedTaskType =
             DelayedTask<Clock, decltype(wrapped_callable), ResultType<Clock, CallableType, ArgumentTypes...>>;
         auto task = score::cpp::pmr::make_unique<DelayedTaskType>(memory_resource,
-                                                           typename DelayedTaskType::ConstructionGuard{},
-                                                           std::forward<decltype(promise)>(promise),
-                                                           execution_time_point,
-                                                           std::move(wrapped_callable));
+                                                                  typename DelayedTaskType::ConstructionGuard{},
+                                                                  std::forward<decltype(promise)>(promise),
+                                                                  execution_time_point,
+                                                                  std::move(wrapped_callable));
 
         return task;
     }

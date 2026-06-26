@@ -57,7 +57,7 @@ constexpr score::concurrency::FutureErrorDomain future_error_domain;
 }
 
 score::result::Error score::concurrency::MakeError(const score::concurrency::Error code,
-                                               const std::string_view user_message) noexcept
+                                                   const std::string_view user_message) noexcept
 {
     return {static_cast<score::result::ErrorCode>(code), future_error_domain, user_message};
 }

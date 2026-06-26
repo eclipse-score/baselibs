@@ -102,11 +102,12 @@ class ConcurrentTimedExecutor final : public TimedExecutor<Clock>
   protected:
     void Enqueue(score::cpp::pmr::unique_ptr<TimedTask<Clock>> task) override
     {
-        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(task != nullptr, "Contract violation, nullptr as task provided");
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(task != nullptr,
+                                                          "Contract violation, nullptr as task provided");
 
         const auto next_execution_point = task->GetNextExecutionPoint();
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(next_execution_point.has_value(),
-                                     "Contract violation, no next execution point given.");
+                                                          "Contract violation, no next execution point given.");
 
         // coverity[autosar_cpp14_a8_5_3_violation] false-positive: not auto
         std::unique_lock lock{mutex_};
@@ -129,7 +130,8 @@ class ConcurrentTimedExecutor final : public TimedExecutor<Clock>
               std::shared_ptr<concurrency::InterruptibleConditionalVariable> conditional_variable)
     {
         SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(conditional_variable != nullptr);
-        score::cpp::pmr::unique_ptr<TimedTask<Clock>> task{};  // LCOV_EXCL_LINE tested via EnsureTaskIsRetrievedAndExecuted
+        score::cpp::pmr::unique_ptr<TimedTask<Clock>>
+            task{};  // LCOV_EXCL_LINE tested via EnsureTaskIsRetrievedAndExecuted
         {
             // coverity[autosar_cpp14_a8_5_3_violation] false-positive: not auto
             std::unique_lock lock{mutex_};
@@ -165,8 +167,8 @@ class ConcurrentTimedExecutor final : public TimedExecutor<Clock>
         {
             // coverity[autosar_cpp14_m0_1_9_violation] false-positive: callback is stored into the token
             [[maybe_unused]] score::cpp::stop_callback cb{token, [&task]() noexcept {
-                                                       score::cpp::ignore = task->GetStopSource().request_stop();
-                                                   }};
+                                                              score::cpp::ignore = task->GetStopSource().request_stop();
+                                                          }};
             std::invoke(*task, task->GetStopSource().get_token());
         }
 

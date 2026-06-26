@@ -301,7 +301,7 @@ class PeriodicTaskFactory
                    const score::cpp::stop_token& token,
                    const typename Clock::time_point intended_execution) mutable {
             return score::cpp::apply(std::forward<CallableType>(callable),
-                              std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
+                                     std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
         };
     }
 
@@ -309,8 +309,9 @@ class PeriodicTaskFactory
         typename Clock,
         typename CallableType,
         typename std::enable_if_t<
-            std::is_same<std::invoke_result_t<CallableType, const score::cpp::stop_token&, const typename Clock::time_point>,
-                         bool>::value,
+            std::is_same<
+                std::invoke_result_t<CallableType, const score::cpp::stop_token&, const typename Clock::time_point>,
+                bool>::value,
             bool> = true>
     static auto WrapReturnValue(CallableType&& callable)
     {
@@ -318,7 +319,7 @@ class PeriodicTaskFactory
         return [callable = std::forward<decltype(callable)>(callable)](
                    const score::cpp::stop_token& token, const typename Clock::time_point intended_execution) mutable {
             return score::cpp::apply(std::forward<CallableType>(callable),
-                              std::tuple_cat(std::tie(token), std::tie(intended_execution)));
+                                     std::tuple_cat(std::tie(token), std::tie(intended_execution)));
         };
     }
 
@@ -326,8 +327,9 @@ class PeriodicTaskFactory
         typename Clock,
         typename CallableType,
         typename std::enable_if_t<
-            !std::is_same<std::invoke_result_t<CallableType, const score::cpp::stop_token&, const typename Clock::time_point>,
-                          bool>::value,
+            !std::is_same<
+                std::invoke_result_t<CallableType, const score::cpp::stop_token&, const typename Clock::time_point>,
+                bool>::value,
             bool> = true>
     // overload resolution is unambiguous due to sfinae
     // coverity[autosar_cpp14_a13_3_1_violation]
@@ -338,7 +340,7 @@ class PeriodicTaskFactory
                    const score::cpp::stop_token& token, const typename Clock::time_point intended_execution) mutable {
             // coverity[autosar_cpp14_a0_1_2_violation] apply returns void
             score::cpp::apply(std::forward<CallableType>(callable),
-                       std::tuple_cat(std::tie(token), std::tie(intended_execution)));
+                              std::tuple_cat(std::tie(token), std::tie(intended_execution)));
             return true;
         };
     }

@@ -77,7 +77,8 @@ auto to_score_expected(score::cpp::expected<T, E>&& expected) -> score::details:
 }
 
 template <typename T, typename E, typename F, typename = std::enable_if_t<std::is_invocable_v<F, const E&>>>
-auto expected_value_to_score_future_cpp_optional_or_else(const expected<T, E>& expected, F&& error_handling) -> score::cpp::optional<T>
+auto expected_value_to_score_future_cpp_optional_or_else(const expected<T, E>& expected, F&& error_handling)
+    -> score::cpp::optional<T>
 {
     if (expected.has_value())
     {
@@ -91,7 +92,8 @@ auto expected_value_to_score_future_cpp_optional_or_else(const expected<T, E>& e
 }
 
 template <typename T, typename E, typename F, typename = std::enable_if_t<std::is_invocable_v<F, E&&>>>
-auto expected_value_to_score_future_cpp_optional_or_else(expected<T, E>&& expected, F&& error_handling) -> score::cpp::optional<T>
+auto expected_value_to_score_future_cpp_optional_or_else(expected<T, E>&& expected, F&& error_handling)
+    -> score::cpp::optional<T>
 {
     if (expected.has_value())
     {
