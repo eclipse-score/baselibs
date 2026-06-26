@@ -706,5 +706,9 @@
   {
     "version": "pr-307",
     "url": "https://eclipse-score.github.io/baselibs/pr-307/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-299-6dd0c414487df375853c980b98d22fc37a140da9",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-299-6dd0c414487df375853c980b98d22fc37a140da9/"
   }
 ]
