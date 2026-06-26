@@ -1,0 +1,91 @@
+# Limit clang-format enforcement for now. Each block below ignores one folder's
+# whole subtree. To start enforcing a folder, delete its block.
+#
+# NOTE: clang-format 19 does NOT implement the "**" globstar (it collapses "**"
+# into a single "*"), and a single "*" matches exactly ONE path segment. A
+# trailing "*" only matches files that have no further sub-directories. So
+# "score/json/*" ignores ONLY direct children of score/json, not nested files.
+# Because no single pattern matches an arbitrary depth, each folder is expanded
+# to one line per nesting level (sized to its current deepest file). If a folder
+# later gains deeper files, add another "/*" line.
+# See https://clang.llvm.org/docs/ClangFormat.html#clang-format-ignore
+
+score/analysis/*
+score/analysis/*/*
+score/analysis/*/*/*
+score/analysis/*/*/*/*
+score/analysis/*/*/*/*/*
+
+score/bitmanipulation/*
+score/bitmanipulation/*/*
+
+score/concurrency/*
+score/concurrency/*/*
+score/concurrency/*/*/*
+
+score/containers/*
+score/containers/*/*
+
+score/datetime_converter/*
+
+score/filesystem/*
+score/filesystem/*/*
+
+score/hash/*
+score/hash/*/*
+score/hash/*/*/*
+score/hash/*/*/*/*
+score/hash/*/*/*/*/*
+
+score/json/*
+score/json/*/*
+score/json/*/*/*
+score/json/*/*/*/*
+score/json/*/*/*/*/*
+score/json/*/*/*/*/*/*
+score/json/*/*/*/*/*/*/*
+score/json/*/*/*/*/*/*/*/*
+
+score/language/*
+score/language/*/*
+score/language/*/*/*
+score/language/*/*/*/*
+score/language/*/*/*/*/*
+score/language/*/*/*/*/*/*
+
+score/memory/*
+score/memory/*/*
+score/memory/*/*/*
+score/memory/*/*/*/*
+score/memory/*/*/*/*/*
+
+score/mw/*
+score/mw/*/*
+score/mw/*/*/*
+score/mw/*/*/*/*
+score/mw/*/*/*/*/*
+
+score/network/*
+score/network/*/*
+
+score/os/*
+score/os/*/*
+score/os/*/*/*
+score/os/*/*/*/*
+score/os/*/*/*/*/*
+score/os/*/*/*/*/*/*
+
+score/result/*
+score/result/*/*
+score/result/*/*/*
+
+score/static_reflection_with_serialization/*
+score/static_reflection_with_serialization/*/*
+score/static_reflection_with_serialization/*/*/*
+score/static_reflection_with_serialization/*/*/*/*
+score/static_reflection_with_serialization/*/*/*/*/*
+score/static_reflection_with_serialization/*/*/*/*/*/*
+
+score/utils/*
+score/utils/*/*
+score/utils/*/*/*
