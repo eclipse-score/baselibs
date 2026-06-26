@@ -25,7 +25,7 @@ namespace concurrency
 
 using InterruptibleInterprocessConditionalVariable =
     score::concurrency::InterruptibleConditionalVariableBasic<score::os::InterprocessMutex,
-                                                            score::os::InterprocessConditionalVariable>;
+                                                              score::os::InterprocessConditionalVariable>;
 
 }  // namespace concurrency
 }  // namespace score

@@ -87,11 +87,11 @@ std::string EncodeBase64(const std::vector<std::uint8_t>& buffer)
         {
             PerformBase64EncodeStep(inputBuffer, outputBuffer);
             score::cpp::ignore = std::transform(std::begin(outputBuffer),
-                                         std::end(outputBuffer),
-                                         std::back_inserter(ret),
-                                         [](EncodeOutputBuffer::value_type v) {
-                                             return base64_chars[v];
-                                         });
+                                                std::end(outputBuffer),
+                                                std::back_inserter(ret),
+                                                [](EncodeOutputBuffer::value_type v) {
+                                                    return base64_chars[v];
+                                                });
             ind = 0U;
         }
     }
@@ -102,11 +102,11 @@ std::string EncodeBase64(const std::vector<std::uint8_t>& buffer)
         std::fill(std::next(std::begin(inputBuffer), ind_diff), std::end(inputBuffer), 0U);
         PerformBase64EncodeStep(inputBuffer, outputBuffer);
         score::cpp::ignore = std::transform(std::begin(outputBuffer),
-                                     std::next(std::begin(outputBuffer), ind_diff + 1),
-                                     std::back_inserter(ret),
-                                     [](EncodeOutputBuffer::value_type v) {
-                                         return base64_chars[v];
-                                     });
+                                            std::next(std::begin(outputBuffer), ind_diff + 1),
+                                            std::back_inserter(ret),
+                                            [](EncodeOutputBuffer::value_type v) {
+                                                return base64_chars[v];
+                                            });
         score::cpp::ignore =
             std::fill_n(std::back_inserter(ret), kEncodeInputBufferSize - static_cast<std::size_t>(ind_diff), '=');
     }

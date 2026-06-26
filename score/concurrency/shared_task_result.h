@@ -91,8 +91,9 @@ class SharedTaskResult : public TaskResultBase
                                                        safecpp::Scope<>,
                                                        Callback>,
                                bool> = true>
-    [[deprecated("SPP_DEPRECATION: Use overload with scoped function instead. (Ticket-141243")]] score::cpp::expected_blank<Error>
-    Then(Callback callback) noexcept
+    [[deprecated("SPP_DEPRECATION: Use overload with scoped function instead. (Ticket-141243")]] score::cpp::
+        expected_blank<Error>
+        Then(Callback callback) noexcept
     {
         return future_.Then(std::forward<Callback>(callback));
     }
@@ -146,7 +147,8 @@ class SharedTaskResult : public TaskResultBase
     /// - the promise was broken
     /// - the absolute time is reached
     template <class Clock, class Duration>
-    score::cpp::expected_blank<Error> WaitUntil(const std::chrono::time_point<Clock, Duration>& timeout_time) const noexcept
+    score::cpp::expected_blank<Error> WaitUntil(
+        const std::chrono::time_point<Clock, Duration>& timeout_time) const noexcept
     {
         // We use a dummy stop source here because we intentionally want to wait for the result even if a stop is
         // requested via the real stop source.This wait is always finite, as any task that we wait for has a stop token

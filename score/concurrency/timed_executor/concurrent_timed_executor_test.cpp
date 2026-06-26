@@ -29,7 +29,8 @@ class ConcurrentTimedExecutorFixture : public ::testing::Test
   public:
     ConcurrentTimedExecutor<testing::SteadyClock> CreateConcurrentTimedExecutor()
     {
-        auto executor_mock = score::cpp::pmr::make_unique<testing::ExecutorMock>(score::cpp::pmr::new_delete_resource());
+        auto executor_mock =
+            score::cpp::pmr::make_unique<testing::ExecutorMock>(score::cpp::pmr::new_delete_resource());
         executor_mock_ = executor_mock.get();
 
         return ConcurrentTimedExecutor<testing::SteadyClock>{score::cpp::pmr::get_default_resource(),
@@ -56,15 +57,17 @@ class ConcurrentTimedExecutorFixture : public ::testing::Test
     ConcurrentTimedExecutor<std::chrono::steady_clock> CreateConcurrentTimedExecutorWithRealThreadPool()
     {
         return ConcurrentTimedExecutor<std::chrono::steady_clock>{
-            score::cpp::pmr::get_default_resource(), score::cpp::pmr::make_unique<ThreadPool>(score::cpp::pmr::new_delete_resource(), 1)};
+            score::cpp::pmr::get_default_resource(),
+            score::cpp::pmr::make_unique<ThreadPool>(score::cpp::pmr::new_delete_resource(), 1)};
     }
 
     score::cpp::pmr::unique_ptr<TimedTask<testing::SteadyClock>> CreateDelayedTask(const std::size_t increment)
     {
-        return DelayedTaskFactory::Make<testing::SteadyClock>(
-            score::cpp::pmr::new_delete_resource(), testing::SteadyClock::now(), [this, increment](auto, auto) noexcept {
-                executed_ += increment;
-            });
+        return DelayedTaskFactory::Make<testing::SteadyClock>(score::cpp::pmr::new_delete_resource(),
+                                                              testing::SteadyClock::now(),
+                                                              [this, increment](auto, auto) noexcept {
+                                                                  executed_ += increment;
+                                                              });
     }
 
     score::cpp::pmr::unique_ptr<TimedTask<testing::SteadyClock>> CreatePeriodicTask()

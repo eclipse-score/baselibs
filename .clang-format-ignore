@@ -16,17 +16,8 @@ score/analysis/*/*/*
 score/analysis/*/*/*/*
 score/analysis/*/*/*/*/*
 
-score/bitmanipulation/*
-score/bitmanipulation/*/*
-
-score/concurrency/*
-score/concurrency/*/*
-score/concurrency/*/*/*
-
 score/containers/*
 score/containers/*/*
-
-score/datetime_converter/*
 
 score/filesystem/*
 score/filesystem/*/*
@@ -75,17 +66,9 @@ score/os/*/*/*/*
 score/os/*/*/*/*/*
 score/os/*/*/*/*/*/*
 
-score/result/*
-score/result/*/*
-score/result/*/*/*
-
 score/static_reflection_with_serialization/*
 score/static_reflection_with_serialization/*/*
 score/static_reflection_with_serialization/*/*/*
 score/static_reflection_with_serialization/*/*/*/*
 score/static_reflection_with_serialization/*/*/*/*/*
 score/static_reflection_with_serialization/*/*/*/*/*/*
-
-score/utils/*
-score/utils/*/*
-score/utils/*/*/*

@@ -1,4 +1,3 @@
-# For changes please present first the motivation in the TAL round
 BasedOnStyle: Google
 AccessModifierOffset: -2
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -39,6 +38,7 @@ IncludeCategories:
   - Regex: '^(<|").*(>|")$'
     Priority: 1
 IndentWidth: 4
+InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: true
 QualifierAlignment: Left
 CommentPragmas: '^.*A2Lfactory:'

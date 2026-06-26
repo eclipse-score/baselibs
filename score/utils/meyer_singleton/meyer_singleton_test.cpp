@@ -292,7 +292,8 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingAfterCallingGetInstanceWithCalla
 
         // When calling GetInstance
         // Then the program terminates
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingleton<InitializationTrackedClass>::GetInstance());
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingleton<InitializationTrackedClass>::GetInstance());
     });
 }
 
@@ -316,7 +317,8 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInst
         // When calling GetInstance
         // Then the program terminates
         using MeyerSingletonType = MeyerSingleton<DummyClass, AtomicIndirectorMock>;
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingletonType::GetInstance(kDummyInt, kDummyDouble));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore =
+                                                              MeyerSingletonType::GetInstance(kDummyInt, kDummyDouble));
     });
 }
 
@@ -328,8 +330,9 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingAfterCallingGetInsta
 
         // When calling GetInstanceInitializedWithCallable
         // Then the program terminates
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingleton<DummyClass>::GetInstanceInitializedWithCallable(
-                                         CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingleton<DummyClass>::GetInstanceInitializedWithCallable(
+                CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
     });
 }
 
@@ -353,8 +356,9 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingWhileOtherThreadIsCa
         // When calling GetInstance
         // Then the program terminates
         using MeyerSingletonType = MeyerSingleton<DummyClass, AtomicIndirectorMock>;
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingletonType::GetInstanceInitializedWithCallable(
-                                         CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingletonType::GetInstanceInitializedWithCallable(
+                CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
     });
 }
 
