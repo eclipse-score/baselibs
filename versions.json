@@ -710,5 +710,9 @@
   {
     "version": "gh-readonly-queue/main/pr-299-6dd0c414487df375853c980b98d22fc37a140da9",
     "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-299-6dd0c414487df375853c980b98d22fc37a140da9/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-307-ae1a181c400992cd7af95520541e3ae0e9a18960",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-307-ae1a181c400992cd7af95520541e3ae0e9a18960/"
   }
 ]
