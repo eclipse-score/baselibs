@@ -42,6 +42,10 @@ class SemaphoreMock : public Semaphore
                 sem_timedwait,
                 (sem_t*, const struct timespec*),
                 (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
+                sem_timedwait_monotonic,
+                (sem_t*, const struct timespec*),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_getvalue, (sem_t*, std::int32_t*), (const, noexcept, override));
 };
 

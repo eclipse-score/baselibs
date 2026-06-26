@@ -146,6 +146,8 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(sem_t* const sem,
     }
     return {};
 }
+// SemaphoreImpl::sem_timedwait_monotonic() is platform-specific and lives in
+// semaphore_impl_linux.cpp / semaphore_impl_qnx.cpp (selected in BUILD).
 /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept
 /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
