@@ -115,7 +115,7 @@ constexpr ::details::IsEnabledEnum<T> operator|(const T& lhs, const T& rhs)
 template <typename T>
 constexpr typename std::enable_if<std::is_enum<T>::value && score::enable_bitmask_operators<T>::value, bool>::type
 // coverity[autosar_cpp14_m7_3_1_violation]
-operator&(const T& lhs, const T& rhs)
+operator&(const T & lhs, const T & rhs)
 {
     using U = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data

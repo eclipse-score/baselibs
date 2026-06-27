@@ -85,9 +85,9 @@ class BaseInterruptibleFutureTest : public BaseInterruptibleFutureTestBase<T>
     void PrepareScopedContinuationCallback()
     {
         safecpp::MoveOnlyScopedFunction<void(score::Result<T>&)> scoped_callback{scope_,
-                                                                               [this](score::Result<T>&) noexcept {
-                                                                                   this->invoked_++;
-                                                                               }};
+                                                                                 [this](score::Result<T>&) noexcept {
+                                                                                     this->invoked_++;
+                                                                                 }};
         this->future_->Then(std::move(scoped_callback));
     }
 
@@ -174,10 +174,10 @@ class BaseInterruptibleFutureTest<void> : public BaseInterruptibleFutureTestBase
 
     void PrepareScopedContinuationCallback()
     {
-        safecpp::MoveOnlyScopedFunction<void(score::Result<void>&)> scoped_callback{scope_,
-                                                                                  [this](score::Result<void>&) noexcept {
-                                                                                      this->invoked_++;
-                                                                                  }};
+        safecpp::MoveOnlyScopedFunction<void(score::Result<void>&)> scoped_callback{
+            scope_, [this](score::Result<void>&) noexcept {
+                this->invoked_++;
+            }};
         this->future_->Then(std::move(scoped_callback));
     }
 

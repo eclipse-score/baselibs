@@ -316,7 +316,7 @@ class DelayedTaskFactory
                    const score::cpp::stop_token& token,
                    const typename Clock::time_point intended_execution) mutable {
             return score::cpp::apply(std::forward<CallableType>(callable),
-                              std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
+                                     std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
         };
     }
 
@@ -335,11 +335,12 @@ class DelayedTaskFactory
         // coverity[autosar_cpp14_a5_1_7_violation]
         using DelayedTaskType =
             DelayedTask<Clock, decltype(wrapped_callable), result_type<Clock, CallableType, ArgumentTypes...>>;
-        auto task = score::cpp::pmr::make_unique<DelayedTaskType>(memory_resource,
-                                                           typename DelayedTaskType::ConstructionGuard{},
-                                                           std::forward<decltype(promise)>(promise),
-                                                           execution_time_point,
-                                                           std::forward<decltype(wrapped_callable)>(wrapped_callable));
+        auto task =
+            score::cpp::pmr::make_unique<DelayedTaskType>(memory_resource,
+                                                          typename DelayedTaskType::ConstructionGuard{},
+                                                          std::forward<decltype(promise)>(promise),
+                                                          execution_time_point,
+                                                          std::forward<decltype(wrapped_callable)>(wrapped_callable));
 
         return task;
     }

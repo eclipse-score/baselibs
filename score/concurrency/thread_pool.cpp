@@ -26,8 +26,8 @@ score::concurrency::ThreadPool::ThreadPool(const std::size_t number_of_threads, 
 }
 
 score::concurrency::ThreadPool::ThreadPool(const std::size_t number_of_threads,
-                                         score::cpp::pmr::memory_resource* memory_resource,
-                                         const std::string& name)
+                                           score::cpp::pmr::memory_resource* memory_resource,
+                                           const std::string& name)
     : Executor(memory_resource)
 {
     InitializeThreads(number_of_threads, name);

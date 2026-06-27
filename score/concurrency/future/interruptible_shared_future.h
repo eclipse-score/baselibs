@@ -67,9 +67,8 @@ class InterruptibleSharedFuture : protected score::concurrency::detail::BaseInte
      * - the token was set
      * - the promise was broken
      */
-    // .error() is marked noexcept due to SCORE_LANGUAGE_FUTURECPP_PRECONDITION call in it; the error() call won't throw because we
-    // check for value presence
-    // coverity[autosar_cpp14_a15_5_3_violation]
+    // .error() is marked noexcept due to SCORE_LANGUAGE_FUTURECPP_PRECONDITION call in it; the error() call won't throw
+    // because we check for value presence coverity[autosar_cpp14_a15_5_3_violation]
     score::Result<std::reference_wrapper<const Value>> Get(const score::cpp::stop_token& stop_token) noexcept
     {
         score::cpp::expected_blank<Error> return_code = this->Wait(stop_token);

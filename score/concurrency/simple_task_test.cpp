@@ -37,7 +37,8 @@ TEST_F(SimpleTaskTest, ConstructionAndDestruction)
 
 TEST_F(SimpleTaskTest, ConstructionAndDestructionOnHeap)
 {
-    auto unique_task = SimpleTaskFactory::Make(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {});
+    auto unique_task =
+        SimpleTaskFactory::Make(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {});
     unique_task.reset();
 }
 
@@ -52,10 +53,10 @@ TEST_F(SimpleTaskTest, ExecutesVoidCallback)
 {
     // Given a manually created SimpleTask<> with a void callback
     bool executed{false};
-    auto unit =
-        SimpleTaskFactory::Make(score::cpp::pmr::get_default_resource(), [&executed](const score::cpp::stop_token&) noexcept -> void {
-            executed = true;
-        });
+    auto unit = SimpleTaskFactory::Make(score::cpp::pmr::get_default_resource(),
+                                        [&executed](const score::cpp::stop_token&) noexcept -> void {
+                                            executed = true;
+                                        });
 
     // When executing the function call operator
     (*unit)(score::cpp::stop_token{});

@@ -53,7 +53,10 @@ class StubInterruptibleConditionalVariable
     }
 
     template <class Lockable, class Clock, class Duration, class Predicate>
-    bool wait_until(Lockable& lock, const score::cpp::stop_token&, const std::chrono::time_point<Clock, Duration>&, Predicate)
+    bool wait_until(Lockable& lock,
+                    const score::cpp::stop_token&,
+                    const std::chrono::time_point<Clock, Duration>&,
+                    Predicate)
     {
         return InternalWaitWrapper(lock);
     }
@@ -97,7 +100,7 @@ class BaseInterruptibleStateTest : public ::testing::Test
     ::testing::NiceMock<StubLockable> mock_callback_lockable_{};
     ::testing::NiceMock<StubInterruptibleConditionalVariable> mock_interruptible_condition_variable_{};
     score::concurrency::detail::BaseInterruptibleState<::testing::NiceMock<StubLockable>&,
-                                                     ::testing::NiceMock<StubInterruptibleConditionalVariable>&>
+                                                       ::testing::NiceMock<StubInterruptibleConditionalVariable>&>
         unit_{mock_ready_lockable_, mock_callback_lockable_, mock_interruptible_condition_variable_};
     bool invoked_{false};
 

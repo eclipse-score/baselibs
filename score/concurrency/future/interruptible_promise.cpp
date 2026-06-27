@@ -12,7 +12,8 @@
  ********************************************************************************/
 #include "score/concurrency/future/interruptible_promise.h"
 
-score::cpp::expected_blank<score::concurrency::Error> score::concurrency::InterruptiblePromise<void>::SetValue() noexcept
+score::cpp::expected_blank<score::concurrency::Error>
+score::concurrency::InterruptiblePromise<void>::SetValue() noexcept
 {
     constexpr auto strategy = [](InterruptibleState<void>& state) noexcept {
         return state.SetValue();

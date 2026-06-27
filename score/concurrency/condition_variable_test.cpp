@@ -135,7 +135,7 @@ TEST_F(InterruptibleConditionalVariableBasicTest, NoEarlySpuriousWakeups)
     InterruptibleConditionalVariable unit;
 
     score::concurrency::testing::SteadyClock::time_point time_point{score::concurrency::testing::SteadyClock::now() +
-                                                                  std::chrono::milliseconds{5}};
+                                                                    std::chrono::milliseconds{5}};
 
     std::future<void> future = std::async([&unit, this, time_point]() {
         std::unique_lock<MockMutex> internal_lock{test_mtx_};

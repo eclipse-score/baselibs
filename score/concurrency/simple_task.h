@@ -176,7 +176,9 @@ class SimpleTaskFactory final
      * \return A SimpleTask constructed from the provided Callable
      */
     template <class CallableType, class... ArgumentTypes>
-    static auto Make(score::cpp::pmr::memory_resource* memory_resource, CallableType&& callable, ArgumentTypes&&... arguments)
+    static auto Make(score::cpp::pmr::memory_resource* memory_resource,
+                     CallableType&& callable,
+                     ArgumentTypes&&... arguments)
     {
         concurrency::InterruptiblePromise<result_type<CallableType, ArgumentTypes...>> promise{};
 
@@ -244,10 +246,11 @@ class SimpleTaskFactory final
         // but doesnt affect the performance and keeps the code simple
         // coverity[autosar_cpp14_a5_1_7_violation]
         using simple_task_type = SimpleTask<decltype(wrapped_callable), result_type<CallableType, ArgumentTypes...>>;
-        auto task = score::cpp::pmr::make_unique<simple_task_type>(memory_resource,
-                                                            typename simple_task_type::ConstructionGuard{},
-                                                            std::forward<decltype(promise)>(promise),
-                                                            std::forward<decltype(wrapped_callable)>(wrapped_callable));
+        auto task =
+            score::cpp::pmr::make_unique<simple_task_type>(memory_resource,
+                                                           typename simple_task_type::ConstructionGuard{},
+                                                           std::forward<decltype(promise)>(promise),
+                                                           std::forward<decltype(wrapped_callable)>(wrapped_callable));
 
         return task;
     }

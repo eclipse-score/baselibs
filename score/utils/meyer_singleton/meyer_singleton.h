@@ -142,8 +142,9 @@ class MeyerSingleton
     static void TrySettingSingletonInitializationState(const InitializationState desired_new_state,
                                                        const InitializationState disallowed_state)
     {
-        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD((desired_new_state == InitializationState::INITIALIZED_WITHOUT_CALLABLE) ||
-                             (desired_new_state == InitializationState::INITIALIZED_WITH_CALLABLE));
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD(
+            (desired_new_state == InitializationState::INITIALIZED_WITHOUT_CALLABLE) ||
+            (desired_new_state == InitializationState::INITIALIZED_WITH_CALLABLE));
 
         auto current_initialization_state =
             AtomicIndirectorType<InitializationState>::load(singleton_initialization_state_);
@@ -176,10 +177,9 @@ class MeyerSingleton
     template <typename... Args>
     static std::atomic<Object*>& GetSingletonWithFence(Args&&... args)
     {
-        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The static
-        // object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is thread safe
-        // with its creation.
-        // coverity[autosar_cpp14_a3_3_2_violation]
+        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The
+        // static object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is
+        // thread safe with its creation. coverity[autosar_cpp14_a3_3_2_violation]
         static std::atomic<Object*> resource{InitializeSingleton(std::forward<Args>(args)...)};
         return resource;
     }
@@ -187,10 +187,9 @@ class MeyerSingleton
     template <typename... Args>
     static Object* InitializeSingleton(Args&&... args)
     {
-        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The static
-        // object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is thread safe
-        // with its creation.
-        // coverity[autosar_cpp14_a3_3_2_violation]
+        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The
+        // static object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is
+        // thread safe with its creation. coverity[autosar_cpp14_a3_3_2_violation]
         static Object resource{std::forward<Args>(args)...};
         return &resource;
     }
@@ -198,10 +197,9 @@ class MeyerSingleton
     template <typename InitializationCallable>
     static std::atomic<Object*>& GetSingletonWithFenceCallable(InitializationCallable&& callable)
     {
-        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The static
-        // object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is thread safe
-        // with its creation.
-        // coverity[autosar_cpp14_a3_3_2_violation]
+        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The
+        // static object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is
+        // thread safe with its creation. coverity[autosar_cpp14_a3_3_2_violation]
         static std::atomic<Object*> resource{
             InitializeSingletonCallable(std::forward<InitializationCallable>(callable))};
         return resource;
@@ -210,10 +208,9 @@ class MeyerSingleton
     template <typename InitializationCallable>
     static Object* InitializeSingletonCallable(InitializationCallable&& callable)
     {
-        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The static
-        // object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is thread safe
-        // with its creation.
-        // coverity[autosar_cpp14_a3_3_2_violation]
+        // score-local-static-variables: non-const static storage is required to fulfill the singleton pattern. The
+        // static object has internal linkage and is accessed via an atomic pointer to ensure that accessing it is
+        // thread safe with its creation. coverity[autosar_cpp14_a3_3_2_violation]
         static Object resource{std::invoke(callable)};
         return &resource;
     }
