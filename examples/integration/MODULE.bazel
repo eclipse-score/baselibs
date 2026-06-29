@@ -12,9 +12,10 @@
 # *******************************************************************************
 
 bazel_dep(name = "score_baselibs", version = "0.0.0")
-local_path_override(
+git_override(
     module_name = "score_baselibs",
-    path = "../..",
+    remote = "https://github.com/eclipse-score/baselibs.git",
+    commit = "55d56e3fe28073e779939d3ccdb815d18bbf2c55",
 )
 
 bazel_dep(name = "rules_cc", version = "0.2.17")
