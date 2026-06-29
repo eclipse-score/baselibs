@@ -21,16 +21,25 @@
    :realizes: wp__requirements_inspect
 
 
-.. req_chklst:: Bitmanipulation Component Requirements Checklist
-   :id: req_chklst__bitmanipulation__comp_req
+.. mod_insp:: Bitmanipulation Component Requirements Inspection Record
+   :id: mod_insp__bitmanipulation__comp_req
    :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: requirements
+   :inspection_state: approved
+   :checklist_template: gd_chklst__req_inspection
+   :reviewers: mihajlo-k
+   :findings_total: 0
+   :findings_open: 0
+   :belongs_to: mod__baselibs
+   :inspects: comp_req__bitmanipulation__bit_operations, comp_req__bitmanipulation__byte_operations, comp_req__bitmanipulation__bitmask_operators, comp_req__bitmanipulation__bounds_safety, comp_req__bitmanipulation__header_only
    :checklist: doc__bitmanipulation_req_inspection
-   :sha256: 4e990bbdb56b8e7cb895d6064eb502f5e4ee3b4198950a1e5ffa740ba0aea51f
+   :sha256: 617fe4ad8a0663c3c2f7b70cce1ce0170d11b2b7a29dae269a8c00a9c5643242
 
-   This checklist pins the reviewed state of the bitmanipulation component
-   requirements (Bazel target ``//:bitmanipulation_comp_reqs``). Build
-   ``//:bitmanipulation_req_checklist`` to validate that the requirements have
-   not changed since the inspection documented in
+   Machine-readable inspection record for the bitmanipulation component
+   requirements. Build ``//:bitmanipulation_req_checklist`` to validate that the
+   requirements have not changed since the inspection documented in
    :need:`doc__bitmanipulation_req_inspection`.
 
 

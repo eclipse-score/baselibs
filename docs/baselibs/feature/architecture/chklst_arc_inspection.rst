@@ -23,17 +23,28 @@ Architecture Inspection Checklist
    :security: YES
    :realizes: wp__sw_arch_verification
 
-.. arch_chklst:: Baselibs Feature Architecture Checklist
-   :id: arch_chklst__baselibs__feat_arc
+.. mod_insp:: Baselibs Feature Architecture Inspection Record
+   :id: mod_insp__baselibs__feat_arc
    :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: architecture
+   :inspection_state: rework_required
+   :checklist_template: gd_chklst__arch_inspection_checklist
+   :reviewers: aschemmel-tech
+   :findings_total: 3
+   :findings_open: 3
+   :correction_issue: https://github.com/eclipse-score/score/issues/2265
+   :belongs_to: mod__baselibs
+   :inspects: feat_arc_sta__baselibs__static_view_arch
    :checklist: doc__baselibs_arc_inspection
-   :sha256: d4b78cf8cb0de247fd88a152d4c02ddd92b1f0d086d65beffbc25bc124cf63c6
+   :sha256: c2c264b02cdc5c4e1c648b1208a32391ad91979e791dd97928fb1d6d079f0621
 
-   This checklist pins the reviewed state of the baselibs feature architecture
-   (Bazel target ``//:baselibs_feature_arch``). Build
-   ``//:baselibs_feat_arch_checklist`` to validate that the architecture has not
-   changed since the inspection documented in
-   :need:`doc__baselibs_arc_inspection`.
+   Machine-readable inspection record for the baselibs feature architecture.
+   It references the inspection checklist template
+   (:need:`gd_chklst__arch_inspection_checklist`) and the filled checklist
+   document (:need:`doc__baselibs_arc_inspection`). The three open findings are
+   tracked in `#2265 <https://github.com/eclipse-score/score/issues/2265>`_.
 
 Purpose
 -------

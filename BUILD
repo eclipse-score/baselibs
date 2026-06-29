@@ -25,25 +25,22 @@ docs(
     source_dir = "docs",
 )
 
-filtered_needs_json(
-    name = "my_feat_reqs",
-    src = "//:needs_json",
-    types = ["comp_req", "comp_arc_sta"],
-    # names = ["baselibs"],
+feature_requirements(
+    name = "baselibs_feature_reqs",
+    src = "@score_platform//:needs_json",
+    feature = "baselibs",
     visibility = ["//visibility:public"],
 )
 
-sphinx_needs_to_md(
-    name = "my_feat_reqs_doc",
-    src = ":my_feat_reqs",
-    title = "Baselibs feature architecture needs",
-    visibility = ["//visibility:public"],
-)
-
-sphinx_needs_to_trlc(
-    name = "my_feat_reqs_trlc",
-    src = ":my_feat_reqs",
-    package = "BaselibsNeeds",
+# Validate the baselibs feature requirements against the reviewed inspection
+# record (mod_insp__baselibs__feat_req). `bazel build` fails when the
+# requirements output (or one of its transitive dependencies) drifts from the
+# SHA256 pinned in the inspection record.
+requirements_checklist(
+    name = "baselibs_feat_req_checklist",
+    mod_insp_id = "mod_insp__baselibs__feat_req",
+    deps = [":baselibs_feature_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
     visibility = ["//visibility:public"],
 )
 
@@ -53,13 +50,13 @@ feature_architecture(
     visibility = ["//visibility:public"],
 )
 
-# Validate the baselibs feature architecture against the reviewed checklist
-# (arch_chklst__baselibs__feat_arc). `bazel build` fails when the architecture
-# output (or one of its transitive dependencies) drifts from the SHA256 pinned
-# in the checklist need.
+# Validate the baselibs feature architecture against the reviewed inspection
+# record (mod_insp__baselibs__feat_arc). `bazel build` fails when the
+# architecture output (or one of its transitive dependencies) drifts from the
+# SHA256 pinned in the inspection record.
 architecture_checklist(
     name = "baselibs_feat_arch_checklist",
-    checklist_id = "arch_chklst__baselibs__feat_arc",
+    mod_insp_id = "mod_insp__baselibs__feat_arc",
     deps = [":baselibs_feature_arch"],
     extra_needs = ["@score_platform//:needs_json"],
     visibility = ["//visibility:public"],
@@ -83,11 +80,12 @@ component_requirements(
 )
 
 # Validate the bitmanipulation component requirements against the reviewed
-# checklist (req_chklst__bitmanipulation__comp_req). `bazel build` fails when the
-# requirements output drifts from the SHA256 pinned in the checklist need.
+# inspection record (mod_insp__bitmanipulation__comp_req). `bazel build` fails
+# when the requirements output drifts from the SHA256 pinned in the inspection
+# record.
 requirements_checklist(
     name = "bitmanipulation_req_checklist",
-    checklist_id = "req_chklst__bitmanipulation__comp_req",
+    mod_insp_id = "mod_insp__bitmanipulation__comp_req",
     deps = [":bitmanipulation_comp_reqs"],
     extra_needs = ["@score_platform//:needs_json"],
     visibility = ["//visibility:public"],
@@ -100,11 +98,12 @@ component_architecture(
 )
 
 # Validate the bitmanipulation component architecture against the reviewed
-# checklist (arch_chklst__bitmanipulation__comp_arc). `bazel build` fails when the
-# architecture output drifts from the SHA256 pinned in the checklist need.
+# inspection record (mod_insp__bitmanipulation__comp_arc). `bazel build` fails
+# when the architecture output drifts from the SHA256 pinned in the inspection
+# record.
 architecture_checklist(
     name = "bitmanipulation_arch_checklist",
-    checklist_id = "arch_chklst__bitmanipulation__comp_arc",
+    mod_insp_id = "mod_insp__bitmanipulation__comp_arc",
     deps = [":bitmanipulation_comp_arch"],
     extra_needs = ["@score_platform//:needs_json"],
     visibility = ["//visibility:public"],

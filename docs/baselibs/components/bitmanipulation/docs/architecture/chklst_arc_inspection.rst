@@ -20,14 +20,26 @@
    :security: YES
    :realizes: wp__sw_arch_verification
 
-.. arch_chklst:: Bitmanipulation Component Architecture Checklist
-   :id: arch_chklst__bitmanipulation__comp_arc
+.. mod_insp:: Bitmanipulation Component Architecture Inspection Record
+   :id: mod_insp__bitmanipulation__comp_arc
    :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: architecture
+   :inspection_state: approved
+   :checklist_template: gd_chklst__arch_inspection_checklist
+   :reviewers: aschemmel-tech
+   :findings_total: 0
+   :findings_open: 0
+   :belongs_to: mod__baselibs
+   :inspects: feat_arc_sta__baselibs__static_view_arch
    :checklist: doc__bitmanipulation_arc_inspection
-   :sha256: 3b96ff6b4807128b47c0bf252a803eee7fa9291cb89f33684f52d0b43ce04f9f
+   :sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
-   This checklist pins the reviewed state of the bitmanipulation component
-   architecture (Bazel target ``//:bitmanipulation_comp_arch``). Build
+   Machine-readable inspection record for the bitmanipulation component
+   architecture. There is no dedicated component architecture; the inspection is
+   covered by the baselibs feature architecture
+   (:need:`feat_arc_sta__baselibs__static_view_arch`). Build
    ``//:bitmanipulation_arch_checklist`` to validate that the architecture has
    not changed since the inspection documented in
    :need:`doc__bitmanipulation_arc_inspection`.

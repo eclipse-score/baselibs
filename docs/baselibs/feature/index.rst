@@ -19,6 +19,7 @@ Feature
    :maxdepth: 1
    :glob:
 
+   requirements/chklst_req_inspection
    architecture/index
    architecture/chklst_arc_inspection
    safety_analysis/dfa
