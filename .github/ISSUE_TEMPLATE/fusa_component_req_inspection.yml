@@ -23,44 +23,47 @@ body:
       placeholder: e.g. json
     validations:
       required: true
-  - type: markdown
+  - type: textarea
+    id: inspection_checklist
     attributes:
+      label: Description
       value: |
-        ## Description
-
         This issue tracks the formal Component Requirements Inspection for the component specified above, according to the S-CORE process.
 
-        The inspection validates that the component's requirements meet quality, completeness, and testability criteria before the work product is marked as `inspected`.
+        The inspection validates that the component's requirements meet quality, completeness, and testability criteria before the work product is marked as `valid(inspected)`.
 
         References:
         - [S-CORE Inspection Conduct](https://eclipse-score.github.io/process_description/main/general_concepts/score_review_concept.html#inspection-conduct)
         - [Inspection Checklist Template](https://eclipse-score.github.io/module_template/main/score/component_example/docs/requirements/chklst_req_inspection.html)
 
-        ---
+        ### Checklist
 
-        ## Checklist
-
-        ### Moderator (Safety, Security or Quality Manager)
-        - [ ] Create the inspection PR in `eclipse-score/baselibs` with the inspection checklist (opening it sets the requirements in scope to `inspected`) and link it to this issue via `Fixes #<issue-number>` in the PR description
-        - [ ] Assign Reviewer(s), one of whom acts as Test Expert; communicate scope and deadline
+        #### Moderator (Safety Manager)
+        - [ ] Create the inspection PR in `eclipse-score/baselibs` with the inspection checklist and link it to this issue via `Fixes #<issue-number>` in the PR description
+        - [ ] Assign Reviewer(s) and Test Expert; communicate scope and deadline
         - [ ] Incorporate reviewer findings as commits into the inspection PR
-        - [ ] Ensure all checklist items are documented with pass/fail verdicts in PR comments
-        - [ ] After all required reviewers and the CODEOWNER approve, merge the PR
+        - [ ] Ensure all checklist items are documented with pass/fail verdicts
+        - [ ] After all reviewers approve, merge the PR
+        - [ ] Set work product status to `valid(inspected)`
 
-        ### Reviewer(s)
-        - [ ] Review all component requirements against each inspection checklist item; one reviewer acts as Test Expert for testability (REQ_08_01)
-        - [ ] For each failing item, link a GitHub issue in `eclipse-score/baselibs` to track/document the required correction (use an existing issue or open a new one that covers all findings)
+        #### Reviewer(s)
+        - [ ] Review all component requirements against each inspection checklist item
+        - [ ] For each failing item, open a GitHub issue in `eclipse-score/baselibs` to track the required correction; link it in the PR comment
         - [ ] Add findings as PR comments (pass or fail, with rationale and link to correction issue where applicable)
-        - [ ] Set verdict to "Request Changes" if findings exist, otherwise "Approve" (the author cannot review their own PR)
+        - [ ] Set PR to "Request Changes" if findings exist
         - [ ] Re-review after the author addresses findings; update verdict accordingly
 
-        ### Content Responsible (Author)
+        #### Test Expert
+        - [ ] Review requirements from a testability perspective (focus: REQ_08_01 checklist item)
+        - [ ] Verify that test cases can be derived from each requirement and that verification criteria are clear
+        - [ ] Add testability findings as PR comments
+        - [ ] Re-review after author addresses findings; update verdict accordingly
+
+        #### Content Responsible (Author)
         - [ ] Analyze all findings and linked correction issues documented in the PR
         - [ ] Respond to each finding with an explanation or a proposed correction
         - [ ] Commit corrections to address all findings
-        - [ ] Request re-review from the Reviewer(s)
+        - [ ] Request re-review from the Reviewer(s) and Test Expert
         - [ ] Address any follow-up comments until all reviewers approve
 
         > **Note:** Eclipse contributors cannot push to the inspection branch directly. Findings must be added as PR comments; the Moderator incorporates them as commits.
-        >
-        > **Note:** Anyone modifying an inspected requirement afterwards must remove its `inspected` tag.
