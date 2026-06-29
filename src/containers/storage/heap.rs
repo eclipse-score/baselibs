@@ -144,10 +144,12 @@ mod tests {
 
     // Type used by all tests.
     type T = u64;
-    // Equals to 1GB. Tests might fail for runners with <1GB.
-    const LARGE_CAP: u32 = (i32::MAX as u32 / size_of::<T>() as u32) / 2;
+    // Larger capacity sizes, equal to 512KB, 16MB, 128MB.
+    const CAP_512KB: u32 = 512 * 1024;
+    const CAP_16MB: u32 = 16 * 1024 * 1024;
+    const CAP_128MB: u32 = 128 * 1024 * 1024;
     // Capacity test cases.
-    const CAP_CASES: [u32; 7] = [0, 1, 2, 3, 4, 5, LARGE_CAP];
+    const CAP_CASES: [u32; 6] = [0, 1, 4, CAP_512KB, CAP_16MB, CAP_128MB];
 
     #[test]
     fn subslice() {
