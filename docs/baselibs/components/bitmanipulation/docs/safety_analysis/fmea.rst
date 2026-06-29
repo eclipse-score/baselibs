@@ -23,6 +23,25 @@ FMEA (Failure Modes and Effects Analysis)
    :security: NO
    :realizes: wp__sw_component_fmea
 
+.. mod_insp:: Bitmanipulation Component FMEA Inspection Record
+   :id: mod_insp__bitmanipulation__comp_fmea
+   :status: valid
+   :safety: ASIL_B
+   :security: NO
+   :inspection_type: safety_analysis
+   :inspection_state: rework_required
+   :checklist_template: gd_chklst__safety_analysis
+   :reviewers: aschemmel-tech
+   :belongs_to: mod__baselibs
+   :inspects: comp_saf_fmea__bitmanipulation__no_return, comp_saf_fmea__bitmanipulation__late_return, comp_saf_fmea__bitmanipulation__constraints, comp_saf_fmea__bitmanipulation__wrong_input
+   :checklist: doc__bitmanipulation_fmea
+   :sha256: c5d79e0571769b1e032434fc1c97c39e2f8edb3d531524b6d00fc494f5b430bf
+
+   Machine-readable inspection record for the bitmanipulation component FMEA. It
+   validates the extracted FMEA elements against the reviewed safety analysis.
+   The build fails and reports the SHA256 to pin once the analysis has been
+   reviewed.
+
 Failure Mode List
 -----------------
 

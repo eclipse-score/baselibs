@@ -34,7 +34,7 @@
    :belongs_to: mod__baselibs
    :inspects: feat_arc_sta__baselibs__static_view_arch
    :checklist: doc__bitmanipulation_arc_inspection
-   :sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+   :sha256: c5d79e0571769b1e032434fc1c97c39e2f8edb3d531524b6d00fc494f5b430bf
 
    Machine-readable inspection record for the bitmanipulation component
    architecture. There is no dedicated component architecture; the inspection is

@@ -23,6 +23,24 @@ DFA (Dependent Failure Analysis)
    :security: YES
    :realizes: wp__feature_dfa
 
+.. mod_insp:: Baselibs Feature DFA Inspection Record
+   :id: mod_insp__baselibs__feat_dfa
+   :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: safety_analysis
+   :inspection_state: rework_required
+   :checklist_template: gd_chklst__safety_analysis
+   :reviewers: aschemmel-tech
+   :belongs_to: mod__baselibs
+   :inspects: feat_saf_dfa__baselibs__memory_access, feat_saf_dfa__baselibs__locked_ressource, feat_saf_dfa__baselibs__conc_file_access, feat_saf_dfa__baselibs__conc_memory_access, feat_saf_dfa__baselibs__blocked_execution, feat_saf_dfa__baselibs__cpu_starvation
+   :checklist: doc__baselibs_dfa
+   :sha256: 03f4c66a817d110adbdd1227e9624352741c8a8f3013ed6c7ae7ba0d67f14dd0
+
+   Machine-readable inspection record for the baselibs feature DFA. It validates
+   the extracted DFA elements against the reviewed safety analysis. The build
+   fails and reports the SHA256 to pin once the analysis has been reviewed.
+
 
 Dependent Failure Initiators
 ----------------------------

@@ -36,7 +36,7 @@
    :belongs_to: mod__baselibs
    :inspects: feat_req__baselibs__core_utilities, feat_req__baselibs__safety, feat_req__baselibs__multi_language_apis, feat_req__baselibs__consistent_apis, feat_req__baselibs__maintainable_design, feat_req__baselibs__security, feat_req__baselibs__json_library, feat_req__baselibs__flatbuffers_library, feat_req__baselibs__result_library, feat_req__baselibs__panic_free_development, feat_req__baselibs__containers_library, feat_req__baselibs__abi_containers, feat_req__baselibs__bitmanipulation, feat_req__baselibs__filesystem_library, feat_req__baselibs__memory_library, feat_req__baselibs__concurrency_library
    :checklist: doc__baselibs_req_inspection
-   :sha256: e9f8a0f7c71aa34db25bbae67461681a1ddcb4b3ed4f0d71de638761941dcb40
+   :sha256: 68ae5b1ff49972a3687e71bf5273a20864da8fde18e6b3739164ca97c9e567a9
 
    Machine-readable inspection record for the baselibs feature requirements.
    Build ``//:baselibs_feat_req_checklist`` to validate that the requirements

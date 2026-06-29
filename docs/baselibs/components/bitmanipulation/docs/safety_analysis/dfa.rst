@@ -23,6 +23,25 @@ DFA (Dependent Failure Analysis)
    :security: YES
    :realizes: wp__sw_component_dfa
 
+.. mod_insp:: Bitmanipulation Component DFA Inspection Record
+   :id: mod_insp__bitmanipulation__comp_dfa
+   :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: safety_analysis
+   :inspection_state: rework_required
+   :checklist_template: gd_chklst__safety_analysis
+   :reviewers: aschemmel-tech
+   :belongs_to: mod__baselibs
+   :inspects: doc__bitmanipulation_dfa
+   :checklist: doc__bitmanipulation_dfa
+   :sha256: c5d79e0571769b1e032434fc1c97c39e2f8edb3d531524b6d00fc494f5b430bf
+
+   Machine-readable inspection record for the bitmanipulation component DFA. It
+   validates the extracted DFA elements against the reviewed safety analysis.
+   The build fails and reports the SHA256 to pin once the analysis has been
+   reviewed.
+
 .. note:: Use the content of the document to describe e.g. why a fault model is not applicable for the diagram.
 
 

@@ -23,6 +23,25 @@ FMEA (Failure Modes and Effects Analysis)
    :security: YES
    :realizes: wp__feature_fmea
 
+.. mod_insp:: Baselibs Feature FMEA Inspection Record
+   :id: mod_insp__baselibs__feat_fmea
+   :status: valid
+   :safety: ASIL_B
+   :security: YES
+   :inspection_type: safety_analysis
+   :inspection_state: rework_required
+   :checklist_template: gd_chklst__safety_analysis
+   :reviewers: aschemmel-tech
+   :belongs_to: mod__baselibs
+   :inspects: doc__baselibs_fmea
+   :checklist: doc__baselibs_fmea
+   :sha256: 03f4c66a817d110adbdd1227e9624352741c8a8f3013ed6c7ae7ba0d67f14dd0
+
+   Machine-readable inspection record for the baselibs feature FMEA. It validates
+   the extracted FMEA elements against the reviewed safety analysis. The build
+   fails and reports the SHA256 to pin once the analysis has been reviewed.
+
+
 The feature baselibs consists of multiple components which provide very different functionality.
 They are also low-complex (i.e. no component architecture is documented, so that the feature architecture is the only one to analyze,
 with one exception which is the Json component).

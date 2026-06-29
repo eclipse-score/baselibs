@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@score_bazel_tools_cc//quality:defs.bzl", "clang_format_config", "quality_clang_tidy_config")
-load("@score_docs_as_code//:docs.bzl", "architecture_checklist", "assumptions_of_use", "component_architecture", "component_requirements", "docs", "feature_architecture", "feature_requirements", "filtered_needs_json", "requirements_checklist", "sphinx_needs_to_md", "sphinx_needs_to_trlc")
+load("@score_docs_as_code//:docs.bzl", "architecture_checklist", "assumptions_of_use", "component_architecture", "component_requirements", "dfa_checklist", "docs", "feature_architecture", "feature_requirements", "filtered_needs_json", "fmea_checklist", "requirements_checklist", "score_component", "score_module", "sphinx_needs_to_md", "sphinx_needs_to_trlc", "verification_report")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
@@ -25,87 +25,134 @@ docs(
     source_dir = "docs",
 )
 
-feature_requirements(
-    name = "baselibs_feature_reqs",
-    src = "@score_platform//:needs_json",
-    feature = "baselibs",
-    visibility = ["//visibility:public"],
-)
-
-# Validate the baselibs feature requirements against the reviewed inspection
-# record (mod_insp__baselibs__feat_req). `bazel build` fails when the
-# requirements output (or one of its transitive dependencies) drifts from the
-# SHA256 pinned in the inspection record.
-requirements_checklist(
-    name = "baselibs_feat_req_checklist",
-    mod_insp_id = "mod_insp__baselibs__feat_req",
-    deps = [":baselibs_feature_reqs"],
-    extra_needs = ["@score_platform//:needs_json"],
-    visibility = ["//visibility:public"],
-)
-
-feature_architecture(
-    name = "baselibs_feature_arch",
-    feature = "baselibs",
-    visibility = ["//visibility:public"],
-)
-
-# Validate the baselibs feature architecture against the reviewed inspection
-# record (mod_insp__baselibs__feat_arc). `bazel build` fails when the
-# architecture output (or one of its transitive dependencies) drifts from the
-# SHA256 pinned in the inspection record.
-architecture_checklist(
-    name = "baselibs_feat_arch_checklist",
-    mod_insp_id = "mod_insp__baselibs__feat_arc",
-    deps = [":baselibs_feature_arch"],
-    extra_needs = ["@score_platform//:needs_json"],
-    visibility = ["//visibility:public"],
-)
-
-
 # *****************************************************************************
-# Example usage of the requirement extraction macros from score_docs_as_code.
+# High-level wrappers: score_module / score_component.
 #
-# Each macro extracts one requirement type from //:needs_json and writes a
-# "<name>.json" file. The optional "component" / "feature" argument is matched
-# against the feature/component name encoded in each need ID (the
-# "<type>__<name>__..." naming convention); if omitted, all requirements of
-# that type are kept.
+# `score_component` bundles a component's requirement + architecture checklists.
+# `score_module` bundles a feature's requirement + architecture checklists with
+# all of its components. Building the module target also builds every component.
 # *****************************************************************************
 
+# --- bitmanipulation component ---------------------------------------------
 component_requirements(
-    name = "bitmanipulation_comp_reqs",  # only the "bitmanipulation" component
+    name = "bitmanipulation_comp_reqs",
+    src = "//:needs_json",
     component = "bitmanipulation",
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:private"],
 )
 
-# Validate the bitmanipulation component requirements against the reviewed
-# inspection record (mod_insp__bitmanipulation__comp_req). `bazel build` fails
-# when the requirements output drifts from the SHA256 pinned in the inspection
-# record.
 requirements_checklist(
     name = "bitmanipulation_req_checklist",
     mod_insp_id = "mod_insp__bitmanipulation__comp_req",
     deps = [":bitmanipulation_comp_reqs"],
     extra_needs = ["@score_platform//:needs_json"],
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:private"],
 )
 
 component_architecture(
-    name = "bitmanipulation_comp_arch",  # only the "bitmanipulation" component
+    name = "bitmanipulation_comp_arch",
+    src = "//:needs_json",
     component = "bitmanipulation",
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:private"],
 )
 
-# Validate the bitmanipulation component architecture against the reviewed
-# inspection record (mod_insp__bitmanipulation__comp_arc). `bazel build` fails
-# when the architecture output drifts from the SHA256 pinned in the inspection
-# record.
 architecture_checklist(
     name = "bitmanipulation_arch_checklist",
     mod_insp_id = "mod_insp__bitmanipulation__comp_arc",
     deps = [":bitmanipulation_comp_arch"],
     extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+dfa_checklist(
+    name = "bitmanipulation_dfa_checklist",
+    mod_insp_id = "mod_insp__bitmanipulation__comp_dfa",
+    deps = [":bitmanipulation_comp_arch", ":bitmanipulation_comp_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+fmea_checklist(
+    name = "bitmanipulation_fmea_checklist",
+    mod_insp_id = "mod_insp__bitmanipulation__comp_fmea",
+    deps = [":bitmanipulation_comp_arch", ":bitmanipulation_comp_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+score_component(
+    name = "bitmanipulation",
+    req_chklst = [":bitmanipulation_req_checklist"],
+    arch_chklst = [":bitmanipulation_arch_checklist"],
+    dfa = ":bitmanipulation_dfa_checklist",
+    fmea = ":bitmanipulation_fmea_checklist",
+    visibility = ["//visibility:private"],
+)
+
+# --- baselibs feature ------------------------------------------------------
+feature_requirements(
+    name = "baselibs_feature_reqs",
+    src = "@score_platform//:needs_json",
+    feature = "baselibs",
+    visibility = ["//visibility:private"],
+)
+
+requirements_checklist(
+    name = "baselibs_req_checklist",
+    mod_insp_id = "mod_insp__baselibs__feat_req",
+    deps = [":baselibs_feature_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+feature_architecture(
+    name = "baselibs_feature_arch",
+    src = "//:needs_json",
+    feature = "baselibs",
+    visibility = ["//visibility:private"],
+)
+
+architecture_checklist(
+    name = "baselibs_arch_checklist",
+    mod_insp_id = "mod_insp__baselibs__feat_arc",
+    deps = [":baselibs_feature_arch"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+dfa_checklist(
+    name = "baselibs_dfa_checklist",
+    mod_insp_id = "mod_insp__baselibs__feat_dfa",
+    deps = [":baselibs_feature_arch", ":baselibs_feature_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+fmea_checklist(
+    name = "baselibs_fmea_checklist",
+    mod_insp_id = "mod_insp__baselibs__feat_fmea",
+    deps = [":baselibs_feature_arch", ":baselibs_feature_reqs"],
+    extra_needs = ["@score_platform//:needs_json"],
+    visibility = ["//visibility:private"],
+)
+
+# verification_report(
+#     name = "baselibs_verification_report",
+#     mod_ver_report_id = "mod_vrep__baselibs__module",
+#     deps = [],
+#     extra_needs = ["@score_platform//:needs_json"],
+#     visibility = ["//visibility:private"],
+# )
+
+score_module(
+    name = "baselibs",
+    docs = ":docs",
+    req_chklst = [":baselibs_req_checklist"],
+    arch_chklst = [":baselibs_arch_checklist"],
+    components = [":bitmanipulation"],
+    fmea = ":baselibs_fmea_checklist",
+    # verif_report = ":baselibs_verification_report",
+    dfa = ":baselibs_dfa_checklist",
     visibility = ["//visibility:public"],
 )
 

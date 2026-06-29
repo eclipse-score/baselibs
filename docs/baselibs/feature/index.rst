@@ -25,3 +25,4 @@ Feature
    safety_analysis/dfa
    safety_analysis/fmea
    safety_planning/index
+   verification_report/index

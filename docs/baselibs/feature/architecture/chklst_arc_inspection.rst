@@ -38,7 +38,7 @@ Architecture Inspection Checklist
    :belongs_to: mod__baselibs
    :inspects: feat_arc_sta__baselibs__static_view_arch
    :checklist: doc__baselibs_arc_inspection
-   :sha256: c2c264b02cdc5c4e1c648b1208a32391ad91979e791dd97928fb1d6d079f0621
+   :sha256: 9a8cbb8bcb6580870bbe5818e98bdefe3c0481d5151076992c743b84ca6760a8
 
    Machine-readable inspection record for the baselibs feature architecture.
    It references the inspection checklist template
