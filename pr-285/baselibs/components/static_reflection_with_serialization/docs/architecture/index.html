@@ -378,6 +378,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
@@ -491,7 +492,7 @@
                   
   <section id="static-reflection-with-serialization-component-architecture">
 <h1>Static Reflection with Serialization Component Architecture<a class="headerlink" href="#static-reflection-with-serialization-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-18e85ebb">
+<div class="need_container docutils container" id="SNCB-1ed87cd2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__static_refl_with_serial_arch">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -540,7 +541,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-3e663b79">
+<div class="need_container docutils container" id="SNCB-e36f7658">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_static_reflection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -563,7 +564,8 @@
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__reflect" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__reflect</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__visitor" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__visitor</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__container" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__nested" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__nested</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__header_only" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__header_only</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__compile_eff" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__compile_eff</a>, <a class="reference internal" href="#comp_arc_sta__baselibs__static_reflection" title="comp__baselibs_static_reflection">comp_arc_sta__baselibs__static_reflection</a></span></span></div>
+<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__static_reflection" title="comp__baselibs_static_reflection">comp_arc_sta__baselibs__static_reflection</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__reflect" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__reflect</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__visitor" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__visitor</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__container" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__nested" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__nested</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__header_only" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__header_only</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__compile_eff" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__compile_eff</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__static_reflection">logic_arc_int__baselibs__static_reflection</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__generic_serial">logic_arc_int__baselibs__generic_serial</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__log_serial">logic_arc_int__baselibs__log_serial</a></span></span></div>
 </span></div>
 </div>
@@ -588,7 +590,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6f3a481c">
+<div class="need_container docutils container" id="SNCB-380e9125">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__static_reflection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -639,7 +641,7 @@
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
 <section id="static-reflection-operations">
 <h3>Static Reflection Operations<a class="headerlink" href="#static-reflection-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-d71e2f15">
+<div class="need_container docutils container" id="SNCB-c15a901a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__visit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -682,7 +684,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e573a4e5">
+<div class="need_container docutils container" id="SNCB-6f86c789">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__decl_struct_visit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -725,7 +727,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6dd67693">
+<div class="need_container docutils container" id="SNCB-45449b5b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__struct_intro">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -771,7 +773,7 @@
 </section>
 <section id="generic-serialization-operations">
 <h3>Generic Serialization Operations<a class="headerlink" href="#generic-serialization-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-8c883678">
+<div class="need_container docutils container" id="SNCB-026766c6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__serialize">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -814,7 +816,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c0776428">
+<div class="need_container docutils container" id="SNCB-461d0ed7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__deserialize">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -857,7 +859,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ec1471a1">
+<div class="need_container docutils container" id="SNCB-6aa8ae22">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_serial_size">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -903,7 +905,7 @@
 </section>
 <section id="logging-serialization-operations">
 <h3>Logging Serialization Operations<a class="headerlink" href="#logging-serialization-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-b13de4f0">
+<div class="need_container docutils container" id="SNCB-072da8b3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__log_ser">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -946,7 +948,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f5ae1587">
+<div class="need_container docutils container" id="SNCB-a8a17439">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__log_deser">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -989,7 +991,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6918288f">
+<div class="need_container docutils container" id="SNCB-affd23c9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_log_ser_size">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
