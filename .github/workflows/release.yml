@@ -19,6 +19,7 @@ name: Release
 run-name: Release ${{ inputs.tag }}
 permissions:
   contents: read
+  actions: write
 on:
   workflow_dispatch:
     inputs:
