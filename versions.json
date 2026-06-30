@@ -774,5 +774,9 @@
   {
     "version": "pr-325",
     "url": "https://eclipse-score.github.io/baselibs/pr-325/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-325-2603afd58043810118b21ce7fca37a33894e5aef",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-325-2603afd58043810118b21ce7fca37a33894e5aef/"
   }
 ]
