@@ -10,10 +10,19 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+load("@score_qnx_unit_tests//:defs.bzl", "cc_test_qnx")
 
-def py_unittest_qnx_test(**kwargs):
-    # This is intentionally left blank.
-    # The cc_test_qnx from @score_qnx_unit_tests can be used here,
-    # but we rely on executing tests on QNX via the run_under approach in this repository.
-    # See .bazelrc for details.
-    pass
+def py_unittest_qnx_test(name, test_cases = [], test_suites = [], **kwargs):
+    all_tests = []
+
+    for idx, test_case in enumerate(test_cases):
+        cc_test_qnx(
+            name = "%s_%s_%d" % (name, native.package_relative_label(test_case).name, idx),
+            cc_test = test_case,
+        )
+        all_tests.append(":%s_%s_%d" % (name, native.package_relative_label(test_case).name, idx))
+
+    native.test_suite(
+        name = name,
+        tests = all_tests + test_suites,
+    )
