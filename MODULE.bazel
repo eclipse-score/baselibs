@@ -123,12 +123,7 @@ git_override(
     remote = "https://github.com/bmw-software-engineering/lobster.git",
 )
 
-bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
-git_override(
-    module_name = "score_platform",
-    commit = "7d16a47714a59b6d803f3bbce7168bec074b960d",
-    remote = "https://github.com/eclipse-score/score",
-)
+bazel_dep(name = "score_platform", version = "0.6.0", dev_dependency = True)
 
 # FIXME: To be removed after https://github.com/eclipse-score/baselibs/issues/266 is resolved
 single_version_override(
