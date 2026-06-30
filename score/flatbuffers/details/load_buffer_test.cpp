@@ -76,6 +76,7 @@ class ThrowingCustomExceptionResource : public std::pmr::memory_resource
     }
 };
 
+template <typename Container>
 class LoadFlatbufferTest : public ::testing::Test
 {
   protected:
@@ -119,10 +120,14 @@ class LoadFlatbufferTest : public ::testing::Test
             }));
     }
 
-    template <class Container>
     score::cpp::expected_blank<score::os::Error> call_impl(const score::filesystem::Path& path, Container& data)
     {
         return detail::LoadBufferImpl(os_, path, data);
+    }
+
+    std::vector<uint8_t> AsVector(const Container& data) const
+    {
+        return std::vector<uint8_t>(data.cbegin(), data.cend());
     }
 
     struct OSMock
@@ -135,93 +140,96 @@ class LoadFlatbufferTest : public ::testing::Test
     OSMock os_{};
 };
 
-TEST_F(LoadFlatbufferTest, OpenFailureReturnsError)
+using ContainerTypes = ::testing::Types<std::vector<uint8_t>, std::pmr::vector<uint8_t>>;
+TYPED_TEST_SUITE(LoadFlatbufferTest, ContainerTypes);
+
+TYPED_TEST(LoadFlatbufferTest, OpenFailureReturnsError)
 {
     const auto open_error = score::os::Error::createFromErrno(ENOENT);
-    EXPECT_CALL(os_.fcntl, open(_, _)).WillOnce(Return(score::cpp::make_unexpected(open_error)));
+    EXPECT_CALL(this->os_.fcntl, open(_, _)).WillOnce(Return(score::cpp::make_unexpected(open_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kNoSuchFileOrDirectory);
 }
 
-TEST_F(LoadFlatbufferTest, FstatFailureReturnsErrorAndClosesFile)
+TYPED_TEST(LoadFlatbufferTest, FstatFailureReturnsErrorAndClosesFile)
 {
-    SetUpSuccessfulOpen();
+    this->SetUpSuccessfulOpen();
 
     const auto stat_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.stat, fstat(kTestFd, _)).WillOnce(Return(score::cpp::make_unexpected(stat_error)));
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(this->os_.stat, fstat(kTestFd, _)).WillOnce(Return(score::cpp::make_unexpected(stat_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, NegativeFileSizeReturnsErrorAndClosesFile)
+TYPED_TEST(LoadFlatbufferTest, NegativeFileSizeReturnsErrorAndClosesFile)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulClose();
 
-    EXPECT_CALL(os_.stat, fstat(kTestFd, _))
+    EXPECT_CALL(this->os_.stat, fstat(kTestFd, _))
         .WillOnce(DoAll(Invoke([](std::int32_t, score::os::StatBuffer& buf) {
                             buf.st_size = kInvalidNegativeSize;
                         }),
                         Return(score::cpp::expected_blank<score::os::Error>{})));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInvalidArgument);
 }
 
-TEST_F(LoadFlatbufferTest, ReadFailureReturnsErrorAndClosesFile)
+TYPED_TEST(LoadFlatbufferTest, ReadFailureReturnsErrorAndClosesFile)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(kTestFileSize);
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(kTestFileSize);
+    this->SetUpSuccessfulClose();
 
     const auto read_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _)).WillOnce(Return(score::cpp::make_unexpected(read_error)));
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _)).WillOnce(Return(score::cpp::make_unexpected(read_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
+TYPED_TEST(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(kTestFileSize);
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(kTestFileSize);
+    this->SetUpSuccessfulClose();
 
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Return(score::cpp::expected<ssize_t, score::os::Error>{static_cast<ssize_t>(0)}));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
+TYPED_TEST(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
 {
     const std::vector<uint8_t> expected_data{'A', 'B', 'C', 'D', 'E'};
 
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
+    this->SetUpSuccessfulClose();
 
     std::size_t offset = 0U;
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Invoke([&](std::int32_t, void* buf, std::size_t) -> score::cpp::expected<ssize_t, score::os::Error> {
             std::memcpy(buf, std::next(expected_data.data(), static_cast<std::ptrdiff_t>(offset)), 2U);
             offset += 2U;
@@ -238,23 +246,23 @@ TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
             return static_cast<ssize_t>(1);
         }));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
-    EXPECT_EQ(data, expected_data);
+    EXPECT_EQ(this->AsVector(data), expected_data);
 }
 
-TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
+TYPED_TEST(LoadFlatbufferTest, InterruptedReadIsRetried)
 {
     const std::vector<uint8_t> expected_data{'X', 'Y'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
+    this->SetUpSuccessfulClose();
 
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(eintr_error)))
         .WillOnce(
             Invoke([&](std::int32_t, void* buf, std::size_t count) -> score::cpp::expected<ssize_t, score::os::Error> {
@@ -263,85 +271,85 @@ TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
                 return static_cast<ssize_t>(to_copy);
             }));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
-    EXPECT_EQ(data, expected_data);
+    EXPECT_EQ(this->AsVector(data), expected_data);
 }
 
-TEST_F(LoadFlatbufferTest, EmptyFileReturnsEmptyVector)
+TYPED_TEST(LoadFlatbufferTest, EmptyFileReturnsEmptyVector)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(0);
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(0);
+    this->SetUpSuccessfulClose();
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
     EXPECT_TRUE(data.empty());
 }
 
-TEST_F(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
+TYPED_TEST(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(0);
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(0);
 
     const auto close_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
+TYPED_TEST(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
 {
     const std::vector<uint8_t> expected_data{'Z'};
 
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
-    SetUpSuccessfulReadAll(expected_data);
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
+    this->SetUpSuccessfulReadAll(expected_data);
 
     const auto close_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, CloseFailureAfterReadErrorPropagatesOriginalError)
+TYPED_TEST(LoadFlatbufferTest, CloseFailureAfterReadErrorPropagatesOriginalError)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(kTestFileSize);
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(kTestFileSize);
 
     const auto read_error = score::os::Error::createFromErrno(ENOENT);
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _)).WillOnce(Return(score::cpp::make_unexpected(read_error)));
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _)).WillOnce(Return(score::cpp::make_unexpected(read_error)));
 
     const auto close_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kNoSuchFileOrDirectory);
 }
 
-TEST_F(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
+TYPED_TEST(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(4);
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(4);
+    this->SetUpSuccessfulClose();
 
     const auto read_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Invoke([](std::int32_t, void* buf, std::size_t) -> score::cpp::expected<ssize_t, score::os::Error> {
             const char byte = 'A';
             std::memcpy(buf, &byte, 1U);
@@ -349,20 +357,20 @@ TEST_F(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
         }))
         .WillOnce(Return(score::cpp::make_unexpected(read_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
+TYPED_TEST(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
 {
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(4);
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(4);
+    this->SetUpSuccessfulClose();
 
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Invoke([](std::int32_t, void* buf, std::size_t) -> score::cpp::expected<ssize_t, score::os::Error> {
             const char byte = 'B';
             std::memcpy(buf, &byte, 1U);
@@ -370,23 +378,23 @@ TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
         }))
         .WillOnce(Return(score::cpp::expected<ssize_t, score::os::Error>{static_cast<ssize_t>(0)}));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInputOutput);
 }
 
-TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
+TYPED_TEST(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
 {
     const std::vector<uint8_t> expected_data{'I'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
-    SetUpSuccessfulOpen();
-    SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
-    SetUpSuccessfulClose();
+    this->SetUpSuccessfulOpen();
+    this->SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
+    this->SetUpSuccessfulClose();
 
-    EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
+    EXPECT_CALL(this->os_.unistd, read(kTestFd, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(eintr_error)))
         .WillOnce(Return(score::cpp::make_unexpected(eintr_error)))
         .WillOnce(
@@ -396,31 +404,35 @@ TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
                 return static_cast<ssize_t>(to_copy);
             }));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
-    EXPECT_EQ(data, expected_data);
+    EXPECT_EQ(this->AsVector(data), expected_data);
 }
 
-TEST_F(LoadFlatbufferTest, CloseFailureAfterFstatErrorPropagatesFstatError)
+TYPED_TEST(LoadFlatbufferTest, CloseFailureAfterFstatErrorPropagatesFstatError)
 {
-    SetUpSuccessfulOpen();
+    this->SetUpSuccessfulOpen();
 
     const auto stat_error = score::os::Error::createFromErrno(EBADF);
-    EXPECT_CALL(os_.stat, fstat(kTestFd, _)).WillOnce(Return(score::cpp::make_unexpected(stat_error)));
+    EXPECT_CALL(this->os_.stat, fstat(kTestFd, _)).WillOnce(Return(score::cpp::make_unexpected(stat_error)));
 
     const auto close_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kBadFileDescriptor);
 }
 
-TEST_F(LoadFlatbufferTest, ResizeBadAllocReturnsEnomemAndClosesFile)
+class LoadFlatbufferPmrTest : public LoadFlatbufferTest<std::pmr::vector<uint8_t>>
+{
+};
+
+TEST_F(LoadFlatbufferPmrTest, ResizeBadAllocReturnsEnomemAndClosesFile)
 {
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
@@ -434,7 +446,7 @@ TEST_F(LoadFlatbufferTest, ResizeBadAllocReturnsEnomemAndClosesFile)
     EXPECT_EQ(result.error(), score::os::Error::Code::kNotEnoughSpace);
 }
 
-TEST_F(LoadFlatbufferTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
+TEST_F(LoadFlatbufferPmrTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
 {
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
@@ -448,21 +460,21 @@ TEST_F(LoadFlatbufferTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
     EXPECT_EQ(result.error(), score::os::Error::Code::kUnexpected);
 }
 
-TEST_F(LoadFlatbufferTest, CloseFailureAfterNegativeSizePropagatesInvalidArgument)
+TYPED_TEST(LoadFlatbufferTest, CloseFailureAfterNegativeSizePropagatesInvalidArgument)
 {
-    SetUpSuccessfulOpen();
+    this->SetUpSuccessfulOpen();
 
-    EXPECT_CALL(os_.stat, fstat(kTestFd, _))
+    EXPECT_CALL(this->os_.stat, fstat(kTestFd, _))
         .WillOnce(DoAll(Invoke([](std::int32_t, score::os::StatBuffer& buf) {
                             buf.st_size = kInvalidNegativeSize;
                         }),
                         Return(score::cpp::expected_blank<score::os::Error>{})));
 
     const auto close_error = score::os::Error::createFromErrno(EIO);
-    EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
+    EXPECT_CALL(this->os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
-    const auto result = call_impl(kTestPath, data);
+    TypeParam data;
+    const auto result = this->call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInvalidArgument);
