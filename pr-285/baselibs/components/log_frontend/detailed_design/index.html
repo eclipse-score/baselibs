@@ -73,6 +73,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Requirements" href="../../containers_rust/requirements/index.html" />
     <link rel="prev" title="Component Architecture" href="../architecture/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -414,6 +415,8 @@
 
 <li class="toctree-l1"><a class="reference internal" href="../architecture/index.html">Component Architecture</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Detailed Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../containers_rust/requirements/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../containers_rust/architecture/index.html">Rust Containers Architecture</a></li>
 </ul>
 </div>
 </nav></div>
@@ -476,7 +479,7 @@
                   
   <section id="detailed-design">
 <span id="component-detailed-design-log"></span><h1>Detailed Design<a class="headerlink" href="#detailed-design" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-a4cb43ff">
+<div class="need_container docutils container" id="SNCB-b0cc4b4c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_detailed_design">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -496,6 +499,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">log</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/implementation/implementation_workproducts.html#wp__sw_implementation">wp__sw_implementation</a></span></span></div>
 </span></div>
@@ -545,7 +549,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="static-diagrams-for-unit-interactions">
 <h3>Static Diagrams for Unit Interactions<a class="headerlink" href="#static-diagrams-for-unit-interactions" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-d88f98a3">
+<div class="need_container docutils container" id="SNCB-7ff083da">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__log__class_diagram">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -564,7 +568,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__placeholder" title="comp_arc_sta__log__class_diagram">comp_req__log__placeholder</a></span></span></div>
 </span></div>
@@ -593,7 +598,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="dynamic-diagrams-for-unit-interactions">
 <h3>Dynamic Diagrams for Unit Interactions<a class="headerlink" href="#dynamic-diagrams-for-unit-interactions" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-1190edf9">
+<div class="need_container docutils container" id="SNCB-24ca13e7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_op">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -612,7 +617,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__placeholder" title="comp_arc_dyn__log__log_op">comp_req__log__placeholder</a></span></span></div>
 </span></div>
@@ -638,7 +644,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ef64f12d">
+<div class="need_container docutils container" id="SNCB-8a0002bd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_to_level">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -657,7 +663,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__placeholder" title="comp_arc_dyn__log__log_to_level">comp_req__log__placeholder</a></span></span></div>
 </span></div>
@@ -705,6 +712,15 @@ Those units are not described in architecture, as they all form a monolithic log
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Component Architecture</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../../containers_rust/requirements/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Requirements</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

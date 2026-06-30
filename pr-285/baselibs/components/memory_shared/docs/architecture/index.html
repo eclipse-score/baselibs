@@ -419,6 +419,8 @@
 
 <li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/architecture/index.html">Component Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/detailed_design/index.html">Detailed Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/requirements/index.html">Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/architecture/index.html">Rust Containers Architecture</a></li>
 </ul>
 </div>
 </nav></div>
@@ -484,7 +486,7 @@
                   
   <section id="memory-shared-component-architecture">
 <h1>Memory Shared Component Architecture<a class="headerlink" href="#memory-shared-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-b59439a1">
+<div class="need_container docutils container" id="SNCB-0875f660">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_memory_shared">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -503,7 +505,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
 <div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__memory_shared" title="comp__baselibs_memory_shared">comp_arc_sta__baselibs__memory_shared</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_memory" title="comp__baselibs_memory_shared">comp_req__memory__shared_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__offset_ptr" title="comp__baselibs_memory_shared">comp_req__memory__offset_ptr</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_container" title="comp__baselibs_memory_shared">comp_req__memory__shared_container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__inter_process_sync" title="comp__baselibs_memory_shared">comp_req__memory__inter_process_sync</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__bounds_check" title="comp__baselibs_memory_shared">comp_req__memory__bounds_check</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__endianness" title="comp__baselibs_memory_shared">comp_req__memory__endianness</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__sealed_shm" title="comp__baselibs_memory_shared">comp_req__memory__sealed_shm</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__typed_memory" title="comp__baselibs_memory_shared">comp_req__memory__typed_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__resource_registry" title="comp__baselibs_memory_shared">comp_req__memory__resource_registry</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__string_utils" title="comp__baselibs_memory_shared">comp_req__memory__string_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__atomic_ops" title="comp__baselibs_memory_shared">comp_req__memory__atomic_ops</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__deterministic_alloc" title="comp__baselibs_memory_shared">comp_req__memory__deterministic_alloc</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__address_independence" title="comp__baselibs_memory_shared">comp_req__memory__address_independence</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__memory_shared">logic_arc_int__baselibs__memory_shared</a></span></span></div>
@@ -532,7 +535,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a9b8b13d">
+<div class="need_container docutils container" id="SNCB-0802baf9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__memory_shared">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -551,7 +554,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_memory_shared" title="comp_arc_sta__baselibs__memory_shared">comp__baselibs_memory_shared</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__offset_ptr" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__offset_ptr</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_container" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__inter_process_sync" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__inter_process_sync</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__bounds_check" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__bounds_check</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__endianness" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__endianness</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__sealed_shm" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__sealed_shm</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__typed_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__typed_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__resource_registry" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__resource_registry</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__string_utils" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__string_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__atomic_ops" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__atomic_ops</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__deterministic_alloc" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__deterministic_alloc</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__address_independence" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__address_independence</a></span></span></div>
 </span></div>
@@ -577,7 +581,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e537e6ca">
+<div class="need_container docutils container" id="SNCB-f1f784ba">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__open">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -596,7 +600,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__memory_shared">logic_arc_int__baselibs__memory_shared</a></span></span></div>
 </span></div>
 </div>
@@ -619,7 +624,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3c4fadd0">
+<div class="need_container docutils container" id="SNCB-0c56cbab">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__update">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -638,7 +643,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__memory_shared">logic_arc_int__baselibs__memory_shared</a></span></span></div>
 </span></div>
 </div>
@@ -661,7 +667,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-48a54237">
+<div class="need_container docutils container" id="SNCB-56e1a840">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__lock">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -680,7 +686,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__memory_shared">logic_arc_int__baselibs__memory_shared</a></span></span></div>
 </span></div>
 </div>
@@ -703,7 +710,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e89ed497">
+<div class="need_container docutils container" id="SNCB-91cd732f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_perm">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -722,7 +729,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__memory_shared">logic_arc_int__baselibs__memory_shared</a></span></span></div>
 </span></div>
 </div>
