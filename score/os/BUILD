@@ -257,7 +257,10 @@ cc_library(
     srcs = [
         "semaphore.cpp",
         "semaphore_impl.cpp",
-    ],
+    ] + select({
+        "@platforms//os:qnx": ["semaphore_impl_qnx.cpp"],
+        "//conditions:default": ["semaphore_impl_linux.cpp"],
+    }),
     hdrs = [
         "semaphore.h",
         "semaphore_impl.h",

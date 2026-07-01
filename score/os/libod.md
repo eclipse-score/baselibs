@@ -270,14 +270,15 @@ This library provides the following internal function:
 ## semaphore
 This lib exports the following OS functions:
 
-* `sem_init` - This is a wrapper over the os sem_init(). This function is to initialize an unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_init.html
-* `sem_open` - This function after converting openflag to nativeflag and the modeflag to nativeflag(depending on the parameters) calls the os sem_open(). Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_open.html
-* `sem_wait` - This is a wrapper over the os sem_wait(). This function wait on a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_wait.html
-* `sem_post` - This is a wrapper over the os sem_post(). This function increment a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_post.html
-* `sem_close` - This is a wrapper over the os sem_close(). This function is to close a named semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_close.html
-* `sem_unlink` - This is a wrapper over the os sem_unlink(). This function is to destroy a named semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_unlink.html
-* `sem_timedwait` - This is a wrapper over the os sem_timedwait(). This function waits on a named or unnamed semaphore, with a timeout. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
-* `sem_getvalue` - This is a wrapper over the os sem_getvalue(). This function is to get the value of a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_getvalue.html
+* `sem_init` - This is a wrapper over the os sem_init(). This function is to initialize an unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_init.html
+* `sem_open` - This function after converting openflag to nativeflag and the modeflag to nativeflag(depending on the parameters) calls the os sem_open(). Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_open.html
+* `sem_wait` - This is a wrapper over the os sem_wait(). This function wait on a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_wait.html
+* `sem_post` - This is a wrapper over the os sem_post(). This function increment a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_post.html
+* `sem_close` - This is a wrapper over the os sem_close(). This function is to close a named semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_close.html
+* `sem_unlink` - This is a wrapper over the os sem_unlink(). This function is to destroy a named semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_unlink.html
+* `sem_timedwait` - This is a wrapper over the os sem_timedwait(). This function waits on a named or unnamed semaphore, with a timeout. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
+* `sem_timedwait_monotonic` - This is a wrapper over the os sem_timedwait_monotonic() on QNX and sem_clockwait() with CLOCK_MONOTONIC on Linux (glibc). It behaves like sem_timedwait() but measures the absolute timeout against CLOCK_MONOTONIC, so the timeout is unaffected by wall-clock adjustments. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
+* `sem_getvalue` - This is a wrapper over the os sem_getvalue(). This function is to get the value of a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_getvalue.html
 ### External Dependencies
 * errno
 * object_seam
