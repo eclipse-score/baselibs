@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,27 +11,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-"""
-`stdout_logger` is a testing/development backend for logging.
-For production use `score_logging`.
-"""
-
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-
-rust_library(
+alias(
     name = "stdout_logger",
-    srcs = glob(["**/*.rs"]),
+    actual = "//score/log_rust/stdout_logger:stdout_logger",
+    deprecation = "//src/log/stdout_logger:stdout_logger has moved to //score/log_rust/stdout_logger:stdout_logger. " +
+                  "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
-    deps = [
-        "//src/log/score_log",
-    ],
-)
-
-rust_test(
-    name = "tests",
-    crate = "stdout_logger",
-    tags = [
-        "unit_tests",
-        "ut",
-    ],
 )

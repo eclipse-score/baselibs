@@ -30,7 +30,6 @@ jobs:
           - bazel-config: bl-x86_64-qnx
             bazel-test-target: >-
               //score/...
-              //src/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
@@ -41,7 +40,6 @@ jobs:
           - bazel-config: bl-aarch64-qnx
             bazel-test-target: >-
               //score/...
-              //src/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/memory/shared:shared_memory_factory_test
@@ -53,7 +51,7 @@ jobs:
       contents: read
       pull-requests: read
     with:
-      bazel-target: "//score/... //src/..."
+      bazel-target: "//score/..."
       bazel-config: ${{ matrix.bazel-config }}
       bazel-test-target: ${{ matrix.bazel-test-target }}
       credential-helper: ".github/tools/qnx_credential_helper.py"

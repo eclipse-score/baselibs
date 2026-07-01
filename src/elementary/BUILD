@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,20 +11,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-
-rust_library(
+alias(
     name = "elementary",
-    srcs = glob(["**/*.rs"]),
-    edition = "2021",
+    actual = "//score/allocator:allocator",
+    deprecation = "//src/elementary:elementary has moved to //score/allocator:allocator. " +
+                  "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
-)
-
-rust_test(
-    name = "tests",
-    crate = "elementary",
-    tags = [
-        "unit_tests",
-        "ut",
-    ],
 )

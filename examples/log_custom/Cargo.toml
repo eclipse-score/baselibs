@@ -15,7 +15,9 @@
 name = "log_custom"
 version.workspace = true
 authors.workspace = true
+readme.workspace = true
 edition.workspace = true
+license-file.workspace = true
 
 [dependencies]
 score_log.workspace = true

@@ -33,7 +33,6 @@ copyright_checker(
         "docs",
         "examples",
         "score",
-        "src",
         "third_party",
         "//:BUILD",
         "//:MODULE.bazel",
@@ -95,9 +94,10 @@ dash_license_checker(
 rust_coverage_report(
     name = "rust_coverage",
     bazel_configs = [
+        "bl-x86_64-linux",
         "ferrocene-coverage",
     ],
-    query = 'kind("rust_test", //src/...) except //src/log/score_log_fmt_macro:tests',
+    query = 'kind("rust_test", //score/...) except //score/log_rust/score_log_fmt_macro:tests',
     visibility = ["//visibility:public"],
 )
 

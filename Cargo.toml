@@ -16,27 +16,27 @@ resolver = "2"
 # Split to default members without tests and examples.
 # Used when executing cargo from project root.
 default-members = [
-    "src/containers",
-    "src/sync",
-    "src/elementary",
-    "src/pal",
-    "src/thread",
-    "src/log/score_log_fmt_macro",
-    "src/log/stdout_logger",
-    "src/testing_macros",
+    "score/containers_rust",
+    "score/sync",
+    "score/allocator",
+    "score/pal",
+    "score/thread",
+    "score/log_rust/score_log_fmt_macro",
+    "score/log_rust/stdout_logger",
+    "score/testing_macros",
 ]
 # Include tests and examples as a member for IDE support and Bazel builds.
 members = [
-    "src/containers",
-    "src/sync",
-    "src/elementary",
-    "src/pal",
-    "src/thread",
-    "src/log/score_log",
-    "src/log/score_log_fmt",
-    "src/log/score_log_fmt_macro",
-    "src/log/stdout_logger",
-    "src/testing_macros",
+    "score/containers_rust",
+    "score/sync",
+    "score/allocator",
+    "score/pal",
+    "score/thread",
+    "score/log_rust/score_log",
+    "score/log_rust/score_log_fmt",
+    "score/log_rust/score_log_fmt_macro",
+    "score/log_rust/stdout_logger",
+    "score/testing_macros",
     "examples/log_builtin",
     "examples/log_custom",
 ]
@@ -46,17 +46,18 @@ version = "0.0.1"
 edition = "2021"
 license-file = "LICENSE.md"
 authors = ["S-CORE Contributors"]
+readme = "README.md"
 
 [workspace.dependencies]
-containers = { path = "src/containers" }
-score_log = { path = "src/log/score_log" }
-score_log_fmt = { path = "src/log/score_log_fmt" }
-score_log_fmt_macro = { path = "src/log/score_log_fmt_macro" }
-stdout_logger = { path = "src/log/stdout_logger" }
-elementary = { path = "src/elementary" }
-testing_macros = { path = "src/testing_macros" }
-pal = { path = "src/pal" }
-thread = { path = "src/thread" }
+containers = { path = "score/containers_rust" }
+score_log = { path = "score/log_rust/score_log" }
+score_log_fmt = { path = "score/log_rust/score_log_fmt" }
+score_log_fmt_macro = { path = "score/log_rust/score_log_fmt_macro" }
+stdout_logger = { path = "score/log_rust/stdout_logger" }
+allocator = { path = "score/allocator" }
+testing_macros = { path = "score/testing_macros" }
+pal = { path = "score/pal" }
+thread = { path = "score/thread" }
 
 [workspace.lints.clippy]
 std_instead_of_core = "warn"
