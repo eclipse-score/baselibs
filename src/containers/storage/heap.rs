@@ -145,9 +145,9 @@ mod tests {
     // Type used by all tests.
     type T = u64;
     // Larger capacity sizes, equal to 512KB, 16MB, 128MB.
-    const CAP_512KB: u32 = 512 * 1024;
-    const CAP_16MB: u32 = 16 * 1024 * 1024;
-    const CAP_128MB: u32 = 128 * 1024 * 1024;
+    const CAP_512KB: u32 = 512 * 1024 / size_of::<T>() as u32;
+    const CAP_16MB: u32 = 16 * 1024 * 1024 / size_of::<T>() as u32;
+    const CAP_128MB: u32 = 128 * 1024 * 1024 / size_of::<T>() as u32;
     // Capacity test cases.
     const CAP_CASES: [u32; 6] = [0, 1, 4, CAP_512KB, CAP_16MB, CAP_128MB];
 

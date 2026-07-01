@@ -12,8 +12,6 @@
  ********************************************************************************/
 #include "score/memory/string_comparison_adaptor.h"
 
-#include "score/memory/string_literal.h"
-
 #include <score/assert.hpp>
 
 #include <gmock/gmock.h>
@@ -33,7 +31,7 @@ using ::testing::Ne;
 using ::testing::StrEq;
 
 /// Set of specialised template functions which allows creating a std::string, std::string_view, or
-/// score::StringLiteral in a generic way, solely based on the template type. We use specialized template functions
+/// the underlying string type in a generic way, solely based on the template type. We use specialized template functions
 /// instead of overloading, since the signatures only differ in the return type.
 template <typename T>
 T CreateUnderlyingString(std::string_view /* string_view */)
@@ -54,12 +52,6 @@ std::string_view CreateUnderlyingString(const std::string_view string_view)
     return string_view;
 }
 
-template <>
-score::StringLiteral CreateUnderlyingString(const std::string_view string_view)
-{
-    return string_view.data();
-}
-
 template <typename T>
 class StringComparisonAdaptorFixture : public ::testing::Test
 {
@@ -68,14 +60,13 @@ class StringComparisonAdaptorFixture : public ::testing::Test
 
 // Gtest will run all tests in the StringComparisonAdaptorFixture once for every type, t, in MyTypes, such that
 // TypeParam == t for each run.
-using MyTypes = ::testing::Types<std::string, std::string_view, score::StringLiteral>;
+using MyTypes = ::testing::Types<std::string, std::string_view>;
 TYPED_TEST_SUITE(StringComparisonAdaptorFixture, MyTypes, );
 
 TEST(StringComparisonAdaptorHelpersFixture, CreateUnderlyingStringReturnCorrectValues)
 {
     EXPECT_THAT(CreateUnderlyingString<std::string>("test_string"), "test_string");
     EXPECT_THAT(CreateUnderlyingString<std::string_view>("test_string").data(), StrEq("test_string"));
-    EXPECT_THAT(CreateUnderlyingString<score::StringLiteral>("test_string"), StrEq("test_string"));
 }
 
 TYPED_TEST(StringComparisonAdaptorFixture, CanBeConvertedImplicitly)
