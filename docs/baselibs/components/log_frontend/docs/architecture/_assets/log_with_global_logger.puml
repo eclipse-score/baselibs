@@ -1,0 +1,22 @@
+@startuml log_with_global_logger
+
+participant "User" as actor
+participant "<<component>> log" as frontend
+participant "<<component>> score_log_subscriber" as backend
+participant "no-op logger" as nop_logger
+
+actor -> frontend : Log message
+
+frontend -> frontend : Get global logger instance
+
+alt registered
+    frontend -> backend : Log message
+    backend --> frontend
+else not-registered
+    frontend -> nop_logger : No-op operation
+    nop_logger --> frontend
+end
+
+frontend --> actor
+
+@enduml
