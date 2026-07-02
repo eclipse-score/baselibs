@@ -22,6 +22,7 @@ cc_library(
         "additional_warnings",
         "strict_warnings",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
