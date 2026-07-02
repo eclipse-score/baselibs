@@ -1,0 +1,17 @@
+@startuml log_with_global_logger
+
+participant "User" as actor
+participant "<<component>> log" as frontend
+participant "<<component>> score_log_subscriber" as backend
+
+actor -> backend : Create concrete logger instance
+backend --> actor : Logger instance
+
+actor -> frontend : Log message with logger instance
+
+frontend -> backend : Log message
+backend --> frontend
+
+frontend --> actor
+
+@enduml

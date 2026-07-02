@@ -1,0 +1,17 @@
+@startuml register_global_logger
+
+participant "User" as actor
+participant "<<component>> score_log_subscriber" as backend
+participant "<<component>> log" as frontend
+
+actor -> backend : Create concrete logger instance
+backend --> actor : Logger instance
+
+actor -> frontend : Set logger
+alt set-success
+    frontend --> actor : Ok
+else set-failed
+    frontend --> actor : Error code
+end
+
+@enduml

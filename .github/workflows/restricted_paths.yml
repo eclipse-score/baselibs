@@ -45,7 +45,12 @@ jobs:
               - 'score/memory/**/!(string_comparison_adaptor|string_literal)*'
               - 'score/mw/**'
               - 'score/network/**'
-              - 'score/os/**'
+              - 'score/os/diagrams/**'
+              - 'score/os/interface/qnx/**'
+              - 'score/os/linux/utils/test/**'
+              - 'score/os/test/qnx/**'
+              - 'score/os/mocklib/qnx/**'
+              - 'score/os/qnx/**'
       - name: Block PR if restricted files are changed
         if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
         env:

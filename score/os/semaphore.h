@@ -67,6 +67,9 @@ class Semaphore : public ObjectSeam<Semaphore>
     virtual score::cpp::expected_blank<Error> sem_unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_timedwait(sem_t* const sem,
                                                      const struct timespec* const abs_time) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_timedwait_monotonic(
+        sem_t* const sem,
+        const struct timespec* const abs_time) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept = 0;
 
     virtual ~Semaphore() = default;

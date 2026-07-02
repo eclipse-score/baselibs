@@ -1,0 +1,21 @@
+@startuml log_static_view
+
+package "log" <<component>> {
+    component "score_log" <<interface>>
+
+    component "score_log_fmt"
+
+    component "score_log_fmt_macro"
+
+    score_log ..> score_log_fmt : use
+    score_log ..> score_log_fmt_macro : use
+}
+
+component "score_log_subscriber" <<component>>
+note bottom
+    Backend implementation.
+end note
+
+score_log --> score_log_subscriber : implements
+
+@enduml
