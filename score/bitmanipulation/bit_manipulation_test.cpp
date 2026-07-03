@@ -34,9 +34,9 @@ TEST(HalfByte, CanBeConstructedFromUInt8)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
-    constexpr HalfByte value{std::uint8_t{4u}};
+    constexpr HalfByte value1{std::uint8_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
@@ -73,9 +73,9 @@ TEST(Byte, CanBeConstructedFromUInt8)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
-    constexpr Byte value{std::uint8_t{4u}};
+    constexpr Byte value1{std::uint8_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(Byte, CanBeConstructedFromUInt16IfInRange)
@@ -86,9 +86,9 @@ TEST(Byte, CanBeConstructedFromUInt16IfInRange)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
-    constexpr Byte value{std::uint16_t{4u}};
+    constexpr Byte value1{std::uint16_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(Byte, CanBeConstructedFromTwoHalfBytes)
