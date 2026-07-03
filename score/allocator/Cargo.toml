@@ -22,5 +22,9 @@ license-file.workspace = true
 [lib]
 path = "lib.rs"
 
+[dependencies]
+pal.workspace = true
+score_log.workspace = true
+
 [lints]
 workspace = true

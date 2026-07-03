@@ -15,6 +15,8 @@
 
 mod allocator_traits;
 mod heap_allocator;
+mod mmap_arena_allocator;
 
 pub use allocator_traits::{AllocationError, BasicAllocator};
 pub use heap_allocator::{HeapAllocator, GLOBAL_ALLOCATOR};
+pub use mmap_arena_allocator::{page_size, MmapArenaAllocator};

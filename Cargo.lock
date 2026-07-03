@@ -5,6 +5,10 @@ version = 4
 [[package]]
 name = "allocator"
 version = "0.0.1"
+dependencies = [
+ "pal",
+ "score_log",
+]
 
 [[package]]
 name = "containers"
@@ -33,7 +37,6 @@ dependencies = [
 name = "pal"
 version = "0.0.1"
 dependencies = [
- "containers",
  "score_log",
 ]
 

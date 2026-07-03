@@ -13,9 +13,10 @@
 
 use core::alloc::Layout;
 use core::ptr::NonNull;
+use score_log::ScoreDebug;
 
 /// Allocation errors.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, ScoreDebug, Clone, Copy, PartialEq, Eq)]
 pub enum AllocationError {
     /// Memory allocation failed due to insufficient memory.
     OutOfMemory,
