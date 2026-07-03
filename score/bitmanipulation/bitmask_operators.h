@@ -117,12 +117,12 @@ constexpr typename std::enable_if<std::is_enum<T>::value && score::enable_bitmas
 // coverity[autosar_cpp14_m7_3_1_violation]
 operator&(const T & lhs, const T & rhs)
 {
-    using U = std::underlying_type_t<T>;
+    using U1 = std::underlying_type_t<T>;
     // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
     // loss." In this context, there is no data loss because lhs/rhs is promoted to std::uint64_t for the bitwise
     // operation. The result is then checked for non-zero, ensuring the integrity of the original data.
     // coverity[autosar_cpp14_a4_7_1_violation]
-    return (static_cast<std::uint64_t>(static_cast<U>(lhs)) & static_cast<std::uint64_t>(static_cast<U>(rhs))) != 0U;
+    return (static_cast<std::uint64_t>(static_cast<U1>(lhs)) & static_cast<std::uint64_t>(static_cast<U1>(rhs))) != 0U;
 }
 
 /// @brief Provides the bitwise XOR operator for scoped enums.

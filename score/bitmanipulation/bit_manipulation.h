@@ -29,7 +29,7 @@ class HalfByte
 {
   public:
     /// \brief Construct a HalfByte from a uint8, only the last 4 bits are considered
-    constexpr explicit HalfByte(const std::uint8_t value) : repr{static_cast<std::uint8_t>(value & mask)} {}
+    constexpr explicit HalfByte(const std::uint8_t value) : repr1{static_cast<std::uint8_t>(value & mask)} {}
     // NOLINTBEGIN(google-explicit-constructor): No potentially dangerous type conversion
     // AUTOSAR Rule A13-5-2 prohibits implicit user defined conversion operators to avoid potential errors in type
     // conversion. But we do not convert underlying type (repr_ is std::uint8_t and return type is std::uint8_t).
@@ -37,12 +37,12 @@ class HalfByte
     // coverity[autosar_cpp14_a13_5_2_violation]
     constexpr operator std::uint8_t() const
     {
-        return repr;
+        return repr1;
     }
     // NOLINTEND(google-explicit-constructor): see above for detailed explanation
   private:
     static constexpr std::uint8_t mask{0b0000'1111U};
-    std::uint8_t repr;
+    std::uint8_t repr1;
 };
 
 // Change to std::byte in C++17
