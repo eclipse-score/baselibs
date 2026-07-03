@@ -42,9 +42,9 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
     return {};
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #else
-    // glibc < 2.30: no monotonic wait primitive. Warn at build time, return ENOSYS at runtime.
+    // glibc < 2.30: no monotonic wait primitive. Notify at build time, return ENOSYS at runtime.
     // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
-#warning "sem_timedwait_monotonic(): requires glibc >= 2.30; returning ENOSYS"
+#pragma message("sem_timedwait_monotonic(): requires glibc >= 2.30; returning ENOSYS")
     static_cast<void>(sem);
     static_cast<void>(abs_time);
     return score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOSYS));

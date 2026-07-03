@@ -3,16 +3,16 @@
 version = 4
 
 [[package]]
-name = "containers"
-version = "0.1.0"
-dependencies = [
- "elementary",
- "score_log",
-]
+name = "allocator"
+version = "0.0.1"
 
 [[package]]
-name = "elementary"
+name = "containers"
 version = "0.0.1"
+dependencies = [
+ "allocator",
+ "score_log",
+]
 
 [[package]]
 name = "log_builtin"
@@ -109,7 +109,7 @@ dependencies = [
 name = "sync"
 version = "0.0.1"
 dependencies = [
- "elementary",
+ "allocator",
 ]
 
 [[package]]

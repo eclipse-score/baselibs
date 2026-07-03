@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -10,15 +10,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
 
-rust_proc_macro(
+alias(
     name = "score_testing_macros",
-    srcs = glob(["*.rs"]),
+    actual = "//score/testing_macros:score_testing_macros",
+    deprecation = "//src/testing_macros:score_testing_macros has moved to " +
+                  "//score/testing_macros:score_testing_macros. " +
+                  "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
-    deps = [
-        "//src/log/stdout_logger",
-        "@score_crates//:quote",
-        "@score_crates//:syn",
-    ],
 )

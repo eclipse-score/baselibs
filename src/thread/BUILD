@@ -11,24 +11,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
-
-rust_library(
+alias(
     name = "thread",
-    srcs = glob(["**/*.rs"]),
-    edition = "2021",
+    actual = "//score/thread:thread",
+    deprecation = "//src/thread:thread has moved to //score/thread:thread. " +
+                  "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
-    deps = [
-        "//src/log/score_log",
-        "//src/pal",
-    ],
-)
-
-rust_test(
-    name = "tests",
-    crate = "thread",
-    tags = [
-        "unit_tests",
-        "ut",
-    ],
 )

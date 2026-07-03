@@ -19,9 +19,9 @@ jobs:
   rust_coverage:
     uses: eclipse-score/cicd-workflows/.github/workflows/rust-coverage.yml@main
     with:
-      bazel-test-targets: "//src/..."
-      bazel-test-config-flags: "--config=ferrocene-coverage"
-      bazel-test-args: "--lockfile_mode=error"
+      bazel-test-targets: "//score/..."
+      bazel-test-config-flags: "--config=bl-x86_64-linux --config=ferrocene-coverage --lockfile_mode=error --test_lang_filters=rust,-miri"
+      bazel-test-args: "--test_output=errors --nocache_test_results --build_tag_filters=-miri,-loom --test_tag_filters=-miri,-loom"
       coverage-target: "//:rust_coverage"
       min-coverage: 0
       coverage-artifact-name: "rust-coverage-html"
