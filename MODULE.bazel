@@ -172,11 +172,11 @@ bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
 bazel_dep(name = "rules_shell", version = "0.6.1", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "score_qnx_unit_tests", version = "0.1.0", dev_dependency = True)
-bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
+bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
 llvm.toolchain(
-    llvm_version = "19.1.1",
+    llvm_version = "22.1.2",
     stdlib = {"linux-x86_64": "stdc++"},
 )
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")

@@ -100,9 +100,23 @@ def main() -> None:
         coverage_args=coverage_args,
         filter_regexes=sorted(filter_regexes),
         workspace_root=workspace_root,
+        output_format="lcov",
     )
     with open(lcov_report_dir / "lcov.dat", "w", encoding="utf-8") as f:
         f.write(lcov_result.stdout)
+
+    # Generate JSON report.
+    json_report_dir = Path.cwd() / "json_report"
+    json_report_dir.mkdir(exist_ok=True)
+    json_result = run_llvm_cov_export(
+        llvm_bin_path=llvm_bin_path,
+        coverage_args=coverage_args,
+        filter_regexes=sorted(filter_regexes),
+        workspace_root=workspace_root,
+        output_format="text",
+    )
+    with open(json_report_dir / "coverage.json", "w", encoding="utf-8") as f:
+        f.write(json_result.stdout)
 
     # Generate text summary.
     text_report_dir = Path.cwd() / "text_report"
@@ -117,7 +131,7 @@ def main() -> None:
     print(summary.stdout, file=sys.stderr)
 
     # Package everything into the output zip.
-    directories = [html_report_dir, lcov_report_dir, text_report_dir]
+    directories = [html_report_dir, lcov_report_dir, json_report_dir, text_report_dir]
     create_zip(
         root=Path.cwd(),
         directories=directories,
@@ -144,7 +158,9 @@ def run_llvm_cov_show(
         f"--path-equivalence=/proc/self/cwd/,{workspace_root}",
         f"--compilation-dir={workspace_root}",
         "--show-branches=count",
-        "--show-region-summary=0",
+        "--show-regions",
+        "--show-line-counts-or-regions",
+        "--show-region-summary=1",
     ]
 
     if cxxfilt_path and Path(cxxfilt_path).exists():
@@ -168,12 +184,13 @@ def run_llvm_cov_export(
     coverage_args: List[str],
     filter_regexes: List[str],
     workspace_root: str,
+    output_format: str = "lcov",
 ) -> subprocess.CompletedProcess:
-    """Run llvm-cov export to produce LCOV format."""
+    """Run llvm-cov export to produce LCOV or JSON (text) format."""
     cmd = [
         str(llvm_bin_path),
         "export",
-        "--format=lcov",
+        f"--format={output_format}",
         f"--path-equivalence=/proc/self/cwd/,{workspace_root}",
         f"--compilation-dir={workspace_root}",
     ]
@@ -196,7 +213,7 @@ def run_llvm_cov_report(
         str(llvm_bin_path),
         "report",
         "--summary-only",
-        "--show-region-summary=0",
+        "--show-region-summary=1",
         "--show-branch-summary=1",
     ]
 
@@ -277,20 +294,30 @@ def write_empty_output(output_file: Path) -> None:
 
 
 def run_command(cmd: List[str]) -> subprocess.CompletedProcess:
-    """Run a command and exit on failure."""
+    """Run a command and exit on failure.
+
+    stderr is captured separately from stdout so that tool warnings (e.g.
+    llvm-cov's "functions have mismatched data") do not contaminate stdout,
+    which is written verbatim to the exported data files (lcov.dat, coverage.json).
+    """
     try:
-        return subprocess.run(
+        result = subprocess.run(
             cmd,
             check=True,
             stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
+            stderr=subprocess.PIPE,
             text=True,
         )
+        if result.stderr:
+            print(result.stderr, file=sys.stderr)
+        return result
     except subprocess.CalledProcessError as e:
         print(f"ERROR: Command failed with code {e.returncode}:", file=sys.stderr)
         print(f"  {' '.join(cmd)}", file=sys.stderr)
         if e.stdout:
             print(e.stdout, file=sys.stderr)
+        if e.stderr:
+            print(e.stderr, file=sys.stderr)
         sys.exit(1)
 
 
