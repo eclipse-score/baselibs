@@ -1,0 +1,16 @@
+deviations:
+  - rule-id: "RULE-18-5-2"
+    query-id: "cpp/misra/avoid-program-terminating-functions"
+    justification: "Evaluation of the CodeQL coding-standards justification mechanism for
+      baselibs (eclipse-score/baselibs#317). This deviation mirrors the one already
+      accepted in eclipse-score/communication and is scoped to the score/ tree only."
+    paths:
+      - "score"
+  - rule-id: "RULE-21-6-1"
+    query-id: "cpp/misra/dynamic-memory-should-not-be-used"
+    justification: "Evaluation of the CodeQL coding-standards path-scoped justification
+      mechanism for baselibs (eclipse-score/baselibs#317). score/language/futurecpp
+      intentionally manages dynamic memory as part of its allocator/memory_resource
+      implementation; scoped narrowly to that component to demonstrate suppression."
+    paths:
+      - "score/language/futurecpp"
