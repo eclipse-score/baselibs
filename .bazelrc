@@ -103,5 +103,8 @@ import %workspace%/score.bazelrc/score_lint.bazelrc
 # LLVM source-based coverage (C++ + Rust): --config=llvm_cov
 import %workspace%/tools/coverage/coverage.bazelrc
 
+# CodeQL static analysis evaluation (eclipse-score/baselibs#317)
+import %workspace%/score/quality/static_analysis/static_analysis.bazelrc
+
 # Import custom user settings, e.g. to enable sanitizers without touching the main .bazelrc
 try-import %workspace%/user.bazelrc

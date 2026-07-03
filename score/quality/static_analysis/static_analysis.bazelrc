@@ -1,0 +1,40 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# CodeQL evaluation config (eclipse-score/baselibs#317), ported from
+# eclipse-score/communication's quality/static_analysis/static_analysis.bazelrc.
+#
+# Run with: bazel run //score/quality/static_analysis:codeql_lint -- --target //score/...
+#
+# baselibs-specific adaptations vs. the communication repo:
+#   - inherits --config=_bl_stub so the traced build resolves baselibs feature flags
+#     (json backend, shared-memory typedshmd flag, warning features) the same way the
+#     default bl-x86_64-linux config does.
+#   - traces the @llvm_toolchain (LLVM 19.1.1) compiler, which is already registered in
+#     MODULE.bazel, rather than the default gcc 12.2.0 host toolchain used by
+#     bl-x86_64-linux. Tracing the production gcc toolchain instead is a possible
+#     follow-up if this becomes a permanent check.
+common:codeql --config=_bl_stub
+common:codeql --platform_suffix=codeql
+common:codeql --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+common:codeql --sandbox_writable_path=/var/tmp
+common:codeql --nouse_action_cache
+common:codeql --noremote_accept_cached
+common:codeql --noremote_upload_local_results
+common:codeql --disk_cache=
+# CodeQL's `--begin-tracing` intercepts compiler invocations via an LD_PRELOAD-based
+# trace agent (env vars merged in codeql_lint.py). Bazel's linux-sandbox strategy runs
+# each action in its own mount namespace, which hides that agent from the compiler
+# subprocess, so nothing gets extracted. Forcing local (non-sandboxed) execution lets
+# the trace agent see and record the compiler invocations.
+build:codeql --spawn_strategy=local
