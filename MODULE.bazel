@@ -98,7 +98,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = Tr
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "4.6.0", dev_dependency = True)
-bazel_dep(name = "score_process", version = "2.0.0", dev_dependency = True)
+bazel_dep(name = "score_process", version = "2.0.1", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
 
 # Needed until new version is released with https://github.com/eclipse-score/tooling/pull/294 included
