@@ -107,12 +107,11 @@ build --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
 build --output_groups=+rules_lint_human
 build:lint --@aspect_rules_lint//lint:fail_on_violation=true
 
-# Coverage configuration for C++
-coverage --features=coverage
-coverage --combined_report=lcov
-coverage --cache_test_results=no
-coverage --copt=-fprofile-update=atomic
-coverage --linkopt=-fprofile-update=atomic
+# Coverage configuration for C++ (llvm-cov based).
+# See quality/coverage/coverage.bazelrc for the bl-cov-x86_64-linux config and
+# quality/coverage/README.md for usage. This replaces the previous gcov+genhtml
+# flow as part of evaluating eclipse-score/communication#549.
+import %workspace%/quality/coverage/coverage.bazelrc
 
 # Sanitizer configuration for C++
 test:asan_ubsan_lsan --features=asan

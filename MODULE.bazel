@@ -152,9 +152,19 @@ python.toolchain(
     python_version = PYTHON_VERSION,
 )
 
+# Python dependencies for the llvm-cov coverage justification tooling.
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip", dev_dependency = True)
+pip.parse(
+    hub_name = "score_baselibs_pip",
+    python_version = PYTHON_VERSION,
+    requirements_lock = "//quality/coverage:requirements_lock.txt",
+)
+use_repo(pip, "score_baselibs_pip")
+
 bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
+bazel_dep(name = "rules_shell", version = "0.6.1", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
@@ -164,7 +174,7 @@ llvm.toolchain(
     llvm_version = "19.1.1",
     stdlib = {"linux-x86_64": "stdc++"},
 )
-use_repo(llvm, "llvm_toolchain")
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 register_toolchains(
     "@llvm_toolchain//:all",
