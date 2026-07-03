@@ -40,12 +40,12 @@ jobs:
             --output-dir /tmp/codeql-results \
             --output-prefix codeql-baselibs \
             --target //score/bitmanipulation/...
-      - name: Upload SARIF to GitHub Code Scanning
-        if: always() && steps.run-codeql.outcome == 'success'
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: /tmp/codeql-results/codeql-baselibs.sarif
-          category: codeql-baselibs
+      #- name: Upload SARIF to GitHub Code Scanning
+      #  if: always() && steps.run-codeql.outcome == 'success'
+      #  uses: github/codeql-action/upload-sarif@v4
+      #  with:
+      #    sarif_file: /tmp/codeql-results/codeql-baselibs.sarif
+      #    category: codeql-baselibs
       - name: Upload CSV results
         if: always() && steps.run-codeql.outcome == 'success'
         uses: actions/upload-artifact@v4
