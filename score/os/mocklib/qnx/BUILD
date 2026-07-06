@@ -246,6 +246,19 @@ cc_library(
 )
 
 cc_library(
+    name = "slog_mock",
+    testonly = True,
+    srcs = ["mock_slog.cpp"],
+    hdrs = ["mock_slog.h"],
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//score/os/qnx:slog",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_library(
     name = "sysmgr_mock",
     testonly = True,
     srcs = ["mock_sysmgr.cpp"],

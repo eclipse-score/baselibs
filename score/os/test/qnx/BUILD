@@ -38,6 +38,7 @@ py_unittest_qnx_test(
         ":resmgr_test",
         ":secpol_test",
         ":slog2_test",
+        ":slog_impl_test",
         ":sysctl_test",
         ":unistd_test",
         ":pthread_test",
@@ -299,6 +300,22 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os/qnx:slog2",
+    ],
+)
+
+cc_test(
+    name = "slog_impl_test",
+    srcs = [
+        "slog_impl_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = [
+        "unit",
+    ],
+    target_compatible_with = ["@platforms//os:qnx"],
+    deps = [
+        "//score/os/qnx:slog",
+        "@googletest//:gtest_main",
     ],
 )
 
