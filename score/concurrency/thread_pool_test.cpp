@@ -32,6 +32,22 @@ TEST(ThreadPool, ConstructionAndDestructionOnStack)
     ThreadPool thread_pool{1U};
 }
 
+TEST(ThreadPool, ConstructionWithCustomName)
+{
+    // Given a ThreadPool constructed with a custom name and a positive thread count
+    ThreadPool unit{1U, "custom_pool"};
+
+    // When submitting a task
+    std::atomic<std::size_t> counter{0};
+    auto f = unit.Submit([&counter](const score::cpp::stop_token&) noexcept {
+        counter++;
+    });
+
+    // Then the task is executed
+    f.Get();
+    ASSERT_EQ(counter, 1U);
+}
+
 TEST(ThreadPool, ConstructionAndDestructionOnHeap)
 {
     auto unique_thread_pool = std::make_unique<ThreadPool>(1U);
