@@ -42,12 +42,20 @@ class MyMemoryResource : public ManagedMemoryResource
           memoryResourceId_{instanceId++},
           manager_{memoryResourceId_}
     {
-    }
-
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
-    {
         MemoryResourceRegistry::getInstance().clear();
         score::cpp::ignore = MemoryResourceRegistry::getInstance().insert_resource({memoryResourceId_, this});
+    }
+
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    {
+        return &this->manager_;
+    }
+
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    {
         return &this->manager_;
     }
 

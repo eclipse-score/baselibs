@@ -95,7 +95,7 @@ const void* ManagedMemoryResourceTestAttorney::getEndAddress() const noexcept
 
 const MemoryResourceProxy* ManagedMemoryResourceTestAttorney::getMemoryResourceProxy() const noexcept
 {
-    return resource_.getMemoryResourceProxy();
+    return std::as_const(resource_).getMemoryResourceProxy();
 }
 
 SharedMemoryResourceTestAttorney::SharedMemoryResourceTestAttorney(SharedMemoryResource& resource) noexcept

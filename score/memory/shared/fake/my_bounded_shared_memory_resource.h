@@ -54,7 +54,15 @@ class MyBoundedSharedMemoryResource final : public ISharedMemoryResource
         return false;
     }
 
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    {
+        return resource_.getMemoryResourceProxy();
+    }
+
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
     {
         return resource_.getMemoryResourceProxy();
     }

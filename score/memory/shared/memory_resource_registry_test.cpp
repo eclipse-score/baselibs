@@ -52,6 +52,10 @@ class BasicMemoryResource : public ManagedMemoryResource
     {
         return nullptr;
     }
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    {
+        return nullptr;
+    }
     void* getBaseAddress() const noexcept override
     {
         return base_address_;
@@ -98,6 +102,10 @@ class BoundsCheckBypassingMemoryResource : public ManagedMemoryResource
     {
     }
     MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    {
+        return nullptr;
+    }
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
     {
         return nullptr;
     }

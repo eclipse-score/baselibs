@@ -45,7 +45,15 @@ class MyBoundedMemoryResource final : public ManagedMemoryResource
     MyBoundedMemoryResource& operator=(const MyBoundedMemoryResource&) noexcept = default;
     MyBoundedMemoryResource& operator=(MyBoundedMemoryResource&&) noexcept = default;
 
-    MemoryResourceProxy* getMemoryResourceProxy() noexcept override
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    {
+        return manager_;
+    }
+
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
+    const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return manager_;
     }
