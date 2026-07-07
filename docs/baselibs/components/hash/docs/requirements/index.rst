@@ -39,6 +39,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__hash_library
    :status: valid
    :satisfied_by: comp__baselibs_hash
 
@@ -51,6 +52,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__hash_library
    :status: valid
    :satisfied_by: comp__baselibs_hash
 
@@ -62,6 +64,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__hash_library
    :status: valid
    :satisfied_by: comp__baselibs_hash
 
@@ -75,6 +78,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__hash_library
    :status: valid
    :satisfied_by: comp__baselibs_hash
 

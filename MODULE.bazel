@@ -125,6 +125,15 @@ git_override(
 
 bazel_dep(name = "score_platform", version = "0.6.0", dev_dependency = True)
 
+# NOTE: git_override is needed until score_platform v0.6.1 is released with
+# feat_req__baselibs__hash_library (merged to score at 8d92b2cc43).
+# See: https://github.com/eclipse-score/score/pull/<PR>
+git_override(
+    module_name = "score_platform",
+    commit = "8d92b2cc43154bfe2aed9917bb6b46bb9a04c368",
+    remote = "https://github.com/Chahult/score.git",
+)
+
 # FIXME: To be removed after https://github.com/eclipse-score/baselibs/issues/266 is resolved
 single_version_override(
     module_name = "grpc-java",
