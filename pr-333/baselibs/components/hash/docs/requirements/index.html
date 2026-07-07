@@ -482,7 +482,7 @@
                   
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-5d386cac">
+<div class="need_container docutils container" id="SNCB-7a296e1a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__hash_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -526,7 +526,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ce180840">
+<div class="need_container docutils container" id="SNCB-09d57aae">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_hash">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -549,7 +549,7 @@
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="#comp_req__hash__calculation_interface" title="comp__baselibs_hash">comp_req__hash__calculation_interface</a>, <a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp__baselibs_hash">comp_req__hash__value_retrieval</a>, <a class="reference internal" href="#comp_req__hash__incremental_input" title="comp__baselibs_hash">comp_req__hash__incremental_input</a>, <a class="reference internal" href="#comp_req__hash__stream_input" title="comp__baselibs_hash">comp_req__hash__stream_input</a>, <a class="reference internal" href="#comp_req__hash__factory_interface" title="comp__baselibs_hash">comp_req__hash__factory_interface</a>, <a class="reference internal" href="#comp_req__hash__openssl_algorithms" title="comp__baselibs_hash">comp_req__hash__openssl_algorithms</a>, <a class="reference internal" href="#comp_req__hash__crc32_algorithm" title="comp__baselibs_hash">comp_req__hash__crc32_algorithm</a>, <a class="reference internal" href="#comp_req__hash__safe_computation" title="comp__baselibs_hash">comp_req__hash__safe_computation</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="#comp_req__hash__calculation_interface" title="comp__baselibs_hash">comp_req__hash__calculation_interface</a>, <a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp__baselibs_hash">comp_req__hash__value_retrieval</a>, <a class="reference internal" href="#comp_req__hash__factory_interface" title="comp__baselibs_hash">comp_req__hash__factory_interface</a>, <a class="reference internal" href="#comp_req__hash__openssl_algorithms" title="comp__baselibs_hash">comp_req__hash__openssl_algorithms</a>, <a class="reference internal" href="#comp_req__hash__safe_computation" title="comp__baselibs_hash">comp_req__hash__safe_computation</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -573,11 +573,11 @@
 </div>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-f693b690">
+<div class="need_container docutils container" id="SNCB-1d6c40d7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__calculation_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Calculation Interface</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Computation from Byte Data</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -601,8 +601,9 @@
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide an <code class="docutils literal notranslate"><span class="pre">IHashCalculator</span></code> interface for computing
-hash values over byte data.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall compute a hash value over a contiguous byte sequence
+supplied by the caller, accumulating state across one or more data inputs
+and producing the final digest upon finalization.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__calculation_interface" title="comp_req__hash__calculation_interface">comp_req__hash__calculation_interface</a></span></span></div>
@@ -618,11 +619,11 @@ hash values over byte data.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d396acac">
+<div class="need_container docutils container" id="SNCB-2f5484c7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__value_retrieval">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value Retrieval</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value as Hexadecimal String</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -646,8 +647,8 @@ hash values over byte data.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide a <code class="docutils literal notranslate"><span class="pre">Hash</span></code> type that exposes the computed hash
-value as a byte array and as a hexadecimal string.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value as a hexadecimal
+string representation.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp_req__hash__value_retrieval">comp_req__hash__value_retrieval</a></span></span></div>
@@ -663,103 +664,11 @@ value as a byte array and as a hexadecimal string.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-fa354d7b">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__incremental_input">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Incremental Data Input</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__incremental_input">comp__baselibs_hash</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall support incremental computation by allowing callers to
-supply data in multiple <code class="docutils literal notranslate"><span class="pre">Update()</span></code> calls followed by a single <code class="docutils literal notranslate"><span class="pre">Finalize()</span></code>
-call.</p></td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__incremental_input" title="comp_req__hash__incremental_input">comp_req__hash__incremental_input</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-d03954ae">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__stream_input">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Stream-Based Data Input</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__stream_input">comp__baselibs_hash</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall support stream-based computation via an
-<code class="docutils literal notranslate"><span class="pre">UpdateFromStream()</span></code> operation that reads from an <code class="docutils literal notranslate"><span class="pre">std::istream</span></code> and
-accumulates data into the running hash state.</p></td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__stream_input" title="comp_req__hash__stream_input">comp_req__hash__stream_input</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-0daf4756">
+<div class="need_container docutils container" id="SNCB-1ec8405a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__factory_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Factory Interface</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Algorithm Selection via Factory</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -783,9 +692,10 @@ accumulates data into the running hash state.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide an <code class="docutils literal notranslate"><span class="pre">IHashCalculatorFactory</span></code> interface to
-create <code class="docutils literal notranslate"><span class="pre">IHashCalculator</span></code> instances, enabling algorithm selection to be
-decoupled from the calling code.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall allow the hash algorithm to be selected and a
+calculator instance to be created independently of the code that performs
+the computation, so that the calling code is not coupled to any specific
+algorithm implementation.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__factory_interface" title="comp_req__hash__factory_interface">comp_req__hash__factory_interface</a></span></span></div>
@@ -801,11 +711,11 @@ decoupled from the calling code.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ba43ec2a">
+<div class="need_container docutils container" id="SNCB-02d80801">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__openssl_algorithms">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">OpenSSL-Based Cryptographic Hash Algorithms</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Cryptographic Hash Algorithms</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -829,8 +739,8 @@ decoupled from the calling code.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide an OpenSSL-backed implementation supporting
-SHA-1, SHA-256, SHA-384, and SHA-512 algorithms.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
+cryptographic hash algorithms.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__openssl_algorithms" title="comp_req__hash__openssl_algorithms">comp_req__hash__openssl_algorithms</a></span></span></div>
@@ -846,56 +756,11 @@ SHA-1, SHA-256, SHA-384, and SHA-512 algorithms.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6f4a5cd0">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__crc32_algorithm">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">CRC-32 Algorithm</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__crc32_algorithm">comp__baselibs_hash</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide a CRC-32 implementation for checksum
-calculation.</p></td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__crc32_algorithm" title="comp_req__hash__crc32_algorithm">comp_req__hash__crc32_algorithm</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-44de340f">
+<div class="need_container docutils container" id="SNCB-69e2d3da">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__safe_computation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Safe Hash Computation</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Exception-Free Error Propagation</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -913,15 +778,16 @@ calculation.</p></td>
 <div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__safe_computation">comp__baselibs_hash</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__safe_computation">comp__baselibs_hash</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide a <code class="docutils literal notranslate"><span class="pre">SafeHashCalculatorFactory</span></code> that returns
-a <code class="docutils literal notranslate"><span class="pre">Result</span></code>-wrapped <code class="docutils literal notranslate"><span class="pre">IHashCalculator</span></code>, enabling error-handling without
-exceptions in safety-relevant contexts.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall propagate errors from hash calculator instantiation
+via return-value types, enabling use in safety-critical contexts where
+exception handling is not available.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__safe_computation" title="comp_req__hash__safe_computation">comp_req__hash__safe_computation</a></span></span></div>
