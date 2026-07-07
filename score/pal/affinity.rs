@@ -347,7 +347,7 @@ mod tests {
         let exp = vec![0, 123, 1023];
         let cpu_set = CpuSet::new(&exp);
         let got = cpu_set.get();
-        assert_eq!(exp, got.iter().copied().collect::<Vec<_>>());
+        assert_eq!(exp, got.to_vec());
     }
 
     #[test]
@@ -361,7 +361,7 @@ mod tests {
         });
         join_handle.join().unwrap();
 
-        assert_eq!(rx.recv().unwrap().iter().copied().collect::<Vec<_>>(), exp_affinity);
+        assert_eq!(rx.recv().unwrap().to_vec(), exp_affinity);
     }
 
     #[test]

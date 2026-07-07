@@ -13,6 +13,8 @@
 
 //! mmap-backed arena allocator.
 
+// TODO: safety clauses.
+
 use crate::{AllocationError, BasicAllocator};
 use core::alloc::Layout;
 use core::cell::Cell;
@@ -37,6 +39,13 @@ fn align_to(value: usize, align: usize) -> usize {
     v_div * align
 }
 
+/// Arena header, placed at the start of memory region.
+/// Keeps track of living object references and current pointer position.
+struct ArenaHeader {
+    ref_count: Cell<usize>,
+    offset: Cell<usize>,
+}
+
 /// mmap-backed memory region.
 struct MemoryRegion {
     ptr: *mut u8,
@@ -59,25 +68,56 @@ impl MemoryRegion {
         let prot = PROT_READ | PROT_WRITE;
         let flags = MAP_PRIVATE | MAP_ANONYMOUS;
         let fd = -1;
-        let ptr = unsafe { mmap(null_mut(), capacity, prot, flags, fd, 0) };
+        let ptr: *mut u8 = unsafe { mmap(null_mut(), capacity, prot, flags, fd, 0) }.cast();
         if ptr as isize == -1 || ptr.is_null() {
             // TODO: information about errno is missing.
             return Err(AllocationError::Internal);
         }
 
-        Ok(Self {
-            ptr: ptr.cast(),
-            capacity,
-        })
+        // Initialize the header at the start of memory region.
+        // Offset is set with regard to header size.
+        unsafe {
+            ptr.cast::<ArenaHeader>().write(ArenaHeader {
+                ref_count: Cell::new(1),
+                offset: Cell::new(size_of::<ArenaHeader>()),
+            });
+        }
+
+        Ok(Self { ptr, capacity })
+    }
+
+    /// Access the header.
+    fn header(&self) -> &ArenaHeader {
+        unsafe { &*self.ptr.cast::<ArenaHeader>() }
+    }
+}
+
+impl Clone for MemoryRegion {
+    fn clone(&self) -> Self {
+        let ref_count_cell = &self.header().ref_count;
+        ref_count_cell.set(ref_count_cell.get() + 1);
+        Self {
+            ptr: self.ptr,
+            capacity: self.capacity,
+        }
     }
 }
 
 impl Drop for MemoryRegion {
     fn drop(&mut self) {
-        let rc = unsafe { munmap(self.ptr.cast(), self.capacity) };
-        if rc != 0 {
-            let errno = errno();
-            panic!("munmap failed, rc: {rc}, errno: {errno}");
+        let ref_count_cell = &self.header().ref_count;
+        let ref_count = ref_count_cell.get();
+        ref_count_cell.set(ref_count - 1);
+
+        // Release the memory on last reference dropping.
+        if ref_count == 1 {
+            unsafe { core::ptr::drop_in_place(self.ptr.cast::<ArenaHeader>()) };
+
+            let rc = unsafe { munmap(self.ptr.cast(), self.capacity) };
+            if rc != 0 {
+                let errno = errno();
+                panic!("munmap failed, rc: {rc}, errno: {errno}");
+            }
         }
     }
 }
@@ -86,9 +126,9 @@ impl Drop for MemoryRegion {
 ///
 /// Allocated chunks are from a continuous chunk of memory obtained using mmap.
 /// Deallocation is a no-op.
+#[derive(Clone)]
 pub struct MmapArenaAllocator {
     memory_region: MemoryRegion,
-    offset: Cell<usize>,
 }
 
 impl MmapArenaAllocator {
@@ -96,8 +136,7 @@ impl MmapArenaAllocator {
     /// Capacity is rounded up to the nearest multiplication of a page size.
     pub fn new(capacity: usize) -> Result<Self, AllocationError> {
         let memory_region = MemoryRegion::new(capacity)?;
-        let offset = Cell::new(0);
-        Ok(Self { memory_region, offset })
+        Ok(Self { memory_region })
     }
 
     /// Capacity of the allocator.
@@ -117,7 +156,8 @@ impl BasicAllocator for MmapArenaAllocator {
         let aligned_size = align_to(layout.size(), layout.align());
 
         // Get current pointer position and align.
-        let current_offset = align_to(self.offset.get(), layout.align());
+        let offset_cell = &self.memory_region.header().offset;
+        let current_offset = align_to(offset_cell.get(), layout.align());
 
         // Check if allocation will not exceed capacity.
         let new_offset = current_offset + aligned_size;
@@ -132,7 +172,7 @@ impl BasicAllocator for MmapArenaAllocator {
         };
 
         // Set new offset.
-        self.offset.set(new_offset);
+        offset_cell.set(new_offset);
 
         Ok(ptr_as_non_null)
     }
@@ -158,8 +198,11 @@ impl score_fmt::ScoreDebug for MmapArenaAllocator {
 
 #[cfg(test)]
 mod tests {
+    use crate::mmap_arena_allocator::ArenaHeader;
     use crate::{page_size, AllocationError, BasicAllocator, MmapArenaAllocator};
     use core::alloc::Layout;
+
+    const HEADER_SIZE: usize = size_of::<ArenaHeader>();
 
     #[test]
     fn test_page_size_ok() {
@@ -203,11 +246,11 @@ mod tests {
 
         // Allocate.
         let layout = Layout::from_size_align(253, 4).unwrap();
-        let result = allocator.allocate(layout.clone());
+        let result = allocator.allocate(layout);
         assert!(result.is_ok());
 
         // Check offset.
-        assert_eq!(allocator.offset.get(), 256);
+        assert_eq!(allocator.memory_region.header().offset.get(), HEADER_SIZE + 256);
     }
 
     #[test]
@@ -220,9 +263,17 @@ mod tests {
         // - allocation pointer offset from memory region start
         // - internal allocator offset
         let cases = vec![
-            (Layout::from_size_align(253, 1).unwrap(), 0, 253),
-            (Layout::from_size_align(557, 2).unwrap(), 254, 812),
-            (Layout::from_size_align(39, 8).unwrap(), 816, 856),
+            (Layout::from_size_align(253, 1).unwrap(), HEADER_SIZE, HEADER_SIZE + 253),
+            (
+                Layout::from_size_align(557, 2).unwrap(),
+                HEADER_SIZE + 254,
+                HEADER_SIZE + 812,
+            ),
+            (
+                Layout::from_size_align(39, 8).unwrap(),
+                HEADER_SIZE + 816,
+                HEADER_SIZE + 856,
+            ),
         ];
 
         let memory_region_ptr = allocator.memory_region.ptr;
@@ -232,8 +283,8 @@ mod tests {
 
             // Check position relative to memory region and allocator offset.
             let allocation_ptr_offset = unsafe { alloc_ptr.offset_from(memory_region_ptr) };
-            assert_eq!(allocation_ptr_offset, exp_ptr_offset);
-            assert_eq!(allocator.offset.get(), exp_allocator_offset);
+            assert_eq!(allocation_ptr_offset, exp_ptr_offset as isize);
+            assert_eq!(allocator.memory_region.header().offset.get(), exp_allocator_offset);
         }
     }
 
@@ -244,11 +295,11 @@ mod tests {
 
         // Allocate.
         let layout = Layout::from_size_align(2 * page_size(), 4).unwrap();
-        let result = allocator.allocate(layout.clone());
+        let result = allocator.allocate(layout);
         assert!(result.is_err_and(|e| e == AllocationError::OutOfMemory));
 
         // Check offset.
-        assert_eq!(allocator.offset.get(), 0);
+        assert_eq!(allocator.memory_region.header().offset.get(), HEADER_SIZE);
     }
 
     #[test]
@@ -258,11 +309,11 @@ mod tests {
 
         // Allocate.
         let layout = Layout::from_size_align(0, 4).unwrap();
-        let result = allocator.allocate(layout.clone());
+        let result = allocator.allocate(layout);
         assert!(result.is_err_and(|e| e == AllocationError::ZeroSizeAllocation));
 
         // Check offset.
-        assert_eq!(allocator.offset.get(), 0);
+        assert_eq!(allocator.memory_region.header().offset.get(), HEADER_SIZE);
     }
 
     #[test]
@@ -272,9 +323,47 @@ mod tests {
 
         // Allocate.
         let layout = Layout::from_size_align(253, 4).unwrap();
-        let ptr = allocator.allocate(layout.clone()).unwrap();
+        let ptr = allocator.allocate(layout).unwrap();
 
         // Deallocate - no-op.
         unsafe { allocator.deallocate(ptr, layout) };
+    }
+
+    #[test]
+    fn test_clone_shared_offset() {
+        // Create allocator and its clone.
+        let capacity = page_size();
+        let allocator = MmapArenaAllocator::new(capacity).unwrap();
+        let clone = allocator.clone();
+
+        // Allocate using cloned object.
+        let layout = Layout::from_size_align(253, 4).unwrap();
+        clone.allocate(layout).unwrap();
+
+        // Check offset is bumped for both objects.
+        let expected = HEADER_SIZE + 256;
+        assert_eq!(clone.memory_region.header().offset.get(), expected);
+        assert_eq!(allocator.memory_region.header().offset.get(), expected);
+    }
+
+    #[test]
+    fn test_clone_ref_count() {
+        let allocator = MmapArenaAllocator::new(page_size()).unwrap();
+        assert_eq!(allocator.memory_region.header().ref_count.get(), 1);
+
+        let clone = allocator.clone();
+        assert_eq!(allocator.memory_region.header().ref_count.get(), 2);
+
+        drop(clone);
+        assert_eq!(allocator.memory_region.header().ref_count.get(), 1);
+    }
+
+    #[test]
+    fn test_clone_single_unmap() {
+        // Check no panic happens when both instances are dropped.
+        let allocator = MmapArenaAllocator::new(page_size()).unwrap();
+        let clone = allocator.clone();
+        drop(allocator);
+        drop(clone);
     }
 }
