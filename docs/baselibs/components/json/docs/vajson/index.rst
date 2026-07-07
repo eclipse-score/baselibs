@@ -163,3 +163,4 @@ Footnotes
 
    architecture/index.rst
    requirements/index.rst
+   detailed_design/CADS.rst
