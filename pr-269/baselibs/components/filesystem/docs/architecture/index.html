@@ -378,9 +378,11 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">filesystem</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -414,6 +416,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -484,7 +487,7 @@
                   
   <section id="filesystem-component-architecture">
 <h1>Filesystem Component Architecture<a class="headerlink" href="#filesystem-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-030de9af">
+<div class="need_container docutils container" id="SNCB-c194fc03">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__filesystem_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -503,7 +506,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/architecture_design/architecture_workproducts.html#wp__component_arch">wp__component_arch</a></span></span></div>
 </span></div>
 </div>
@@ -532,7 +536,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-a8dfbb71">
+<div class="need_container docutils container" id="SNCB-6d0a79fd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_filesystem">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -552,9 +556,11 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_filesystem</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__filesystem" title="comp__baselibs_filesystem">comp_arc_sta__baselibs__filesystem</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__api_abstraction" title="comp__baselibs_filesystem">comp_req__filesystem__api_abstraction</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__path_utilities" title="comp__baselibs_filesystem">comp_req__filesystem__path_utilities</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__directory_iterators" title="comp__baselibs_filesystem">comp_req__filesystem__directory_iterators</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_io" title="comp__baselibs_filesystem">comp_req__filesystem__file_io</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__full_testability" title="comp__baselibs_filesystem">comp_req__filesystem__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_utils" title="comp__baselibs_filesystem">comp_req__filesystem__file_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__mock_fake" title="comp__baselibs_filesystem">comp_req__filesystem__mock_fake</a></span></span></div>
+<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__filesystem" title="comp__baselibs_filesystem">comp_arc_sta__baselibs__filesystem</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__filesystem__api_abstraction" title="comp__baselibs_filesystem">comp_req__filesystem__api_abstraction</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__path_utilities" title="comp__baselibs_filesystem">comp_req__filesystem__path_utilities</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__directory_iterators" title="comp__baselibs_filesystem">comp_req__filesystem__directory_iterators</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_io" title="comp__baselibs_filesystem">comp_req__filesystem__file_io</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__full_testability" title="comp__baselibs_filesystem">comp_req__filesystem__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_utils" title="comp__baselibs_filesystem">comp_req__filesystem__file_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__mock_fake" title="comp__baselibs_filesystem">comp_req__filesystem__mock_fake</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../module/index.html#mod__baselibs" title="comp__baselibs_filesystem">mod__baselibs</a>, <a class="reference internal" href="../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_filesystem">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
@@ -580,7 +586,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ab8bd14c">
+<div class="need_container docutils container" id="SNCB-e4e07fa9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__filesystem">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -599,7 +605,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_filesystem" title="comp_arc_sta__baselibs__filesystem">comp__baselibs_filesystem</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__filesystem__api_abstraction" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__api_abstraction</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__path_utilities" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__path_utilities</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__directory_iterators" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__directory_iterators</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_io" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__file_io</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__full_testability" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__file_utils" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__file_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__filesystem__mock_fake" title="comp_arc_sta__baselibs__filesystem">comp_req__filesystem__mock_fake</a></span></span></div>
 </span></div>
@@ -628,7 +635,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-8b84bf07">
+<div class="need_container docutils container" id="SNCB-3635f2ea">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__absolute">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -647,7 +654,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -670,7 +678,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-656bf1fc">
+<div class="need_container docutils container" id="SNCB-443638c8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__exists">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -689,7 +697,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -712,7 +721,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8147df7a">
+<div class="need_container docutils container" id="SNCB-16499e40">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__file_type">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -731,7 +740,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -754,7 +764,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-86408f68">
+<div class="need_container docutils container" id="SNCB-6098f695">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__file_status">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -773,7 +783,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -796,7 +807,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-91f0b640">
+<div class="need_container docutils container" id="SNCB-7e46cbe6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__copy_file">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -815,7 +826,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -838,7 +850,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c289d905">
+<div class="need_container docutils container" id="SNCB-2780f546">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__remove">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -857,7 +869,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -880,7 +893,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-607c337b">
+<div class="need_container docutils container" id="SNCB-ebf0ed8e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__permissions">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -899,7 +912,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -922,7 +936,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-291ef9e5">
+<div class="need_container docutils container" id="SNCB-2503903d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__create_directory">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -941,7 +955,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -964,7 +979,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0a7000b4">
+<div class="need_container docutils container" id="SNCB-a78c29f2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__symlink_ops">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -983,7 +998,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1006,7 +1022,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f1aface7">
+<div class="need_container docutils container" id="SNCB-5f6d7f89">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__hardlink_ops">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1025,7 +1041,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1048,7 +1065,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8f17da35">
+<div class="need_container docutils container" id="SNCB-ffcd891e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__last_write_time">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1067,7 +1084,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1090,7 +1108,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-90b1bf37">
+<div class="need_container docutils container" id="SNCB-85f3abf1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__current_path">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1109,7 +1127,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1132,7 +1151,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6a307409">
+<div class="need_container docutils container" id="SNCB-5e4e6710">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__is_empty">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1151,7 +1170,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1174,7 +1194,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a8376e67">
+<div class="need_container docutils container" id="SNCB-b3e19e6f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__create_dir_perms">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1193,7 +1213,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1216,7 +1237,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-077a8a8c">
+<div class="need_container docutils container" id="SNCB-c0162041">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__file_comparison">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1235,7 +1256,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1258,7 +1280,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-48ab7b71">
+<div class="need_container docutils container" id="SNCB-fed582cb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__change_group">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1277,7 +1299,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1300,7 +1323,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8e3e1ade">
+<div class="need_container docutils container" id="SNCB-3b95095f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__validate_group">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1319,7 +1342,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1342,7 +1366,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-080b0fd2">
+<div class="need_container docutils container" id="SNCB-daec2a31">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__check_filesystem">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1361,7 +1385,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1384,7 +1409,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a2acfb6b">
+<div class="need_container docutils container" id="SNCB-81066146">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__repair_filesystem">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1403,7 +1428,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1426,7 +1452,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-08c03942">
+<div class="need_container docutils container" id="SNCB-71c71695">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__format_partition">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1445,7 +1471,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1468,7 +1495,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-61d15227">
+<div class="need_container docutils container" id="SNCB-4e47d27a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__qnx_compatible">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1487,7 +1514,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1510,7 +1538,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c09cd376">
+<div class="need_container docutils container" id="SNCB-54947dfd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__sync_directory">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1529,7 +1557,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>
@@ -1552,7 +1581,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-5580bcd0">
+<div class="need_container docutils container" id="SNCB-a1248103">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__open_unique_file">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1571,7 +1600,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__filesystem">logic_arc_int__baselibs__filesystem</a></span></span></div>
 </span></div>
 </div>

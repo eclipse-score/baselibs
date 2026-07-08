@@ -378,9 +378,11 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
 
@@ -417,6 +419,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -487,7 +490,7 @@
                   
   <section id="json-component-architecture">
 <h1>JSON Component Architecture<a class="headerlink" href="#json-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-c8edb166">
+<div class="need_container docutils container" id="SNCB-c706b3e9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -506,7 +509,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/architecture_design/architecture_workproducts.html#wp__component_arch">wp__component_arch</a></span></span></div>
 </span></div>
 </div>
@@ -556,7 +560,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-fbe7625b">
+<div class="need_container docutils container" id="SNCB-1f1d8d79">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -575,10 +579,12 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">consists of: <span class="consists_of"><span><a class="reference internal" href="#comp__baselibs_json_wrapper" title="comp__baselibs_json">comp__baselibs_json_wrapper</a>, <a class="reference internal" href="#comp__baselibs_nlohman_json" title="comp__baselibs_json">comp__baselibs_nlohman_json</a></span></span></div>
 <div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__json" title="comp__baselibs_json">comp_arc_sta__baselibs__json</a>, <a class="reference internal" href="#comp_arc_dyn__baselibs__json_dynamic_view" title="comp__baselibs_json">comp_arc_dyn__baselibs__json_dynamic_view</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__deserialization" title="comp__baselibs_json">comp_req__json__deserialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__serialization" title="comp__baselibs_json">comp_req__json__serialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__user_format" title="comp__baselibs_json">comp_req__json__user_format</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_idioms" title="comp__baselibs_json">comp_req__json__lang_idioms</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_infra" title="comp__baselibs_json">comp_req__json__lang_infra</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__type_compatibility" title="comp__baselibs_json">comp_req__json__type_compatibility</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__full_testability" title="comp__baselibs_json">comp_req__json__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__asil" title="comp__baselibs_json">comp_req__json__asil</a></span></span></div>
+<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__json" title="comp__baselibs_json">comp_arc_sta__baselibs__json</a>, <a class="reference internal" href="#comp_arc_dyn__baselibs__json_dynamic_view" title="comp__baselibs_json">comp_arc_dyn__baselibs__json_dynamic_view</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__json__deserialization" title="comp__baselibs_json">comp_req__json__deserialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__serialization" title="comp__baselibs_json">comp_req__json__serialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__user_format" title="comp__baselibs_json">comp_req__json__user_format</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_idioms" title="comp__baselibs_json">comp_req__json__lang_idioms</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_infra" title="comp__baselibs_json">comp_req__json__lang_infra</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__type_compatibility" title="comp__baselibs_json">comp_req__json__type_compatibility</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__full_testability" title="comp__baselibs_json">comp_req__json__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__asil" title="comp__baselibs_json">comp_req__json__asil</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../module/index.html#mod__baselibs" title="comp__baselibs_json">mod__baselibs</a>, <a class="reference internal" href="../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_json">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
@@ -602,7 +608,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f217bd4e">
+<div class="need_container docutils container" id="SNCB-80389bd2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -621,7 +627,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_json" title="comp_arc_sta__baselibs__json">comp__baselibs_json</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__json__deserialization" title="comp_arc_sta__baselibs__json">comp_req__json__deserialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__serialization" title="comp_arc_sta__baselibs__json">comp_req__json__serialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__user_format" title="comp_arc_sta__baselibs__json">comp_req__json__user_format</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_idioms" title="comp_arc_sta__baselibs__json">comp_req__json__lang_idioms</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_infra" title="comp_arc_sta__baselibs__json">comp_req__json__lang_infra</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__type_compatibility" title="comp_arc_sta__baselibs__json">comp_req__json__type_compatibility</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__full_testability" title="comp_arc_sta__baselibs__json">comp_req__json__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__asil" title="comp_arc_sta__baselibs__json">comp_req__json__asil</a></span></span></div>
 </span></div>
@@ -650,7 +657,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </section>
 <section id="dynamic-architecture">
 <h2>Dynamic Architecture<a class="headerlink" href="#dynamic-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c63bd607">
+<div class="need_container docutils container" id="SNCB-2a9c2138">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__baselibs__json_dynamic_view">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -669,7 +676,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_json" title="comp_arc_dyn__baselibs__json_dynamic_view">comp__baselibs_json</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__json__deserialization" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__deserialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__serialization" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__serialization</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__user_format" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__user_format</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_idioms" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__lang_idioms</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__lang_infra" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__lang_infra</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__type_compatibility" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__type_compatibility</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__full_testability" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__full_testability</a>, <a class="reference internal" href="../requirements/index.html#comp_req__json__asil" title="comp_arc_dyn__baselibs__json_dynamic_view">comp_req__json__asil</a></span></span></div>
 </span></div>
@@ -696,7 +704,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-b389a937">
+<div class="need_container docutils container" id="SNCB-380e0305">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__parse">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -715,7 +723,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
 </span></div>
 </div>
@@ -738,7 +747,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-17ad31e3">
+<div class="need_container docutils container" id="SNCB-c8127b90">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__write">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -757,7 +766,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
 </span></div>
 </div>
@@ -783,7 +793,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </section>
 <section id="lower-level-components">
 <h2>Lower Level Components<a class="headerlink" href="#lower-level-components" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c76f54ab">
+<div class="need_container docutils container" id="SNCB-93232965">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json_wrapper">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -802,7 +812,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">forms part of: <span class="consists_of"><span><a class="reference internal" href="#comp__baselibs_json" title="comp__baselibs_json_wrapper">comp__baselibs_json</a></span></span></div>
 <div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
@@ -827,7 +838,7 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-03717bda">
+<div class="need_container docutils container" id="SNCB-969a52c4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_nlohman_json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -846,7 +857,8 @@ the main driver is to re-use existing implementation(s), enable switch of implem
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">forms part of: <span class="consists_of"><span><a class="reference internal" href="#comp__baselibs_json" title="comp__baselibs_nlohman_json">comp__baselibs_json</a></span></span></div>
 <div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
 </span></div>
