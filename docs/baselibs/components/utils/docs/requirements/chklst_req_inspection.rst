@@ -36,7 +36,7 @@ As described in the concept :need:`doc_concept__wp_inspections` the following "i
 - content responsible (author): `<https://github.com/ssingh2099>`_
 - reviewer: `<https://github.com/mihajlo-k>`_
 - moderator: `<https://github.com/aschemmel-tech>`_
-- test expert: `<https://github.com/rahulthakre29>`_
+- test expert: `<https://github.com/Priyanka-Patil18>`_
 
 Checklist
 ---------
@@ -130,8 +130,15 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
     * - REQ_08_01
       - Is the requirement *verifiable*?
       - If at the time of the inspection already tests are created for the requirement, the answer is yes. This can be checked via traces, but also :need:`gd_req__req_attr_test_covered` shows this. In case the requirement is not sufficiently traced to test cases already, a test expert is invited to the inspection to give their opinion whether the requirement is formulated in a way that supports test development and the available test infrastructure is sufficient to perform the test.
-      -
-      -
+      - NO
+      - Following requirement needs clarification before testability can be confirmed:
+
+        - :need:`comp_req__utils__deterministic_behavior`
+
+        Following requirements are directly testable:
+
+        - :need:`comp_req__utils__base64`
+        - :need:`comp_req__utils__scoped_operation`
       -
     * - REQ_08_02
       - Is the requirement verifiable by design or code review in case it is not feasibly testable?
