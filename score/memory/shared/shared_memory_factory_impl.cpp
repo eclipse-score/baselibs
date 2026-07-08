@@ -22,6 +22,7 @@
 #include <score/utility.hpp>
 
 #include <memory>
+#include <string_view>
 #include <utility>
 
 namespace score::memory::shared
@@ -41,6 +42,19 @@ constexpr auto kTypedSharedMemoryPathPrefix = "/dev/shmem";
 constexpr auto kTypedSharedMemoryPathPrefix = "/tmp";
 // coverity[autosar_cpp14_a16_0_1_violation]
 #endif
+
+// Path prefix that marks a shared memory object as intended for inter-VM sharing.
+// This encoding into the path name is an interim convention introduced via ShmPathBuilder; see
+// eclipse-score/communication#492.
+// TODO: In the future, lib/memory/shared shall be able to deal with inter-VM shared memory.
+// However, the solution will look differently - i.e. NOT encoding the intent into the path name,
+// but providing an explicit interface for the create/open calls instead.
+constexpr std::string_view kInterVmSharedShmPrefix{"/intervm-shared-shmem/"};
+
+bool IsInterVmShmPath(const std::string& path) noexcept
+{
+    return path.find(kInterVmSharedShmPrefix) == 0U;
+}
 
 std::unique_ptr<score::os::IAccessControlList> CreateAccessControlList(
     ISharedMemoryResource::FileDescriptor file_descriptor)
@@ -123,6 +137,14 @@ auto SharedMemoryFactoryImpl::Open(const std::string& path,
                                    const std::optional<score::cpp::span<const uid_t>>& allowedProviders) noexcept
     -> std::shared_ptr<ISharedMemoryResource>
 {
+    if (IsInterVmShmPath(path))
+    {
+        score::mw::log::LogError("shm") << "Opening inter-VM shared memory (path prefix '" << kInterVmSharedShmPrefix
+                                      << "') is not supported. No portable implementation exists yet. Rejecting path: "
+                                      << path;
+        return nullptr;
+    }
+
     std::lock_guard<std::mutex> lock{mutex_};
     auto resource = GetResourceIfAlreadyOpened(path, resources_);
     if (resource == nullptr)
@@ -160,6 +182,14 @@ auto score::memory::shared::SharedMemoryFactoryImpl::Create(std::string path,
                                                           const bool prefer_typed_memory) noexcept
     -> std::shared_ptr<ISharedMemoryResource>
 {
+    if (IsInterVmShmPath(path))
+    {
+        score::mw::log::LogError("shm") << "Creating inter-VM shared memory (path prefix '" << kInterVmSharedShmPrefix
+                                      << "') is not supported. No portable implementation exists yet. Rejecting path: "
+                                      << path;
+        return nullptr;
+    }
+
     std::lock_guard<std::mutex> lock{mutex_};
     if (GetResourceIfAlreadyOpened(path, resources_) != nullptr)
     {
@@ -232,6 +262,15 @@ auto score::memory::shared::SharedMemoryFactoryImpl::CreateOrOpen(
     const SharedMemoryResource::AccessControl access_control,
     const bool prefer_typed_memory) noexcept -> std::shared_ptr<ISharedMemoryResource>
 {
+    if (IsInterVmShmPath(path))
+    {
+        score::mw::log::LogError("shm") << "Creating or opening inter-VM shared memory (path prefix '"
+                                      << kInterVmSharedShmPrefix
+                                      << "') is not supported. No portable implementation exists yet. Rejecting path: "
+                                      << path;
+        return nullptr;
+    }
+
     std::lock_guard<std::mutex> lock{mutex_};
     auto resource = GetResourceIfAlreadyOpened(path, resources_);
     if (resource == nullptr)
