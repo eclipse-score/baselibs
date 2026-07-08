@@ -29,7 +29,8 @@ namespace
 {
 constexpr std::int32_t INVALID_SOCKET_ID = -1;
 
-void CloseFileDescriptorIfValidAndIgnoreError(const score::cpp::expected<std::int32_t, score::os::Error>& file_descriptor)
+void CloseFileDescriptorIfValidAndIgnoreError(
+    const score::cpp::expected<std::int32_t, score::os::Error>& file_descriptor)
 {
     if (file_descriptor.has_value() && (file_descriptor.value() != INVALID_SOCKET_ID))
     {
@@ -44,8 +45,9 @@ void CloseFileDescriptorIfValidAndIgnoreError(const score::cpp::expected<std::in
 }
 }  // namespace
 
-score::cpp::expected<sockaddr_in, score::os::Error> score::os::GetSockAddrInFromIpAndPort(const score::os::Ipv4Address& address,
-                                                                               const std::uint16_t port)
+score::cpp::expected<sockaddr_in, score::os::Error> score::os::GetSockAddrInFromIpAndPort(
+    const score::os::Ipv4Address& address,
+    const std::uint16_t port)
 {
     sockaddr_in sockaddr_in{};
     sockaddr_in.sin_family = AF_INET;
@@ -72,7 +74,8 @@ score::cpp::expected<sockaddr_in, score::os::Error> score::os::GetSockAddrInFrom
         // However, this is impossible to test through unit tests because, in the case of an invalid string,
         // the score::os::Ipv4Address constructor sets the default address to `0.0.0.0`, preventing ::inet_aton from
         // failing.
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL));  // LCOV_EXCL_LINE: justification above
+        return score::cpp::make_unexpected(
+            score::os::Error::createFromErrno(EINVAL));  // LCOV_EXCL_LINE: justification above
     }
 
     return sockaddr_in;
@@ -87,22 +90,23 @@ score::os::UdpSocket::~UdpSocket() noexcept
 
 score::cpp::expected<score::os::UdpSocket, score::os::Error> score::os::UdpSocket::Make() noexcept
 {
-    auto file_descriptor_expected = score::os::Socket::instance().socket(score::os::Socket::Domain::kIPv4, SOCK_DGRAM, 0);
+    auto file_descriptor_expected =
+        score::os::Socket::instance().socket(score::os::Socket::Domain::kIPv4, SOCK_DGRAM, 0);
     if (!file_descriptor_expected.has_value())
     {
         return score::cpp::make_unexpected(file_descriptor_expected.error());
     }
 
     auto flags_exp = score::os::Fcntl::instance().fcntl(file_descriptor_expected.value(),
-                                                      score::os::Fcntl::Command::kFileGetStatusFlags);
+                                                        score::os::Fcntl::Command::kFileGetStatusFlags);
     if (!flags_exp.has_value())
     {
         return score::cpp::make_unexpected(flags_exp.error());
     }
 
     auto ret = score::os::Fcntl::instance().fcntl(file_descriptor_expected.value(),
-                                                score::os::Fcntl::Command::kFileSetStatusFlags,
-                                                flags_exp.value() | score::os::Fcntl::Open::kNonBlocking);
+                                                  score::os::Fcntl::Command::kFileSetStatusFlags,
+                                                  flags_exp.value() | score::os::Fcntl::Open::kNonBlocking);
     if (!ret.has_value())
     {
         return score::cpp::make_unexpected(ret.error());
@@ -131,7 +135,8 @@ std::int32_t score::os::UdpSocket::GetFileDescriptor() const noexcept
     return this->file_descriptor_;
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::UdpSocket::Bind(const Ipv4Address& address, std::uint16_t port) noexcept
+score::cpp::expected_blank<score::os::Error> score::os::UdpSocket::Bind(const Ipv4Address& address,
+                                                                        std::uint16_t port) noexcept
 {
     if (!address.IsValid())
     {
@@ -162,14 +167,13 @@ score::cpp::expected_blank<score::os::Error> score::os::UdpSocket::Bind(const Ip
 }
 
 score::cpp::expected<ssize_t, score::os::Error> score::os::UdpSocket::TryReceive(unsigned char* const buffer,
-                                                                      const std::size_t length) noexcept
+                                                                                 const std::size_t length) noexcept
 {
     return Socket::instance().recvfrom(file_descriptor_, buffer, length, Socket::MessageFlag::kNone, nullptr, nullptr);
 }
 
-score::cpp::expected<std::tuple<ssize_t, score::os::Ipv4Address>, score::os::Error> score::os::UdpSocket::TryReceiveWithAddress(
-    unsigned char* const buffer,
-    const std::size_t length) noexcept
+score::cpp::expected<std::tuple<ssize_t, score::os::Ipv4Address>, score::os::Error>
+score::os::UdpSocket::TryReceiveWithAddress(unsigned char* const buffer, const std::size_t length) noexcept
 {
     sockaddr_in source_address{};
     socklen_t address_length = sizeof(source_address);
@@ -198,9 +202,9 @@ score::cpp::expected<std::tuple<ssize_t, score::os::Ipv4Address>, score::os::Err
 
 score::cpp::expected<score::cpp::pmr::vector<std::tuple<ssize_t, score::os::Ipv4Address>>, score::os::Error>
 score::os::UdpSocket::TryReceiveMultipleMessagesWithAddress(unsigned char* const recv_bufs,
-                                                          const std::size_t recv_buffer_size,
-                                                          const std::size_t vlen,
-                                                          const std::size_t msg_length) noexcept
+                                                            const std::size_t recv_buffer_size,
+                                                            const std::size_t vlen,
+                                                            const std::size_t msg_length) noexcept
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!((vlen * msg_length) > recv_buffer_size));
     score::cpp::pmr::vector<struct mmsghdr> msgs(vlen);
@@ -258,9 +262,9 @@ score::os::UdpSocket::TryReceiveMultipleMessagesWithAddress(unsigned char* const
 }
 
 score::cpp::expected<ssize_t, score::os::Error> score::os::UdpSocket::TrySendTo(const Ipv4Address& recipient,
-                                                                     const std::uint16_t port,
-                                                                     const unsigned char* const buffer,
-                                                                     const std::size_t length) noexcept
+                                                                                const std::uint16_t port,
+                                                                                const unsigned char* const buffer,
+                                                                                const std::size_t length) noexcept
 {
     auto recipient_sockaddr_in_expected = GetSockAddrInFromIpAndPort(recipient, port);
     if (!recipient_sockaddr_in_expected.has_value())  // LCOV_EXCL_BR_LINE: Justification below
@@ -269,7 +273,8 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::UdpSocket::TrySendTo(
         // However, this is impossible to test through unit tests because, in the case of an invalid string,
         // the score::os::Ipv4Address constructor sets the default address to `0.0.0.0`, preventing ::inet_aton from
         // failing.
-        return score::cpp::make_unexpected(recipient_sockaddr_in_expected.error());  // LCOV_EXCL_LINE: Justification above
+        return score::cpp::make_unexpected(
+            recipient_sockaddr_in_expected.error());  // LCOV_EXCL_LINE: Justification above
     }
     const sockaddr_in recipient_sockaddr_in = recipient_sockaddr_in_expected.value();
 
@@ -288,9 +293,9 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::UdpSocket::TrySendTo(
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::UdpSocket::SetSocketOption(const std::int32_t level,
-                                                                        const std::int32_t optname,
-                                                                        const void* optval,
-                                                                        const socklen_t optlen) noexcept
+                                                                                   const std::int32_t optname,
+                                                                                   const void* optval,
+                                                                                   const socklen_t optlen) noexcept
 {
     return score::os::Socket::instance().setsockopt(this->file_descriptor_, level, optname, optval, optlen);
 }

@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/network/sock_async_udp/socket_udp.h"
-#include "score/os/unistd.h"
 #include "score/mw/log/logging.h"
+#include "score/os/unistd.h"
 
 namespace score
 {
@@ -77,7 +77,8 @@ std::int32_t SocketUdp::ReadAsync(std::shared_ptr<std::vector<score::cpp::span<s
 }
 
 /* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
-std::int32_t SocketUdp::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data, AsyncCallback u_cb) noexcept
+std::int32_t SocketUdp::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data,
+                                   AsyncCallback u_cb) noexcept
 /* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
     std::int32_t ret{kExitFailure};
