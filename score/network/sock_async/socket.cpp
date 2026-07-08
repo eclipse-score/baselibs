@@ -83,11 +83,11 @@ score::cpp::expected<ssize_t, score::os::Error> SocketBase::WriteSync(
 
     const void* const bufferPtr = static_cast<const void*>(buffer->data());
     return score::os::Socket::instance().sendto(socket_fd_,
-                                              bufferPtr,
-                                              buffer->size(),
-                                              Socket::MessageFlag::kNone,
-                                              recipient_sockaddr,
-                                              sizeof(*recipient_sockaddr));
+                                                bufferPtr,
+                                                buffer->size(),
+                                                Socket::MessageFlag::kNone,
+                                                recipient_sockaddr,
+                                                sizeof(*recipient_sockaddr));
 }
 /* KW_SUPPRESS_END:MISRA.LINKAGE.EXTERN:False positive. */
 
@@ -136,7 +136,8 @@ void SocketBase::Bind(const Endpoint endpoint) noexcept
     const auto recipient_sockaddr = reinterpret_cast<const struct sockaddr*>(&sock_addr);
     /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:*/
 
-    const auto bind_ret = score::os::Socket::instance().bind(socket_fd_, recipient_sockaddr, sizeof(*recipient_sockaddr));
+    const auto bind_ret =
+        score::os::Socket::instance().bind(socket_fd_, recipient_sockaddr, sizeof(*recipient_sockaddr));
 
     if (!bind_ret.has_value())
     {

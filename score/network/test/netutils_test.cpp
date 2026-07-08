@@ -56,7 +56,8 @@ struct NetUtilsTestFixture : ::testing::Test
 
 TEST_F(NetUtilsTestFixture, GetIfcIpAddress_GetifadrsFail)
 {
-    EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
+    EXPECT_CALL(ifaddrs_mock_, getifaddrs())
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     EXPECT_FALSE(score::os::Netutils::instance().get_ifcip_address("eth0").has_value());
 }
 
@@ -101,7 +102,8 @@ TEST_F(NetUtilsTestFixture, GetIfcIpAddress_TwoAddrs_Success)
 
 TEST_F(NetUtilsTestFixture, GetNetMask_GetifadrsFail)
 {
-    EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
+    EXPECT_CALL(ifaddrs_mock_, getifaddrs())
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     EXPECT_FALSE(score::os::Netutils::instance().get_net_mask("eth0").has_value());
 }
 
@@ -156,7 +158,8 @@ TEST_F(NetUtilsTestFixture, GetNetMask_TwoAddrs_Success)
 
 TEST_F(NetUtilsTestFixture, GetIfcIpAddressNetMask_GetifadrsFail)
 {
-    EXPECT_CALL(ifaddrs_mock_, getifaddrs()).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
+    EXPECT_CALL(ifaddrs_mock_, getifaddrs())
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno())));
     auto ret = score::os::Netutils::instance().get_ifc_ip_address_net_mask("eth0");
     EXPECT_FALSE(ret.has_value());
 }

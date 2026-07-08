@@ -27,7 +27,10 @@ namespace os
 class NetutilsMock : public Netutils
 {
   public:
-    MOCK_METHOD((score::cpp::expected<std::uint32_t, Error>), get_net_mask, (const std::string&), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::uint32_t, Error>),
+                get_net_mask,
+                (const std::string&),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::uint32_t, Error>),
                 get_ifcip_address,
                 (const std::string&),
@@ -36,7 +39,10 @@ class NetutilsMock : public Netutils
                 get_ifc_ip_address_net_mask,
                 (const std::string&),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<MacAddress, Error>), get_mac_address, (const std::string&), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<MacAddress, Error>),
+                get_mac_address,
+                (const std::string&),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::optional<std::uint32_t>), get_default_gateway_ip4, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 set_ip_address,

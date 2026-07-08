@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/network/sock_async/sock_async.h"
-#include "score/os/socket.h"
 #include "score/mw/log/logging.h"
+#include "score/os/socket.h"
 
 #include <iostream>
 namespace score
