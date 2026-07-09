@@ -154,6 +154,7 @@ cc_library(
         ":lock_file",
         ":pointer_arithmetic_util",
         ":types",
+        "@score_baselibs//score/concurrency:atomic_indirector",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/safe_math",
         "@score_baselibs//score/memory/shared/sealedshm/sealedshm_wrapper:sealedshm",
@@ -789,6 +790,7 @@ cc_gtest_unit_test(
     deps = [
         ":pointer_arithmetic_util",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/concurrency:atomic_indirector_mock_binding",
         "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],

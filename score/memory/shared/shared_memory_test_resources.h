@@ -127,6 +127,8 @@ class SharedMemoryResourceTestAttorney
         return resource_.do_allocate(bytes, alignment);
     }
 
+    void* do_allocate_using_mock_atomic_indirector(std::size_t bytes, std::size_t alignment);
+
     static std::size_t GetNeededManagementSpace()
     {
         return SharedMemoryResource::GetNeededManagementSpace();
