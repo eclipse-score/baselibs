@@ -165,7 +165,16 @@ Requirement Inspection Checklist
         - YES
         - There is only one requirement here that does define a safety mechanism - :need:`comp_req__bitmanipulation__bounds_safety`, findings on this were fixed in PR-2667 and PR-2696
         -
+      * - REQ_10_01
+        - Is the requirement description *complete* ?
+        - For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).
+        - YES
+        - Following feature requirements are linked:
 
+          - feat_req__baselibs__core_utilities : very generic requirement, could be used as a placeholder, recommend replacement with the following requirement
+          - feat_req__baselibs__bitmanipulation : is linked to all functional bitmanipulation component requirements
+          - feat_req__baselibs__safety : is linked to requirement describing a safety mechanism
+        -
 
 .. attention::
     The above checklist entries must be filled according to your component requirements in scope.

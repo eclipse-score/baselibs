@@ -31,7 +31,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -43,7 +43,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__result_library
+   :derived_from: feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -55,7 +55,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__result_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -67,7 +67,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -79,7 +79,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -94,7 +94,7 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
@@ -106,7 +106,7 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__result_library, feat_req__baselibs__safety
    :status: valid
    :tags: inspected
    :satisfied_by: comp__baselibs_result
