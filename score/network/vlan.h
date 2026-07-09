@@ -34,7 +34,7 @@ class Vlan : public ObjectSeam<Vlan>
     /// this socket.
     /// \arg file_descriptor valid socket file handle
     virtual score::cpp::expected_blank<Error> SetVlanPriorityOfSocket(const std::uint8_t pcp_priority,
-                                                               const std::int32_t file_descriptor) noexcept = 0;
+                                                                      const std::int32_t file_descriptor) noexcept = 0;
 
     virtual ~Vlan() = default;
 };
