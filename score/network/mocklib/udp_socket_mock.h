@@ -28,21 +28,28 @@ class UdpSocketMock : public UdpSocket
     static constexpr auto UDP_SOCKET_MOCK_FILE_DESCRIPTOR = 42U;
     UdpSocketMock() : UdpSocket{UDP_SOCKET_MOCK_FILE_DESCRIPTOR} {};
 
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), Bind, (const Ipv4Address&, std::uint16_t), (noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                Bind,
+                (const Ipv4Address&, std::uint16_t),
+                (noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<ssize_t, Error>), TryReceive, (unsigned char*, std::size_t), (noexcept, override));
+    MOCK_METHOD((score::cpp::expected<ssize_t, Error>),
+                TryReceive,
+                (unsigned char*, std::size_t),
+                (noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<std::tuple<ssize_t, score::os::Ipv4Address>, score::os::Error>),
                 TryReceiveWithAddress,
                 (unsigned char*, std::size_t),
                 (noexcept, override));
-    MOCK_METHOD((score::cpp::expected<score::cpp::pmr::vector<std::tuple<ssize_t, score::os::Ipv4Address>>, score::os::Error>),
-                TryReceiveMultipleMessagesWithAddress,
-                (unsigned char* const recv_bufs,
-                 const std::size_t recv_buffer_size,
-                 const std::size_t vec_length,
-                 const std::size_t msg_length),
-                (noexcept, override));
+    MOCK_METHOD(
+        (score::cpp::expected<score::cpp::pmr::vector<std::tuple<ssize_t, score::os::Ipv4Address>>, score::os::Error>),
+        TryReceiveMultipleMessagesWithAddress,
+        (unsigned char* const recv_bufs,
+         const std::size_t recv_buffer_size,
+         const std::size_t vec_length,
+         const std::size_t msg_length),
+        (noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<ssize_t, Error>),
                 TrySendTo,

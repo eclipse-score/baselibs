@@ -43,7 +43,6 @@ jobs:
               - 'score/language/safecpp/test/**'
               - 'score/memory/**/!(string_comparison_adaptor|string_literal)*'
               - 'score/mw/**'
-              - 'score/network/**'
               - 'score/os/diagrams/**'
               - 'score/os/interface/qnx/**'
               - 'score/os/linux/utils/test/**'

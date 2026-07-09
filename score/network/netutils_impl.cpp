@@ -12,11 +12,11 @@
  ********************************************************************************/
 #include "score/network/netutils_impl.h"
 
+#include "score/mw/log/logging.h"
 #include "score/os/ifaddrs.h"
 #include "score/os/ioctl.h"
 #include "score/os/socket.h"
 #include "score/os/unistd.h"
-#include "score/mw/log/logging.h"
 
 #if defined(__QNXNTO__)
 #include <ifaddrs.h>
@@ -48,7 +48,8 @@ using InterfaceAddressResult = score::cpp::expected<std::pair<ifaddrs*, Interfac
 
 static InterfaceAddressResult find_interface(const std::string& name, const sa_family_t family);
 
-score::cpp::expected<std::uint32_t, score::os::Error> NetutilsImpl::get_ifcip_address(const std::string& ifc_name) const noexcept
+score::cpp::expected<std::uint32_t, score::os::Error> NetutilsImpl::get_ifcip_address(
+    const std::string& ifc_name) const noexcept
 {
     const auto ret = find_interface(ifc_name, kAfInet);
     if (!ret.has_value())
@@ -64,7 +65,8 @@ score::cpp::expected<std::uint32_t, score::os::Error> NetutilsImpl::get_ifcip_ad
     return address;
 }
 
-score::cpp::expected<std::uint32_t, score::os::Error> NetutilsImpl::get_net_mask(const std::string& ifc_name) const noexcept
+score::cpp::expected<std::uint32_t, score::os::Error> NetutilsImpl::get_net_mask(
+    const std::string& ifc_name) const noexcept
 {
     const auto ret = find_interface(ifc_name, kAfInet);
     if (!ret.has_value())
@@ -116,7 +118,7 @@ score::cpp::expected<Ipv4Address, score::os::Error> NetutilsImpl::get_ifc_ip_add
 }
 
 score::cpp::expected_blank<score::os::Error> NetutilsImpl::set_ip_address(const std::string& ifc_name,
-                                                                 const Ipv4Address& ip_addr) const noexcept
+                                                                          const Ipv4Address& ip_addr) const noexcept
 {
     const auto sockfd = Socket::instance().socket(Socket::Domain::kIPv4, SOCK_DGRAM, 0);
     if (!sockfd.has_value())
