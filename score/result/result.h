@@ -41,8 +41,10 @@ inline constexpr details::unexpect_t unexpect{};
 using Unexpected = details::unexpected<score::result::Error>;
 
 /// \brief Blank and ResultBlank can be used interchangeably with void and Result<void>.
-using Blank = void;
-using ResultBlank = Result<Blank>;
+/// \deprecated Use `void` directly instead.
+using Blank [[deprecated("Use 'void' instead")]] = void;
+/// \deprecated Use `Result<void>` directly instead.
+using ResultBlank [[deprecated("Use 'Result<void>' instead")]] = Result<Blank>;
 
 template <typename Code>
 // Overload of MakeUnexpected; the overloads have different signatures
