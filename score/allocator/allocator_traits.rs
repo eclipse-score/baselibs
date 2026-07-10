@@ -16,13 +16,16 @@ use core::ptr::NonNull;
 use score_log::ScoreDebug;
 
 /// Allocation errors.
-#[derive(Debug, ScoreDebug, Clone, Copy)]
+#[derive(Debug, ScoreDebug, Clone, Copy, PartialEq, Eq)]
 pub enum AllocationError {
     /// Memory allocation failed due to insufficient memory.
     OutOfMemory,
 
     /// Memory allocation requested for zero size.
     ZeroSizeAllocation,
+
+    /// Invalid layout provided.
+    InvalidLayout,
 
     /// Fatal failure inside the allocator.
     Internal,
