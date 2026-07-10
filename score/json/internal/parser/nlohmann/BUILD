@@ -20,10 +20,10 @@ cc_library(
     srcs = ["json_builder.cpp"],
     hdrs = ["json_builder.h"],
     deps = [
-        "@nlohmann_json//:json",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
+        "@score_nlohmann_json//:json",
     ],
 )
 
@@ -39,6 +39,7 @@ cc_library(
         "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
+        "@score_nlohmann_json//:json",
     ],
 )
 
