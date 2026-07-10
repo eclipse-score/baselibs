@@ -600,6 +600,7 @@ cc_gtest_unit_test(
     deps = [
         ":shared_memory_factory",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/memory/shared/sealedshm/sealedshm_wrapper:sealedshm",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
