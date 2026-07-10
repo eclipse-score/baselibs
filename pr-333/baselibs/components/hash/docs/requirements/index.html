@@ -482,7 +482,7 @@
                   
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-4044df30">
+<div class="need_container docutils container" id="SNCB-48885540">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__hash_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -526,7 +526,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-bcf1873f">
+<div class="need_container docutils container" id="SNCB-33d32df0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_hash">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -573,7 +573,7 @@
 </div>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-ac98db98">
+<div class="need_container docutils container" id="SNCB-8cb4fef1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__calculation_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -620,11 +620,11 @@ and producing the final digest upon finalization.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f31e46d2">
+<div class="need_container docutils container" id="SNCB-27cb9329">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__value_retrieval">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value Retrieval</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value as Hexadecimal String</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -649,8 +649,8 @@ and producing the final digest upon finalization.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value both as a hexadecimal
-string representation and as a raw byte sequence.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value as a hexadecimal
+string representation.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp_req__hash__value_retrieval">comp_req__hash__value_retrieval</a></span></span></div>
@@ -666,7 +666,7 @@ string representation and as a raw byte sequence.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4f05af31">
+<div class="need_container docutils container" id="SNCB-57e94134">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__factory_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -695,9 +695,10 @@ string representation and as a raw byte sequence.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall provide a factory interface through which the caller
-specifies the hash algorithm and receives an <code class="docutils literal notranslate"><span class="pre">IHashCalculator</span></code> instance,
-decoupling the consumer from any concrete algorithm implementation.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall allow the hash algorithm to be selected and a
+calculator instance to be created independently of the code that performs
+the computation, so that the calling code is not coupled to any specific
+algorithm implementation.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__factory_interface" title="comp_req__hash__factory_interface">comp_req__hash__factory_interface</a></span></span></div>
@@ -713,11 +714,11 @@ decoupling the consumer from any concrete algorithm implementation.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d8bb029f">
+<div class="need_container docutils container" id="SNCB-3c51905c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__openssl_algorithms">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Supported Hash Algorithms</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Cryptographic Hash Algorithms</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -742,8 +743,8 @@ decoupling the consumer from any concrete algorithm implementation.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall support SHA-1, SHA-256, SHA-384, SHA-512, and
-IEEE CRC-32 as hash algorithms.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
+cryptographic hash algorithms.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__openssl_algorithms" title="comp_req__hash__openssl_algorithms">comp_req__hash__openssl_algorithms</a></span></span></div>
@@ -759,7 +760,7 @@ IEEE CRC-32 as hash algorithms.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6703f15e">
+<div class="need_container docutils container" id="SNCB-2b84e196">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__safe_computation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
