@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/memory/shared/shared_memory_factory.h"
+#include "score/memory/shared/sealedshm/sealedshm_wrapper/sealed_shm.h"
 #include "score/memory/shared/shared_memory_test_resources.h"
 
 #include <gtest/gtest.h>
@@ -1067,6 +1068,45 @@ TEST_F(SharedMemoryFactoryTest, CreatingAnonymousSharedMemoryInTypedMemoryFailsW
         create_in_typed_memory);
 
     EXPECT_EQ(nullptr, created_resource);
+}
+
+TEST_F(SharedMemoryFactoryTest, CreatingAnonymousSharedMemoryInSystemMemory)
+{
+    InSequence sequence{};
+    constexpr bool prefer_system_memory = false;
+    std::array<std::uint8_t, kSharedMemorySize> data_region{};
+    bool isInitialized = false;
+    const score::cpp::expected<std::int32_t, score::os::Error> open_anonymous_return_value{kFileDescriptor};
+    const score::cpp::expected_blank<score::os::Error> seal_return_value{};
+
+    // No typed memory allocation is expected since prefer_typed_memory is false
+    EXPECT_CALL(*typedmemory_mock_, AllocateAndOpenAnonymousTypedMemory(_)).Times(0);
+
+    score::memory::shared::SealedShm::InjectMock(&sealedshm_mock_);
+    EXPECT_CALL(sealedshm_mock_, OpenAnonymous(_)).Times(1).WillOnce(Return(open_anonymous_return_value));
+
+    expectFstatReturns(kFileDescriptor);
+
+    EXPECT_CALL(sealedshm_mock_, Seal(kFileDescriptor, _)).Times(1).WillOnce(Return(seal_return_value));
+
+    expectMmapReturns(data_region.data(), kFileDescriptor);
+
+    // When creating anonymous shared memory without typed memory
+    auto created_resource = SharedMemoryFactory::CreateAnonymous(
+        TestValues::sharedMemoryResourceIdentifier,
+        [&isInitialized](auto) {
+            isInitialized = true;
+        },
+        kSharedMemorySize,
+        {},
+        prefer_system_memory);
+
+    score::memory::shared::SealedShm::InjectMock(nullptr);
+
+    // Then a valid resource is returned and it is not in typed memory
+    EXPECT_NE(nullptr, created_resource);
+    EXPECT_FALSE(created_resource->IsShmInTypedMemory());
+    EXPECT_TRUE(isInitialized);
 }
 
 using SharedMemoryFactoryDeathTest = SharedMemoryFactoryTest;
