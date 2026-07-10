@@ -23,7 +23,8 @@ license-file.workspace = true
 path = "lib.rs"
 
 [dependencies]
-allocator = { workspace = true }
+allocator.workspace = true
+score_log.workspace = true
 
 [lints]
 workspace = true

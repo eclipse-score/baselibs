@@ -20,6 +20,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//score/allocator",
+        "//score/log_rust/score_log",
     ],
 )
 
