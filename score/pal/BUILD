@@ -19,7 +19,6 @@ rust_library(
     edition = "2021",
     visibility = ["//score:__subpackages__"],
     deps = [
-        "//score/containers_rust:containers",
         "//score/log_rust/score_log",
     ],
 )
