@@ -237,7 +237,7 @@ bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
 git_override(
     module_name = "hedron_compile_commands",
     commit = "abb61a688167623088f8768cc9264798df6a9d10",
-    patch_args = ["-p1"],
+    patch_strip = 1,
     # Patch for support for Bazel 8.6.0.
     patches = ["//patches:hedron_compile_commands_env_vars.patch"],
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
