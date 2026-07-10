@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
@@ -23,6 +24,25 @@ docs(
         "@score_process//:needs_json",
     ],
     source_dir = "docs",
+)
+
+# Generate `compile_commands.json`.
+# Required for `clangd` support.
+refresh_compile_commands(
+    name = "generate_compile_commands",
+    exclude_external_sources = True,
+    target_compatible_with = ["@platforms//os:linux"],
+    targets = {
+        "//...": "",
+    },
+)
+
+# Generate `rust_project.json`.
+# Required for `rust-analyzer` support.
+alias(
+    name = "generate_rust_project",
+    actual = "@rules_rust//tools/rust_analyzer:gen_rust_project",
+    target_compatible_with = ["@platforms//os:linux"],
 )
 
 copyright_checker(

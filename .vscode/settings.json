@@ -1,4 +1,24 @@
 {
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.rulers": [
+            150
+        ]
+    },
+    "rust-analyzer.cargo.cfgs": [],
+    "rust-analyzer.cargo.features": [],
+    "rust-analyzer.cargo.noDefaultFeatures": false,
+    "rust-analyzer.check.command": "clippy",
+    "rust-analyzer.rustfmt.overrideCommand": [
+        "${workspaceFolder}/.vscode/rustfmt.sh"
+    ],
+    "clangd.arguments": [
+        "--header-insertion=never",
+        "--compile-commands-dir=${workspaceFolder}/",
+        "--query-driver=**",
+        "--clang-tidy",
+        "--fallback-style=None"
+    ],
     "json.schemas": [
         {
             "fileMatch": [
