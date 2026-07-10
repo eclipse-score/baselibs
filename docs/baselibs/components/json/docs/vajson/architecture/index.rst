@@ -28,5 +28,5 @@ VaJson Component Architecture
    :id: comp__baselibs_vajson
    :security: YES
    :safety:  ASIL_B
-   :status: invalid
+   :status: valid
    :belongs_to: feat__baselibs
