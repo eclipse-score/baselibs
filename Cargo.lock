@@ -33,7 +33,6 @@ dependencies = [
 name = "pal"
 version = "0.0.1"
 dependencies = [
- "containers",
  "score_log",
 ]
 

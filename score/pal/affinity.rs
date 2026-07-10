@@ -14,8 +14,9 @@
 //! Affinity handling differs between Linux and QNX.
 //! Module ensures similar behavior between both OSes.
 
+extern crate alloc;
+
 use crate::{c_int, errno};
-use containers::fixed_capacity::FixedCapacityVec;
 use score_log::ScoreDebug;
 
 #[cfg(target_os = "linux")]
@@ -78,28 +79,24 @@ impl CpuSet {
         mask
     }
 
-    /// Create list based on provided mask.
-    fn create_list(mask: &[u8; CPU_MASK_SIZE]) -> FixedCapacityVec<usize> {
-        let mut list = FixedCapacityVec::new(MAX_CPU_NUM);
-        for cpu_id in 0..MAX_CPU_NUM {
-            let index = cpu_id / 8;
-            let offset = cpu_id % 8;
-
-            if (mask[index] & (1 << offset)) != 0 {
-                // Error should not occur, since capacity is matching the mask size.
-                list.push(cpu_id).expect("failed to push CPU ID to the list");
-            }
-        }
-
-        list
-    }
-
     pub fn set(&mut self, affinity: &[usize]) {
         self.mask = Self::create_mask(affinity);
     }
 
-    pub fn get(&self) -> FixedCapacityVec<usize> {
-        Self::create_list(&self.mask)
+    pub fn get(&self) -> Box<[usize]> {
+        let mut cpu_id_array = [0usize; MAX_CPU_NUM];
+        let mut counter = 0;
+        for cpu_id in 0..MAX_CPU_NUM {
+            let index = cpu_id / 8;
+            let offset = cpu_id % 8;
+
+            if (self.mask[index] & (1 << offset)) != 0 {
+                cpu_id_array[counter] = cpu_id;
+                counter += 1;
+            }
+        }
+
+        Box::from(&cpu_id_array[..counter])
     }
 }
 
@@ -249,7 +246,7 @@ pub fn set_affinity(cpu_set: CpuSet) {
 }
 
 /// Get affinity of a current thread.
-pub fn get_affinity() -> FixedCapacityVec<usize> {
+pub fn get_affinity() -> Box<[usize]> {
     #[cfg(target_os = "linux")]
     {
         let mut native_cpu_set = core::mem::MaybeUninit::zeroed();
@@ -350,7 +347,7 @@ mod tests {
         let exp = vec![0, 123, 1023];
         let cpu_set = CpuSet::new(&exp);
         let got = cpu_set.get();
-        assert_eq!(exp, got.iter().copied().collect::<Vec<_>>());
+        assert_eq!(exp, got.to_vec());
     }
 
     #[test]
@@ -364,7 +361,7 @@ mod tests {
         });
         join_handle.join().unwrap();
 
-        assert_eq!(rx.recv().unwrap().iter().copied().collect::<Vec<_>>(), exp_affinity);
+        assert_eq!(rx.recv().unwrap().to_vec(), exp_affinity);
     }
 
     #[test]
