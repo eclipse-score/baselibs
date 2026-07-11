@@ -125,12 +125,6 @@ git_override(
 
 bazel_dep(name = "score_platform", version = "0.6.0", dev_dependency = True)
 
-# FIXME: To be removed after https://github.com/eclipse-score/baselibs/issues/266 is resolved
-single_version_override(
-    module_name = "grpc-java",
-    version = "1.70.0",
-)
-
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
@@ -221,8 +215,33 @@ deb(
 )
 
 bazel_dep(name = "flatbuffers", version = "25.12.19")
+
+# flatbuffers@25.12.19 is a non-dev dependency that transitively pulls
+# grpc -> googleapis -> grpc-java@1.66.0 into all consumers. grpc-java@1.66.0
+# contains a broken use_repo declaration that Bazel 8.x rejects as a hard error.
+#
+# The upstream fix in flatbuffers (google/flatbuffers@2b8e4d3) upgrades grpc to
+# 1.76.0, which drops the problematic grpc-java@1.66.0 dependency. Until that
+# commit is included in a flatbuffers release, this direct dependency of a transitive
+# dependency serves as a mitigation.
+#
+# TODO: Remove once flatbuffers releases a version containing the following fix.
+# https://github.com/google/flatbuffers/commit/2b8e4d3af04a6c38c7a7e19460fc26faa3608c9e
+bazel_dep(name = "grpc", version = "1.76.0")
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
+
+# Hedron's Compile Commands Extractor for Bazel
+# https://github.com/hedronvision/bazel-compile-commands-extractor
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    commit = "abb61a688167623088f8768cc9264798df6a9d10",
+    patch_strip = 1,
+    # Patch for support for Bazel 8.6.0.
+    patches = ["//patches:hedron_compile_commands_env_vars.patch"],
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+)
 
 #############################################################
 #

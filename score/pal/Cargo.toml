@@ -24,7 +24,6 @@ license-file.workspace = true
 path = "lib.rs"
 
 [dependencies]
-containers.workspace = true
 score_log.workspace = true
 
 [lints]

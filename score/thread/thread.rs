@@ -522,7 +522,7 @@ mod tests {
         let result = join_handle.join();
         assert!(result.is_ok());
 
-        assert_eq!(rx.recv().unwrap().iter().copied().collect::<Vec<_>>(), exp_affinity);
+        assert_eq!(rx.recv().unwrap().to_vec(), exp_affinity);
     }
 
     #[test]
