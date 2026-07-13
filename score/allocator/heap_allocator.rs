@@ -16,6 +16,7 @@ extern crate alloc;
 use alloc::alloc::{alloc, dealloc};
 use core::alloc::Layout;
 use core::ptr::NonNull;
+use score_log::ScoreDebug;
 
 use crate::allocator_traits::{AllocationError, BasicAllocator};
 
@@ -23,7 +24,7 @@ use crate::allocator_traits::{AllocationError, BasicAllocator};
 pub static GLOBAL_ALLOCATOR: HeapAllocator = HeapAllocator;
 
 /// Proxy to global heap allocation in Rust.
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Debug, ScoreDebug, Default, Clone, Copy)]
 pub struct HeapAllocator;
 
 impl BasicAllocator for HeapAllocator {
