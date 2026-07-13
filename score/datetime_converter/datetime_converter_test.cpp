@@ -518,8 +518,7 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
 
 TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_YearBoundary_DayOverflowRollover)
 {
-    RecordProperty("Description",
-        "Verify that pre-1970 conversion handles day overflow at year boundary by rolling month and year.");
+    RecordProperty("Description", "Verify that pre-1970 conversion handles day overflow at year boundary by rolling month and year.");
     RecordProperty("TestType", "requirements-based");
 
     // 1960-01-01 00:00:00 epoch; this path normalizes an intermediate Dec 32 to Jan 1 of the next year.
