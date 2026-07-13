@@ -498,7 +498,8 @@ TEST_F(DateTimeConverterTest, dateTimeToEpoch_false_isValidDateTimeFormat)
 TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
 {
     RecordProperty("Description",
-        "Verify that a post-1970 epoch landing exactly on a non-leap year boundary rolls over to the next year correctly.");
+                   "Verify that a post-1970 epoch landing exactly on a non-leap year boundary rolls over to the next "
+                   "year correctly.");
     RecordProperty("TestType", "requirements-based");
 
     time_t epoch{};
