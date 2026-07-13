@@ -56,6 +56,10 @@ Persistent container state is parameterized through pointer-slot policies so
 that storage of internal links and buffer pointers can be adapted without
 changing container algorithms.
 
+A side-by-side comparison with the standard containers, one failure scenario
+per row, is provided in :need:`doc__nothrow_comparison_std`. It serves as an
+input to the planned "when to use which container" guideline.
+
 Dependencies
 ------------
 
@@ -69,3 +73,4 @@ source files while this architecture document is being expanded.
 .. toctree::
 
    failure_handling.rst
+   comparison_std.rst
