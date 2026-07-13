@@ -425,7 +425,7 @@
                   
   <section id="nothrow">
 <h1>Nothrow<a class="headerlink" href="#nothrow" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-52bb119a">
+<div class="need_container docutils container" id="SNCB-98733e31">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__nothrow">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -499,81 +499,98 @@ component deliberately exposes explicit error-propagating APIs. This design
 makes failure handling visible at the call site and allows higher-level code to
 choose between propagation and deliberate abort semantics.</p>
 </section>
+<section id="scope-and-relation-to-communication-modelling">
+<h2>Scope and Relation to Communication Modelling<a class="headerlink" href="#scope-and-relation-to-communication-modelling" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> is a <strong>library component</strong>: its types are linked into an
+executable and used within that executable’s address space. The component is
+not a platform service and does not define a communication stack.</p>
+<p>The only interprocess contract the component specifies is the <strong>binary
+representation of container state in shared memory</strong>: standard-layout types,
+internal pointers persisted through the offset pointer-slot policy, and
+bounded objects with a fixed footprint but dynamic content. Memory
+<em>management</em> does not cross that boundary: the polymorphic allocator and
+memory resource are not part of the shared representation. Memory provisioning
+stays with the memory-aware side, which creates the container in the shared
+segment (<code class="docutils literal notranslate"><span class="pre">CreateWithBuffer</span></code>); in that scenario the allocator parameter is
+type-compatibility decoration only.</p>
+<p>The proposal therefore addresses two separable aspects:</p>
+<ol class="arabic simple">
+<li><p><strong>Binary representation</strong> – the stable ABI that shared-memory participants
+agree on: standard-layout types and offset-encoded pointers, independent of
+language bindings and rebuild-free across storage locations and container
+sizes.</p></li>
+<li><p><strong>API</strong> – error propagation on memory exhaustion, with memory provisioning
+hidden behind a generic allocator as in the C++ standard library. Container
+references pointing into shared memory can be passed to component
+interfaces that are unaware of the IPC layer and of memory provisioning,
+without payload copying.</p></li>
+</ol>
+<p>Relation to communication modelling:</p>
+<ul class="simple">
+<li><p>score has deliberately decided not to model executables and components,
+unlike communication-modelling approaches such as AUTOSAR Adaptive. Nothing
+in this component changes or depends on that decision. <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>
+does not introduce, require, or substitute communication modelling.</p></li>
+<li><p>Where a communication model and generator exist, the types can serve as
+<strong>elements in the generator’s output</strong> – for example as typed event
+payloads placed in shared memory by a communication stack. They complement
+such a stack; they do not compete with it.</p></li>
+<li><p>The types work equally well in <strong>pure API-driven configurations</strong> without
+any model or generator involved.</p></li>
+</ul>
+<p>Usage scenarios discussed in the component review illustrate this scope:</p>
+<ul class="simple">
+<li><p><strong>Event communication (one-to-many):</strong> the sender is memory-aware, maintains
+an object pool in shared memory, and retains ownership; receivers access
+payloads by reference without ownership transfer.</p></li>
+<li><p><strong>Method communication (one-to-one):</strong> for intra-process API communication,
+ownership passing is possible, including across C++/Rust API boundaries,
+using opaque references to the binary-stable memory-resource interfaces.</p></li>
+<li><p><strong>Gateway serialization:</strong> dynamic datatypes in shared memory remain
+interpretable by a gateway process (for example for SOME/IP serialization),
+because the shared representation is self-contained.</p></li>
+</ul>
+<p>Both aspects are demonstrated by runnable examples in <code class="docutils literal notranslate"><span class="pre">example/</span></code>. The
+shared-memory demo (<code class="docutils literal notranslate"><span class="pre">shm_parent</span></code>/<code class="docutils literal notranslate"><span class="pre">shm_child</span></code> with
+<code class="docutils literal notranslate"><span class="pre">bounded_containers.h</span></code>) exercises the <strong>binary representation</strong>: two
+processes map the same segment at different base addresses, and the child
+reads, mutates, and inserts into containers the parent created.
+<code class="docutils literal notranslate"><span class="pre">resource_scopes.cpp</span></code> exercises the <strong>API</strong> aspect: the same allocation is
+handled with <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> where the budget is co-located with its use, and as
+a propagated <code class="docutils literal notranslate"><span class="pre">score::Result</span></code> error where memory is provisioned centrally –
+including the rejection of an oversized request without process termination.</p>
+</section>
 <section id="failure-handling-model">
 <h2>Failure Handling Model<a class="headerlink" href="#failure-handling-model" title="Link to this heading">#</a></h2>
 <p>score does not yet define a common software-error concept. To make the intent
 of the <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> interfaces unambiguous, the component adopts a
 simplified categorization of operation failures and maps each category to a
-specific API shape. Two categories are relevant at the container boundary:</p>
-<ul class="simple">
-<li><p><strong>Error</strong> – the requested operation could not be completed, but the program
-state remains valid and execution can proceed. The failure is handed back to
-the caller as a value, and the caller decides whether to recover from it or
-to propagate it further. Allocation failure is reported this way: a memory
-resource returns <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>, and container operations return
-<code class="docutils literal notranslate"><span class="pre">score::Result</span></code> or <code class="docutils literal notranslate"><span class="pre">score::ResultBlank</span></code>.</p></li>
-<li><p><strong>Violation</strong> – a precondition of the operation was not met. This indicates
-a defect in the calling code, not a runtime condition that the caller could
-legitimately encounter. The operation aborts at the point of detection
-instead of returning, because a bug-free caller cannot trigger it and so has
-no error-handling path to implement or test. The <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants
-implement this category.</p></li>
-</ul>
-<p>The category is chosen by the response mechanism and by who is responsible for
-handling the failure – not by how severe the failure seems. The same
-underlying condition, a failed allocation, is an <em>error</em> when the available
-memory is not known in the scope of use, and a <em>violation</em> when the capacity is
-guaranteed by design, so that a failure could only mean that guarantee was
-broken.</p>
-<p>Choosing between the two APIs:</p>
-<ul class="simple">
-<li><p>Use the result-returning operations (<code class="docutils literal notranslate"><span class="pre">Create</span></code>, <code class="docutils literal notranslate"><span class="pre">PushBack</span></code>, <code class="docutils literal notranslate"><span class="pre">Insert</span></code>,
-and similar) when the memory budget is <strong>not</strong> known at the call site. The
-failure path is real and must be handled by the caller, and it can be tested
-by deliberately providing an undersized memory resource.</p></li>
-<li><p>Use the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants when the memory budget <strong>is</strong> known at the call
-site, so that an allocation failure could only mean a broken design
-assumption. The abort is part of the component’s contract and is tested
-within the component, for example with a death test, rather than by the
-caller.</p></li>
-</ul>
-<section id="out-of-scope-process-level-termination">
-<h3>Out of scope: process-level termination<a class="headerlink" href="#out-of-scope-process-level-termination" title="Link to this heading">#</a></h3>
-<p>A third failure category – an unrecoverable corruption of the runtime
-environment that justifies terminating the process – exists at the system
-level but is deliberately <strong>not</strong> a concern of these containers. A container is
-not the right place to decide that a process must exit: that decision needs
-context about whether any caller higher up can still recover and whether an
-orderly shutdown is still safe. <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> therefore never terminates
-the process on its own. It either returns the failure as an error, so that a
-layer with the necessary context can decide how to react, or it aborts on a
-contract violation.</p>
-<p>Memory exhaustion is frequently driven by the size or shape of incoming data
-rather than by a defect, and that data may be attacker-controlled – a request
-crafted to allocate as much as possible is a classic denial-of-service vector.
-Recovery is therefore the common case, not the exception: a service that hits
-its allocation limit while assembling a response can reject that one request,
-release the memory the partially built response had reserved, and proceed to
-serve the next request. Only the layer handling the request has the context to
-draw that line – which request to reject, what to release, and when to keep
-running. A container several levels below it cannot.</p>
-<p>For that reason the result-returning APIs are the generic choice and the
-<code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants the special case. The premise behind <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> – that
-the integrated environment guarantees enough memory for every possible
-operation up front – holds only in tightly bounded, statically sized
-constellations. It is not a generic safe bet, so a guaranteed budget should be
-treated as something a specific design has deliberately established, not as the
-normal state of affairs.</p>
-<p>Converting a propagated allocation error into a controlled process shutdown,
-where that genuinely is the right response, remains the responsibility of a
-higher layer, at the point where continuing is no longer safe.</p>
-</section>
+specific API shape. Failures are either <strong>errors</strong> – the request could not be
+fulfilled, program state remains valid, and the failure is returned to the
+caller as <code class="docutils literal notranslate"><span class="pre">score::Result</span></code> – or <strong>violations</strong> – a caller precondition was
+broken, which indicates a code defect and aborts at the point of detection
+(the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants and bounds-checked accessors).</p>
+<p>The category is chosen by the response mechanism and by who owns the handling,
+not by severity: the same failed allocation is an <em>error</em> when the memory
+budget is unknown at the call site, and a <em>violation</em> when the budget is
+guaranteed by design. In a modularized architecture, memory <em>need</em> and memory
+<em>budget</em> are usually not co-located – the budget is sized by configuration at
+integration time while the need arises at run time in independently evolving,
+resource-sharing components – so an up-front guarantee holds only in tightly
+bounded constellations. The result-returning APIs are therefore the generic
+choice and the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants the special case. Process-level
+termination in response to a propagated allocation error is deliberately left
+to higher layers that have the context to decide it.</p>
+<p>The full model – category definitions, the need/budget separation argument,
+the rule for choosing between the two API shapes, and the rationale for
+keeping process termination out of the containers – is defined in the
+component architecture: <a class="reference internal" href="architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>.</p>
 </section>
 <section id="specification">
 <h2>Specification<a class="headerlink" href="#specification" title="Link to this heading">#</a></h2>
 <p>The component requirements are collected in <a class="reference internal" href="requirements/index.html#doc__nothrow_requirements" title="doc__nothrow_requirements"><em class="xref need">Nothrow Requirements (doc__nothrow_requirements)</em></a>.
 At a high level, <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> provides the following capabilities:</p>
-<div class="need_container docutils container" id="SNCB-16f299e1">
+<div class="need_container docutils container" id="SNCB-6c4594a4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_req table" id="feat_req__nothrow__container_utilities">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -641,7 +658,11 @@ unless they opt into these types.</p>
 surface on its own. Its primary security relevance is operational: callers can
 use explicit error-propagating APIs to prevent memory pressure from turning
 into uncontrolled termination.</p>
-<p>When inputs are influenced by untrusted sources, users should prefer the
+<p>Resource exhaustion triggered by attacker-controlled input is a classic
+denial-of-service vector, and the separation of memory need from memory budget
+in a modularized architecture makes it easy to reach and hard to rule out by
+testing; <a class="reference internal" href="architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a> develops this argument. When
+inputs are influenced by untrusted sources, users should therefore prefer the
 <code class="docutils literal notranslate"><span class="pre">score::Result</span></code>-returning APIs over <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants so that resource
 exhaustion can be handled as a contained error path.</p>
 </section>
@@ -668,6 +689,10 @@ repository’s existing licensing model.</p>
 explicit failure handling. The <a class="reference internal" href="#failure-handling-model">Failure Handling Model</a> section describes the
 error and violation categories and the rule for choosing between the
 result-returning operations and their <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants.</p>
+<p>Runnable teaching material lives in <code class="docutils literal notranslate"><span class="pre">example/</span></code>: <code class="docutils literal notranslate"><span class="pre">resource_scopes.cpp</span></code> is
+the decision rule in code – a co-located budget handled with <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code>
+next to centrally provisioned memory handled with <code class="docutils literal notranslate"><span class="pre">score::Result</span></code> – and
+the shared-memory demo shows bounded containers used across processes.</p>
 </section>
 <section id="rejected-ideas">
 <h2>Rejected Ideas<a class="headerlink" href="#rejected-ideas" title="Link to this heading">#</a></h2>
@@ -690,7 +715,33 @@ the component scope</p></li>
 <li class="toctree-l1"><a class="reference internal" href="architecture/index.html">Nothrow Component Architecture</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="architecture/index.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture/index.html#design-principles">Design Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture/index.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/index.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/failure_handling.html">Failure Handling Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/failure_handling.html#memory-need-and-memory-budget-are-separated">Memory need and memory budget are separated</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/failure_handling.html#choosing-between-the-two-apis">Choosing between the two APIs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/failure_handling.html#out-of-scope-process-level-termination">Out of scope: process-level termination</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/comparison_std.html">Comparison with Standard Containers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-1-fallible-construction-budget-unknown">Scenario 1: Fallible construction, budget unknown</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-2-fallible-growth-in-business-logic">Scenario 2: Fallible growth in business logic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-3-pre-flight-check-before-mutation">Scenario 3: Pre-flight check before mutation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-4-testing-the-failure-path">Scenario 4: Testing the failure path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-5-budget-guaranteed-by-design-violation-leg">Scenario 5: Budget guaranteed by design (violation leg)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-6-bounds-checked-element-access">Scenario 6: Bounds-checked element access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-7-attacker-sized-input-denial-of-service">Scenario 7: Attacker-sized input (denial of service)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#scenario-8-shared-memory-placement">Scenario 8: Shared-memory placement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/comparison_std.html#relation-to-the-usage-guideline">Relation to the usage guideline</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/usage_guidelines.html">Usage Guidelines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/usage_guidelines.html#container-choice-standard-or-nothrow">Container choice: standard or nothrow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/usage_guidelines.html#pointer-policy-choice-offset-or-raw">Pointer policy choice: offset or raw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/usage_guidelines.html#decision-summary">Decision summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="requirements/index.html">Requirements</a></li>
@@ -750,10 +801,8 @@ the component scope</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale">Rationale</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#failure-handling-model">Failure Handling Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-scope-process-level-termination">Out of scope: process-level termination</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scope-and-relation-to-communication-modelling">Scope and Relation to Communication Modelling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#failure-handling-model">Failure Handling Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-compatibility">Backward Compatibility</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-impact">Security Impact</a></li>

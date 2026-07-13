@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Nothrow Component Architecture &#8212; S-CORE Baselibs  documentation</title>
+    <title>Usage Guidelines &#8212; S-CORE Baselibs  documentation</title>
   
   
   
@@ -62,7 +62,7 @@
     <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
     <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
     <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'nothrow/architecture/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'nothrow/architecture/usage_guidelines';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.17.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
@@ -73,8 +73,8 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Failure Handling Model" href="failure_handling.html" />
-    <link rel="prev" title="Nothrow" href="../index.html" />
+    <link rel="next" title="Requirements" href="../requirements/index.html" />
+    <link rel="prev" title="Comparison with Standard Containers" href="comparison_std.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -363,10 +363,10 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Nothrow Component Architecture</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Nothrow Component Architecture</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="failure_handling.html">Failure Handling Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="comparison_std.html">Comparison with Standard Containers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage_guidelines.html">Usage Guidelines</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Usage Guidelines</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
@@ -414,7 +414,10 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Nothrow</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Nothrow Component Architecture</span></li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Nothrow Component Architecture</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Usage Guidelines</span></li>
   </ul>
 </nav>
 </div>
@@ -431,11 +434,11 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-ead21cf6">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__nothrow_architecture">
+  <div class="need_container docutils container" id="SNCB-36a4547b">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__nothrow_usage_guidelines">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Nothrow Architecture</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Nothrow Usage Guidelines</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -460,7 +463,7 @@
 <tr class="content row-odd"><td class="content" colspan="6"></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#doc__nothrow_architecture" title="doc__nothrow_architecture">doc__nothrow_architecture</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#doc__nothrow_usage_guidelines" title="doc__nothrow_usage_guidelines">doc__nothrow_usage_guidelines</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
@@ -473,116 +476,162 @@
 </table>
 </div>
 </div>
-<section id="nothrow-component-architecture">
-<h1>Nothrow Component Architecture<a class="headerlink" href="#nothrow-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-413e384d">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_nothrow">
+<section id="usage-guidelines">
+<h1>Usage Guidelines<a class="headerlink" href="#usage-guidelines" title="Link to this heading">#</a></h1>
+<p>This document answers the two questions a user of <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> has to
+decide, in order:</p>
+<ol class="arabic simple">
+<li><p><strong>Container choice</strong> – standard container or <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> container?</p></li>
+<li><p><strong>Pointer policy choice</strong> – <code class="docutils literal notranslate"><span class="pre">OffsetSlotPolicy</span></code> (default) or
+<code class="docutils literal notranslate"><span class="pre">RawSlotPolicy</span></code>?</p></li>
+</ol>
+<p>The two decisions are orthogonal: the first is driven by failure semantics,
+the second by where the container’s memory lives and which interfaces it must
+pass through. Supporting analyses: <a class="reference internal" href="failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>
+(failure semantics), <a class="reference internal" href="comparison_std.html#doc__nothrow_comparison_std" title="doc__nothrow_comparison_std"><em class="xref need">Nothrow Comparison with Sta... (doc__nothrow_comparison_std)</em></a> (side-by-side
+comparison with the standard containers), and <code class="docutils literal notranslate"><span class="pre">score/nothrow/BENCHMARK.md</span></code>
+(pointer-policy runtime costs). The decision rules are demonstrated by
+runnable examples in <code class="docutils literal notranslate"><span class="pre">example/</span></code>: <code class="docutils literal notranslate"><span class="pre">resource_scopes.cpp</span></code> for the co-located
+versus centrally provisioned budget choice, and the shared-memory demo for
+offset-policy containers used across processes.</p>
+<section id="container-choice-standard-or-nothrow">
+<h2>Container choice: standard or nothrow<a class="headerlink" href="#container-choice-standard-or-nothrow" title="Link to this heading">#</a></h2>
+<p>The standard library remains the default where its failure semantics are
+acceptable, and standard types remain required at boundaries to interfaces
+that consume them – a third-party API expecting <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> cannot be
+handed a <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> type. Adoption of <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> is therefore
+deliberately targeted at the code that needs its guarantees rather than a
+blanket replacement: a statement about where the types can be deployed today,
+not about their generality.</p>
+<p>Use a <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> container when at least one of the following holds:</p>
+<ul class="simple">
+<li><p><strong>Allocation failure must be a contained, testable error.</strong> The memory
+budget is not co-located with the consuming code – it is sized by
+configuration at integration time, shared between consumers, or the
+allocation amount is influenced by input data. Standard containers can only
+terminate in this situation; the failure path is not even testable without
+exceptions (<a class="reference internal" href="comparison_std.html#doc__nothrow_comparison_std" title="doc__nothrow_comparison_std"><em class="xref need">Nothrow Comparison with Sta... (doc__nothrow_comparison_std)</em></a>, scenarios 1–4).</p></li>
+<li><p><strong>The process must survive memory pressure.</strong> Data crossing a trust
+boundary can be attacker-sized; exhaustion must be rejected per request
+rather than terminate the process (scenario 7).</p></li>
+<li><p><strong>A fixed budget contract should trap at the defect site.</strong> Where capacity
+is guaranteed by design, the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants convert a broken guarantee
+into an immediate, death-testable abort instead of a masked reallocation
+(scenario 5).</p></li>
+<li><p><strong>Container state is placed in shared memory</strong> (scenario 8, and the pointer
+policy section below).</p></li>
+</ul>
+<p>Keep the standard container when none of these applies – in particular for
+interoperation with interfaces that consume standard types, and for local
+containers whose allocation behavior is trivially bounded and whose failure
+would be acceptable as termination anyway.</p>
+<p>Within <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>, choose between the error-returning and the
+aborting API per operation, following the failure handling model: the
+result-returning operations are the generic choice; <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> is legitimate
+only where the memory budget is established, owned, and verifiable in the
+same scope as the consumption (<a class="reference internal" href="failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>).</p>
+</section>
+<section id="pointer-policy-choice-offset-or-raw">
+<h2>Pointer policy choice: offset or raw<a class="headerlink" href="#pointer-policy-choice-offset-or-raw" title="Link to this heading">#</a></h2>
+<p>The pointer policy decides how a container persists its internal pointers
+(tree links, buffer bases, pool free lists). It is part of the container
+<em>type</em>, so the choice propagates through every interface the container passes
+through – which is exactly why the default is the generic one.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">OffsetSlotPolicy</span></code> (the default) when a dynamic container is passed by
+reference through generic interfaces
+…………………………………………………………………….</p>
+<p>Application code that operates on a container received by reference should
+not have to care where that container’s memory lives. That placement is an
+integration decision, and it legitimately differs between deployments of the
+same logic:</p>
+<ul class="simple">
+<li><p><strong>Shared-memory IPC:</strong> the container lives in a shared-memory object and is
+accessed zero-copy by several processes, each mapping it at a different
+base address.</p></li>
+<li><p><strong>Process-local IPC:</strong> the container lives in ordinary process-local
+memory – for example populated from an OS-provided buffer backing
+socket-based communication – and never leaves the process address space.</p></li>
+</ul>
+<p>With <code class="docutils literal notranslate"><span class="pre">OffsetSlotPolicy</span></code>, both cases are the <em>same container type</em>. A
+function taking <code class="docutils literal notranslate"><span class="pre">Map&lt;int,</span> <span class="pre">int&gt;&amp;</span></code> serves both deployments unchanged; the
+application logic does not fork per IPC mechanism, and the transport decision
+stays where it belongs – with the integrator provisioning the memory.</p>
+<p>This genericity is deliberately bought at the cheapest available price. The
+offset encoding is inline and fully visible to the optimizer; the measured
+overhead over raw pointers is in the single-digit to low-double-digit percent
+range for worst-case random access patterns (~1.1x nested-vector random
+access, ~1.5x map iteration, ~2x pointer-chasing map lookup microbenchmarks;
+insert/rebalance at or below standard-container cost – see
+<code class="docutils literal notranslate"><span class="pre">score/nothrow/BENCHMARK.md</span></code>). The alternatives for placement-independent
+application code all cost more: instantiating the logic for both policies
+duplicates types and interfaces, type erasure adds dispatch on every access,
+and barrier-based fancy-pointer implementations measured in the same
+benchmark run one to two orders of magnitude slower.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">RawSlotPolicy</span></code> for closed, single-address-space subsystems with a
+profiled need
+…………………………………………………………………….</p>
+<p><code class="docutils literal notranslate"><span class="pre">RawSlotPolicy</span></code> stores plain pointers and benchmarks at parity with the
+standard containers. Choose it only when <em>both</em> hold:</p>
+<ul class="simple">
+<li><p>the container is confined to one process address space by design, with no
+generic interface anywhere in its reach that must also accept shared-memory
+instances, and</p></li>
+<li><p>profiling shows the offset arithmetic matters on a hot path of this
+subsystem.</p></li>
+</ul>
+<p>The cost of choosing raw is architectural, not runtime: a raw-policy
+container is a different type, so it cannot be handed to the generic
+interfaces above, and the fork propagates through every signature it touches.
+Confine <code class="docutils literal notranslate"><span class="pre">RawSlotPolicy</span></code> to subsystem-internal types that never cross a
+module boundary.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The pointer policy makes container <em>state</em> position-independent; it does
+not by itself make a container shared-memory ready. For cross-process use,
+the backing storage must also reside in the shared segment
+(<code class="docutils literal notranslate"><span class="pre">CreateWithBuffer</span></code>), and synchronization between processes remains the
+integrator’s responsibility.</p>
+</div>
+</section>
+<section id="decision-summary">
+<h2>Decision summary<a class="headerlink" href="#decision-summary" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 55.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Situation</p></th>
+<th class="head"><p>Choice</p></th>
+</tr>
+</thead>
 <tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">score::nothrow</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">invalid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
+<tr class="row-even"><td><p>Interop with third-party or standard-library interfaces; trivially
+bounded local container</p></td>
+<td><p>Standard container</p></td>
 </tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
-<div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="../requirements/index.html#comp_req__nothrow__alloc_fail" title="comp__baselibs_nothrow">comp_req__nothrow__alloc_fail</a>, <a class="reference internal" href="../requirements/index.html#comp_req__nothrow__create" title="comp__baselibs_nothrow">comp_req__nothrow__create</a>, <a class="reference internal" href="../requirements/index.html#comp_req__nothrow__mutate_result" title="comp__baselibs_nothrow">comp_req__nothrow__mutate_result</a>, <a class="reference internal" href="../requirements/index.html#comp_req__nothrow__or_abort" title="comp__baselibs_nothrow">comp_req__nothrow__or_abort</a>, <a class="reference internal" href="../requirements/index.html#comp_req__nothrow__pointer_policy" title="comp__baselibs_nothrow">comp_req__nothrow__pointer_policy</a>, <a class="reference internal" href="../requirements/index.html#comp_req__nothrow__asil" title="comp__baselibs_nothrow">comp_req__nothrow__asil</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
+<tr class="row-odd"><td><p>Budget not co-located with consumption; input-influenced allocation;
+failure must be contained and testable</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>, result-returning APIs</p></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"></td>
+<tr class="row-even"><td><p>Untrusted input can drive allocation size</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>, result-returning APIs; reject the request on error</p></td>
 </tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp__baselibs_nothrow" title="comp__baselibs_nothrow">comp__baselibs_nothrow</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
+<tr class="row-odd"><td><p>Budget established and verifiable in the same scope</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>, <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants</p></td>
+</tr>
+<tr class="row-even"><td><p>Container passed by reference through generic interfaces; placement
+(SHM vs process-local) is an integration decision</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">OffsetSlotPolicy</span></code> (default)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Container state in shared memory</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">OffsetSlotPolicy</span></code> + <code class="docutils literal notranslate"><span class="pre">CreateWithBuffer</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Closed subsystem, single address space, profiled hot path</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">RawSlotPolicy</span></code></p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> is a library component linked into executables; its scope
-relative to communication modelling is delimited in the component request
-(<a class="reference internal" href="../index.html#doc__nothrow" title="doc__nothrow"><em class="xref need">nothrow (doc__nothrow)</em></a>). It is organized into three main areas:</p>
-<ul class="simple">
-<li><p>memory resources and allocators, including <code class="docutils literal notranslate"><span class="pre">MemoryResource</span></code>,
-<code class="docutils literal notranslate"><span class="pre">PolymorphicAllocator</span></code>, and <code class="docutils literal notranslate"><span class="pre">MonotonicBufferResource</span></code></p></li>
-<li><p>pointer-slot abstractions that control how persisted container pointers are
-stored</p></li>
-<li><p>container implementations such as <code class="docutils literal notranslate"><span class="pre">Vector</span></code> and <code class="docutils literal notranslate"><span class="pre">Map</span></code> that use the
-nothrow allocation model</p></li>
-</ul>
-</section>
-<section id="design-principles">
-<h2>Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading">#</a></h2>
-<p>The component preserves standard-library naming and behavior where possible,
-but replaces exception-based allocation failure with explicit result-returning
-or aborting APIs. Which failures are reported which way is governed by the
-component’s failure handling model, defined in
-<a class="reference internal" href="failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>: failures are categorized as <em>errors</em>
-(returned to the caller as <code class="docutils literal notranslate"><span class="pre">score::Result</span></code>) or <em>violations</em> (caller contract
-breaches that abort at the point of detection).</p>
-<p>Persistent container state is parameterized through pointer-slot policies so
-that storage of internal links and buffer pointers can be adapted without
-changing container algorithms.</p>
-<p>A side-by-side comparison with the standard containers, one failure scenario
-per row, is provided in <a class="reference internal" href="comparison_std.html#doc__nothrow_comparison_std" title="doc__nothrow_comparison_std"><em class="xref need">Nothrow Comparison with Sta... (doc__nothrow_comparison_std)</em></a>. The resulting
-“when to use which container” guideline, covering both the container choice
-and the pointer policy choice, is <a class="reference internal" href="usage_guidelines.html#doc__nothrow_usage_guidelines" title="doc__nothrow_usage_guidelines"><em class="xref need">Nothrow Usage Guidelines (doc__nothrow_usage_guidelines)</em></a>.</p>
-</section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">#</a></h2>
-<p>The component depends on existing baselibs building blocks, most notably
-<code class="docutils literal notranslate"><span class="pre">score::Result</span></code> for error propagation. It also follows repository-wide
-toolchain and quality settings defined in the local Bazel targets.</p>
-<p>Detailed design notes remain in <code class="docutils literal notranslate"><span class="pre">score/nothrow/README.md</span></code> and the component’s
-source files while this architecture document is being expanded.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="failure_handling.html">Failure Handling Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="failure_handling.html#memory-need-and-memory-budget-are-separated">Memory need and memory budget are separated</a></li>
-<li class="toctree-l2"><a class="reference internal" href="failure_handling.html#choosing-between-the-two-apis">Choosing between the two APIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="failure_handling.html#out-of-scope-process-level-termination">Out of scope: process-level termination</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="comparison_std.html">Comparison with Standard Containers</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-1-fallible-construction-budget-unknown">Scenario 1: Fallible construction, budget unknown</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-2-fallible-growth-in-business-logic">Scenario 2: Fallible growth in business logic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-3-pre-flight-check-before-mutation">Scenario 3: Pre-flight check before mutation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-4-testing-the-failure-path">Scenario 4: Testing the failure path</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-5-budget-guaranteed-by-design-violation-leg">Scenario 5: Budget guaranteed by design (violation leg)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-6-bounds-checked-element-access">Scenario 6: Bounds-checked element access</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-7-attacker-sized-input-denial-of-service">Scenario 7: Attacker-sized input (denial of service)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#scenario-8-shared-memory-placement">Scenario 8: Shared-memory placement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="comparison_std.html#relation-to-the-usage-guideline">Relation to the usage guideline</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="usage_guidelines.html">Usage Guidelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage_guidelines.html#container-choice-standard-or-nothrow">Container choice: standard or nothrow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage_guidelines.html#pointer-policy-choice-offset-or-raw">Pointer policy choice: offset or raw</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage_guidelines.html#decision-summary">Decision summary</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
 </section>
@@ -598,20 +647,20 @@ source files while this architecture document is being expanded.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="comparison_std.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Nothrow</p>
+        <p class="prev-next-title">Comparison with Standard Containers</p>
       </div>
     </a>
     <a class="right-next"
-       href="failure_handling.html"
+       href="../requirements/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Failure Handling Model</p>
+        <p class="prev-next-title">Requirements</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -634,9 +683,9 @@ source files while this architecture document is being expanded.</p>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-principles">Design Principles</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#container-choice-standard-or-nothrow">Container choice: standard or nothrow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pointer-policy-choice-offset-or-raw">Pointer policy choice: offset or raw</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-summary">Decision summary</a></li>
 </ul>
   </nav></div>
 
@@ -644,7 +693,7 @@ source files while this architecture document is being expanded.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/nothrow/architecture/index.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/nothrow/architecture/usage_guidelines.rst">
       <i class="fa-solid fa-pencil"></i>
       
       

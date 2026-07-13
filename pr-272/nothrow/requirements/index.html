@@ -73,7 +73,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Nothrow Component Architecture" href="../architecture/index.html" />
+    <link rel="prev" title="Usage Guidelines" href="../architecture/usage_guidelines.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -425,7 +425,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-774e0910">
+  <div class="need_container docutils container" id="SNCB-5040c74f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__nothrow_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -469,7 +469,7 @@
 </div>
 <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-df5c4ac4">
+<div class="need_container docutils container" id="SNCB-5a05b9db">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__alloc_fail">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -499,7 +499,10 @@
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><p>The <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> memory-resource allocation interfaces shall not throw
 on allocation failure and shall instead signal failure by returning
-<code class="docutils literal notranslate"><span class="pre">nullptr</span></code>.</p></td>
+<code class="docutils literal notranslate"><span class="pre">nullptr</span></code>.</p>
+<p>This realizes the <em>error</em> category of the failure handling model defined in
+<a class="reference internal" href="../architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>.</p>
+</td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__nothrow__alloc_fail" title="comp_req__nothrow__alloc_fail">comp_req__nothrow__alloc_fail</a></span></span></div>
@@ -515,7 +518,7 @@ on allocation failure and shall instead signal failure by returning
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0ac1f049">
+<div class="need_container docutils container" id="SNCB-1d965f95">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__create">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -545,7 +548,10 @@ on allocation failure and shall instead signal failure by returning
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><p>Containers in <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> shall provide explicit fallible factory
 functions that return <code class="docutils literal notranslate"><span class="pre">score::Result&lt;Container&gt;</span></code> for construction paths
-that may require allocation.</p></td>
+that may require allocation.</p>
+<p>This realizes the <em>error</em> category of the failure handling model defined in
+<a class="reference internal" href="../architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>.</p>
+</td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__nothrow__create" title="comp_req__nothrow__create">comp_req__nothrow__create</a></span></span></div>
@@ -561,7 +567,7 @@ that may require allocation.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a6f0e753">
+<div class="need_container docutils container" id="SNCB-6a22e1b7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__mutate_result">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -592,7 +598,10 @@ that may require allocation.</p></td>
 <tr class="content row-odd"><td class="content" colspan="6"><p>Container operations that may allocate during mutation shall provide
 explicit error-propagating APIs using <code class="docutils literal notranslate"><span class="pre">score::Result</span></code> or
 <code class="docutils literal notranslate"><span class="pre">score::ResultBlank</span></code> instead of relying on exception-based failure
-signaling.</p></td>
+signaling.</p>
+<p>This realizes the <em>error</em> category of the failure handling model defined in
+<a class="reference internal" href="../architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>.</p>
+</td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__nothrow__mutate_result" title="comp_req__nothrow__mutate_result">comp_req__nothrow__mutate_result</a></span></span></div>
@@ -608,7 +617,7 @@ signaling.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f6daa4a2">
+<div class="need_container docutils container" id="SNCB-14e0bbe1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__or_abort">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -638,7 +647,10 @@ signaling.</p></td>
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><p>For operations with explicit error-propagating APIs, <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code>
 shall provide clearly named <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> convenience variants for cases where
-allocation failure is considered a programming error.</p></td>
+allocation failure is considered a programming error.</p>
+<p>This realizes the <em>violation</em> category of the failure handling model defined
+in <a class="reference internal" href="../architecture/failure_handling.html#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling"><em class="xref need">Nothrow Failure Handling Model (doc__nothrow_failure_handling)</em></a>.</p>
+</td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__nothrow__or_abort" title="comp_req__nothrow__or_abort">comp_req__nothrow__or_abort</a></span></span></div>
@@ -654,7 +666,7 @@ allocation failure is considered a programming error.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-02bf462e">
+<div class="need_container docutils container" id="SNCB-2568e55f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__pointer_policy">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -703,7 +715,7 @@ semantics can be changed without rewriting the container algorithms.</p></td>
 </section>
 <section id="safety-impact">
 <h1>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-b1bffb29">
+<div class="need_container docutils container" id="SNCB-839e3e09">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__nothrow__asil">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -760,12 +772,12 @@ semantics can be changed without rewriting the container algorithms.</p></td>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../architecture/index.html"
+       href="../architecture/usage_guidelines.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Nothrow Component Architecture</p>
+        <p class="prev-next-title">Usage Guidelines</p>
       </div>
     </a>
 </div>

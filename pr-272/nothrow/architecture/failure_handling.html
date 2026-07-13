@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../../" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>VaJson Component Architecture &#8212; S-CORE Baselibs  documentation</title>
+    <title>Failure Handling Model &#8212; S-CORE Baselibs  documentation</title>
   
   
   
@@ -27,42 +27,42 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/score.css?v=6e51530f" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/score_needs.css?v=1f5dae2a" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/score_design.css?v=d9fd870c" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/score.css?v=6e51530f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/score_needs.css?v=1f5dae2a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/score_design.css?v=d9fd870c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
-    <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../../_static/documentation_options.js?v=7f41d439"></script>
-    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-    <script src="../../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
-    <script src="../../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
-    <script src="../../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
-    <script src="../../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
-    <script src="../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'json/vajson/architecture/index';</script>
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=7f41d439"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'nothrow/architecture/failure_handling';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.17.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
@@ -71,18 +71,18 @@
             false;
         </script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Requirements" href="../requirements/index.html" />
-    <link rel="prev" title="VaJson" href="../index.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Comparison with Standard Containers" href="comparison_std.html" />
+    <link rel="prev" title="Nothrow Component Architecture" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
   
     
-    <script src="../../../_static/searchtools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <script src="../../../searchindex.js"></script>
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
   
   </head>
   <body data-default-mode="">
@@ -100,7 +100,7 @@
   <dialog id="pst-search-dialog">
     
 <form class="bd-search d-flex align-items-center"
-      action="../../../search.html"
+      action="../../search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -136,7 +136,7 @@
     
   
 
-<a class="navbar-brand logo" href="../../../index.html">
+<a class="navbar-brand logo" href="../../index.html">
   
   
   
@@ -157,15 +157,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../../index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../json/index.html">
     JSON
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../nothrow/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
     Nothrow
   </a>
 </li>
@@ -279,15 +279,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="../../index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../json/index.html">
     JSON
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../nothrow/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
     Nothrow
   </a>
 </li>
@@ -363,12 +363,14 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">VaJson</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">VaJson Component Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
-
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Nothrow Component Architecture</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Failure Handling Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comparison_std.html">Comparison with Standard Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage_guidelines.html">Usage Guidelines</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
+
 </ul>
 </div>
 </nav></div>
@@ -405,17 +407,17 @@
   <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../../index.html" class="nav-link" aria-label="Home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">JSON</a></li>
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Nothrow</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">VaJson</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Nothrow Component Architecture</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">VaJson Component Architecture</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Failure Handling Model</span></li>
   </ul>
 </nav>
 </div>
@@ -432,16 +434,16 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-7e1cf130">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson_architecture">
+  <div class="need_container docutils container" id="SNCB-59881fbe">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__nothrow_failure_handling">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">VaJson Architecture</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Nothrow Failure Handling Model</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">draft</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -461,7 +463,7 @@
 <tr class="content row-odd"><td class="content" colspan="6"></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#doc__vajson_architecture" title="doc__vajson_architecture">doc__vajson_architecture</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#doc__nothrow_failure_handling" title="doc__nothrow_failure_handling">doc__nothrow_failure_handling</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
@@ -474,51 +476,109 @@
 </table>
 </div>
 </div>
-<section id="vajson-component-architecture">
-<h1>VaJson Component Architecture<a class="headerlink" href="#vajson-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-d412ced7">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_vajson">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">VaJson</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">invalid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
-<div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="../requirements/index.html#comp_req__vajson__validation" title="comp__baselibs_vajson">comp_req__vajson__validation</a>, <a class="reference internal" href="../requirements/index.html#comp_req__vajson__trailing_commas" title="comp__baselibs_vajson">comp_req__vajson__trailing_commas</a>, <a class="reference internal" href="../requirements/index.html#comp_req__vajson__hex_integers" title="comp__baselibs_vajson">comp_req__vajson__hex_integers</a>, <a class="reference internal" href="../requirements/index.html#comp_req__vajson__unicode" title="comp__baselibs_vajson">comp_req__vajson__unicode</a>, <a class="reference internal" href="../requirements/index.html#comp_req__vajson__asil" title="comp__baselibs_vajson">comp_req__vajson__asil</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"></td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp__baselibs_vajson" title="comp__baselibs_vajson">comp__baselibs_vajson</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<section id="failure-handling-model">
+<h1>Failure Handling Model<a class="headerlink" href="#failure-handling-model" title="Link to this heading">#</a></h1>
+<p>score does not yet define a common software-error concept. To make the intent
+of the <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> interfaces unambiguous, the component adopts a
+simplified categorization of operation failures and maps each category to a
+specific API shape. Two categories are relevant at the container boundary:</p>
+<ul class="simple">
+<li><p><strong>Error</strong> – the requested operation could not be completed, but the program
+state remains valid and execution can proceed. The failure is handed back to
+the caller as a value, and the caller decides whether to recover from it or
+to propagate it further. Allocation failure is reported this way: a memory
+resource returns <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>, and container operations return
+<code class="docutils literal notranslate"><span class="pre">score::Result</span></code> or <code class="docutils literal notranslate"><span class="pre">score::ResultBlank</span></code>.</p></li>
+<li><p><strong>Violation</strong> – a precondition of the operation was not met. This indicates
+a defect in the calling code, not a runtime condition that the caller could
+legitimately encounter. The operation aborts at the point of detection
+instead of returning, because a bug-free caller cannot trigger it and so has
+no error-handling path to implement or test. The <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants and the
+bounds-checked accessors (<code class="docutils literal notranslate"><span class="pre">at()</span></code>, <code class="docutils literal notranslate"><span class="pre">front()</span></code>, <code class="docutils literal notranslate"><span class="pre">back()</span></code>) implement this
+category.</p></li>
+</ul>
+<p>The category is chosen by the response mechanism and by who is responsible for
+handling the failure – not by how severe the failure seems. The same
+underlying condition, a failed allocation, is an <em>error</em> when the available
+memory is not known in the scope of use, and a <em>violation</em> when the capacity is
+guaranteed by design, so that a failure could only mean that guarantee was
+broken.</p>
+<section id="memory-need-and-memory-budget-are-separated">
+<h2>Memory need and memory budget are separated<a class="headerlink" href="#memory-need-and-memory-budget-are-separated" title="Link to this heading">#</a></h2>
+<p>Treating allocation failure as an error by default is not a stylistic choice.
+It follows from how memory is provisioned in a modularized architecture: the
+<em>budget</em> and the <em>need</em> are established in different places, by different
+roles, at different times, and several independent separations compound.</p>
+<ul class="simple">
+<li><p><strong>Separation in time and role.</strong> The budget is fixed at integration time
+through configuration – for example by sizing preallocated memory resources
+or shared-memory buffers. The need arises at run time inside business logic
+operating on containers. The integrator sizes without seeing every code path;
+the component consumes without seeing the configuration.</p></li>
+<li><p><strong>Separation across components.</strong> Data crossing a trust boundary is validated
+in a different component than the one that later allocates container elements
+from it. The allocating code cannot assume that input validation bounded the
+data to fit <em>its</em> budget, because the validator does not know that budget.</p></li>
+<li><p><strong>Sharing couples consumers.</strong> Memory resources are deliberately shared
+between container objects to keep the number of configuration parameters
+manageable. As a consequence, one component’s consumption changes another
+component’s headroom – invisibly to both.</p></li>
+<li><p><strong>Independent evolution.</strong> The logic that determines actual consumption lives
+in reusable parts that change under their own maintenance cadence. A budget
+that was sufficient at integration can silently stop being sufficient after a
+routine update of a library nobody re-sized the configuration for.</p></li>
+</ul>
+<p>These separations produce an asymmetry: in such an architecture it is
+extraordinarily hard to ensure that all values fit, and practically impossible
+to <em>prove</em> budget sizing correct by testing – while it is easy for an attacker
+to trigger resource exhaustion deliberately. A request crafted to allocate as
+much as possible is a classic denial-of-service vector: the defender must be
+right about every path, the attacker needs one oversized request.</p>
+<p>Allocation failure must therefore be treated as a reachable runtime condition
+– an <strong>error</strong> – by default. The payoff is a contained failure path: a
+service that hits its allocation limit while assembling a response can reject
+that one request, release the memory the partially built response had reserved,
+and proceed to serve the next request. Only the layer handling the request has
+the context to draw that line – which request to reject, what to release, and
+when to keep running.</p>
+</section>
+<section id="choosing-between-the-two-apis">
+<h2>Choosing between the two APIs<a class="headerlink" href="#choosing-between-the-two-apis" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Use the result-returning operations (<code class="docutils literal notranslate"><span class="pre">Create</span></code>, <code class="docutils literal notranslate"><span class="pre">PushBack</span></code>, <code class="docutils literal notranslate"><span class="pre">Insert</span></code>,
+and similar) when the memory budget is <strong>not</strong> known at the call site. The
+failure path is real and must be handled by the caller, and it can be tested
+by deliberately providing an undersized memory resource.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants when the memory budget <strong>is</strong> known at the call
+site, so that an allocation failure could only mean a broken design
+assumption. The abort is part of the component’s contract and is tested
+within the component, for example with a death test, rather than by the
+caller.</p></li>
+</ul>
+<p>A co-located budget – established, owned, and verifiable in the same scope as
+the consumption – is exactly the special constellation in which the
+separations described above have been deliberately eliminated. Only then is
+classifying allocation failure as a violation legitimate. Because that holds
+solely in tightly bounded, statically sized constellations, the
+result-returning APIs are the generic choice and the <code class="docutils literal notranslate"><span class="pre">OrAbort</span></code> variants the
+special case: a guaranteed budget is something a specific design has
+deliberately established, not the normal state of affairs.</p>
+</section>
+<section id="out-of-scope-process-level-termination">
+<h2>Out of scope: process-level termination<a class="headerlink" href="#out-of-scope-process-level-termination" title="Link to this heading">#</a></h2>
+<p>A third failure category – an unrecoverable corruption of the runtime
+environment that justifies terminating the process – exists at the system
+level but is deliberately <strong>not</strong> a concern of these containers. A container is
+not the right place to decide that a process must exit: that decision needs
+context about whether any caller higher up can still recover and whether an
+orderly shutdown is still safe. <code class="docutils literal notranslate"><span class="pre">score::nothrow</span></code> therefore never terminates
+the process on its own. It either returns the failure as an error, so that a
+layer with the necessary context can decide how to react, or it aborts on a
+contract violation.</p>
+<p>Converting a propagated allocation error into a controlled process shutdown,
+where that genuinely is the right response, remains the responsibility of a
+higher layer, at the point where continuing is no longer safe.</p>
+</section>
 </section>
 
 
@@ -532,20 +592,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../index.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">VaJson</p>
+        <p class="prev-next-title">Nothrow Component Architecture</p>
       </div>
     </a>
     <a class="right-next"
-       href="../requirements/index.html"
+       href="comparison_std.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Requirements</p>
+        <p class="prev-next-title">Comparison with Standard Containers</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -561,10 +621,24 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-need-and-memory-budget-are-separated">Memory need and memory budget are separated</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-between-the-two-apis">Choosing between the two APIs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-scope-process-level-termination">Out of scope: process-level termination</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/json/vajson/architecture/index.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/nothrow/architecture/failure_handling.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
@@ -589,8 +663,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
