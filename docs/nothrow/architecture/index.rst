@@ -57,8 +57,9 @@ that storage of internal links and buffer pointers can be adapted without
 changing container algorithms.
 
 A side-by-side comparison with the standard containers, one failure scenario
-per row, is provided in :need:`doc__nothrow_comparison_std`. It serves as an
-input to the planned "when to use which container" guideline.
+per row, is provided in :need:`doc__nothrow_comparison_std`. The resulting
+"when to use which container" guideline, covering both the container choice
+and the pointer policy choice, is :need:`doc__nothrow_usage_guidelines`.
 
 Dependencies
 ------------
@@ -74,3 +75,4 @@ source files while this architecture document is being expanded.
 
    failure_handling.rst
    comparison_std.rst
+   usage_guidelines.rst

@@ -42,11 +42,11 @@ Ground rules, to keep the comparison honest:
 
    This comparison covers **failure semantics only**. It serves as *one input*
    to the "when to use which container" guideline requested in the component
-   review -- it is not that guideline. The guideline must additionally weigh
-   the pointer-slot policy selection (offset versus raw pointer storage),
-   interoperability with third-party dependencies that consume standard
-   containers, and the general agreement that ``score::nothrow`` types are not
-   general-purpose replacements for the standard library.
+   review -- it is not that guideline. The guideline,
+   :need:`doc__nothrow_usage_guidelines`, additionally weighs the pointer-slot
+   policy selection (offset versus raw pointer storage) and the boundaries
+   where standard types remain required because existing and third-party
+   interfaces consume them.
 
 Scenario 1: Fallible construction, budget unknown
 -------------------------------------------------
@@ -305,8 +305,8 @@ containers range from fragile (scenarios 5, 6) through terminating (1, 2, 7)
 to inexpressible (3, 4, 8). That comparison is necessary but not sufficient
 for deciding *when to use which container*: a usage guideline must also weigh
 the pointer-slot policy choice (offset storage costs indirection and constrains
-object placement; raw storage forbids relocation), interoperability with
-third-party and standard-library interfaces, and the project agreement that
-``score::nothrow`` types are reserved for code that needs their guarantees
-rather than a general-purpose replacement. This document is an input to that
-guideline, not the guideline itself.
+object placement; raw storage forbids relocation) and the boundaries where
+standard types remain required because third-party and standard-library
+interfaces consume them -- a deployment constraint, not a statement about the
+types' generality. This document is an input to that guideline, not the
+guideline itself; the guideline is :need:`doc__nothrow_usage_guidelines`.
