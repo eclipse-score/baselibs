@@ -517,6 +517,7 @@ TEST_F(DateTimeConverterTest, EpochToDateTime_Post1970_NonLeapYear_YearRollover)
 }
 
 TEST_F(DateTimeConverterTest, EpochToDateTime_Pre1970_YearBoundary_DayOverflowRollover)
+{
     RecordProperty("Description",
                    "Verify that pre-1970 conversion handles day overflow at year boundary by rolling month and year.");
     RecordProperty("TestType", "requirements-based");
