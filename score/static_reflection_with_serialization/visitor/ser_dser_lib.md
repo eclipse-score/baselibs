@@ -22,7 +22,7 @@ supported (pointer dependent data structures, e.g. linked lists are not supporte
 
 ## How to ser/dser a structure
 
-To mark structure for ser/dser, the structure needs to be put in the `STRUCT_VISITABLE` macro.
+To mark structure for ser/dser, the structure needs to be put in the `SCORE_STRUCT_VISITABLE` macro.
 The following code snippet is for overview only. Please check unit tests in implementation directories.
 
 ```c++
@@ -41,7 +41,7 @@ struct real_alloc_t {
     using subsize_t = uint16_t;  /*size type holding the info about size of each element, e.g. len of string is 2*/
 };
 
-STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
+SCORE_STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
 
 int main(int argc, char** argv) {
     using namespace ::score::common::visitor;
@@ -59,13 +59,13 @@ int main(int argc, char** argv) {
 
 ### Macros
 
-By calling `STRUCT_VISITABLE` the following further macros as are being called:
+By calling `SCORE_STRUCT_VISITABLE` the following further macros as are being called:
 
-* `STRUCT_VISITABLE_START` --> macro generates template code for inspecting the names of structure members, it is based on
+* `SCORE_STRUCT_VISITABLE_START` --> macro generates template code for inspecting the names of structure members, it is based on
 _PRETTY_FUNCTION_.
-* `STRUCT_VISITABLE_FIELDNAMES(...)` --> macro generates the code that creates array of structure field names
-* `STRUCT_VISITABLE_FIELDS(...)` --> The _most_ important macro the code generated here is used for ser/dser
-* `STRUCT_VISITABLE_END` --> generates some helper code.
+* `SCORE_STRUCT_VISITABLE_FIELDNAMES(...)` --> macro generates the code that creates array of structure field names
+* `SCORE_STRUCT_VISITABLE_FIELDS(...)` --> The _most_ important macro the code generated here is used for ser/dser
+* `SCORE_STRUCT_VISITABLE_END` --> generates some helper code.
 
 The macro based code can only support a structure with up to 50 members.
 

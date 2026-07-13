@@ -12,7 +12,7 @@ The list of requirements below is supposed to describe the library functionality
 
 - SERIALIZE-SERIALIZED: The typename (possibly alias) template `::score::common::visitor::serialized_t<A, T>` shall be a standard-layout, byte-aligned C++ type for any C++ type `T` constructed using the following C++ types
   - Fundamental types: `char`; `uintN_t` and `intN_t` for `N` being 8, 16, 32, and 64; `float` and `double`;
-  - Compound types: `std::string`, C-style arrays, `std::array<>`, `std::vector<>`, `std::tuple<>`, `std::pair<>`, structs (with the help of `STRUCT_VISITABLE()` macro);
+  - Compound types: `std::string`, C-style arrays, `std::array<>`, `std::vector<>`, `std::tuple<>`, `std::pair<>`, structs (with the help of `SCORE_STRUCT_VISITABLE()` macro);
   - References shall be supported as long as they refer to a complete static type and the referred object's dynamic type is equivalent to the static type for the purpose of serialization. Using incomplete or dynamic types for the purpose of making the depth of the reference path not computable at compile time is not supported.
 
 - SERIALIZE-ALLOCATOR: The `A` typename parameter of the `serialized_t<A, T>` template defines the types used for handling data which serialization size is not calculated at compile time (in particular, the `std::string` and `std::vector<>` types). It contains the following type definitions:
@@ -24,7 +24,7 @@ The list of requirements below is supposed to describe the library functionality
   - for the `std::string` and `std::vector<>` types, the `serialized<>` contains one `A::offset_t` serialized field. The actual serialized data is not a part of the `serialized<>` object itself; the `A::offset_t` serialized field contains the offset to the beginning of the data from the beginning of the outermost `serialized<>` object for the serialized data structure. The serialized data consists of an `A::subside_t` header specifying the length of the payload (not including the header itself), then the payload data.
   - for the `std::string` type, the payload is the sequence of bytes representing the string in the host locale, zero terminating byte included (for compatibility with DLT format).
   - for the `std::vector<>` type, the payload is equivalent to the serialized C-style array payload of the equivalent size and value type.
-  - for C-style arrays, `std::array<>`, `std::tuple<>`, `std::pair<>`, structs (with the help of `STRUCT_VISITABLE()` macro) the serialized object consists of the concatenated (without padding) serialized objects of their subjects traversed in their natural order (for structs, the "natural" order is the order defined in their coddesponding `STRUCT_VISITABLE()` macro).
+  - for C-style arrays, `std::array<>`, `std::tuple<>`, `std::pair<>`, structs (with the help of `SCORE_STRUCT_VISITABLE()` macro) the serialized object consists of the concatenated (without padding) serialized objects of their subjects traversed in their natural order (for structs, the "natural" order is the order defined in their coddesponding `SCORE_STRUCT_VISITABLE()` macro).
 
 - SERIALIZE-SERIALIZER: There shall be an template class `::score::common::visitor::serializer_t<A>` having the following static function templates implementing serialization/deserialization:
   - `A::offset_t serialize<T>(const T& t, char* data, A::offset_t size)`
