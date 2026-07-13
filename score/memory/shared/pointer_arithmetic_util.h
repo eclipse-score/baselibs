@@ -143,7 +143,7 @@ score::mw::log::LogHex64 PointerToLogValue(const void* const pointer);
 /// elements of the same array. This function avoids undefined behaviour by first casting the addresses to integral
 /// types and subtracting the integers. The conversion of a pointer to an integral type is implementation defined:
 /// https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast#4
-std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const second) noexcept;
+std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const second);
 
 /// \brief Calculates the absolute value of a signed integer and returns the result as an unsigned integer with the same
 /// bit width

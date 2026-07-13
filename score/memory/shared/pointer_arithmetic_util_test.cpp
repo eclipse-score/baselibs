@@ -117,8 +117,7 @@ TEST_P(PointerArithmeticSubtractOverflowPointerBytesFixture, SubtractingPointers
     // When subtracting two pointers whose absolute difference is larger than
     // kPtrDiffTMax
     // Then the program will terminate
-    // TODO (Ticket-247839): Replace with SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED when SubtractPointersBytes is no longer noexcept
-    EXPECT_DEATH(SubtractPointersBytes(first_address, second_address), ".*");
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(SubtractPointersBytes(first_address, second_address));
 }
 
 // We make assumptions in this test about the size of std::uintptr_t and std::ptrdiff_t based on the system we're using
