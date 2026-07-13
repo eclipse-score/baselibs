@@ -64,6 +64,66 @@ makes failure handling visible at the call site and allows higher-level code to
 choose between propagation and deliberate abort semantics.
 
 
+Scope and Relation to Communication Modelling
+=============================================
+
+``score::nothrow`` is a **library component**: its types are linked into an
+executable and used within that executable's address space. The component is
+not a platform service and does not define a communication stack.
+
+The only interprocess contract the component specifies is the **binary
+representation of container state in shared memory**: standard-layout types,
+internal pointers persisted through the offset pointer-slot policy, and
+bounded objects with a fixed footprint but dynamic content. Memory
+*management* does not cross that boundary: the polymorphic allocator and
+memory resource are not part of the shared representation. Memory provisioning
+stays with the memory-aware side, which creates the container in the shared
+segment (``CreateWithBuffer``); in that scenario the allocator parameter is
+type-compatibility decoration only.
+
+The proposal therefore addresses two separable aspects:
+
+1. **Binary representation** -- the stable ABI that shared-memory participants
+   agree on: standard-layout types and offset-encoded pointers, independent of
+   language bindings and rebuild-free across storage locations and container
+   sizes.
+
+2. **API** -- error propagation on memory exhaustion, with memory provisioning
+   hidden behind a generic allocator as in the C++ standard library. Container
+   references pointing into shared memory can be passed to component
+   interfaces that are unaware of the IPC layer and of memory provisioning,
+   without payload copying.
+
+Relation to communication modelling:
+
+* score has deliberately decided not to model executables and components,
+  unlike communication-modelling approaches such as AUTOSAR Adaptive. Nothing
+  in this component changes or depends on that decision. ``score::nothrow``
+  does not introduce, require, or substitute communication modelling.
+
+* Where a communication model and generator exist, the types can serve as
+  **elements in the generator's output** -- for example as typed event
+  payloads placed in shared memory by a communication stack. They complement
+  such a stack; they do not compete with it.
+
+* The types work equally well in **pure API-driven configurations** without
+  any model or generator involved.
+
+Usage scenarios discussed in the component review illustrate this scope:
+
+* **Event communication (one-to-many):** the sender is memory-aware, maintains
+  an object pool in shared memory, and retains ownership; receivers access
+  payloads by reference without ownership transfer.
+
+* **Method communication (one-to-one):** for intra-process API communication,
+  ownership passing is possible, including across C++/Rust API boundaries,
+  using opaque references to the binary-stable memory-resource interfaces.
+
+* **Gateway serialization:** dynamic datatypes in shared memory remain
+  interpretable by a gateway process (for example for SOME/IP serialization),
+  because the shared representation is self-contained.
+
+
 Failure Handling Model
 ======================
 

@@ -32,7 +32,9 @@ Nothrow Component Architecture
 Overview
 --------
 
-``score::nothrow`` is organized into three main areas:
+``score::nothrow`` is a library component linked into executables; its scope
+relative to communication modelling is delimited in the component request
+(:need:`doc__nothrow`). It is organized into three main areas:
 
 * memory resources and allocators, including ``MemoryResource``,
   ``PolymorphicAllocator``, and ``MonotonicBufferResource``
