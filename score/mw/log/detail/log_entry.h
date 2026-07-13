@@ -90,7 +90,7 @@ Justification:
 // coverity[autosar_cpp14_a11_0_2_violation]
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-STRUCT_VISITABLE(LogEntry,
+SCORE_STRUCT_VISITABLE(LogEntry,
                      app_id,
                      ctx_id,
                      payload,

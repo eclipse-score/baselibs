@@ -190,7 +190,7 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define STRUCT_VISITABLE_FULL_DEFINITION(S, TUPLE_OF_NAMES, ...)                                                       \
+#define SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, TUPLE_OF_NAMES, ...)                                                       \
     template <typename T>                                                                                              \
     class struct_visitable_impl;                                                                                       \
     template <>                                                                                                        \
@@ -201,7 +201,7 @@ using struct_visitable = decltype(get_struct_visitable<T>());
         {                                                                                                              \
             return __PRETTY_FUNCTION__;                                                                                \
         }                                                                                                              \
-        static constexpr std::size_t fields = static_cast<std::size_t>(COUNT_VARARGS(__VA_ARGS__));                    \
+        static constexpr std::size_t fields = static_cast<std::size_t>(SCORE_COUNT_VARARGS(__VA_ARGS__));                    \
         static constexpr const char* field_name(const size_t i)                                                        \
         {                                                                                                              \
             constexpr std::array<const char*, fields> names =                                                          \
@@ -230,19 +230,19 @@ using struct_visitable = decltype(get_struct_visitable<T>());
         return struct_visitable_impl<S>::visit(std::forward<V>(v), std::forward<T>(t));                                \
     }
 
-/// \public STRUCT_VISITABLE and STRUCT_TRACEABLE are public API.
+/// \public SCORE_STRUCT_VISITABLE and SCORE_STRUCT_TRACEABLE are public API.
 // used as public API
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define STRUCT_TRACEABLE(...) STRUCT_VISITABLE(__VA_ARGS__)
+#define SCORE_STRUCT_TRACEABLE(...) SCORE_STRUCT_VISITABLE(__VA_ARGS__)
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros of Field names and can't use parenthesis.
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE64(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62, F63, F64) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE64(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62, F63, F64) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59, #F60, #F61, #F62, #F63, #F64), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59, s.F60, s.F61, s.F62, s.F63, s.F64) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -250,8 +250,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE63(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62, F63) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE63(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62, F63) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59, #F60, #F61, #F62, #F63), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59, s.F60, s.F61, s.F62, s.F63) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -259,8 +259,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE62(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE62(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61, F62) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59, #F60, #F61, #F62), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59, s.F60, s.F61, s.F62) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -268,8 +268,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE61(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE61(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60, F61) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59, #F60, #F61), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59, s.F60, s.F61) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -277,8 +277,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE60(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE60(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59, F60) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59, #F60), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59, s.F60) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -286,8 +286,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE59(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE59(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58, F59) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58, #F59), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58, s.F59) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -295,8 +295,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE58(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE58(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57, F58) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57, #F58), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57, s.F58) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -304,8 +304,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE57(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE57(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56, F57) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56, #F57), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56, s.F57) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -313,8 +313,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE56(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE56(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55, F56) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55, #F56), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55, s.F56) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -322,8 +322,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE55(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE55(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54, F55) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54, #F55), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54, s.F55) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -331,8 +331,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE54(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE54(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53, F54) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53, #F54), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53, s.F54) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -340,8 +340,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE53(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE53(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52, F53) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52, #F53), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52, s.F53) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -349,8 +349,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE52(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE52(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51, F52) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51, #F52), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51, s.F52) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -358,8 +358,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE51(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE51(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50, F51) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50, #F51), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50, s.F51) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -367,8 +367,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE50(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE50(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49, F50) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49, #F50), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49, s.F50) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -376,8 +376,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE49(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE49(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48, F49) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48, #F49), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48, s.F49) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -385,8 +385,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE48(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE48(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47, F48) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47, #F48), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47, s.F48) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -394,8 +394,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE47(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE47(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46, F47) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46, #F47), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46, s.F47) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -403,8 +403,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE46(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE46(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45, F46) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45, #F46), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45, s.F46) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -412,8 +412,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE45(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE45(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44, F45) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44, #F45), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44, s.F45) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -421,8 +421,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE44(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE44(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43, F44) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43, #F44), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43, s.F44) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -430,8 +430,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE43(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE43(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42, F43) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42, #F43), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42, s.F43) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -439,8 +439,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE42(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE42(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41, F42) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41, #F42), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41, s.F42) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -448,8 +448,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE41(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE41(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40, F41) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40, #F41), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40, s.F41) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -457,8 +457,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE40(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE40(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39, F40) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39, #F40), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39, s.F40) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -466,8 +466,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE39(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE39(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38, F39) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38, #F39), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38, s.F39) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -475,8 +475,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE38(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE38(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37, F38) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37, #F38), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37, s.F38) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -484,8 +484,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE37(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE37(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36, F37) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36, #F37), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36, s.F37) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -493,8 +493,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE36(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE36(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35, F36) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35, #F36), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35, s.F36) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -502,8 +502,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE35(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE35(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34, F35) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34, #F35), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34, s.F35) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -511,8 +511,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE34(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE34(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33, F34) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33, #F34), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33, s.F34) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -520,8 +520,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE33(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE33(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32, F33) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32, #F33), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32, s.F33) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -529,8 +529,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE32(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE32(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31, F32) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31, #F32), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31, s.F32) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -538,8 +538,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE31(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE31(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30, F31) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30, #F31), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30, s.F31) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -547,8 +547,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE30(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE30(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29, F30) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29, #F30), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29, s.F30) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -556,8 +556,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE29(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE29(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28, F29) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28, #F29), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28, s.F29) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -565,8 +565,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE28(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE28(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27, F28) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27, #F28), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27, s.F28) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -574,8 +574,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE27(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE27(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26, F27) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26, #F27), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26, s.F27) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -583,8 +583,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE26(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE26(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25, F26) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25, #F26), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25, s.F26) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -592,8 +592,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE25(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE25(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24, #F25), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24, s.F25) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -601,8 +601,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE24(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE24(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23, #F24), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23, s.F24) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -610,8 +610,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE23(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE23(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22, #F23), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22, s.F23) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -619,8 +619,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE22(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE22(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21, #F22), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21, s.F22) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -628,8 +628,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE21(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE21(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20, #F21), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20, s.F21) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -637,8 +637,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE20(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE20(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19, #F20), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19, s.F20) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -646,8 +646,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE19(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE19(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18, #F19), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18, s.F19) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -655,8 +655,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE18(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE18(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17, #F18), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17, s.F18) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -664,8 +664,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE17(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE17(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16, #F17), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16, s.F17) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -673,8 +673,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE16(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE16(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15, #F16), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15, s.F16) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -682,8 +682,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE15(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE15(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14, #F15), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14, s.F15) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -691,8 +691,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE14(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE14(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13, #F14), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13, s.F14) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -700,8 +700,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE13(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE13(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12, #F13), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12, s.F13) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -709,8 +709,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE12(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE12(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11, #F12), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11, s.F12) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -718,8 +718,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE11(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE11(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10, #F11), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10, s.F11) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -727,8 +727,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE10(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE10(S, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9, #F10), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9, s.F10) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -736,8 +736,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE9(S, F1, F2, F3, F4, F5, F6, F7, F8, F9) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE9(S, F1, F2, F3, F4, F5, F6, F7, F8, F9) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8, #F9), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8, s.F9) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -745,8 +745,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE8(S, F1, F2, F3, F4, F5, F6, F7, F8) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE8(S, F1, F2, F3, F4, F5, F6, F7, F8) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7, #F8), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7, s.F8) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -754,8 +754,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE7(S, F1, F2, F3, F4, F5, F6, F7) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE7(S, F1, F2, F3, F4, F5, F6, F7) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6, #F7), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6, s.F7) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -763,8 +763,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE6(S, F1, F2, F3, F4, F5, F6) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE6(S, F1, F2, F3, F4, F5, F6) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5, #F6), s.F1, s.F2, s.F3, s.F4, s.F5, s.F6) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -772,8 +772,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE5(S, F1, F2, F3, F4, F5) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE5(S, F1, F2, F3, F4, F5) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4, #F5), s.F1, s.F2, s.F3, s.F4, s.F5) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -781,8 +781,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE4(S, F1, F2, F3, F4) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE4(S, F1, F2, F3, F4) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3, #F4), s.F1, s.F2, s.F3, s.F4) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -790,8 +790,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE3(S, F1, F2, F3) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE3(S, F1, F2, F3) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2, #F3), s.F1, s.F2, s.F3) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -799,8 +799,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE2(S, F1, F2) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE2(S, F1, F2) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1, #F2), s.F1, s.F2) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -808,8 +808,8 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 // coverity[autosar_cpp14_m16_3_1_violation]
-#define STRUCT_VISITABLE1(S, F1) \
-    STRUCT_VISITABLE_FULL_DEFINITION(S, \
+#define SCORE_STRUCT_VISITABLE1(S, F1) \
+    SCORE_STRUCT_VISITABLE_FULL_DEFINITION(S, \
     ::score::common::visitor::detail::pack_values(#F1), s.F1) \
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
@@ -817,32 +817,32 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // Macros are used to pass length of args and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define GET_NTH_ARG(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, N, ...) N
+#define SCORE_GET_NTH_ARG(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35, _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53, _54, _55, _56, _57, _58, _59, _60, _61, _62, _63, _64, N, ...) N
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for counting number of args.
 // Macros are used to pass count args length and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define COUNT_VARARGS(...) GET_NTH_ARG(__VA_ARGS__, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+#define SCORE_COUNT_VARARGS(...) SCORE_GET_NTH_ARG(__VA_ARGS__, 64, 63, 62, 61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for Concatenation.
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define CONCATENATE2(A, B) A##B
+#define SCORE_CONCATENATE2(A, B) A##B
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for Concatenation.
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define CONCATENATE(A, B) CONCATENATE2(A, B)
+#define SCORE_CONCATENATE(A, B) SCORE_CONCATENATE2(A, B)
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage)
 // Macros for Concatenation.
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define STRUCT_VISITABLE(S, ...) CONCATENATE(STRUCT_VISITABLE, COUNT_VARARGS(__VA_ARGS__))(S, __VA_ARGS__)
+#define SCORE_STRUCT_VISITABLE(S, ...) SCORE_CONCATENATE(SCORE_STRUCT_VISITABLE, SCORE_COUNT_VARARGS(__VA_ARGS__))(S, __VA_ARGS__)
 
 
 #endif  // SCORE_COMMON_VISITOR_INCLUDE_VISITOR_VISIT_AS_STRUCT_H

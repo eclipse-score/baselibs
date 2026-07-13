@@ -120,14 +120,14 @@ struct Duration1
     std::chrono::microseconds microseconds;
 };
 
-STRUCT_VISITABLE(StructOneSigned, f1)
-STRUCT_VISITABLE(S2, f1, f2)
-STRUCT_VISITABLE(S3, f1, f2, f3)
-STRUCT_VISITABLE(SS2S3, s2, s3)
-STRUCT_VISITABLE(SS2S3r, s2, s3)
-STRUCT_VISITABLE(Opt1, opt_int)
-STRUCT_VISITABLE(Bitset1, bitset)
-STRUCT_VISITABLE(Duration1, seconds, milliseconds, nanoseconds, microseconds)
+SCORE_STRUCT_VISITABLE(StructOneSigned, f1)
+SCORE_STRUCT_VISITABLE(S2, f1, f2)
+SCORE_STRUCT_VISITABLE(S3, f1, f2, f3)
+SCORE_STRUCT_VISITABLE(SS2S3, s2, s3)
+SCORE_STRUCT_VISITABLE(SS2S3r, s2, s3)
+SCORE_STRUCT_VISITABLE(Opt1, opt_int)
+SCORE_STRUCT_VISITABLE(Bitset1, bitset)
+SCORE_STRUCT_VISITABLE(Duration1, seconds, milliseconds, nanoseconds, microseconds)
 
 template <typename T>
 struct S1w
@@ -182,17 +182,17 @@ struct S1wc6
     assignable_container<int, std::allocator<int>> f1;
 };
 
-STRUCT_VISITABLE(S1w<std::string>, f1)
-STRUCT_VISITABLE(S1w<std::vector<int>>, f1)
-STRUCT_VISITABLE(S1wvA, f1)
-STRUCT_VISITABLE(S1wa4, f1)
-STRUCT_VISITABLE(S1wc1, f1)
-STRUCT_VISITABLE(S1wc2, f1)
-STRUCT_VISITABLE(S1wc3, f1)
-STRUCT_VISITABLE(S1wc4, f1)
-STRUCT_VISITABLE(S1wc5, f1)
-STRUCT_VISITABLE(S1wc6, f1)
-STRUCT_VISITABLE(VectorOfArrays3Ints, data)
+SCORE_STRUCT_VISITABLE(S1w<std::string>, f1)
+SCORE_STRUCT_VISITABLE(S1w<std::vector<int>>, f1)
+SCORE_STRUCT_VISITABLE(S1wvA, f1)
+SCORE_STRUCT_VISITABLE(S1wa4, f1)
+SCORE_STRUCT_VISITABLE(S1wc1, f1)
+SCORE_STRUCT_VISITABLE(S1wc2, f1)
+SCORE_STRUCT_VISITABLE(S1wc3, f1)
+SCORE_STRUCT_VISITABLE(S1wc4, f1)
+SCORE_STRUCT_VISITABLE(S1wc5, f1)
+SCORE_STRUCT_VISITABLE(S1wc6, f1)
+SCORE_STRUCT_VISITABLE(VectorOfArrays3Ints, data)
 
 enum E
 {
@@ -511,7 +511,7 @@ TEST(serializer_visitor, serializer)
 
 using timestamp_t = std::chrono::steady_clock::time_point;
 
-MEMCPY_SERIALIZABLE(score::common::visitor::payload_tags::unsigned_le, timestamp_t)
+SCORE_MEMCPY_SERIALIZABLE(score::common::visitor::payload_tags::unsigned_le, timestamp_t)
 
 TEST(serializer_visitor, custom)
 {
@@ -545,7 +545,7 @@ struct is_custom_float : std::is_same<T, CustomFloat>
 {
 };
 
-MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le, T, is_custom_float<T>::value)
+SCORE_MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le, T, is_custom_float<T>::value)
 
 TEST(serializer_visitor, serialize_unit)
 {
@@ -569,7 +569,7 @@ struct PotentiallyTooBigSubstructure
     std::vector<char> dummyVector;
 };
 
-STRUCT_VISITABLE(PotentiallyTooBigSubstructure, dummyVector)
+SCORE_STRUCT_VISITABLE(PotentiallyTooBigSubstructure, dummyVector)
 
 inline bool operator==(const PotentiallyTooBigSubstructure& lhs, const PotentiallyTooBigSubstructure& rhs) noexcept
 {
@@ -583,7 +583,7 @@ struct PotentiallyTooBigStructure
     std::string potentiallyTooBigString;
 };
 
-STRUCT_VISITABLE(PotentiallyTooBigStructure, staticPart, dynamicPart, potentiallyTooBigString)
+SCORE_STRUCT_VISITABLE(PotentiallyTooBigStructure, staticPart, dynamicPart, potentiallyTooBigString)
 
 inline bool operator==(const PotentiallyTooBigStructure& lhs, const PotentiallyTooBigStructure& rhs) noexcept
 {

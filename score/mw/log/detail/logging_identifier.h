@@ -81,7 +81,7 @@ class LoggingIdentifier
 // coverity[autosar_cpp14_a7_1_2_violation]
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-STRUCT_VISITABLE(LoggingIdentifier, data)
+SCORE_STRUCT_VISITABLE(LoggingIdentifier, data)
 
 // NOLINTEND(score-struct-usage-compliance) justified by design
 
