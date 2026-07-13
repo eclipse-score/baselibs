@@ -77,6 +77,15 @@ external requests: treating allocation failure only as an abort condition can
 turn memory pressure into a denial-of-service vector instead of a contained
 error path.
 
+The API conventions below follow the component's failure handling model,
+defined in
+[`docs/nothrow/architecture/failure_handling.rst`](../../docs/nothrow/architecture/failure_handling.rst):
+failures are categorized as *errors* (request not fulfilled, returned to the
+caller as `score::Result`) or *violations* (caller precondition broken, a code
+defect, abort at the point of detection). The bounds-checked accessors and the
+`OrAbort` variants implement the violation category; the result-returning
+operations implement the error category.
+
 The general pattern of containers planned in `score::nothrow` is:
 
 - Functional clones of the standard counterparts.
