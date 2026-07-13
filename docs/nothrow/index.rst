@@ -79,16 +79,19 @@ broken, which indicates a code defect and aborts at the point of detection
 The category is chosen by the response mechanism and by who owns the handling,
 not by severity: the same failed allocation is an *error* when the memory
 budget is unknown at the call site, and a *violation* when the budget is
-guaranteed by design. Because such an up-front guarantee holds only in tightly
-bounded constellations, the result-returning APIs are the generic choice and
-the ``OrAbort`` variants the special case. Process-level termination in
-response to a propagated allocation error is deliberately left to higher
-layers that have the context to decide it.
+guaranteed by design. In a modularized architecture, memory *need* and memory
+*budget* are usually not co-located -- the budget is sized by configuration at
+integration time while the need arises at run time in independently evolving,
+resource-sharing components -- so an up-front guarantee holds only in tightly
+bounded constellations. The result-returning APIs are therefore the generic
+choice and the ``OrAbort`` variants the special case. Process-level
+termination in response to a propagated allocation error is deliberately left
+to higher layers that have the context to decide it.
 
-The full model -- category definitions, the rule for choosing between the two
-API shapes, and the rationale for keeping process termination out of the
-containers -- is defined in the component architecture:
-:need:`doc__nothrow_failure_handling`.
+The full model -- category definitions, the need/budget separation argument,
+the rule for choosing between the two API shapes, and the rationale for
+keeping process termination out of the containers -- is defined in the
+component architecture: :need:`doc__nothrow_failure_handling`.
 
 
 Specification
@@ -134,7 +137,11 @@ surface on its own. Its primary security relevance is operational: callers can
 use explicit error-propagating APIs to prevent memory pressure from turning
 into uncontrolled termination.
 
-When inputs are influenced by untrusted sources, users should prefer the
+Resource exhaustion triggered by attacker-controlled input is a classic
+denial-of-service vector, and the separation of memory need from memory budget
+in a modularized architecture makes it easy to reach and hard to rule out by
+testing; :need:`doc__nothrow_failure_handling` develops this argument. When
+inputs are influenced by untrusted sources, users should therefore prefer the
 ``score::Result``-returning APIs over ``OrAbort`` variants so that resource
 exhaustion can be handled as a contained error path.
 

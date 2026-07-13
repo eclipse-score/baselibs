@@ -49,6 +49,50 @@ memory is not known in the scope of use, and a *violation* when the capacity is
 guaranteed by design, so that a failure could only mean that guarantee was
 broken.
 
+Memory need and memory budget are separated
+-------------------------------------------
+
+Treating allocation failure as an error by default is not a stylistic choice.
+It follows from how memory is provisioned in a modularized architecture: the
+*budget* and the *need* are established in different places, by different
+roles, at different times, and several independent separations compound.
+
+* **Separation in time and role.** The budget is fixed at integration time
+  through configuration -- for example by sizing preallocated memory resources
+  or shared-memory buffers. The need arises at run time inside business logic
+  operating on containers. The integrator sizes without seeing every code path;
+  the component consumes without seeing the configuration.
+
+* **Separation across components.** Data crossing a trust boundary is validated
+  in a different component than the one that later allocates container elements
+  from it. The allocating code cannot assume that input validation bounded the
+  data to fit *its* budget, because the validator does not know that budget.
+
+* **Sharing couples consumers.** Memory resources are deliberately shared
+  between container objects to keep the number of configuration parameters
+  manageable. As a consequence, one component's consumption changes another
+  component's headroom -- invisibly to both.
+
+* **Independent evolution.** The logic that determines actual consumption lives
+  in reusable parts that change under their own maintenance cadence. A budget
+  that was sufficient at integration can silently stop being sufficient after a
+  routine update of a library nobody re-sized the configuration for.
+
+These separations produce an asymmetry: in such an architecture it is
+extraordinarily hard to ensure that all values fit, and practically impossible
+to *prove* budget sizing correct by testing -- while it is easy for an attacker
+to trigger resource exhaustion deliberately. A request crafted to allocate as
+much as possible is a classic denial-of-service vector: the defender must be
+right about every path, the attacker needs one oversized request.
+
+Allocation failure must therefore be treated as a reachable runtime condition
+-- an **error** -- by default. The payoff is a contained failure path: a
+service that hits its allocation limit while assembling a response can reject
+that one request, release the memory the partially built response had reserved,
+and proceed to serve the next request. Only the layer handling the request has
+the context to draw that line -- which request to reject, what to release, and
+when to keep running.
+
 Choosing between the two APIs
 -----------------------------
 
@@ -63,6 +107,15 @@ Choosing between the two APIs
   within the component, for example with a death test, rather than by the
   caller.
 
+A co-located budget -- established, owned, and verifiable in the same scope as
+the consumption -- is exactly the special constellation in which the
+separations described above have been deliberately eliminated. Only then is
+classifying allocation failure as a violation legitimate. Because that holds
+solely in tightly bounded, statically sized constellations, the
+result-returning APIs are the generic choice and the ``OrAbort`` variants the
+special case: a guaranteed budget is something a specific design has
+deliberately established, not the normal state of affairs.
+
 Out of scope: process-level termination
 ---------------------------------------
 
@@ -75,24 +128,6 @@ orderly shutdown is still safe. ``score::nothrow`` therefore never terminates
 the process on its own. It either returns the failure as an error, so that a
 layer with the necessary context can decide how to react, or it aborts on a
 contract violation.
-
-Memory exhaustion is frequently driven by the size or shape of incoming data
-rather than by a defect, and that data may be attacker-controlled -- a request
-crafted to allocate as much as possible is a classic denial-of-service vector.
-Recovery is therefore the common case, not the exception: a service that hits
-its allocation limit while assembling a response can reject that one request,
-release the memory the partially built response had reserved, and proceed to
-serve the next request. Only the layer handling the request has the context to
-draw that line -- which request to reject, what to release, and when to keep
-running. A container several levels below it cannot.
-
-For that reason the result-returning APIs are the generic choice and the
-``OrAbort`` variants the special case. The premise behind ``OrAbort`` -- that
-the integrated environment guarantees enough memory for every possible
-operation up front -- holds only in tightly bounded, statically sized
-constellations. It is not a generic safe bet, so a guaranteed budget should be
-treated as something a specific design has deliberately established, not as the
-normal state of affairs.
 
 Converting a propagated allocation error into a controlled process shutdown,
 where that genuinely is the right response, remains the responsibility of a
