@@ -55,3 +55,23 @@ bazel build //example:shm_parent //example:shm_child
 # The parent forks and execs the child binary given as its first argument:
 bazel-bin/example/shm_parent bazel-bin/example/shm_child
 ```
+
+## Memory resource scopes (`resource_scopes.cpp`)
+
+A single-process companion example demonstrating the failure-handling decision
+rule (`docs/nothrow/architecture/failure_handling.rst`): the same operation —
+allocation — is handled differently depending on where the memory budget lives.
+
+- **Co-located budget:** a local buffer and `MonotonicBufferResource` in the
+  same scope as the consuming container. The budget is visible two lines above
+  its use, so allocation failure could only be a bug — the `OrAbort` variants
+  are correct and trap at the defect site.
+- **Dislocated budget:** `main()` configures the process-wide default resource
+  centrally (standing in for integration-time configuration); business logic
+  (`BuildSquares()`) knows nothing about the sizing and returns
+  `score::Result`. An oversized — possibly attacker-sized — request is
+  rejected as a contained error and the process keeps serving.
+
+```bash
+bazel run //example:resource_scopes
+```

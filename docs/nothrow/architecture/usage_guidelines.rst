@@ -34,7 +34,10 @@ the second by where the container's memory lives and which interfaces it must
 pass through. Supporting analyses: :need:`doc__nothrow_failure_handling`
 (failure semantics), :need:`doc__nothrow_comparison_std` (side-by-side
 comparison with the standard containers), and ``score/nothrow/BENCHMARK.md``
-(pointer-policy runtime costs).
+(pointer-policy runtime costs). The decision rules are demonstrated by
+runnable examples in ``example/``: ``resource_scopes.cpp`` for the co-located
+versus centrally provisioned budget choice, and the shared-memory demo for
+offset-policy containers used across processes.
 
 Container choice: standard or nothrow
 -------------------------------------

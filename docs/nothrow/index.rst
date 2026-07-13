@@ -123,6 +123,16 @@ Usage scenarios discussed in the component review illustrate this scope:
   interpretable by a gateway process (for example for SOME/IP serialization),
   because the shared representation is self-contained.
 
+Both aspects are demonstrated by runnable examples in ``example/``. The
+shared-memory demo (``shm_parent``/``shm_child`` with
+``bounded_containers.h``) exercises the **binary representation**: two
+processes map the same segment at different base addresses, and the child
+reads, mutates, and inserts into containers the parent created.
+``resource_scopes.cpp`` exercises the **API** aspect: the same allocation is
+handled with ``OrAbort`` where the budget is co-located with its use, and as
+a propagated ``score::Result`` error where memory is provisioned centrally --
+including the rejection of an oversized request without process termination.
+
 
 Failure Handling Model
 ======================
@@ -239,6 +249,11 @@ Users should be taught to approach ``score::nothrow`` as a std-like API with
 explicit failure handling. The `Failure Handling Model`_ section describes the
 error and violation categories and the rule for choosing between the
 result-returning operations and their ``OrAbort`` variants.
+
+Runnable teaching material lives in ``example/``: ``resource_scopes.cpp`` is
+the decision rule in code -- a co-located budget handled with ``OrAbort``
+next to centrally provisioned memory handled with ``score::Result`` -- and
+the shared-memory demo shows bounded containers used across processes.
 
 
 Rejected Ideas

@@ -28,6 +28,15 @@ cc_binary(
 )
 
 cc_binary(
+    name = "resource_scopes",
+    srcs = ["resource_scopes.cpp"],
+    deps = [
+        "@score_baselibs//score/nothrow:monotonic_buffer_resource",
+        "@score_baselibs//score/nothrow:vector",
+    ],
+)
+
+cc_binary(
     name = "shm_child",
     srcs = [
         "bounded_containers.h",
