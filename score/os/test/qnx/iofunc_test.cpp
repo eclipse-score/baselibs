@@ -176,6 +176,43 @@ TEST_F(IoFuncMockTest, iofunc_lseek_default)
     EXPECT_CALL(iofuncmock, iofunc_lseek_default);
     unit_->iofunc_lseek_default(nullptr, nullptr, nullptr);
 }
+
+TEST_F(IoFuncMockTest, iofunc_close_dup_default)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Close Dup Default");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    EXPECT_CALL(iofuncmock, iofunc_close_dup_default);
+    unit_->iofunc_close_dup_default(nullptr, nullptr, nullptr);
+}
+
+TEST_F(IoFuncMockTest, iofunc_lock_ocb_default)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Lock Ocb Default");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    EXPECT_CALL(iofuncmock, iofunc_lock_ocb_default);
+    unit_->iofunc_lock_ocb_default(nullptr, nullptr, nullptr);
+}
+
+TEST_F(IoFuncMockTest, iofunc_unlock_ocb_default)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Unlock Ocb Default");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    EXPECT_CALL(iofuncmock, iofunc_unlock_ocb_default);
+    unit_->iofunc_unlock_ocb_default(nullptr, nullptr, nullptr);
+}
+
 // ------------ IoFuncQnx -------------
 class IoFuncFixture : public ::testing::Test
 {
@@ -583,6 +620,67 @@ TEST(IoFuncTest, iofunc_ocb_attach_failure_invalid_ctp)
 
     EXPECT_FALSE(ocb_attach_result.has_value());
     EXPECT_EQ(ocb_attach_result.error(), ENOENT);
+}
+
+TEST_F(IoFuncFixture, iofunc_close_dup_default_success)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Close Dup Default Success");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    resmgr_context_t ctp{};
+    io_close_t msg{};
+    iofunc_ocb_t ocb{};
+
+    auto& iofunc = score::os::IoFunc::instance();
+    const auto close_dup_result = iofunc.iofunc_close_dup_default(&ctp, &msg, &ocb);
+
+    EXPECT_EQ(close_dup_result, EOK);
+}
+
+TEST_F(IoFuncFixture, iofunc_lock_ocb_default_success)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Lock Ocb Default Success");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    resmgr_context_t ctp{};
+    extended_dev_attr_t attr{};
+    iofunc_ocb_t ocb{};
+
+    auto& iofunc = score::os::IoFunc::instance();
+    iofunc.iofunc_attr_init(&attr.attr, 0U, nullptr, nullptr);
+    ocb.attr = &attr;
+    const auto lock_ocb_result = iofunc.iofunc_lock_ocb_default(&ctp, nullptr, &ocb);
+
+    EXPECT_EQ(lock_ocb_result, EOK);
+}
+
+TEST_F(IoFuncFixture, iofunc_unlock_ocb_default_success)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Iofunc Unlock Ocb Default Success");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence classes");
+
+    resmgr_context_t ctp{};
+    extended_dev_attr_t attr{};
+    iofunc_ocb_t ocb{};
+
+    auto& iofunc = score::os::IoFunc::instance();
+    iofunc.iofunc_attr_init(&attr.attr, 0U, nullptr, nullptr);
+    ocb.attr = &attr;
+
+    const auto lock_ocb_result = iofunc.iofunc_lock_ocb_default(&ctp, nullptr, &ocb);
+    EXPECT_EQ(lock_ocb_result, EOK);
+
+    const auto unlock_ocb_result = iofunc.iofunc_unlock_ocb_default(&ctp, nullptr, &ocb);
+    EXPECT_EQ(unlock_ocb_result, EOK);
 }
 
 }  // namespace

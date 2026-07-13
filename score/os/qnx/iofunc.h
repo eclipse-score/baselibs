@@ -130,6 +130,19 @@ class IoFunc : public ObjectSeam<IoFunc>
 
     virtual void iofunc_notify_remove(resmgr_context_t* const ctp, iofunc_notify_t* const nop) const noexcept = 0;
 
+
+    virtual std::int32_t iofunc_close_dup_default(resmgr_context_t* ctp,
+                                                  io_close_t* msg,
+                                                  iofunc_ocb_t* ocb) const noexcept = 0;
+    
+    virtual std::int32_t iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                                 void* reserved,
+                                                 iofunc_ocb_t* ocb) const noexcept = 0;
+                                                 
+    virtual std::int32_t iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                                   void* reserved,
+                                                   iofunc_ocb_t* ocb) const noexcept = 0;
+
     IoFunc() = default;
     virtual ~IoFunc() = default;
 
@@ -226,6 +239,18 @@ class IoFuncQnx final : public IoFunc
                                       const std::int32_t index) const noexcept override;
 
     void iofunc_notify_remove(resmgr_context_t* const ctp, iofunc_notify_t* const nop) const noexcept override;
+
+    std::int32_t iofunc_close_dup_default(resmgr_context_t* ctp,
+                                                  io_close_t* msg,
+                                                  iofunc_ocb_t* ocb) const noexcept override;
+
+    std::int32_t iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                        void* reserved,
+                                        iofunc_ocb_t* ocb) const noexcept override;
+                                                 
+    std::int32_t iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                            void* reserved,
+                                            iofunc_ocb_t* ocb) const noexcept override;
 };
 
 }  // namespace os

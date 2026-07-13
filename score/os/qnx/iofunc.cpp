@@ -277,6 +277,27 @@ void score::os::IoFuncQnx::iofunc_notify_remove(resmgr_context_t* const ctp, iof
     ::iofunc_notify_remove(ctp, nop);
 }
 
+std::int32_t score::os::IoFuncQnx::iofunc_close_dup_default(resmgr_context_t* ctp,
+                                                          io_close_t* msg,
+                                                          iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_close_dup_default(ctp, msg, ocb);
+}
+
+std::int32_t score::os::IoFuncQnx::iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                                         void* reserved,
+                                                         iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_lock_ocb_default(ctp, reserved, ocb);
+}
+
+std::int32_t score::os::IoFuncQnx::iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                                           void* reserved,
+                                                           iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_unlock_ocb_default(ctp, reserved, ocb);
+}
+
 score::os::IoFunc& score::os::IoFunc::instance() noexcept
 {
     // The rule states: Static and thread-local objects shall be constant-initialized.
