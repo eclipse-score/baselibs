@@ -35,6 +35,9 @@ Requirements
    on allocation failure and shall instead signal failure by returning
    ``nullptr``.
 
+   This realizes the *error* category of the failure handling model defined in
+   :need:`doc__nothrow_failure_handling`.
+
 .. comp_req:: Nothrow fallible construction
    :id: comp_req__nothrow__create
    :reqtype: Functional
@@ -47,6 +50,9 @@ Requirements
    Containers in ``score::nothrow`` shall provide explicit fallible factory
    functions that return ``score::Result<Container>`` for construction paths
    that may require allocation.
+
+   This realizes the *error* category of the failure handling model defined in
+   :need:`doc__nothrow_failure_handling`.
 
 .. comp_req:: Nothrow explicit mutation error propagation
    :id: comp_req__nothrow__mutate_result
@@ -62,6 +68,9 @@ Requirements
    ``score::ResultBlank`` instead of relying on exception-based failure
    signaling.
 
+   This realizes the *error* category of the failure handling model defined in
+   :need:`doc__nothrow_failure_handling`.
+
 .. comp_req:: Nothrow aborting convenience operations
    :id: comp_req__nothrow__or_abort
    :reqtype: Functional
@@ -74,6 +83,9 @@ Requirements
    For operations with explicit error-propagating APIs, ``score::nothrow``
    shall provide clearly named ``OrAbort`` convenience variants for cases where
    allocation failure is considered a programming error.
+
+   This realizes the *violation* category of the failure handling model defined
+   in :need:`doc__nothrow_failure_handling`.
 
 .. comp_req:: Nothrow pointer-slot policy abstraction
    :id: comp_req__nothrow__pointer_policy
