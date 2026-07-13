@@ -990,5 +990,9 @@
   {
     "version": "gh-readonly-queue/main/pr-318-ab7c22c3de3d1927979f0925be1bcd50a4730a60",
     "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-318-ab7c22c3de3d1927979f0925be1bcd50a4730a60/"
+  },
+  {
+    "version": "pr-365",
+    "url": "https://eclipse-score.github.io/baselibs/pr-365/"
   }
 ]
