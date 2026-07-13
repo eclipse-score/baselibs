@@ -41,6 +41,8 @@ score::cpp::expected_blank<Error> StdioImpl::remove(const char* const pathname) 
 }
 score::cpp::expected_blank<Error> StdioImpl::rename(const char* const oldname, const char* const newname) const noexcept
 {
+    // Suppressed here because usage of this OSAL method is on banned list
+    // NOLINTNEXTLINE(bmw-banned-function) see comment above
     if (::rename(oldname, newname) != 0)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());

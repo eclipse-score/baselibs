@@ -29,6 +29,8 @@ score::cpp::expected<void*, Error> MmanQnxImpl::mmap(void* const addr,
                                               const std::int64_t offset) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
+    // Suppressed here because usage of this OSAL method is on banned list
+    // NOLINTNEXTLINE(bmw-banned-function) see comment above
     void* const ret{::mmap(addr, length, protection, flags, fd, offset)};
     /* KW_SUPPRESS_START:AUTOSAR.CAST.CSTYLE:Cast is happening outside our code domain */
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
