@@ -40,7 +40,11 @@ Ground rules, to keep the comparison honest:
 
 .. note::
 
-   This comparison covers **failure semantics only**. It serves as *one input*
+   **Failure semantics are the main focus of this comparison.** Scenario 8
+   additionally touches shared-memory placement: the pointer-slot policy that
+   enables it affects container construction and cross-process
+   synchronization, but not API use or failure robustness -- which is why it
+   appears here only as a capability row. The comparison serves as *one input*
    to the "when to use which container" guideline requested in the component
    review -- it is not that guideline. The guideline,
    :need:`doc__nothrow_usage_guidelines`, additionally weighs the pointer-slot
