@@ -22,11 +22,11 @@ use score_log::fmt::{FormatSpec, Result as ScoreLogResult, ScoreDebug, Writer};
 ///
 /// The vector can hold between 0 and `capacity` elements, and behaves similarly to Rust's `Vec`,
 /// except that it allocates memory immediately on construction, and can't shrink or grow.
-pub struct FixedCapacityVecIn<'alloc, T, A: BasicAllocator> {
-    inner: GenericVec<T, Heap<'alloc, T, A>>,
+pub struct FixedCapacityVecIn<T, A: BasicAllocator> {
+    inner: GenericVec<T, Heap<T, A>>,
 }
 
-impl<'alloc, T, A: BasicAllocator> FixedCapacityVecIn<'alloc, T, A> {
+impl<T, A: BasicAllocator> FixedCapacityVecIn<T, A> {
     /// Creates an empty vector and allocates memory for up to `capacity` elements, where `capacity <= u32::MAX`.
     ///
     /// # Panics
@@ -34,7 +34,7 @@ impl<'alloc, T, A: BasicAllocator> FixedCapacityVecIn<'alloc, T, A> {
     /// - Panics if `capacity > u32::MAX`.
     /// - Panics if the memory allocation fails.
     #[must_use]
-    pub fn new(capacity: usize, alloc: &'alloc A) -> Self {
+    pub fn new(capacity: usize, alloc: A) -> Self {
         assert!(
             capacity <= u32::MAX as usize,
             "FixedCapacityVec can hold at most u32::MAX elements"
@@ -49,7 +49,7 @@ impl<'alloc, T, A: BasicAllocator> FixedCapacityVecIn<'alloc, T, A> {
     ///
     /// Returns `None` if `capacity > u32::MAX`, or if the memory allocation fails.
     #[must_use]
-    pub fn try_new(capacity: usize, alloc: &'alloc A) -> Option<Self> {
+    pub fn try_new(capacity: usize, alloc: A) -> Option<Self> {
         if capacity <= u32::MAX as usize {
             let storage = Heap::try_new(capacity as u32, alloc)?;
             let inner = GenericVec::new(storage);
@@ -60,33 +60,33 @@ impl<'alloc, T, A: BasicAllocator> FixedCapacityVecIn<'alloc, T, A> {
     }
 }
 
-impl<T, A: BasicAllocator> Drop for FixedCapacityVecIn<'_, T, A> {
+impl<T, A: BasicAllocator> Drop for FixedCapacityVecIn<T, A> {
     fn drop(&mut self) {
         self.inner.clear();
     }
 }
 
-impl<'alloc, T, A: BasicAllocator> ops::Deref for FixedCapacityVecIn<'alloc, T, A> {
-    type Target = GenericVec<T, Heap<'alloc, T, A>>;
+impl<T, A: BasicAllocator> ops::Deref for FixedCapacityVecIn<T, A> {
+    type Target = GenericVec<T, Heap<T, A>>;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
 
-impl<T, A: BasicAllocator> ops::DerefMut for FixedCapacityVecIn<'_, T, A> {
+impl<T, A: BasicAllocator> ops::DerefMut for FixedCapacityVecIn<T, A> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<T: fmt::Debug, A: BasicAllocator> fmt::Debug for FixedCapacityVecIn<'_, T, A> {
+impl<T: fmt::Debug, A: BasicAllocator> fmt::Debug for FixedCapacityVecIn<T, A> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(self.as_slice(), f)
     }
 }
 
-impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityVecIn<'_, T, A> {
+impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityVecIn<T, A> {
     fn fmt(&self, f: Writer, spec: &FormatSpec) -> ScoreLogResult {
         ScoreDebug::fmt(self.as_slice(), f, spec)
     }
@@ -94,7 +94,7 @@ impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityVecIn<'_, T, 
 
 /// A fixed-capacity vector, using global allocator.
 /// Refer to [`FixedCapacityVecIn`] for more information.
-pub struct FixedCapacityVec<T>(FixedCapacityVecIn<'static, T, HeapAllocator>);
+pub struct FixedCapacityVec<T>(FixedCapacityVecIn<T, HeapAllocator>);
 
 impl<T> FixedCapacityVec<T> {
     /// Creates an empty vector and allocates memory for up to `capacity` elements, where `capacity <= u32::MAX`.
@@ -105,7 +105,7 @@ impl<T> FixedCapacityVec<T> {
     /// - Panics if the memory allocation fails.
     #[must_use]
     pub fn new(capacity: usize) -> Self {
-        Self(FixedCapacityVecIn::new(capacity, &GLOBAL_ALLOCATOR))
+        Self(FixedCapacityVecIn::new(capacity, GLOBAL_ALLOCATOR))
     }
 
     /// Tries to create an empty vector for up to `capacity` elements, where `capacity <= u32::MAX`.
@@ -113,13 +113,13 @@ impl<T> FixedCapacityVec<T> {
     /// Returns `None` if `capacity > u32::MAX`, or if the memory allocation fails.
     #[must_use]
     pub fn try_new(capacity: usize) -> Option<Self> {
-        let inner = FixedCapacityVecIn::try_new(capacity, &GLOBAL_ALLOCATOR)?;
+        let inner = FixedCapacityVecIn::try_new(capacity, GLOBAL_ALLOCATOR)?;
         Some(Self(inner))
     }
 }
 
 impl<T> ops::Deref for FixedCapacityVec<T> {
-    type Target = GenericVec<T, Heap<'static, T, HeapAllocator>>;
+    type Target = GenericVec<T, Heap<T, HeapAllocator>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0.inner
