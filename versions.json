@@ -1018,5 +1018,9 @@
   {
     "version": "pr-370",
     "url": "https://eclipse-score.github.io/baselibs/pr-370/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-367-48235f411ed207c876da05f4712982f91f0e1d1d",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-367-48235f411ed207c876da05f4712982f91f0e1d1d/"
   }
 ]
