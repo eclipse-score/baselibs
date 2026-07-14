@@ -386,7 +386,7 @@ cc_test(
         ":minimal",
         ":recorder_mock",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/mw/log/test/my_custom_lib:my_custom_type_mw_log",
+        "@score_baselibs//score/mw/log/tests/my_custom_lib:my_custom_type_mw_log",
     ],
 )
 
@@ -486,7 +486,7 @@ cc_unit_test_suites_for_host_and_qnx(
         "@score_baselibs//score/mw/log/configuration:unit_tests",
         "@score_baselibs//score/mw/log/detail:unit_tests",
         #"@score_baselibs//score/mw/log/legacy_non_verbose_api:unit_tests",
-        #"@score_baselibs//score/mw/log/test:unit_test_suite",
+        #"@score_baselibs//score/mw/log/tests:unit_test_suite",
     ],
     visibility = [
         "//platform/aas/mw:__pkg__",
