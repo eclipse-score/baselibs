@@ -11,6 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Do not use automatically C++ generated toolchains
+build --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
 common --registry=https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/
 common --registry=https://bcr.bazel.build
 common --http_connector_attempts=10
