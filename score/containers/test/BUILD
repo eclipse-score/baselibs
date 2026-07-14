@@ -92,10 +92,37 @@ cc_gtest_unit_test(
     ],
 )
 
+cc_library(
+    name = "fancy_pointer_allocator",
+    testonly = True,
+    srcs = ["fancy_pointer_allocator.cpp"],
+    hdrs = ["fancy_pointer_allocator.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/containers:__subpackages__",
+    ],
+    deps = [
+        ":mockable_allocator",
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "fancy_pointer_allocator_test",
+    srcs = ["fancy_pointer_allocator_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":fake_memory_resource",
+        ":fancy_pointer_allocator",
+        "@googletest//:gtest",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":fake_memory_resource_test",
+        ":fancy_pointer_allocator_test",
     ],
     visibility = [
         "//visibility:public",
