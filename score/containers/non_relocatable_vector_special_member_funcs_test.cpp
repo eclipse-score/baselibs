@@ -15,8 +15,8 @@
 #include "score/containers/test/allocator_test_type_helpers.h"
 #include "score/containers/test/container_test_types.h"
 
-#include "score/memory/shared/fake/my_bounded_memory_resource.h"
-#include "score/memory/shared/polymorphic_offset_ptr_allocator.h"
+#include "score/containers/test/fake_memory_resource.h"
+#include "score/containers/test/fancy_pointer_allocator.h"
 
 #include <score/assert_support.hpp>
 
@@ -32,7 +32,6 @@
 namespace score::containers
 {
 
-using namespace score::memory::shared;
 using namespace score::containers::test_types;
 
 constexpr std::size_t kNonZeroNumberElements{10U};
@@ -58,7 +57,7 @@ class NonRelocatableVectorFixture : public ::testing::Test
         return *this;
     }
 
-    score::memory::shared::test::MyBoundedMemoryResource memory_resource_{2000U};
+    score::containers::test::FakeMemoryResource memory_resource_{};
     std::unique_ptr<NonRelocatableVector<ElementType, Allocator>> unit_{nullptr};
 };
 
@@ -92,7 +91,7 @@ TYPED_TEST_SUITE(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture,
                  NonMoveableAndCopyableElementTypeAllocatorTypes, );
 
 using NonRelocatableVectorSpecialMemberFunctionRecorderFixture = NonRelocatableVectorFixture<
-    ContainerTestTypes<SpecialMemberFunctionRecordingType, memory::shared::PolymorphicOffsetPtrAllocator>>;
+    ContainerTestTypes<SpecialMemberFunctionRecordingType, test::FancyPointerAllocator>>;
 
 TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithZeroElementsSetsSizeAndCapacityToZero)
 {
@@ -153,7 +152,7 @@ TYPED_TEST(NonRelocatableVectorFixture, DestructingWithZeroElementsDoesNotDeallo
     this->unit_.reset();
 
     // Then no memory is deallocated
-    EXPECT_EQ(this->memory_resource_.GetUserDeAllocatedBytes(), 0U);
+    EXPECT_EQ(this->memory_resource_.GetUserDeallocatedBytes(), 0U);
 }
 
 TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, DestructingWithNonZeroElementsDeallocatesAllElements)
@@ -167,7 +166,7 @@ TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, DestructingWithNonZe
     const auto expected_memory_deallocated =
         sizeof(typename NonRelocatableVectorPolymorphicAllocatorFixture<TypeParam>::ElementType) *
         kNonZeroNumberElements;
-    EXPECT_EQ(this->memory_resource_.GetUserDeAllocatedBytes(), expected_memory_deallocated);
+    EXPECT_EQ(this->memory_resource_.GetUserDeallocatedBytes(), expected_memory_deallocated);
 }
 
 TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
@@ -324,7 +323,7 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, C
         new_vector{*this->unit_};
 
     // Then memory no memory is deallocated
-    EXPECT_EQ(this->memory_resource_.GetUserDeAllocatedBytes(), 0U);
+    EXPECT_EQ(this->memory_resource_.GetUserDeallocatedBytes(), 0U);
 }
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveConstructingMovesAllElements)
@@ -448,7 +447,7 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, M
         new_vector{std::move(*this->unit_)};
 
     // Then memory no memory is deallocated
-    EXPECT_EQ(this->memory_resource_.GetUserDeAllocatedBytes(), 0U);
+    EXPECT_EQ(this->memory_resource_.GetUserDeallocatedBytes(), 0U);
 }
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveAssigningMovesAllElements)
