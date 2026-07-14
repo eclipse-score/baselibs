@@ -156,6 +156,9 @@ cc_unit_test_suites_for_host_and_qnx(
         ":non_relocatable_vector_special_member_funcs_test",
         ":intrusive_list_test",
     ],
+    test_suites_from_sub_packages = [
+        "@score_baselibs//score/containers/test:unit_test_suite",
+    ],
     visibility = [
         "//visibility:public",
     ],
