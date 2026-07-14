@@ -482,7 +482,7 @@
                   
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-f9a43360">
+<div class="need_container docutils container" id="SNCB-fd6e59d0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__hash_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -526,7 +526,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-87fcc099">
+<div class="need_container docutils container" id="SNCB-a2ca05df">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_hash">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -549,7 +549,7 @@
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="#comp_req__hash__calculation_interface" title="comp__baselibs_hash">comp_req__hash__calculation_interface</a>, <a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp__baselibs_hash">comp_req__hash__value_retrieval</a>, <a class="reference internal" href="#comp_req__hash__factory_interface" title="comp__baselibs_hash">comp_req__hash__factory_interface</a>, <a class="reference internal" href="#comp_req__hash__sha_algorithms" title="comp__baselibs_hash">comp_req__hash__sha_algorithms</a>, <a class="reference internal" href="#comp_req__hash__crc32_algorithm" title="comp__baselibs_hash">comp_req__hash__crc32_algorithm</a>, <a class="reference internal" href="#comp_req__hash__safe_computation" title="comp__baselibs_hash">comp_req__hash__safe_computation</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="#comp_req__hash__calculation_interface" title="comp__baselibs_hash">comp_req__hash__calculation_interface</a>, <a class="reference internal" href="#comp_req__hash__value_retrieval_bytes" title="comp__baselibs_hash">comp_req__hash__value_retrieval_bytes</a>, <a class="reference internal" href="#comp_req__hash__value_retrieval_hex" title="comp__baselibs_hash">comp_req__hash__value_retrieval_hex</a>, <a class="reference internal" href="#comp_req__hash__factory_interface" title="comp__baselibs_hash">comp_req__hash__factory_interface</a>, <a class="reference internal" href="#comp_req__hash__sha_algorithms" title="comp__baselibs_hash">comp_req__hash__sha_algorithms</a>, <a class="reference internal" href="#comp_req__hash__crc32_algorithm" title="comp__baselibs_hash">comp_req__hash__crc32_algorithm</a>, <a class="reference internal" href="#comp_req__hash__safe_computation" title="comp__baselibs_hash">comp_req__hash__safe_computation</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -573,7 +573,7 @@
 </div>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-f80e7d68">
+<div class="need_container docutils container" id="SNCB-0ab4bce9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__calculation_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -620,11 +620,11 @@ and producing the final digest upon finalization.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4c12013b">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__value_retrieval">
+<div class="need_container docutils container" id="SNCB-e7d728b3">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__value_retrieval_bytes">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value Retrieval</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value Retrieval as Raw Bytes</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -643,17 +643,16 @@ and producing the final digest upon finalization.</p></td>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__hash_library">feat_req__baselibs__hash_library</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__value_retrieval">comp__baselibs_hash</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__value_retrieval_bytes">comp__baselibs_hash</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value both as a raw byte
-sequence and as a hexadecimal string representation.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value as a raw byte sequence.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__value_retrieval" title="comp_req__hash__value_retrieval">comp_req__hash__value_retrieval</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__value_retrieval_bytes" title="comp_req__hash__value_retrieval_bytes">comp_req__hash__value_retrieval_bytes</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
@@ -666,7 +665,53 @@ sequence and as a hexadecimal string representation.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0fb09619">
+<div class="need_container docutils container" id="SNCB-08503254">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__value_retrieval_hex">
+<tbody>
+<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
+<div class="line"><span><span class="needs_title"><span class="needs_data">Hash Value Retrieval as Hexadecimal String</span></span></span></div>
+</div>
+</td>
+<td class="head_center" colspan="2"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
+</div>
+</td>
+<td class="head_right" colspan="2"><div class="needs_head_right line-block">
+<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
+</div>
+</td>
+</tr>
+<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__hash_library">feat_req__baselibs__hash_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="#comp__baselibs_hash" title="comp_req__hash__value_retrieval_hex">comp__baselibs_hash</a></span></span></div>
+</span></div>
+</div>
+</td>
+<td class="meta" colspan="3"></td>
+</tr>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The hash library shall expose the computed hash value as a hexadecimal string
+representation.</p></td>
+</tr>
+<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__hash__value_retrieval_hex" title="comp_req__hash__value_retrieval_hex">comp_req__hash__value_retrieval_hex</a></span></span></div>
+</div>
+</td>
+<td class="footer" colspan="2"><div class="needs_footer line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
+</div>
+</td>
+<td class="footer_right" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="need_container docutils container" id="SNCB-d049041c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__factory_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -714,7 +759,7 @@ algorithm implementation.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a138df66">
+<div class="need_container docutils container" id="SNCB-a5d81931">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__sha_algorithms">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -760,7 +805,7 @@ cryptographic hash algorithms.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ea35b2b3">
+<div class="need_container docutils container" id="SNCB-e4b59404">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__crc32_algorithm">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -805,7 +850,7 @@ cryptographic hash algorithms.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-34e571d2">
+<div class="need_container docutils container" id="SNCB-04fc502c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__hash__safe_computation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
