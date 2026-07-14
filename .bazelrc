@@ -47,7 +47,7 @@ test:_bl_common --test_output=errors
 
 # Common BaseLibs Toolchain flags for build (do not use it in case of system toolchains!)
 build:_bl_toolchain_common --incompatible_strict_action_env
-build:_bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux
+build:_bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 
 # Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
 build:bl-x86_64-linux --config=_bl_stub
