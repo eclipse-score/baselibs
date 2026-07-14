@@ -15,8 +15,8 @@
 #include "score/containers/test/allocator_test_type_helpers.h"
 #include "score/containers/test/container_test_types.h"
 
-#include "score/memory/shared/fake/my_memory_resource.h"
-#include "score/memory/shared/polymorphic_offset_ptr_allocator.h"
+#include "score/containers/test/fake_memory_resource.h"
+#include "score/containers/test/fancy_pointer_allocator.h"
 
 #include <score/assert_support.hpp>
 
@@ -27,7 +27,6 @@
 #include <memory>
 
 using namespace score::containers;
-using namespace score::memory::shared;
 
 constexpr std::size_t kNonEmptyArraySize{10U};
 constexpr std::size_t kEmptyArraySize{0U};
@@ -52,10 +51,10 @@ class DynamicArrayTestFixture : public ::testing::Test
         return specific_type_alloc;
     }
 
-    score::memory::shared::test::MyMemoryResource memory_resource_{};
+    score::containers::test::FakeMemoryResource memory_resource_{};
 };
 
-using AllocatorTypes = ::testing::Types<std::allocator<TrivialType>, PolymorphicOffsetPtrAllocator<TrivialType>>;
+using AllocatorTypes = ::testing::Types<std::allocator<TrivialType>, test::FancyPointerAllocator<TrivialType>>;
 TYPED_TEST_SUITE(DynamicArrayTestFixture, AllocatorTypes, );
 
 TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTrivialType)
