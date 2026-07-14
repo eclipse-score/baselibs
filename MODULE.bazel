@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -52,6 +52,7 @@ use_repo(
     gcc,
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
+    "score_gcc_x86_64_toolchain_pkg",
     "score_qcc_aarch64_toolchain",
     "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
@@ -151,14 +152,39 @@ bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True
 bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
-bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
+bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
 llvm.toolchain(
+    cxx_standard = {"": "c++17"},
+    link_libs = {"": [
+        "-lrt",
+        "-latomic",
+    ]},
     llvm_version = "19.1.1",
-    stdlib = {"linux-x86_64": "stdc++"},
+    stdlib = {"": "stdc++"},
+)
+
+# Reuse the sysroot (and libstdc++ headers) shipped with the score_gcc_x86_64_toolchain
+# package for the hermetic LLVM toolchain, so both toolchains build against the same
+# libc/libstdc++.
+llvm.sysroot(
+    label = "@score_gcc_x86_64_sysroot//x86_64-unknown-linux-gnu/sysroot:sysroot",
+    targets = ["linux-x86_64"],
 )
 use_repo(llvm, "llvm_toolchain")
+
+gcc_sysroot = use_repo_rule("//third_party/gcc_sysroot:repository.bzl", "gcc_sysroot")
+
+# Same GCC package tarball as score_gcc_x86_64_toolchain, laid out so the sysroot
+# directory is its own Bazel package (required by the LLVM sysroot mechanism).
+gcc_sysroot(
+    name = "score_gcc_x86_64_sysroot",
+    sha256 = "e9b9a7a63a5f8271b76d6e2057906b95c7a244e4931a8e10edeaa241e9f7c11e",
+    strip_prefix = "x86_64-unknown-linux-gnu",
+    triple = "x86_64-unknown-linux-gnu",
+    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.4/x86_64-unknown-linux-gnu_gcc12.tar.gz",
+)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 

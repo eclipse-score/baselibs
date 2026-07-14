@@ -49,6 +49,13 @@ build:bl-x86_64-linux --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-li
 build:bl-x86_64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
 test:bl-x86_64-linux --config=_bl_common
 
+build:bl-x86_64-linux-llvm --platforms=@score_bazel_platforms//:x86_64-linux
+build:bl-x86_64-linux-llvm --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+build:bl-x86_64-linux-llvm --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+# Clang treats [[deprecated]] usages as -Werror; keep them as warnings for the LLVM toolchain.
+build:bl-x86_64-linux-llvm --copt=-Wno-error=deprecated-declarations
+test:bl-x86_64-linux-llvm --config=_bl_common
+
 # Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
 build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
 build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
