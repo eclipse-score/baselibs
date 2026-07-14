@@ -545,11 +545,9 @@ cc_library(
     ],
 )
 
-cc_unit_test(
+cc_gtest_unit_test(
     name = "pointer_arithmetic_util_precondition_violation_test",
-    srcs = [
-        "pointer_arithmetic_util_test.cpp",
-    ],
+    srcs = ["pointer_arithmetic_util_test.cpp"],
     features = COMPILER_WARNING_FEATURES + [
         # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
         "-aborts_upon_exception",
@@ -559,10 +557,7 @@ cc_unit_test(
     ],
     deps = [
         ":pointer_arithmetic_util",
-        "@googletest//:gtest",
-        "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",  # TODO: Remove when SubtractPointersBytes is no longer noexcept and we remove the last death test.
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )

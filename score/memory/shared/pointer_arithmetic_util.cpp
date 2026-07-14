@@ -24,7 +24,6 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
-#include <exception>
 #include <limits>
 #include <vector>
 
@@ -121,7 +120,7 @@ score::mw::log::LogHex64 PointerToLogValue(const void* const pointer)
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
 }
 
-std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const second) noexcept
+std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const second)
 {
     static_assert(sizeof(std::ptrdiff_t) == sizeof(std::uintptr_t), "");
 
@@ -139,7 +138,7 @@ std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const 
             score::mw::log::LogFatal("shm")
                 << "Could not subtract " << second_address_as_integer << "from" << first_address_as_integer
                 << ". Result does not fit into std::ptrdiff_t. Terminating.";
-            std::terminate();
+            SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(false);
         }
         return static_cast<std::ptrdiff_t>(result_as_integer);
     }
@@ -161,7 +160,7 @@ std::ptrdiff_t SubtractPointersBytes(const void* const first, const void* const 
         score::mw::log::LogFatal("shm") << "Could not subtract " << second_address_as_integer << "from"
                                       << first_address_as_integer
                                       << ". Result does not fit into std::ptrdiff_t. Terminating.";
-        std::terminate();
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(false);
     }
     return -1 * static_cast<std::ptrdiff_t>(absolute_value_result_as_integer);
 }

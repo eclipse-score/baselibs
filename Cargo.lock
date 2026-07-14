@@ -5,6 +5,9 @@ version = 4
 [[package]]
 name = "allocator"
 version = "0.0.1"
+dependencies = [
+ "score_log",
+]
 
 [[package]]
 name = "containers"
@@ -109,6 +112,7 @@ name = "sync"
 version = "0.0.1"
 dependencies = [
  "allocator",
+ "score_log",
 ]
 
 [[package]]

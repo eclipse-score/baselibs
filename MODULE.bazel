@@ -123,7 +123,7 @@ git_override(
     remote = "https://github.com/bmw-software-engineering/lobster.git",
 )
 
-bazel_dep(name = "score_platform", version = "0.6.0", dev_dependency = True)
+bazel_dep(name = "score_platform", version = "0.6.1", dev_dependency = True)
 
 ## Configure the python toolchain
 

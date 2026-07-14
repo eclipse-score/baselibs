@@ -18,6 +18,9 @@ rust_library(
     srcs = glob(["**/*.rs"]),
     edition = "2021",
     visibility = ["//visibility:public"],
+    deps = [
+        "//score/log_rust/score_log",
+    ],
 )
 
 rust_test(

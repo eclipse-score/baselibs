@@ -13,12 +13,13 @@
 
 use core::alloc::Layout;
 use core::cmp::Ordering;
-use core::fmt;
+use core::fmt as core_fmt;
 use core::hash::{Hash, Hasher};
 use core::ops::Deref;
 use core::ptr::{drop_in_place, NonNull};
 use core::sync::atomic;
 use core::sync::atomic::{AtomicUsize, Ordering as AtomicOrdering};
+use score_log::fmt as score_fmt;
 
 use allocator::BasicAllocator;
 
@@ -96,9 +97,15 @@ impl<T: Default, A: BasicAllocator + Clone + Default> Default for ArcIn<T, A> {
     }
 }
 
-impl<T: fmt::Debug, A: BasicAllocator> fmt::Debug for ArcIn<T, A> {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl<T: core_fmt::Debug, A: BasicAllocator> core_fmt::Debug for ArcIn<T, A> {
+    fn fmt(&self, f: &mut core_fmt::Formatter<'_>) -> core_fmt::Result {
         self.deref().fmt(f)
+    }
+}
+
+impl<T: score_fmt::ScoreDebug, A: BasicAllocator> score_fmt::ScoreDebug for ArcIn<T, A> {
+    fn fmt(&self, f: score_fmt::Writer, spec: &score_fmt::FormatSpec) -> score_fmt::Result {
+        self.deref().fmt(f, spec)
     }
 }
 

@@ -24,11 +24,11 @@ use score_log::fmt::{FormatSpec, Result as ScoreLogResult, ScoreDebug, Writer};
 ///
 /// The string can hold between 0 and `CAPACITY` **bytes**, and behaves similarly to Rust's `String`,
 /// except that it allocates memory immediately on construction, and can't shrink or grow.
-pub struct FixedCapacityStringIn<'alloc, A: BasicAllocator> {
-    inner: GenericString<Heap<'alloc, u8, A>>,
+pub struct FixedCapacityStringIn<A: BasicAllocator> {
+    inner: GenericString<Heap<u8, A>>,
 }
 
-impl<'alloc, A: BasicAllocator> FixedCapacityStringIn<'alloc, A> {
+impl<A: BasicAllocator> FixedCapacityStringIn<A> {
     /// Creates an empty string and allocates memory for up to `capacity` bytes, where `capacity <= u32::MAX`.
     ///
     /// Note that the string is encoded as UTF-8, so each character (Unicode codepoint) requires between 1 and 4 bytes of storage.
@@ -38,7 +38,7 @@ impl<'alloc, A: BasicAllocator> FixedCapacityStringIn<'alloc, A> {
     /// - Panics if `capacity > u32::MAX`.
     /// - Panics if the memory allocation fails.
     #[must_use]
-    pub fn new(capacity: usize, alloc: &'alloc A) -> Self {
+    pub fn new(capacity: usize, alloc: A) -> Self {
         assert!(
             capacity <= u32::MAX as usize,
             "FixedCapacityString can hold at most u32::MAX bytes"
@@ -55,7 +55,7 @@ impl<'alloc, A: BasicAllocator> FixedCapacityStringIn<'alloc, A> {
     ///
     /// Returns `None` if `capacity > u32::MAX`, or if the memory allocation fails.
     #[must_use]
-    pub fn try_new(capacity: usize, alloc: &'alloc A) -> Option<Self> {
+    pub fn try_new(capacity: usize, alloc: A) -> Option<Self> {
         if capacity <= u32::MAX as usize {
             let storage = Heap::try_new(capacity as u32, alloc)?;
             let inner = GenericString::new(storage);
@@ -66,39 +66,39 @@ impl<'alloc, A: BasicAllocator> FixedCapacityStringIn<'alloc, A> {
     }
 }
 
-impl<A: BasicAllocator> Drop for FixedCapacityStringIn<'_, A> {
+impl<A: BasicAllocator> Drop for FixedCapacityStringIn<A> {
     fn drop(&mut self) {
         self.inner.clear();
     }
 }
 
-impl<'alloc, A: BasicAllocator> ops::Deref for FixedCapacityStringIn<'alloc, A> {
-    type Target = GenericString<Heap<'alloc, u8, A>>;
+impl<A: BasicAllocator> ops::Deref for FixedCapacityStringIn<A> {
+    type Target = GenericString<Heap<u8, A>>;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
 
-impl<A: BasicAllocator> ops::DerefMut for FixedCapacityStringIn<'_, A> {
+impl<A: BasicAllocator> ops::DerefMut for FixedCapacityStringIn<A> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<A: BasicAllocator> fmt::Display for FixedCapacityStringIn<'_, A> {
+impl<A: BasicAllocator> fmt::Display for FixedCapacityStringIn<A> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Display::fmt(self.as_str(), f)
     }
 }
 
-impl<A: BasicAllocator> fmt::Debug for FixedCapacityStringIn<'_, A> {
+impl<A: BasicAllocator> fmt::Debug for FixedCapacityStringIn<A> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(self.as_str(), f)
     }
 }
 
-impl<A: BasicAllocator> ScoreDebug for FixedCapacityStringIn<'_, A> {
+impl<A: BasicAllocator> ScoreDebug for FixedCapacityStringIn<A> {
     fn fmt(&self, f: Writer, spec: &FormatSpec) -> ScoreLogResult {
         ScoreDebug::fmt(self.as_str(), f, spec)
     }
@@ -106,7 +106,7 @@ impl<A: BasicAllocator> ScoreDebug for FixedCapacityStringIn<'_, A> {
 
 /// A fixed-capacity Unicode string, using global allocator.
 /// Refer to [`FixedCapacityStringIn`] for more information.
-pub struct FixedCapacityString(FixedCapacityStringIn<'static, HeapAllocator>);
+pub struct FixedCapacityString(FixedCapacityStringIn<HeapAllocator>);
 
 impl FixedCapacityString {
     /// Creates an empty string and allocates memory for up to `capacity` bytes, where `capacity <= u32::MAX`.
@@ -119,7 +119,7 @@ impl FixedCapacityString {
     /// - Panics if the memory allocation fails.
     #[must_use]
     pub fn new(capacity: usize) -> Self {
-        Self(FixedCapacityStringIn::new(capacity, &GLOBAL_ALLOCATOR))
+        Self(FixedCapacityStringIn::new(capacity, GLOBAL_ALLOCATOR))
     }
 
     /// Tries to create an empty string for up to `capacity` bytes, where `capacity <= u32::MAX`.
@@ -129,13 +129,13 @@ impl FixedCapacityString {
     /// Returns `None` if `capacity > u32::MAX`, or if the memory allocation fails.
     #[must_use]
     pub fn try_new(capacity: usize) -> Option<Self> {
-        let inner = FixedCapacityStringIn::try_new(capacity, &GLOBAL_ALLOCATOR)?;
+        let inner = FixedCapacityStringIn::try_new(capacity, GLOBAL_ALLOCATOR)?;
         Some(Self(inner))
     }
 }
 
 impl ops::Deref for FixedCapacityString {
-    type Target = GenericString<Heap<'static, u8, HeapAllocator>>;
+    type Target = GenericString<Heap<u8, HeapAllocator>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0.inner

@@ -22,11 +22,11 @@ use score_log::fmt::{FormatSpec, Result as ScoreLogResult, ScoreDebug, Writer};
 ///
 /// The queue can hold between 0 and `CAPACITY` elements, and behaves similarly to Rust's `VecDeque`,
 /// except that it allocates memory immediately on construction, and can't shrink or grow.
-pub struct FixedCapacityQueueIn<'alloc, T, A: BasicAllocator> {
-    inner: GenericQueue<T, Heap<'alloc, T, A>>,
+pub struct FixedCapacityQueueIn<T, A: BasicAllocator> {
+    inner: GenericQueue<T, Heap<T, A>>,
 }
 
-impl<'alloc, T, A: BasicAllocator> FixedCapacityQueueIn<'alloc, T, A> {
+impl<T, A: BasicAllocator> FixedCapacityQueueIn<T, A> {
     /// Creates an empty queue and allocates memory for up to `capacity` elements, where `capacity <= u32::MAX`.
     ///
     /// # Panics
@@ -34,7 +34,7 @@ impl<'alloc, T, A: BasicAllocator> FixedCapacityQueueIn<'alloc, T, A> {
     /// - Panics if `capacity > u32::MAX`.
     /// - Panics if the memory allocation fails.
     #[must_use]
-    pub fn new(capacity: usize, alloc: &'alloc A) -> Self {
+    pub fn new(capacity: usize, alloc: A) -> Self {
         assert!(
             capacity <= u32::MAX as usize,
             "FixedQueue can hold at most u32::MAX elements"
@@ -46,33 +46,33 @@ impl<'alloc, T, A: BasicAllocator> FixedCapacityQueueIn<'alloc, T, A> {
     }
 }
 
-impl<T, A: BasicAllocator> Drop for FixedCapacityQueueIn<'_, T, A> {
+impl<T, A: BasicAllocator> Drop for FixedCapacityQueueIn<T, A> {
     fn drop(&mut self) {
         self.inner.clear();
     }
 }
 
-impl<'alloc, T, A: BasicAllocator> ops::Deref for FixedCapacityQueueIn<'alloc, T, A> {
-    type Target = GenericQueue<T, Heap<'alloc, T, A>>;
+impl<T, A: BasicAllocator> ops::Deref for FixedCapacityQueueIn<T, A> {
+    type Target = GenericQueue<T, Heap<T, A>>;
 
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
 
-impl<T, A: BasicAllocator> ops::DerefMut for FixedCapacityQueueIn<'_, T, A> {
+impl<T, A: BasicAllocator> ops::DerefMut for FixedCapacityQueueIn<T, A> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<T: fmt::Debug, A: BasicAllocator> fmt::Debug for FixedCapacityQueueIn<'_, T, A> {
+impl<T: fmt::Debug, A: BasicAllocator> fmt::Debug for FixedCapacityQueueIn<T, A> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(&self.inner, f)
     }
 }
 
-impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityQueueIn<'_, T, A> {
+impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityQueueIn<T, A> {
     fn fmt(&self, f: Writer, spec: &FormatSpec) -> ScoreLogResult {
         ScoreDebug::fmt(&self.inner, f, spec)
     }
@@ -80,7 +80,7 @@ impl<T: ScoreDebug, A: BasicAllocator> ScoreDebug for FixedCapacityQueueIn<'_, T
 
 /// A fixed-capacity queue, using global allocator.
 /// Refer to [`FixedCapacityQueueIn`] for more information.
-pub struct FixedCapacityQueue<T>(FixedCapacityQueueIn<'static, T, HeapAllocator>);
+pub struct FixedCapacityQueue<T>(FixedCapacityQueueIn<T, HeapAllocator>);
 
 impl<T> FixedCapacityQueue<T> {
     /// Creates an empty queue and allocates memory for up to `capacity` elements, where `capacity <= u32::MAX`.
@@ -91,12 +91,12 @@ impl<T> FixedCapacityQueue<T> {
     /// - Panics if the memory allocation fails.
     #[must_use]
     pub fn new(capacity: usize) -> Self {
-        Self(FixedCapacityQueueIn::new(capacity, &GLOBAL_ALLOCATOR))
+        Self(FixedCapacityQueueIn::new(capacity, GLOBAL_ALLOCATOR))
     }
 }
 
 impl<T> ops::Deref for FixedCapacityQueue<T> {
-    type Target = GenericQueue<T, Heap<'static, T, HeapAllocator>>;
+    type Target = GenericQueue<T, Heap<T, HeapAllocator>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0.inner
