@@ -12,8 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-
-# load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -66,5 +65,39 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "@score_baselibs//score/containers:__subpackages__",
+    ],
+)
+
+cc_library(
+    name = "fake_memory_resource",
+    testonly = True,
+    srcs = ["fake_memory_resource.cpp"],
+    hdrs = ["fake_memory_resource.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/containers:__subpackages__",
+    ],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "fake_memory_resource_test",
+    srcs = ["fake_memory_resource_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":fake_memory_resource",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_unit_test_suites_for_host_and_qnx(
+    name = "unit_test_suite",
+    cc_unit_tests = [
+        ":fake_memory_resource_test",
+    ],
+    visibility = [
+        "//visibility:public",
     ],
 )
