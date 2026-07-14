@@ -79,10 +79,10 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/containers/test:allocator_test_type_helpers",
         "@score_baselibs//score/containers/test:container_test_types",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-        "@score_baselibs//score/memory/shared:types",
-        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
