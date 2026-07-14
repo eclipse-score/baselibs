@@ -50,10 +50,9 @@ cc_library(
     ],
     deps = [
         ":container_test_types",
+        ":fancy_pointer_allocator",
         "@googletest//:gtest",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:managed_memory_resource",
-        "@score_baselibs//score/memory/shared:polymorphic_offset_ptr_allocator",
     ],
 )
 
