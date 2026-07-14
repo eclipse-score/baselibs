@@ -38,6 +38,8 @@ Overview
 - :need:`doc__flatbuffers`: FlatBuffers-Library with serialization, read access, and structural
   verification of FlatBuffers data, plus code generation via ``flatc`` for C++, Rust, and Python.
 - :need:`doc__filesystem`: Filesystem manipulation library similar to ``std::filesystem``.
+- :need:`doc__hash`: Hash calculation library supporting cryptographic (SHA-256, SHA-512) and
+  checksum (CRC-32) algorithms via a pluggable interface.
 - :need:`doc__futurecpp`: Extends the C++17 Standard Library with features from newer C++ standards up to C++26,
   as well as selected proposals for the C++ Standard Library.
 - :need:`doc__safecpp`: A collection of utilities that helps developers write safer C++ code, including
