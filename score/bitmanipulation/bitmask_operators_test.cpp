@@ -69,10 +69,10 @@ TEST(MyBitmask, SupportsOperatorAnd)
 
 TEST(MyBitmask, SupportsOperatorXor)
 {
-    MyBitmask bitmask{MyBitmask::a ^ MyBitmask::b};
-    EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
-    bitmask = bitmask ^ MyBitmask::b;
-    EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 1);
+    MyBitmask abc{MyBitmask::a ^ MyBitmask::b};
+    EXPECT_EQ(static_cast<UnderlyingType>(abc), 3);
+    abc = abc ^ MyBitmask::b;
+    EXPECT_EQ(static_cast<UnderlyingType>(abc), 1);
 }
 
 TEST(MyBitmask, SupportsOperatorNot)

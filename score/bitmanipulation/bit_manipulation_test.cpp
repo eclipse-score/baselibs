@@ -28,9 +28,9 @@ using ::testing::Eq;
 
 TEST(HalfByte, CanBeConstructedFromUInt8)
 {
-    constexpr HalfByte value{std::uint8_t{4u}};
+    constexpr HalfByte value1{std::uint8_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
@@ -49,16 +49,16 @@ TEST(HalfByte, CanBeConstructedFromBigUInt8ButUpperHalfIsDropped)
 
 TEST(Byte, CanBeConstructedFromUInt8)
 {
-    constexpr Byte value{std::uint8_t{4u}};
+    constexpr Byte value1{std::uint8_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(Byte, CanBeConstructedFromUInt16IfInRange)
 {
-    constexpr Byte value{std::uint16_t{4u}};
+    constexpr Byte value1{std::uint16_t{4u}};
 
-    EXPECT_THAT(value, Eq(4u));
+    EXPECT_THAT(value1, Eq(4u));
 }
 
 TEST(Byte, CanBeConstructedFromTwoHalfBytes)

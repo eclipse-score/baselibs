@@ -165,6 +165,35 @@ register_toolchains(
     dev_dependency = True,
 )
 
+## Configure CodeQL static analysis (evaluation, see eclipse-score/baselibs#317)
+## Ported from eclipse-score/communication's quality/static_analysis approach.
+
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip", dev_dependency = True)
+pip.parse(
+    hub_name = "codeql_coding_standards_pip_hub",
+    python_version = PYTHON_VERSION,
+    requirements_lock = "//third_party/codeql:requirements_lock.txt",
+)
+use_repo(pip, "codeql_coding_standards_pip_hub")
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "codeql_bundle",
+    build_file = "//third_party/codeql:codeql.BUILD",
+    sha256 = "a94f674bb3c23ea5e9a2ad06b64847dd0277b15014d2517ecd9c41c88e6caa65",
+    url = "https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.21.4/codeql-bundle-linux64.tar.gz",
+)
+
+git_repository = use_repo_rule("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+    name = "codeql_coding_standards",
+    build_file = "//third_party/codeql:codeql_coding_standards.BUILD",
+    commit = "06dc6bc32b05152fbe94dbf341a3e854574c9df5",  # v2.61.0
+    remote = "https://github.com/github/codeql-coding-standards.git",
+)
+
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(

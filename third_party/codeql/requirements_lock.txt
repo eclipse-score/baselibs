@@ -1,0 +1,4 @@
+# Requirements for the CodeQL coding-standards tooling (process_coding_standards_config,
+# analysis_report). Kept unhashed since this is a CodeQL evaluation (issue #317); hashes
+# should be added with `pip-compile --generate-hashes` if this is promoted to a permanent tool.
+pyyaml==6.0.2

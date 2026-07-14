@@ -1,0 +1,70 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# CodeQL MISRA C++ static analysis evaluation for baselibs (eclipse-score/baselibs#317).
+name: CodeQL static analysis (evaluation)
+permissions:
+  contents: read
+  actions: write
+  security-events: write
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+jobs:
+  codeql:
+    runs-on: ubuntu-24.04
+    env:
+      CODEQL_TARGET_SCOPE: //score/bitmanipulation/...
+    steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 3
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Allow linux-sandbox
+        uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@f89865691445b60e9229c36adb1c37b675e1ca85
+      - name: Setup Bazel Cache
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
+        with:
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}
+      - name: Resolve production (non-test) targets
+        id: resolve-targets
+        run: |
+          # Exclude cc_test targets (and testonly helpers/mocks) so CodeQL only
+          # analyzes production code, not test/GTest framework noise
+          # (eclipse-score/baselibs#317 finding: GTest's TEST() macro alone
+          # triggers dozens of unrelated MISRA findings per test file).
+          bazel query "${CODEQL_TARGET_SCOPE} except kind(cc_test, ${CODEQL_TARGET_SCOPE}) except attr(testonly, 1, ${CODEQL_TARGET_SCOPE})" \
+            --output=label > /tmp/codeql-targets.txt
+          echo "Resolved $(wc -l < /tmp/codeql-targets.txt) production target(s):"
+          cat /tmp/codeql-targets.txt
+      - name: Run CodeQL analysis
+        id: run-codeql
+        run: |
+          bazel run //score/quality/static_analysis:codeql_lint -- \
+            --output-dir /tmp/codeql-results \
+            --output-prefix codeql-baselibs \
+            --target $(cat /tmp/codeql-targets.txt)
+      #- name: Upload SARIF to GitHub Code Scanning
+      #  if: always() && steps.run-codeql.outcome == 'success'
+      #  uses: github/codeql-action/upload-sarif@v4
+      #  with:
+      #    sarif_file: /tmp/codeql-results/codeql-baselibs.sarif
+      #    category: codeql-baselibs
+      - name: Upload CSV results
+        if: always() && steps.run-codeql.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-csv-results
+          path: /tmp/codeql-results/codeql-baselibs.csv
+          retention-days: 30
