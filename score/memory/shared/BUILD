@@ -764,6 +764,25 @@ cc_gtest_unit_test(
 )
 
 cc_gtest_unit_test(
+    name = "containers_compatibility_test",
+    srcs = [
+        "containers_compatibility_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/memory:__pkg__",
+    ],
+    deps = [
+        ":polymorphic_offset_ptr_allocator",
+        "@score_baselibs//score/containers:dynamic_array",
+        "@score_baselibs//score/containers:non_relocatable_vector",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+    ],
+)
+
+cc_gtest_unit_test(
     name = "shared_memory_error_test",
     srcs = [
         "shared_memory_error_test.cpp",
@@ -928,6 +947,7 @@ test_suite(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
+        ":containers_compatibility_test",
         ":lock_file_test",
         ":managed_memory_resource_test",
         ":map_test",
