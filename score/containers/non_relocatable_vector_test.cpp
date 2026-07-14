@@ -17,8 +17,8 @@
 #include "score/containers/test/mockable_allocator.h"
 #include "score/containers/test/mockable_pointer_mock_guard.h"
 
-#include "score/memory/shared/fake/my_memory_resource.h"
-#include "score/memory/shared/polymorphic_offset_ptr_allocator.h"
+#include "score/containers/test/fake_memory_resource.h"
+#include "score/containers/test/fancy_pointer_allocator.h"
 
 #include <score/assert_support.hpp>
 #include <score/utility.hpp>
@@ -35,7 +35,6 @@
 namespace score::containers
 {
 
-using namespace score::memory::shared;
 using namespace score::containers::test_types;
 
 constexpr std::size_t kNonZeroNumberElements{10U};
@@ -61,7 +60,7 @@ class NonRelocatableVectorFixture : public ::testing::Test
         return *this;
     }
 
-    score::memory::shared::test::MyMemoryResource memory_resource_{};
+    score::containers::test::FakeMemoryResource memory_resource_{};
     std::unique_ptr<NonRelocatableVector<ElementType, Allocator>> unit_{nullptr};
 };
 
