@@ -19,6 +19,7 @@
 #include <score/assert.hpp>
 
 #include <cstddef>
+#include <cstdlib>
 #include <limits>
 
 namespace score::containers::test
@@ -46,6 +47,13 @@ class FancyPointerAllocator
         using other = FancyPointerAllocator<U>;
     };
 
+    // Default constructor is required for parity with PolymorphicOffsetPtrAllocator's default constructor, which is
+    // relied upon by GetAllocator()'s SFINAE dispatch in allocator_test_type_helpers.h whenever the requested
+    // Allocator type doesn't literally match FancyPointerAllocator<ElementType> (i.e. the allocator is rebound to a
+    // different element type than the one it was originally instantiated with). The resulting allocator is never
+    // used to allocate directly; it is only ever rebound (via the converting constructor below) before use.
+    FancyPointerAllocator() noexcept = default;
+
     // Non-explicit constructor is required so that FancyPointerAllocator can be constructed implicitly from a
     // memory resource reference, mirroring PolymorphicOffsetPtrAllocator's constructor from ManagedMemoryResource&.
     // NOLINTNEXTLINE(google-explicit-constructor): intentional implicit conversion.
@@ -67,12 +75,23 @@ class FancyPointerAllocator
     pointer allocate(size_type n)
     {
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(n <= (std::numeric_limits<size_type>::max() / sizeof(T)));
+        // Falls back to malloc when unconnected to a memory resource (default-constructed), mirroring
+        // PolymorphicOffsetPtrAllocator::allocate()'s behavior for a null proxy_.
+        if (resource_ == nullptr)
+        {
+            return pointer{static_cast<T*>(std::malloc(n * sizeof(T)))};
+        }
         return pointer{static_cast<T*>(resource_->allocate(n * sizeof(T), alignof(T)))};
     }
 
     void deallocate(pointer p, size_type n)
     {
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(n <= (std::numeric_limits<size_type>::max() / sizeof(T)));
+        if (resource_ == nullptr)
+        {
+            std::free(static_cast<void*>(p.get()));
+            return;
+        }
         resource_->deallocate(static_cast<void*>(p.get()), n * sizeof(T), alignof(T));
     }
 
@@ -82,12 +101,16 @@ class FancyPointerAllocator
     }
 
   private:
-    score::cpp::pmr::memory_resource* resource_;
+    score::cpp::pmr::memory_resource* resource_{nullptr};
 };
 
 template <typename T>
 bool operator==(const FancyPointerAllocator<T>& lhs, const FancyPointerAllocator<T>& rhs) noexcept
 {
+    if ((lhs.GetMemoryResource() == nullptr) || (rhs.GetMemoryResource() == nullptr))
+    {
+        return lhs.GetMemoryResource() == rhs.GetMemoryResource();
+    }
     return *lhs.GetMemoryResource() == *rhs.GetMemoryResource();
 }
 
