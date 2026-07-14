@@ -106,8 +106,8 @@ build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Cde
 test:ferrocene-coverage --run_under=@score_tooling//coverage:llvm_profile_wrapper
 
 # Clippy linting for Rust
-build --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
-build --output_groups=+rules_lint_human
+build:lint --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
+build:lint --output_groups=+rules_lint_human
 build:lint --@aspect_rules_lint//lint:fail_on_violation=true
 
 # Coverage configuration for C++
