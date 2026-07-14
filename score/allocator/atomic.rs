@@ -15,6 +15,6 @@
 //! Required for testing with Loom.
 
 #[cfg(not(loom))]
-pub(crate) use core::sync::atomic::{fence, AtomicUsize, Ordering};
+pub(crate) use core::sync::atomic::{fence, AtomicU8, AtomicUsize, Ordering};
 #[cfg(loom)]
-pub(crate) use loom::sync::atomic::{fence, AtomicUsize, Ordering};
+pub(crate) use loom::sync::atomic::{fence, AtomicU8, AtomicUsize, Ordering};
