@@ -339,10 +339,19 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithT
                                                   GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     };
 
-    // Since a std::exception is thrown by std::allocator_traits<Allocator>::allocate(), rather than by an AMP
-    // assertion / precondition, we capture this using the gtest framework instead of
-    // SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED.
-    EXPECT_THROW(initialise_dynamic_array(), std::exception);
+    if constexpr (std::is_same_v<TypeParam, std::allocator<TrivialType>>)
+    {
+        // Since a std::exception is thrown by std::allocator_traits<Allocator>::allocate(), rather than by an AMP
+        // assertion / precondition, we capture this using the gtest framework instead of
+        // SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED.
+        EXPECT_THROW(initialise_dynamic_array(), std::exception);
+    }
+    else
+    {
+        // FancyPointerAllocator, mirroring PolymorphicOffsetPtrAllocator, detects the overflow via an AMP
+        // precondition rather than a thrown std::exception, so we must use SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED here.
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED(initialise_dynamic_array());
+    }
 }
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingConstRefArrayOutOfBoundsTerminates)
