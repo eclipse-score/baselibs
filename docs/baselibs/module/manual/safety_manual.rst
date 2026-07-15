@@ -50,7 +50,8 @@ So for Baselibs the definition of the assumed safety requirement(s) of each of t
 - json library: :need:`feat_req__baselibs__json_library`
 - memory library: :need:`feat_req__baselibs__memory_library`
 - result library: :need:`feat_req__baselibs__result_library`
-- safecpp, static_reflection_with_serialization, utils :need:`feat_req__baselibs__core_utilities`
+- safecpp, utils: :need:`feat_req__baselibs__utils_library`
+- static_reflection_with_serialization: :need:`feat_req__baselibs__static_reflection_library`
 
 Assumptions of Use
 ------------------

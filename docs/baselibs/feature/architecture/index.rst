@@ -31,7 +31,7 @@ A brief overview of Baselibs is described :need:`doc__baselibs`.
 Description
 -----------
 
-A detailed description of the Baselibs module requirements is located :need:`feat_req__baselibs__core_utilities`.
+A detailed description of the Baselibs module requirements is located :need:`doc__baselibs_requirements`.
 
 The Baselibs module provides foundational software utilities, safety mechanisms and robust infrastructure components. It comprises essential libraries organized into functional categories:
 
@@ -84,12 +84,16 @@ The decomposition of Baselibs into modular libraries is motivated by the need fo
 Static Architecture
 -------------------
 
+   ..
+      The fulfils in feat_arc_sta and feat_arc_dyn should be optional.
+      Issue: https://github.com/eclipse-score/process_description/issues/642
+
 .. feat_arc_sta:: Baselibs Static View
    :id: feat_arc_sta__baselibs__static_view_arch
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :fulfils: feat_req__baselibs__core_utilities
+   :fulfils: feat_req__baselibs__abi_containers, feat_req__baselibs__bitmanipulation, feat_req__baselibs__concurrency_library, feat_req__baselibs__containers_library, feat_req__baselibs__utils_library, feat_req__baselibs__filesystem_library, feat_req__baselibs__flatbuffers_library, feat_req__baselibs__json_library, feat_req__baselibs__memory_library, feat_req__baselibs__result_library
    :includes: logic_arc_int__baselibs__json, logic_arc_int__baselibs__memory_shared, logic_arc_int__baselibs__result, logic_arc_int__baselibs__bit_manipulation, logic_arc_int__baselibs__bit_mask_operator, logic_arc_int__baselibs__dynamic_array, logic_arc_int__baselibs__intrusive_list, logic_arc_int__baselibs__filesystem, logic_arc_int__baselibs__utils_base64, logic_arc_int__baselibs__utils_scoped_op, logic_arc_int__baselibs__promise, logic_arc_int__baselibs__future, logic_arc_int__baselibs__shared_future, logic_arc_int__baselibs__executor, logic_arc_int__baselibs__task, logic_arc_int__baselibs__task_result, logic_arc_int__baselibs__synchronized_queue, logic_arc_int__baselibs__condition_variable, logic_arc_int__baselibs__aborts_upon_ex, logic_arc_int__baselibs__coverage_termination, logic_arc_int__baselibs__safemath, logic_arc_int__baselibs__safeatomics, logic_arc_int__baselibs__scoped_function, logic_arc_int__baselibs__string_view
    :tags: inspected
    :belongs_to: feat__baselibs
@@ -105,7 +109,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :fulfils: feat_req__baselibs__core_utilities
+   :fulfils: feat_req__baselibs__abi_containers, feat_req__baselibs__bitmanipulation, feat_req__baselibs__concurrency_library, feat_req__baselibs__containers_library, feat_req__baselibs__utils_library, feat_req__baselibs__filesystem_library, feat_req__baselibs__flatbuffers_library, feat_req__baselibs__json_library, feat_req__baselibs__memory_library, feat_req__baselibs__result_library
    :belongs_to: feat__baselibs
 
    not needed, simple caller/callee sequence

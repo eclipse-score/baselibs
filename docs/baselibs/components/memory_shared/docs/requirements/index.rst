@@ -31,7 +31,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -42,7 +42,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -53,7 +53,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -64,7 +64,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -75,7 +75,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -84,9 +84,9 @@ Functional Requirements
 .. comp_req:: Endianness Conversion
    :id: comp_req__memory__endianness
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -97,7 +97,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety, feat_req__baselibs__memory_library, feat_req__baselibs__security
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -108,7 +108,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -117,9 +117,9 @@ Functional Requirements
 .. comp_req:: Memory Resource Registry
    :id: comp_req__memory__resource_registry
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -128,9 +128,9 @@ Functional Requirements
 .. comp_req:: String Utilities
    :id: comp_req__memory__string_utils
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -141,7 +141,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -154,9 +154,9 @@ Non-Functional Requirements
 .. comp_req:: Deterministic Memory Allocation
    :id: comp_req__memory__deterministic_alloc
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 
@@ -167,7 +167,7 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety, feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library
    :status: valid
    :satisfied_by: comp__baselibs_memory_shared
 

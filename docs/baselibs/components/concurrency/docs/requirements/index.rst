@@ -30,9 +30,9 @@ Functional Requirements
 .. comp_req:: Asynchronous Task Execution
    :id: comp_req__concurrency__task_interface
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -41,9 +41,9 @@ Functional Requirements
 .. comp_req:: Task Cancellation
    :id: comp_req__concurrency__task_cancellation
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -52,9 +52,9 @@ Functional Requirements
 .. comp_req:: Simple Task Implementation
    :id: comp_req__concurrency__simple_task
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -63,9 +63,9 @@ Functional Requirements
 .. comp_req:: Task Result Management
    :id: comp_req__concurrency__task_result
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -74,9 +74,9 @@ Functional Requirements
 .. comp_req:: Periodic Task Execution
    :id: comp_req__concurrency__periodic_task
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -85,9 +85,9 @@ Functional Requirements
 .. comp_req:: Delayed Task Execution
    :id: comp_req__concurrency__delayed_task
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -96,9 +96,9 @@ Functional Requirements
 .. comp_req:: Executor Interface
    :id: comp_req__concurrency__executor_interface
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -107,9 +107,9 @@ Functional Requirements
 .. comp_req:: Thread Pool Implementation
    :id: comp_req__concurrency__thread_pool
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -118,9 +118,9 @@ Functional Requirements
 .. comp_req:: Interruptible Condition Variable
    :id: comp_req__concurrency__condition_variable
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -129,9 +129,9 @@ Functional Requirements
 .. comp_req:: Interruptible Wait Utilities
    :id: comp_req__concurrency__interruptible_wait
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -140,9 +140,9 @@ Functional Requirements
 .. comp_req:: Notification Mechanism
    :id: comp_req__concurrency__notification
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -151,9 +151,9 @@ Functional Requirements
 .. comp_req:: Synchronized Queue
    :id: comp_req__concurrency__synchronized_queue
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 
@@ -162,9 +162,9 @@ Functional Requirements
 .. comp_req:: Long-Running Threads Container
    :id: comp_req__concurrency__long_running_threads
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__concurrency_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
    :satisfied_by: comp__baselibs_concurrency
 

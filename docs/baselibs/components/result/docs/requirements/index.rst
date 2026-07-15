@@ -29,7 +29,7 @@ Functional Requirements
 .. comp_req:: Result-Based Error Handling
    :id: comp_req__result__error_handling
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -41,7 +41,7 @@ Functional Requirements
 .. comp_req:: Set Result
    :id: comp_req__result__set_result
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -53,7 +53,7 @@ Functional Requirements
 .. comp_req:: Domain-Specific Error Information
    :id: comp_req__result__domain_error_information
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -65,7 +65,7 @@ Functional Requirements
 .. comp_req:: Type-Safe Error Handling
    :id: comp_req__result__type_safety
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -77,7 +77,7 @@ Functional Requirements
 .. comp_req:: Standard Library Integration
    :id: comp_req__result__std_integration
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -92,7 +92,7 @@ Non-Functional Requirements
 .. comp_req:: Deterministic Behavior
    :id: comp_req__result__deterministic_behavior
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
@@ -104,7 +104,7 @@ Non-Functional Requirements
 .. comp_req:: Exception-Free Operation
    :id: comp_req__result__exception_free_operation
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
