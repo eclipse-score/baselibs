@@ -10,16 +10,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_SHARED_MOCK_ATOMICMOCK_H
-#define SCORE_LIB_MEMORY_SHARED_MOCK_ATOMICMOCK_H
+#ifndef SCORE_LIB_CONCURRENCY_MOCK_ATOMICMOCK_H
+#define SCORE_LIB_CONCURRENCY_MOCK_ATOMICMOCK_H
 
-#include "score/memory/shared/i_atomic.h"
+#include "score/concurrency/i_atomic.h"
 
 #include "gmock/gmock.h"
 
 #include <atomic>
 
-namespace score::memory::shared
+namespace score::concurrency
 {
 
 template <typename T>
@@ -36,6 +36,6 @@ class AtomicMock final : public IAtomic<T>
     MOCK_METHOD(T, load, (std::memory_order), (noexcept, override));
 };
 
-}  // namespace score::memory::shared
+}  // namespace score::concurrency
 
-#endif  // SCORE_LIB_MEMORY_SHARED_MOCK_ATOMICMOCK_H
+#endif  // SCORE_LIB_CONCURRENCY_MOCK_ATOMICMOCK_H

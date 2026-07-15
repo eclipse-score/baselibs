@@ -10,15 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/shared/atomic_indirector.h"
-#include "score/memory/shared/atomic_mock.h"
+#include "score/concurrency/atomic_indirector.h"
+#include "score/concurrency/atomic_mock.h"
 
 #include <gtest/gtest.h>
 
 #include <atomic>
 #include <memory>
 
-namespace score::memory::shared
+namespace score::concurrency
 {
 namespace
 {
@@ -336,4 +336,4 @@ TEST_F(AtomicIndirectorMockFixture, CallingLoadMockObjectReturnsCorrectValue)
 }
 
 }  // namespace
-}  // namespace score::memory::shared
+}  // namespace score::concurrency

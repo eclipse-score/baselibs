@@ -31,8 +31,8 @@ cc_library(
         "//visibility:public",
     ],
     deps = [
+        "//score/concurrency:atomic_indirector",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:atomic_indirector",
     ],
 )
 
@@ -45,8 +45,8 @@ cc_test(
     tags = ["unit"],
     deps = [
         ":wait_free_stack",
+        "//score/concurrency:atomic_indirector_mock_binding",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/memory/shared:atomic_indirector_mock_binding",
     ],
 )
 

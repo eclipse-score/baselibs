@@ -10,15 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_SHARED_ATOMICINDIRECTOR_H
-#define SCORE_LIB_MEMORY_SHARED_ATOMICINDIRECTOR_H
+#ifndef SCORE_LIB_CONCURRENCY_ATOMICINDIRECTOR_H
+#define SCORE_LIB_CONCURRENCY_ATOMICINDIRECTOR_H
 
-#include "score/memory/shared/i_atomic.h"
+#include "score/concurrency/i_atomic.h"
 
 #include <atomic>
 #include <type_traits>
 
-namespace score::memory::shared
+namespace score::concurrency
 {
 
 /**
@@ -39,7 +39,7 @@ namespace score::memory::shared
  * implementation class (i.e. AtomicIndirectorReal or AtomicIndirectorMock). To use this class, an existing class should
  * be modified as follows (see platform/aas/mw/com/impl/bindings/lola/event_data_control.h for an example):
  *
- *      template <template <class> class AtomicIndirectorType = memory::shared::AtomicIndirectorReal>
+ *      template <template <class> class AtomicIndirectorType = concurrency::AtomicIndirectorReal>
  *      class ExistingClass
  *
  * Calls to atomic operations within ExistingClass should be called as follows (assuming the atomic type is int):
@@ -175,6 +175,6 @@ template <typename T>
 // coverity[autosar_cpp14_a3_1_1_violation]
 IAtomic<T>* AtomicIndirectorMock<T>::mock_object_{nullptr};
 
-}  // namespace score::memory::shared
+}  // namespace score::concurrency
 
-#endif  // SCORE_LIB_MEMORY_SHARED_ATOMICINDIRECTOR_H
+#endif  // SCORE_LIB_CONCURRENCY_ATOMICINDIRECTOR_H
