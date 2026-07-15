@@ -16,8 +16,8 @@ log_frontend
 ############
 
 .. toctree::
-   :hidden:
 
+   assumptions_of_use/index.rst
    requirements/index.rst
    architecture/index.rst
    detailed_design/index.rst
