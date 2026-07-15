@@ -171,9 +171,9 @@ Requirement Inspection Checklist
         - YES
         - Following feature requirements are linked:
 
-          - feat_req__baselibs__core_utilities : very generic requirement, could be used as a placeholder, recommend replacement with the following requirement
+          - feat_req__baselibs__core_utilities :  very generic requirement, rewritten by `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
           - feat_req__baselibs__bitmanipulation : is linked to all functional bitmanipulation component requirements
-          - feat_req__baselibs__safety : is linked to requirement describing a safety mechanism
+          - feat_req__baselibs__safety : removed with `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
         -
 
 .. attention::

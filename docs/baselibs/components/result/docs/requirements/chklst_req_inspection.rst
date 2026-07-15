@@ -144,10 +144,10 @@ Requirement Inspection Checklist
         - YES
         - Following feature requirements are linked:
 
-          - feat_req__baselibs__core_utilities : very generic requirement, could be used as a placeholder, recommend replacement with the following requirement
-          - feat_req__baselibs__result_library : should be linked to all functional result component requirements, fixed
-          - feat_req__baselibs__safety : should be linked to all result component requirements as it is all about safety relevant error returns, fixed
-          - feat_req__baselibs__consistent_apis : not sure if completely covered, but as it is QM only this can be accepted
+          - feat_req__baselibs__core_utilities : very generic requirement, rewritten by `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
+          - feat_req__baselibs__result_library : should be linked to all result component requirements, fixed
+          - feat_req__baselibs__safety : removed with `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
+          - feat_req__baselibs__consistent_apis : removed with `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
         -
 
 
