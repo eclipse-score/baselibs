@@ -22,7 +22,7 @@ package(
 )
 
 py_unittest_qnx_test(
-    name = "unit_tests_qnx",
+    name = "unit_tests_qnx_common",
     test_cases = [
         ":channel_test",
         ":channel_impl_test",
@@ -31,7 +31,6 @@ py_unittest_qnx_test(
         ":dispatch_impl_test",
         ":iofunc_test",
         ":neutrino_test",
-        ":pci_test",
         # TODO: To be fixed on Ticket-201117. Test not compatible with ARM64
         # ":pci_safety_test",
         ":procmgr_test",
@@ -52,7 +51,28 @@ py_unittest_qnx_test(
         ":sigevent_qnx_test",
         ":qnx_version_test",
     ],
+    visibility = ["//visibility:public"],  # platform_only
+)
+
+py_unittest_qnx_test(
+    name = "unit_tests_qnx",
+    test_cases = [
+        ":pci_test",
+    ],
     test_suites = [
+        ":unit_tests_qnx_common",
+        "@score_baselibs//score/os/utils/qnx/resource_manager:unit_tests_qnx",
+    ],
+    visibility = ["//visibility:public"],  # platform_only
+)
+
+py_unittest_qnx_test(
+    name = "unit_tests_qnx8_hw",
+    test_cases = [
+        ":pci_test_qnx8_hw",
+    ],
+    test_suites = [
+        ":unit_tests_qnx",
         "@score_baselibs//score/os/utils/qnx/resource_manager:unit_tests_qnx",
     ],
     visibility = ["//visibility:public"],  # platform_only
@@ -311,10 +331,29 @@ cc_test(
         "manual",
         "unit",
     ],
-    #TODO: Ticket-216047: Fix disabled tests which failed on qnx8
     target_compatible_with = [
         "@platforms//os:qnx",
         "@score_bazel_platforms//:qnx7_1",
+    ],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os/qnx:neutrino",
+        "@score_baselibs//score/os/qnx:pci",
+    ],
+)
+
+cc_test(
+    name = "pci_test_qnx8_hw",
+    srcs = [
+        "pci_test.cpp",
+    ],
+    tags = [
+        "manual",
+        "unit",
+    ],
+    target_compatible_with = [
+        "@platforms//os:qnx",
+        "@score_bazel_platforms//:qnx8_0",
     ],
     deps = [
         "@googletest//:gtest_main",
