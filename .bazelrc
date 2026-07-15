@@ -11,6 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Do not use automatically C++ generated toolchains
+build --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
 common --registry=https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/
 common --registry=https://bcr.bazel.build
 common --http_connector_attempts=10
@@ -44,7 +47,7 @@ test:_bl_common --test_output=errors
 
 # Common BaseLibs Toolchain flags for build (do not use it in case of system toolchains!)
 build:_bl_toolchain_common --incompatible_strict_action_env
-build:_bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux
+build:_bl_toolchain_common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 
 # Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
 build:bl-x86_64-linux --config=_bl_stub
@@ -103,8 +106,8 @@ build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Cde
 test:ferrocene-coverage --run_under=@score_tooling//coverage:llvm_profile_wrapper
 
 # Clippy linting for Rust
-build --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
-build --output_groups=+rules_lint_human
+build:lint --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
+build:lint --output_groups=+rules_lint_human
 build:lint --@aspect_rules_lint//lint:fail_on_violation=true
 
 # Coverage configuration for C++
