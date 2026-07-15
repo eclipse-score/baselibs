@@ -18,6 +18,11 @@ load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
+exports_files(
+    ["docs/conf.py"],
+    visibility = ["//visibility:public"],
+)
+
 docs(
     data = [
         "@score_platform//:needs_json",

@@ -10,4 +10,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
+// # req-Id: comp_req__bitmanipulation__bitmask_operators
 #include "score/bitmanipulation/bitmask_operators.h"
