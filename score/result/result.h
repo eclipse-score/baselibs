@@ -44,7 +44,7 @@ using Unexpected = details::unexpected<score::result::Error>;
 /// \deprecated Use `void` directly instead.
 using Blank [[deprecated("Use 'void' instead")]] = void;
 /// \deprecated Use `Result<void>` directly instead.
-using ResultBlank [[deprecated("Use 'Result<void>' instead")]] = Result<Blank>;
+using ResultBlank [[deprecated("Use 'Result<void>' instead")]] = Result<void>;
 
 template <typename Code>
 // Overload of MakeUnexpected; the overloads have different signatures
