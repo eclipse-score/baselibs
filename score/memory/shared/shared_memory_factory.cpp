@@ -85,6 +85,11 @@ auto SharedMemoryFactory::SetTypedMemoryProvider(std::shared_ptr<TypedMemory> ty
     instance().SetTypedMemoryProvider(typed_memory_ptr);
 }
 
+auto SharedMemoryFactory::SetInterVMMemoryProvider(std::shared_ptr<TypedMemory> intervm_memory_ptr) noexcept -> void
+{
+    static_cast<SharedMemoryFactoryImpl&>(instance()).SetInterVMMemoryProvider(intervm_memory_ptr);
+}
+
 auto SharedMemoryFactory::instance() noexcept -> ISharedMemoryFactory&
 {
     if (mock_ != nullptr)

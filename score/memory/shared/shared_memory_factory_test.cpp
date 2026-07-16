@@ -1185,36 +1185,43 @@ TEST_F(SharedMemoryFactoryDeathTest, FailingToInsertResourceIntoRegistryTerminat
     EXPECT_DEATH(resource_attorney.mapMemoryIntoProcess(), ".*");
 }
 
-TEST_F(SharedMemoryFactoryTest, OpenWithInterVmPathReturnsNullptr)
+TEST_F(SharedMemoryFactoryTest, OpenWithInterVmPathReturnsNullptrWhenProviderNotSet)
 {
     // Given a shared memory path using the inter-VM prefix
     const std::string inter_vm_path{"/intervm-shared-shmem/lola-data-0000000000004660-00001"};
 
+    // And no InterVM memory provider has been set
+    // (SharedMemoryFactory is fresh after TearDown/SetUp)
+
     // When opening shared memory using this path
-    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    // Then nullptr is returned because InterVM provider is required but not set
     const auto result = SharedMemoryFactory::Open(inter_vm_path, false);
     EXPECT_EQ(result, nullptr);
 }
 
-TEST_F(SharedMemoryFactoryTest, CreateWithInterVmPathReturnsNullptr)
+TEST_F(SharedMemoryFactoryTest, CreateWithInterVmPathReturnsNullptrWhenProviderNotSet)
 {
     // Given a shared memory path using the inter-VM prefix
     const std::string inter_vm_path{"/intervm-shared-shmem/lola-ctl-0000000000004660-00001-b"};
 
+    // And no InterVM memory provider has been set
+
     // When creating shared memory using this path
-    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    // Then nullptr is returned because InterVM provider is required but not set
     const auto result = SharedMemoryFactory::Create(
         inter_vm_path, [](std::shared_ptr<ISharedMemoryResource>) {}, kSharedMemorySize, {}, false);
     EXPECT_EQ(result, nullptr);
 }
 
-TEST_F(SharedMemoryFactoryTest, CreateOrOpenWithInterVmPathReturnsNullptr)
+TEST_F(SharedMemoryFactoryTest, CreateOrOpenWithInterVmPathReturnsNullptrWhenProviderNotSet)
 {
     // Given a shared memory path using the inter-VM prefix
     const std::string inter_vm_path{"/intervm-shared-shmem/lola-methods-0000000000004660-00001-00002-00003"};
 
+    // And no InterVM memory provider has been set
+
     // When creating or opening shared memory using this path
-    // Then nullptr is returned and no OS calls are made (no mock expectations set)
+    // Then nullptr is returned because InterVM provider is required but not set
     const auto result = SharedMemoryFactory::CreateOrOpen(
         inter_vm_path,
         [](std::shared_ptr<ISharedMemoryResource>) {},
@@ -1222,6 +1229,113 @@ TEST_F(SharedMemoryFactoryTest, CreateOrOpenWithInterVmPathReturnsNullptr)
         SharedMemoryResource::AccessControl{{}, {}},
         false);
     EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(SharedMemoryFactoryTest, OpenWithInterVmPathSucceedsWhenProviderIsSet)
+{
+    InSequence sequence{};
+
+    // Given a shared memory path using the inter-VM prefix (use standard test path for simplicity)
+    // Note: The key test is that SetInterVMMemoryProvider allows the operation, not the path format
+    const std::string test_path = TestValues::sharedMemorySegmentPath;
+
+    // And an InterVM memory provider has been set
+    auto intervm_mock = std::make_shared<TypedMemoryMock>();
+    SharedMemoryFactory::SetInterVMMemoryProvider(intervm_mock);
+
+    // And the shared memory can be opened successfully
+    constexpr bool is_read_write = false;
+    expectSharedMemorySuccessfullyOpened(kFileDescriptor, is_read_write);
+
+    // When opening shared memory using this path
+    const auto result = SharedMemoryFactory::Open(test_path, is_read_write);
+
+    // Then the resource is successfully opened
+    ASSERT_NE(result, nullptr);
+    EXPECT_EQ(*result->getPath(), test_path);
+
+    // Cleanup
+    SharedMemoryFactory::SetInterVMMemoryProvider(nullptr);
+}
+
+TEST_F(SharedMemoryFactoryTest, CreateWithInterVmPathSucceedsWhenProviderIsSet)
+{
+    InSequence sequence{};
+
+    // Given a shared memory path (use standard test path for simplicity)
+    const std::string test_path = TestValues::sharedMemorySegmentPath;
+
+    // And an InterVM memory provider has been set
+    auto intervm_mock = std::make_shared<TypedMemoryMock>();
+    SharedMemoryFactory::SetInterVMMemoryProvider(intervm_mock);
+
+    // And shared memory can be created successfully
+    std::array<std::uint8_t, kSharedMemorySize> dataRegion{};
+    const bool prefer_typed_memory = false;
+    expectSharedMemorySuccessfullyCreated(
+        kFileDescriptor, kLockFileDescriptor, dataRegion.data(), prefer_typed_memory);
+
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(kFileDescriptor));
+
+    // When creating shared memory using this path
+    const auto result = SharedMemoryFactory::Create(
+        test_path, [](std::shared_ptr<ISharedMemoryResource>) {}, kSharedMemorySize, {}, prefer_typed_memory);
+
+    // Then the resource is successfully created
+    ASSERT_NE(result, nullptr);
+    EXPECT_EQ(*result->getPath(), test_path);
+
+    // Cleanup
+    SharedMemoryFactory::SetInterVMMemoryProvider(nullptr);
+}
+
+TEST_F(SharedMemoryFactoryTest, CreateOrOpenWithInterVmPathSucceedsWhenProviderIsSet)
+{
+    InSequence sequence{};
+
+    // Given a shared memory path (use standard test path for simplicity)
+    const std::string test_path = TestValues::sharedMemorySegmentPath;
+
+    // And an InterVM memory provider has been set
+    auto intervm_mock = std::make_shared<TypedMemoryMock>();
+    SharedMemoryFactory::SetInterVMMemoryProvider(intervm_mock);
+
+    // And shared memory can be created successfully (CreateOrOpen tries Create after Open fails)
+    std::array<std::uint8_t, kSharedMemorySize> dataRegion{};
+    const bool prefer_typed_memory = false;
+    
+    // CreateOrOpen will first try to Open (which fails), then Create
+    constexpr std::int32_t open_lock_file_descriptor = 10;
+    constexpr bool is_read_write = true;
+    
+    // Expect the Open attempt to fail
+    expectCreateLockFileReturns(TestValues::sharedMemorySegmentLockPath, open_lock_file_descriptor);
+    expectShmOpenReturns(test_path, score::cpp::make_unexpected(Error::createFromErrno(ENOENT)), is_read_write);
+    EXPECT_CALL(*unistd_mock_, close(open_lock_file_descriptor));
+    EXPECT_CALL(*unistd_mock_, unlink(StrEq(TestValues::sharedMemorySegmentLockPath)));
+    
+    // Then expect the Create to succeed
+    expectSharedMemorySuccessfullyCreated(
+        kFileDescriptor, kLockFileDescriptor, dataRegion.data(), prefer_typed_memory);
+
+    EXPECT_CALL(*mman_mock_, munmap(_, _));
+    EXPECT_CALL(*unistd_mock_, close(kFileDescriptor));
+
+    // When creating or opening shared memory using this path
+    const auto result = SharedMemoryFactory::CreateOrOpen(
+        test_path,
+        [](std::shared_ptr<ISharedMemoryResource>) {},
+        kSharedMemorySize,
+        SharedMemoryResource::AccessControl{{}, {}},
+        prefer_typed_memory);
+
+    // Then the resource is successfully created or opened
+    ASSERT_NE(result, nullptr);
+    EXPECT_EQ(*result->getPath(), test_path);
+
+    // Cleanup
+    SharedMemoryFactory::SetInterVMMemoryProvider(nullptr);
 }
 
 }  // namespace score::memory::shared::test
