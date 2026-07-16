@@ -12,12 +12,9 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-log_frontend
-############
+.. _component_detailed_design_log_frontend:
 
-.. toctree::
-   :maxdepth: 1
+Log Frontend Detailed Design
+============================
 
-   assumptions_of_use/index.rst
-   detailed_design/index.rst
-   requirements/index.rst
+.. TODO move docs from score/ to here https://github.com/eclipse-score/logging/issues/187
