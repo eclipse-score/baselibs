@@ -223,10 +223,11 @@ class SimpleTaskFactory final
         // intentional usage; may generate more instantiations, but is harmless
         // coverity[autosar_cpp14_a5_1_7_violation]
         // coverity[autosar_cpp14_a18_9_2_violation] false-poisitve
-        return [callable = std::forward<decltype(callable)>(callable),
+        return [wrapped_callable = std::forward<decltype(callable)>(callable),
                 tuple = std::make_tuple(std::forward<decltype(arguments)>(arguments)...)](
                    const score::cpp::stop_token& token) mutable {
-            return score::cpp::apply(std::forward<CallableType>(callable), std::tuple_cat(std::tie(token), tuple));
+            return score::cpp::apply(std::forward<decltype(wrapped_callable)>(wrapped_callable),
+                                     std::tuple_cat(std::tie(token), tuple));
         };
     }
 
