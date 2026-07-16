@@ -1106,5 +1106,9 @@
   {
     "version": "pr-388",
     "url": "https://eclipse-score.github.io/baselibs/pr-388/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-357-73c25fe65a513c757bff67edb4067b58ed04ddfa",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-357-73c25fe65a513c757bff67edb4067b58ed04ddfa/"
   }
 ]
