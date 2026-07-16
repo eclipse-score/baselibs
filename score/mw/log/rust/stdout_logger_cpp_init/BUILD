@@ -11,13 +11,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_rust//rust:defs.bzl", "rust_binary")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_rust//rust:defs.bzl", "rust_static_library")
 
-rust_binary(
-    name = "log_builtin",
-    srcs = glob(["src/**/*.rs"]),
+rust_static_library(
+    name = "ffi",
+    srcs = ["ffi.rs"],
+    edition = "2021",
+    visibility = ["//visibility:private"],
     deps = [
         "//score/mw/log/rust/score_log",
         "//score/mw/log/rust/stdout_logger",
+    ],
+)
+
+cc_library(
+    name = "stdout_logger_cpp_init",
+    srcs = ["stdout_logger_init.cpp"],
+    hdrs = ["stdout_logger_init.h"],
+    include_prefix = "score/mw/log/rust",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ffi",
     ],
 )

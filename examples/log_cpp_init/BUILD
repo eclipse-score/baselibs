@@ -20,8 +20,8 @@ rust_static_library(
     edition = "2021",
     visibility = ["//visibility:private"],
     deps = [
-        "//score/log_rust/score_log",
-        "//score/log_rust/stdout_logger",
+        "//score/mw/log/rust/score_log",
+        "//score/mw/log/rust/stdout_logger",
     ],
 )
 
@@ -32,6 +32,6 @@ cc_binary(
     visibility = ["//visibility:public"],
     deps = [
         ":example_lib",
-        "//score/log_rust/stdout_logger_cpp_init",
+        "//score/mw/log/rust/stdout_logger_cpp_init",
     ],
 )

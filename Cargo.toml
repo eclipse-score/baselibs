@@ -21,8 +21,8 @@ default-members = [
     "score/allocator",
     "score/pal",
     "score/thread",
-    "score/log_rust/score_log_fmt_macro",
-    "score/log_rust/stdout_logger",
+    "/score/mw/log/rust/score_log_fmt_macro",
+    "/score/mw/log/rust/stdout_logger",
     "score/testing_macros",
 ]
 # Include tests and examples as a member for IDE support and Bazel builds.
@@ -32,10 +32,10 @@ members = [
     "score/allocator",
     "score/pal",
     "score/thread",
-    "score/log_rust/score_log",
-    "score/log_rust/score_log_fmt",
-    "score/log_rust/score_log_fmt_macro",
-    "score/log_rust/stdout_logger",
+    "/score/mw/log/rust/score_log",
+    "/score/mw/log/rust/score_log_fmt",
+    "/score/mw/log/rust/score_log_fmt_macro",
+    "/score/mw/log/rust/stdout_logger",
     "score/testing_macros",
     "examples/log_builtin",
     "examples/log_custom",
@@ -50,10 +50,10 @@ readme = "README.md"
 
 [workspace.dependencies]
 containers = { path = "score/containers_rust" }
-score_log = { path = "score/log_rust/score_log" }
-score_log_fmt = { path = "score/log_rust/score_log_fmt" }
-score_log_fmt_macro = { path = "score/log_rust/score_log_fmt_macro" }
-stdout_logger = { path = "score/log_rust/stdout_logger" }
+score_log = { path = "/score/mw/log/rust/score_log" }
+score_log_fmt = { path = "/score/mw/log/rust/score_log_fmt" }
+score_log_fmt_macro = { path = "/score/mw/log/rust/score_log_fmt_macro" }
+stdout_logger = { path = "/score/mw/log/rust/stdout_logger" }
 allocator = { path = "score/allocator" }
 testing_macros = { path = "score/testing_macros" }
 pal = { path = "score/pal" }

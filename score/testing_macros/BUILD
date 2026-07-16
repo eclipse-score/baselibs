@@ -17,7 +17,7 @@ rust_proc_macro(
     srcs = glob(["*.rs"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//score/log_rust/stdout_logger",
+        "//score/mw/log/rust/stdout_logger",
         "@score_crates//:quote",
         "@score_crates//:syn",
     ],

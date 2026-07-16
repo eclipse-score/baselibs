@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -10,25 +10,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
-rust_library(
+alias(
     name = "score_log",
-    srcs = glob(["**/*.rs"]),
-    proc_macro_deps = [
-        "//score/log_rust/score_log_fmt_macro",
-    ],
+    actual = "//score/mw/log/rust/score_log:score_log",
+    deprecation = "//score/log_rust/score_log:score_log has moved to //score/mw/log/rust/score_log:score_log. " +
+                  "Update your dependency to the new //score/mw/... label.",
     visibility = ["//visibility:public"],
-    deps = [
-        "//score/log_rust/score_log_fmt",
-    ],
-)
-
-rust_test(
-    name = "tests",
-    crate = "score_log",
-    tags = [
-        "unit_tests",
-        "ut",
-    ],
 )

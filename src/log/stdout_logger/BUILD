@@ -13,8 +13,8 @@
 
 alias(
     name = "stdout_logger",
-    actual = "//score/log_rust/stdout_logger:stdout_logger",
-    deprecation = "//src/log/stdout_logger:stdout_logger has moved to //score/log_rust/stdout_logger:stdout_logger. " +
+    actual = "//score/mw/log/rust/stdout_logger:stdout_logger",
+    deprecation = "//src/log/stdout_logger:stdout_logger has moved to //score/mw/log/rust/stdout_logger:stdout_logger. " +
                   "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
 )
