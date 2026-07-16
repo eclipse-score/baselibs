@@ -34,7 +34,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
@@ -46,7 +46,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
@@ -58,7 +58,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__core_utilities
+   :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
@@ -70,7 +70,7 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
