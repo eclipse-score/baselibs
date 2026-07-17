@@ -307,17 +307,12 @@ cc_test(
     srcs = [
         "pci_test.cpp",
     ],
-    tags = [
-        "manual",
-        "unit",
-    ],
-    #TODO: Ticket-216047: Fix disabled tests which failed on qnx8
-    target_compatible_with = [
-        "@platforms//os:qnx",
-        "@score_bazel_platforms//:qnx7_1",
-    ],
+    tags = ["unit"],
+    target_compatible_with = ["@platforms//os:qnx"],
     deps = [
         "@googletest//:gtest_main",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+        "@score_baselibs//score/mw/log:frontend",
         "@score_baselibs//score/os/qnx:neutrino",
         "@score_baselibs//score/os/qnx:pci",
     ],
