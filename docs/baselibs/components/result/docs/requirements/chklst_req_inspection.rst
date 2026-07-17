@@ -138,6 +138,18 @@ Requirement Inspection Checklist
         - YES
         - Fixed: There should be an AoU covering this, :need:`aou_req__result__value_handling` is not.
         - `#2229 <https://github.com/eclipse-score/score/issues/2229>`_
+      * - REQ_10_01
+        - Is the requirement description *complete* ?
+        - For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).
+        - YES
+        - Following feature requirements are linked:
+
+          - feat_req__baselibs__core_utilities : very generic requirement, rewritten by `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
+          - feat_req__baselibs__result_library : should be linked to all result component requirements, fixed
+          - feat_req__baselibs__safety : removed with `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
+          - feat_req__baselibs__consistent_apis : removed with `#3071 <https://github.com/eclipse-score/score/pull/3071>`_ can be removed, fixed
+        -
+
 
 Note: If a Review ID is not applicable for your requirement, then state "n/a" in status and comment accordingly in remarks.
 
