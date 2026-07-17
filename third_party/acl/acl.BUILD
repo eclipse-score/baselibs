@@ -16,8 +16,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 cc_library(
     name = "acl",
     srcs = select({
-        "@platforms//cpu:aarch64": ["usr/lib/libacl.a"],
-        "@platforms//cpu:x86_64": ["usr/lib/libacl.a"],
+        "@platforms//cpu:aarch64": ["usr/lib/aarch64-linux-gnu/libacl.a"],
+        "@platforms//cpu:x86_64": ["usr/lib/x86_64-linux-gnu/libacl.a"],
     }),
     hdrs = [
         "usr/include/acl/libacl.h",
