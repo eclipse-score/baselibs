@@ -35,7 +35,6 @@ jobs:
           list-files: json
           filters: |
             restricted:
-              - 'score/filesystem/**'
               - 'score/json/!(*parser*|*serializer*)'
               - 'score/json/!(internal)/**/*'
               - 'score/json/internal/!(parser|model)/**'
