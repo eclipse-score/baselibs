@@ -289,6 +289,11 @@ public:
     /// \return  Number of elements in the row.
     size_type size() const noexcept { return base_.size(); }
 
+    /// \brief Returns the size of the row in bytes.
+    ///
+    /// \return  Size of the row in bytes.
+    size_type size_bytes() const noexcept { return base_.size() * sizeof(T); }
+
     /// \brief checks if the span is empty
     ///
     /// @return true if span is empty (size==0); false otherwise.
