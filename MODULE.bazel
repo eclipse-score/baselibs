@@ -165,14 +165,14 @@ deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 deb(
     name = "acl-deb",
     build = "//third_party/acl:acl.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.2.52-3build1_amd64.deb"],
+    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.3.1-1_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
     name = "acl-deb-aarch64",
     build = "//third_party/acl:acl.BUILD",
-    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.2.52-3build1_arm64.deb"],
+    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.3.1-1_arm64.deb"],
     visibility = ["//visibility:public"],
 )
 
