@@ -85,6 +85,7 @@ cc_library(
     implementation_deps = ["@score_baselibs//score/language/futurecpp"],
     tags = ["FFI"],
     visibility = [
+        "@score_baselibs//score/memory:__pkg__",
         "@score_baselibs//score/mw/log:__subpackages__",
     ],
 )

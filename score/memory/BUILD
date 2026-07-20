@@ -20,6 +20,71 @@ package(default_visibility = [
     "@score_baselibs//score/memory:__subpackages__",
 ])
 
+# --------------------------------------------------------------------------------------------------------------
+# Migration shims for string_literal, string_comparison_adaptor and split_string_view, which moved to
+# //score/string_manipulation.
+#
+# The headers below only forward-include the new headers and (except for string_literal, whose StringLiteral
+# symbol already lives directly in the score namespace) pull the relocated symbols back into score::memory via
+# using-declarations, so existing bazel targets, include paths and namespace usages of consumers outside of this
+# package keep working unchanged. New code should depend on @score_baselibs//score/string_manipulation directly.
+# --------------------------------------------------------------------------------------------------------------
+
+cc_library(
+    name = "string_literal",
+    srcs = ["string_literal.cpp"],
+    hdrs = ["string_literal.h"],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:string_literal instead."),
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:string_literal",
+    ],
+)
+
+cc_library(
+    name = "string_comparison_adaptor",
+    srcs = [
+        "string_comparison_adaptor.cpp",
+    ],
+    hdrs = [
+        "string_comparison_adaptor.h",
+    ],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:string_comparison_adaptor instead."),
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
+    ],
+)
+
+cc_library(
+    name = "split_string_view",
+    srcs = [
+        "split_string_view.cpp",
+    ],
+    hdrs = [
+        "split_string_view.h",
+    ],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:split_string_view instead."),
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:split_string_view",
+    ],
+)
+
 cc_library(
     name = "endianness",
     srcs = ["endianness.cpp"],
