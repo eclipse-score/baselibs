@@ -80,6 +80,5 @@ table BinaryData {
 // Root configuration object
 root_type MyComponentConfig;
 
-// Component specific file identifier – distinct from the unversioned "DEMO"
-// so that VerifyVersion can distinguish the two buffer formats.
+// Component specific file identifier
 file_identifier "DEMO";

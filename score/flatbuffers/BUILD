@@ -156,19 +156,25 @@ cc_test(
 cc_test(
     name = "version_reader_test",
     size = "small",
-    srcs = ["test/version_reader_test.cpp"],
+    srcs = [
+        "test/version_reader_test.cpp",
+        "//score/flatbuffers/test/testdata:gen_versioned_dedup_node_h",
+    ],
     data = [
         "//score/flatbuffers/test/testdata:gen_versioned_buffer_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_buffer_explicit_ids_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_buffer_version_info_wrong_field",
         "//score/flatbuffers/test/testdata:gen_versioned_buffer_version_info_wrong_field_similar_type",
+        "//score/flatbuffers/test/testdata:gen_versioned_dedup_node_buffer_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_max_buffer_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_max_range_buffer_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_min_buffer_bin",
         "//score/flatbuffers/test/testdata:gen_versioned_min_range_buffer_bin",
+        "//score/flatbuffers/test/testdata:gen_versioned_no_identifier_buffer_bin",
     ],
     deps = [
         ":flatbufferutils",
+        "//score/flatbuffers/common:buffer_version_envelope",
         "@googletest//:gtest_main",
     ],
 )

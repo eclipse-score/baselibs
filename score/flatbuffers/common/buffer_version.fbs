@@ -38,6 +38,17 @@
 /// and `score::flatbuffers::VerifyVersion`) rely on both the
 /// field name and its vtable slot: a different name or a non-zero slot will
 /// cause buffer identification to fail at runtime.
+///
+/// 3. Declare a file_identifier for your schema, e.g.:
+///
+///      file_identifier "DEMO";
+///
+/// If file_identifier is missing, `kVerificationFailed` will be returned by
+/// (`score::flatbuffers::GetVersion` and `score::flatbuffers::VerifyVersion`)
+/// at runtime. 
+/// Note: This check is only best effort and may not detect the missing identifier.
+/// Not detectable cases can occur when: root tables contain >= 8214 fields, or deduplicated 
+/// root vtables where the root table schema is repeated in a subtable.
 
 namespace score.flatbuffers;
 
@@ -49,8 +60,8 @@ table BufferVersion {
     ///
     /// The FlatBuffers verifier is structurally type-blind: it checks only that
     /// offsets are in-bounds and sizes are valid, not that the data at a given
-    /// vtable slot actually belongs to the expected table type. A `required`
-    /// non-scalar field closes this gap. The universal reader (`GetVersion`)
+    /// vtable slot actually belongs to the expected table type. A non-scalar 
+    /// field closes this gap. The universal reader (`GetVersion`)
     /// rejects any buffer where `type_marker != "BV"` with
     /// `ErrorCode::kVerificationFailed`, catching cases where
     /// `version_info` was accidentally placed in a non-zero vtable slot and

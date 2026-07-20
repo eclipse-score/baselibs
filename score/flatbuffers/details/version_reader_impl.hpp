@@ -37,7 +37,6 @@
 
 #include <cstdint>
 #include <cstring>
-#include <string_view>
 
 namespace score
 {
@@ -86,16 +85,44 @@ inline score::Result<BufferVersionInfo> GetVersionImpl(const score::cpp::span<co
     // NOTE: The "BV" literal must be kept in sync with the type_marker value in
     // inject_buffer_version.py. Changing it here without updating that script
     // (or vice versa) will cause buffer version validation to fail at runtime.
-    if ((marker == nullptr) || (std::string_view{marker->c_str()} != "BV"))
+    if ((marker == nullptr) || (marker->string_view() != "BV"))
     {
         return MakeUnexpected(ErrorCode::kVerificationFailed);
+    }
+
+    // Guard: verify that bytes [4..7] are all printable ASCII (>= 0x20).
+    // At this point the structural check above has confirmed a valid BufferVersion in field 0,
+    // but the buffer may still lack a file_identifier directive.
+    // Because the binary format has no explicit "has identifier" flag, this check is best-effort
+    // and cannot detect every case of a missing file_identifier.
+    //
+    // When no file_identifier is present, bytes [4..7] hold implementation-defined data.
+    // For buffers produced by the official toolchain (flatc or generated code), two known
+    // cases can bypass the guard:
+    // - Root vtable header: for small root tables this typically contains control bytes (< 0x20)
+    //   and is rejected. Once the field count exceeds 8214, all four header bytes can be >= 0x20
+    //   and the guard is bypassed.
+    // - Deduplicated root vtable soffset: when the root table reuses an earlier vtable, the
+    //   soffset is negative and its bytes are all >= 0x20, so the guard is bypassed.
+    //   Deduplication requires child tables whose vtable layout, data sizes, and alignment all
+    //   match the root table.
+    //
+    // This guard is complementary to the structural integrity check above, which ensures that
+    // version_info is present and valid.
+    const auto* const raw_id = ::flatbuffers::GetBufferIdentifier(buf.data());
+    for (std::size_t i = 0U; i < static_cast<std::size_t>(::flatbuffers::kFileIdentifierLength); ++i)
+    {
+        if (static_cast<unsigned char>(raw_id[i]) < static_cast<unsigned char>(' '))
+        {
+            return MakeUnexpected(ErrorCode::kVerificationFailed);
+        }
     }
 
     // GetBufferIdentifier returns a non-null-terminated pointer into the buffer.
     // The identifier is always exactly 4 characters (kFileIdentifierLength).
     // Zero-initialize the array so id[kFileIdentifierLength] remains '\0' after memcpy.
     char id[::flatbuffers::kFileIdentifierLength + 1U]{};
-    std::memcpy(id, ::flatbuffers::GetBufferIdentifier(buf.data()), ::flatbuffers::kFileIdentifierLength);
+    std::memcpy(id, raw_id, ::flatbuffers::kFileIdentifierLength);
 
     return BufferVersionInfo{id, version->major_version(), version->minor_version()};
 }

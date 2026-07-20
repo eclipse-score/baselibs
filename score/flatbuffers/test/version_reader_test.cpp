@@ -14,17 +14,60 @@
 #include "score/flatbuffers/version_reader.hpp"
 #include "score/filesystem/path.h"
 #include "score/flatbuffers/buffer_version_info.hpp"
+#include "score/flatbuffers/common/buffer_version_envelope_generated.h"
 #include "score/flatbuffers/i_version_reader.hpp"
 #include "score/flatbuffers/load_buffer.hpp"
+#include "score/flatbuffers/test/testdata/test_versioned_dedup_node_generated.h"
 
+#include <flatbuffers/flatbuffer_builder.h>
 #include <score/span.hpp>
 
 #include <gtest/gtest.h>
 
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <vector>
+
+/// @brief Print the vtable of a FlatBuffer table.
+/// @param name Name of the table (for logging).
+/// @param buf_start Pointer to the start of the buffer (for calculating offsets).
+/// @param table Pointer to the table whose vtable is to be printed.
+/// @param print_fields Whether to print the individual field offsets (default: true).
+void PrintVTable(const std::string_view name,
+                 const uint8_t* buf_start,
+                 const uint8_t* table,
+                 const bool print_fields = true)
+{
+    const auto soffset = ::flatbuffers::ReadScalar<int32_t>(table);
+    const uint8_t* vtable = table - soffset;  // vtable = table_ptr - soffset
+
+    // vtable layout: [vtable_size][table_object_size][field_loc0][field_loc1]...
+    const auto vtable_size = ::flatbuffers::ReadScalar<uint16_t>(vtable);
+    const auto table_obj_size = ::flatbuffers::ReadScalar<uint16_t>(vtable + 2U);
+    std::printf("  %-6s @+%02td: soffset=%-5d  vtable@+%02td {vtable_size=%u, table_obj_size=%u",
+                name.data(),
+                table - buf_start,
+                soffset,
+                vtable - buf_start,
+                vtable_size,
+                table_obj_size);
+    if (print_fields)
+    {
+        for (uint16_t vtable_field_offset = 4U; vtable_field_offset < vtable_size; vtable_field_offset += 2U)
+        {
+            std::printf(", field_loc[%u]=%u",
+                        (vtable_field_offset - 4U) / 2U,
+                        ::flatbuffers::ReadScalar<uint16_t>(vtable + vtable_field_offset));
+        }
+    }
+    else
+    {
+        std::printf(", ...");
+    }
+    std::printf("}\n");
+}
 
 /// Integration test for `VersionReader` / `IVersionReader`.
 ///
@@ -52,14 +95,17 @@ class VersionReaderTest : public ::testing::Test
 // clang-format off
 /// Equivalence classes for `GetVersion`
 ///
-/// | EC# | Input                                    | Pointer | Buffer content / size          | Expected result              | Test case(s)                                              |
-/// |-----|------------------------------------------|---------|--------------------------------|------------------------------|-----------------------------------------------------------|
-/// | EC1 | Null data pointer                        | null    | size = 64                      | Err: kNullDataPointer        | GetVersionRejectsNullPointer                              |
-/// | EC2 | Empty buffer                             | valid   | size = 0                       | Err: kVerificationFailed     | GetVersionRejectsEmptyBuffer                              |
-/// | EC3 | Buffer too small to hold version info    | valid   | size = 4 (4 zero bytes)        | Err: kVerificationFailed     | GetVersionRejectsTooSmallBuffer                           |
-/// | EC4 | Buffer with invalid FlatBuffer content   | valid   | 64 zero bytes                  | Err: kVerificationFailed     | GetVersionRejectsInvalidBuffer                            |
-/// | EC5 | version_info not in field 0 of root table| valid   | valid FlatBuffer, wrong field  | Err: kVerificationFailed     | GetVersionRejectsBufferWithVersionInfoInWrongField        |
-/// | EC6 | Valid buffer with version info           | valid   | valid FlatBuffer               | Ok: BufferVersionInfo        | ReadBufferVersionFromBinary                               |
+/// | EC# | Input                                    | Pointer | Buffer content / size          | Expected result              | Test case(s)                                       |
+/// |-----|------------------------------------------|---------|--------------------------------|------------------------------|----------------------------------------------------|
+/// | EC1 | Null data pointer                        | null    | size = 64                      | Err: kNullDataPointer        | GetVersionRejectsNullPointer                       |
+/// | EC2 | Empty buffer                             | valid   | size = 0                       | Err: kVerificationFailed     | GetVersionRejectsEmptyBuffer                       |
+/// | EC3 | Buffer too small to hold version info    | valid   | size = 4 (4 zero bytes)        | Err: kVerificationFailed     | GetVersionRejectsTooSmallBuffer                    |
+/// | EC4 | Buffer with invalid FlatBuffer content   | valid   | 64 zero bytes                  | Err: kVerificationFailed     | GetVersionRejectsInvalidBuffer                     |
+/// | EC5 | version_info not in field 0 of root table| valid   | valid FlatBuffer, wrong field  | Err: kVerificationFailed     | GetVersionRejectsBufferWithVersionInfoInWrongField |
+/// | EC6 | Valid buffer with version info           | valid   | valid FlatBuffer               | Ok: BufferVersionInfo        | ReadBufferVersionFromBinary                        |
+/// | EC7 | Normal schema without file_identifier    | valid   | valid FlatBuffer               | Err: kVerificationFailed     | GetVersionRejectsBufferWithMissingIdentifier       |
+/// | EC8 | No file_identifier wide schema           | valid   | valid FlatBuffer               | Ok: BufferVersionInfo        | MissingIdentifierNotDetectedWideSchema             |
+/// | EC9 | No file_identifier dedup vtable          | valid   | valid FlatBuffer               | Ok: BufferVersionInfo        | MissingIdentifierNotDetectedDeduplicatedRootVtable |
 // clang-format on
 
 TEST_F(VersionReaderTest, GetVersionRejectsNullPointer)
@@ -126,6 +172,180 @@ TEST_F(VersionReaderTest, GetVersionRejectsInvalidBuffer)
     const auto result2 = score::flatbuffers::GetVersion(bad_buf);
     EXPECT_FALSE(result2.has_value());
     EXPECT_EQ(result2.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+}
+
+TEST_F(VersionReaderTest, GetVersionRejectsBufferWithMissingIdentifier)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "kVerificationFailed is returned when the schema has no file_identifier directive "
+                   "(bytes [4,8) contain implementation-defined data, not a valid identifier)");
+
+    auto load_result = score::flatbuffers::LoadBuffer(
+        score::filesystem::Path{"score/flatbuffers/test/testdata/versioned_no_identifier_buffer.bin"});
+    ASSERT_TRUE(load_result.has_value()) << "LoadBuffer failed for versioned_no_identifier_buffer.bin";
+    const auto& buf = load_result.value();
+
+    // This reaction is just a demonstration it cannot be guaranteed for all schemas as it depends
+    // on the implementation-defined bytes in the buffer.
+    const auto result = version_reader_.GetVersion(buf);
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result2 = score::flatbuffers::GetVersion(buf);
+    ASSERT_FALSE(result2.has_value());
+    EXPECT_EQ(result2.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+}
+
+// clang-format off
+// EC8: The printable-ASCII guard rejects buffers without a file_identifier by
+// checking that bytes [4..7] are all >= 0x20.  
+// Without a file_identifier those bytes typically hold the root vtable header 
+// (vtable_size, table_obj_size) — small integers that almost always contain
+// control bytes, so the guard reliably catches practical schemas.
+//
+// The guard fails once the root table is wide enough: vtable_size increases by 2
+// per declared field.  At 8214 fields the header bytes are all >= 0x20 and the
+// buffer passes the check with garbage identifier bytes.  The FlatBuffers verifier
+// accepts such a buffer because extra fields beyond version_info are
+// schema-forward-compatible.
+//
+// vtable_size    = 4 + 8214×2 = 16432 = 0x4030 => bytes [4..5] = 0x30 0x40
+// table_obj_size = 8224       = 0x2020         => bytes [6..7] = 0x20 0x20
+//
+// As such wide root tables are unusual in practice, the guards limitations are acceptable to fail
+// as the goal is to detect a missing file_identifier in the common case.
+// clang-format on
+TEST_F(VersionReaderTest, MissingIdentifierNotDetectedWideSchema)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "GetVersion succeeds (readability guard bypassed) for a buffer "
+                   "whose root table has >= 8214 declared fields and no file_identifier. "
+                   "The vtable header bytes [4..7] all can be >= 0x20 and therefore bypass the guard. "
+                   "Accepted guard limitation.");
+
+    constexpr ::flatbuffers::voffset_t num_fields = 8214;
+
+    ::flatbuffers::FlatBufferBuilder fbb;
+    const auto type_marker = fbb.CreateString("BV");
+    const auto version = score::flatbuffers::CreateBufferVersion(fbb, type_marker, 1U, 0U);
+
+    const ::flatbuffers::uoffset_t root_start = fbb.StartTable();
+    fbb.AddOffset(::flatbuffers::FieldIndexToOffset(0), version);
+    for (::flatbuffers::voffset_t f = 1; f < num_fields; ++f)
+    {
+        fbb.AddElement<uint8_t>(::flatbuffers::FieldIndexToOffset(f), 0xFFU, 0U);
+    }
+    const auto root = fbb.EndTable(root_start);
+    fbb.Finish(::flatbuffers::Offset<::flatbuffers::Table>(root));  // NO file_identifier
+
+    const uint8_t* ptr = fbb.GetBufferPointer();
+    const std::vector<uint8_t> buf(ptr, ptr + fbb.GetSize());
+
+    // --- raw buffer dump (first 10 bytes) ---
+    std::printf("Buffer (%zu B):", buf.size());
+    for (size_t i = 0; i < 10U; ++i)
+    {
+        std::printf(" %02x", buf[i]);
+    }
+    std::printf(" ...\n");
+
+    // --- raw vtable dump ---
+    std::printf("table entry + vtable (without fields):\n");
+    const auto root_table_offset = ::flatbuffers::ReadScalar<::flatbuffers::uoffset_t>(ptr);
+    const auto* const root_table_ptr = reinterpret_cast<const uint8_t*>(ptr + root_table_offset);
+    PrintVTable("root", ptr, root_table_ptr, false);
+
+    const auto result = version_reader_.GetVersion(buf);
+    ASSERT_TRUE(result.has_value()) << "GetVersion must succeed (guard bypassed by wide-schema buffer)";
+    // The 'identifier' is the raw vtable header bytes "0@  " (vtable_size=0x4030, table_obj_size=0x2020).
+    EXPECT_EQ(result.value().identifier(), std::string("0@  "));
+    // The actual version data is correctly extracted from the nested BufferVersion table.
+    EXPECT_EQ(result.value().major_version, 1U);
+    EXPECT_EQ(result.value().minor_version, 0U);
+
+    const auto result2 = score::flatbuffers::GetVersion(buf);
+    ASSERT_TRUE(result2.has_value()) << "free-function GetVersion must succeed (guard bypassed by wide-schema buffer)";
+    // The 'identifier' is the raw vtable header bytes "0@  " (vtable_size=0x4030, table_obj_size=0x2020).
+    EXPECT_EQ(result2.value().identifier(), std::string("0@  "));
+    // The actual version data is correctly extracted from the nested BufferVersion table.
+    EXPECT_EQ(result2.value().major_version, 1U);
+    EXPECT_EQ(result2.value().minor_version, 0U);
+}
+
+// clang-format off
+// EC9: The printable-ASCII guard rejects buffers without a file_identifier by
+// checking that bytes [4..7] are all >= 0x20.
+// Without a file_identifier those bytes typically hold the root vtable header
+// (vtable_size, table_obj_size) - see EC8.
+// In case of a recursive root table, the root vtable can be deduplicated against 
+// a child vtable. In this case bytes [4..7] contain the negative soffset to the 
+// child vtable, which is almost always < 0x20.
+//
+// As such deduplicated root vtables are unusual in practice, the guards limitations are acceptable to fail
+// as the goal is to detect a missing file_identifier in the common case.
+// clang-format on
+TEST_F(VersionReaderTest, MissingIdentifierNotDetectedDeduplicatedRootVtable)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "GetVersion succeeds (readability guard bypassed) for a buffer "
+                   "whose root table has a deduplicated vtable and no file_identifier. "
+                   "The table soffset bytes [4..7] are negative and therefore bypass the guard. "
+                   "Accepted guard limitation.");
+
+    auto load_result = score::flatbuffers::LoadBuffer(
+        score::filesystem::Path{"score/flatbuffers/test/testdata/versioned_dedup_node_buffer.bin"});
+    ASSERT_TRUE(load_result.has_value()) << "LoadBuffer failed for versioned_dedup_node_buffer.bin";
+    const std::vector<uint8_t>& buf = load_result.value();
+
+    // --- raw buffer dump ---
+    std::printf("Buffer (%zu B):", buf.size());
+    for (auto& buf_byte : buf)
+    {
+        std::printf(" %02x", buf_byte);
+    }
+    std::printf("\n");
+
+    // --- raw vtable dump ---
+    const auto* const root_node = my_component::dedup_node::GetNode(buf.data());
+    ASSERT_NE(root_node, nullptr) << "GetNode must succeed: buffer is valid FlatBuffer";
+    std::printf("table entry + vtable overview:\n");
+    PrintVTable("root", buf.data(), reinterpret_cast<const uint8_t*>(root_node));
+
+    const auto* const child1_node = root_node->child();
+    ASSERT_NE(child1_node, nullptr) << "root must have a child node";
+    PrintVTable("child1", buf.data(), reinterpret_cast<const uint8_t*>(child1_node));
+
+    const auto* const child2_node = child1_node->child();
+    ASSERT_NE(child2_node, nullptr) << "child1 must have a child node";
+    PrintVTable("child2", buf.data(), reinterpret_cast<const uint8_t*>(child2_node));
+
+    // Report whether deduplication of root vtable occured.
+    const auto root_soffset = ::flatbuffers::ReadScalar<int32_t>(reinterpret_cast<const uint8_t*>(root_node));
+    ASSERT_LT(root_soffset, 0) << "dedup: root reuses an earlier vtable -> negative soffset";
+
+    const auto result = version_reader_.GetVersion(buf);
+    ASSERT_TRUE(result.has_value()) << "GetVersion must succeed (guard bypassed by vtable-dedup soffset)";
+    EXPECT_EQ(result.value().major_version, 1U);
+    EXPECT_EQ(result.value().minor_version, 0U);
+    EXPECT_EQ(result.value().identifier(), std::string("\xE0\xFF\xFF\xFF"))
+        << "dedup: root table soffset bytes [4..7] are treated as identifier";
+
+    const auto result2 = score::flatbuffers::GetVersion(buf);
+    ASSERT_TRUE(result2.has_value())
+        << "free-function GetVersion must succeed (guard bypassed by vtable-dedup soffset)";
+    EXPECT_EQ(result2.value().major_version, 1U);
+    EXPECT_EQ(result2.value().minor_version, 0U);
+    EXPECT_EQ(result2.value().identifier(), std::string("\xE0\xFF\xFF\xFF"))
+        << "dedup: root table soffset bytes [4..7] are treated as identifier";
 }
 
 // ---------------------------------------------------------------------------

@@ -55,6 +55,27 @@ static std::vector<uint8_t> BuildValidBuffer(const char* identifier, uint16_t ma
     return std::vector<uint8_t>(ptr, ptr + fbb.GetSize());
 }
 
+/// Build a structurally valid versioned buffer whose file-identifier bytes [4..7] are
+/// zeroed after construction, producing a null-byte identifier (\0\0\0\0).
+///
+/// '\0' < ' ', so the printable-ASCII check in GetVersionImpl rejects it.
+/// The FlatBuffers builder itself rejects null-byte identifiers via
+/// strlen(identifier) == kFileIdentifierLength, so the null bytes must be injected
+/// post-construction. Note: in a real schema-without-identifier buffer those bytes
+/// contain implementation-defined data — not necessarily null — but the printable-
+/// ASCII check covers that case too.
+static std::vector<uint8_t> BuildBufferWithNullIdentifier(uint16_t major, uint16_t minor)
+{
+    // Use a valid placeholder identifier; the identifier bytes will be zeroed below.
+    auto buf = BuildValidBuffer("XXXX", major, minor);
+    // FlatBuffer layout: bytes [0..3] = root offset, bytes [4..7] = file identifier.
+    constexpr std::size_t kIdentifierOffset = sizeof(::flatbuffers::uoffset_t);
+    std::fill(buf.begin() + static_cast<std::ptrdiff_t>(kIdentifierOffset),
+              buf.begin() + static_cast<std::ptrdiff_t>(kIdentifierOffset + ::flatbuffers::kFileIdentifierLength),
+              uint8_t{0});
+    return buf;
+}
+
 /// Build an envelope buffer that carries NO version_info field.
 /// The FlatBuffers verifier accepts it (version_info is optional in the schema).
 static std::vector<uint8_t> BuildBufferWithoutVersionInfo()
@@ -326,7 +347,33 @@ TEST_F(VersionReaderTest, GetVersionReturnsNullDataPointerWhenEnvelopeIsNull)
     EXPECT_EQ(result.error(), MakeError(score::flatbuffers::ErrorCode::kNullDataPointer));
 }
 
-// ─── GetVersion – success / boundary values ───────────────────────────────────
+TEST_F(VersionReaderTest, GetVersionRejectsBufferWithNullIdentifier)
+{
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "kVerificationFailed is returned when the 4 identifier bytes at buffer positions [4..7] are all "
+                   "zero, as produced by a schema without a file_identifier directive");
+
+    const auto buf = BuildBufferWithNullIdentifier(1U, 0U);
+    const score::cpp::span<const uint8_t> buf_span{buf.data(), buf.size()};
+
+    const auto result_vec = version_reader_.GetVersion(buf);
+    ASSERT_FALSE(result_vec.has_value());
+    EXPECT_EQ(result_vec.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_span = version_reader_.GetVersion(buf_span);
+    ASSERT_FALSE(result_span.has_value());
+    EXPECT_EQ(result_span.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_free_vec = score::flatbuffers::GetVersion(buf);
+    ASSERT_FALSE(result_free_vec.has_value());
+    EXPECT_EQ(result_free_vec.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_free_span = score::flatbuffers::GetVersion(buf_span);
+    ASSERT_FALSE(result_free_span.has_value());
+    EXPECT_EQ(result_free_span.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+}
 
 struct VersionBufferParam
 {
@@ -336,9 +383,55 @@ struct VersionBufferParam
     const char* name;
 };
 
-class VersionBufferParamTest : public ::testing::TestWithParam<VersionBufferParam>
+class InvalidIdentifierTest : public ::testing::TestWithParam<VersionBufferParam>
 {
 };
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(
+    InvalidIdentifier,
+    InvalidIdentifierTest,
+    ::testing::Values(
+        // Invalid identifier byte boundaries: \x01 (minimum non-null byte) and \x1F (maximum byte).
+        // GetVersion preserves all byte values verbatim; the 4-byte string_view returned by
+        // identifier() is compared by value, not by printability.
+        // VerifyVersion is NOT expected to be called with non-printable expected identifiers
+        // in production — the parameterised mismatch tests cover rejection of such buffers.
+        VersionBufferParam{"\x01\x01\x01\x01", 0U,         0U,              "MinInvalidByteIdentifier"},
+        VersionBufferParam{"\x1F\x1F\x1F\x1F", UINT16_MAX, UINT16_MAX,      "MaxInvalidByteIdentifier"}
+    ),
+    [](const ::testing::TestParamInfo<VersionBufferParam>& info) { return info.param.name; }
+);
+// clang-format on
+
+TEST_P(InvalidIdentifierTest, GetVersionRejectsBufferWithInvalidIdentifier)
+{
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "GetVersion rejects a buffer whose identifier bytes are all non-printable ASCII (< 0x20)");
+
+    const auto& p = GetParam();
+    const auto buf = BuildValidBuffer(p.identifier, p.major, p.minor);
+    const score::cpp::span<const uint8_t> buf_span{buf.data(), buf.size()};
+    score::flatbuffers::VersionReader reader;
+
+    const auto result_vec = reader.GetVersion(buf);
+    ASSERT_FALSE(result_vec.has_value());
+    EXPECT_EQ(result_vec.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_span = reader.GetVersion(buf_span);
+    ASSERT_FALSE(result_span.has_value());
+    EXPECT_EQ(result_span.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_free_vec = score::flatbuffers::GetVersion(buf);
+    ASSERT_FALSE(result_free_vec.has_value());
+    EXPECT_EQ(result_free_vec.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+
+    const auto result_free_span = score::flatbuffers::GetVersion(buf_span);
+    ASSERT_FALSE(result_free_span.has_value());
+    EXPECT_EQ(result_free_span.error(), MakeError(score::flatbuffers::ErrorCode::kVerificationFailed));
+}
 
 // ─── Null-byte identifier – library constraint documentation ─────────────────
 //
@@ -362,24 +455,30 @@ TEST(VersionBufferNullByteIdentifierTest, BuildingBufferWithNullByteIdentifierAb
     ASSERT_DEATH(BuildValidBuffer("\x00\x00\x00\x00", 0U, 0U), "");
 }
 
+// ─── GetVersion – success / boundary values ───────────────────────────────────
+
+class VersionBufferParamTest : public ::testing::TestWithParam<VersionBufferParam>
+{
+};
+
 // clang-format off
 INSTANTIATE_TEST_SUITE_P(
     BoundaryValues,
     VersionBufferParamTest,
     ::testing::Values(
-        // Identifier byte boundaries: \x01 (minimum non-null byte) and \xFF (maximum byte).
+        // Identifier byte boundaries: \x20 (minimum non-null byte) and \xFF (maximum byte).
+        // Sanity check ensures that bytes [4..7] are printable ASCII characters (>= \x20).
         // GetVersion preserves all byte values verbatim; the 4-byte string_view returned by
-        // identifier() is compared by value, not by printability.
+        // identifier() is compared by value.
         // VerifyVersion is NOT expected to be called with non-printable expected identifiers
         // in production — the parameterised mismatch tests cover rejection of such buffers.
-        VersionBufferParam{"\x01\x01\x01\x01", 0U,         0U,              "MinByteIdentifier"},
-        VersionBufferParam{"\xFF\xFF\xFF\xFF", UINT16_MAX, UINT16_MAX,      "MaxByteIdentifier"},
         VersionBufferParam{"    ", 0U,          0U,                   "MinMinVersion"},
         VersionBufferParam{"    ", 0U,          1U,                   "MinMajorMinorOne"},
         VersionBufferParam{"    ", 1U,          0U,                   "MajorOneMinMinor"},
         VersionBufferParam{"DEMO", 2U,          3U,                   "TypicalValues"},
         VersionBufferParam{"~~~~", UINT16_MAX,  UINT16_MAX - 1U,      "MaxMajorNearMaxMinor"},
-        VersionBufferParam{"~~~~", UINT16_MAX,  UINT16_MAX,           "MaxMaxVersion"}
+        VersionBufferParam{"~~~~", UINT16_MAX,  UINT16_MAX,           "MaxMaxVersion"},
+        VersionBufferParam{"\xFF\xFF\xFF\xFF", UINT16_MAX, UINT16_MAX,      "MaxByteIdentifier"}
     ),
     [](const ::testing::TestParamInfo<VersionBufferParam>& info) { return info.param.name; }
 );

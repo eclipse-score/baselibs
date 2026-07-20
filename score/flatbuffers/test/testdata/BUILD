@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//score/flatbuffers/bazel:codegen.bzl", "generate_cpp")
 load("//score/flatbuffers/bazel:tools.bzl", "serialize_multiple_versioned_buffers", "serialize_versioned_buffer")
 
@@ -22,6 +23,7 @@ exports_files(
         "test_versioned_max.fbs",
         "test_versioned_min_range.fbs",
         "test_versioned_max_range.fbs",
+        "test_versioned_no_identifier.fbs",
         "test_versioned_wrong_placement.fbs",
         "test_versioned_wrong_field.fbs",
         "invalid_data.json",
@@ -121,5 +123,37 @@ serialize_versioned_buffer(
     data = "versioned_buffer_data.json",
     output = "versioned_max_buffer.bin",
     schema = "test_versioned_max.fbs",
+    visibility = ["//score/flatbuffers:__pkg__"],
+)
+
+# Buffer serialized from a schema with no file_identifier directive.
+# The 4 identifier bytes at positions [4..7] are implementation defined.
+serialize_versioned_buffer(
+    name = "gen_versioned_no_identifier_buffer_bin",
+    buffer_major_version = 1,
+    buffer_minor_version = 0,
+    data = "versioned_buffer_data.json",
+    output = "versioned_no_identifier_buffer.bin",
+    schema = "test_versioned_no_identifier.fbs",
+    visibility = ["//score/flatbuffers:__pkg__"],
+)
+
+# Recursive Node buffer with no file_identifier.
+# Showcase deduplication of root vtable which leads to
+# negative soffset in bytes [4..7] of the buffer.
+serialize_versioned_buffer(
+    name = "gen_versioned_dedup_node_buffer_bin",
+    buffer_major_version = 1,
+    buffer_minor_version = 0,
+    data = "versioned_dedup_node_data.json",
+    output = "versioned_dedup_node_buffer.bin",
+    schema = "test_versioned_no_identifier_dedup_node.fbs",
+    visibility = ["//score/flatbuffers:__pkg__"],
+)
+
+generate_cpp(
+    name = "gen_versioned_dedup_node_h",
+    output = "test_versioned_dedup_node_generated.h",
+    schema = "test_versioned_no_identifier_dedup_node.fbs",
     visibility = ["//score/flatbuffers:__pkg__"],
 )
