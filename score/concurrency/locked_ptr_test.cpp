@@ -164,6 +164,30 @@ TEST(LockedPtrTest, UnlockGuardUniqueLockTests)
         EXPECT_TRUE((std::is_same_v<decltype(cug_mut), UnlockGuard<std::unique_lock<std::mutex>>>))
             << "unlock_guard() should return UnlockGuard<std::unique_lock<std::mutex>>";
     }
+
+    {
+        IntWrapper obj{42};
+        MockMutex mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+        EXPECT_TRUE(mut.is_locked());
+        {
+            auto ug = lp_obj.unlock_guard();
+            EXPECT_FALSE(mut.is_locked());
+        }
+        EXPECT_TRUE(mut.is_locked());
+    }
+
+    {
+        IntWrapper obj{42};
+        MockMutex mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+        EXPECT_TRUE(mut.is_locked());
+        {
+            auto cug = std::as_const(lp_obj).unlock_guard();
+            EXPECT_FALSE(mut.is_locked());
+        }
+        EXPECT_TRUE(mut.is_locked());
+    }
 }
 
 TEST(LockedPtrTest, UnlockGuardSharedLockTests)
@@ -183,6 +207,30 @@ TEST(LockedPtrTest, UnlockGuardSharedLockTests)
         auto cug_sh = std::as_const(lp_sh).unlock_guard();
         EXPECT_TRUE((std::is_same_v<decltype(cug_sh), UnlockGuard<std::shared_lock<std::shared_mutex>>>))
             << "unlock_guard() should return UnlockGuard<std::shared_lock<std::shared_mutex>>";
+    }
+
+    {
+        IntWrapper obj{42};
+        MockSharedMutex mut{};
+        LockedPtr lp_obj{&obj, std::shared_lock<MockSharedMutex>{mut}};
+        EXPECT_TRUE(mut.is_shared_locked());
+        {
+            auto ug = lp_obj.unlock_guard();
+            EXPECT_FALSE(mut.is_shared_locked());
+        }
+        EXPECT_TRUE(mut.is_shared_locked());
+    }
+
+    {
+        IntWrapper obj{42};
+        MockSharedMutex mut{};
+        LockedPtr lp_obj{&obj, std::shared_lock<MockSharedMutex>{mut}};
+        EXPECT_TRUE(mut.is_shared_locked());
+        {
+            auto cug = std::as_const(lp_obj).unlock_guard();
+            EXPECT_FALSE(mut.is_shared_locked());
+        }
+        EXPECT_TRUE(mut.is_shared_locked());
     }
 }
 
