@@ -10,12 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_SHARED_MOCK_IATOMIC_H
-#define SCORE_LIB_MEMORY_SHARED_MOCK_IATOMIC_H
+#ifndef SCORE_LIB_CONCURRENCY_MOCK_IATOMIC_H
+#define SCORE_LIB_CONCURRENCY_MOCK_IATOMIC_H
 
 #include <atomic>
 
-namespace score::memory::shared
+namespace score::concurrency
 {
 
 /// \brief Interface abstraction for a subset of methods from std::atomic, needed/used for mocking support
@@ -53,6 +53,6 @@ class IAtomic
     IAtomic& operator=(IAtomic&&) noexcept = default;
 };
 
-}  // namespace score::memory::shared
+}  // namespace score::concurrency
 
-#endif  // SCORE_LIB_MEMORY_SHARED_MOCK_IATOMIC_H
+#endif  // SCORE_LIB_CONCURRENCY_MOCK_IATOMIC_H

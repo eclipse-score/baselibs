@@ -245,8 +245,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
-        ":atomic_indirector",
         ":memory_region_bounds",
+        "@score_baselibs//score/concurrency:atomic_indirector",
         "@score_baselibs//score/language/futurecpp",
     ],
 )
@@ -635,9 +635,9 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":atomic_indirector_mock_binding",
         ":memory_region_map",
         ":shared_memory_test_resources",
+        "@score_baselibs//score/concurrency:atomic_indirector_mock_binding",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )

@@ -21,6 +21,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
+        "@score_baselibs//score/concurrency:__pkg__",
         "@score_baselibs//score/memory/shared:__pkg__",
     ],
     deps = [],
