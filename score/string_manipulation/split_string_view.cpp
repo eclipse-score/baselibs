@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/split_string_view.h"
+#include "score/string_manipulation/split_string_view.h"
 
 #include "score/assert.hpp"
 
@@ -37,7 +37,7 @@ std::string_view::size_type FindNextSeperator(std::string_view view,
 
 }  // namespace
 
-namespace score::memory
+namespace score::string_manipulation
 {
 
 LazySplitStringView::LazySplitStringView(const std::string_view source,
@@ -72,14 +72,16 @@ LazySplitStringView::Iterator::Iterator(const LazySplitStringView& view,
       start_index_{start_index},
       seperator_index_{FindNextSeperator(view.source_, start_index, view.seperator_)}
 {
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(seperator_index_ >= start_index_,
-                       "Class invariant shall ensure seperator index shall be greater or equal than start index.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(
+        seperator_index_ >= start_index_,
+        "Class invariant shall ensure seperator index shall be greater or equal than start index.");
 }
 
 std::string_view LazySplitStringView::Iterator::operator*() const noexcept
 {
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(seperator_index_ >= start_index_,
-                       "Class invariant shall ensure seperator index shall be greater or equal than start index.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(
+        seperator_index_ >= start_index_,
+        "Class invariant shall ensure seperator index shall be greater or equal than start index.");
     std::string_view result{split_view_.source_};
     result.remove_suffix(result.size() - seperator_index_);
     result.remove_prefix(start_index_);
@@ -101,8 +103,9 @@ LazySplitStringView::Iterator& LazySplitStringView::Iterator::operator++() noexc
 
     seperator_index_ = FindNextSeperator(split_view_.source_, start_index_, split_view_.seperator_);
 
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(seperator_index_ >= start_index_,
-                       "Class invariant shall ensure seperator index shall be greater or equal than start index.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(
+        seperator_index_ >= start_index_,
+        "Class invariant shall ensure seperator index shall be greater or equal than start index.");
 
     return *this;
 }
@@ -112,4 +115,4 @@ bool operator!=(const LazySplitStringView::Iterator& lhs, const LazySplitStringV
     return !(lhs == rhs);
 }
 
-}  // namespace score::memory
+}  // namespace score::string_manipulation

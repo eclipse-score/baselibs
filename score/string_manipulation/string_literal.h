@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_STRING_LITERAL_H
-#define SCORE_LIB_MEMORY_STRING_LITERAL_H
+#ifndef SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
+#define SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
 
 namespace score
 {
@@ -22,4 +22,4 @@ using StringLiteral
 
 }  // namespace score
 
-#endif  // SCORE_LIB_MEMORY_STRING_LITERAL_H
+#endif  // SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H

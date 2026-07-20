@@ -10,15 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_MEMORY_STRING_COMPARISON_ADAPTOR_H
-#define SCORE_LIB_MEMORY_STRING_COMPARISON_ADAPTOR_H
+#ifndef SCORE_LIB_STRING_MANIPULATION_STRING_COMPARISON_ADAPTOR_H
+#define SCORE_LIB_STRING_MANIPULATION_STRING_COMPARISON_ADAPTOR_H
 
 #include <functional>
 #include <string>
 #include <string_view>
 #include <variant>
 
-namespace score::memory
+namespace score::string_manipulation
 {
 
 class StringComparisonAdaptor
@@ -82,21 +82,21 @@ bool operator!=(const StringComparisonAdaptor& lhs, const StringComparisonAdapto
 
 bool operator<(const StringComparisonAdaptor& lhs, const StringComparisonAdaptor& rhs) noexcept;
 
-}  // namespace score::memory
+}  // namespace score::string_manipulation
 
 namespace std
 {
 
 template <>
 // NOLINTNEXTLINE(score-struct-usage-compliance): STL defines a struct, not a class
-class hash<score::memory::StringComparisonAdaptor>
+class hash<score::string_manipulation::StringComparisonAdaptor>
 {
   public:
     /// @brief Gets the hash for a StringComparisonAdaptor
     /// For the hash it is only important what content the string(-view) has
     /// @return The hash of the underlying content
     // NOL INT NEX TLINE(score-hash-noexcept): operator invokes non-noexcept calls
-    size_t operator()(const score::memory::StringComparisonAdaptor& k) const noexcept
+    size_t operator()(const score::string_manipulation::StringComparisonAdaptor& k) const noexcept
     {
         const auto as_string_view = k.GetAsStringView();
         return std::hash<std::string_view>{}(as_string_view);
@@ -105,4 +105,4 @@ class hash<score::memory::StringComparisonAdaptor>
 
 }  // namespace std
 
-#endif  // SCORE_LIB_MEMORY_STRING_COMPARISON_ADAPTOR_H
+#endif  // SCORE_LIB_STRING_MANIPULATION_STRING_COMPARISON_ADAPTOR_H
