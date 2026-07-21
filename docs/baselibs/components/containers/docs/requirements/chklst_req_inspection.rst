@@ -146,7 +146,12 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
       -
       -
       -
-
+    * - REQ_10_01
+      - Is the requirement description *complete* ?
+      - For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).
+      -
+      -
+      -
 
 .. attention::
     The above checklist entries must be filled according to your component requirements in scope.
