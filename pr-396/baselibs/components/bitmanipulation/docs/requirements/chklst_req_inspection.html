@@ -406,6 +406,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json/docs/index.html">JSON-Library</a></li>
 
 
@@ -485,7 +486,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-b50c2a64">
+  <div class="need_container docutils container" id="SNCB-ebc4dd40">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_req_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -543,8 +544,8 @@
 </ul>
 <p><strong>Checklist</strong></p>
 <p>See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 24 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 9.1%" />
 <col style="width: 27.3%" />
@@ -702,6 +703,19 @@
 <td><p>Alternatively to the safe state there could also be “repair” mechanisms. Also do not forget to consider REQ_05_01 for these.</p></td>
 <td><p>YES</p></td>
 <td><p>There is only one requirement here that does define a safety mechanism - <a class="reference internal" href="index.html#comp_req__bitmanipulation__bounds_safety" title="comp_req__bitmanipulation__bounds_safety"><em class="xref need">Bounds and Safety Checks (comp_req__bitmanipulation__bounds_safety)</em></a>, findings on this were fixed in PR-2667 and PR-2696</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_10_01</p></td>
+<td><p>Is the requirement description <em>complete</em> ?</p></td>
+<td><p>For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).</p></td>
+<td><p>YES</p></td>
+<td><p>Following feature requirements are linked:</p>
+<ul class="simple">
+<li><p>feat_req__baselibs__core_utilities :  very generic requirement, rewritten by <a class="reference external" href="https://github.com/eclipse-score/score/pull/3071">#3071</a> can be removed, fixed</p></li>
+<li><p>feat_req__baselibs__bitmanipulation : is linked to all functional bitmanipulation component requirements</p></li>
+<li><p>feat_req__baselibs__safety : removed with <a class="reference external" href="https://github.com/eclipse-score/score/pull/3071">#3071</a> can be removed, fixed</p></li>
+</ul>
+</td>
 <td></td>
 </tr>
 </tbody>
