@@ -291,7 +291,10 @@ public:
 
     /// \brief Returns the size of the row in bytes.
     ///
-    /// \return  Size of the row in bytes.
+    /// \note Counts only `size() * sizeof(T)`. Heap storage owned by allocator-aware element types
+    /// (e.g. `std::vector`) is not included, consistent with `std::span::size_bytes`.
+    ///
+    /// \return Size of the row in bytes.
     size_type size_bytes() const noexcept { return base_.size() * sizeof(T); }
 
     /// \brief checks if the span is empty
