@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/string_comparison_adaptor.h"
+#include "score/string_manipulation/string_comparison_adaptor.h"
 
 #include <score/overload.hpp>
 
@@ -19,7 +19,7 @@
 #include <utility>
 #include <variant>
 
-namespace score::memory
+namespace score::string_manipulation
 {
 
 StringComparisonAdaptor::StringComparisonAdaptor(const std::string& str) : str_{str} {}
@@ -88,4 +88,4 @@ bool operator<(const StringComparisonAdaptor& lhs, const StringComparisonAdaptor
     return lhs.GetAsStringView().compare(rhs.GetAsStringView()) < 0;
 }
 
-}  // namespace score::memory
+}  // namespace score::string_manipulation

@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/string_comparison_adaptor.h"
+#include "score/string_manipulation/string_comparison_adaptor.h"
 
 #include <score/assert.hpp>
 
@@ -20,7 +20,7 @@
 #include <string_view>
 #include <type_traits>
 
-namespace score::memory
+namespace score::string_manipulation
 {
 namespace
 {
@@ -31,12 +31,13 @@ using ::testing::Ne;
 using ::testing::StrEq;
 
 /// Set of specialised template functions which allows creating a std::string, std::string_view, or
-/// the underlying string type in a generic way, solely based on the template type. We use specialized template functions
-/// instead of overloading, since the signatures only differ in the return type.
+/// the underlying string type in a generic way, solely based on the template type. We use specialized template
+/// functions instead of overloading, since the signatures only differ in the return type.
 template <typename T>
 T CreateUnderlyingString(std::string_view /* string_view */)
 {
-    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_MESSAGE(false, "There is no default implementation. Only specialized functions should be called.");
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_MESSAGE(
+        false, "There is no default implementation. Only specialized functions should be called.");
     return T{};
 }
 
@@ -280,4 +281,4 @@ TEST(StringComparisonAdaptorLessComparison, LessThan)
 }
 
 }  // namespace
-}  // namespace score::memory
+}  // namespace score::string_manipulation

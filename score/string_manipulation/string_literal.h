@@ -10,4 +10,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/memory/shared/atomic_indirector.h"
+#ifndef SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
+#define SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
+
+namespace score
+{
+
+using StringLiteral
+    [[deprecated("No longer supported. Use std::string, std::string_view, safecpp::zstring_view, or const char* "
+                 "depending on your use case")]] = const char*;
+
+}  // namespace score
+
+#endif  // SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H

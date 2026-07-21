@@ -23,8 +23,8 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
+        "//score/concurrency:atomic_indirector",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:atomic_indirector",
     ],
 )
 
@@ -37,8 +37,8 @@ cc_gtest_unit_test(
     ],
     deps = [
         ":meyer_singleton",
+        "//score/concurrency:atomic_indirector_mock_binding",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
-        "@score_baselibs//score/memory/shared:atomic_indirector_mock_binding",
         "@score_baselibs//score/utils/meyer_singleton/test:single_test_per_process_fixture",
     ],
 )

@@ -16,42 +16,6 @@ load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_te
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "atomic_interface",
-    hdrs = ["i_atomic.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/memory/shared:__pkg__",
-    ],
-    deps = [],
-)
-
-cc_library(
-    name = "atomic_indirector",
-    srcs = ["atomic_indirector.cpp"],
-    hdrs = ["atomic_indirector.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "//visibility:public",  # platform_only
-    ],
-    deps = [":atomic_interface"],
-)
-
-cc_library(
-    name = "atomic_indirector_mock_binding",
-    testonly = True,
-    srcs = ["atomic_mock.cpp"],
-    hdrs = ["atomic_mock.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = ["//visibility:public"],
-    deps = [
-        ":atomic_indirector",
-        "@googletest//:gtest",
-    ],
-)
-
-cc_library(
     name = "pointer_arithmetic_util",
     srcs = ["pointer_arithmetic_util.cpp"],
     hdrs = ["pointer_arithmetic_util.h"],
@@ -281,8 +245,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
-        ":atomic_indirector",
         ":memory_region_bounds",
+        "//score/concurrency:atomic_indirector",
         "@score_baselibs//score/language/futurecpp",
     ],
 )
@@ -615,19 +579,6 @@ cc_gtest_unit_test(
 )
 
 cc_gtest_unit_test(
-    name = "atomic_indirector_test",
-    srcs = ["atomic_indirector_test.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "@score_baselibs//score/memory:__pkg__",
-    ],
-    deps = [
-        ":atomic_indirector",
-        ":atomic_indirector_mock_binding",
-    ],
-)
-
-cc_gtest_unit_test(
     name = "lock_file_test",
     srcs = [
         "lock_file_test.cpp",
@@ -684,9 +635,9 @@ cc_gtest_unit_test(
         "@score_baselibs//score/memory:__pkg__",
     ],
     deps = [
-        ":atomic_indirector_mock_binding",
         ":memory_region_map",
         ":shared_memory_test_resources",
+        "//score/concurrency:atomic_indirector_mock_binding",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -752,6 +703,25 @@ cc_gtest_unit_test(
     ],
     deps = [
         ":polymorphic_offset_ptr_allocator",
+        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "containers_compatibility_test",
+    srcs = [
+        "containers_compatibility_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/memory:__pkg__",
+    ],
+    deps = [
+        ":polymorphic_offset_ptr_allocator",
+        "@score_baselibs//score/containers:dynamic_array",
+        "@score_baselibs//score/containers:non_relocatable_vector",
+        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
@@ -922,7 +892,7 @@ test_suite(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
-        ":atomic_indirector_test",
+        ":containers_compatibility_test",
         ":lock_file_test",
         ":managed_memory_resource_test",
         ":map_test",

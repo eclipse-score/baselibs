@@ -52,6 +52,7 @@ cc_test(
     features = ["aborts_upon_exception"],
     tags = ["unit"],
     deps = [
+        ":abortsuponexception",
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
