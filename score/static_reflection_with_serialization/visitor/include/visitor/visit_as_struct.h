@@ -20,6 +20,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include "score/quality/compiler_warnings/warnings.h"
+
 namespace score
 {
 
@@ -843,6 +845,20 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
 #define SCORE_STRUCT_VISITABLE(S, ...) SCORE_CONCATENATE(SCORE_STRUCT_VISITABLE, SCORE_COUNT_VARARGS(__VA_ARGS__))(S, __VA_ARGS__)
+
+// Deprecated aliases kept for backward compatibility.
+// Use SCORE_STRUCT_VISITABLE and SCORE_STRUCT_TRACEABLE in new code.
+#ifndef STRUCT_VISITABLE
+#define STRUCT_VISITABLE(...)                                                                                        \
+    SCORE_DEPRECATE_MACRO_USE("STRUCT_VISITABLE is deprecated, use SCORE_STRUCT_VISITABLE instead.");             \
+    SCORE_STRUCT_VISITABLE(__VA_ARGS__)
+#endif
+
+#ifndef STRUCT_TRACEABLE
+#define STRUCT_TRACEABLE(...)                                                                                        \
+    SCORE_DEPRECATE_MACRO_USE("STRUCT_TRACEABLE is deprecated, use SCORE_STRUCT_TRACEABLE instead.");             \
+    SCORE_STRUCT_TRACEABLE(__VA_ARGS__)
+#endif
 
 
 #endif  // SCORE_COMMON_VISITOR_INCLUDE_VISITOR_VISIT_AS_STRUCT_H

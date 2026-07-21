@@ -41,7 +41,7 @@ struct real_alloc_t {
     using subsize_t = uint16_t;  /*size type holding the info about size of each element, e.g. len of string is 2*/
 };
 
-SCORE_STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
+STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
 
 int main(int argc, char** argv) {
     using namespace ::score::common::visitor;

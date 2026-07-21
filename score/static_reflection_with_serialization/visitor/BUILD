@@ -33,7 +33,9 @@ cc_library(
         "//visibility:public",
     ],
     # No dependencies except for STL shall be used
-    deps = [],
+    deps = [
+        "@score_baselibs//score/quality/compiler_warnings",
+    ],
 )
 
 test_suite(
