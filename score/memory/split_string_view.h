@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 Contributors to the Eclipse Foundation
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -13,76 +13,16 @@
 #ifndef SCORE_LIB_MEMORY_SPLIT_STRING_VIEW_H
 #define SCORE_LIB_MEMORY_SPLIT_STRING_VIEW_H
 
-#include <string_view>
+// MIGRATION SHIM: LazySplitStringView moved to score/string_manipulation/split_string_view.h. This header is kept
+// so that existing bazel targets, include paths ("score/memory/split_string_view.h") and the score::memory
+// namespace keep working unchanged. New code should include "score/string_manipulation/split_string_view.h"
+// directly and use the score::string_manipulation namespace.
+#include "score/string_manipulation/split_string_view.h"
 
 namespace score::memory
 {
 
-/// \brief Split a string_view by a character into multiple substring views.
-/// \details This class shall **not** use any dynamic memory allocation.
-/// This splitter is lazy, because it only processes one element at a time.
-/// Thus it is not possible to get the number of substrings in advance and the class only provides a forward iterator.
-/// Substring views might be empty, e.g. if a seperator occurs at the beginning, or is repeated multiple times.
-///
-/// This class shall behave similar to C++20 `std::ranges::lazy_split_view`.
-/// The primary use case is with a range-based for loop:
-/// ```C++
-///     LazySplitStringView splitter("Hello World"_sv, ' ');
-///     for (std::string_view segment : splitter)
-///     {
-///         HandleSegment(segment)
-///     }
-/// ```
-///
-/// Thus we apply the same behavior in the edge cases as std::ranges::lazy_split_view:
-///     If source == seperator, one empty substring shall be returned.
-///     Else if the source begins with a seperator, the first substring shall be an empty string view.
-///     Else if the source ends with a seperator the splitter shall ignore the right side of the trailing seperator.
-class LazySplitStringView final
-{
-  public:
-    explicit LazySplitStringView(const std::string_view source, const std::string_view::value_type seperator) noexcept;
-
-    class Iterator
-    {
-      public:
-        /// \brief Returns the view on the current substring
-        /// \precondition *this != end()
-        std::string_view operator*() const noexcept;
-
-        /// \brief Move this to the next substring.
-        Iterator& operator++() noexcept;
-
-        friend bool operator==(const Iterator& lhs, const Iterator& rhs) noexcept;
-        friend bool operator!=(const Iterator& lhs, const Iterator& rhs) noexcept;
-
-      private:
-        explicit Iterator(const LazySplitStringView&, const std::string_view::size_type start_index) noexcept;
-        const LazySplitStringView& split_view_;
-        std::string_view::size_type start_index_;
-        std::string_view::size_type seperator_index_;  // Class invariant: seperator_index_ >= start_index_
-
-        // Suppress "AUTOSAR C++14 A11-3-1" rule finding: "Friend declarations shall not be used.".
-        // The 'friend' class is employed to encapsulate non-public members.
-        // This design choice protects end users from implementation details
-        // and prevents incorrect usage. Friend classes provide controlled
-        // access to private members, utilized internally, ensuring that
-        // end users cannot access implementation specifics.
-        // coverity[autosar_cpp14_a11_3_1_violation]
-        friend LazySplitStringView;
-    };
-
-    // Code style: must use lowercase for `begin()` and `end()` so that this can be used as a forward iterator in the
-    // standard library and range-based for loops.
-    Iterator cbegin() const noexcept;
-    Iterator cend() const noexcept;
-    Iterator begin() const noexcept;
-    Iterator end() const noexcept;
-
-  private:
-    std::string_view source_;
-    std::string_view::value_type seperator_;
-};
+using score::string_manipulation::LazySplitStringView;
 
 }  // namespace score::memory
 
