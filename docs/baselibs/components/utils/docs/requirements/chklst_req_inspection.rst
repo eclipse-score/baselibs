@@ -34,7 +34,7 @@ Conduct
 As described in the concept :need:`doc_concept__wp_inspections` the following "inspection roles" are expected to be filled:
 
 - content responsible (author): `<https://github.com/ssingh2099>`_
-- reviewer: `<https://github.com/mihajlo-k>`_
+- reviewer: `<https://github.com/Rutik7>`_
 - moderator: `<https://github.com/aschemmel-tech>`_
 - test expert: `<https://github.com/Priyanka-Patil18>`_
 
@@ -58,75 +58,76 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
     * - REQ_01_01
       - Is the requirement formulation template used?
       - see :need:`gd_temp__req_formulation`, this includes the use of "shall".
-      -
-      -
+      - YES
+      - All requirements use "shall" and the correct directive with required attributes.
       -
     * - REQ_02_01
       - Is the requirement description *comprehensible* ?
       - If you think the requirement is hard to understand, comment here.
-      -
-      -
+      - YES
+      - All requirements are clear and understandable.
       -
     * - REQ_02_02
       - Is the requirement description *unambiguous* ?
       - Especially search for "weak words" like "about", "etc.", "relevant" and others (see the internet documentation on this). This check shall be supported by tooling.
-      -
-      -
+      - NO
+      - :need:`comp_req__utils__deterministic_behavior` - "predictable manner" is a weak, un-measurable phrase
       -
     * - REQ_02_03
       - Is the requirement description *atomic* ?
       - A good way to think about this is to consider if the requirement may be tested by one (positive) test case or needs more of these. The requirement formulation template should also avoid being non-atomic already. Note that there are cases where also non-atomic requirements are the better ones, for example if those are better understandable.
-      -
-      -
+      - NO
+      - :need:`comp_req__utils__base64` - Non-atomic, covers both encodding and decoding in single requirement
+        :need:`comp_req__utils__deterministic_behavior` - Non-atomic, combines "predictable manner" and "without dynamic memory allocation" in one statement.
       -
     * - REQ_02_04
       - Is the requirement description *feasible* ?
       - If at the time of the inspection the requirement has already some implementation, the answer is yes. This can be checked via traces, but also :need:`gd_req__req_attr_impl` shows this. In case the requirement has no implementation at the time of inspection (i.e. not implemented at least as "proof-of-concept"), a development expert should be invited to the Pull-Request review to explicitly check this item.
-      -
-      -
+      - NO
+      - :need:`comp_req__utils__scoped_operation` - different component , not belong to utils , need to move
       -
     * - REQ_02_05
       - Is the requirement description *independent from implementation* ?
       - This checkpoint should improve requirements definition in the sense that the "what" is described and not the "how" - the latter should be described in architecture/design derived from the requirement. But there can also be a good reason for this, for example we would require using a file format like JSON and even specify the formatting standard already on stakeholder requirement level because we want to be compatible. A finding in this checkpoint does not mean there is a safety problem in the requirement.
-      -
-      -
+      - YES
+      - All requirements describe "what" not "how".
       -
     * - REQ_03_01
       - Is the *linkage to the parent requirement* correct?
       - Linkage to correct levels and ASIL attributes is checked automatically, but it needs checking if the child requirement implements (at least) a part of the parent requirement.
-      -
-      -
+      - YES
+      - All requirements link to :need:`feat_req__baselibs__core_utilities` and :need:`feat_req__baselibs__safety`. With `PR #387 <https://github.com/eclipse-score/baselibs/pull/387>`_ this will change to feat_req__baselibs__utils_library, also ok.
       -
     * - REQ_04_01
       - Is the requirement *internally and externally consistent*?
       - Does the requirement contradict other requirements within the same or higher levels? One may restrict the search to the feature for component requirements, for features to other features using same components. Is the description of the requirement consistent with all its attributes (if not already part of another check, e.g. does the title fit?).
-      -
-      -
+      - YES
+      - Requirements consistent apart from topic raised in REQ_07_02
       -
     * - REQ_05_01
       - Do the software requirements consider *timing constraints*?
       - This checkpoint encourages to think about timing constraints even if those are not explicitly mentioned in the parent requirement. If the reviewer of a requirement already knows or suspects that the code execution will be consuming a lot of time, one should think of the expectation of a "user".
-      -
-      -
+      - NO
+      - :need:`comp_req__utils__deterministic_behavior` uses "predictable manner" but defines no timing bounds. Requirement should be removed or rewritten.
       -
     * - REQ_06_01
       - Does the requirement consider *external interfaces*?
       - The SW platform's external interfaces (to the user) are defined in the Feature Architecture, so the Feature and Component Requirements should determine the input data use and setting of output data for these interfaces. Are all output values defined?
-      -
-      -
+      - YES
+      - External interfaces are defined at the architecture level for all three requirements.
       -
     * - REQ_07_01
       - Is the *safety* attribute set correctly?
       - Derived requirements are checked automatically, see :need:`gd_req__req_linkage_safety`. But for the top level requirements (and also all AoU) this needs to be checked manually for correctness.
-      -
-      -
+      - YES
+      - All requirements correctly set safety: ASIL_B, consistent with :need:`comp__baselibs_utils`.
       -
     * - REQ_07_02
       - Is the attribute *security* set correctly?
       - For component requirements this checklist item is supported by automated check: "Every requirement which satisfies a feature requirement with security attribute set to YES inherits this". But the component requirements/architecture may additionally also be subject to a :need:`wp__sw_component_security_analysis`.
-      -
-      -
-      -
+      - NO
+      - All requirements have declare security "NO", but the parent document (:need:`doc__utils_lib_requirements`), the component (:need:`comp__baselibs_utils`), and all architecture interface operations are marked security "YES". This is a direct inconsistency.
+      - `PR #387 <https://github.com/eclipse-score/baselibs/pull/387>`_
     * - REQ_08_01
       - Is the requirement *verifiable*?
       - If at the time of the inspection already tests are created for the requirement, the answer is yes. This can be checked via traces, but also :need:`gd_req__req_attr_test_covered` shows this. In case the requirement is not sufficiently traced to test cases already, a test expert is invited to the inspection to give their opinion whether the requirement is formulated in a way that supports test development and the available test infrastructure is sufficient to perform the test.
@@ -143,20 +144,22 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
     * - REQ_08_02
       - Is the requirement verifiable by design or code review in case it is not feasibly testable?
       - In very rare cases a requirement may not be verifiable by test cases, for example a specific non-functional requirement. In this case a requirement analysis verifies the requirement by design/code review. If such a requirement is in scope of this inspection, please check this here and link to the respective review record. A test expert is invited to the inspection to confirm their opinion that the requirement is not testable.
-      -
-      -
+      - NO
+      - :need:`comp_req__utils__deterministic_behavior` - No code review record is linked. The implementation contradicts the requirement
+        ``EncodeBase64/DecodeBase64`` use heap-allocated ``std::string/std::vector``. Requirement should be removed or rewritten.
       -
     * - REQ_09_01
       - Do the requirements that define a safety mechanism specify the error reaction leading to a safe state?
       - Alternatively to the safe state there could also be "repair" mechanisms. Also do not forget to consider REQ_05_01 for these.
-      -
-      -
+      - YES
+      - In the scope of this inspection are no requirements defining a safety mechanism.
       -
     * - REQ_10_01
       - Is the requirement description *complete* ?
       - For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).
-      -
-      -
+      - NO
+      - ``score/utils/meyer_singleton/`` (MeyerSingleton) is part of the utils component but has no component requirement.
+        :need:`comp_req__utils__scoped_operation` is satisfied_by :need:`comp__baselibs_utils` but its implementation is in ``score/scope_exit/``, not ``score/utils/``. Component boundary needs clarification.
       -
 
 .. attention::
