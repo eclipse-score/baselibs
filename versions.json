@@ -1150,5 +1150,9 @@
   {
     "version": "pr-397",
     "url": "https://eclipse-score.github.io/baselibs/pr-397/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-397-32f8ebc1efe3cefd30118a0547bcc69787dd9aa1",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-397-32f8ebc1efe3cefd30118a0547bcc69787dd9aa1/"
   }
 ]
