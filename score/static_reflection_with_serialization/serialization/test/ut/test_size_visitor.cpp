@@ -150,7 +150,7 @@ class CustomAllocator : public std::allocator<T>
     };
 };
 
-SCORE_STRUCT_VISITABLE(S1, f1)
+STRUCT_VISITABLE(S1, f1)
 
 using MemcpyType = std::chrono::steady_clock::time_point;
 
@@ -186,7 +186,7 @@ struct S2
     }
 };
 
-SCORE_STRUCT_VISITABLE(S2, f1)
+STRUCT_VISITABLE(S2, f1)
 
 struct S3
 {
@@ -198,7 +198,7 @@ struct S3
     }
 };
 
-SCORE_STRUCT_VISITABLE(S3, f1)
+STRUCT_VISITABLE(S3, f1)
 
 struct InitialTypeValues
 {

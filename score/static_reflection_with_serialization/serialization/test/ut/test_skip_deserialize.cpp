@@ -50,15 +50,15 @@ struct S3s
     int f3;
 };
 
-SCORE_STRUCT_VISITABLE(S, f1, f2, f3, f4)
+STRUCT_VISITABLE(S, f1, f2, f3, f4)
 
-SCORE_STRUCT_VISITABLE(S1, f1, f2, f3, f4)
+STRUCT_VISITABLE(S1, f1, f2, f3, f4)
 static_assert(::score::common::visitor::is_payload_compatible<S1, S>(), "shall be compatible");
 
-SCORE_STRUCT_VISITABLE(S2, f1, f2, f3, f4)
+STRUCT_VISITABLE(S2, f1, f2, f3, f4)
 static_assert(::score::common::visitor::is_payload_compatible<S2, S>(), "shall be compatible");
 
-SCORE_STRUCT_VISITABLE(S3s, f1, f2, f3)
+STRUCT_VISITABLE(S3s, f1, f2, f3)
 
 }  // namespace test
 

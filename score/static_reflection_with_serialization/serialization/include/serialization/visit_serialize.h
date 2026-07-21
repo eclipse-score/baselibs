@@ -1532,4 +1532,18 @@ class serializer_t
         v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
 
+// Deprecated aliases kept for backward compatibility.
+// Use SCORE_MEMCPY_SERIALIZABLE and SCORE_MEMCPY_SERIALIZABLE_IF in new code.
+#ifndef MEMCPY_SERIALIZABLE
+#define MEMCPY_SERIALIZABLE(...)                                                                                       \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE is deprecated, use SCORE_MEMCPY_SERIALIZABLE instead.");        \
+    SCORE_MEMCPY_SERIALIZABLE(__VA_ARGS__)
+#endif
+
+#ifndef MEMCPY_SERIALIZABLE_IF
+#define MEMCPY_SERIALIZABLE_IF(...)                                                                                    \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE_IF is deprecated, use SCORE_MEMCPY_SERIALIZABLE_IF instead.");  \
+    SCORE_MEMCPY_SERIALIZABLE_IF(__VA_ARGS__)
+#endif
+
 #endif  // SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_VISIT_SERIALIZE_H
