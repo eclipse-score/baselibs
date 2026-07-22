@@ -26,9 +26,9 @@ Requirements
 .. comp_req:: Static Reflection Support
    :id: comp_req__static_reflect_serial__reflect
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
@@ -38,9 +38,9 @@ Requirements
 .. comp_req:: Generic Visitor Pattern
    :id: comp_req__static_reflect_serial__visitor
    :reqtype: Interface
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
@@ -50,9 +50,9 @@ Requirements
 .. comp_req:: Automatic Container Iteration
    :id: comp_req__static_reflect_serial__container
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
@@ -62,9 +62,9 @@ Requirements
 .. comp_req:: Nested Type Support
    :id: comp_req__static_reflect_serial__nested
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
@@ -74,9 +74,9 @@ Requirements
 .. comp_req:: Header-Only Implementation
    :id: comp_req__static_reflect_serial__header_only
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs
@@ -86,9 +86,9 @@ Requirements
 .. comp_req:: Compile-Time Efficiency
    :id: comp_req__static_reflect_serial__compile_eff
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__static_reflection_library
    :satisfied_by: comp__baselibs_static_reflection
    :status: valid
    :tags: baselibs

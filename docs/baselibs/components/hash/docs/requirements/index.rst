@@ -37,7 +37,7 @@ Functional Requirements
 .. comp_req:: Hash Computation from Byte Data
    :id: comp_req__hash__calculation_interface
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -50,7 +50,7 @@ Functional Requirements
 .. comp_req:: Hash Value Retrieval as Raw Bytes
    :id: comp_req__hash__value_retrieval_bytes
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -61,7 +61,7 @@ Functional Requirements
 .. comp_req:: Hash Value Retrieval as Hexadecimal String
    :id: comp_req__hash__value_retrieval_hex
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -73,7 +73,7 @@ Functional Requirements
 .. comp_req:: Algorithm Selection via Factory
    :id: comp_req__hash__factory_interface
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -87,7 +87,7 @@ Functional Requirements
 .. comp_req:: Cryptographic Hash Algorithms
    :id: comp_req__hash__sha_algorithms
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -99,7 +99,7 @@ Functional Requirements
 .. comp_req:: CRC-32 Checksum Algorithm
    :id: comp_req__hash__crc32_algorithm
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
@@ -110,9 +110,9 @@ Functional Requirements
 .. comp_req:: Exception-Free Error Propagation
    :id: comp_req__hash__safe_computation
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__hash_library
    :status: valid
    :satisfied_by: comp__baselibs_hash
 

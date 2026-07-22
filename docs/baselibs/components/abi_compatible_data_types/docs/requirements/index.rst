@@ -36,9 +36,9 @@ Restrictions on Native Types
 .. comp_req:: Restrict boolean size
    :id: comp_req__abi_compatible_data_types__bool_sz
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -49,9 +49,9 @@ Restrictions on Native Types
 .. comp_req:: Fixed-width integers
    :id: comp_req__abi_compatible_data_types__int_fix
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -62,9 +62,9 @@ Restrictions on Native Types
 .. comp_req:: Limit floating-point sizes
    :id: comp_req__abi_compatible_data_types__flt_sz
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -75,9 +75,9 @@ Restrictions on Native Types
 .. comp_req:: Characters
    :id: comp_req__abi_compatible_data_types__char
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -88,9 +88,9 @@ Restrictions on Native Types
 .. comp_req:: Fixed-size arrays
    :id: comp_req__abi_compatible_data_types__arr_fix
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -101,9 +101,9 @@ Restrictions on Native Types
 .. comp_req:: Struct and tuple ABI layout
    :id: comp_req__abi_compatible_data_types__st_tpl
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -114,9 +114,9 @@ Restrictions on Native Types
 .. comp_req:: Explicit enum representation
    :id: comp_req__abi_compatible_data_types__enum_udr
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -127,9 +127,9 @@ Restrictions on Native Types
 .. comp_req:: Disallow pointers and metadata
    :id: comp_req__abi_compatible_data_types__nop_mt
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -140,9 +140,9 @@ Restrictions on Native Types
 .. comp_req:: Compiler-agnostic ABI
    :id: comp_req__abi_compatible_data_types__compabi
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -159,9 +159,9 @@ Vector
 .. comp_req:: Provide AbiVec<T,N>
    :id: comp_req__abi_compatible_data_types__prv_abv
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -189,9 +189,9 @@ Vector
 .. comp_req:: AbiVec field semantics
    :id: comp_req__abi_compatible_data_types__abv_fld
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -202,9 +202,9 @@ Vector
 .. comp_req:: AbiVec API
    :id: comp_req__abi_compatible_data_types__abv_noa
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -215,9 +215,9 @@ Vector
 .. comp_req:: AbiVec overflow check
    :id: comp_req__abi_compatible_data_types__abv_ovf
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -231,9 +231,9 @@ String
 .. comp_req:: Provide AbiString<N>
    :id: comp_req__abi_compatible_data_types__prv_abs
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -261,9 +261,9 @@ String
 .. comp_req:: AbiString field semantics
    :id: comp_req__abi_compatible_data_types__abs_fld
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -274,9 +274,9 @@ String
 .. comp_req:: AbiString API
    :id: comp_req__abi_compatible_data_types__abs_noa
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -287,9 +287,9 @@ String
 .. comp_req:: AbiString overflow check
    :id: comp_req__abi_compatible_data_types__abs_ovf
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -303,9 +303,9 @@ Option
 .. comp_req:: Provide AbiOption<T>
    :id: comp_req__abi_compatible_data_types__prv_abo
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -333,9 +333,9 @@ Option
 .. comp_req:: AbiOption is_some flag
    :id: comp_req__abi_compatible_data_types__abo_flg
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -346,9 +346,9 @@ Option
 .. comp_req:: AbiOption API
    :id: comp_req__abi_compatible_data_types__abo_api
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -362,9 +362,9 @@ Result
 .. comp_req:: Provide AbiResult<T,E>
    :id: comp_req__abi_compatible_data_types__prv_ari
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -401,9 +401,9 @@ Result
 .. comp_req:: AbiResult is_err flag
    :id: comp_req__abi_compatible_data_types__ari_flg
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1
@@ -414,9 +414,9 @@ Result
 .. comp_req:: AbiResult API
    :id: comp_req__abi_compatible_data_types__ari_api
    :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :derived_from: feat_req__baselibs__core_utilities
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__abi_containers
    :satisfied_by: comp__baselibs_abi_compatible_data_types
    :status: valid
    :version: 1

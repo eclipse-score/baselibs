@@ -32,7 +32,7 @@ Functional Requirements
 .. comp_req:: Support for Bit Operations
    :id: comp_req__bitmanipulation__bit_operations
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
@@ -44,7 +44,7 @@ Functional Requirements
 .. comp_req:: Support for Byte and Half-Byte Operations
    :id: comp_req__bitmanipulation__byte_operations
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
@@ -56,7 +56,7 @@ Functional Requirements
 .. comp_req:: Support for Bitmask Operators for Enum Classes
    :id: comp_req__bitmanipulation__bitmask_operators
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
@@ -68,7 +68,7 @@ Functional Requirements
 .. comp_req:: Bounds and Safety Checks
    :id: comp_req__bitmanipulation__bounds_safety
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid

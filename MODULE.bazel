@@ -125,6 +125,14 @@ git_override(
 
 bazel_dep(name = "score_platform", version = "0.6.2", dev_dependency = True)
 
+# Needed until a release of score_platform includes
+# https://github.com/eclipse-score/score/pull/3071 (merged to main).
+git_override(
+    module_name = "score_platform",
+    commit = "c97388c6da1f5b3233d4b73bffa196ff75e801cd",
+    remote = "https://github.com/eclipse-score/score",
+)
+
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)

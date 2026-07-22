@@ -29,9 +29,9 @@ Functional Requirements
 .. comp_req:: Standard Filesystem Abstraction
    :id: comp_req__filesystem__api_abstraction
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
    :satisfied_by: comp__baselibs_filesystem
 
@@ -40,9 +40,9 @@ Functional Requirements
 .. comp_req:: Path Manipulation Utilities
    :id: comp_req__filesystem__path_utilities
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library
    :status: valid
    :satisfied_by: comp__baselibs_filesystem
 

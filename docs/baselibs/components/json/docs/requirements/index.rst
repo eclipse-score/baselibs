@@ -28,7 +28,7 @@ General Requirements
 .. comp_req:: JSON Deserialization
    :id: comp_req__json__deserialization
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -40,7 +40,7 @@ General Requirements
 .. comp_req:: JSON Serialization
    :id: comp_req__json__serialization
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -51,7 +51,7 @@ General Requirements
 .. comp_req:: Return data in user format
    :id: comp_req__json__user_format
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -67,9 +67,9 @@ User friendly API for information exchange
 .. comp_req:: Support for programming language idioms
    :id: comp_req__json__lang_idioms
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library, feat_req__baselibs__consistent_apis
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
    :satisfied_by: comp__baselibs_json
 
@@ -78,7 +78,7 @@ User friendly API for information exchange
 .. comp_req:: Use programming language infrastructure
    :id: comp_req__json__lang_infra
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -92,7 +92,7 @@ User friendly API for information exchange
 .. comp_req:: Enforce strict type compatibility
    :id: comp_req__json__type_compatibility
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -109,7 +109,7 @@ Full testability for the user facing API
 .. comp_req:: Fully testable public API
    :id: comp_req__json__full_testability
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -125,9 +125,9 @@ Safety Impact
 .. comp_req:: JSON library ASIL level
    :id: comp_req__json__asil
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__json_library
    :status: valid
    :satisfied_by: comp__baselibs_json
 

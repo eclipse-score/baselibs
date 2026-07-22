@@ -29,9 +29,9 @@ Functional Requirements
 .. comp_req:: Dynamic Array
    :id: comp_req__containers__dynamic_array
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__containers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__containers_library
    :status: valid
    :satisfied_by: comp__baselibs_containers
 
@@ -40,9 +40,9 @@ Functional Requirements
 .. comp_req:: Intrusive List
    :id: comp_req__containers__intrusive_list
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__containers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__containers_library
    :status: valid
    :satisfied_by: comp__baselibs_containers
 
@@ -51,9 +51,9 @@ Functional Requirements
 .. comp_req:: Type Safety
    :id: comp_req__containers__type_safety
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__consistent_apis, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__containers_library
    :status: valid
    :satisfied_by: comp__baselibs_containers
 
@@ -62,9 +62,9 @@ Functional Requirements
 .. comp_req:: Non-Relocatable Vector
    :id: comp_req__containers__non_relocatable_vector
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__containers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__containers_library
    :status: valid
    :satisfied_by: comp__baselibs_containers
 
@@ -77,9 +77,9 @@ Non-Functional Requirements
 .. comp_req:: Deterministic Behavior
    :id: comp_req__containers__deterministic_behavior
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__containers_library
    :status: valid
    :satisfied_by: comp__baselibs_containers
 

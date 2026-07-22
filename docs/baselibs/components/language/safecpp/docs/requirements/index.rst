@@ -31,7 +31,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
@@ -47,7 +47,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
@@ -61,7 +61,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
@@ -70,9 +70,9 @@ Functional Requirements
 .. comp_req:: Null-Terminated String
    :id: comp_req__safecpp__nullstring
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
@@ -84,7 +84,7 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
@@ -96,9 +96,9 @@ Non-Functional Requirements
 .. comp_req:: Code Coverage Termination
    :id: comp_req__safecpp__coverage_termination
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__maintainable_design
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_safecpp
 
