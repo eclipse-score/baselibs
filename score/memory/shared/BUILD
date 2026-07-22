@@ -80,8 +80,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
+        ":data_type_size_info",
         "@score_baselibs//score/language/safecpp/safe_math",
-        "@score_baselibs//score/memory:data_type_size_info",
         "@score_baselibs//score/mw/log:frontend",
     ],
 )
@@ -933,6 +933,30 @@ cc_gtest_unit_test(
     ],
 )
 
+cc_library(
+    name = "data_type_size_info",
+    srcs = ["data_type_size_info.cpp"],
+    hdrs = ["data_type_size_info.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    deps = ["@score_baselibs//score/language/futurecpp"],
+)
+
+cc_unit_test(
+    name = "data_type_size_info_test",
+    srcs = ["data_type_size_info_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
+        "-aborts_upon_exception",
+    ],
+    deps = [
+        ":data_type_size_info",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
+    ],
+)
+
 # Separate test suite for string test as it should not be executed on qnx
 test_suite(
     name = "unit_tests_host",
@@ -948,6 +972,7 @@ cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":containers_compatibility_test",
+        ":data_type_size_info_test",
         ":lock_file_test",
         ":managed_memory_resource_test",
         ":map_test",
