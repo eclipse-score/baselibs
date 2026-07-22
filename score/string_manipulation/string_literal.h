@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ * Copyright (c) 2025 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -10,5 +10,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+#ifndef SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
+#define SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
 
-#include "score/memory/shared/atomic_mock.h"
+namespace score
+{
+
+using StringLiteral
+    [[deprecated("No longer supported. Use std::string, std::string_view, safecpp::zstring_view, or const char* "
+                 "depending on your use case")]] = const char*;
+
+}  // namespace score
+
+#endif  // SCORE_LIB_STRING_MANIPULATION_STRING_LITERAL_H
