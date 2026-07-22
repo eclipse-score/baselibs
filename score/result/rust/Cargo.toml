@@ -1,0 +1,39 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+[package]
+name = "result_rs"
+description = "FFI-compatible bindings for `score::result` types."
+version.workspace = true
+authors.workspace = true
+readme.workspace = true
+edition.workspace = true
+license-file.workspace = true
+
+[lib]
+path = "result.rs"
+
+# The C++ standard library layout cannot be selected per-target by Cargo (Bazel does this via
+# `select()`). `libstdcpp_layout` is the default for the Linux dev environment; build with
+# `--no-default-features --features libcxx_layout` for libc++/QNX.
+[features]
+default = ["libstdcpp_layout"]
+libstdcpp_layout = []
+libcxx_layout = []
+
+[dependencies]
+libc = "0.2"
+libcpp.workspace = true
+
+[lints]
+workspace = true

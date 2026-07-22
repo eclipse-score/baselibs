@@ -1,0 +1,107 @@
+@startuml Result_CppToRust_Integration
+
+!theme bluegray
+!pragma teoz true
+
+participant "C++ Code" as cpp
+participant "FFI Boundary" as ffi
+participant "Rust Code" as rust
+
+autonumber
+
+cpp -> cpp: SomeFunction() returns\nResult
+note over cpp
+  local variable created:
+  bmw::Result result
+  {
+    storage.value = true,
+    discriminant = 0  // Value
+  }
+end note
+
+cpp -> cpp: Prepare to return\nby value across FFI
+
+cpp -> ffi: Return Result\n(by register/stack)
+note over ffi, cpp
+  **ABI Calling Convention:**
+  Registers/stack contain:
+  - Offset 0: bool value (1 byte) = 0x01
+  - Offset 1-3: padding
+  - Offset 4-7: ErrorCode (4 bytes) = 0
+  - Offset 8-15: domain pointer
+  - Offset 16-23: message.ptr
+  - Offset 24-31: message.len
+  - Offset 32: discriminant = 0x00
+end note
+
+ffi -> rust: Receive as ffi::Expected
+note over rust
+  Rust sees the incoming bytes:
+  struct Expected {
+    storage: union {
+      value: bool = 0x01,
+      error: Error = {...}
+    },
+    discriminant: u8 = 0x00
+  }
+end note
+
+rust -> rust: Match on discriminant
+alt discriminant == 0x00 (Value)
+    rust -> rust: Extract bool value
+    note over rust
+      unsafe {
+        ManuallyDrop::take(&mut storage.value)
+      }
+      Retrieves: true
+    end note
+
+    rust -> rust: Mark discriminant = 255 (Stale)
+
+    rust -> rust: Construct Ok(true)
+    note over rust
+      std::result::Result = Ok(true)
+    end note
+
+else discriminant == 0x01 (Error)
+    rust -> rust: Extract Error
+    note over rust
+      Would construct Err(error)
+    end note
+end
+
+opt discriminant != 255 (not stale)
+    note over rust
+      Clean up original storage
+      to avoid leaks.
+      The union may contain either
+      a Value or an Error. In any
+      case, we must drop it properly.
+      If the discriminant is stale (255),
+      we don't have to do it because the
+      Rust object took ownership, and thus
+      will clean it up later.
+    end note
+
+    rust -> rust: Value::Drop or Error::Drop
+end
+
+rust -> rust: Call match on Rust Result
+note over rust
+  match rust_result {
+      Ok(bool_val) => {
+          println!("Success: {}", bool_val);
+      },
+      Err(err) => {
+          eprintln!("Failed: {}", err);
+      }
+  }
+end note
+
+rust -> rust: Process success path
+note over rust
+  Application logic for Ok case
+  Uses bool_val = true
+end note
+
+@enduml

@@ -24,6 +24,9 @@ default-members = [
     "score/log_rust/score_log_fmt_macro",
     "score/log_rust/stdout_logger",
     "score/testing_macros",
+    "score/language/rust/libcpp",
+    "score/language/rust/libcpp_derive",
+    "score/result/rust",
 ]
 # Include tests and examples as a member for IDE support and Bazel builds.
 members = [
@@ -37,6 +40,9 @@ members = [
     "score/log_rust/score_log_fmt_macro",
     "score/log_rust/stdout_logger",
     "score/testing_macros",
+    "score/language/rust/libcpp",
+    "score/language/rust/libcpp_derive",
+    "score/result/rust",
     "examples/log_builtin",
     "examples/log_custom",
 ]
@@ -58,6 +64,8 @@ allocator = { path = "score/allocator" }
 testing_macros = { path = "score/testing_macros" }
 pal = { path = "score/pal" }
 thread = { path = "score/thread" }
+libcpp = { path = "score/language/rust/libcpp" }
+libcpp_derive = { path = "score/language/rust/libcpp_derive" }
 
 [workspace.lints.clippy]
 std_instead_of_core = "warn"
