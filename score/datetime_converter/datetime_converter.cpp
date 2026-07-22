@@ -68,7 +68,7 @@ bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime)
     {
         return false;
     }
-    else if (dateTime->m_day < 0 || dateTime->m_day > 31)
+    else if (dateTime->m_day < 1 || dateTime->m_day > 31)
     {
         return false;
     }
@@ -84,8 +84,8 @@ bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime)
     {
         return false;
     }
-
-    return (dateTime->m_day >= 1) && (dateTime->m_day <= daysInMonth(dateTime->m_year, dateTime->m_month));
+    
+    return dateTime->m_day <= daysInMonth(dateTime->m_year, dateTime->m_month);
 };
 
 bool dateTimeToEpoch(const std::shared_ptr<DateTimeType> dateTime, time_t* epoch)
