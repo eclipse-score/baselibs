@@ -163,6 +163,7 @@ Buffer Identification and Versioning
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
+   :testcovered: YES
    :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in buffer identification mechanism consisting
@@ -175,6 +176,7 @@ Buffer Identification and Versioning
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
+   :testcovered: YES
    :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in version check mechanism that validates

@@ -11,44 +11,56 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-/// @file demo_app_test.cpp
-/// @brief Demonstrates loading and reading a FlatBuffer binary config
-///        using flatbufferscpp (FlatBuffers C++ API)
-///
-/// Build and run via Bazel:
-///   bazel test //demo_config_usecase:demo_app
+/// @file demo_config_versioned_test.cpp
+/// @brief Demonstrates loading of a versioned FlatBuffer binary config,
+///        verifying its version via score::flatbuffers::VerifyVersion before
+///        accessing any data, and then reading the config fields.
 
+#include "score/flatbuffers/buffer_version_info.hpp"
 #include "score/flatbuffers/load_buffer.hpp"
-// Generated C++ accessor header produced by generate_cpp() – depends on flatbufferscpp
-#include "score/flatbuffers/examples/config_usecase/component_config.h"
+#include "score/flatbuffers/version_reader.hpp"
+// Generated C++ accessor header produced by generate_cpp() for demo_versioned.fbs
+#include "flatbuffers/config_usecase/component_config_versioned.h"
 
-// FlatBuffers verifier (part of flatbufferscpp / @flatbuffers headers)
 #include "flatbuffers/verifier.h"
 
 #include <gtest/gtest.h>
 
 #include <string_view>
-#include <vector>
 
-TEST(DemoAppTest, LoadsAndVerifiesBuffer)
+TEST(DemoConfigVersionedTest, VerifiesVersionThenLoadsAndReadsBuffer)
 {
     // -------------------------------------------------------------------------
-    // Step 1: Load the binary FlatBuffer file from disk (standard file I/O)
+    // Step 1: Load the binary FlatBuffer file from disk
     // -------------------------------------------------------------------------
-    const std::string_view bin_path = "score/flatbuffers/examples/config_usecase/demo_config.bin";
+    const std::string_view bin_path = "flatbuffers/config_usecase/demo_config_versioned.bin";
     const auto buffer = score::flatbuffers::LoadBuffer(bin_path);
     ASSERT_TRUE(buffer.has_value()) << buffer.error().ToString();
 
     // -------------------------------------------------------------------------
-    // Step 2: Verify buffer integrity (flatbuffercpp / FlatBuffers verifier)
+    // Step 2: Verify buffer version before accessing any data
+    //
+    // The expected BufferVersionInfo must match:
+    //   - file_identifier  : "DEMO"  (set in demo_versioned.fbs)
+    //   - major_version    : 1       (set in serialize_versioned_buffer rule)
+    //   - minor_version    : 0       (set in serialize_versioned_buffer rule)
+    // -------------------------------------------------------------------------
+    const score::flatbuffers::BufferVersionInfo expected{"DEMO", 1U, 0U};
+    // Free function variant is used for VerifyVersion.
+    // Use score::flatbuffers::VersionReader (implements IVersionReader) instead
+    // when the caller needs to inject or mock the reader.
+    const auto version_result = score::flatbuffers::VerifyVersion(buffer.value(), expected);
+    ASSERT_TRUE(version_result.has_value()) << version_result.error();
+
+    // -------------------------------------------------------------------------
+    // Step 3: Verify structural integrity of the FlatBuffer
     // -------------------------------------------------------------------------
     flatbuffers::Verifier verifier(buffer.value().data(), buffer.value().size());
-
     ASSERT_TRUE(my_component::demo::VerifyMyComponentConfigBuffer(verifier))
-        << "FlatBuffer verification failed for '" << bin_path << "'";
+        << "FlatBuffer structural verification failed for '" << bin_path << "'";
 
     // -------------------------------------------------------------------------
-    // Step 3: Access config values via the generated flatbuffercpp API
+    // Step 4: Access config values via the generated APIs
     // -------------------------------------------------------------------------
     const my_component::demo::MyComponentConfig* config =
         my_component::demo::GetMyComponentConfig(buffer.value().data());
