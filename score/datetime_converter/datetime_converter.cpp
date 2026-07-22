@@ -84,7 +84,7 @@ bool isValidDateTimeFormat(const std::shared_ptr<DateTimeType> dateTime)
     {
         return false;
     }
-
+    
     return dateTime->m_day <= daysInMonth(dateTime->m_year, dateTime->m_month);
 };
 
