@@ -609,6 +609,7 @@ cc_gtest_unit_test(
         "shared_memory_factory_test.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:linux"],
     visibility = [
         "@score_baselibs//score/memory:__pkg__",
     ],
@@ -889,6 +890,7 @@ cc_gtest_unit_test(
         "shared_memory_resource_open_test.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
+    target_compatible_with = ["@platforms//os:linux"],
     visibility = [
         "@score_baselibs//score/memory:__pkg__",
     ],
