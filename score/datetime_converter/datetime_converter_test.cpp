@@ -476,6 +476,9 @@ TEST_F(DateTimeConverterTest, invalid_day_values)
     auto dtt = std::make_shared<DateTimeType>(2020, 12, 34, 3, 4, 5);
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
 
+    dtt->m_day = 0;
+    ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
+
     dtt->m_day = -1;
     ASSERT_FALSE(score::common::isValidDateTimeFormat(dtt));
 }
