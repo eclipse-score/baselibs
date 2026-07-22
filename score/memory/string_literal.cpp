@@ -11,4 +11,4 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/memory/shared/atomic_mock.h"
+#include "score/memory/string_literal.h"

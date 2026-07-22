@@ -20,12 +20,68 @@ package(default_visibility = [
     "@score_baselibs//score/memory:__subpackages__",
 ])
 
+# --------------------------------------------------------------------------------------------------------------
+# Migration shims for string_literal, string_comparison_adaptor and split_string_view, which moved to
+# //score/string_manipulation.
+#
+# The headers below only forward-include the new headers and (except for string_literal, whose StringLiteral
+# symbol already lives directly in the score namespace) pull the relocated symbols back into score::memory via
+# using-declarations, so existing bazel targets, include paths and namespace usages of consumers outside of this
+# package keep working unchanged. New code should depend on @score_baselibs//score/string_manipulation directly.
+# --------------------------------------------------------------------------------------------------------------
+
 cc_library(
     name = "string_literal",
+    srcs = ["string_literal.cpp"],
     hdrs = ["string_literal.h"],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:string_literal instead."),
     tags = ["FFI"],
     visibility = [
         "//visibility:public",  # platform_only
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:string_literal",
+    ],
+)
+
+cc_library(
+    name = "string_comparison_adaptor",
+    srcs = [
+        "string_comparison_adaptor.cpp",
+    ],
+    hdrs = [
+        "string_comparison_adaptor.h",
+    ],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:string_comparison_adaptor instead."),
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
+    ],
+)
+
+cc_library(
+    name = "split_string_view",
+    srcs = [
+        "split_string_view.cpp",
+    ],
+    hdrs = [
+        "split_string_view.h",
+    ],
+    deprecation = ("This target is deprecated. Use " +
+                   "@score_baselibs//score/string_manipulation:split_string_view instead."),
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/mw/log:__subpackages__",
+    ],
+    deps = [
+        "@score_baselibs//score/string_manipulation:split_string_view",
     ],
 )
 
@@ -43,23 +99,6 @@ cc_library(
 )
 
 cc_library(
-    name = "string_comparison_adaptor",
-    srcs = [
-        "string_comparison_adaptor.cpp",
-    ],
-    hdrs = [
-        "string_comparison_adaptor.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    implementation_deps = ["@score_baselibs//score/language/futurecpp"],
-    tags = ["FFI"],
-    visibility = [
-        "//visibility:public",
-    ],
-    deps = [":string_literal"],
-)
-
-cc_library(
     name = "data_type_size_info",
     srcs = ["data_type_size_info.cpp"],
     hdrs = ["data_type_size_info.h"],
@@ -67,41 +106,6 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = ["@score_baselibs//score/language/futurecpp"],
-)
-
-cc_test(
-    name = "string_comparison_adaptor_unit_test",
-    srcs = [
-        "string_comparison_adaptor_test.cpp",
-    ],
-    features = [
-        "aborts_upon_exception",
-        "treat_warnings_as_errors",
-        "strict_warnings",
-        "additional_warnings",
-    ],
-    tags = ["unit"],
-    deps = [
-        ":string_comparison_adaptor",
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/language/futurecpp",
-    ],
-)
-
-cc_library(
-    name = "split_string_view",
-    srcs = [
-        "split_string_view.cpp",
-    ],
-    hdrs = [
-        "split_string_view.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    implementation_deps = ["@score_baselibs//score/language/futurecpp"],
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
-    ],
 )
 
 cc_library(
@@ -116,24 +120,6 @@ cc_library(
     ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-    ],
-)
-
-cc_test(
-    name = "split_string_view_unit_test",
-    srcs = [
-        "split_string_view_test.cpp",
-    ],
-    features = [
-        "aborts_upon_exception",
-        "treat_warnings_as_errors",
-        "strict_warnings",
-        "additional_warnings",
-    ],
-    tags = ["unit"],
-    deps = [
-        ":split_string_view",
-        "@googletest//:gtest_main",
     ],
 )
 
@@ -193,9 +179,7 @@ cc_unit_test_suites_for_host_and_qnx(
     cc_unit_tests = [
         ":endianness_unit_test",
         ":pmr_ring_buffer_unit_test",
-        ":split_string_view_unit_test",
         ":data_type_size_info_test",
-        ":string_comparison_adaptor_unit_test",
     ],
     test_suites_from_sub_packages = [
         "@score_baselibs//score/memory/shared:unit_test_suite",

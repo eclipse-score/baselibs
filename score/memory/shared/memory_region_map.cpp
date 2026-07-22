@@ -376,7 +376,7 @@ std::optional<std::uint8_t> MemoryRegionMapImpl<AtomicIndirectorType>::AcquireRe
     return std::nullopt;
 }
 
-template class MemoryRegionMapImpl<memory::shared::AtomicIndirectorReal>;
-template class MemoryRegionMapImpl<memory::shared::AtomicIndirectorMock>;
+template class MemoryRegionMapImpl<concurrency::AtomicIndirectorReal>;
+template class MemoryRegionMapImpl<concurrency::AtomicIndirectorMock>;
 
 }  // namespace score::memory::shared::detail

@@ -26,10 +26,10 @@ cc_library(
         "hash_calculator_factory.h",
         "safe_hash_calculator_factory.h",
     ],
+    tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/hash/code/core/factory",
-        "@score_baselibs//score/hash/code/openssl:openssl_cal",
     ],
 )
 

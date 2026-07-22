@@ -35,7 +35,7 @@ cc_library(
     visibility = ["@score_baselibs//score/hash:__subpackages__"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log",
         "@score_baselibs//score/result",
     ],
 )
