@@ -13,7 +13,7 @@
 #ifndef SCORE_LIB_UTILS_MEYER_SINGLETON_MEYER_SINGLETON_H
 #define SCORE_LIB_UTILS_MEYER_SINGLETON_MEYER_SINGLETON_H
 
-#include "score/memory/shared/atomic_indirector.h"
+#include "score/concurrency/atomic_indirector.h"
 
 #include <score/assert.hpp>
 
@@ -78,7 +78,7 @@ enum class InitializationState
 ///
 /// We therefore store an atomic pointer to the static object which is loaded by any thread which wants to access the
 /// static object, creating a compiler barrier / fence which prevents reordering.
-template <typename Object, template <class> class AtomicIndirectorType = memory::shared::AtomicIndirectorReal>
+template <typename Object, template <class> class AtomicIndirectorType = concurrency::AtomicIndirectorReal>
 class MeyerSingleton
 {
     // The point of a singleton is to have a single instance per process! Therefore, the object type should not be
