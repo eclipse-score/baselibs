@@ -377,7 +377,7 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
     class ControlBlock
     {
       public:
-        explicit ControlBlock(const std::size_t id) noexcept : mutex{}, alreadyAllocatedBytes{}, memoryResourceProxy{id}
+        explicit ControlBlock(const std::size_t id) noexcept : alreadyAllocatedBytes{}, memoryResourceProxy{id}
         {
         }
 
@@ -385,8 +385,6 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
         // be private.".
         // Rationale: There are no class invariants to maintain which could be violated by directly accessing these
         // member variables.
-        // coverity[autosar_cpp14_m11_0_1_violation]
-        score::os::InterprocessMutex mutex;
         // coverity[autosar_cpp14_m11_0_1_violation]
         std::atomic<std::size_t> alreadyAllocatedBytes;
         // coverity[autosar_cpp14_m11_0_1_violation]
@@ -416,6 +414,8 @@ class SharedMemoryResource : public ISharedMemoryResource, public std::enable_sh
     void* start_;
 
     void* do_allocate(const std::size_t bytes, const std::size_t alignment) override;
+    template <template <class> class AtomicIndirectorType>
+    void* do_allocate_with_indirector(const std::size_t bytes, const std::size_t alignment);
     void do_deallocate(void*, std::size_t bytes, std::size_t alignment) override;
     // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class method (Ticket-234468)
     bool do_is_equal(const memory_resource& other) const noexcept override;

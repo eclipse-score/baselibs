@@ -12,6 +12,7 @@
  ********************************************************************************/
 #include "score/memory/shared/shared_memory_resource.h"
 #include "score/language/safecpp/string_view/zstring_view.h"
+#include "score/concurrency/atomic_indirector.h"
 #include "score/memory/shared/memory_resource_proxy.h"
 #include "score/memory/shared/memory_resource_registry.h"
 #include "score/memory/shared/pointer_arithmetic_util.h"
@@ -688,50 +689,108 @@ auto SharedMemoryResource::getMemoryResourceProxy() noexcept -> const MemoryReso
 
 auto SharedMemoryResource::do_allocate(const std::size_t bytes, const std::size_t alignment) -> void*
 {
-    std::lock_guard<score::os::InterprocessMutex> lock(this->control_block_->mutex);
+    return do_allocate_with_indirector<score::concurrency::AtomicIndirectorReal>(bytes, alignment);
+}
+
+template <template <class> class AtomicIndirectorType>
+auto SharedMemoryResource::do_allocate_with_indirector(const std::size_t bytes, const std::size_t alignment) -> void*
+{
     /**
      * For the proof of concept we agreed to use a monotonic allocation algorithm.
      * So there is no need for any fancy logic.
+     *
+     * The bump pointer (alreadyAllocatedBytes) is advanced with a lock-free compare-exchange
+     * loop instead of a process-shared mutex. A process-shared mutex has many downsides:
+     * - Even if it is accessed from processes of the same OS instance, if one of the processes
+     *   dies, the mutex is in an undefined state, which needs recovery.
+     * - Depending from what type of memory the SharedMemoryObject has been created, an
+     *   InterprocessMutex might not be supported. I.e. OS might not support an InterprocessMutex
+     *   in device specific memory. But we have use cases for such memory and don't want to
+     *   restrict.
+     * - We also have use cases for SharedMemory being shared across different OS instances (i.e.
+     *   interVM shared memory). There we can't use an OS specific InterprocessMutex stored in
+     *   shared-memory at all.
      */
-    const std::size_t already_allocated_bytes = this->control_block_->alreadyAllocatedBytes.load();
-    void* const allocation_start_address =
-        // In our architecture we have a one-to-one mapping between pointers and integral values.
-        // Therefore, casting between the two is well-defined.
-        // The base_adress_ points to the start of the memory arena for the allocation and alreadyAllocatedBytes is
-        // ensured by this class to not exceed the size of the memory arena.
-        // Therefore, the resulting pointer will always point into the memory arena.
-        // In C++23 std::start_lifetime_as_array can be used to inform the compiler.
-        // NOLINTNEXTLINE(score-banned-function) see above
-        AddOffsetToPointer(this->base_address_, already_allocated_bytes);
+
+    constexpr std::size_t max_retries = 32U;
+
     // In our architecture we have a one-to-one mapping between pointers and integral values.
     // Therefore, casting between the two is well-defined.
     // This pointer is not dereferenced.
     // NOLINTNEXTLINE(score-banned-function) see above
     void* const allocation_end_address = AddOffsetToPointer(this->base_address_, virtual_address_space_to_reserve_);
-    void* const new_address_aligned =
-        detail::do_allocation_algorithm(allocation_start_address, allocation_end_address, bytes, alignment);
 
-    if (new_address_aligned == nullptr)
+    std::size_t already_allocated_bytes =
+        AtomicIndirectorType<std::size_t>::load(this->control_block_->alreadyAllocatedBytes, std::memory_order_acquire);
+
+    for (std::size_t retry_count = 0U; retry_count < max_retries; ++retry_count)
     {
-        score::mw::log::LogFatal("shm")
-            << "Cannot allocate shared memory block of size" << bytes << "with alignment " << alignment
-            << " at: ["
-            // In our architecture we have a one-to-one mapping between pointers and integral values.
-            // Therefore, casting between the two is well-defined.
-            // The resulting pointer is used for logging and is not dereferenced.
+        void* const allocation_start_address =
+            // The base_address_ points to the start of the memory arena for the allocation and
+            // alreadyAllocatedBytes is ensured by this class to not exceed the size of the memory arena.
+            // Therefore, the resulting pointer will always point into the memory arena.
             // NOLINTNEXTLINE(score-banned-function) see above
-            << PointerToLogValue(allocation_start_address) << ":" << PointerToLogValue(allocation_end_address)
-            << "]. Does not fit within shared memory segment: [" << PointerToLogValue(this->base_address_) << ":"
-            << PointerToLogValue(this->getEndAddress()) << "]. Already allocated bytes: " << already_allocated_bytes
-            << ". Virtual address space to reserve: " << virtual_address_space_to_reserve_;
-        std::terminate();
-    }
-    const auto padding = SubtractPointersBytes(new_address_aligned, allocation_start_address);
+            AddOffsetToPointer(this->base_address_, already_allocated_bytes);
 
-    const auto total_allocated_bytes = safe_math::Add(bytes, padding).value();
-    this->control_block_->alreadyAllocatedBytes += total_allocated_bytes;
-    return new_address_aligned;
+        void* const new_address_aligned =
+            detail::do_allocation_algorithm(allocation_start_address,
+                                            allocation_end_address,
+                                            bytes,
+                                            alignment);
+
+        if (new_address_aligned == nullptr)
+        {
+            score::mw::log::LogFatal("shm")
+                << "Cannot allocate shared memory block of size " << bytes
+                << " with alignment " << alignment
+                << " at: ["
+                // The resulting pointer is used for logging and is not dereferenced.
+                // NOLINTNEXTLINE(score-banned-function) see above
+                << PointerToLogValue(allocation_start_address) << ":"
+                << PointerToLogValue(allocation_end_address)
+                << "]. Does not fit within shared memory segment: ["
+                << PointerToLogValue(this->base_address_) << ":"
+                << PointerToLogValue(this->getEndAddress())
+                << "]. Already allocated bytes: " << already_allocated_bytes
+                << ". Virtual address space to reserve: "
+                << virtual_address_space_to_reserve_;
+            std::terminate();
+        }
+
+        const auto padding =
+            SubtractPointersBytes(new_address_aligned, allocation_start_address);
+
+        const auto total_allocated_bytes =
+            safe_math::Add(bytes, padding).value();
+
+        const std::size_t new_already_allocated_bytes =
+            safe_math::Add(already_allocated_bytes, total_allocated_bytes).value();
+
+        // Atomically publish the advanced bump pointer. If another allocator updated the
+        // bump pointer first, compare_exchange_weak updates already_allocated_bytes with the
+        // latest value and the next loop iteration recalculates the allocation.
+        if (AtomicIndirectorType<std::size_t>::compare_exchange_weak(
+            this->control_block_->alreadyAllocatedBytes,
+                already_allocated_bytes,
+                new_already_allocated_bytes,
+                std::memory_order_acq_rel,
+                std::memory_order_acquire))
+        {
+            return new_address_aligned;
+        }
+    }
+
+    score::mw::log::LogFatal("shm")
+        << "Failed to reserve shared memory after " << max_retries << " attempts.";
+    std::terminate();
 }
+
+template void* SharedMemoryResource::do_allocate_with_indirector<score::concurrency::AtomicIndirectorReal>(
+    const std::size_t,
+    const std::size_t);
+template void* SharedMemoryResource::do_allocate_with_indirector<score::concurrency::AtomicIndirectorMock>(
+    const std::size_t,
+    const std::size_t);
 
 auto SharedMemoryResource::getBaseAddress() const noexcept -> void*
 {
