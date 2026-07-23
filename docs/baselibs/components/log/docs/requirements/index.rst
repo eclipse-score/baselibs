@@ -31,7 +31,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration File
-   :id: comp_req__log_frontend__cfg_file
+   :id: comp_req__log__cfg_file
    :status: valid
    :derived_from:
       feat_req__logging__config_log_level,
@@ -57,7 +57,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration File Location
-   :id: comp_req__log_frontend__cfg_file_loc
+   :id: comp_req__log__cfg_file_loc
    :status: valid
    :derived_from: feat_req__logging__config_fallback
    :reqtype: Functional
@@ -77,7 +77,7 @@ Configuration
 
 
 .. comp_req:: Logging Global Configuration File
-   :id: comp_req__log_frontend__global_config
+   :id: comp_req__log__global_config
    :status: valid
    :derived_from: feat_req__logging__config_fallback
    :reqtype: Functional
@@ -94,7 +94,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration File Defaults
-   :id: comp_req__log_frontend__cfg_defaults
+   :id: comp_req__log__cfg_defaults
    :status: valid
    :derived_from: feat_req__logging__config_fallback
    :reqtype: Functional
@@ -111,7 +111,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration Precedence 
-   :id: comp_req__log_frontend__cfg_precedence
+   :id: comp_req__log__cfg_precedence
    :status: valid
    :derived_from: feat_req__logging__config_fallback
    :reqtype: Functional
@@ -130,7 +130,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration Syntax Errors Handling
-   :id: comp_req__log_frontend__cfg_syntax_err
+   :id: comp_req__log__cfg_syntax_err
    :status: valid
    :derived_from: feat_req__logging__error_handling_recoverable
    :reqtype: Functional
@@ -145,7 +145,7 @@ Configuration
 
 
 .. comp_req:: Logging Configuration Invalid Settings Handling
-   :id: comp_req__log_frontend__cfg_invalid
+   :id: comp_req__log__cfg_invalid
    :status: valid
    :derived_from: feat_req__logging__error_handling_recoverable
    :reqtype: Functional
@@ -164,7 +164,7 @@ Configuration Fields
 --------------------
 
 .. comp_req:: Logging Configuration Log Storage Device
-   :id: comp_req__log_frontend__cfg_sink_device
+   :id: comp_req__log__cfg_sink_device
    :status: valid
    :derived_from: feat_req__logging__sink_device
    :reqtype: Functional
@@ -179,7 +179,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Multiple Log Storage Devices
-   :id: comp_req__log_frontend__cfg_sink_multi_dev
+   :id: comp_req__log__cfg_sink_multi_dev
    :status: valid
    :derived_from: feat_req__logging__sink_multiple_device
    :reqtype: Functional
@@ -193,7 +193,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Log Storage Strategy
-   :id: comp_req__log_frontend__cfg_sink_strategy
+   :id: comp_req__log__cfg_sink_strategy
    :status: valid
    :derived_from: feat_req__logging__sink_strategy
    :reqtype: Functional
@@ -207,7 +207,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Internal Buffer Size
-   :id: comp_req__log_frontend__cfg_buffer_size
+   :id: comp_req__log__cfg_buffer_size
    :status: valid
    :derived_from: feat_req__logging__config_buffer_size
    :reqtype: Functional
@@ -221,7 +221,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Log Storage Size
-   :id: comp_req__log_frontend__cfg_storage_size
+   :id: comp_req__log__cfg_storage_size
    :status: valid
    :derived_from: feat_req__logging__config_storage_size
    :reqtype: Functional
@@ -236,7 +236,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Log ECU Identifier
-   :id: comp_req__log_frontend__cfg_log_ecu_id
+   :id: comp_req__log__cfg_log_ecu_id
    :status: valid
    :derived_from: feat_req__logging__entity_identifier, feat_req__logging__config_entity_id
    :reqtype: Functional
@@ -251,7 +251,7 @@ Configuration Fields
 
 
 .. comp_req:: Logging Configuration Log Application Identifier
-   :id: comp_req__log_frontend__cfg_log_app_id
+   :id: comp_req__log__cfg_log_app_id
    :status: valid
    :derived_from: feat_req__logging__entity_identifier, feat_req__logging__config_entity_id
    :reqtype: Functional
@@ -269,7 +269,7 @@ Log Handling
 ============
 
 .. comp_req:: Log Prioritization
-   :id: comp_req__log_frontend__log_prior
+   :id: comp_req__log__log_prior
    :status: valid
    :derived_from: feat_req__logging__prioritization
    :reqtype: Functional
@@ -294,7 +294,7 @@ Log Handling
 
 
 .. comp_req:: Early Startup Logging
-   :id: comp_req__log_frontend__early_startup
+   :id: comp_req__log__early_startup
    :status: valid
    :derived_from: feat_req__logging__early_startup
    :reqtype: Functional
@@ -309,7 +309,7 @@ Log Handling
 
 
 .. comp_req:: Message Loss Detection
-   :id: comp_req__log_frontend__log_loss_detect
+   :id: comp_req__log__log_loss_detect
    :status: valid
    :derived_from: feat_req__logging__message_loss_detection
    :reqtype: Functional
@@ -323,7 +323,7 @@ Log Handling
 
 
 .. comp_req:: Context-Specific Log Level
-   :id: comp_req__log_frontend__context_log_level
+   :id: comp_req__log__context_log_level
    :status: valid
    :derived_from: feat_req__logging__context_log_level
    :reqtype: Functional
@@ -338,7 +338,7 @@ Log Handling
 
 
 .. comp_req:: Boot Logging
-   :id: comp_req__log_frontend__boot_logging
+   :id: comp_req__log__boot_logging
    :status: valid
    :derived_from: feat_req__logging__boot_logging
    :reqtype: Functional
@@ -353,7 +353,7 @@ Log Handling
 
 
 .. comp_req:: Custom Log Types
-   :id: comp_req__log_frontend__cfg_custom_types
+   :id: comp_req__log__cfg_custom_types
    :status: valid
    :derived_from: feat_req__logging__config_custom_types
    :reqtype: Functional
@@ -367,7 +367,7 @@ Log Handling
 
 
 .. comp_req:: Non-Recoverable Error Handling Silent
-   :id: comp_req__log_frontend__err_nonrec_silent
+   :id: comp_req__log__err_nonrec_silent
    :status: valid
    :derived_from: feat_req__log__err_handling_nonrec
    :reqtype: Functional
@@ -382,7 +382,7 @@ Log Handling
     
     
 .. comp_req:: Non-Recoverable Error Handling Reporting
-   :id: comp_req__log_frontend__err_nonrec_report
+   :id: comp_req__log__err_nonrec_report
    :status: valid
    :derived_from: feat_req__log__err_handling_nonrec
    :reqtype: Functional
@@ -400,7 +400,7 @@ Log Message Format
 ==================
 
 .. comp_req:: Local Timestamp
-   :id: comp_req__log_frontend__timestamp_local
+   :id: comp_req__log__timestamp_local
    :status: valid
    :derived_from: feat_req__logging__timestamping_local
    :reqtype: Functional
@@ -414,7 +414,7 @@ Log Message Format
 
 
 .. comp_req:: Original Timestamp
-   :id: comp_req__log_frontend__timestamp_orig
+   :id: comp_req__log__timestamp_orig
    :status: valid
    :derived_from: feat_req__logging__timestamping_original
    :reqtype: Functional
@@ -429,7 +429,7 @@ Log Message Format
 
 
 .. comp_req:: Timestamp Synchronization
-   :id: comp_req__log_frontend__timestamp_sync
+   :id: comp_req__log__timestamp_sync
    :status: valid
    :derived_from: feat_req__logging__timestamping_sync
    :reqtype: Functional
@@ -447,7 +447,7 @@ Console Backend
 ===============
 
 .. comp_req:: Console Backend Stdout Sink
-   :id: comp_req__log_frontend__console_backend
+   :id: comp_req__log__console_backend
    :status: valid
    :derived_from: feat_req__logging__log_sinks_stdout
    :reqtype: Functional
@@ -464,7 +464,7 @@ Compatibility
 =============
 
 .. comp_req:: Compatibility Supported Operating Systems
-   :id: comp_req__log_frontend__compat_os
+   :id: comp_req__log__compat_os
    :status: valid
    :derived_from: feat_req__logging__compat_os
    :reqtype: Interface
@@ -478,7 +478,7 @@ Compatibility
 
 
 .. comp_req:: Compatibility Supported Programming Languages
-   :id: comp_req__log_frontend__compat_languages
+   :id: comp_req__log__compat_languages
    :status: valid
    :derived_from: feat_req__logging__compat_languages
    :reqtype: Interface
@@ -495,7 +495,7 @@ Non-Functional Requirements
 ===========================
 
 .. comp_req:: Storage Resource Consumption
-   :id: comp_req__log_frontend__resource_storage
+   :id: comp_req__log__resource_storage
    :status: valid
    :derived_from: feat_req__logging__resource_storage
    :reqtype: Non-Functional
@@ -509,7 +509,7 @@ Non-Functional Requirements
 
 
 .. comp_req:: Safety System Classification
-   :id: comp_req__log_frontend__system_class
+   :id: comp_req__log__system_class
    :status: valid
    :derived_from: feat_req__logging__system_class
    :reqtype: Non-Functional
