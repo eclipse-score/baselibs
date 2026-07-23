@@ -1,0 +1,49 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Bazel Lockfile Check
+on:
+  pull_request:
+    paths:
+      - 'MODULE.bazel'
+      - 'MODULE.bazel.lock'
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+jobs:
+  validate-lockfile:
+    name: Verify Lockfile Correctness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout:v4
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@v0.13.0
+        with:
+          bazelisk-version: true
+          repository-cache: true
+      - name: Assert Lockfile matches Cargo State
+        id: run-check
+        run: bazel mod deps --lockfile_mode=error
+      - name: Instructions on Failure
+        if: failure() && steps.run-check.outcome == 'failure'
+        run: |
+          echo "::error title=Lockfile Out of Sync::Your MODULE.bazel.lock does not match your Cargo configuration changes!"
+          echo "=============================================================================="
+          echo " HOW TO FIX THIS BUILD:"
+          echo "=============================================================================="
+          echo " Your recent Cargo dependency changes broke the Bazel lockfile state."
+          echo " Please run the following command locally in your repository root:"
+          echo ""
+          echo "   bazel mod deps --lockfile_mode=update"
+          echo ""
+          echo " Once completed, commit and push the updated 'MODULE.bazel.lock'."
+          echo "=============================================================================="
