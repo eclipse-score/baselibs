@@ -36,7 +36,7 @@ using score::concurrency::AtomicMock;
 class MemoryRegionMapAttorney
 {
   public:
-    using MemoryRegionMapMock = detail::MemoryRegionMapImpl<AtomicIndirectorMock>;
+    using MemoryRegionMapMock = detail::MemoryRegionMapImpl<concurrency::AtomicIndirectorMock>;
     using RegionVersionRefCountType = MemoryRegionMapMock::RegionVersionRefCountType;
 
     constexpr static auto VERSION_COUNT = MemoryRegionMapMock::VERSION_COUNT;
@@ -79,12 +79,12 @@ class MemoryRegionMapTest : public ::testing::Test
 class MockMemoryRegionMapTest : public MemoryRegionMapTest
 {
   protected:
-    using MemoryRegionMapMock = detail::MemoryRegionMapImpl<AtomicIndirectorMock>;
+    using MemoryRegionMapMock = detail::MemoryRegionMapImpl<concurrency::AtomicIndirectorMock>;
     using AtomicType = MemoryRegionMapAttorney::RegionVersionRefCountType;
 
     MockMemoryRegionMapTest() : unit_{}, attorney_{unit_}, atomic_mock_{}
     {
-        AtomicIndirectorMock<AtomicType>::SetMockObject(&atomic_mock_);
+        concurrency::AtomicIndirectorMock<AtomicType>::SetMockObject(&atomic_mock_);
 
         // We set the ref count of all versions to 0 because the version acquisition algorithm treats unused versions
         // (i.e. versions which still have the default initial ref count value) differently.
@@ -93,7 +93,7 @@ class MockMemoryRegionMapTest : public MemoryRegionMapTest
 
     ~MockMemoryRegionMapTest()
     {
-        AtomicIndirectorMock<AtomicType>::SetMockObject(nullptr);
+        concurrency::AtomicIndirectorMock<AtomicType>::SetMockObject(nullptr);
     }
 
     void ExpectAcquireRegionVersionForOverwriteCannotAcquireRegion(bool is_death_test = false)
@@ -142,7 +142,7 @@ class MockMemoryRegionMapTest : public MemoryRegionMapTest
 
     MemoryRegionMapMock unit_;
     MemoryRegionMapAttorney attorney_;
-    AtomicMock<AtomicType> atomic_mock_;
+    concurrency::AtomicMock<AtomicType> atomic_mock_;
 };
 
 TEST_F(MemoryRegionMapTest, ReturnsNullMemoryBoundsIfKnownRegionsEmpty)
