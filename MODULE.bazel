@@ -16,6 +16,11 @@ module(name = "score_baselibs")
 ## Configure the C++ toolchain
 
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
+git_override(
+    module_name = "score_bazel_cpp_toolchains",
+    commit = "ea0a49808e82c9ec462e6cf752a57fbac4edd888",
+    remote = "https://github.com/eclipse-score/bazel_cpp_toolchains.git",
+)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -48,10 +53,26 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+gcc.toolchain(
+    name = "score_gcc_x86_64_toolchain_gcc15",
+    target_cpu = "x86_64",
+    target_os = "linux",
+    use_default_package = True,
+    version = "15.3.0",
+)
+gcc.toolchain(
+    name = "score_gcc_aarch64_toolchain_gcc15",
+    target_cpu = "aarch64",
+    target_os = "linux",
+    use_default_package = True,
+    version = "15.3.0",
+)
 use_repo(
     gcc,
     "score_gcc_aarch64_toolchain",
+    "score_gcc_aarch64_toolchain_gcc15",
     "score_gcc_x86_64_toolchain",
+    "score_gcc_x86_64_toolchain_gcc15",
     "score_qcc_aarch64_toolchain",
     "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
@@ -241,5 +262,5 @@ git_override(
 # Constraint values for specifying platforms and toolchains
 #
 #############################################################
-bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
