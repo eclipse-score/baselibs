@@ -1,0 +1,26 @@
+/// Recursive Node schema — no file_identifier.
+///
+/// Used to investigate whether vtable deduplication across nested tables
+/// causes a negative root soffset at bytes [4..7], bypassing the
+/// printable-ASCII guard in GetVersion.
+///
+/// Every Node table has the same two offset fields (version_info, child),
+/// so all serialized Node objects share an identical vtable layout.
+/// When flatc serializes a chain of Nodes (root → child1 → child2) the builder
+/// may deduplicate vtables, placing a negative soffset in the root table —
+/// which lands in bytes [4..7] of the final buffer.
+include "buffer_version.fbs";
+
+namespace my_component.dedup_node;
+
+table Node {
+    /// Buffer version — MUST be field 0.
+    version_info:score.flatbuffers.BufferVersion;
+
+    /// Recursive child — same offset-field type as version_info so all
+    /// Node tables share an identical vtable layout.
+    child:Node;
+}
+
+root_type Node;
+// Intentionally no file_identifier directive.

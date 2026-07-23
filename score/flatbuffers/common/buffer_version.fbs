@@ -1,0 +1,73 @@
+// *******************************************************************************
+// Copyright (c) 2026 Contributors to the Eclipse Foundation
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information regarding copyright ownership.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Apache License Version 2.0 which is available at
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// SPDX-License-Identifier: Apache-2.0
+// *******************************************************************************
+
+/// Shared buffer identification table.
+/// Included by any schema that wants to support universal buffer identification.
+/// All instances use the same structure and zero defaults.
+///
+/// Zero defaults ensure that non-zero version values injected at serialization
+/// time will always be explicitly stored in the binary (they differ from the
+/// default), enabling a universal non-template reader.
+///
+/// Usage
+/// -----
+/// 1. Include this file at the top of your schema:
+///
+///      include "buffer_version.fbs";
+///
+/// 2. Declare `version_info` as the FIRST field of your root table:
+///
+///      table MyConfig {
+///          version_info:score.flatbuffers.BufferVersion;  // MUST be field 0
+///          // ... application fields follow
+///      }
+///
+/// The field MUST be named `version_info` and MUST occupy vtable slot 0 (i.e.
+/// be the first declared field, or use the `(id: 0)` attribute explicitly).
+/// The universal buffer utilities (`score::flatbuffers::GetVersion`
+/// and `score::flatbuffers::VerifyVersion`) rely on both the
+/// field name and its vtable slot: a different name or a non-zero slot will
+/// cause buffer identification to fail at runtime.
+///
+/// 3. Declare a file_identifier for your schema, e.g.:
+///
+///      file_identifier "DEMO";
+///
+/// If file_identifier is missing, `kVerificationFailed` will be returned by
+/// (`score::flatbuffers::GetVersion` and `score::flatbuffers::VerifyVersion`)
+/// at runtime. 
+/// Note: This check is only best effort and may not detect the missing identifier.
+/// Not detectable cases can occur when: root tables contain >= 8214 fields, or deduplicated 
+/// root vtables where the root table schema is repeated in a subtable.
+
+namespace score.flatbuffers;
+
+/// Open for extension: additional fields may be appended in future revisions.
+/// FlatBuffers forward/backward compatibility guarantees that existing readers
+/// will safely ignore unknown fields added here.
+table BufferVersion {
+    /// Type marker used to detect wrong-field placement at runtime.
+    ///
+    /// The FlatBuffers verifier is structurally type-blind: it checks only that
+    /// offsets are in-bounds and sizes are valid, not that the data at a given
+    /// vtable slot actually belongs to the expected table type. A non-scalar 
+    /// field closes this gap. The universal reader (`GetVersion`)
+    /// rejects any buffer where `type_marker != "BV"` with
+    /// `ErrorCode::kVerificationFailed`, catching cases where
+    /// `version_info` was accidentally placed in a non-zero vtable slot and
+    /// the verifier mistook another field's bytes as a valid `BufferVersion`.
+    type_marker:string;
+
+    major_version:uint16 = 0;
+    minor_version:uint16 = 0;
+}

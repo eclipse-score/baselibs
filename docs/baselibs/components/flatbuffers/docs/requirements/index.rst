@@ -27,9 +27,9 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Code Generation for C++
    :id: tool_req__flatbuffers_codegen_cpp
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety, feat_req__baselibs__multi_language_apis
+   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
    :status: valid
    :implemented: NO
 
@@ -37,9 +37,9 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Code Generation for Rust
    :id: tool_req__flatbuffers_codegen_rust
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety, feat_req__baselibs__multi_language_apis
+   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
    :status: valid
    :implemented: NO
 
@@ -47,7 +47,7 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Code Generation for Python
    :id: tool_req__flatbuffers_codegen_python
-   :security: NO
+   :security: YES
    :safety: QM
    :satisfies: feat_req__baselibs__flatbuffers_library
    :status: valid
@@ -60,9 +60,9 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Binary Creation from JSON
    :id: tool_req__flatbuffers_tooling_json_to_bin
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :satisfies: feat_req__baselibs__flatbuffers_library
    :status: valid
    :implemented: NO
 
@@ -72,7 +72,7 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Data Constraint Validation
    :id: tool_req__flatbuffers_tooling_data_validate
-   :security: NO
+   :security: YES
    :safety: QM
    :satisfies: feat_req__baselibs__flatbuffers_library
    :status: valid
@@ -91,7 +91,7 @@ FlatBuffers Tooling Requirements
 
 .. tool_req:: FlatBuffers Schema Evolution Check
    :id: tool_req__flatbuffers_tooling_evolution
-   :security: NO
+   :security: YES
    :safety: QM
    :satisfies: feat_req__baselibs__flatbuffers_library
    :status: valid
@@ -112,9 +112,9 @@ FlatBuffers Library Requirements
 .. comp_req:: FlatBuffers Serialization
    :id: comp_req__flatbuffers__serialization
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
    :satisfied_by: comp__baselibs_flatbuffers
 
@@ -127,9 +127,9 @@ FlatBuffers Library Requirements
 .. comp_req:: FlatBuffers Access
    :id: comp_req__flatbuffers__access
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
    :satisfied_by: comp__baselibs_flatbuffers
 
@@ -141,9 +141,9 @@ FlatBuffers Library Requirements
 .. comp_req:: FlatBuffers Verification
    :id: comp_req__flatbuffers__verification
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
    :satisfied_by: comp__baselibs_flatbuffers
 
@@ -159,10 +159,11 @@ Buffer Identification and Versioning
 .. comp_req:: Common Buffer Identification
    :id: comp_req__flatbuffers__buffer_identification
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
+   :testcovered: YES
    :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in buffer identification mechanism consisting
@@ -171,10 +172,11 @@ Buffer Identification and Versioning
 .. comp_req:: Common Version Check
    :id: comp_req__flatbuffers__version_check
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library
    :status: valid
+   :testcovered: YES
    :satisfied_by: comp__baselibs_flatbuffers
 
    The FlatBuffers-Library shall provide a common opt-in version check mechanism that validates
@@ -186,9 +188,9 @@ Safety Impact
 .. comp_req:: FlatBuffers library ASIL level
    :id: comp_req__flatbuffers__asil
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
    :status: valid
    :satisfied_by: comp__baselibs_flatbuffers
 

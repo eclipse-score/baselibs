@@ -71,7 +71,7 @@ jobs:
         if: matrix.bazel-config == 'bl-x86_64-linux'
         run: |
           # Test that baselibs works when consumed as an external module dependency
-          cd examples/integration && bazel build //... && bazel mod deps --lockfile_mode=update
+          cd examples/integration && bazel build //... && bazel test //... && bazel mod deps --lockfile_mode=update
       - name: Upload test logs on failure
         if: failure()
         uses: actions/upload-artifact@v7

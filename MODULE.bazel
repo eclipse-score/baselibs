@@ -99,14 +99,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = Tr
 
 bazel_dep(name = "score_docs_as_code", version = "4.6.1", dev_dependency = True)
 bazel_dep(name = "score_process", version = "2.0.1", dev_dependency = True)
-bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
-
-# Needed until new version is released with https://github.com/eclipse-score/tooling/pull/294 included
-git_override(
-    module_name = "score_tooling",
-    commit = "2ea61535696f61a4ba0d49d829256915557dcfe7",
-    remote = "https://github.com/eclipse-score/tooling",
-)
+bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 
 # score_tooling declares trlc and lobster as regular bazel_deps with their own
 # git_override. Overrides in non-root modules are ignored, so the root module
@@ -125,9 +118,17 @@ git_override(
 
 bazel_dep(name = "score_platform", version = "0.6.2", dev_dependency = True)
 
+# Needed until a release of score_platform includes
+# https://github.com/eclipse-score/score/pull/3071 (merged to main).
+git_override(
+    module_name = "score_platform",
+    commit = "c97388c6da1f5b3233d4b73bffa196ff75e801cd",
+    remote = "https://github.com/eclipse-score/score",
+)
+
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
+bazel_dep(name = "rules_python", version = "1.8.3")
 
 PYTHON_VERSION = "3.12"
 

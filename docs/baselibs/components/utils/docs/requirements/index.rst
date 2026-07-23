@@ -29,9 +29,9 @@ Functional Requirements
 .. comp_req:: Base64 Encoding and Decoding
    :id: comp_req__utils__base64
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_utils
 
@@ -40,9 +40,9 @@ Functional Requirements
 .. comp_req:: Scoped Operation Management
    :id: comp_req__utils__scoped_operation
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_utils
 
@@ -54,9 +54,9 @@ Non-Functional Requirements
 .. comp_req:: Deterministic Behavior
    :id: comp_req__utils__deterministic_behavior
    :reqtype: Non-Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__core_utilities, feat_req__baselibs__safety
+   :derived_from: feat_req__baselibs__utils_library
    :status: valid
    :satisfied_by: comp__baselibs_utils
 

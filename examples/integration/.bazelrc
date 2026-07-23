@@ -17,3 +17,5 @@ common --registry=https://bcr.bazel.build
 # Required baselibs configuration settings
 common --@score_baselibs//score/json:base_library=nlohmann
 common --@score_baselibs//score/memory/shared/flags:use_typedshmd=False
+
+build --cxxopt=-Wno-error=deprecated-declarations

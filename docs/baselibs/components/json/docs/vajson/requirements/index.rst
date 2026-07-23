@@ -32,7 +32,7 @@ In addition, the following VaJson-specific requirements apply:
 .. comp_req:: JSON Validation
    :id: comp_req__vajson__validation
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -44,7 +44,7 @@ In addition, the following VaJson-specific requirements apply:
 .. comp_req:: JSON Deserialization RFC extension trailing commas
    :id: comp_req__vajson__trailing_commas
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -56,7 +56,7 @@ In addition, the following VaJson-specific requirements apply:
 .. comp_req:: JSON Deserialization RFC extension hexadecimal integers
    :id: comp_req__vajson__hex_integers
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -68,7 +68,7 @@ In addition, the following VaJson-specific requirements apply:
 .. comp_req:: Unicode Support
    :id: comp_req__vajson__unicode
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
@@ -82,7 +82,7 @@ Safety Impact
 .. comp_req:: VaJson library ASIL level
    :id: comp_req__vajson__asil
    :reqtype: Functional
-   :security: NO
+   :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
