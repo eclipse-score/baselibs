@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Rust Bridge Detailed Design &#8212; S-CORE Baselibs  documentation</title>
+    <title>Assumptions of Use &#8212; S-CORE Baselibs  documentation</title>
   
   
   
@@ -38,11 +38,11 @@
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
@@ -62,7 +62,7 @@
     <script src="../../../../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
     <script src="../../../../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
     <script src="../../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/log_frontend/docs/detailed_design/rust_bridge_design';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/log/docs/assumptions_of_use/index';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.17.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
@@ -73,8 +73,8 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="Log Frontend Detailed Design" href="log_frontend_design.html" />
-    <link rel="prev" title="Detailed Design" href="index.html" />
+    <link rel="next" title="Detailed Design" href="../detailed_design/index.html" />
+    <link rel="prev" title="log_frontend" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -409,12 +409,8 @@
 
 
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../assumptions_of_use/index.html">Assumptions of Use</a></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Rust Bridge Detailed Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="log_frontend_design.html">Log Frontend Detailed Design</a></li>
-</ul>
-</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Assumptions of Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../detailed_design/index.html">Detailed Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Log Frontend Requirements</a></li>
 </ul>
 </details></li>
@@ -469,10 +465,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">log_frontend</a></li>
     
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Detailed Design</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Rust Bridge Detailed Design</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Assumptions of Use</span></li>
   </ul>
 </nav>
 </div>
@@ -489,37 +482,13 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="rust-bridge-detailed-design">
-<span id="component-detailed-design-log-rust-bridge"></span><h1>Rust Bridge Detailed Design<a class="headerlink" href="#rust-bridge-detailed-design" title="Link to this heading">#</a></h1>
-<section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Link to this heading">#</a></h2>
-<p>The rust log bridge component consists of three units:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">score_log</span></code> - modelled after <code class="docutils literal notranslate"><span class="pre">log</span></code> Rust library.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">score_log_fmt</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">core::fmt</span></code> provided by Rust core library.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">score_log_fmt_macro</span></code> - replacement for macros provided by Rust compiler:
-- <code class="docutils literal notranslate"><span class="pre">score_log_format_args!</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">format_args!</span></code>
-- <code class="docutils literal notranslate"><span class="pre">ScoreDebug</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">Debug</span></code></p></li>
-</ul>
-<p>Most common approach in Rust is that formatting always results in a string.
-This means that the <code class="docutils literal notranslate"><span class="pre">log</span></code> library always receives a pre-formatted string.</p>
-<p>Such approach is incompatible with the expectation that log sink is not always text-based.
-Log component design is no longer string-based, and data frames can consist of multiple types.
-Value is passed along with formatting options to the backend.</p>
-<section id="rationale-behind-decomposition-into-units">
-<h3>Rationale Behind Decomposition into Units<a class="headerlink" href="#rationale-behind-decomposition-into-units" title="Link to this heading">#</a></h3>
-<p>All units provide an interface or an implementation to a well defined functionality.
-Those units are not described in architecture, as they all form a monolithic logging frontend.</p>
-<p>Such frontend shall remain transparent replacement to common functionalities provided by Rust.</p>
-</section>
-</section>
-<section id="static-diagrams-for-unit-interactions">
-<h2>Static Diagrams for Unit Interactions<a class="headerlink" href="#static-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-a5062fe1">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__log__class_diagram">
+  <section id="assumptions-of-use">
+<span id="component-assumptions-of-use-log"></span><h1>Assumptions of Use<a class="headerlink" href="#assumptions-of-use" title="Link to this heading">#</a></h1>
+<div class="need_container docutils container" id="SNCB-fc46a450">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_assumptions_of_use">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Log class diagram</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Log Assumptions of Use</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -534,25 +503,23 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">log</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log_frontend__compat_languages" title="comp_arc_sta__log__class_diagram">comp_req__log_frontend__compat_languages</a>, <a class="reference internal" href="../requirements/index.html#comp_req__log_frontend__cfg_custom_types" title="comp_arc_sta__log__class_diagram">comp_req__log_frontend__cfg_custom_types</a></span></span></div>
+<div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/implementation/implementation_workproducts.html#wp__sw_implementation">wp__sw_implementation</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml">
-<object data="../../../../../_images/plantuml-079a8801a7c306640b5cf01b102b3f31a04b4aa9.svg" type="image/svg+xml" style="width:2069px;height:2569px;background:#FFFFFF;"></object></p>
-</td>
+<tr class="content row-odd"><td class="content" colspan="6"></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_arc_sta__log__class_diagram" title="comp_arc_sta__log__class_diagram">comp_arc_sta__log__class_diagram</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#doc__log_assumptions_of_use" title="doc__log_assumptions_of_use">doc__log_assumptions_of_use</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Package Diagram</span></span></span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Generic Document</span></span></span></div>
 </div>
 </td>
 <td class="footer_right" colspan="2"></td>
@@ -561,14 +528,11 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-</section>
-<section id="dynamic-diagrams-for-unit-interactions">
-<h2>Dynamic Diagrams for Unit Interactions<a class="headerlink" href="#dynamic-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-ba8a7b63">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_op">
+<div class="need_container docutils container" id="SNCB-92824feb">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__log__private_or_undocumented_apis">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Log operation</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Undocumented or Private APIs</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -583,25 +547,52 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log_frontend__compat_languages" title="comp_arc_dyn__log__log_op">comp_req__log_frontend__compat_languages</a>, <a class="reference internal" href="../requirements/index.html#comp_req__log_frontend__cfg_custom_types" title="comp_arc_dyn__log__log_op">comp_req__log_frontend__cfg_custom_types</a></span></span></div>
-</span></div>
+<div class="line"><span></span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml">
-<object data="../../../../../_images/plantuml-b3f5c456adc916ee817797c27e9076e0e4849c1e.svg" type="image/svg+xml" style="width:1302px;height:863px;background:#FFFFFF;"></object></p>
+<tr class="content row-odd"><td class="content" colspan="6"><p>Undocumented or private API from <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> <strong>shall not</strong> be used.</p>
+<p>The public API of <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> is contained in the <code class="docutils literal notranslate"><span class="pre">mw::log</span></code>
+namespace and is annotated with the documentation tag <code class="docutils literal notranslate"><span class="pre">\public</span></code>.
+Everything else is considered part of the private API and <strong>shall not</strong> be
+used.
+Entities from any implementation <code class="docutils literal notranslate"><span class="pre">details</span></code> namespace <strong>shall not</strong> be
+used.</p>
+<p>In the following example, the <code class="docutils literal notranslate"><span class="pre">TextRecorder</span></code> class is part of a detail
+namespace and <strong>shall not</strong> be used directly. It may be used indirectly but
+only though public API:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">mw</span><span class="o">::</span><span class="nn">log</span>
+<span class="p">{</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">details</span>
+<span class="p">{</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TextRecorder</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Recorder</span><span class="w"> </span><span class="c1">// Private undocumented API SHALL NOT be used.</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">};</span>
+
+<span class="p">}</span><span class="w"> </span><span class="c1">// namespace detail</span>
+
+<span class="cm">/*</span>
+<span class="cm">* \public</span>
+<span class="cm">*/</span>
+<span class="n">LogStream</span><span class="w"> </span><span class="n">LogInfo</span><span class="p">();</span><span class="w"> </span><span class="c1">// Public API is OK to be used by Safety-Related Application Software.</span>
+
+<span class="p">}</span><span class="w"> </span><span class="c1">// namespace mw::log</span>
+</pre></div>
+</div>
 </td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_arc_dyn__log__log_op" title="comp_arc_dyn__log__log_op">comp_arc_dyn__log__log_op</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#aou_req__log__private_or_undocumented_apis" title="aou_req__log__private_or_undocumented_apis">aou_req__log__private_or_undocumented_apis</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Sequence Diagram</span></span></span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Assumption of Use Requirement</span></span></span></div>
 </div>
 </td>
 <td class="footer_right" colspan="2"></td>
@@ -610,11 +601,11 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b1618d1b">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_to_level">
+<div class="need_container docutils container" id="SNCB-fa08c906">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__log__unsupported_contexts">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Log to level</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Unsupported Contexts</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -629,25 +620,65 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log_frontend__context_log_level" title="comp_arc_dyn__log__log_to_level">comp_req__log_frontend__context_log_level</a></span></span></div>
-</span></div>
+<div class="line"><span></span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml">
-<object data="../../../../../_images/plantuml-63d57cacb37512aa962a7acdd78d5252a3abdfc2.svg" type="image/svg+xml" style="width:579px;height:217px;background:#FFFFFF;"></object></p>
+<tr class="content row-odd"><td class="content" colspan="6"><p>The log frontend API <strong>shall not</strong> be used from unsupported contexts.</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Threads: mw::log API documented and tagged <code class="docutils literal notranslate"><span class="pre">\thread-safe</span></code> shall be</dt><dd><p>thread safe.</p>
+</dd>
+</dl>
+</li>
+<li><p>Signal handler: mw::log API <strong>shall not</strong> be called from signal handlers.</p></li>
+<li><dl class="simple">
+<dt>Interrupt handler: mw::log API <strong>shall not</strong> be called from interrupt</dt><dd><p>handlers.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>The majority of the mw::log API is thread-safe. Thread-safe API can be
+recognized by the <cite>thread-safe</cite> tag in the documentation:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Logger</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">/// \brief Creates a LogStream to log messages of criticality `Fatal` (highest).</span>
+<span class="w">    </span><span class="c1">///</span>
+<span class="w">    </span><span class="c1">/// \public</span>
+<span class="w">    </span><span class="c1">/// \thread-safe</span>
+<span class="w">    </span><span class="c1">///</span>
+<span class="w">    </span><span class="c1">/// \details Fatal shall be used on errors that cannot be recovered and will lead to an overall failure in the</span>
+<span class="w">    </span><span class="c1">/// system. The message will be logged under the context that was provided on construction.</span>
+<span class="w">    </span><span class="c1">///</span>
+<span class="w">    </span><span class="c1">/// \return LogStream which can be used stream verbose logging messages (will be flushed on destruction)</span>
+<span class="w">    </span><span class="n">log</span><span class="o">::</span><span class="n">LogStream</span><span class="w"> </span><span class="nf">LogFatal</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">LogStream</span></code> classes are <strong>not</strong> thread-safe. For example, the following
+code shows what <strong>not</strong> to do with <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> classes:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">log_stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logger</span><span class="p">.</span><span class="n">LogInfo</span><span class="p">();</span>
+
+<span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="w"> </span><span class="nf">t1</span><span class="p">([</span><span class="o">&amp;</span><span class="p">](){</span>
+<span class="w">    </span><span class="c1">// Do not access log_stream from another thread!</span>
+<span class="w">    </span><span class="n">log_stream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="n">log_stream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
 </td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_arc_dyn__log__log_to_level" title="comp_arc_dyn__log__log_to_level">comp_arc_dyn__log__log_to_level</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#aou_req__log__unsupported_contexts" title="aou_req__log__unsupported_contexts">aou_req__log__unsupported_contexts</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Sequence Diagram</span></span></span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Assumption of Use Requirement</span></span></span></div>
 </div>
 </td>
 <td class="footer_right" colspan="2"></td>
@@ -656,7 +687,177 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-</section>
+<div class="need_container docutils container" id="SNCB-651e4675">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__log__no_static_log">
+<tbody>
+<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
+<div class="line"><span><span class="needs_title"><span class="needs_data">Logging During the C++ Static Storage
+construction and destruction.</span></span></span></div>
+</div>
+</td>
+<td class="head_center" colspan="2"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
+</div>
+</td>
+<td class="head_right" colspan="2"><div class="needs_head_right line-block">
+<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
+</div>
+</td>
+</tr>
+<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
+<div class="line"><span></span></div>
+</div>
+</td>
+<td class="meta" colspan="3"></td>
+</tr>
+<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
+<div><p>mw::log SHALL NOT be used during the C++ static storage</p>
+<p>Safety-Related Platform Software and Safety-Related Application Software
+<strong>shall not</strong> use mw::log during C++ static storage initialization and
+destruction.</p>
+</div></blockquote>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">MyClass</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">MyClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">mw</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">LogInfo</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;MyClass()&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// mw::log SHALL NOT be used before entering main().</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="o">~</span><span class="n">MyClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">mw</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">LogInfo</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;MyClass()&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// mw::log SHALL NOT be used after exiting main().</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="k">static</span><span class="w"> </span><span class="n">MyClass</span><span class="w"> </span><span class="n">singleton</span><span class="p">{};</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#aou_req__log__no_static_log" title="aou_req__log__no_static_log">aou_req__log__no_static_log</a></span></span></div>
+</div>
+</td>
+<td class="footer" colspan="2"><div class="needs_footer line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Assumption of Use Requirement</span></span></span></div>
+</div>
+</td>
+<td class="footer_right" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="need_container docutils container" id="SNCB-2c39176d">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__log__console_logging">
+<tbody>
+<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
+<div class="line"><span><span class="needs_title"><span class="needs_data">Console Logging</span></span></span></div>
+</div>
+</td>
+<td class="head_center" colspan="2"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
+</div>
+</td>
+<td class="head_right" colspan="2"><div class="needs_head_right line-block">
+<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
+</div>
+</td>
+</tr>
+<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
+<div class="line"><span></span></div>
+</div>
+</td>
+<td class="meta" colspan="3"></td>
+</tr>
+<tr class="content row-odd"><td class="content" colspan="6"><p>Console logging <strong>shall not</strong> be used in production.</p></td>
+</tr>
+<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#aou_req__log__console_logging" title="aou_req__log__console_logging">aou_req__log__console_logging</a></span></span></div>
+</div>
+</td>
+<td class="footer" colspan="2"><div class="needs_footer line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Assumption of Use Requirement</span></span></span></div>
+</div>
+</td>
+<td class="footer_right" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="need_container docutils container" id="SNCB-e282e002">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__log__relying_on_logs">
+<tbody>
+<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
+<div class="line"><span><span class="needs_title"><span class="needs_data">Applications relying on logs
+verification/qualification/case.</span></span></span></div>
+</div>
+</td>
+<td class="head_center" colspan="2"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
+</div>
+</td>
+<td class="head_right" colspan="2"><div class="needs_head_right line-block">
+<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
+</div>
+</td>
+</tr>
+<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>0</span></div>
+</span></span></div>
+<div class="line"><span></span></div>
+</div>
+</td>
+<td class="meta" colspan="3"></td>
+</tr>
+<tr class="content row-odd"><td class="content" colspan="6"><p>Applications <strong>shall not</strong> rely on mw::log output for safety
+verification/qualification/case.</p>
+<p>Safety-Related Platform Software and Safety-Related Application Software
+<strong>shall not</strong> rely on the presence of any form of mw::log output for delivering
+their business logic.
+This shall hold even for logs sent out by the application itself.</p>
+<p>Safety-Related Platform Software and Safety-Related Application Software
+behavior <strong>shall not</strong> depend on log messages:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">Step</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Do not rely on log messages!</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">ReceiveStopLogMessage</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="n">ExecuteStopCommand</span><span class="p">();</span>
+
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>This requirement shall be verified for each assigned application. The whole
+dependency tree of <strong>all</strong> included libraries shall be also verified on this
+requirement in the application use case and by application developers.</p>
+</td>
+</tr>
+<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#aou_req__log__relying_on_logs" title="aou_req__log__relying_on_logs">aou_req__log__relying_on_logs</a></span></span></div>
+</div>
+</td>
+<td class="footer" colspan="2"><div class="needs_footer line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Assumption of Use Requirement</span></span></span></div>
+</div>
+</td>
+<td class="footer_right" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </section>
 
 
@@ -670,20 +871,20 @@ Those units are not described in architecture, as they all form a monolithic log
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="../index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Detailed Design</p>
+        <p class="prev-next-title">log_frontend</p>
       </div>
     </a>
     <a class="right-next"
-       href="log_frontend_design.html"
+       href="../detailed_design/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Log Frontend Detailed Design</p>
+        <p class="prev-next-title">Detailed Design</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -699,27 +900,10 @@ Those units are not described in architecture, as they all form a monolithic log
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#description">Description</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale-behind-decomposition-into-units">Rationale Behind Decomposition into Units</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#static-diagrams-for-unit-interactions">Static Diagrams for Unit Interactions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-diagrams-for-unit-interactions">Dynamic Diagrams for Unit Interactions</a></li>
-</ul>
-  </nav></div>
-
-  <div class="sidebar-secondary-item">
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/log_frontend/docs/detailed_design/rust_bridge_design.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/log/docs/assumptions_of_use/index.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
