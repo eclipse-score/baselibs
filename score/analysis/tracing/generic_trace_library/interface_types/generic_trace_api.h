@@ -141,7 +141,7 @@ class GenericTraceAPI
     /// kRingBufferFullRecoverable, kRingBufferNoEmptyElementRecoverable, kRingBufferNoReadyElementRecoverable,
     /// kClientNotFoundRecoverable) in case where trace operation was not successful
     static TraceResult Trace(const TraceClientId client,
-                             const MetaInfoVariants::Type& meta_info,
+                             const MetaInfoVariants::StdType& meta_info,
                              ShmDataChunkList& data,
                              TraceContextId context_id);
 
@@ -161,7 +161,7 @@ class GenericTraceAPI
     /// kRingBufferFullRecoverable, kRingBufferNoEmptyElementRecoverable, kRingBufferNoReadyElementRecoverable,
     /// kClientNotFoundRecoverable) in case where trace operation was not successful
     static TraceResult Trace(const TraceClientId client,
-                             const MetaInfoVariants::Type& meta_info,
+                             const MetaInfoVariants::StdType& meta_info,
                              LocalDataChunkList& data) noexcept;
 
   private:

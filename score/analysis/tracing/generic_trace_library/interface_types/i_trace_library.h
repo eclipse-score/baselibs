@@ -41,11 +41,11 @@ class ITraceLibrary
     virtual RegisterTraceDoneCallBackResult RegisterTraceDoneCB(const TraceClientId trace_client_id,
                                                                 TraceDoneCallBackType trace_done_callback) = 0;
     virtual TraceResult Trace(const TraceClientId trace_client_id,
-                              const MetaInfoVariants::Type& meta_info,
+                              const MetaInfoVariants::StdType& meta_info,
                               ShmDataChunkList& data,
                               TraceContextId context_id) = 0;
     virtual TraceResult Trace(const TraceClientId trace_client_id,
-                              const MetaInfoVariants::Type& meta_info,
+                              const MetaInfoVariants::StdType& meta_info,
                               LocalDataChunkList& data) noexcept = 0;
 };
 
