@@ -223,7 +223,7 @@ bazel_dep(name = "flatbuffers", version = "25.12.19")
 #
 # TODO: Remove once flatbuffers releases a version containing the following fix.
 # https://github.com/google/flatbuffers/commit/2b8e4d3af04a6c38c7a7e19460fc26faa3608c9e
-bazel_dep(name = "grpc", version = "1.76.0")
+bazel_dep(name = "grpc-java", version = "1.75.0.bcr.1")
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
