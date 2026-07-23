@@ -27,6 +27,7 @@ default-members = [
     "score/language/rust/libcpp",
     "score/language/rust/libcpp_derive",
     "score/result/rust",
+    "score/language/rust/memres",
 ]
 # Include tests and examples as a member for IDE support and Bazel builds.
 members = [
@@ -35,6 +36,7 @@ members = [
     "score/allocator",
     "score/pal",
     "score/thread",
+    "score/language/rust/memres",
     "score/log_rust/score_log",
     "score/log_rust/score_log_fmt",
     "score/log_rust/score_log_fmt_macro",
@@ -66,6 +68,7 @@ pal = { path = "score/pal" }
 thread = { path = "score/thread" }
 libcpp = { path = "score/language/rust/libcpp" }
 libcpp_derive = { path = "score/language/rust/libcpp_derive" }
+memres = { path = "score/language/rust/memres" }
 
 [workspace.lints.clippy]
 std_instead_of_core = "warn"
