@@ -64,6 +64,26 @@ class MockMutex
     bool locked_{false};
 };
 
+class MockSharedMutex : public MockMutex
+{
+  public:
+    void lock_shared()
+    {
+        shared_locked_ = true;
+    }
+    void unlock_shared()
+    {
+        shared_locked_ = false;
+    }
+    bool is_shared_locked() const
+    {
+        return shared_locked_;
+    }
+
+  private:
+    bool shared_locked_{false};
+};
+
 class MockMutexParameterized
 {
   public:
