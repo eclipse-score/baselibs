@@ -93,6 +93,16 @@ bazel_dep(name = "rules_rust", version = "0.68.1-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.10")
 
+# TODO: Consume score_crates from the registry once the CXX dependencies are
+# released. Until then, build against the PR branch that adds the vendored
+# `@rust_cxx` overlay and its crates.
+# https://github.com/eclipse-score/score-crates/pull/57
+git_override(
+    module_name = "score_crates",
+    commit = "df190486b24cb569cda6798d4ab6302d66fc9574",
+    remote = "https://github.com/eclipse-score/score-crates.git",
+)
+
 bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = True)
 
 ## Custom Module Loading
@@ -100,6 +110,11 @@ bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = Tr
 bazel_dep(name = "score_docs_as_code", version = "4.6.1", dev_dependency = True)
 bazel_dep(name = "score_process", version = "2.0.2", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
+git_override(
+    module_name = "score_tooling",
+    commit = "82dfe86b7778d633734f342ed44e8143c060c41e",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
 
 # score_tooling declares trlc and lobster as regular bazel_deps with their own
 # git_override. Overrides in non-root modules are ignored, so the root module
