@@ -77,3 +77,13 @@
 #define DISABLE_WARNING_MISSING_DESIGNATED_FIELD_INITIALIZERS
 
 #endif
+
+// clang-format off
+// Emit deprecation warnings from macro aliases by referencing a deprecated type alias.
+#ifndef SCORE_DEPRECATE_MACRO_USE
+#define SCORE_DEPRECATE_MACRO_USE(MESSAGE) SCORE_DEPRECATE_MACRO_USE_IMPL(MESSAGE, __COUNTER__)
+#define SCORE_DEPRECATE_MACRO_USE_IMPL(MESSAGE, ID)                                                      \
+    using score_deprecated_macro_def_##ID [[deprecated(MESSAGE)]] = void;                               \
+    using score_deprecated_macro_use_##ID [[maybe_unused]] = score_deprecated_macro_def_##ID
+#endif
+// clang-format on

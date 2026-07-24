@@ -87,7 +87,7 @@ struct VisitableTypeWithCustomSerialization
     }
 };
 
-STRUCT_VISITABLE(VisitableTypeWithCustomSerialization, integer_val, string_val)
+SCORE_STRUCT_VISITABLE(VisitableTypeWithCustomSerialization, integer_val, string_val)
 
 namespace
 {
@@ -99,7 +99,7 @@ struct NestedType
     std::vector<std::uint8_t> nested_array{};
 };
 
-STRUCT_VISITABLE(NestedType, nested_int, nested_bool, nested_array)
+SCORE_STRUCT_VISITABLE(NestedType, nested_int, nested_bool, nested_array)
 
 struct TypeToSerialize
 {
@@ -108,7 +108,7 @@ struct TypeToSerialize
     NestedType nested_val{};
 };
 
-STRUCT_VISITABLE(TypeToSerialize, integer_val, string_val, nested_val)
+SCORE_STRUCT_VISITABLE(TypeToSerialize, integer_val, string_val, nested_val)
 
 TEST(JsonSerializerTest, TestSerialization)
 {
@@ -235,7 +235,7 @@ struct TypeWithCustomSerializable
     ::completely::different::CustomSerializable custom_type;
 };
 
-STRUCT_VISITABLE(TypeWithCustomSerializable, custom_type)
+SCORE_STRUCT_VISITABLE(TypeWithCustomSerializable, custom_type)
 
 TEST(JsonSerializerTest, UserProvidedDeserialization)
 {
@@ -294,7 +294,7 @@ struct TypeWithOptionalValue
     std::optional<std::uint32_t> optional_val{};
 };
 
-STRUCT_VISITABLE(TypeWithOptionalValue, mandatory_val, never_ever_val, optional_val)
+SCORE_STRUCT_VISITABLE(TypeWithOptionalValue, mandatory_val, never_ever_val, optional_val)
 
 TEST(JsonSerializerTest, DeserializeOptionalFields)
 {

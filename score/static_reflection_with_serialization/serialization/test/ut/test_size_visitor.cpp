@@ -154,8 +154,8 @@ STRUCT_VISITABLE(S1, f1)
 
 using MemcpyType = std::chrono::steady_clock::time_point;
 
-// MEMCPY_SERIALIZABLE(MemcpyType, score::common::visitor::payload_tags::unsigned_le)
-MEMCPY_SERIALIZABLE(payload_tags::unsigned_le, MemcpyType)
+// SCORE_MEMCPY_SERIALIZABLE(MemcpyType, score::common::visitor::payload_tags::unsigned_le)
+SCORE_MEMCPY_SERIALIZABLE(payload_tags::unsigned_le, MemcpyType)
 
 struct CustomFloat
 {
@@ -172,9 +172,9 @@ struct is_custom_float : std::is_same<T, CustomFloat>
 {
 };
 
-MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le,
-                       T,
-                       is_custom_float<std::remove_const_t<T>>::value)
+SCORE_MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le,
+                             T,
+                             is_custom_float<std::remove_const_t<T>>::value)
 
 struct S2
 {
