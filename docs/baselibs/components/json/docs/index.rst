@@ -18,6 +18,7 @@ JSON-Library
 .. document:: JSON-Library
    :id: doc__json
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: component_request

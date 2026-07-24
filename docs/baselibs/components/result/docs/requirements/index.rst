@@ -18,6 +18,7 @@ Requirements
 .. document:: Result Library Requirements
    :id: doc__result_lib_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp
@@ -33,6 +34,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -45,6 +47,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -57,6 +60,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -69,6 +73,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -81,6 +86,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -96,6 +102,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -108,6 +115,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__result_library
    :status: valid
+   :version: 1
    :tags: inspected
    :satisfied_by: comp__baselibs_result
 
@@ -122,6 +130,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall implement error domain classes and error code enumerations according to the library's interface specification.
@@ -132,6 +141,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall check and handle both successful and error states of Result objects before accessing contained values to prevent undefined behavior.
@@ -142,6 +152,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall implement error reaction mechanisms that transition the system to a safe state when error conditions are detected in Result objects.
@@ -152,6 +163,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall implement external synchronization mechanisms (e.g., mutexes, atomic operations, or locks) when accessing or modifying Result objects from multiple threads concurrently, as the library provides no internal thread safety guarantees.
@@ -162,6 +174,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall ensure that error domain objects and referenced resources remain valid throughout the entire lifetime of any dependent Result or Error objects.

@@ -16,6 +16,7 @@
 .. document:: Result Library Requirements Inspection Checklist
    :id: doc__result_library_req_inspection
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_inspect

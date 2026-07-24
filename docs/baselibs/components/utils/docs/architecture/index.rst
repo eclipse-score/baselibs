@@ -18,6 +18,7 @@ Utils Component Architecture
 .. document:: Utils Architecture
    :id: doc__utils_architecture
    :status: valid
+   :version: 1
    :security: YES
    :safety: ASIL_B
    :realizes: wp__component_arch
@@ -34,6 +35,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_utils
    :implements: logic_arc_int__baselibs__utils_base64,logic_arc_int__baselibs__utils_scoped_op
    :belongs_to: feat__baselibs
@@ -49,6 +51,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__utils__base64, comp_req__utils__scoped_operation, comp_req__utils__deterministic_behavior
    :belongs_to: comp__baselibs_utils
 
@@ -66,6 +69,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__utils_base64
 
 .. logic_arc_int_op:: Decode
@@ -73,6 +77,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__utils_base64
 
 .. logic_arc_int_op:: Constructor
@@ -80,6 +85,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__utils_scoped_op
 
 .. logic_arc_int_op:: Destructor
@@ -87,4 +93,5 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__utils_scoped_op

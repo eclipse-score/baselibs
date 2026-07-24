@@ -18,6 +18,7 @@ Concurrency Component Architecture
 .. document:: Concurrency Architecture
    :id: doc__concurrency_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_concurrency
    :implements: logic_arc_int__baselibs__promise, logic_arc_int__baselibs__future, logic_arc_int__baselibs__shared_future, logic_arc_int__baselibs__executor, logic_arc_int__baselibs__task, logic_arc_int__baselibs__task_result, logic_arc_int__baselibs__synchronized_queue, logic_arc_int__baselibs__condition_variable
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__concurrency__task_interface, comp_req__concurrency__task_cancellation, comp_req__concurrency__simple_task, comp_req__concurrency__task_result, comp_req__concurrency__periodic_task, comp_req__concurrency__delayed_task, comp_req__concurrency__executor_interface, comp_req__concurrency__thread_pool, comp_req__concurrency__condition_variable, comp_req__concurrency__interruptible_wait, comp_req__concurrency__notification, comp_req__concurrency__synchronized_queue, comp_req__concurrency__long_running_threads, comp_req__concurrency__memory_usage_control, comp_req__concurrency__memory_reservation, comp_req__concurrency__thread_count_reporting, comp_req__concurrency__operation_timeout, comp_req__concurrency__error_handling
    :belongs_to: comp__baselibs_concurrency
 
@@ -67,6 +70,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__promise
 
 .. logic_arc_int_op:: Set Error
@@ -74,6 +78,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__promise
 
 .. logic_arc_int_op:: Get Future
@@ -81,6 +86,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__promise
 
 .. logic_arc_int_op:: On Abort
@@ -88,6 +94,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__promise
 
 .. logic_arc_int_op:: Get
@@ -95,6 +102,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Wait
@@ -102,6 +110,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Wait For
@@ -109,6 +118,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Wait Until
@@ -116,6 +126,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Valid
@@ -123,6 +134,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Share
@@ -130,6 +142,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Then
@@ -137,6 +150,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__future
 
 .. logic_arc_int_op:: Get Shared
@@ -144,6 +158,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__shared_future
 
 .. logic_arc_int_op:: Copy
@@ -151,6 +166,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__shared_future
 
 .. logic_arc_int_op:: Enqueue
@@ -158,6 +174,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__executor
 
 .. logic_arc_int_op:: Post
@@ -165,6 +182,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__executor
 
 .. logic_arc_int_op:: Submit
@@ -172,6 +190,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__executor
 
 .. logic_arc_int_op:: Shutdown
@@ -179,6 +198,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__executor
 
 .. logic_arc_int_op:: Max Concurrency Level
@@ -186,6 +206,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__executor
 
 .. logic_arc_int_op:: Execute
@@ -193,6 +214,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__task
 
 .. logic_arc_int_op:: Get Stop Source
@@ -200,6 +222,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__task
 
 .. logic_arc_int_op:: Abort
@@ -207,6 +230,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__task_result
 
 .. logic_arc_int_op:: Aborted
@@ -214,6 +238,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__task_result
 
 .. logic_arc_int_op:: Get Result
@@ -221,6 +246,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__task_result
 
 .. logic_arc_int_op:: Push
@@ -228,6 +254,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__synchronized_queue
 
 .. logic_arc_int_op:: Pop
@@ -235,6 +262,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__synchronized_queue
 
 .. logic_arc_int_op:: Try Push
@@ -242,6 +270,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__synchronized_queue
 
 .. logic_arc_int_op:: Try Pop
@@ -249,6 +278,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__synchronized_queue
 
 .. logic_arc_int_op:: Wait
@@ -256,6 +286,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__condition_variable
 
 .. logic_arc_int_op:: Wait For
@@ -263,6 +294,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__condition_variable
 
 .. logic_arc_int_op:: Notify One
@@ -270,6 +302,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__condition_variable
 
 .. logic_arc_int_op:: Notify All
@@ -277,4 +310,5 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__condition_variable

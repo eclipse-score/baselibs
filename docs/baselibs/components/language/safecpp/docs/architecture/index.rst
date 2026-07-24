@@ -18,6 +18,7 @@ Safecpp Component Architecture
 .. document:: Safecpp Architecture
    :id: doc__safecpp_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_safecpp
    :implements: logic_arc_int__baselibs__aborts_upon_ex, logic_arc_int__baselibs__coverage_termination, logic_arc_int__baselibs__safemath, logic_arc_int__baselibs__safeatomics, logic_arc_int__baselibs__scoped_function, logic_arc_int__baselibs__string_view
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__safecpp__aborts_upon_exception, comp_req__safecpp__safe_math, comp_req__safecpp__scoped_guards, comp_req__safecpp__nullstring, comp_req__safecpp__safe_atomic, comp_req__safecpp__coverage_termination
    :belongs_to: comp__baselibs_safecpp
 
@@ -66,6 +69,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__aborts_upon_ex
 
 .. logic_arc_int_op:: Terminate_handler
@@ -73,6 +77,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__coverage_termination
 
 .. logic_arc_int_op:: Signal_handler
@@ -80,6 +85,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__coverage_termination
 
 .. logic_arc_int_op:: Add
@@ -87,6 +93,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Subtract
@@ -94,6 +101,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Multiply
@@ -101,6 +109,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Divide
@@ -108,6 +117,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Negate
@@ -115,6 +125,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Abs
@@ -122,6 +133,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Cast
@@ -129,6 +141,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Less
@@ -136,6 +149,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Greater
@@ -143,6 +157,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Equal
@@ -150,6 +165,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Notequal
@@ -157,6 +173,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Lessequal
@@ -164,6 +181,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Greaterequal
@@ -171,6 +189,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safemath
 
 .. logic_arc_int_op:: Atomic Add
@@ -178,6 +197,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__safeatomics
 
 .. logic_arc_int_op:: Move Only Scoped Function
@@ -185,6 +205,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__scoped_function
 
 .. logic_arc_int_op:: Copyable Scoped Function
@@ -192,6 +213,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__scoped_function
 
 .. logic_arc_int_op:: Expire
@@ -199,6 +221,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__scoped_function
 
 .. logic_arc_int_op:: Null Termination Check
@@ -206,4 +229,5 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__string_view

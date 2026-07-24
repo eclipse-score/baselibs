@@ -16,11 +16,13 @@
    :id: mod__baselibs
    :includes: comp__baselibs_json, comp__baselibs_memory_shared, comp__baselibs_result, comp__baselibs_bit_manipulation, comp__baselibs_containers, comp__baselibs_filesystem, comp__baselibs_utils, comp__baselibs_concurrency, comp__baselibs_safecpp
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
 
 .. mod_view_sta:: Baselibs Static View
    :id: mod_view_sta__baselibs__baselibs
+   :version: 1
    :includes: comp__baselibs_json, comp__baselibs_memory_shared, comp__baselibs_result, comp__baselibs_bit_manipulation, comp__baselibs_containers, comp__baselibs_filesystem, comp__baselibs_utils, comp__baselibs_concurrency, comp__baselibs_safecpp
 
    .. needarch::

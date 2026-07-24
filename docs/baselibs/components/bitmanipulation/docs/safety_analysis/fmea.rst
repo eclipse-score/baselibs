@@ -19,6 +19,7 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: bitmanipulation FMEA
    :id: doc__bitmanipulation_fmea
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__sw_component_fmea
@@ -108,6 +109,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2837
    :sufficient: no
    :status: valid
+   :version: 1
 
    There is already an aou on platform level which states that a user has to use the return values,
    so the error mode of no return should be covered, but there is no explicit mention that a "success"
@@ -121,6 +123,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigated_by: aou_req__platform__flow_monitoring
    :sufficient: yes
    :status: valid
+   :version: 1
 
    There is already an aou on platform level which states that a user has to use program flow monitoring
 
@@ -132,6 +135,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigated_by: comp_req__bitmanipulation__bounds_safety
    :sufficient: yes
    :status: valid
+   :version: 1
 
    Constraints are checked, see mitigation requirement.
 
@@ -143,6 +147,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigated_by: aou_req__bitmanipulation__enum_constraints
    :sufficient: yes
    :status: valid
+   :version: 1
 
    Wrongly defined Enum values are not checked by Bitmanipulation component, the output of the action may be unexpected.
    So the user has to make sure this is done in a right way, covered by the linked AoU.

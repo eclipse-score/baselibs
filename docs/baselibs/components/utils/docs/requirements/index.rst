@@ -18,6 +18,7 @@ Requirements
 .. document:: Utils Library Requirements
    :id: doc__utils_lib_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp
@@ -33,6 +34,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_utils
 
    The Utils component shall provide functions for encoding data to Base64 format and decoding Base64 data back to its original form.
@@ -44,6 +46,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_utils
 
    The Utils component shall provide a functionality that stores a callback and executes it automatically when the class is destructed
@@ -58,6 +61,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_utils
 
    The Utils component shall ensure that all operations complete in a predictable manner and without dynamic memory allocation.

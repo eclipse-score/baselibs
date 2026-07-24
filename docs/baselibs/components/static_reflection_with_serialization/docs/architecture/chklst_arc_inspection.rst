@@ -16,6 +16,7 @@
 .. document:: Static Reflection Architecture Inspection Checklist
    :id: doc__static_reflection_arc_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_arch_verification

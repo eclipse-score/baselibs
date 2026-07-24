@@ -18,6 +18,7 @@ JSON Component Architecture
 .. document:: JSON Architecture
    :id: doc__json_architecture
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -63,6 +64,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :implements: logic_arc_int__baselibs__json
    :consists_of: comp__baselibs_json_wrapper, comp__baselibs_nlohman_json
    :belongs_to: feat__baselibs
@@ -72,6 +74,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__json__deserialization, comp_req__json__serialization, comp_req__json__user_format, comp_req__json__lang_idioms, comp_req__json__lang_infra, comp_req__json__type_compatibility, comp_req__json__full_testability, comp_req__json__asil
    :belongs_to: comp__baselibs_json
 
@@ -90,6 +93,7 @@ Dynamic Architecture
    :security: YES
    :safety: ASIL_B
    :status: invalid
+   :version: 1
    :fulfils: comp_req__json__deserialization, comp_req__json__serialization, comp_req__json__user_format, comp_req__json__lang_idioms, comp_req__json__lang_infra, comp_req__json__type_compatibility, comp_req__json__full_testability, comp_req__json__asil
    :belongs_to: comp__baselibs_json
 
@@ -104,6 +108,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__json
 
 .. logic_arc_int_op:: Write
@@ -111,6 +116,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__json
 
 Lower Level Components
@@ -121,6 +127,7 @@ Lower Level Components
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :implements: logic_arc_int__baselibs__json
    :belongs_to: feat__baselibs
 
@@ -129,4 +136,5 @@ Lower Level Components
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: feat__baselibs

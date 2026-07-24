@@ -20,6 +20,7 @@ Component Architecture
 .. document:: Log Architecture
    :id: doc__log_architecture
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__component_arch
@@ -59,6 +60,7 @@ Static Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: comp__logging
    :fulfils: comp_req__log__placeholder
    :includes:
@@ -74,6 +76,7 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: comp__logging
    :fulfils: comp_req__log__placeholder
 
@@ -84,6 +87,7 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: comp__logging
    :fulfils: comp_req__log__placeholder
 
@@ -94,6 +98,7 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: comp__logging
    :fulfils: comp_req__log__placeholder
 
@@ -108,6 +113,7 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__log__placeholder
    :language: rust
 

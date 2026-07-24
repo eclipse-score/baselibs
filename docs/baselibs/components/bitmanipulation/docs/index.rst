@@ -18,6 +18,7 @@ bitmanipulation
 .. document:: Bit Manipulation Library
    :id: doc__bitmanipulation
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_bitmanipulation
    :realizes: wp__cmpt_request

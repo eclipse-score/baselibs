@@ -15,6 +15,7 @@
 .. document:: Bitmanipulation Implementation Inspection Checklist
    :id: doc__bitmanipulation_impl_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_implementation_inspection

@@ -15,6 +15,7 @@
 .. document:: Utils Implementation Inspection Checklist
    :id: doc__utils_impl_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_implementation_inspection

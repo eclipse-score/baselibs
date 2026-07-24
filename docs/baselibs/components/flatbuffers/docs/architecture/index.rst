@@ -22,4 +22,5 @@ FlatBuffers Component Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :belongs_to: feat__baselibs

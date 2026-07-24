@@ -18,6 +18,7 @@ Requirements
 .. document:: Safecpp Requirements
    :id: doc__safecpp_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__requirements_comp
@@ -33,6 +34,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a mechanism to abort the program upon C++ exception allocation,
@@ -49,6 +51,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide arithmetic operations
@@ -63,6 +66,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide scope-bound callable wrappers that prevent resource leaks.
@@ -74,6 +78,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a view type which guarantees that an underlying character sequence is guaranteed to be null-terminated.
@@ -86,6 +91,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a lock-free atomic addition operation for integral types with overflow detection.
@@ -100,6 +106,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_safecpp
 
    The safecpp library shall provide a mechanism which automatically registers a termination handler

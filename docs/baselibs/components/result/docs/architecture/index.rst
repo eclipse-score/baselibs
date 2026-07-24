@@ -18,6 +18,7 @@ Result Component Architecture
 .. document:: Result Architecture
    :id: doc__result_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_result
    :implements: logic_arc_int__baselibs__result
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__result__error_handling, comp_req__result__set_result, comp_req__result__domain_error_information, comp_req__result__type_safety, comp_req__result__std_integration, comp_req__result__deterministic_behavior, comp_req__result__exception_free_operation
    :belongs_to: comp__baselibs_result
 
@@ -67,6 +70,7 @@ Dynamic Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__result__error_handling, comp_req__result__set_result, comp_req__result__domain_error_information, comp_req__result__type_safety, comp_req__result__std_integration, comp_req__result__deterministic_behavior, comp_req__result__exception_free_operation
    :belongs_to: comp__baselibs_result
 
@@ -80,6 +84,7 @@ Interfaces
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__result
 
 .. logic_arc_int_op:: Get Value
@@ -87,6 +92,7 @@ Interfaces
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__result
 
 .. logic_arc_int_op:: Get Error
@@ -94,4 +100,5 @@ Interfaces
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__result

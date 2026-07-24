@@ -19,6 +19,7 @@ Requirements
 .. document:: Concurrency Requirements
    :id: doc__concurrency_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp
@@ -34,6 +35,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall allow running tasks asynchronously.
@@ -45,6 +47,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall allow cancelling tasks when needed.
@@ -56,6 +59,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide implementation for executing callable objects without returning results, supporting fire-and-forget asynchronous operations.
@@ -67,6 +71,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide implementation to access the result of an asynchronously running task or to request aborting the task when the result is no longer needed.
@@ -78,6 +83,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide implementation for executing callable objects at regular intervals with configurable first execution time and period duration.
@@ -89,6 +95,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide implementation for executing callable objects after a specified delay with support for early cancellation.
@@ -100,6 +107,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide interface defining a common API for task submission operations, graceful shutdown, and maximum concurrency level reporting.
@@ -111,6 +119,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide implementation that manages submitted tasks in FIFO order.
@@ -122,6 +131,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide an abortable mechanism for threads to wait for conditions.
@@ -133,6 +143,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide utilities offering APIs for sleep operations allowing early cancellation.
@@ -144,6 +155,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall allow one thread to notify another thread once, with a timeout option.
@@ -155,6 +167,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide a thread-safe container facilitating FIFO transmission of data in a N:1 communication pattern.
@@ -166,6 +179,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall provide a container for managing long-running threads, allowing addition and removal of threads.
@@ -180,6 +194,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall limit memory usage to prevent uncontrolled resource consumption.
@@ -191,6 +206,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall allow reserving memory upfront for tasks to ensure predictable resource allocation.
@@ -202,6 +218,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall report the maximum number of concurrent threads available for task execution.
@@ -213,6 +230,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall avoid indefinitely blocking, unabortable operations.
@@ -224,6 +242,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__concurrency_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_concurrency
 
    The concurrency module shall use error codes instead of throwing exceptions.
@@ -237,6 +256,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall implement cancellation logic in long-running tasks to respond to stop_token signals.
 
@@ -246,6 +266,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall handle task submission failures when the bounded memory resource is exhausted and implement appropriate backpressure mechanisms.
 
@@ -255,6 +276,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall size ThreadPool according to task characteristics and avoid submitting blocking tasks that will starve the thread pool.
 
@@ -264,6 +286,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall implement appropriate synchronization mechanisms when sharing state between tasks, as the library only guarantees thread-safe task submission and execution scheduling.
 

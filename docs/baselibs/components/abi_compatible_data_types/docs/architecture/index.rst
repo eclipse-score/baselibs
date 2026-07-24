@@ -18,6 +18,7 @@ ABI Compatible Data Types Component Architecture
 .. document:: ABI Compatible Data Types Architecture
    :id: doc__abi_compatible_data_types_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_abi_compatible_data_types
    :belongs_to: feat__baselibs
 

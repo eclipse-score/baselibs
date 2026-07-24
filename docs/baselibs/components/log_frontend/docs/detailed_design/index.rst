@@ -20,6 +20,7 @@ Detailed Design
 .. document:: Log Detailed Design
    :id: doc__log_detailed_design
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__sw_implementation
@@ -63,6 +64,7 @@ Static Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__log__placeholder
    :belongs_to: comp__logging
 
@@ -76,6 +78,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__log__placeholder
    :belongs_to: comp__logging
 
@@ -86,6 +89,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__log__placeholder
    :belongs_to: comp__logging
 

@@ -16,6 +16,7 @@
 .. document:: Containers Requirements Inspection Checklist
    :id: doc__containers_req_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_inspect

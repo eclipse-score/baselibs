@@ -18,6 +18,7 @@ Requirements
 .. document:: Hash Requirements
    :id: doc__hash_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__requirements_comp
@@ -28,6 +29,7 @@ Requirements
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_hash
    :belongs_to: feat__baselibs
 
@@ -41,6 +43,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall compute a hash value over a contiguous byte sequence
@@ -54,6 +57,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall expose the computed hash value as a raw byte sequence.
@@ -65,6 +69,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall expose the computed hash value as a hexadecimal string
@@ -77,6 +82,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall allow the hash algorithm to be selected and a
@@ -91,6 +97,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
@@ -103,6 +110,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall support IEEE CRC-32 as a checksum algorithm.
@@ -114,6 +122,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_hash
 
    The hash library shall propagate errors from hash calculator instantiation

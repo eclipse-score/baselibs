@@ -19,6 +19,7 @@ DFA (Dependent Failure Analysis)
 .. document:: filesystem DFA
    :id: doc__filesystem_dfa
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__sw_component_dfa
@@ -40,6 +41,7 @@ Dependent Failure Initiators
        :mitigation_issue: <ID from Issue Tracker>
        :sufficient: <yes|no>
        :status: <valid|invalid>
+       :version: 1
 
 .. note::   argument is inside the 'content'. Therefore content is mandatory
 

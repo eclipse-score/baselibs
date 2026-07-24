@@ -16,6 +16,7 @@
 .. document:: Result Library Architecture Inspection Checklist
    :id: doc__result_lib_arc_inspection
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_arch_verification

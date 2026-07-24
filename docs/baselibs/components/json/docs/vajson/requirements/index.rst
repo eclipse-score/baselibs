@@ -15,6 +15,7 @@
 .. document:: VaJson Requirements
     :id: doc__vajson_requirements
     :status: draft
+    :version: 1
     :safety: ASIL_B
     :security: YES
     :realizes: wp__requirements_comp
@@ -36,6 +37,7 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_vajson
 
    VaJson checks the well-formedness of JSON data.
@@ -48,6 +50,7 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_vajson
 
    VaJson shall ignore trailing commas.
@@ -60,6 +63,7 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_vajson
 
    VaJson shall accept hexadecimal integers.
@@ -72,6 +76,7 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_vajson
 
    VaJson shall encode and decode UTF-8 encoded strings.
@@ -86,6 +91,7 @@ Safety Impact
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_vajson
 
    The VaJson library shall be ASIL-B compliant.

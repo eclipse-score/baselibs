@@ -16,6 +16,7 @@
 .. document:: Containers Architecture Inspection Checklist
    :id: doc__containers_arc_inspection
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_arch_verification

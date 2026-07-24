@@ -18,6 +18,7 @@ Bitmanipulation Component Architecture
 .. document:: bitmanipulation Architecture
    :id: doc__bitmanipulation_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_bit_manipulation
    :implements: logic_arc_int__baselibs__bit_manipulation,logic_arc_int__baselibs__bit_mask_operator
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__bitmanipulation__bit_operations,comp_req__bitmanipulation__byte_operations,comp_req__bitmanipulation__bitmask_operators,comp_req__bitmanipulation__bounds_safety,comp_req__bitmanipulation__header_only
    :belongs_to: comp__baselibs_bit_manipulation
 
@@ -79,6 +82,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: Clear Bit
@@ -86,6 +90,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: Toggle Bit
@@ -93,6 +98,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: Test Bit
@@ -100,6 +106,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: Set (Half)-Byte
@@ -107,6 +114,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: Extract (Half)-Byte
@@ -114,6 +122,7 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_manipulation
 
 .. logic_arc_int_op:: OR operator
@@ -121,6 +130,7 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator
 
 .. logic_arc_int_op:: AND operator
@@ -128,6 +138,7 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator
 
 .. logic_arc_int_op:: XOR operator
@@ -135,6 +146,7 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator
 
 .. logic_arc_int_op:: Complement operator
@@ -142,6 +154,7 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator
 
 .. logic_arc_int_op:: Assignment Operators
@@ -149,4 +162,5 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator

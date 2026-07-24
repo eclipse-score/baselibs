@@ -18,6 +18,7 @@ Requirements
 .. document:: Rust Containers Library Requirements
    :id: doc__containers_rust_lib_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__requirements_comp
@@ -28,6 +29,7 @@ Requirements
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_rust_containers_rust
    :belongs_to: feat__baselibs
 
@@ -42,6 +44,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated vector container with construction-time capacity specification.
 
@@ -53,6 +56,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a vector container with a capacity determined at compile-time,
    which stores the elements within the data structure itself.
@@ -66,6 +70,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated, UTF-8 encoded string data type with construction-time capacity specification.
 
@@ -77,6 +82,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a UTF-8 encoded string data type with a capacity determined at compile-time,
    which stores the codepoints within the data structure itself.
@@ -90,6 +96,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated double-ended queue container with construction-time capacity specification.
 
@@ -101,6 +108,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a queue container with a capacity determined at compile-time,
    which stores the elements within the data structure itself.
@@ -114,6 +122,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated hashmap container with construction-time capacity specification.
 
@@ -125,6 +134,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a hashmap container with a capacity determined at compile-time,
    which stores the elements within the data structure itself.
@@ -138,6 +148,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated hashset container with construction-time capacity specification.
 
@@ -149,6 +160,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a hashset container with a capacity determined at compile-time,
    which stores the elements within the data structure itself.
@@ -162,6 +174,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a heap-allocated B-tree container with construction-time capacity specification.
 
@@ -173,6 +186,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall provide a B-tree container with a capacity determined at compile-time,
    which stores the elements within the data structure itself.
@@ -186,6 +200,7 @@ Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust Containers library shall enforce compile-time type safety for all container operations.
 
@@ -200,6 +215,7 @@ Non-Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    The Rust containers library shall provide deterministic behavior.
 
@@ -211,6 +227,7 @@ Non-Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    Inline-storage containers shall never allocate heap memory.
 
@@ -222,5 +239,6 @@ Non-Functional Requirements
    :satisfied_by: comp__baselibs_containers_rust
    :belongs_to: comp__baselibs_containers_rust
    :status: valid
+   :version: 1
 
    Fixed-capacity containers shall never allocate or re-allocate memory after their initial construction.

@@ -18,6 +18,7 @@ static_reflection_with_serialization
 .. document:: Static Reflection With Serialization Library
    :id: doc__static_reflection_with_serialization
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_static_reflection_with_serialization
    :realizes: wp__cmpt_request

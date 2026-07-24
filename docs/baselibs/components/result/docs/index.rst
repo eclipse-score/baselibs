@@ -18,6 +18,7 @@ result
 .. document:: Result Library
    :id: doc__result
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_result

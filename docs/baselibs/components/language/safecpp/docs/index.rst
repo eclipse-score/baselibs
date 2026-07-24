@@ -18,6 +18,7 @@ safecpp
 .. document:: Safecpp Library
    :id: doc__safecpp
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_safecpp

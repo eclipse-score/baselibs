@@ -18,6 +18,7 @@ Static Reflection with Serialization Component Architecture
 .. document:: static_reflection_with_serialization Architecture
    :id: doc__static_refl_with_serial_arch
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_static_reflection_serialization
    :implements: logic_arc_int__baselibs__static_reflection,logic_arc_int__baselibs__generic_serial,logic_arc_int__baselibs__log_serial
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__container, comp_req__static_reflect_serial__nested, comp_req__static_reflect_serial__header_only, comp_req__static_reflect_serial__compile_eff
    :belongs_to: comp__baselibs_static_reflection
 
@@ -70,6 +73,7 @@ Static Reflection Operations
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__static_reflection
 
 .. logic_arc_int_op:: Declare Struct Visitable
@@ -77,6 +81,7 @@ Static Reflection Operations
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__static_reflection
 
 .. logic_arc_int_op:: Struct Introspection
@@ -84,6 +89,7 @@ Static Reflection Operations
    :security: NO
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__static_reflection
 
 Generic Serialization Operations
@@ -94,6 +100,7 @@ Generic Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__generic_serial
 
 .. logic_arc_int_op:: Deserialize
@@ -101,6 +108,7 @@ Generic Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__generic_serial
 
 .. logic_arc_int_op:: Get Serialized Size
@@ -108,6 +116,7 @@ Generic Serialization Operations
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__generic_serial
 
 Logging Serialization Operations
@@ -118,6 +127,7 @@ Logging Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__log_serial
 
 .. logic_arc_int_op:: Deserialize
@@ -125,6 +135,7 @@ Logging Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__log_serial
 
 .. logic_arc_int_op:: Get Serialized Size
@@ -132,4 +143,5 @@ Logging Serialization Operations
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__log_serial

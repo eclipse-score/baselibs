@@ -19,6 +19,7 @@ DFA (Dependent Failure Analysis)
 .. document:: Baselibs DFA
    :id: doc__baselibs_dfa
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__feature_dfa
@@ -225,6 +226,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
    :sufficient: no
    :status: valid
+   :version: 1
 
    All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
    out of bounds access should be detected by unit testing/sanitizers.
@@ -237,6 +239,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: feat_req__baselibs__memory_library,aou_req__platform__flow_monitoring
    :sufficient: yes
    :status: valid
+   :version: 1
 
    Only components "filesystem" and "memory_shared" should have the problem ("bitmanipulation" should not be affected due to shortness of execution)
    "memory_shared" cares for this by above linked feature requirement and :need:`comp_req__memory__atomic_ops`.
@@ -250,6 +253,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__filesystem__thread_safety
    :sufficient: yes
    :status: valid
+   :version: 1
 
    The user has to care for concurrent file access. This is not covered by the filesytem library.
 
@@ -261,6 +265,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__bitmanipulation__concurrent_access
    :sufficient: yes
    :status: valid
+   :version: 1
 
    The user has to care for concurrent memory access. This is not covered by the bitmanipulation library.
 
@@ -272,6 +277,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
    :sufficient: no
    :status: valid
+   :version: 1
 
    All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
    all blocks should be detected by unit testing.
@@ -284,6 +290,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__platform__flow_monitoring
    :sufficient: yes
    :status: valid
+   :version: 1
 
    Some care is taken to avoid using too much CPU time, but this cannot be covered fully.
    Platform level AoU asks applications with timing requirements to cover this by program flow monitoring.

@@ -19,6 +19,7 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: concurrency FMEA
    :id: doc__concurrency_fmea
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__sw_component_fmea
@@ -40,6 +41,7 @@ Failure Mode List
        :mitigation_issue: <ID from Issue Tracker>
        :sufficient: <yes|no>
        :status: <valid|invalid>
+       :version: 1
 
 .. note::   argument is inside the 'content'. Therefore content is mandatory
 

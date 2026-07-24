@@ -18,6 +18,7 @@ Module Codeowners Skill Check
 .. document:: Baselibs Codeowners
    :id: doc__baselibs_codeowners
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__module_safety_plan

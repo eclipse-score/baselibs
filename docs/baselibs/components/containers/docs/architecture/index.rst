@@ -18,6 +18,7 @@ Container Component Architecture
 .. document:: Container Architecture
    :id: doc__containers_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch
@@ -35,6 +36,7 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_containers
    :implements: logic_arc_int__baselibs__dynamic_array, logic_arc_int__baselibs__intrusive_list
    :belongs_to: feat__baselibs
@@ -50,6 +52,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
+   :version: 1
    :fulfils: comp_req__containers__dynamic_array, comp_req__containers__intrusive_list, comp_req__containers__type_safety, comp_req__containers__non_relocatable_vector, comp_req__containers__deterministic_behavior
    :belongs_to: comp__baselibs_containers
 
@@ -68,6 +71,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__dynamic_array
 
 .. logic_arc_int_op:: Iterate
@@ -75,6 +79,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__dynamic_array
 
 .. logic_arc_int_op:: Change
@@ -82,6 +87,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__dynamic_array
 
 .. logic_arc_int_op:: Insert
@@ -89,6 +95,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__intrusive_list
 
 .. logic_arc_int_op:: Remove
@@ -96,6 +103,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__intrusive_list
 
 .. logic_arc_int_op:: Iterate
@@ -103,6 +111,7 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__intrusive_list
 
 .. logic_arc_int_op:: Access
@@ -110,4 +119,5 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :included_by: logic_arc_int__baselibs__intrusive_list

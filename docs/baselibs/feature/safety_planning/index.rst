@@ -19,6 +19,7 @@ Feature Safety Work Products List
 .. document:: Baselibs Safety WPs
    :id: doc__baselibs_safety_wp
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__platform_safety_plan

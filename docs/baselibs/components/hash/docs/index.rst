@@ -18,6 +18,7 @@ hash
 .. document:: Hash Library
    :id: doc__hash
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_hash
    :realizes: wp__cmpt_request

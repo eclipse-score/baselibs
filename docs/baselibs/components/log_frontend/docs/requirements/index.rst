@@ -20,6 +20,7 @@ Requirements
 .. document:: Log Requirements
    :id: doc__log_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__requirements_comp
@@ -33,6 +34,7 @@ Requirements
    :satisfied_by: comp__logging
    :belongs_to: comp__logging
    :status: valid
+   :version: 1
 
    Requirement placeholder for diagram rendering.
    To be replaced with actual requirements.

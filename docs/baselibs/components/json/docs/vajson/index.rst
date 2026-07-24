@@ -18,6 +18,7 @@ VaJson
 .. document:: vajson
    :id: doc__vajson
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__cmpt_request

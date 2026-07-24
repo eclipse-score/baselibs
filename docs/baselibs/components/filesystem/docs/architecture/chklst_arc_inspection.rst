@@ -16,6 +16,7 @@
 .. document:: Filesystem Architecture Inspection Checklist
    :id: doc__filesystem_arc_inspection
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_arch_verification

@@ -15,6 +15,7 @@
 .. document:: Result Lib Implementation Inspection Checklist
    :id: doc__result_lib_impl_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__sw_implementation_inspection

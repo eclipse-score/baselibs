@@ -18,6 +18,7 @@ Requirements
 .. document:: JSON Wrapper Requirements
    :id: doc__json_wrapper_requirements
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp

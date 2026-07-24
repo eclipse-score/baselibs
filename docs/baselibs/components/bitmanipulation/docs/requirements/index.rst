@@ -21,6 +21,7 @@ Requirements
 .. document:: Bit Manipulation Requirements
    :id: doc__bitmanipulation_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp
@@ -36,6 +37,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
@@ -48,6 +50,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
@@ -60,6 +63,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
@@ -72,6 +76,7 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
@@ -87,6 +92,7 @@ Non-Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__bitmanipulation
    :status: valid
+   :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation
    :tags: inspected
 
@@ -101,6 +107,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall use bit manipulation functions only with integral types (integers, enumerations) as specified in the library's type constraints.
@@ -113,6 +120,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall use scoped enumeration types (enum class) whose enumerators are defined as non-zero power-of-two values.
@@ -123,6 +131,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall implement external synchronization mechanisms (e.g., mutexes, atomic operations, or locks) when accessing or modifying the same integral value from multiple threads concurrently.

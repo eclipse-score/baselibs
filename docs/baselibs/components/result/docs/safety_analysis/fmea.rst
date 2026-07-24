@@ -19,6 +19,7 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: result FMEA
    :id: doc__result_fmea
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: NO
    :realizes: wp__sw_component_fmea
@@ -107,6 +108,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2880
    :sufficient: no
    :status: valid
+   :version: 1
 
    If the user relies on the error code not only for diagnostic purposes but for selecting an error reaction path,
    misinterpreting the code under a wrong domain could lead to an incorrect safety-relevant decision.
@@ -121,6 +123,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2880
    :sufficient: no
    :status: valid
+   :version: 1
 
    The existing Assumption of Use for resource lifetime addresses the validity of error domain objects
    and referenced resources. However, it does not explicitly cover the user-provided error message,
@@ -135,6 +138,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigated_by: aou_req__result__value_handling, aou_req__result__error_reaction
    :sufficient: yes
    :status: valid
+   :version: 1
 
    If the user accesses the value or the error without first verifying the state of the result,
    the program will deterministically terminate. The provided Assumptions of Use require the user to check and handle both states before access.
@@ -147,6 +151,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :mitigated_by: aou_req__platform__flow_monitoring
    :sufficient: yes
    :status: valid
+   :version: 1
 
    The Result library invokes user-provided operations synchronously during transformation of values or errors.
    Ensuring these operations terminate is outside the scope of the library and is the responsibility of the user via program flow monitoring,

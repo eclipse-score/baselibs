@@ -18,6 +18,7 @@ os
 .. document:: OS Library
    :id: doc__os
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_os
