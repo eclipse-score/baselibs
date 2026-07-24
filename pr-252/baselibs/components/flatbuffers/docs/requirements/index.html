@@ -378,9 +378,11 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">FlatBuffers-Library</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Requirements</a></li>
@@ -399,6 +401,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json/docs/index.html">JSON-Library</a></li>
 
 
@@ -409,6 +412,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -479,7 +483,7 @@
                   
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-69f00c08">
+<div class="need_container docutils container" id="SNCB-4bf9dd41">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__flatbuffers_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -498,7 +502,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/requirements_engineering/requirements_workproducts.html#wp__requirements_comp">wp__requirements_comp</a></span></span></div>
 </span></div>
 </div>
@@ -523,7 +528,7 @@
 </div>
 <section id="flatbuffers-tooling-requirements">
 <h2>FlatBuffers Tooling Requirements<a class="headerlink" href="#flatbuffers-tooling-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-6fb97dd1">
+<div class="need_container docutils container" id="SNCB-5bc638d0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_codegen_cpp">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -532,7 +537,7 @@
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -543,8 +548,9 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__multi_language_apis">feat_req__baselibs__multi_language_apis</a></span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__multi_language_apis">feat_req__baselibs__multi_language_apis</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -566,7 +572,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a9d60ae8">
+<div class="need_container docutils container" id="SNCB-96d1854c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_codegen_rust">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -575,7 +581,7 @@
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -586,8 +592,9 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__multi_language_apis">feat_req__baselibs__multi_language_apis</a></span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__multi_language_apis">feat_req__baselibs__multi_language_apis</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -609,7 +616,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-cf7ca9cd">
+<div class="need_container docutils container" id="SNCB-2f65445a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_codegen_python">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -618,7 +625,7 @@
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">QM</span></span></span></div>
 </div>
 </td>
@@ -629,6 +636,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
 </span></div>
@@ -657,7 +665,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d72f030c">
+<div class="need_container docutils container" id="SNCB-4a2182b7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_tooling_json_to_bin">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -666,7 +674,7 @@
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -677,8 +685,9 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
+<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -702,7 +711,7 @@ of the FlatBuffers schema the tool shall fail with an appropriate error message.
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8cdb1378">
+<div class="need_container docutils container" id="SNCB-89b78081">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_tooling_data_validate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -711,7 +720,7 @@ of the FlatBuffers schema the tool shall fail with an appropriate error message.
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">QM</span></span></span></div>
 </div>
 </td>
@@ -722,6 +731,7 @@ of the FlatBuffers schema the tool shall fail with an appropriate error message.
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
 </span></div>
@@ -756,7 +766,7 @@ marked with required to enforce their presence, otherwise they are optional.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-5825235c">
+<div class="need_container docutils container" id="SNCB-4cd1e079">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_tool_req table" id="tool_req__flatbuffers_tooling_evolution">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -765,7 +775,7 @@ marked with required to enforce their presence, otherwise they are optional.</p>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">QM</span></span></span></div>
 </div>
 </td>
@@ -776,6 +786,7 @@ marked with required to enforce their presence, otherwise they are optional.</p>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_implemented"><span class="needs_label">implemented: </span><span class="needs_data">NO</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
 </span></div>
@@ -811,7 +822,7 @@ a new schema or vice versa.</p>
 </section>
 <section id="flatbuffers-library-requirements">
 <h2>FlatBuffers Library Requirements<a class="headerlink" href="#flatbuffers-library-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-960e834a">
+<div class="need_container docutils container" id="SNCB-bd03924c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__serialization">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -820,7 +831,7 @@ a new schema or vice versa.</p>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -832,9 +843,10 @@ a new schema or vice versa.</p>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__serialization">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__serialization">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -862,7 +874,7 @@ included, as excluding it would require extensive patching of <code class="docut
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c42d4a89">
+<div class="need_container docutils container" id="SNCB-67c975b5">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -871,7 +883,7 @@ included, as excluding it would require extensive patching of <code class="docut
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -883,9 +895,10 @@ included, as excluding it would require extensive patching of <code class="docut
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__access">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__access">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -912,7 +925,7 @@ included, as excluding it would require extensive patching of <code class="docut
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c2518849">
+<div class="need_container docutils container" id="SNCB-27b73284">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__verification">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -921,7 +934,7 @@ included, as excluding it would require extensive patching of <code class="docut
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -933,9 +946,10 @@ included, as excluding it would require extensive patching of <code class="docut
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__verification">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__verification">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -966,7 +980,7 @@ not the correctness or integrity of the payload data.</p>
 </section>
 <section id="buffer-identification-and-versioning">
 <h2>Buffer Identification and Versioning<a class="headerlink" href="#buffer-identification-and-versioning" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-1bf3a733">
+<div class="need_container docutils container" id="SNCB-b9d2d5b6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__buffer_identification">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -975,7 +989,7 @@ not the correctness or integrity of the payload data.</p>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -987,9 +1001,11 @@ not the correctness or integrity of the payload data.</p>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_testcovered"><span class="needs_label">testcovered: </span><span class="needs_data">YES</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__buffer_identification">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__buffer_identification">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -1012,7 +1028,7 @@ of a major version, a minor version, and a 4-character identifier.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-5c5056db">
+<div class="need_container docutils container" id="SNCB-6d9a6096">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__version_check">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1021,7 +1037,7 @@ of a major version, a minor version, and a 4-character identifier.</p></td>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -1033,9 +1049,11 @@ of a major version, a minor version, and a 4-character identifier.</p></td>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_testcovered"><span class="needs_label">testcovered: </span><span class="needs_data">YES</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__version_check">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__version_check">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -1061,7 +1079,7 @@ the major version, minor version, and 4-character identifier of a FlatBuffers bu
 </section>
 <section id="safety-impact">
 <h2>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-4bc6d80c">
+<div class="need_container docutils container" id="SNCB-5a96577c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__flatbuffers__asil">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1070,7 +1088,7 @@ the major version, minor version, and 4-character identifier of a FlatBuffers bu
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
 <div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
 <div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
 </div>
 </td>
@@ -1082,9 +1100,10 @@ the major version, minor version, and 4-character identifier of a FlatBuffers bu
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">satisfies: <span class="satisfies"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__safety">feat_req__baselibs__safety</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__asil">comp__baselibs_flatbuffers</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__multi_language_apis">feat_req__baselibs__multi_language_apis</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_flatbuffers" title="comp_req__flatbuffers__asil">comp__baselibs_flatbuffers</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -1109,7 +1128,7 @@ the major version, minor version, and 4-character identifier of a FlatBuffers bu
 </section>
 <section id="aou-requirements">
 <h2>AoU Requirements<a class="headerlink" href="#aou-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-4f4d6268">
+<div class="need_container docutils container" id="SNCB-26966db9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__flatbuffers__data_integrity">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1130,6 +1149,7 @@ the major version, minor version, and 4-character identifier of a FlatBuffers bu
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
@@ -1160,7 +1180,7 @@ FlatBuffers binary file content.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f59df6e1">
+<div class="need_container docutils container" id="SNCB-5a290b57">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__flatbuffers__access_control">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1181,6 +1201,7 @@ FlatBuffers binary file content.</p>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
@@ -1208,7 +1229,7 @@ FlatBuffers binary file content.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-64e820d9">
+<div class="need_container docutils container" id="SNCB-365600ec">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__flatbuffers__verify_version">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1229,6 +1250,7 @@ FlatBuffers binary file content.</p>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
@@ -1258,7 +1280,7 @@ verified or accessed.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2f3632ce">
+<div class="need_container docutils container" id="SNCB-46a5d224">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__flatbuffers__verify_structure">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1279,6 +1301,7 @@ verified or accessed.</p>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>

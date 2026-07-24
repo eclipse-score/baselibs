@@ -378,9 +378,11 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
 
@@ -395,6 +397,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">JSON-Library</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -406,6 +409,7 @@
 <li class="toctree-l3"><a class="reference internal" href="architecture/index.html">VaJson Component Architecture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="requirements/index.html">Requirements</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/CADS.html">Design</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
@@ -422,6 +426,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -492,7 +497,7 @@
                   
   <section id="vajson">
 <h1>VaJson<a class="headerlink" href="#vajson" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-8615fc7d">
+<div class="need_container docutils container" id="SNCB-730a70d8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -512,6 +517,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">component_request</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/change_management/change_management_workproducts.html#wp__cmpt_request">wp__cmpt_request</a></span></span></div>
 </span></div>
@@ -642,6 +648,49 @@ Vector will not create the required S-CORE process documentation (for example, s
 <li class="toctree-l1"><a class="reference internal" href="architecture/index.html">VaJson Component Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="requirements/index.html">Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="requirements/index.html#safety-impact">Safety Impact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detailed_design/CADS.html">Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="detailed_design/functional/Functional.html">Functional</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/functional/Common.html">Initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/functional/Reader.html">Reader</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#deserialization">Deserialization</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/functional/Reader.html#sequences">Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#encoding">Encoding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#data-items">Data Items</a></li>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#number-formatting">Number formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#error-reporting">Error reporting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/functional/Reader.html#composition-parser">Composition Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="detailed_design/logical/Logical.html">Logical</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/logical/Reader.html">Reader</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="detailed_design/logical/Reader.html#diagrams">Diagrams</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#jsonparser">JsonParser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#parser">Parser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#strictparser">StrictParser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#virtualparser">VirtualParser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#structureparser">StructureParser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#compositionparser">CompositionParser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#single-level-parser">Single Level Parser</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#jsondata">JsonData</a></li>
+<li class="toctree-l5"><a class="reference internal" href="detailed_design/logical/Reader.html#util">Util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="detailed_design/structural/Structural.html">Structural</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detailed_design/concepts/Concepts.html">Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/concepts/Reader.html">Templates and Polymorphism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="detailed_design/concepts/Reader.html#parser-mixins">Parser Mixins</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>

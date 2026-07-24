@@ -378,6 +378,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">bitmanipulation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="index.html">Requirements</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Requirement Inspection Checklist</a></li>
@@ -390,6 +391,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
 
@@ -404,6 +406,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json/docs/index.html">JSON-Library</a></li>
 
 
@@ -414,6 +417,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -482,7 +486,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-f9f69146">
+  <div class="need_container docutils container" id="SNCB-6268842e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_req_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -501,7 +505,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/requirements_engineering/requirements_workproducts.html#wp__requirements_inspect">wp__requirements_inspect</a></span></span></div>
 </span></div>
 </div>
@@ -539,8 +544,8 @@
 </ul>
 <p><strong>Checklist</strong></p>
 <p>See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 23 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-number">Table 24 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 9.1%" />
 <col style="width: 27.3%" />
@@ -698,6 +703,19 @@
 <td><p>Alternatively to the safe state there could also be “repair” mechanisms. Also do not forget to consider REQ_05_01 for these.</p></td>
 <td><p>YES</p></td>
 <td><p>There is only one requirement here that does define a safety mechanism - <a class="reference internal" href="index.html#comp_req__bitmanipulation__bounds_safety" title="comp_req__bitmanipulation__bounds_safety"><em class="xref need">Bounds and Safety Checks (comp_req__bitmanipulation__bounds_safety)</em></a>, findings on this were fixed in PR-2667 and PR-2696</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_10_01</p></td>
+<td><p>Is the requirement description <em>complete</em> ?</p></td>
+<td><p>For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).</p></td>
+<td><p>YES</p></td>
+<td><p>Following feature requirements are linked:</p>
+<ul class="simple">
+<li><p>feat_req__baselibs__core_utilities :  very generic requirement, rewritten by <a class="reference external" href="https://github.com/eclipse-score/score/pull/3071">#3071</a> can be removed, fixed</p></li>
+<li><p>feat_req__baselibs__bitmanipulation : is linked to all functional bitmanipulation component requirements</p></li>
+<li><p>feat_req__baselibs__safety : removed with <a class="reference external" href="https://github.com/eclipse-score/score/pull/3071">#3071</a> can be removed, fixed</p></li>
+</ul>
+</td>
 <td></td>
 </tr>
 </tbody>

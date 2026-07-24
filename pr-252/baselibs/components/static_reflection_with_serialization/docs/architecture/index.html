@@ -378,9 +378,11 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/docs/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/docs/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/docs/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
 
@@ -395,6 +397,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json/docs/index.html">JSON-Library</a></li>
 
 
@@ -405,6 +408,7 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../log_frontend/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
@@ -484,7 +488,7 @@
                   
   <section id="static-reflection-with-serialization-component-architecture">
 <h1>Static Reflection with Serialization Component Architecture<a class="headerlink" href="#static-reflection-with-serialization-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-bc625386">
+<div class="need_container docutils container" id="SNCB-abc699c8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__static_refl_with_serial_arch">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -503,7 +507,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/architecture_design/architecture_workproducts.html#wp__component_arch">wp__component_arch</a></span></span></div>
 </span></div>
 </div>
@@ -532,7 +537,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-47dfa575">
+<div class="need_container docutils container" id="SNCB-306a28b2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_static_reflection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -552,9 +557,11 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_static_reflection_serialization</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
-<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__static_reflection" title="comp__baselibs_static_reflection">comp_arc_sta__baselibs__static_reflection</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__reflect" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__reflect</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__visitor" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__visitor</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__container" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__nested" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__nested</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__header_only" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__header_only</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__compile_eff" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__compile_eff</a></span></span></div>
+<div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__static_reflection" title="comp__baselibs_static_reflection">comp_arc_sta__baselibs__static_reflection</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__reflect" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__reflect</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__visitor" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__visitor</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__container" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__nested" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__nested</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__header_only" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__header_only</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__compile_eff" title="comp__baselibs_static_reflection">comp_req__static_reflect_serial__compile_eff</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__static_reflection">logic_arc_int__baselibs__static_reflection</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__generic_serial">logic_arc_int__baselibs__generic_serial</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__log_serial">logic_arc_int__baselibs__log_serial</a></span></span></div>
 </span></div>
 </div>
@@ -579,7 +586,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ee359ce3">
+<div class="need_container docutils container" id="SNCB-f55c0ec3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__static_reflection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -598,7 +605,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_static_reflection" title="comp_arc_sta__baselibs__static_reflection">comp__baselibs_static_reflection</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__reflect" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__reflect</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__visitor" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__visitor</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__container" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__nested" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__nested</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__header_only" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__header_only</a>, <a class="reference internal" href="../requirements/index.html#comp_req__static_reflect_serial__compile_eff" title="comp_arc_sta__baselibs__static_reflection">comp_req__static_reflect_serial__compile_eff</a></span></span></div>
 </span></div>
@@ -629,7 +637,7 @@
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
 <section id="static-reflection-operations">
 <h3>Static Reflection Operations<a class="headerlink" href="#static-reflection-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-0fb25b9f">
+<div class="need_container docutils container" id="SNCB-ff418161">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__visit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -648,7 +656,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__static_reflection">logic_arc_int__baselibs__static_reflection</a></span></span></div>
 </span></div>
 </div>
@@ -671,7 +680,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-dfdf5740">
+<div class="need_container docutils container" id="SNCB-295c101b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__decl_struct_visit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -690,7 +699,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__static_reflection">logic_arc_int__baselibs__static_reflection</a></span></span></div>
 </span></div>
 </div>
@@ -713,7 +723,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-81abc1c5">
+<div class="need_container docutils container" id="SNCB-a4a78803">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__struct_intro">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -732,7 +742,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__static_reflection">logic_arc_int__baselibs__static_reflection</a></span></span></div>
 </span></div>
 </div>
@@ -758,7 +769,7 @@
 </section>
 <section id="generic-serialization-operations">
 <h3>Generic Serialization Operations<a class="headerlink" href="#generic-serialization-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-fc6980f9">
+<div class="need_container docutils container" id="SNCB-982236a3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__serialize">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -777,7 +788,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__generic_serial">logic_arc_int__baselibs__generic_serial</a></span></span></div>
 </span></div>
 </div>
@@ -800,7 +812,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-490dff41">
+<div class="need_container docutils container" id="SNCB-c7d55f1f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__deserialize">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -819,7 +831,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__generic_serial">logic_arc_int__baselibs__generic_serial</a></span></span></div>
 </span></div>
 </div>
@@ -842,7 +855,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-1186cb39">
+<div class="need_container docutils container" id="SNCB-54b91cce">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_serial_size">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -861,7 +874,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__generic_serial">logic_arc_int__baselibs__generic_serial</a></span></span></div>
 </span></div>
 </div>
@@ -887,7 +901,7 @@
 </section>
 <section id="logging-serialization-operations">
 <h3>Logging Serialization Operations<a class="headerlink" href="#logging-serialization-operations" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-70058ace">
+<div class="need_container docutils container" id="SNCB-b0abee32">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__log_ser">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -906,7 +920,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__log_serial">logic_arc_int__baselibs__log_serial</a></span></span></div>
 </span></div>
 </div>
@@ -929,7 +944,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4b403b1e">
+<div class="need_container docutils container" id="SNCB-0d197d69">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__log_deser">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -948,7 +963,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__log_serial">logic_arc_int__baselibs__log_serial</a></span></span></div>
 </span></div>
 </div>
@@ -971,7 +987,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-9ec96956">
+<div class="need_container docutils container" id="SNCB-db82a772">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_log_ser_size">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -990,7 +1006,8 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span></span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
 <div class="line"><span><div class="line">included by: <span class="included_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/architecture/index.html#logic_arc_int__baselibs__log_serial">logic_arc_int__baselibs__log_serial</a></span></span></div>
 </span></div>
 </div>
