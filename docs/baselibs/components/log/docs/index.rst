@@ -12,33 +12,12 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. _component_log_requirements:
-
-Requirements
+log_frontend
 ############
 
-.. document:: Log Requirements
-   :id: doc__log_requirements
-   :status: draft
-   :safety: ASIL_B
-   :security: NO
-   :realizes: wp__requirements_comp
-   :tags: log
+.. toctree::
+   :maxdepth: 1
 
-.. comp_req:: Log requirements placeholder
-   :id: comp_req__log__placeholder
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging
-   :belongs_to: comp__logging
-   :status: valid
-
-   Requirement placeholder for diagram rendering.
-   To be replaced with actual requirements.
-
-
-.. _component_log_requirements_aou:
-
-AoU Requirements
-################
+   assumptions_of_use/index.rst
+   detailed_design/index.rst
+   requirements/index.rst

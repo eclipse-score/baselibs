@@ -12,43 +12,31 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. _component_detailed_design_log:
+.. _component_detailed_design_log_rust_bridge:
 
-Detailed Design
-###############
-
-.. document:: Log Detailed Design
-   :id: doc__log_detailed_design
-   :status: draft
-   :safety: ASIL_B
-   :security: NO
-   :realizes: wp__sw_implementation
-   :tags: log
-
-
-Detailed Design for Component: Log
-==================================
+Rust Bridge Detailed Design
+===========================
 
 Description
 -----------
 
-Log component consists of three units:
+The rust log bridge component consists of three units:
 
-- `score_log` - modelled after `log` Rust library.
-- `score_log_fmt` - replacement for `core::fmt` provided by Rust core library.
-- `score_log_fmt_macro` - replacement for macros provided by Rust compiler:
-  - `score_log_format_args!` - replacement for `format_args!`
-  - `ScoreDebug` - replacement for `Debug`
+- ``score_log`` - modelled after ``log`` Rust library.
+- ``score_log_fmt`` - replacement for ``core::fmt`` provided by Rust core library.
+- ``score_log_fmt_macro`` - replacement for macros provided by Rust compiler:
+  - ``score_log_format_args!`` - replacement for ``format_args!``
+  - ``ScoreDebug`` - replacement for ``Debug``
 
 Most common approach in Rust is that formatting always results in a string.
-This means that the `log` library always receives a pre-formatted string.
+This means that the ``log`` library always receives a pre-formatted string.
 
 Such approach is incompatible with the expectation that log sink is not always text-based.
 Log component design is no longer string-based, and data frames can consist of multiple types.
 Value is passed along with formatting options to the backend.
 
 Rationale Behind Decomposition into Units
-******************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All units provide an interface or an implementation to a well defined functionality.
 Those units are not described in architecture, as they all form a monolithic logging frontend.
@@ -63,7 +51,7 @@ Static Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__placeholder
+   :fulfils: comp_req__log__compat_languages, comp_req__log__cfg_custom_types
    :belongs_to: comp__logging
 
    .. uml:: _assets/class_diagram.puml
@@ -76,7 +64,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__placeholder
+   :fulfils: comp_req__log__compat_languages, comp_req__log__cfg_custom_types
    :belongs_to: comp__logging
 
    .. uml:: _assets/log_op.puml
@@ -86,7 +74,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__placeholder
+   :fulfils: comp_req__log__context_log_level
    :belongs_to: comp__logging
 
    .. uml:: _assets/log_to_level.puml
