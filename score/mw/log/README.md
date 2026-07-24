@@ -360,7 +360,7 @@ The key sections of this implementation are going to be described in this docume
 The primary assumption is to **have separate library** for each custom user type.
 Thus the first step is to create separate directory. For the purpose of presenting
 an example there was a directory created inside `mw/log` test directory, e.g.:
-`mw/log/test/my_custom_lib` and create `BUILD` file there, e.g.:
+`mw/log/tests/my_custom_lib` and create `BUILD` file there, e.g.:
 
 ```bazel
 cc_library(
@@ -420,7 +420,7 @@ for logging, e.g. header `my_custom_type_mw_log.h`:
 
 ```c++
 #include "mw/log/log_stream.h"
-#include "mw/log/test/my_custom_lib/my_custom_type.h"
+#include "mw/log/tests/my_custom_lib/my_custom_type.h"
 
 namespace my
 {
@@ -510,7 +510,7 @@ cc_library(
 
 ```c++
 #include "mw/log/logstream.h"
-#include "mw/log/test/my_custom_lib/my_custom_type.h"
+#include "mw/log/tests/my_custom_lib/my_custom_type.h"
 
 namespace my
 {

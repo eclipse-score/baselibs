@@ -10,32 +10,28 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@rules_rust//rust:defs.bzl", "rust_proc_macro", "rust_test")
 
-rust_proc_macro(
-    name = "score_log_fmt_macro",
-    srcs = glob(["*.rs"]),
-    visibility = ["//score/log_rust/score_log:__pkg__"],
+"""
+`stdout_logger` is a testing/development backend for logging.
+For production use `score_logging`.
+"""
+
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+
+rust_library(
+    name = "stdout_logger",
+    srcs = glob(["**/*.rs"]),
+    visibility = ["//visibility:public"],
     deps = [
-        "//score/log_rust/score_log_fmt",
-        "@score_crates//:proc_macro2",
-        "@score_crates//:quote",
-        "@score_crates//:syn",
+        "//score/mw/log/rust/score_log",
     ],
 )
 
 rust_test(
     name = "tests",
-    srcs = glob(["tests/**/*.rs"]),
-    proc_macro_deps = [
-        "//score/log_rust/score_log_fmt_macro",
-    ],
+    crate = "stdout_logger",
     tags = [
         "unit_tests",
         "ut",
-    ],
-    deps = [
-        "//score/log_rust/score_log",
-        "//score/log_rust/score_log_fmt",
     ],
 )

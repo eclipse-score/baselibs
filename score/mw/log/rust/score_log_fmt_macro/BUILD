@@ -10,26 +10,32 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro", "rust_test")
 
-rust_library(
-    name = "score_log_fmt",
-    srcs = glob(["**/*.rs"]),
-    crate_features = select({
-        "//score/log_rust:safety_level_qm": ["qm"],
-        "//score/log_rust:safety_level_asil_b": [],
-    }),
-    visibility = [
-        "//score/log_rust/score_log:__pkg__",
-        "//score/log_rust/score_log_fmt_macro:__pkg__",
+rust_proc_macro(
+    name = "score_log_fmt_macro",
+    srcs = glob(["*.rs"]),
+    visibility = ["//score/mw/log/rust/score_log:__pkg__"],
+    deps = [
+        "//score/mw/log/rust/score_log_fmt",
+        "@score_crates//:proc_macro2",
+        "@score_crates//:quote",
+        "@score_crates//:syn",
     ],
 )
 
 rust_test(
     name = "tests",
-    crate = "score_log_fmt",
+    srcs = glob(["tests/**/*.rs"]),
+    proc_macro_deps = [
+        "//score/mw/log/rust/score_log_fmt_macro",
+    ],
     tags = [
         "unit_tests",
         "ut",
+    ],
+    deps = [
+        "//score/mw/log/rust/score_log",
+        "//score/mw/log/rust/score_log_fmt",
     ],
 )

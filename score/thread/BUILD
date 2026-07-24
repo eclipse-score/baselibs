@@ -19,7 +19,7 @@ rust_library(
     edition = "2021",
     visibility = ["//visibility:public"],
     deps = [
-        "//score/log_rust/score_log",
+        "//score/mw/log/rust/score_log",
         "//score/pal",
     ],
 )
