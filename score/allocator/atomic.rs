@@ -11,15 +11,10 @@
 // SPDX-License-Identifier: Apache-2.0
 // *******************************************************************************
 
-//! Custom allocator support.
+//! Atomic primitives re-export.
+//! Required for testing with Loom.
 
-mod allocator_traits;
-mod arena_allocator;
-mod atomic;
-mod heap_allocator;
-mod memory_region;
-
-pub use allocator_traits::{AllocationError, BasicAllocator};
-pub use arena_allocator::ArenaAllocator;
-pub use heap_allocator::{HeapAllocator, GLOBAL_ALLOCATOR};
-pub use memory_region::{page_size, MemoryRegion, MmapMemoryRegion};
+#[cfg(not(loom))]
+pub(crate) use core::sync::atomic::{fence, AtomicUsize, Ordering};
+#[cfg(loom)]
+pub(crate) use loom::sync::atomic::{fence, AtomicUsize, Ordering};
