@@ -21,7 +21,7 @@ JSON Component Architecture
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview
 --------
@@ -65,9 +65,9 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :implements: logic_arc_int__baselibs__json
-   :consists_of: comp__baselibs_json_wrapper, comp__baselibs_nlohman_json
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__json[version==1]
+   :consists_of: comp__baselibs_json_wrapper[version==1], comp__baselibs_nlohman_json[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
 .. comp_arc_sta:: JSON Static view
    :id: comp_arc_sta__baselibs__json
@@ -75,8 +75,8 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__json__deserialization, comp_req__json__serialization, comp_req__json__user_format, comp_req__json__lang_idioms, comp_req__json__lang_infra, comp_req__json__type_compatibility, comp_req__json__full_testability, comp_req__json__asil
-   :belongs_to: comp__baselibs_json
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :belongs_to: comp__baselibs_json[version==1]
 
    .. needarch::
       :scale: 50
@@ -94,8 +94,8 @@ Dynamic Architecture
    :safety: ASIL_B
    :status: invalid
    :version: 1
-   :fulfils: comp_req__json__deserialization, comp_req__json__serialization, comp_req__json__user_format, comp_req__json__lang_idioms, comp_req__json__lang_infra, comp_req__json__type_compatibility, comp_req__json__full_testability, comp_req__json__asil
-   :belongs_to: comp__baselibs_json
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :belongs_to: comp__baselibs_json[version==1]
 
    put here a sequence diagram (TBD)
 
@@ -109,7 +109,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__json
+   :included_by: logic_arc_int__baselibs__json[version==1]
 
 .. logic_arc_int_op:: Write
    :id: logic_arc_int_op__baselibs__write
@@ -117,7 +117,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__json
+   :included_by: logic_arc_int__baselibs__json[version==1]
 
 Lower Level Components
 ----------------------
@@ -128,8 +128,8 @@ Lower Level Components
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :implements: logic_arc_int__baselibs__json
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__json[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
 .. comp:: nlohman-JSON
    :id: comp__baselibs_nlohman_json
@@ -137,4 +137,4 @@ Lower Level Components
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :belongs_to: feat__baselibs
+   :belongs_to: feat__baselibs[version==1]

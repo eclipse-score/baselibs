@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, containers_library
 
 Functional Requirements
@@ -32,10 +32,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide a fixed-size array container with construction-time size specification.
 
@@ -44,10 +44,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide an intrusive doubly-linked list based on the C++ standardization proposal P0406R1.
 
@@ -56,10 +56,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall enforce compile-time type safety for all container operations.
 
@@ -68,10 +68,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide a non-relocatable vector container that maintains stable element addresses.
 
@@ -84,10 +84,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide deterministic behavior with no dynamic memory allocation.
 

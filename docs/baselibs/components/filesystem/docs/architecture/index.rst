@@ -21,7 +21,7 @@ Filesystem Component Architecture
    :version: 1
    :security: YES
    :safety: ASIL_B
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -37,8 +37,8 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_filesystem
-   :implements: logic_arc_int__baselibs__filesystem
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__filesystem[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -52,8 +52,8 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__filesystem__api_abstraction, comp_req__filesystem__path_utilities, comp_req__filesystem__directory_iterators, comp_req__filesystem__file_io, comp_req__filesystem__full_testability, comp_req__filesystem__file_utils, comp_req__filesystem__mock_fake
-   :belongs_to: comp__baselibs_filesystem
+   :fulfils: comp_req__filesystem__api_abstraction[version==1], comp_req__filesystem__path_utilities[version==1], comp_req__filesystem__directory_iterators[version==1], comp_req__filesystem__file_io[version==1], comp_req__filesystem__full_testability[version==1], comp_req__filesystem__file_utils[version==1], comp_req__filesystem__mock_fake[version==1]
+   :belongs_to: comp__baselibs_filesystem[version==1]
 
    .. needarch::
       :scale: 50
@@ -70,7 +70,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File/Directory Existence Check
    :id: logic_arc_int_op__baselibs__exists
@@ -78,7 +78,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Type Detection
    :id: logic_arc_int_op__baselibs__file_type
@@ -86,7 +86,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Status Query
    :id: logic_arc_int_op__baselibs__file_status
@@ -94,7 +94,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Copy File
    :id: logic_arc_int_op__baselibs__copy_file
@@ -102,7 +102,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Remove File or Directory
    :id: logic_arc_int_op__baselibs__remove
@@ -110,7 +110,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Modify File Permissions
    :id: logic_arc_int_op__baselibs__permissions
@@ -118,7 +118,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Create Directory
    :id: logic_arc_int_op__baselibs__create_directory
@@ -126,7 +126,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Symlink Operations
    :id: logic_arc_int_op__baselibs__symlink_ops
@@ -134,7 +134,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Hard Link Operations
    :id: logic_arc_int_op__baselibs__hardlink_ops
@@ -142,7 +142,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Last Write Time
    :id: logic_arc_int_op__baselibs__last_write_time
@@ -150,7 +150,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Current Path
    :id: logic_arc_int_op__baselibs__current_path
@@ -158,7 +158,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Empty Check
    :id: logic_arc_int_op__baselibs__is_empty
@@ -166,7 +166,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Directory Creation with Permissions
    :id: logic_arc_int_op__baselibs__create_dir_perms
@@ -174,7 +174,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Content Comparison
    :id: logic_arc_int_op__baselibs__file_comparison
@@ -182,7 +182,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Group Ownership Management
    :id: logic_arc_int_op__baselibs__change_group
@@ -190,7 +190,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Group Validation
    :id: logic_arc_int_op__baselibs__validate_group
@@ -198,7 +198,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Check Filesystem
    :id: logic_arc_int_op__baselibs__check_filesystem
@@ -206,7 +206,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Repair Filesystem
    :id: logic_arc_int_op__baselibs__repair_filesystem
@@ -214,7 +214,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Partition Formatting
    :id: logic_arc_int_op__baselibs__format_partition
@@ -222,7 +222,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: QNX Compatibility Check
    :id: logic_arc_int_op__baselibs__qnx_compatible
@@ -230,7 +230,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Directory Synchronization
    :id: logic_arc_int_op__baselibs__sync_directory
@@ -238,7 +238,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Unique File Creation
    :id: logic_arc_int_op__baselibs__open_unique_file
@@ -246,4 +246,4 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__filesystem
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]

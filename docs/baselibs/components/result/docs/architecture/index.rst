@@ -21,7 +21,7 @@ Result Component Architecture
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -38,8 +38,8 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_result
-   :implements: logic_arc_int__baselibs__result
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__result[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -53,8 +53,8 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__result__error_handling, comp_req__result__set_result, comp_req__result__domain_error_information, comp_req__result__type_safety, comp_req__result__std_integration, comp_req__result__deterministic_behavior, comp_req__result__exception_free_operation
-   :belongs_to: comp__baselibs_result
+   :fulfils: comp_req__result__error_handling[version==1], comp_req__result__set_result[version==1], comp_req__result__domain_error_information[version==1], comp_req__result__type_safety[version==1], comp_req__result__std_integration[version==1], comp_req__result__deterministic_behavior[version==1], comp_req__result__exception_free_operation[version==1]
+   :belongs_to: comp__baselibs_result[version==1]
 
    .. needarch::
       :scale: 50
@@ -71,8 +71,8 @@ Dynamic Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__result__error_handling, comp_req__result__set_result, comp_req__result__domain_error_information, comp_req__result__type_safety, comp_req__result__std_integration, comp_req__result__deterministic_behavior, comp_req__result__exception_free_operation
-   :belongs_to: comp__baselibs_result
+   :fulfils: comp_req__result__error_handling[version==1], comp_req__result__set_result[version==1], comp_req__result__domain_error_information[version==1], comp_req__result__type_safety[version==1], comp_req__result__std_integration[version==1], comp_req__result__deterministic_behavior[version==1], comp_req__result__exception_free_operation[version==1]
+   :belongs_to: comp__baselibs_result[version==1]
 
    No need for sequence diagram. Simple caller callee flow.
 
@@ -85,7 +85,7 @@ Interfaces
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__result
+   :included_by: logic_arc_int__baselibs__result[version==1]
 
 .. logic_arc_int_op:: Get Value
    :id: logic_arc_int_op__baselibs__get_value
@@ -93,7 +93,7 @@ Interfaces
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__result
+   :included_by: logic_arc_int__baselibs__result[version==1]
 
 .. logic_arc_int_op:: Get Error
    :id: logic_arc_int_op__baselibs__get_error
@@ -101,4 +101,4 @@ Interfaces
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__result
+   :included_by: logic_arc_int__baselibs__result[version==1]

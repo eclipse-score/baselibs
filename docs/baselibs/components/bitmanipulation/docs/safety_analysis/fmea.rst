@@ -22,7 +22,7 @@ FMEA (Failure Modes and Effects Analysis)
    :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__sw_component_fmea
+   :realizes: wp__sw_component_fmea[version==1]
 
 Failure Mode List
 -----------------
@@ -101,11 +101,11 @@ FMEA
 For all identified applicable failure initiators, the FMEA is performed in the following section.
 
 .. comp_saf_fmea:: Bitmanipulation No Return
-   :violates: comp_arc_sta__baselibs__bit_manipulation
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
    :id: comp_saf_fmea__bitmanipulation__no_return
    :fault_id: MF_01_01,MF_01_06,EX_01_04
    :failure_effect: Bitmanipulation is not executed, if safety function relies on this there may be violation of the safety requirements.
-   :mitigated_by: aou_req__platform__error_reaction
+   :mitigated_by: aou_req__platform__error_reaction[version==1]
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2837
    :sufficient: no
    :status: valid
@@ -116,11 +116,11 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    return is needed.
 
 .. comp_saf_fmea:: Bitmanipulation Late Return
-   :violates: comp_arc_sta__baselibs__bit_manipulation
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
    :id: comp_saf_fmea__bitmanipulation__late_return
    :fault_id: MF_01_02,EX_01_06
    :failure_effect: Bitmanipulation is executed too late or stalls, so there may be violation of its safety requirements.
-   :mitigated_by: aou_req__platform__flow_monitoring
+   :mitigated_by: aou_req__platform__flow_monitoring[version==1]
    :sufficient: yes
    :status: valid
    :version: 1
@@ -128,11 +128,11 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    There is already an aou on platform level which states that a user has to use program flow monitoring
 
 .. comp_saf_fmea:: Bitmanipulation Constraints
-   :violates: comp_arc_sta__baselibs__bit_manipulation
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
    :id: comp_saf_fmea__bitmanipulation__constraints
    :fault_id: CO_01_01,CO_01_02
    :failure_effect: If constraints are violated there may be out-of bounds memory corruption.
-   :mitigated_by: comp_req__bitmanipulation__bounds_safety
+   :mitigated_by: comp_req__bitmanipulation__bounds_safety[version==1]
    :sufficient: yes
    :status: valid
    :version: 1
@@ -140,11 +140,11 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    Constraints are checked, see mitigation requirement.
 
 .. comp_saf_fmea:: Bitmanipulation Wrong Input
-   :violates: comp_arc_sta__baselibs__bit_manipulation
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
    :id: comp_saf_fmea__bitmanipulation__wrong_input
    :fault_id: MF_01_05
    :failure_effect: If enums are wrongly defined, the expectation of what bit(s) are set will not be met.
-   :mitigated_by: aou_req__bitmanipulation__enum_constraints
+   :mitigated_by: aou_req__bitmanipulation__enum_constraints[version==1]
    :sufficient: yes
    :status: valid
    :version: 1

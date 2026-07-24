@@ -22,7 +22,7 @@ filesystem
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_filesystem
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
 
 .. toctree::
    :hidden:

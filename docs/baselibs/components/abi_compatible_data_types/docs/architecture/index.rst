@@ -21,7 +21,7 @@ ABI Compatible Data Types Component Architecture
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -38,7 +38,7 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_abi_compatible_data_types
-   :belongs_to: feat__baselibs
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50

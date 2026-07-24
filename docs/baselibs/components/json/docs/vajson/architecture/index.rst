@@ -18,7 +18,7 @@
     :version: 1
     :safety: ASIL_B
     :security: YES
-    :realizes: wp__component_arch
+    :realizes: wp__component_arch[version==1]
 
 VaJson Component Architecture
 =============================
@@ -31,4 +31,4 @@ VaJson Component Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :belongs_to: feat__baselibs
+   :belongs_to: feat__baselibs[version==1]

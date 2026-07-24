@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, memory_library
 
 Functional Requirements
@@ -32,10 +32,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide capabilities for creating, opening and managing shared memory.
 
@@ -44,10 +44,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide polymorphic memory resource allocators using offset pointers instead of raw pointers to enable allocation in shared memory regions accessible across multiple processes. The standard library's std::pmr::polymorphic_allocator is not applicable as it uses raw pointers that are invalid when shared memory is mapped at different virtual addresses in different processes.
 
@@ -56,10 +56,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide type aliases for STL containers (vector, map, string) that use offset pointers for shared memory storage.
 
@@ -68,10 +68,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide file-based locking mechanisms for inter-process synchronization and mutual exclusion.
 
@@ -80,10 +80,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall track and validate memory region boundaries to prevent out-of-bounds access in shared memory.
 
@@ -92,10 +92,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide byte order conversion between host and network byte order (big/little endian).
 
@@ -104,10 +104,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide immutable shared memory segments that become read-only after initialization.
 
@@ -116,10 +116,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide an interface to allocate shared memory from typed memory regions.
 
@@ -128,10 +128,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide a global registry for memory resource lookup and management.
 
@@ -140,10 +140,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide zero-allocation string utilities including splitting, comparison, and compile-time literals.
 
@@ -152,10 +152,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall provide atomic operations on shared memory data for lock-free inter-process communication.
 
@@ -168,10 +168,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The shared memory allocation shall provide deterministic behavior with predictable execution time suitable for real-time automotive systems.
 
@@ -180,10 +180,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__memory_library
+   :derived_from: feat_req__baselibs__memory_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_memory_shared
+   :satisfied_by: comp__baselibs_memory_shared[version==1]
 
    The Memory library shall ensure shared memory data structures remain valid regardless of process virtual address space mappings.
 

@@ -21,7 +21,7 @@ Safecpp Component Architecture
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -38,8 +38,8 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_safecpp
-   :implements: logic_arc_int__baselibs__aborts_upon_ex, logic_arc_int__baselibs__coverage_termination, logic_arc_int__baselibs__safemath, logic_arc_int__baselibs__safeatomics, logic_arc_int__baselibs__scoped_function, logic_arc_int__baselibs__string_view
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__aborts_upon_ex[version==1], logic_arc_int__baselibs__coverage_termination[version==1], logic_arc_int__baselibs__safemath[version==1], logic_arc_int__baselibs__safeatomics[version==1], logic_arc_int__baselibs__scoped_function[version==1], logic_arc_int__baselibs__string_view[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -53,8 +53,8 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__safecpp__aborts_upon_exception, comp_req__safecpp__safe_math, comp_req__safecpp__scoped_guards, comp_req__safecpp__nullstring, comp_req__safecpp__safe_atomic, comp_req__safecpp__coverage_termination
-   :belongs_to: comp__baselibs_safecpp
+   :fulfils: comp_req__safecpp__aborts_upon_exception[version==1], comp_req__safecpp__safe_math[version==1], comp_req__safecpp__scoped_guards[version==1], comp_req__safecpp__nullstring[version==1], comp_req__safecpp__safe_atomic[version==1], comp_req__safecpp__coverage_termination[version==1]
+   :belongs_to: comp__baselibs_safecpp[version==1]
 
    .. needarch::
       :scale: 50
@@ -70,7 +70,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__aborts_upon_ex
+   :included_by: logic_arc_int__baselibs__aborts_upon_ex[version==1]
 
 .. logic_arc_int_op:: Terminate_handler
    :id: logic_arc_int_op__safecpp__terminate_handler
@@ -78,7 +78,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__coverage_termination
+   :included_by: logic_arc_int__baselibs__coverage_termination[version==1]
 
 .. logic_arc_int_op:: Signal_handler
    :id: logic_arc_int_op__safecpp__signal_handler
@@ -86,7 +86,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__coverage_termination
+   :included_by: logic_arc_int__baselibs__coverage_termination[version==1]
 
 .. logic_arc_int_op:: Add
    :id: logic_arc_int_op__safecpp__safemath_add
@@ -94,7 +94,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Subtract
    :id: logic_arc_int_op__safecpp__safemath_subtract
@@ -102,7 +102,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Multiply
    :id: logic_arc_int_op__safecpp__safemath_multiply
@@ -110,7 +110,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Divide
    :id: logic_arc_int_op__safecpp__safemath_divide
@@ -118,7 +118,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Negate
    :id: logic_arc_int_op__safecpp__safemath_negate
@@ -126,7 +126,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Abs
    :id: logic_arc_int_op__safecpp__safemath_abs
@@ -134,7 +134,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Cast
    :id: logic_arc_int_op__safecpp__safemath_cast
@@ -142,7 +142,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Less
    :id: logic_arc_int_op__safecpp__safemath_less
@@ -150,7 +150,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Greater
    :id: logic_arc_int_op__safecpp__safemath_greater
@@ -158,7 +158,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Equal
    :id: logic_arc_int_op__safecpp__safemath_equal
@@ -166,7 +166,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Notequal
    :id: logic_arc_int_op__safecpp__safemath_notequal
@@ -174,7 +174,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Lessequal
    :id: logic_arc_int_op__safecpp__safemath_lessequal
@@ -182,7 +182,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Greaterequal
    :id: logic_arc_int_op__safecpp__safemath_greatereq
@@ -190,7 +190,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safemath
+   :included_by: logic_arc_int__baselibs__safemath[version==1]
 
 .. logic_arc_int_op:: Atomic Add
    :id: logic_arc_int_op__safecpp__safeatomics_atomic
@@ -198,7 +198,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__safeatomics
+   :included_by: logic_arc_int__baselibs__safeatomics[version==1]
 
 .. logic_arc_int_op:: Move Only Scoped Function
    :id: logic_arc_int_op__safecpp__scoped_function_mo
@@ -206,7 +206,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__scoped_function
+   :included_by: logic_arc_int__baselibs__scoped_function[version==1]
 
 .. logic_arc_int_op:: Copyable Scoped Function
    :id: logic_arc_int_op__safecpp__scoped_function_co
@@ -214,7 +214,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__scoped_function
+   :included_by: logic_arc_int__baselibs__scoped_function[version==1]
 
 .. logic_arc_int_op:: Expire
    :id: logic_arc_int_op__safecpp__scoped_function_ex
@@ -222,7 +222,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__scoped_function
+   :included_by: logic_arc_int__baselibs__scoped_function[version==1]
 
 .. logic_arc_int_op:: Null Termination Check
    :id: logic_arc_int_op__safecpp__string_view_null
@@ -230,4 +230,4 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__string_view
+   :included_by: logic_arc_int__baselibs__string_view[version==1]

@@ -23,7 +23,7 @@ Detailed Design
    :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__sw_implementation
+   :realizes: wp__sw_implementation[version==1]
    :tags: log
 
 
@@ -65,8 +65,8 @@ Static Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__log__placeholder
-   :belongs_to: comp__logging
+   :fulfils: comp_req__log__placeholder[version==1]
+   :belongs_to: comp__logging[version==1]
 
    .. uml:: _assets/class_diagram.puml
 
@@ -79,8 +79,8 @@ Dynamic Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__log__placeholder
-   :belongs_to: comp__logging
+   :fulfils: comp_req__log__placeholder[version==1]
+   :belongs_to: comp__logging[version==1]
 
    .. uml:: _assets/log_op.puml
 
@@ -90,7 +90,7 @@ Dynamic Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__log__placeholder
-   :belongs_to: comp__logging
+   :fulfils: comp_req__log__placeholder[version==1]
+   :belongs_to: comp__logging[version==1]
 
    .. uml:: _assets/log_to_level.puml

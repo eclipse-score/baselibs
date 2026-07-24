@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, static_reflection_serialization_library
 
 .. comp_req:: Static Reflection Support
@@ -29,8 +29,8 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs
@@ -42,8 +42,8 @@ Requirements
    :reqtype: Interface
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs
@@ -55,8 +55,8 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs
@@ -68,8 +68,8 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs
@@ -81,8 +81,8 @@ Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs
@@ -94,8 +94,8 @@ Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
    :version: 1
    :tags: baselibs

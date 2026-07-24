@@ -22,7 +22,7 @@ Architecture Inspection Checklist
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__sw_arch_verification
+   :realizes: wp__sw_arch_verification[version==1]
 
 Purpose
 -------

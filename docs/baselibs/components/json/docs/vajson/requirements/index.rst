@@ -18,7 +18,7 @@
     :version: 1
     :safety: ASIL_B
     :security: YES
-    :realizes: wp__requirements_comp
+    :realizes: wp__requirements_comp[version==1]
 
 Requirements
 ============
@@ -35,10 +35,10 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson[version==1]
 
    VaJson checks the well-formedness of JSON data.
    Errors shall include the reason and location in the JSON document for malformed JSON.
@@ -48,10 +48,10 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson[version==1]
 
    VaJson shall ignore trailing commas.
    This behavior extends RFC 8259.
@@ -61,10 +61,10 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson[version==1]
 
    VaJson shall accept hexadecimal integers.
    This behavior extends RFC 8259.
@@ -74,10 +74,10 @@ In addition, the following VaJson-specific requirements apply:
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson[version==1]
 
    VaJson shall encode and decode UTF-8 encoded strings.
 
@@ -89,9 +89,9 @@ Safety Impact
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library
+   :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_vajson
+   :satisfied_by: comp__baselibs_vajson[version==1]
 
    The VaJson library shall be ASIL-B compliant.

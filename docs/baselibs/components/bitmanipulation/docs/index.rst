@@ -21,7 +21,7 @@ bitmanipulation
    :version: 1
    :safety: ASIL_B
    :tags: baselibs_bitmanipulation
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :security: YES
 
 .. toctree::

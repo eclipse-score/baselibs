@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, hash
 
 .. comp:: Hash Library
@@ -31,7 +31,7 @@ Requirements
    :status: valid
    :version: 1
    :tags: baselibs_hash
-   :belongs_to: feat__baselibs
+   :belongs_to: feat__baselibs[version==1]
 
 Functional Requirements
 =======================
@@ -41,10 +41,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall compute a hash value over a contiguous byte sequence
    supplied by the caller, accumulating state across one or more data inputs
@@ -55,10 +55,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall expose the computed hash value as a raw byte sequence.
 
@@ -67,10 +67,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall expose the computed hash value as a hexadecimal string
    representation.
@@ -80,10 +80,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall allow the hash algorithm to be selected and a
    calculator instance to be created independently of the code that performs
@@ -95,10 +95,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
    cryptographic hash algorithms.
@@ -108,10 +108,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall support IEEE CRC-32 as a checksum algorithm.
 
@@ -120,10 +120,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__hash_library
+   :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_hash
+   :satisfied_by: comp__baselibs_hash[version==1]
 
    The hash library shall propagate errors from hash calculator instantiation
    via return-value types, enabling use in safety-critical contexts where

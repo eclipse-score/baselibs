@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, utils_library
 
 Functional Requirements
@@ -32,10 +32,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__utils_library
+   :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_utils
+   :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall provide functions for encoding data to Base64 format and decoding Base64 data back to its original form.
 
@@ -44,10 +44,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__utils_library
+   :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_utils
+   :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall provide a functionality that stores a callback and executes it automatically when the class is destructed
 
@@ -59,10 +59,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__utils_library
+   :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_utils
+   :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall ensure that all operations complete in a predictable manner and without dynamic memory allocation.
 

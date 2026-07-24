@@ -21,7 +21,7 @@ Requirements
    :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, containers_rust_library
 
 .. comp:: Rust Containers
@@ -31,7 +31,7 @@ Requirements
    :status: valid
    :version: 1
    :tags: baselibs_rust_containers_rust
-   :belongs_to: feat__baselibs
+   :belongs_to: feat__baselibs[version==1]
 
 Functional Requirements
 =======================
@@ -41,8 +41,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -53,8 +53,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -67,8 +67,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -79,8 +79,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -93,8 +93,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -105,8 +105,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -119,8 +119,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -131,8 +131,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -145,8 +145,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -157,8 +157,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -171,8 +171,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -183,8 +183,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -197,8 +197,8 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -212,8 +212,8 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -224,8 +224,8 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -236,8 +236,8 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__baselibs_containers_rust
-   :belongs_to: comp__baselibs_containers_rust
+   :satisfied_by: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 

@@ -19,7 +19,7 @@
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_inspect
+   :realizes: wp__requirements_inspect[version==1]
 
 Requirement Inspection Checklist
 ================================

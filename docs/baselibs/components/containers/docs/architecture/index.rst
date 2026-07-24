@@ -21,7 +21,7 @@ Container Component Architecture
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -38,8 +38,8 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_containers
-   :implements: logic_arc_int__baselibs__dynamic_array, logic_arc_int__baselibs__intrusive_list
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__dynamic_array[version==1], logic_arc_int__baselibs__intrusive_list[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -53,8 +53,8 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__containers__dynamic_array, comp_req__containers__intrusive_list, comp_req__containers__type_safety, comp_req__containers__non_relocatable_vector, comp_req__containers__deterministic_behavior
-   :belongs_to: comp__baselibs_containers
+   :fulfils: comp_req__containers__dynamic_array[version==1], comp_req__containers__intrusive_list[version==1], comp_req__containers__type_safety[version==1], comp_req__containers__non_relocatable_vector[version==1], comp_req__containers__deterministic_behavior[version==1]
+   :belongs_to: comp__baselibs_containers[version==1]
 
    .. needarch::
       :scale: 50
@@ -72,7 +72,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__dynamic_array
+   :included_by: logic_arc_int__baselibs__dynamic_array[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__containers__dynarray_itrate
@@ -80,7 +80,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__dynamic_array
+   :included_by: logic_arc_int__baselibs__dynamic_array[version==1]
 
 .. logic_arc_int_op:: Change
    :id: logic_arc_int_op__containers__dynarray_change
@@ -88,7 +88,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__dynamic_array
+   :included_by: logic_arc_int__baselibs__dynamic_array[version==1]
 
 .. logic_arc_int_op:: Insert
    :id: logic_arc_int_op__baselibs__intr_list_insert
@@ -96,7 +96,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__intrusive_list
+   :included_by: logic_arc_int__baselibs__intrusive_list[version==1]
 
 .. logic_arc_int_op:: Remove
    :id: logic_arc_int_op__baselibs__intr_list_remove
@@ -104,7 +104,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__intrusive_list
+   :included_by: logic_arc_int__baselibs__intrusive_list[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__baselibs__intr_list_iterate
@@ -112,7 +112,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__intrusive_list
+   :included_by: logic_arc_int__baselibs__intrusive_list[version==1]
 
 .. logic_arc_int_op:: Access
    :id: logic_arc_int_op__baselibs__intr_list_access
@@ -120,4 +120,4 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__intrusive_list
+   :included_by: logic_arc_int__baselibs__intrusive_list[version==1]

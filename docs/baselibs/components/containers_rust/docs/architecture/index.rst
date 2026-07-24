@@ -21,7 +21,7 @@ Rust Containers Architecture
    :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
    :tags: baselibs_rust_containers_rust
 
 
@@ -45,8 +45,8 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_rust_containers_rust
-   :fulfils: comp_req__containers_rust__fixed_vector, comp_req__containers_rust__inline_vector, comp_req__containers_rust__fixed_queue, comp_req__containers_rust__inline_queue
-   :belongs_to: comp__baselibs_containers_rust
+   :fulfils: comp_req__containers_rust__fixed_vector[version==1], comp_req__containers_rust__inline_vector[version==1], comp_req__containers_rust__fixed_queue[version==1], comp_req__containers_rust__inline_queue[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==1]
 
    .. needarch::
       :scale: 50
@@ -71,7 +71,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixvec
+   :included_by: logic_arc_int__b_r__fixvec[version==1]
 
 .. logic_arc_int_op:: Pop
    :id: logic_arc_int_op__cont__fixvec_pop
@@ -79,7 +79,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixvec
+   :included_by: logic_arc_int__b_r__fixvec[version==1]
 
 .. logic_arc_int_op:: Clear
    :id: logic_arc_int_op__cont__fixvec_clear
@@ -87,7 +87,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixvec
+   :included_by: logic_arc_int__b_r__fixvec[version==1]
 
 .. logic_arc_int_op:: Index
    :id: logic_arc_int_op__cont__fixvec_index
@@ -95,7 +95,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixvec
+   :included_by: logic_arc_int__b_r__fixvec[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__cont__fixvec_iterate
@@ -103,7 +103,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixvec
+   :included_by: logic_arc_int__b_r__fixvec[version==1]
 
 
 .. logic_arc_int:: Inline-Storage Vector
@@ -119,7 +119,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlinevec
+   :included_by: logic_arc_int__b_r__inlinevec[version==1]
 
 .. logic_arc_int_op:: Pop
    :id: logic_arc_int_op__cont__inlinevec_pop
@@ -127,7 +127,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlinevec
+   :included_by: logic_arc_int__b_r__inlinevec[version==1]
 
 .. logic_arc_int_op:: Clear
    :id: logic_arc_int_op__cont__inlinevec_clear
@@ -135,7 +135,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlinevec
+   :included_by: logic_arc_int__b_r__inlinevec[version==1]
 
 .. logic_arc_int_op:: Index
    :id: logic_arc_int_op__cont__inlinevec_index
@@ -143,7 +143,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlinevec
+   :included_by: logic_arc_int__b_r__inlinevec[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__cont__inlinevec_iterate
@@ -151,7 +151,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlinevec
+   :included_by: logic_arc_int__b_r__inlinevec[version==1]
 
 
 .. logic_arc_int:: Fixed-Capacity Queue
@@ -167,7 +167,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 .. logic_arc_int_op:: Push Back
    :id: logic_arc_int_op__cont__fixqueue_pushback
@@ -175,7 +175,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 .. logic_arc_int_op:: Pop Front
    :id: logic_arc_int_op__cont__fixqueue_popfront
@@ -183,7 +183,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 .. logic_arc_int_op:: Pop Back
    :id: logic_arc_int_op__cont__fixqueue_popback
@@ -191,7 +191,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 .. logic_arc_int_op:: Clear
    :id: logic_arc_int_op__cont__fixqueue_clear
@@ -199,7 +199,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__cont__fixqueue_iterate
@@ -207,7 +207,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__fixqueue
+   :included_by: logic_arc_int__b_r__fixqueue[version==1]
 
 
 .. logic_arc_int:: Inline-Storage Queue
@@ -223,7 +223,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
 
 .. logic_arc_int_op:: Push Back
    :id: logic_arc_int_op__cont__inlqueue_pushback
@@ -231,7 +231,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
 
 .. logic_arc_int_op:: Pop Front
    :id: logic_arc_int_op__cont__inlqueue_popfront
@@ -239,7 +239,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
 
 .. logic_arc_int_op:: Pop Back
    :id: logic_arc_int_op__cont__inlqueue_popback
@@ -247,7 +247,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
 
 .. logic_arc_int_op:: Clear
    :id: logic_arc_int_op__cont__inlqueue_clear
@@ -255,7 +255,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
 
 .. logic_arc_int_op:: Iterate
    :id: logic_arc_int_op__cont__inlqueue_iterate
@@ -263,4 +263,4 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__b_r__inlqueue
+   :included_by: logic_arc_int__b_r__inlqueue[version==1]
