@@ -379,6 +379,31 @@ alias(
 )
 
 cc_library(
+    name = "slog_impl",
+    srcs = [
+        "slog.cpp",
+    ],
+    hdrs = [
+        "slog.h",
+        "slog_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    target_compatible_with = ["@platforms//os:qnx"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//score/os:errno",
+        "//score/os:object_seam",
+    ],
+)
+
+alias(
+    name = "slog",
+    actual = "slog_impl",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "sysmgr",
     srcs = [
         "sysmgr.cpp",
