@@ -20,9 +20,10 @@ Safety Plan Formal Review Report
 .. document:: Baselibs Safety Plan Formal Review
    :id: doc__baselibs_safety_plan_fdr
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__fdr_reports
+   :realizes: wp__fdr_reports[version==1]
 
 
 **1. Purpose**

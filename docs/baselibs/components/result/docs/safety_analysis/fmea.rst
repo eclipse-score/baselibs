@@ -19,9 +19,10 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: result FMEA
    :id: doc__result_fmea
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__sw_component_fmea
+   :realizes: wp__sw_component_fmea[version==1]
 
 Failure Mode List
 -----------------
@@ -100,27 +101,29 @@ FMEA
 For all identified applicable failure initiators, the FMEA is performed in the following section.
 
 .. comp_saf_fmea:: Result Error Code Cross-Domain Misinterpretation
-   :violates: comp_arc_dyn__baselibs__result
+   :violates: comp_arc_dyn__baselibs__result[version==1]
    :id: comp_saf_fmea__result__error_code
    :fault_id: CO_01_01
    :failure_effect: When retrieving error information, the error code is returned as a domain-agnostic integer. If the user interprets this code under a different error domain than the one that produced it, the error is misidentified, potentially leading to incorrect error reaction.
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2880
    :sufficient: no
    :status: valid
+   :version: 1
 
    If the user relies on the error code not only for diagnostic purposes but for selecting an error reaction path,
    misinterpreting the code under a wrong domain could lead to an incorrect safety-relevant decision.
    An Assumption of Use shall ensure the user verifies the error domain before interpreting the error code.
 
 .. comp_saf_fmea:: Result Error Message Lifetime Violation
-   :violates: comp_arc_dyn__baselibs__result
+   :violates: comp_arc_dyn__baselibs__result[version==1]
    :id: comp_saf_fmea__result__error_message_life
    :fault_id: MF_01_05
    :failure_effect: The error message provided during error construction is stored as a non-owning reference. If the referenced data is no longer valid when the user retrieves the error message, accessing it results in undefined behavior.
-   :mitigated_by: aou_req__result__resource_lifetime
+   :mitigated_by: aou_req__result__resource_lifetime[version==1]
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2880
    :sufficient: no
    :status: valid
+   :version: 1
 
    The existing Assumption of Use for resource lifetime addresses the validity of error domain objects
    and referenced resources. However, it does not explicitly cover the user-provided error message,
@@ -128,25 +131,27 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    or a separate AoU should be established for it.
 
 .. comp_saf_fmea:: Result Unchecked Value or Error Access
-   :violates: comp_arc_dyn__baselibs__result
+   :violates: comp_arc_dyn__baselibs__result[version==1]
    :id: comp_saf_fmea__result__unchecked
    :fault_id: MF_01_06
    :failure_effect: If the user calls value without the result containing a value, or calls error without the result containing an error, the program will terminate. This may occur when the user does not check the state of the result before accessing it.
-   :mitigated_by: aou_req__result__value_handling, aou_req__result__error_reaction
+   :mitigated_by: aou_req__result__value_handling[version==1], aou_req__result__error_reaction[version==1]
    :sufficient: yes
    :status: valid
+   :version: 1
 
    If the user accesses the value or the error without first verifying the state of the result,
    the program will deterministically terminate. The provided Assumptions of Use require the user to check and handle both states before access.
 
 .. comp_saf_fmea:: Result Stop User
-   :violates: comp_arc_dyn__baselibs__result
+   :violates: comp_arc_dyn__baselibs__result[version==1]
    :id: comp_saf_fmea__result__stop_user
    :fault_id: EX_01_06
    :failure_effect: The user provides a transformation or error handling operation to the Result library. If this operation does not terminate (e.g., infinite loop), the calling execution is blocked indefinitely.
-   :mitigated_by: aou_req__platform__flow_monitoring
+   :mitigated_by: aou_req__platform__flow_monitoring[version==1]
    :sufficient: yes
    :status: valid
+   :version: 1
 
    The Result library invokes user-provided operations synchronously during transformation of values or errors.
    Ensuring these operations terminate is outside the scope of the library and is the responsibility of the user via program flow monitoring,

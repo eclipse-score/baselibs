@@ -18,9 +18,10 @@ Filesystem Component Architecture
 .. document:: Filesystem Architecture
    :id: doc__filesystem_architecture
    :status: valid
+   :version: 1
    :security: YES
    :safety: ASIL_B
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -34,9 +35,10 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_filesystem
-   :implements: logic_arc_int__baselibs__filesystem
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__filesystem[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -49,8 +51,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :fulfils: comp_req__filesystem__api_abstraction, comp_req__filesystem__path_utilities, comp_req__filesystem__directory_iterators, comp_req__filesystem__file_io, comp_req__filesystem__full_testability, comp_req__filesystem__file_utils, comp_req__filesystem__mock_fake
-   :belongs_to: comp__baselibs_filesystem
+   :version: 1
+   :fulfils: comp_req__filesystem__api_abstraction[version==1], comp_req__filesystem__path_utilities[version==1], comp_req__filesystem__directory_iterators[version==1], comp_req__filesystem__file_io[version==1], comp_req__filesystem__full_testability[version==1], comp_req__filesystem__file_utils[version==1], comp_req__filesystem__mock_fake[version==1]
+   :belongs_to: comp__baselibs_filesystem[version==1]
 
    .. needarch::
       :scale: 50
@@ -66,158 +69,181 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File/Directory Existence Check
    :id: logic_arc_int_op__baselibs__exists
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Type Detection
    :id: logic_arc_int_op__baselibs__file_type
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Status Query
    :id: logic_arc_int_op__baselibs__file_status
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Copy File
    :id: logic_arc_int_op__baselibs__copy_file
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Remove File or Directory
    :id: logic_arc_int_op__baselibs__remove
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Modify File Permissions
    :id: logic_arc_int_op__baselibs__permissions
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Create Directory
    :id: logic_arc_int_op__baselibs__create_directory
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Symlink Operations
    :id: logic_arc_int_op__baselibs__symlink_ops
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Hard Link Operations
    :id: logic_arc_int_op__baselibs__hardlink_ops
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Last Write Time
    :id: logic_arc_int_op__baselibs__last_write_time
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Current Path
    :id: logic_arc_int_op__baselibs__current_path
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Empty Check
    :id: logic_arc_int_op__baselibs__is_empty
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Directory Creation with Permissions
    :id: logic_arc_int_op__baselibs__create_dir_perms
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: File Content Comparison
    :id: logic_arc_int_op__baselibs__file_comparison
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Group Ownership Management
    :id: logic_arc_int_op__baselibs__change_group
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Group Validation
    :id: logic_arc_int_op__baselibs__validate_group
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Check Filesystem
    :id: logic_arc_int_op__baselibs__check_filesystem
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Repair Filesystem
    :id: logic_arc_int_op__baselibs__repair_filesystem
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Partition Formatting
    :id: logic_arc_int_op__baselibs__format_partition
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: QNX Compatibility Check
    :id: logic_arc_int_op__baselibs__qnx_compatible
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Directory Synchronization
    :id: logic_arc_int_op__baselibs__sync_directory
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]
 
 .. logic_arc_int_op:: Unique File Creation
    :id: logic_arc_int_op__baselibs__open_unique_file
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__filesystem
+   :version: 1
+   :included_by: logic_arc_int__baselibs__filesystem[version==1]

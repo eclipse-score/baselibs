@@ -24,7 +24,7 @@ ABI Compatible Data Types
    :safety: ASIL_B
    :tags: component_request, abi_compatible_data_types
    :security: YES
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
 
 
 .. toctree::

@@ -20,8 +20,9 @@ Release Note
 .. document:: Baselibs Release Note
    :id: doc__baselibs_release_note
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__module_sw_release_note
+   :realizes: wp__module_sw_release_note[version==1]
 
 For the release notes, see the `Baselibs releases <https://github.com/eclipse-score/baselibs/releases>`_ on GitHub.

@@ -18,10 +18,11 @@ JSON-Library
 .. document:: JSON-Library
    :id: doc__json
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: component_request
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
 
 
 .. toctree::

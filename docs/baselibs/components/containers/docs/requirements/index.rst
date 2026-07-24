@@ -18,9 +18,10 @@ Requirements
 .. document:: Containers Library Requirements
    :id: doc__containers_lib_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, containers_library
 
 Functional Requirements
@@ -31,9 +32,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_containers
+   :version: 1
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide a fixed-size array container with construction-time size specification.
 
@@ -42,9 +44,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_containers
+   :version: 1
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide an intrusive doubly-linked list based on the C++ standardization proposal P0406R1.
 
@@ -53,9 +56,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_containers
+   :version: 1
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall enforce compile-time type safety for all container operations.
 
@@ -64,9 +68,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_containers
+   :version: 1
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide a non-relocatable vector container that maintains stable element addresses.
 
@@ -79,9 +84,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library
+   :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_containers
+   :version: 1
+   :satisfied_by: comp__baselibs_containers[version==1]
 
    The Containers library shall provide deterministic behavior with no dynamic memory allocation.
 
@@ -94,6 +100,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall verify sufficient capacity or handle allocation failures before insertion operations to prevent exceeding container limits and undefined behavior.
 
@@ -103,6 +110,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall ensure that iterators are not used after operations that invalidate them and refresh iterators after modifying operations.
 
@@ -112,6 +120,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall ensure that elements stored in containers remain valid throughout their lifetime in the container, and for intrusive containers, that element objects are not destroyed or moved while contained within the container.
 
@@ -121,6 +130,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall implement external synchronization mechanisms when accessing or modifying container objects from multiple threads concurrently, as the library provides no internal thread safety guarantees.
 
@@ -130,6 +140,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall ensure that all index-based access operations use valid indices within the container's current size range to prevent out-of-bounds access and undefined behavior.
 
@@ -139,6 +150,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall verify container state before performing operations that depend on specific states, such as checking if a container is non-empty before accessing elements.
 
@@ -148,6 +160,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall provide sufficient memory resources for all container operations.
 
@@ -157,6 +170,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall ensure that element types are copy constructible, move constructible and destructible, and additionally for intrusive containers that they provide the required intrusive node members.
 

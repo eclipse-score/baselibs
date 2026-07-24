@@ -19,9 +19,10 @@ Safety Analysis Checklist
 .. document:: Baselibs Safety Analysis Checklist
    :id: doc__baselibs_safety_analysis_fdr
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__fdr_reports
+   :realizes: wp__fdr_reports[version==1]
 
 **Purpose**
 

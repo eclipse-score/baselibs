@@ -18,9 +18,10 @@ VaJson
 .. document:: vajson
    :id: doc__vajson
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :tags: component_request
 
 

@@ -18,9 +18,10 @@ Requirements
 .. document:: FlatBuffers Requirements
    :id: doc__flatbuffers_requirements
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
 
 FlatBuffers Tooling Requirements
 ================================
@@ -29,8 +30,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_codegen_cpp
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2], feat_req__baselibs__multi_language_apis[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall generate code for serialization and read access of FlatBuffers data for C++.
@@ -39,8 +41,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_codegen_rust
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2], feat_req__baselibs__multi_language_apis[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall generate code for serialization and read access of FlatBuffers data for Rust.
@@ -49,8 +52,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_codegen_python
    :security: YES
    :safety: QM
-   :satisfies: feat_req__baselibs__flatbuffers_library
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall generate code for serialization and read access of FlatBuffers data for Python.
@@ -62,8 +66,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_tooling_json_to_bin
    :security: YES
    :safety: ASIL_B
-   :satisfies: feat_req__baselibs__flatbuffers_library
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall support creation of FlatBuffers binary files from
@@ -74,8 +79,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_tooling_data_validate
    :security: YES
    :safety: QM
-   :satisfies: feat_req__baselibs__flatbuffers_library
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall provide a mechanism to validate JSON-encoded files containing
@@ -93,8 +99,9 @@ FlatBuffers Tooling Requirements
    :id: tool_req__flatbuffers_tooling_evolution
    :security: YES
    :safety: QM
-   :satisfies: feat_req__baselibs__flatbuffers_library
+   :satisfies: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :implemented: NO
 
    The FlatBuffers-Library tooling shall provide a mechanism to check whether a new version of a
@@ -114,9 +121,10 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_flatbuffers
+   :version: 1
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers-Library shall provide functionality to serialize data into the FlatBuffers binary format.
 
@@ -129,9 +137,10 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_flatbuffers
+   :version: 1
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers-Library shall provide functionality to read FlatBuffers binary data.
 
@@ -143,9 +152,10 @@ FlatBuffers Library Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_flatbuffers
+   :version: 1
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers-Library shall provide a verification mechanism to validate the structural well-formedness of a FlatBuffers buffer.
 
@@ -161,10 +171,11 @@ Buffer Identification and Versioning
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :testcovered: YES
-   :satisfied_by: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers-Library shall provide a common opt-in buffer identification mechanism consisting
    of a major version, a minor version, and a 4-character identifier.
@@ -174,10 +185,11 @@ Buffer Identification and Versioning
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2]
    :status: valid
+   :version: 1
    :testcovered: YES
-   :satisfied_by: comp__baselibs_flatbuffers
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers-Library shall provide a common opt-in version check mechanism that validates
    the major version, minor version, and 4-character identifier of a FlatBuffers buffer.
@@ -190,9 +202,10 @@ Safety Impact
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__flatbuffers_library, feat_req__baselibs__multi_language_apis
+   :derived_from: feat_req__baselibs__flatbuffers_library[version==2], feat_req__baselibs__multi_language_apis[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_flatbuffers
+   :version: 1
+   :satisfied_by: comp__baselibs_flatbuffers[version==1]
 
    The FlatBuffers library shall be ASIL-B compliant for C++ and Rust language support.
 
@@ -205,6 +218,7 @@ AoU Requirements
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall provide FlatBuffers binary data as input which is not corrupted due to HW, QM SW, or communication channel errors.
 
@@ -220,6 +234,7 @@ AoU Requirements
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall ensure access control and manipulation prevention on the FlatBuffers binary files.
 
@@ -232,6 +247,7 @@ AoU Requirements
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall apply the version check mechanism provided by :need:`comp_req__flatbuffers__version_check`
    to a loaded buffer and confirm a successful result before accessing any data from that buffer.
@@ -246,6 +262,7 @@ AoU Requirements
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    The user shall apply the verification mechanism provided by :need:`comp_req__flatbuffers__verification`
    to a loaded buffer and confirm a successful result before accessing any data from that buffer.

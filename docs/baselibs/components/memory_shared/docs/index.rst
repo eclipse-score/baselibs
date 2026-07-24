@@ -20,9 +20,10 @@ memory
 .. document:: Memory Library
    :id: doc__memory
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_memory
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :security: YES
 
 .. toctree::

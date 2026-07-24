@@ -18,9 +18,10 @@ Requirements
 .. document:: JSON Wrapper Requirements
    :id: doc__json_wrapper_requirements
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
 
 Due to low complexity, the requirements of the JSON component were not split into the "sub" components
 "JSON Wrapper" and "nlohman_json". Reasoning is the low number of requirements (only about ten).
