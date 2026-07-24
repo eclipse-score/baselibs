@@ -11,11 +11,35 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+# Import user-specific configurations
+try-import %workspace%/user.bazelrc
+
 common --registry=https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/
 common --registry=https://bcr.bazel.build
+
+# Do not use automatically detected C++ toolchains
+build --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+
+# Exec/host toolchain for build-time tools (e.g. flatc) — required for all configs including cross-compilation
+common --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
+common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 
 # Required baselibs configuration settings
 common --@score_baselibs//score/json:base_library=nlohmann
 common --@score_baselibs//score/memory/shared/flags:use_typedshmd=False
 
-build --cxxopt=-Wno-error=deprecated-declarations
+# Target configuration for CPU:x86-64|OS:Linux build
+build:x86_64-linux --platforms=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
+build:x86_64-linux --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
+
+# Target configuration for CPU:x86-64|OS:QNX build
+build:x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
+build:x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
+build:x86_64-qnx --extra_toolchains=@score_qnx_x86_64_ifs_toolchain//:ifs-x86_64-qnx-sdp_8.0.0
+test:x86_64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
+
+# Target configuration for CPU:AArch64|OS:QNX build
+build:aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
+build:aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0
+build:aarch64-qnx --extra_toolchains=@score_qnx_aarch64_ifs_toolchain//:ifs-aarch64-qnx-sdp_8.0.0
+test:aarch64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx

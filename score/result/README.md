@@ -12,62 +12,8 @@ related functions and classes.
 
 ## Usage
 
-In order to provide your custom error code in a custom domain, you have to implement the following.
-
-1. A custom error code
-```c++
-enum class MyErrorCode : score::result::ErrorCode
-{
-    ... // your error code values
-};
-```
-
-2. A custom error domain
-```c++
-class MyErrorDomain final : public score::result::ErrorDomain
-{
-  public:
-    std::string_view MessageFor(score::result::ErrorCode const& code) const noexcept override
-    {
-        switch (static_cast<MyErrorCode>(code))
-        {
-            case MyErrorCode::kFirstError:
-                return "First Error!";
-            case MyErrorCode::kSecondError:
-                return "Second Error!";
-            default:
-                return "Unknown Error!";
-        }
-    }
-};
-```
-
-3. A `MakeError()` function for ADL lookup
-```c++
-constexpr MyErrorDomain my_error_domain;
-
-score::result::Error MakeError(MyErrorCode code, std::string_view user_message = "") noexcept
-{
-    return {static_cast<score::result::ErrorCode>(code), my_error_domain, user_message};
-}
-```
-
-After that you are free to use the errors as follows:
-```c++
-
-score::Result<std::string> MyFancyFunction(std::int32_t number) {
-    if(number == 42) {
-        return score::MakeUnexpected(MyErrorCode::kFirstError, "You did it!");
-    }
-    return "Try Again!";
-}
-
-auto first_try = MyFancyFunction(42);
-if(!first_try && first_try.error() == MyErrorCode::kFirstError) {
-    ara::log::LogInfo() << first_try.error();
-}
-
-```
+For a complete usage example covering custom error codes, error domains, `Result<T>`, and `Result<void>`,
+see [examples/integration/result/result_demo_test.cpp](../../examples/integration/result/result_demo_test.cpp).
 
 
 ## Design
