@@ -14,8 +14,8 @@
 #define SCORE_LIB_MEMORY_SHARED_SHARED_MEMORY_RESOURCE_MOCK_H
 
 #include "score/memory/shared/i_shared_memory_resource.h"
-#include <score/memory_resource.hpp>
 #include <gmock/gmock.h>
+#include <score/memory_resource.hpp>
 
 #include <string>
 
@@ -25,7 +25,9 @@ namespace score::memory::shared
 class SharedMemoryResourceMock : public ISharedMemoryResource
 {
   public:
-    MOCK_METHOD(MemoryResourceProxy*, getMemoryResourceProxy, (), (noexcept, override));
+    MOCK_METHOD(const MemoryResourceProxy*, getMemoryResourceProxy, (), (noexcept, override));
+
+    MOCK_METHOD(const MemoryResourceProxy*, getMemoryResourceProxy, (), (const, noexcept, override));
 
     MOCK_METHOD(void*, getBaseAddress, (), (const, noexcept, override));
 
