@@ -24,6 +24,7 @@ default-members = [
     "score/log_rust/score_log_fmt_macro",
     "score/log_rust/stdout_logger",
     "score/testing_macros",
+    "score/language/rust/memres",
 ]
 # Include tests and examples as a member for IDE support and Bazel builds.
 members = [
@@ -32,6 +33,7 @@ members = [
     "score/allocator",
     "score/pal",
     "score/thread",
+    "score/language/rust/memres",
     "score/log_rust/score_log",
     "score/log_rust/score_log_fmt",
     "score/log_rust/score_log_fmt_macro",
@@ -58,6 +60,7 @@ allocator = { path = "score/allocator" }
 testing_macros = { path = "score/testing_macros" }
 pal = { path = "score/pal" }
 thread = { path = "score/thread" }
+memres = { path = "score/language/rust/memres" }
 
 [workspace.lints.clippy]
 std_instead_of_core = "warn"
