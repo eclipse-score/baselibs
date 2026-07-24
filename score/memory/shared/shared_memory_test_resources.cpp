@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/memory/shared/shared_memory_test_resources.h"
+#include "score/concurrency/atomic_indirector.h"
 #include "score/memory/shared/shared_memory_factory.h"
 #include "score/os/utils/acl/i_access_control_list.h"
 
@@ -101,6 +102,12 @@ const MemoryResourceProxy* ManagedMemoryResourceTestAttorney::getMemoryResourceP
 SharedMemoryResourceTestAttorney::SharedMemoryResourceTestAttorney(SharedMemoryResource& resource) noexcept
     : resource_{resource}
 {
+}
+
+void* SharedMemoryResourceTestAttorney::do_allocate_using_mock_atomic_indirector(std::size_t bytes,
+                                                                                  std::size_t alignment)
+{
+    return resource_.do_allocate_with_indirector<score::concurrency::AtomicIndirectorMock>(bytes, alignment);
 }
 
 score::cpp::expected<std::shared_ptr<SharedMemoryResource>, score::os::Error> SharedMemoryResourceTestAttorney::Create(

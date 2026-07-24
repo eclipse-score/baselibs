@@ -98,7 +98,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.9.1", dev_dependency = Tr
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "4.6.1", dev_dependency = True)
-bazel_dep(name = "score_process", version = "2.0.1", dev_dependency = True)
+bazel_dep(name = "score_process", version = "2.0.2", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 
 # score_tooling declares trlc and lobster as regular bazel_deps with their own
@@ -223,7 +223,7 @@ bazel_dep(name = "flatbuffers", version = "25.12.19")
 #
 # TODO: Remove once flatbuffers releases a version containing the following fix.
 # https://github.com/google/flatbuffers/commit/2b8e4d3af04a6c38c7a7e19460fc26faa3608c9e
-bazel_dep(name = "grpc", version = "1.76.0")
+bazel_dep(name = "grpc-java", version = "1.75.0.bcr.1")
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 
