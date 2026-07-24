@@ -160,6 +160,8 @@ class SharedMemoryFactory
 
     static void SetTypedMemoryProvider(std::shared_ptr<score::memory::shared::TypedMemory> typed_memory_ptr) noexcept;
 
+    static void SetInterVMMemoryProvider(std::shared_ptr<score::memory::shared::TypedMemory> intervm_memory_ptr) noexcept;
+
     static std::size_t GetControlBlockSize() noexcept
     {
         return instance().GetControlBlockSize();
