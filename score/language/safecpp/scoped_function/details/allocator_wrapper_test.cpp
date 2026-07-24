@@ -109,7 +109,8 @@ TEST_F(AllocatorWrapperTest, CorrectlyHandlesSelfMoveAssignment)
     DISABLE_WARNING_PUSH
     DISABLE_WARNING_SELF_MOVE
 
-    allocator_wrapper = std::move(allocator_wrapper);
+    auto* wrapper_ptr = &allocator_wrapper;
+    allocator_wrapper = std::move(*wrapper_ptr);
 
     DISABLE_WARNING_POP
 

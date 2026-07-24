@@ -349,7 +349,7 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsOnlyAfterValueWasSet)
 
     InterruptibleSharedFutureTest<TypeParam>::SetPromise(this->promise_);
 
-    auto expected = std::move(async_future.get());
+    auto expected = async_future.get();
     InterruptibleSharedFutureTest<TypeParam>::ExpectCorrectValue(expected);
 }
 
@@ -358,7 +358,7 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsErrorWhenSet)
     this->promise_.SetError(Error::kFutureAlreadyRetrieved);
 
     score::cpp::stop_token stop_token{};
-    auto expected = std::move(this->future_.Get(stop_token));
+    auto expected = this->future_.Get(stop_token);
     ASSERT_FALSE(expected.has_value());
     EXPECT_EQ(expected.error(), Error::kFutureAlreadyRetrieved);
 }

@@ -29,7 +29,7 @@ namespace
 {
 
 template <typename T, std::enable_if_t<!std::is_arithmetic<T>::value, bool> = true>
-const T& GetValueOfObject(const score::json::Any& any, const std::string& key)
+const T GetValueOfObject(const score::json::Any& any, const std::string& key)
 {
     return any.As<score::json::Object>().value().get().at(key).As<T>().value().get();
 }
@@ -114,7 +114,7 @@ TYPED_TEST_P(ParserTest, CanParseObjectString)
     auto root = TypeParam::FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as std::string
-    auto& value = GetValueOfObject<std::string>(root.value(), "color");
+    auto value = GetValueOfObject<std::string>(root.value(), "color");
 
     // Then the correct value is returned
     EXPECT_EQ(value, "gold");
@@ -133,7 +133,7 @@ TYPED_TEST_P(ParserTest, CanParseObjectNull)
     auto root = TypeParam::FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as Null
-    auto& value = GetValueOfObject<Null>(root.value(), "null");
+    auto value = GetValueOfObject<Null>(root.value(), "null");
 
     // Then the correct value is returned
     EXPECT_EQ(value, Null{});
@@ -172,7 +172,7 @@ TYPED_TEST_P(ParserTest, CanParseObjectFloatingPointNumber)
 
     // When reading a key of an object that is interpreted as floating point number
     auto float_value = GetValueOfObject<float>(root.value(), "float");
-    double double_value = GetValueOfObject<double>(root.value(), "double");
+    auto double_value = GetValueOfObject<double>(root.value(), "double");
     auto double_as_float_value =
         root->template As<score::json::Object>().value().get().at("double").template As<float>().has_value();
 
@@ -193,13 +193,16 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObject)
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
-
+    
     // When reading a key of an object that is interpreted as number
-    auto& value = GetValueOfObject<Object>(root.value(), "object");
-
+    auto value = root.value().template As<Object>().value().get()
+      .at("object").template As<Object>().value().get()
+      .at("a").template As<std::string>().value().get();
+    
     // Then the correct value is returned
-    EXPECT_EQ(value.at("a").template As<std::string>().value().get(), "b");
+    EXPECT_EQ(value, "b");
 }
+
 
 TYPED_TEST_P(ParserTest, CanParseListInObject)
 {
@@ -212,14 +215,15 @@ TYPED_TEST_P(ParserTest, CanParseListInObject)
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
-
+    
     // When reading a key of an object that is interpreted as number
-    auto& value = GetValueOfObject<List>(*root, "list");
+    auto* root_map = &root.value().template As<Object>().value().get();
+    auto* value = &root_map->at("list").template As<List>().value().get();
 
     // Then the correct value is returned
-    EXPECT_EQ(value[0].template As<std::string>().value().get(), "first");
-    EXPECT_EQ(value[1].template As<std::uint64_t>().value(), 2UL);
-    EXPECT_EQ(value[2].template As<std::string>().value().get(), "third");
+    EXPECT_EQ((*value)[0].template As<std::string>().value().get(), "first");
+    EXPECT_EQ((*value)[1].template As<std::uint64_t>().value(), 2UL);
+    EXPECT_EQ((*value)[2].template As<std::string>().value().get(), "third");
 }
 
 TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
@@ -257,14 +261,18 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
 }
 )"};
     auto root = TypeParam::FromBuffer(buffer);
+    auto* root_map = &root.value().template As<Object>().value().get();
+    auto* storage_list = &root_map->at("storage_list").template As<Object>().value().get();
 
     // When iterating over the unknown keys
-    const auto& storage_list = root.value().template As<Object>().value().get()["storage_list"];
     std::vector<std::string> collected_paths{};
-    for (const auto& element : storage_list.template As<Object>().value().get())
+    for (const auto& element : *storage_list)
     {
+        auto* inner_obj = &element.second.template As<Object>().value().get();
+
         collected_paths.push_back(
-            element.second.template As<Object>().value().get().at("path").template As<std::string>().value().get());
+            inner_obj->at("path").template As<std::string>().value().get()
+        );
     }
 
     // Then we can store them and thus also access them
@@ -378,7 +386,7 @@ TYPED_TEST_P(ParserTest, ParsingFromFileWorks)
     EXPECT_TRUE(root.has_value());
 
     // When reading a key of an object that is interpreted as bool
-    auto value = GetValueOfObject<bool>(root.value(), "boolean");
+    bool value = GetValueOfObject<bool>(root.value(), "boolean");
 
     // Then the correct value is returned
     EXPECT_EQ(value, true);

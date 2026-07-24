@@ -179,7 +179,8 @@ TYPED_TEST(BaseInterruptiblePromiseTest, MoveAssignmentAlsoMovesFutureRetrievalS
 TYPED_TEST(BaseInterruptiblePromiseTest, MoveAssignmentToSelf)
 {
     BaseInterruptiblePromise<TypeParam> moved_to_promise{};
-    moved_to_promise = std::move(moved_to_promise);
+    auto* promise_ptr = &moved_to_promise;
+    moved_to_promise = std::move(*promise_ptr);
     ASSERT_TRUE(moved_to_promise.GetInterruptibleFuture().has_value());
 }
 

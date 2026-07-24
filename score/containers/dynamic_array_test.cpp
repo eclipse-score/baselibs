@@ -261,8 +261,9 @@ TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
-    // when doing a self-move-assign
-    unit = std::move(unit);
+    // when doing a self-move-assign (use pointer indirection to avoid compiler warning)
+    auto* unit_ptr = &unit;
+    unit = std::move(*unit_ptr);
 
     // expect, that the unit afterward still has the same size
     EXPECT_EQ(unit.size(), kNonEmptyArraySize);
