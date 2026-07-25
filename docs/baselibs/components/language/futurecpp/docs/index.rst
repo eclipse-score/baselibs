@@ -18,9 +18,10 @@ futurecpp
 .. document:: FutureCPP Library
    :id: doc__futurecpp
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_futurecpp
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :security: YES
 
 .. toctree::

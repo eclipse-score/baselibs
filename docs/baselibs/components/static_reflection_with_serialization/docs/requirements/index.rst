@@ -18,9 +18,10 @@ Requirements
 .. document:: Static Reflection with Serialization Library Requirements
    :id: doc__static_reflect_serial_lib_req
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, static_reflection_serialization_library
 
 .. comp_req:: Static Reflection Support
@@ -28,9 +29,10 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall provide compile-time reflection-based serialization and deserialization for C++ Data Structures.
@@ -40,9 +42,10 @@ Requirements
    :reqtype: Interface
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall provide a visitor pattern for traversal of C++ data structures.
@@ -52,9 +55,10 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall automatically traverse containers using appropriate iteration.
@@ -64,9 +68,10 @@ Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall support serialization and visitation of nested data structures.
@@ -76,9 +81,10 @@ Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall be implemented as a header-only library to enable compile-time optimizations and avoid runtime dependencies.
@@ -88,9 +94,10 @@ Requirements
    :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__static_reflection_library
-   :satisfied_by: comp__baselibs_static_reflection
+   :derived_from: feat_req__baselibs__static_reflection_library[version==1]
+   :satisfied_by: comp__baselibs_static_reflection[version==1]
    :status: valid
+   :version: 1
    :tags: baselibs
 
    The library shall provide compile-time safety and efficiency of serialization operations with minimal runtime overhead.

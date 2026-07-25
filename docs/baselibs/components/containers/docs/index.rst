@@ -18,9 +18,10 @@ containers
 .. document:: Containers Library
    :id: doc__containers
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :tags: baselibs_containers
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :security: YES
 
 .. toctree::

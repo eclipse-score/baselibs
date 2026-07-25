@@ -15,9 +15,10 @@
 .. document:: Filesystem Implementation Inspection Checklist
    :id: doc__filesystem_impl_inspection
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__sw_implementation_inspection
+   :realizes: wp__sw_implementation_inspection[version==1]
 
 
 Implementation Inspection Checklist

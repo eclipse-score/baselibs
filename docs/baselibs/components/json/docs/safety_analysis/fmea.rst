@@ -19,9 +19,10 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: JSON FMEA
    :id: doc__json_fmea
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__sw_component_fmea
+   :realizes: wp__sw_component_fmea[version==1]
 
 .. note:: Use the content of the document to describe e.g. why a fault model is not applicable for the diagram.
 
@@ -40,6 +41,7 @@ Failure Mode List
        :mitigation_issue: <ID from Issue Tracker>
        :sufficient: <yes|no>
        :status: <valid|invalid>
+       :version: 1
 
 .. note::   argument is inside the 'content'. Therefore content is mandatory
 

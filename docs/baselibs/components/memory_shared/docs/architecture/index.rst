@@ -20,9 +20,10 @@ Memory Shared Component Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :implements: logic_arc_int__baselibs__memory_shared
-   :uses: logic_arc_int__os__fcntl, logic_arc_int__os__stat, logic_arc_int__os__mman
-   :belongs_to: feat__baselibs
+   :version: 1
+   :implements: logic_arc_int__baselibs__memory_shared[version==1]
+   :uses: logic_arc_int__os__fcntl[version==1], logic_arc_int__os__stat[version==1], logic_arc_int__os__mman[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -35,8 +36,9 @@ Memory Shared Component Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :fulfils: comp_req__memory__shared_memory, comp_req__memory__offset_ptr, comp_req__memory__shared_container, comp_req__memory__inter_process_sync, comp_req__memory__bounds_check, comp_req__memory__endianness, comp_req__memory__sealed_shm, comp_req__memory__typed_memory, comp_req__memory__resource_registry, comp_req__memory__string_utils, comp_req__memory__atomic_ops, comp_req__memory__deterministic_alloc, comp_req__memory__address_independence
-   :belongs_to: comp__baselibs_memory_shared
+   :version: 1
+   :fulfils: comp_req__memory__shared_memory[version==1], comp_req__memory__offset_ptr[version==1], comp_req__memory__shared_container[version==1], comp_req__memory__inter_process_sync[version==1], comp_req__memory__bounds_check[version==1], comp_req__memory__endianness[version==1], comp_req__memory__sealed_shm[version==1], comp_req__memory__typed_memory[version==1], comp_req__memory__resource_registry[version==1], comp_req__memory__string_utils[version==1], comp_req__memory__atomic_ops[version==1], comp_req__memory__deterministic_alloc[version==1], comp_req__memory__address_independence[version==1]
+   :belongs_to: comp__baselibs_memory_shared[version==1]
 
    .. needarch::
       :scale: 50
@@ -49,25 +51,29 @@ Memory Shared Component Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__memory_shared
+   :version: 1
+   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
 
 .. logic_arc_int_op:: Update
    :id: logic_arc_int_op__baselibs__update
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__memory_shared
+   :version: 1
+   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
 
 .. logic_arc_int_op:: Lock
    :id: logic_arc_int_op__baselibs__lock
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__memory_shared
+   :version: 1
+   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
 
 .. logic_arc_int_op:: Set Permissions
    :id: logic_arc_int_op__baselibs__set_perm
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__memory_shared
+   :version: 1
+   :included_by: logic_arc_int__baselibs__memory_shared[version==1]

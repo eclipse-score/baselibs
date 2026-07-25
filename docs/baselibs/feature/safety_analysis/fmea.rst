@@ -19,9 +19,10 @@ FMEA (Failure Modes and Effects Analysis)
 .. document:: Baselibs FMEA
    :id: doc__baselibs_fmea
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__feature_fmea
+   :realizes: wp__feature_fmea[version==1]
 
 The feature baselibs consists of multiple components which provide very different functionality.
 They are also low-complex (i.e. no component architecture is documented, so that the feature architecture is the only one to analyze,

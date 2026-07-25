@@ -20,9 +20,10 @@ containers_rust
 .. document:: Rust Containers Library
    :id: doc__containers_rust
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
    :tags: baselibs_rust_containers_rust
 
 

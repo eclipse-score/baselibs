@@ -18,9 +18,10 @@ Static Reflection with Serialization Component Architecture
 .. document:: static_reflection_with_serialization Architecture
    :id: doc__static_refl_with_serial_arch
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -35,9 +36,10 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_static_reflection_serialization
-   :implements: logic_arc_int__baselibs__static_reflection,logic_arc_int__baselibs__generic_serial,logic_arc_int__baselibs__log_serial
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__static_reflection[version==1],logic_arc_int__baselibs__generic_serial[version==1],logic_arc_int__baselibs__log_serial[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -50,8 +52,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :fulfils: comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__container, comp_req__static_reflect_serial__nested, comp_req__static_reflect_serial__header_only, comp_req__static_reflect_serial__compile_eff
-   :belongs_to: comp__baselibs_static_reflection
+   :version: 1
+   :fulfils: comp_req__static_reflect_serial__reflect[version==1], comp_req__static_reflect_serial__visitor[version==1], comp_req__static_reflect_serial__container[version==1], comp_req__static_reflect_serial__nested[version==1], comp_req__static_reflect_serial__header_only[version==1], comp_req__static_reflect_serial__compile_eff[version==1]
+   :belongs_to: comp__baselibs_static_reflection[version==1]
 
    .. needarch::
       :scale: 50
@@ -70,21 +73,24 @@ Static Reflection Operations
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__static_reflection
+   :version: 1
+   :included_by: logic_arc_int__baselibs__static_reflection[version==1]
 
 .. logic_arc_int_op:: Declare Struct Visitable
    :id: logic_arc_int_op__baselibs__decl_struct_visit
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__static_reflection
+   :version: 1
+   :included_by: logic_arc_int__baselibs__static_reflection[version==1]
 
 .. logic_arc_int_op:: Struct Introspection
    :id: logic_arc_int_op__baselibs__struct_intro
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__static_reflection
+   :version: 1
+   :included_by: logic_arc_int__baselibs__static_reflection[version==1]
 
 Generic Serialization Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,21 +100,24 @@ Generic Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__generic_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__generic_serial[version==1]
 
 .. logic_arc_int_op:: Deserialize
    :id: logic_arc_int_op__baselibs__deserialize
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__generic_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__generic_serial[version==1]
 
 .. logic_arc_int_op:: Get Serialized Size
    :id: logic_arc_int_op__baselibs__get_serial_size
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__generic_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__generic_serial[version==1]
 
 Logging Serialization Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,18 +127,21 @@ Logging Serialization Operations
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__log_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__log_serial[version==1]
 
 .. logic_arc_int_op:: Deserialize
    :id: logic_arc_int_op__baselibs__log_deser
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__log_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__log_serial[version==1]
 
 .. logic_arc_int_op:: Get Serialized Size
    :id: logic_arc_int_op__baselibs__get_log_ser_size
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__log_serial
+   :version: 1
+   :included_by: logic_arc_int__baselibs__log_serial[version==1]

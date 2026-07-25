@@ -18,9 +18,10 @@ Requirements
 .. document:: Filesystem Library Requirements
    :id: doc__filesystem_lib_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, filesystem_library
 
 Functional Requirements
@@ -31,9 +32,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide filesystem API based on the C++ standardization.
 
@@ -42,9 +44,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide type-safe utilities for path construction and manipulation.
 
@@ -53,9 +56,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide directory iterator types for traversing directory contents.
 
@@ -64,9 +68,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide functionality for reading from and writing to files, including buffered I/O operations.
 
@@ -75,9 +80,10 @@ Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The public API of the library shall support dependency injection with test doubles.
 
@@ -88,9 +94,10 @@ Functional Requirements
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide additional file utility functions, such as temporary file handling and file comparison.
 
@@ -99,9 +106,10 @@ Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__filesystem_library
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_filesystem
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
 
    The Filesystem library shall provide mock and fake implementations for unit testing and validation.
 
@@ -114,6 +122,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall use this library only when they need to manipulate files, directories, and paths at the operating system level beyond what higher-level storage abstractions provide, accepting reduced portability to other platforms.
 
@@ -123,6 +132,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall not use Windows paths with this library.
 
@@ -132,6 +142,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall handle all function return values and take appropriate action on errors.
 
@@ -141,6 +152,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    User shall ensure that all paths passed to the filesystem library are valid and originate from trusted sources.
 
@@ -152,6 +164,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall implement appropriate synchronization mechanisms when accessing shared filesystem resources concurrently.
 
@@ -161,6 +174,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
 
    Users shall not assume any performance characteristics.
 

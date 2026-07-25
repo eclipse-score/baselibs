@@ -18,9 +18,10 @@ Utils Component Architecture
 .. document:: Utils Architecture
    :id: doc__utils_architecture
    :status: valid
+   :version: 1
    :security: YES
    :safety: ASIL_B
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -34,9 +35,10 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_utils
-   :implements: logic_arc_int__baselibs__utils_base64,logic_arc_int__baselibs__utils_scoped_op
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__utils_base64[version==1],logic_arc_int__baselibs__utils_scoped_op[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -49,8 +51,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :fulfils: comp_req__utils__base64, comp_req__utils__scoped_operation, comp_req__utils__deterministic_behavior
-   :belongs_to: comp__baselibs_utils
+   :version: 1
+   :fulfils: comp_req__utils__base64[version==1], comp_req__utils__scoped_operation[version==1], comp_req__utils__deterministic_behavior[version==1]
+   :belongs_to: comp__baselibs_utils[version==1]
 
    .. needarch::
       :scale: 50
@@ -66,25 +69,29 @@ Interfaces
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__utils_base64
+   :version: 1
+   :included_by: logic_arc_int__baselibs__utils_base64[version==1]
 
 .. logic_arc_int_op:: Decode
    :id: logic_arc_int_op__utils__base64_decode
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__utils_base64
+   :version: 1
+   :included_by: logic_arc_int__baselibs__utils_base64[version==1]
 
 .. logic_arc_int_op:: Constructor
    :id: logic_arc_int_op__utils__scoped_op_construct
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__utils_scoped_op
+   :version: 1
+   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
 
 .. logic_arc_int_op:: Destructor
    :id: logic_arc_int_op__utils__scoped_op_destruct
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__utils_scoped_op
+   :version: 1
+   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]

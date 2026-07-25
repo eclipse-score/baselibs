@@ -21,9 +21,10 @@ Requirements
 .. document:: Bit Manipulation Requirements
    :id: doc__bitmanipulation_requirements
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp
+   :realizes: wp__requirements_comp[version==1]
    :tags: requirements, bitmanipulation
 
 Functional Requirements
@@ -34,9 +35,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_bit_manipulation
+   :version: 1
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
    :tags: inspected
 
    The bit manipulation component shall provide an API for setting, clearing, toggling, and checking individual bits for any integral type up to 64 bits, returning boolean success status.
@@ -46,9 +48,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_bit_manipulation
+   :version: 1
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
    :tags: inspected
 
    The bit manipulation component shall provide an API for extracting and setting bytes and half-bytes for any integral type up to 64 bits, returning boolean success status.
@@ -58,9 +61,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_bit_manipulation
+   :version: 1
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
    :tags: inspected
 
    The bit manipulation library shall provide type-safe bitmask operations for scoped enumeration types.
@@ -70,9 +74,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_bit_manipulation
+   :version: 1
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
    :tags: inspected
 
    The bit manipulation functions shall validate input parameters against bounds and, on out-of-bounds access, shall leave the target value unmodified and return false.
@@ -85,9 +90,10 @@ Non-Functional Requirements
    :reqtype: Non-Functional
    :security: NO
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__bitmanipulation
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
    :status: valid
-   :satisfied_by: comp__baselibs_bit_manipulation
+   :version: 1
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
    :tags: inspected
 
    The bit manipulation API shall be header-only and not require external dependencies.
@@ -101,6 +107,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall use bit manipulation functions only with integral types (integers, enumerations) as specified in the library's type constraints.
@@ -113,6 +120,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall use scoped enumeration types (enum class) whose enumerators are defined as non-zero power-of-two values.
@@ -123,6 +131,7 @@ Assumptions of Use (AoU)
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: inspected
 
    The user shall implement external synchronization mechanisms (e.g., mutexes, atomic operations, or locks) when accessing or modifying the same integral value from multiple threads concurrently.

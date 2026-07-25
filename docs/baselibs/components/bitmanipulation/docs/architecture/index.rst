@@ -18,9 +18,10 @@ Bitmanipulation Component Architecture
 .. document:: bitmanipulation Architecture
    :id: doc__bitmanipulation_architecture
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
 
 Overview/Description
 --------------------
@@ -35,9 +36,10 @@ Static Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
+   :version: 1
    :tags: baselibs_bit_manipulation
-   :implements: logic_arc_int__baselibs__bit_manipulation,logic_arc_int__baselibs__bit_mask_operator
-   :belongs_to: feat__baselibs
+   :implements: logic_arc_int__baselibs__bit_manipulation[version==1],logic_arc_int__baselibs__bit_mask_operator[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
       :scale: 50
@@ -50,8 +52,9 @@ Static Architecture
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :fulfils: comp_req__bitmanipulation__bit_operations,comp_req__bitmanipulation__byte_operations,comp_req__bitmanipulation__bitmask_operators,comp_req__bitmanipulation__bounds_safety,comp_req__bitmanipulation__header_only
-   :belongs_to: comp__baselibs_bit_manipulation
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==1],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
 
    .. needarch::
       :scale: 50
@@ -79,74 +82,85 @@ Interfaces
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: Clear Bit
    :id: logic_arc_int_op__baselibs__clear_bit
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: Toggle Bit
    :id: logic_arc_int_op__baselibs__toggle_bit
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: Test Bit
    :id: logic_arc_int_op__baselibs__test_bit
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: Set (Half)-Byte
    :id: logic_arc_int_op__baselibs__set_byte
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: Extract (Half)-Byte
    :id: logic_arc_int_op__baselibs__extract_byte
    :security: NO
    :safety:  ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_manipulation
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
 
 .. logic_arc_int_op:: OR operator
    :id: logic_arc_int_op__baselibs__bitmask_or
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_mask_operator
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]
 
 .. logic_arc_int_op:: AND operator
    :id: logic_arc_int_op__baselibs__bitmask_and
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_mask_operator
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]
 
 .. logic_arc_int_op:: XOR operator
    :id: logic_arc_int_op__baselibs__bitmask_xor
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_mask_operator
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]
 
 .. logic_arc_int_op:: Complement operator
    :id: logic_arc_int_op__baselibs__bitmask_not
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_mask_operator
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]
 
 .. logic_arc_int_op:: Assignment Operators
    :id: logic_arc_int_op__baselibs__bitmask_assignmnt
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :included_by: logic_arc_int__baselibs__bit_mask_operator
+   :version: 1
+   :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]

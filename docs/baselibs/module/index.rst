@@ -14,14 +14,16 @@
 
 .. mod:: Baselibs
    :id: mod__baselibs
-   :includes: comp__baselibs_json, comp__baselibs_memory_shared, comp__baselibs_result, comp__baselibs_bit_manipulation, comp__baselibs_containers, comp__baselibs_filesystem, comp__baselibs_utils, comp__baselibs_concurrency, comp__baselibs_safecpp
+   :includes: comp__baselibs_json[version==1], comp__baselibs_memory_shared[version==1], comp__baselibs_result[version==1], comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==1], comp__baselibs_filesystem[version==1], comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1], comp__baselibs_safecpp[version==1]
    :status: valid
+   :version: 1
    :safety: ASIL_B
    :security: YES
 
 .. mod_view_sta:: Baselibs Static View
    :id: mod_view_sta__baselibs__baselibs
-   :includes: comp__baselibs_json, comp__baselibs_memory_shared, comp__baselibs_result, comp__baselibs_bit_manipulation, comp__baselibs_containers, comp__baselibs_filesystem, comp__baselibs_utils, comp__baselibs_concurrency, comp__baselibs_safecpp
+   :version: 1
+   :includes: comp__baselibs_json[version==1], comp__baselibs_memory_shared[version==1], comp__baselibs_result[version==1], comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==1], comp__baselibs_filesystem[version==1], comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1], comp__baselibs_safecpp[version==1]
 
    .. needarch::
       :scale: 50

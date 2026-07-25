@@ -15,9 +15,10 @@
 .. document:: VaJson Architecture
     :id: doc__vajson_architecture
     :status: draft
+    :version: 1
     :safety: ASIL_B
     :security: YES
-    :realizes: wp__component_arch
+    :realizes: wp__component_arch[version==1]
 
 VaJson Component Architecture
 =============================
@@ -29,4 +30,5 @@ VaJson Component Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :belongs_to: feat__baselibs
+   :version: 1
+   :belongs_to: feat__baselibs[version==1]

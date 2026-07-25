@@ -18,10 +18,11 @@ os
 .. document:: OS Library
    :id: doc__os
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_os
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
 
 .. toctree::
    :hidden:

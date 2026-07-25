@@ -20,9 +20,10 @@ Component Architecture
 .. document:: Log Architecture
    :id: doc__log_architecture
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: NO
-   :realizes: wp__component_arch
+   :realizes: wp__component_arch[version==1]
    :tags: log
 
 
@@ -59,8 +60,9 @@ Static Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :belongs_to: comp__logging
-   :fulfils: comp_req__log__placeholder
+   :version: 1
+   :belongs_to: comp__logging[version==1]
+   :fulfils: comp_req__log__placeholder[version==1]
    :includes:
 
    .. uml:: _assets/static_view.puml
@@ -74,8 +76,9 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :belongs_to: comp__logging
-   :fulfils: comp_req__log__placeholder
+   :version: 1
+   :belongs_to: comp__logging[version==1]
+   :fulfils: comp_req__log__placeholder[version==1]
 
    .. uml:: _assets/register_global_logger.puml
 
@@ -84,8 +87,9 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :belongs_to: comp__logging
-   :fulfils: comp_req__log__placeholder
+   :version: 1
+   :belongs_to: comp__logging[version==1]
+   :fulfils: comp_req__log__placeholder[version==1]
 
    .. uml:: _assets/log_with_global_logger.puml
 
@@ -94,8 +98,9 @@ Dynamic Architecture
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :belongs_to: comp__logging
-   :fulfils: comp_req__log__placeholder
+   :version: 1
+   :belongs_to: comp__logging[version==1]
+   :fulfils: comp_req__log__placeholder[version==1]
 
    .. uml:: _assets/log_with_local_logger.puml
 
@@ -108,7 +113,8 @@ Interfaces
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__placeholder
+   :version: 1
+   :fulfils: comp_req__log__placeholder[version==1]
    :language: rust
 
    .. uml:: _assets/interface.puml

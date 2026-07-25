@@ -18,10 +18,11 @@ utils
 .. document:: Utils Library
    :id: doc__utils
    :status: draft
+   :version: 1
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_utils
-   :realizes: wp__cmpt_request
+   :realizes: wp__cmpt_request[version==1]
 
 .. toctree::
    :hidden:
