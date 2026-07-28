@@ -1493,7 +1493,7 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define MEMCPY_SERIALIZABLE(tag, ...)                                                                                 \
+#define SCORE_MEMCPY_SERIALIZABLE(tag, ...)                                                                                 \
     template <typename A,                                                                                             \
               typename T,                                                                                             \
               std::enable_if_t<std::is_same<__VA_ARGS__, typename std::remove_const<T>::type>::value, std::int32_t> = \
@@ -1520,7 +1520,7 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                         \
+#define SCORE_MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                         \
     template <typename A, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                              \
     inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                        \
     {                                                                                                               \
@@ -1531,5 +1531,19 @@ class serializer_t
     {                                                                                                               \
         v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
+
+// Deprecated aliases kept for backward compatibility.
+// Use SCORE_MEMCPY_SERIALIZABLE and SCORE_MEMCPY_SERIALIZABLE_IF in new code.
+#ifndef MEMCPY_SERIALIZABLE
+#define MEMCPY_SERIALIZABLE(...)                                                                                       \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE is deprecated, use SCORE_MEMCPY_SERIALIZABLE instead.");        \
+    SCORE_MEMCPY_SERIALIZABLE(__VA_ARGS__)
+#endif
+
+#ifndef MEMCPY_SERIALIZABLE_IF
+#define MEMCPY_SERIALIZABLE_IF(...)                                                                                    \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE_IF is deprecated, use SCORE_MEMCPY_SERIALIZABLE_IF instead.");  \
+    SCORE_MEMCPY_SERIALIZABLE_IF(__VA_ARGS__)
+#endif
 
 #endif  // SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_VISIT_SERIALIZE_H

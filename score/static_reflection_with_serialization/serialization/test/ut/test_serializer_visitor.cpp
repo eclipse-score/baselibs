@@ -511,7 +511,7 @@ TEST(serializer_visitor, serializer)
 
 using timestamp_t = std::chrono::steady_clock::time_point;
 
-MEMCPY_SERIALIZABLE(score::common::visitor::payload_tags::unsigned_le, timestamp_t)
+SCORE_MEMCPY_SERIALIZABLE(score::common::visitor::payload_tags::unsigned_le, timestamp_t)
 
 TEST(serializer_visitor, custom)
 {
@@ -545,7 +545,7 @@ struct is_custom_float : std::is_same<T, CustomFloat>
 {
 };
 
-MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le, T, is_custom_float<T>::value)
+SCORE_MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le, T, is_custom_float<T>::value)
 
 TEST(serializer_visitor, serialize_unit)
 {
