@@ -48,7 +48,7 @@ std::uint_fast32_t Crc32IeeeHashCalculator::GetChecksum() const noexcept
     return ~checksum_ & kAllOnes;
 }
 
-ResultBlank Crc32IeeeHashCalculator::Update(const score::cpp::span<const std::uint8_t> data) noexcept
+Result<void> Crc32IeeeHashCalculator::Update(const score::cpp::span<const std::uint8_t> data) noexcept
 {
     checksum_ = CalculateIeeeCrc32(checksum_, data.begin(), data.end());
     return {};

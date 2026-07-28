@@ -34,7 +34,7 @@ constexpr std::size_t kDataChunkSize{4096U};
 /// @brief Unlimited reading.
 constexpr std::int64_t kReadEndlessFromStream{-1};
 
-using UpdateMethodPtr = ResultBlank (IHashCalculator::*)(const score::cpp::span<const std::uint8_t>&);
+using UpdateMethodPtr = Result<void> (IHashCalculator::*)(const score::cpp::span<const std::uint8_t>&);
 
 /// @brief Auxiliary class for parsing Streams.
 /// @details Made a separated class to avoid keeping state on the interface level.
@@ -99,7 +99,7 @@ class StreamConsumer
     {
     }
 
-    ResultBlank Consume(std::istream& input)
+    Result<void> Consume(std::istream& input)
     {
         // GCOVR is unable to analyze line below. But all decision are taken in for while declaration.
         while (input.good() == true)  // LCOV_EXCL_BR_LINE rationale above
@@ -120,7 +120,7 @@ class StreamConsumer
             if (update_result.has_value() == false)
             {
                 mw::log::LogError() << "IHashCalculator::Input data might be invalid " << __func__;
-                return MakeUnexpected<score::Blank>(update_result.error());
+                return MakeUnexpected<void>(update_result.error());
             }
 
             accumulate();
@@ -138,12 +138,12 @@ class StreamConsumer
 
 }  // namespace
 
-ResultBlank IHashCalculator::UpdateFromStream(std::istream& input)
+Result<void> IHashCalculator::UpdateFromStream(std::istream& input)
 {
     return UpdateFromStream(input, kReadEndlessFromStream);
 }
 
-ResultBlank IHashCalculator::UpdateFromStream(std::istream& input, const std::int64_t max_read)
+Result<void> IHashCalculator::UpdateFromStream(std::istream& input, const std::int64_t max_read)
 {
     if (input.good() == false)
     {
