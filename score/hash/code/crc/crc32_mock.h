@@ -29,8 +29,8 @@ class Crc32HashCalculatorMock final : public ICrc32HashCalculator
     Crc32HashCalculatorMock() = default;
     ~Crc32HashCalculatorMock() = default;
 
-    MOCK_METHOD(ResultBlank, Update, (const score::cpp::span<const std::uint8_t>), (noexcept, override));
-    MOCK_METHOD(ResultBlank, UpdateFromStream, (std::istream & input), (noexcept, override));
+    MOCK_METHOD(Result<void>, Update, (const score::cpp::span<const std::uint8_t>), (noexcept, override));
+    MOCK_METHOD(Result<void>, UpdateFromStream, (std::istream & input), (noexcept, override));
     MOCK_METHOD(Hash, Finalize, (), (noexcept, override));
     MOCK_METHOD(std::uint_fast32_t, GetChecksum, (), (const, noexcept, override));
 };

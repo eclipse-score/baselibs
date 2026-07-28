@@ -31,8 +31,8 @@ class SafeHashCalculatorFactory {
 }
 
 interface IHashCalculator {
-  +Update(data: const amp::span<const std::uint8_t>): ResultBlank
-  +UpdateFromStream(input: std::istream&): ResultBlank
+  +Update(data: const amp::span<const std::uint8_t>): Result<void>
+  +UpdateFromStream(input: std::istream&): Result<void>
   +Finalize(): Hash
 }
 
