@@ -44,7 +44,7 @@ TEST(ThreadPool, ConstructionWithCustomName)
     });
 
     // Then the task is executed
-    f.Get();
+    score::cpp::ignore = f.Get();
     ASSERT_EQ(counter, 1U);
 }
 
