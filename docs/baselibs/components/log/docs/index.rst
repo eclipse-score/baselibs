@@ -16,8 +16,8 @@ log_frontend
 ############
 
 .. toctree::
-   :hidden:
+   :maxdepth: 1
 
-   requirements/index.rst
-   architecture/index.rst
+   assumptions_of_use/index.rst
    detailed_design/index.rst
+   requirements/index.rst
