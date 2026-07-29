@@ -25,19 +25,23 @@ on:
   workflow_call:
 jobs:
   linux-build-and-test:
-    name: Build and Test ${{ matrix.bazel-config }}
+    name: Build and Test ${{ matrix.name }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         include:
-          - bazel-config: bl-x86_64-linux
+          - name: bl-x86_64-linux
+            bazel-config: bl-x86_64-linux
+            working-directory: "."
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
             bazel-test-extra-flags: ""
-          - bazel-config: bl-aarch64-linux
+          - name: bl-aarch64-linux
+            bazel-config: bl-aarch64-linux
+            working-directory: "."
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
@@ -46,6 +50,12 @@ jobs:
               -//score/os/test:errno_test
               -//score/os/test:socket_test
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
+          - name: x86_64-linux (examples/integration)
+            bazel-config: x86_64-linux
+            working-directory: "examples/integration"
+            bazel-build-target: "//..."
+            bazel-test-target: "//..."
+            bazel-test-extra-flags: ""
     steps:
       - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
         with:
@@ -55,26 +65,28 @@ jobs:
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.bazel-config }}
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
       - name: Install QEMU
         if: matrix.bazel-config == 'bl-aarch64-linux'
         run: |
           sudo apt-get update
           sudo apt install -y qemu-user
       - name: Bazel Build
+        working-directory: ${{ matrix.working-directory }}
         run: |
           bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
+        working-directory: ${{ matrix.working-directory }}
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Bazel test integration as module
-        if: matrix.bazel-config == 'bl-x86_64-linux'
+      - name: Bazel mod deps
+        if: matrix.working-directory == 'examples/integration'
+        working-directory: ${{ matrix.working-directory }}
         run: |
-          # Test that baselibs works when consumed as an external module dependency
-          cd examples/integration && bazel build //... && bazel test //... && bazel mod deps --lockfile_mode=update
+          bazel mod deps --lockfile_mode=update
       - name: Upload test logs on failure
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: bazel-testlogs-${{ matrix.bazel-config }}
-          path: bazel-testlogs/**/test.log
+          name: bazel-testlogs-${{ matrix.name }}
+          path: ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
