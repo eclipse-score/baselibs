@@ -1302,5 +1302,9 @@
   {
     "version": "pr-424",
     "url": "https://eclipse-score.github.io/baselibs/pr-424/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-269-5c820844fe261bc9b553a8266cac5b30e2fc23f4",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-269-5c820844fe261bc9b553a8266cac5b30e2fc23f4/"
   }
 ]
