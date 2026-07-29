@@ -133,9 +133,7 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":errno",
         ":object_seam",
