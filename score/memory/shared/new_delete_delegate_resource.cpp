@@ -38,8 +38,9 @@ static_assert((PAGE_SIZE % alignof(std::max_align_t) == 0), "allocation_buffer_s
 }  // namespace
 
 // coverity[autosar_cpp14_a3_3_1_violation] false-positive: declared in header, implemented here
-NewDeleteDelegateMemoryResource::NewDeleteDelegateMemoryResource(const std::uint64_t mem_res_id,
-                                                                 score::cpp::pmr::memory_resource* upstream_resource) noexcept
+NewDeleteDelegateMemoryResource::NewDeleteDelegateMemoryResource(
+    const std::uint64_t mem_res_id,
+    score::cpp::pmr::memory_resource* upstream_resource) noexcept
     : ManagedMemoryResource{},
       upstream_resource_{upstream_resource},
       memory_resource_id_{mem_res_id},
@@ -48,7 +49,8 @@ NewDeleteDelegateMemoryResource::NewDeleteDelegateMemoryResource(const std::uint
       current_upstream_allocations_{}
 {
     auto result = MemoryResourceRegistry::getInstance().insert_resource({memory_resource_id_, this});
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(result, "memory resource id clash! Inserting NewDeleteDelegateMemoryResource failed.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(
+        result, "memory resource id clash! Inserting NewDeleteDelegateMemoryResource failed.");
 }
 
 NewDeleteDelegateMemoryResource::~NewDeleteDelegateMemoryResource()
@@ -94,7 +96,11 @@ const void* NewDeleteDelegateMemoryResource::getEndAddress() const noexcept
 
 const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() noexcept
 {
-    // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
+    // coverity[autosar_cpp14_a9_3_1_violation]
+    return &proxy_;
+}
+const MemoryResourceProxy* NewDeleteDelegateMemoryResource::getMemoryResourceProxy() const noexcept
+{  // Suppress "AUTOSAR C++14 A9-3-1" rule finding: "Member functions shall not return non-const “raw” pointers or
     // references to private or protected data owned by the class.".
     // The function provides controlled access to the internal 'proxy_' member. 'proxy_' is part of the class's
     // implementation details and is not meant for direct external access.
@@ -119,9 +125,9 @@ void* NewDeleteDelegateMemoryResource::do_allocate(const std::size_t bytes, std:
     // the real allocation gets forwarded to upstream new-delete res.
     auto* const result = upstream_resource_->allocate(bytes, alignment);
 
-    // LCOV_EXCL_START (Defensive programming: score::cpp::pmr::memory_resource already asserts that the allocate call on the
-    // underlying allocator does not return a nullptr so this branch can never be entered)
-    // LCOV_EXCL_BR_START (See line coverage suppression explanation)
+    // LCOV_EXCL_START (Defensive programming: score::cpp::pmr::memory_resource already asserts that the allocate call
+    // on the underlying allocator does not return a nullptr so this branch can never be entered) LCOV_EXCL_BR_START
+    // (See line coverage suppression explanation)
     if (result == nullptr)
     {
         score::mw::log::LogError("shm")
@@ -134,7 +140,8 @@ void* NewDeleteDelegateMemoryResource::do_allocate(const std::size_t bytes, std:
 
     const auto emplace_result = current_upstream_allocations_.emplace(
         std::piecewise_construct, std::forward_as_tuple(result), std::forward_as_tuple(bytes, alignment));
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(emplace_result.second, "Could not emplace allocation in allocation map.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(emplace_result.second,
+                                                "Could not emplace allocation in allocation map.");
 
     // calculation of how many bytes will be effectively needed is done here
     //  at the basis of how our (real) shared-mem resource allocation behavior! So the following alloc-approach exactly
@@ -155,7 +162,8 @@ void* NewDeleteDelegateMemoryResource::do_allocate(const std::size_t bytes, std:
         safe_math::Add(bytes, alignment).and_then([](const auto max_required_padding) noexcept {
             return safe_math::Subtract(max_required_padding, 1U);
         });
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(max_required_padding_result.has_value(), "Calculating max required padding overflowed!");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(max_required_padding_result.has_value(),
+                                                "Calculating max required padding overflowed!");
 
     void* const end_memory_buffer =
         // In our architecture we have a one-to-one mapping between pointers and integral values.
@@ -173,7 +181,8 @@ void* NewDeleteDelegateMemoryResource::do_allocate(const std::size_t bytes, std:
         safe_math::Add(bytes, static_cast<std::size_t>(padding)).and_then([this](const auto allocated_bytes) noexcept {
             return safe_math::Add(sum_allocated_bytes_, allocated_bytes);
         });
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(allocated_bytes_result.has_value(), "Calculating allocated bytes overflowed!");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(allocated_bytes_result.has_value(),
+                                                "Calculating allocated bytes overflowed!");
     sum_allocated_bytes_ = allocated_bytes_result.value();
 
     return result;

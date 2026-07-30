@@ -162,10 +162,25 @@ class ManagedMemoryResource : public ::score::cpp::pmr::memory_resource
      * pointer into an OffsetPtr if it shall be stored in shared memory.
      * @return MemoryResourceProxy* that identifies _this_ memory_resource.
      */
-
-    /// \todo: getMemoryResourceProxy should not return a non const pointer and the method should also be marked const.
-    /// This issue will be investigated and fixed in Ticket-146625"
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
     virtual const MemoryResourceProxy* getMemoryResourceProxy() noexcept = 0;
+
+    /**
+     * We need to return a raw pointer, since we need to convert this
+     * pointer into an OffsetPtr if it shall be stored in shared memory.
+     * @return MemoryResourceProxy* that identifies _this_ memory_resource.
+     *
+     * @note Not pure virtual yet: mw::com has a subclass that does not override this yet and cannot be
+     *       updated until this change is consumed downstream. Returning nullptr is safe here since this
+     *       is a private method only reachable by the friend classes above, which always operate on
+     *       subclasses that provide their own override. Will be made pure virtual once downstream is updated.
+     */
+    virtual const MemoryResourceProxy* getMemoryResourceProxy() const noexcept
+    {
+        return nullptr;
+    }
 };
 
 }  // namespace score::memory::shared

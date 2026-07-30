@@ -52,7 +52,11 @@ class NewDeleteDelegateMemoryResource : public score::memory::shared::ManagedMem
 
     ~NewDeleteDelegateMemoryResource() override;
 
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
     const MemoryResourceProxy* getMemoryResourceProxy() noexcept override;
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override;
     void* getBaseAddress() const noexcept override;
     void* getUsableBaseAddress() const noexcept override;
 

@@ -46,6 +46,14 @@ class SharedMemoryResourceHeapAllocatorMock : public ISharedMemoryResource
 
     MOCK_METHOD(std::string_view, GetIdentifier, (), (const, noexcept, override));
 
+    const MemoryResourceProxy* getMemoryResourceProxy() const noexcept override
+    {
+        return resource_.getMemoryResourceProxy();
+    }
+
+    [[deprecated(
+        "SCORE_DEPRECATION: Please use const getMemoryResourceProxy() const noexcept instead, which is the "
+        "non-deprecated version of this function. This function will be removed in a future release.")]]
     const MemoryResourceProxy* getMemoryResourceProxy() noexcept override
     {
         return resource_.getMemoryResourceProxy();
