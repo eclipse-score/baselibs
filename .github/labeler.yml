@@ -104,3 +104,12 @@ c++:
 rust:
   - changed-files:
       - any-glob-to-any-file: '**/*.rs'
+bazel:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.bzl'
+          - '**/*.bazel'
+          - '**/BUILD'
+          - '**/WORKSPACE'
+          - '**/.bazelrc'
+          - '**/.bazelversion'
