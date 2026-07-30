@@ -272,7 +272,8 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, CanMoveAssignSelfWithoutAdverseEffe
     DISABLE_WARNING_PUSH
     DISABLE_WARNING_SELF_MOVE
 
-    target = std::move(target);
+    auto* target_ptr = &target;
+    target = std::move(*target_ptr);
 
     DISABLE_WARNING_POP
 
