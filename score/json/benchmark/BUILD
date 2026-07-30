@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,16 +11,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 
-cc_library(
-    name = "typedmemory_mock",
-    testonly = True,
-    srcs = ["typed_memory_mock.cpp"],
-    hdrs = ["typed_memory_mock.h"],
-    visibility = ["@score_baselibs//score/memory/shared:__pkg__"],
+cc_binary(
+    name = "json_parser_benchmark",
+    srcs = ["json_parser_benchmark.cpp"],
+    tags = ["benchmark"],
+    visibility = ["//platform/aas/lib/json:__subpackages__"],
     deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/memory/shared/typedshm/typedshm_wrapper:typedmemory",
+        "@google_benchmark//:benchmark_main",
+        "@score_baselibs//score/json",
     ],
 )
