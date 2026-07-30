@@ -1,0 +1,73 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+# Component labels: applied when a PR changes files in the mapped folder.
+comp-abi-types:
+  - changed-files:
+      - any-glob-to-any-file: 'score/containers_rust/**'
+comp-concurrency:
+  - changed-files:
+      - any-glob-to-any-file: 'score/concurrency/**'
+comp-cpp-containers:
+  - changed-files:
+      - any-glob-to-any-file: 'score/containers/**'
+comp-datetime:
+  - changed-files:
+      - any-glob-to-any-file: 'score/datetime_converter/**'
+comp-flatbuffers:
+  - changed-files:
+      - any-glob-to-any-file: 'score/flatbuffers/**'
+comp-hash:
+  - changed-files:
+      - any-glob-to-any-file: 'score/hash/**'
+comp-json:
+  - changed-files:
+      - any-glob-to-any-file: 'score/json/**'
+comp-logging:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'score/mw/log/**'
+          - 'score/log_rust/**'
+comp-osal:
+  - changed-files:
+      - any-glob-to-any-file: 'score/os/**'
+comp-result:
+  - changed-files:
+      - any-glob-to-any-file: 'score/result/**'
+comp-safecpp:
+  - changed-files:
+      - any-glob-to-any-file: 'score/language/safecpp/**'
+comp-static_reflection_with_serialization:
+  - changed-files:
+      - any-glob-to-any-file: 'score/static_reflection_with_serialization/**'
+comp-tracing:
+  - changed-files:
+      - any-glob-to-any-file: 'score/analysis/tracing/**'
+comp-utils:
+  - changed-files:
+      - any-glob-to-any-file: 'score/utils/**'
+# Documentation label: applied when a PR changes files under docs/.
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: 'docs/**'
+# Language labels: applied based on the type of code files changed.
+c++:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.h'
+          - '**/*.hpp'
+          - '**/*.cpp'
+          - '**/*.cc'
+          - '**/*.cxx'
+rust:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.rs'
