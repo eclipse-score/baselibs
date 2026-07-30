@@ -13,6 +13,7 @@
 
 use core::cmp;
 use core::fmt;
+use core::mem::ManuallyDrop;
 use core::mem::MaybeUninit;
 use score_log::fmt::{FormatSpec, Result as ScoreLogResult, ScoreDebug, Writer};
 
@@ -27,15 +28,17 @@ use score_log::fmt::{FormatSpec, Result as ScoreLogResult, ScoreDebug, Writer};
 /// **Note:** When encoding an instance of this type in other programming languages,
 /// the `is_some` field must only be assigned the binary values `0x00` and `0x01`;
 /// everything else results in *Undefined Behavior*.
-#[derive(Clone, Copy)]
+///
+/// Unlike the standard [`Option`], this type is **not** `Copy` (even when `T: Copy`), because it runs
+/// drop glue for the contained value; it implements [`Clone`] when `T: Clone`.
 #[repr(C)]
-pub struct InlineOption<T: Copy> {
+pub struct InlineOption<T> {
     /// This is valid/initialized if and only if `is_some` is true.
     value: MaybeUninit<T>,
     is_some: bool,
 }
 
-impl<T: Copy> InlineOption<T> {
+impl<T> InlineOption<T> {
     /// Creates a new instance populated by `value`.
     pub const fn some(value: T) -> Self {
         Self {
@@ -62,10 +65,13 @@ impl<T: Copy> InlineOption<T> {
     }
 
     /// Converts this instance into a standard [`Option`].
-    pub const fn into_option(self) -> Option<T> {
-        if self.is_some {
+    pub fn into_option(self) -> Option<T> {
+        let this = ManuallyDrop::new(self);
+        if this.is_some {
             // SAFETY: `is_some` is true, so `value` must be valid as per its invariant.
-            Some(unsafe { self.value.assume_init() })
+            // `self` is wrapped in `ManuallyDrop`, so its `Drop` impl won't run and the value is
+            // moved out exactly once.
+            Some(unsafe { this.value.assume_init_read() })
         } else {
             None
         }
@@ -92,7 +98,25 @@ impl<T: Copy> InlineOption<T> {
     }
 }
 
-impl<T: Copy> Default for InlineOption<T> {
+impl<T> Drop for InlineOption<T> {
+    fn drop(&mut self) {
+        if self.is_some {
+            // SAFETY: `is_some` is true, so `value` must be valid as per its invariant.
+            unsafe { self.value.assume_init_drop() };
+        }
+    }
+}
+
+impl<T: Clone> Clone for InlineOption<T> {
+    fn clone(&self) -> Self {
+        match self.as_ref() {
+            Some(value) => Self::some(value.clone()),
+            None => Self::none(),
+        }
+    }
+}
+
+impl<T> Default for InlineOption<T> {
     fn default() -> Self {
         Self {
             value: MaybeUninit::uninit(),
@@ -101,7 +125,7 @@ impl<T: Copy> Default for InlineOption<T> {
     }
 }
 
-impl<T: Copy> From<T> for InlineOption<T> {
+impl<T> From<T> for InlineOption<T> {
     fn from(value: T) -> Self {
         Self {
             value: MaybeUninit::new(value),
@@ -110,19 +134,19 @@ impl<T: Copy> From<T> for InlineOption<T> {
     }
 }
 
-impl<T: Copy> From<Option<T>> for InlineOption<T> {
+impl<T> From<Option<T>> for InlineOption<T> {
     fn from(option: Option<T>) -> Self {
         Self::from_option(option)
     }
 }
 
-impl<T: Copy> From<InlineOption<T>> for Option<T> {
+impl<T> From<InlineOption<T>> for Option<T> {
     fn from(option: InlineOption<T>) -> Self {
         option.into_option()
     }
 }
 
-impl<T: PartialEq + Copy> PartialEq for InlineOption<T> {
+impl<T: PartialEq> PartialEq for InlineOption<T> {
     fn eq(&self, other: &Self) -> bool {
         match (self.as_ref(), other.as_ref()) {
             (Some(a), Some(b)) => a.eq(b),
@@ -133,9 +157,9 @@ impl<T: PartialEq + Copy> PartialEq for InlineOption<T> {
     }
 }
 
-impl<T: Eq + Copy> Eq for InlineOption<T> {}
+impl<T: Eq> Eq for InlineOption<T> {}
 
-impl<T: PartialOrd + Copy> PartialOrd for InlineOption<T> {
+impl<T: PartialOrd> PartialOrd for InlineOption<T> {
     fn partial_cmp(&self, other: &Self) -> Option<cmp::Ordering> {
         match (self.as_ref(), other.as_ref()) {
             (Some(a), Some(b)) => a.partial_cmp(b),
@@ -146,7 +170,7 @@ impl<T: PartialOrd + Copy> PartialOrd for InlineOption<T> {
     }
 }
 
-impl<T: Ord + Copy> Ord for InlineOption<T> {
+impl<T: Ord> Ord for InlineOption<T> {
     fn cmp(&self, other: &Self) -> cmp::Ordering {
         match (self.as_ref(), other.as_ref()) {
             (Some(a), Some(b)) => a.cmp(b),
@@ -157,7 +181,7 @@ impl<T: Ord + Copy> Ord for InlineOption<T> {
     }
 }
 
-impl<T: Copy> fmt::Display for InlineOption<T>
+impl<T> fmt::Display for InlineOption<T>
 where
     for<'a> Option<&'a T>: fmt::Display,
 {
@@ -166,7 +190,7 @@ where
     }
 }
 
-impl<T: Copy> fmt::Debug for InlineOption<T>
+impl<T> fmt::Debug for InlineOption<T>
 where
     for<'a> Option<&'a T>: fmt::Debug,
 {
@@ -175,7 +199,7 @@ where
     }
 }
 
-impl<T: Copy> ScoreDebug for InlineOption<T>
+impl<T> ScoreDebug for InlineOption<T>
 where
     for<'a> Option<&'a T>: ScoreDebug,
 {
@@ -233,12 +257,10 @@ mod tests {
             assert_eq!(lhs.ne(rhs), lhs.as_ref().ne(&rhs.as_ref()));
         }
 
-        let some_5 = InlineOption::some(5);
-        let some_6 = InlineOption::some(6);
-        let none = InlineOption::none();
+        let options = [InlineOption::some(5), InlineOption::some(6), InlineOption::none()];
         // Check all combinations
-        for lhs in &[some_5, some_6, none] {
-            for rhs in &[some_5, some_6, none] {
+        for lhs in &options {
+            for rhs in &options {
                 check(lhs, rhs);
             }
         }
@@ -256,12 +278,10 @@ mod tests {
             assert_eq!(lhs >= rhs, lhs.as_ref() >= rhs.as_ref());
         }
 
-        let some_5 = InlineOption::some(5);
-        let some_6 = InlineOption::some(6);
-        let none = InlineOption::none();
+        let options = [InlineOption::some(5), InlineOption::some(6), InlineOption::none()];
         // Check all combinations
-        for lhs in &[some_5, some_6, none] {
-            for rhs in &[some_5, some_6, none] {
+        for lhs in &options {
+            for rhs in &options {
                 check(lhs, rhs);
             }
         }
@@ -277,12 +297,10 @@ mod tests {
             assert_eq!(lhs.min(rhs).as_ref(), lhs.as_ref().min(rhs.as_ref()));
         }
 
-        let some_5 = InlineOption::some(5);
-        let some_6 = InlineOption::some(6);
-        let none = InlineOption::none();
+        let options = [InlineOption::some(5), InlineOption::some(6), InlineOption::none()];
         // Check all combinations
-        for lhs in &[some_5, some_6, none] {
-            for rhs in &[some_5, some_6, none] {
+        for lhs in &options {
+            for rhs in &options {
                 check(lhs, rhs);
             }
         }

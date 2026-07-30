@@ -36,11 +36,11 @@ use crate::storage::Inline;
 /// }
 /// ```
 #[repr(transparent)]
-pub struct InlineVec<T: Copy, const CAPACITY: usize> {
+pub struct InlineVec<T, const CAPACITY: usize> {
     inner: GenericVec<T, Inline<T, CAPACITY>>,
 }
 
-impl<T: Copy, const CAPACITY: usize> InlineVec<T, CAPACITY> {
+impl<T, const CAPACITY: usize> InlineVec<T, CAPACITY> {
     const CHECK_CAPACITY: () = assert!(0 < CAPACITY && CAPACITY <= u32::MAX as usize);
 
     /// Creates an empty vector.
@@ -54,13 +54,19 @@ impl<T: Copy, const CAPACITY: usize> InlineVec<T, CAPACITY> {
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> Default for InlineVec<T, CAPACITY> {
+impl<T, const CAPACITY: usize> Drop for InlineVec<T, CAPACITY> {
+    fn drop(&mut self) {
+        self.inner.clear();
+    }
+}
+
+impl<T, const CAPACITY: usize> Default for InlineVec<T, CAPACITY> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> ops::Deref for InlineVec<T, CAPACITY> {
+impl<T, const CAPACITY: usize> ops::Deref for InlineVec<T, CAPACITY> {
     type Target = GenericVec<T, Inline<T, CAPACITY>>;
 
     fn deref(&self) -> &Self::Target {
@@ -68,19 +74,19 @@ impl<T: Copy, const CAPACITY: usize> ops::Deref for InlineVec<T, CAPACITY> {
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> ops::DerefMut for InlineVec<T, CAPACITY> {
+impl<T, const CAPACITY: usize> ops::DerefMut for InlineVec<T, CAPACITY> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<T: Copy + fmt::Debug, const CAPACITY: usize> fmt::Debug for InlineVec<T, CAPACITY> {
+impl<T: fmt::Debug, const CAPACITY: usize> fmt::Debug for InlineVec<T, CAPACITY> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(self.as_slice(), f)
     }
 }
 
-impl<T: Copy + ScoreDebug, const CAPACITY: usize> ScoreDebug for InlineVec<T, CAPACITY> {
+impl<T: ScoreDebug, const CAPACITY: usize> ScoreDebug for InlineVec<T, CAPACITY> {
     fn fmt(&self, f: Writer, spec: &FormatSpec) -> ScoreLogResult {
         ScoreDebug::fmt(self.as_slice(), f, spec)
     }

@@ -37,11 +37,11 @@ use crate::storage::Inline;
 /// }
 /// ```
 #[repr(transparent)]
-pub struct InlineQueue<T: Copy, const CAPACITY: usize> {
+pub struct InlineQueue<T, const CAPACITY: usize> {
     inner: GenericQueue<T, Inline<T, CAPACITY>>,
 }
 
-impl<T: Copy, const CAPACITY: usize> InlineQueue<T, CAPACITY> {
+impl<T, const CAPACITY: usize> InlineQueue<T, CAPACITY> {
     const CHECK_CAPACITY: () = assert!(0 < CAPACITY && CAPACITY <= u32::MAX as usize);
 
     /// Creates an empty queue.
@@ -55,13 +55,19 @@ impl<T: Copy, const CAPACITY: usize> InlineQueue<T, CAPACITY> {
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> Default for InlineQueue<T, CAPACITY> {
+impl<T, const CAPACITY: usize> Drop for InlineQueue<T, CAPACITY> {
+    fn drop(&mut self) {
+        self.inner.clear();
+    }
+}
+
+impl<T, const CAPACITY: usize> Default for InlineQueue<T, CAPACITY> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> ops::Deref for InlineQueue<T, CAPACITY> {
+impl<T, const CAPACITY: usize> ops::Deref for InlineQueue<T, CAPACITY> {
     type Target = GenericQueue<T, Inline<T, CAPACITY>>;
 
     fn deref(&self) -> &Self::Target {
@@ -69,19 +75,19 @@ impl<T: Copy, const CAPACITY: usize> ops::Deref for InlineQueue<T, CAPACITY> {
     }
 }
 
-impl<T: Copy, const CAPACITY: usize> ops::DerefMut for InlineQueue<T, CAPACITY> {
+impl<T, const CAPACITY: usize> ops::DerefMut for InlineQueue<T, CAPACITY> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.inner
     }
 }
 
-impl<T: Copy + fmt::Debug, const CAPACITY: usize> fmt::Debug for InlineQueue<T, CAPACITY> {
+impl<T: fmt::Debug, const CAPACITY: usize> fmt::Debug for InlineQueue<T, CAPACITY> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         fmt::Debug::fmt(&self.inner, f)
     }
 }
 
-impl<T: Copy + ScoreDebug, const CAPACITY: usize> ScoreDebug for InlineQueue<T, CAPACITY> {
+impl<T: ScoreDebug, const CAPACITY: usize> ScoreDebug for InlineQueue<T, CAPACITY> {
     fn fmt(&self, f: Writer, spec: &FormatSpec) -> ScoreLogResult {
         ScoreDebug::fmt(&self.inner, f, spec)
     }
