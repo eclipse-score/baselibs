@@ -35,8 +35,8 @@ namespace unit_test
 TEST(UT__DepthCounter, MoveAssignment)
 {
     internal::DepthCounter dc{};
-    score::cpp::ignore = dc.AddArray();
-    score::cpp::ignore = dc.AddValue();
+    dc.AddArray();
+    dc.AddValue();
     auto result = dc.CheckEndOfFile();
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(),
@@ -62,8 +62,8 @@ TEST(UT__DepthCounter, MoveAssignment)
 TEST(UT__DepthCounter, MoveConstruction)
 {
     internal::DepthCounter dc{};
-    score::cpp::ignore = dc.AddArray();
-    score::cpp::ignore = dc.AddValue();
+    dc.AddArray();
+    dc.AddValue();
 
     const auto result = dc.CheckEndOfFile();
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);

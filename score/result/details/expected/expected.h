@@ -76,7 +76,7 @@ template <typename E>
 // copy assignment operators.
 // NOLINTBEGIN(cppcoreguidelines-special-member-functions): shall be implicitly declared as per the C++23 standard.
 // coverity[autosar_cpp14_a12_0_1_violation]
-class [[nodiscard]] unexpected : impl::base_unexpected
+class unexpected : impl::base_unexpected
 // NOLINTEND(cppcoreguidelines-special-member-functions): shall be implicitly declared as per the C++23 standard.
 {
   public:
@@ -115,16 +115,16 @@ class [[nodiscard]] unexpected : impl::base_unexpected
     // NOLINTNEXTLINE(performance-noexcept-move-constructor) qualification from the move assignment operator of E.
     constexpr unexpected& operator=(unexpected&&) = default;
 
-    [[nodiscard]] constexpr const E& error() const& noexcept
+    constexpr const E& error() const& noexcept
     {
         return value_;
     }
-    [[nodiscard]] constexpr E& error() & noexcept
+    constexpr E& error() & noexcept
     {
         // coverity[autosar_cpp14_a9_3_1_violation] by design
         return value_;
     }
-    [[nodiscard]] constexpr const E&& error() const&& noexcept
+    constexpr const E&& error() const&& noexcept
     {
         // Suppress AUTOSAR C++14 A18-9-3" rule violations. The rule states "The std::move shall not be used on objects
         // declared const or const&." the move operation on a const object does not cause unintended behavior it ensures
@@ -132,7 +132,7 @@ class [[nodiscard]] unexpected : impl::base_unexpected
         // coverity[autosar_cpp14_a18_9_3_violation]
         return std::move(value_);
     }
-    [[nodiscard]] constexpr E&& error() && noexcept
+    constexpr E&& error() && noexcept
     {
         return std::move(value_);
     }
@@ -189,8 +189,26 @@ class [[nodiscard]] unexpected : impl::base_unexpected
 template <class E>
 unexpected(E) -> unexpected<E>;
 
+// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+// Suppress "AUTOSAR C++14 M16-0-2" rule findings. This rule stated: "Macros shall only be #define’d or #undef’d in
+// the global namespace".
+// Tolerated by project to enable/disable enforce and expected nodiscard.
+// coverity[autosar_cpp14_a16_0_1_violation]
+#ifdef SPP_ENFORCE_NODISCARD
+// coverity[autosar_cpp14_a16_0_1_violation]
+#define SPP_EXPECTED_NODISCARD [[nodiscard]]
+// coverity[autosar_cpp14_a16_0_1_violation]
+#else
+// coverity[autosar_cpp14_m16_0_2_violation]
+// coverity[autosar_cpp14_a16_0_1_violation]
+#define SPP_EXPECTED_NODISCARD
+// coverity[autosar_cpp14_a16_0_1_violation]
+#endif
+
 template <typename T, typename E>
-class [[nodiscard]] expected : impl::base_expected
+class SPP_EXPECTED_NODISCARD expected : impl::base_expected
 {
     // Suppress "AUTOSAR C++14 A5-1-7" rule finding. This rule states: "A lambda shall not be an operand to decltype or
     // typeid". False-positive, at this point "decltype" is not used with lambda.
@@ -1013,7 +1031,7 @@ class [[nodiscard]] expected : impl::base_expected
 };
 
 template <typename E>
-class [[nodiscard]] expected<void, E> : impl::base_expected
+class SPP_EXPECTED_NODISCARD expected<void, E> : impl::base_expected
 {
     // Suppress "AUTOSAR C++14 A5-1-7" rule finding. This rule states: "A lambda shall not be an operand to decltype or
     // typeid". False-positive, at this point "decltype" is not used with lambda.
