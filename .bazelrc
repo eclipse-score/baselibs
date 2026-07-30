@@ -118,3 +118,6 @@ build:clang_tidy --force_pic
 build:clang_tidy --output_groups=clang_tidy_output
 build:clang_tidy --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
 build:clang_tidy --verbose_failures
+
+# Import user-specific configurations
+try-import %workspace%/user.bazelrc
