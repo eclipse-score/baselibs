@@ -114,7 +114,7 @@ git_override(
     remote = "https://github.com/bmw-software-engineering/lobster.git",
 )
 
-bazel_dep(name = "score_platform", version = "0.6.2", dev_dependency = True)
+bazel_dep(name = "score_platform", version = "0.6.3", dev_dependency = True)
 
 # Needed until a release of score_platform includes
 # https://github.com/eclipse-score/score/pull/3071 (merged to main).
