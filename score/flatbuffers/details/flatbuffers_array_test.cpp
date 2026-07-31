@@ -50,6 +50,30 @@ struct Point
 };
 
 // ---------------------------------------------------------------------------
+// MISRA classification of the cast helpers (applies to the whole file)
+//
+// CastToArray / CastToArrayOfEnum from flatbuffers/array.h reinterpret_cast a
+// raw T[length] into an Array<T, length>. This deliberately violates:
+//   - MISRA C++:2023 Rule 8.2.5 / AUTOSAR C++14 A5-2-4 (use of
+//     reinterpret_cast). Rule 8.2.5 exempts casts whose target is a pointer to
+//     void, char, unsigned char or std::byte (possibly cv-qualified), or an
+//     integer type holding the pointer value, but this cast targets a pointer
+//     to an unrelated class type (Array<T, length>*), so no exception applies.
+// The third-party header marks these functions as risky itself ("Use with
+// care.", TODO: move to `internal`) and guarantees no defined behaviour with
+// respect to object lifetime / strict aliasing; it only works because
+// Array<T> is a pure layout wrapper with no data members of its own.
+//
+// Justification:
+// 
+// Array isn't a real value type; it's a reinterpret-cast view onto bytes that
+// already exist inside a FlatBuffer, lifespan concerns are out of scope.
+// 
+// User facing is the flac generated header, which has measures 
+// for correct usage.
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 // ArrayCastTest
 // Tests casting raw C arrays to flatbuffers::Array.
 // ---------------------------------------------------------------------------
@@ -218,6 +242,7 @@ TEST(ArrayMakeSpanTest, SpanFromArray)
   auto s = make_span(arr);
   EXPECT_EQ(s.size(), 3u);
   EXPECT_EQ(s[0], 100);
+  EXPECT_EQ(s[1], 200);
   EXPECT_EQ(s[2], 300);
 }
 
@@ -379,6 +404,7 @@ TEST(ArrayMutableDataTest, MutableData)
   int32_t val = 42;
   std::memcpy(mutable_ptr, &val, sizeof(val));
   EXPECT_EQ(arr.Get(0), 42);
+  EXPECT_EQ(arr.Get(1), 0);
 }
 
 TEST(ArrayMutableDataTest, MutableDataTyped)
@@ -394,6 +420,8 @@ TEST(ArrayMutableDataTest, MutableDataTyped)
   EXPECT_EQ(typed_ptr, raw);
   typed_ptr[1] = 99;
   EXPECT_EQ(arr.Get(1), 99);
+  EXPECT_EQ(arr.Get(0), 1);
+  EXPECT_EQ(arr.Get(2), 3);
 }
 
 // ---------------------------------------------------------------------------
@@ -535,6 +563,18 @@ TEST(ArrayConstSpanTest, ConstCastToArrayOfEnum)
 // ---------------------------------------------------------------------------
 // ArraySpanObservableTest
 // Tests is_span_observable.
+//
+// Only the true path is exercised. is_span_observable is false in two cases,
+// neither of which is reachable in this build:
+//   1. T is a pointer. Array<T, N> is documented to carry only POD data
+//      (scalars or structs), and its public factories (CastToArray /
+//      CastToArrayOfEnum) cannot produce a pointer element type, so a pointer
+//      T cannot be instantiated here.
+//   2. T is a multi-byte scalar on a big-endian platform. FlatBuffers stores
+//      scalars little-endian, so their raw bytes are only span-observable when
+//      FLATBUFFERS_LITTLEENDIAN holds (or sizeof(T) == 1). The test targets are
+//      little-endian, so this branch is never taken; forcing it would require a
+//      big-endian toolchain that is out of scope for these unit tests.
 // ---------------------------------------------------------------------------
 
 TEST(ArraySpanObservableTest, StaticAssertions)
@@ -561,6 +601,10 @@ TEST(ArraySpanObservableTest, StaticAssertions)
 // Direct access helper for CopyFromSpanImpl true_type and false_type paths.
 // ---------------------------------------------------------------------------
 
+// Exposes the protected CopyFromSpanImpl overloads so both paths can be tested
+// regardless of platform endianness:
+//   observable    -> memcpy path (raw bytes match native layout)
+//   non-observable -> element-wise Mutate path (with endian conversion)
 template <typename T, uint16_t N>
 struct ArrayTestAccess : public Array<T, N>
 {
@@ -582,7 +626,7 @@ TEST(CopyFromSpanImplTest, Observable)
   RecordProperty("DerivationTechnique", "equivalence-classes");
 
   int32_t raw[3] = {0, 0, 0};
-  auto& accessor = reinterpret_cast<ArrayTestAccess<int32_t, 3>&>(raw);
+  auto& accessor = static_cast<ArrayTestAccess<int32_t, 3>&>(CastToArray(raw));
 
   const int32_t src[3] = {10, 20, 30};
   span<const int32_t, 3> src_span(src, 3);
@@ -601,7 +645,7 @@ TEST(CopyFromSpanImplTest, NonObservableScalar)
   RecordProperty("DerivationTechnique", "equivalence-classes");
 
   int32_t raw[3] = {0, 0, 0};
-  auto& accessor = reinterpret_cast<ArrayTestAccess<int32_t, 3>&>(raw);
+  auto& accessor = static_cast<ArrayTestAccess<int32_t, 3>&>(CastToArray(raw));
 
   const int32_t src[3] = {100, 200, 300};
   span<const int32_t, 3> src_span(src, 3);
@@ -620,7 +664,7 @@ TEST(CopyFromSpanImplTest, NonObservableStruct)
   RecordProperty("DerivationTechnique", "equivalence-classes");
 
   Point raw[2] = {{0, 0}, {0, 0}};
-  auto& accessor = reinterpret_cast<ArrayTestAccess<Point, 2>&>(raw);
+  auto& accessor = static_cast<ArrayTestAccess<Point, 2>&>(CastToArray(raw));
 
   const Point src[2] = {{7, 8}, {9, 10}};
   span<const Point, 2> src_span(src, 2);
@@ -744,6 +788,19 @@ TEST(ArrayFaultInjectionTest, FaultMutateStructOutOfBounds)
   auto& arr = CastToArray(raw);
   const Point p = {1, 2};
   EXPECT_DEATH({arr.Mutate(2u, p); }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultCopyFromSpanOverlap)
+{
+  RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpan");
+  RecordProperty("Description", "CopyFromSpan with a source span overlapping the array triggers assert(false)");
+  RecordProperty("TestType", "fault-test");
+  RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+  int32_t raw[3] = {1, 2, 3};
+  auto& arr = CastToArray(raw);
+  span<const int32_t, 3> overlapping(raw, 3);  // shares storage with arr -> p1 == p2
+  EXPECT_DEATH({arr.CopyFromSpan(overlapping); }, "");
 }
 
 }  // namespace test
