@@ -13,49 +13,11 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
 
 package(
     default_visibility = [
         "@score_baselibs//score/os/test/qnx:__subpackages__",
     ],
-)
-
-py_unittest_qnx_test(
-    name = "unit_tests_qnx",
-    test_cases = [
-        ":channel_test",
-        ":channel_impl_test",
-        ":devctl_test",
-        ":dispatch_test",
-        ":dispatch_impl_test",
-        ":iofunc_test",
-        ":neutrino_test",
-        ":pci_test",
-        # TODO: To be fixed on Ticket-201117. Test not compatible with ARM64
-        # ":pci_safety_test",
-        ":procmgr_test",
-        ":resmgr_test",
-        ":secpol_test",
-        ":slog2_test",
-        ":sysctl_test",
-        ":unistd_test",
-        ":pthread_test",
-        ":timer_test",
-        ":thread_ctl_test",
-        ":inout_test",
-        ":mman_test",
-        ":pathmgr_test",
-        ":fs_crypto_test",
-        ":fs_crypto_impl_test",
-        ":pcap_test",
-        ":sigevent_qnx_test",
-        ":qnx_version_test",
-    ],
-    test_suites = [
-        "@score_baselibs//score/os/utils/qnx/resource_manager:unit_tests_qnx",
-    ],
-    visibility = ["//visibility:public"],  # platform_only
 )
 
 cc_test(
