@@ -220,12 +220,12 @@ impl<T> JoinInner<T> {
         // Obtain `packet` from `Arc`.
         // This can only be done once thread finished.
         fence(Ordering::Acquire);
+
+        // Prevent destructor from running - thread is already joined.
         let this = core::mem::ManuallyDrop::new(self);
-        // SAFETY: join_internal already joined the thread, so we must not let JoinInner::drop run it again
-        // — hence ManuallyDrop. ptr::read duplicates the Arc handle without bumping the strong count;
-        // the copy left inside this is never used and never dropped, so packet is effectively the unique owner.
-        // That's why Arc::get_mut correctly observes strong == 1, and why freeing via packet is not a double-free.
-        // Thread has no Drop (just a joined `pthread_t`), so skipping its drop leaks nothing.
+        // SAFETY:
+        // `self` have its `Drop` disabled, which would cause `packet` field to never clean-up.
+        // `packet` is duplicated with `core::ptr::read` to ensure `Drop` on `Arc` is being run when going out of scope.
         let mut packet = unsafe { core::ptr::read(&this.packet) };
         let packet_contents = Arc::get_mut(&mut packet).expect("thread not yet finished");
 
