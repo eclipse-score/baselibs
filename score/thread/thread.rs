@@ -213,20 +213,23 @@ impl<T> JoinInner<T> {
     /// Wait for the associated thread to finish.
     ///
     /// This function will return immediately if the associated thread has already finished.
-    pub fn join(mut self) -> Result<T> {
+    pub fn join(self) -> Result<T> {
         // Perform native join.
         self.join_internal();
 
         // Obtain `packet` from `Arc`.
         // This can only be done once thread finished.
         fence(Ordering::Acquire);
-        let packet = Arc::get_mut(&mut self.packet).expect("thread not yet finished");
-        let result = packet.0.take().expect("thread result uninitialized");
 
         // Prevent destructor from running - thread is already joined.
-        core::mem::forget(self);
+        let this = core::mem::ManuallyDrop::new(self);
+        // SAFETY:
+        // `self` have its `Drop` disabled, which would cause `packet` field to never clean-up.
+        // `packet` is duplicated with `core::ptr::read` to ensure `Drop` on `Arc` is being run when going out of scope.
+        let mut packet = unsafe { core::ptr::read(&this.packet) };
+        let packet_contents = Arc::get_mut(&mut packet).expect("thread not yet finished");
 
-        result
+        packet_contents.0.take().expect("thread result uninitialized")
     }
 
     fn join_internal(&self) {
