@@ -19,6 +19,9 @@ mod result;
 mod string;
 mod vec;
 
+#[cfg(test)]
+mod drop_tests;
+
 pub use self::option::InlineOption;
 pub use self::queue::InlineQueue;
 pub use self::result::InlineResult;
