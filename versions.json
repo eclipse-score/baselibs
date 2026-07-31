@@ -1366,5 +1366,9 @@
   {
     "version": "gh-readonly-queue/main/pr-429-adb83fac315ae1dff15d7c1339989f107e5964e7",
     "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-429-adb83fac315ae1dff15d7c1339989f107e5964e7/"
+  },
+  {
+    "version": "pr-438",
+    "url": "https://eclipse-score.github.io/baselibs/pr-438/"
   }
 ]
