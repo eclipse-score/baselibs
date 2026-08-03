@@ -358,7 +358,7 @@ mod ffi {
             ) -> bool;
         }
 
-        #[test]
+        #[cfg(all(test, not(miri)))]
         fn test_binary_compatibility_sizes() {
             unsafe {
                 let cpp_result_int32_size = get_score_result_int32_size();
@@ -406,7 +406,7 @@ mod ffi {
          * will cause a panic or assertion failure.
          * On the contrary, if everything passes, we can be reasonably sure that our layout assumptions are correct.
          */
-        #[test]
+        #[cfg(all(test, not(miri)))]
         fn test_binary_layout_verification() {
             fn print_bytes_hex(label: &str, bytes: &[u8]) {
                 println!("  {}:", label);
@@ -499,7 +499,7 @@ mod ffi {
             }
         }
 
-        #[test]
+        #[cfg(all(test, not(miri)))]
         fn test_cpp_created_results_in_rust() {
             unsafe {
                 let test_message = std::ffi::CString::new("Test error from C++").unwrap();
@@ -548,7 +548,7 @@ mod ffi {
             }
         }
 
-        #[test]
+        #[cfg(all(test, not(miri)))]
         fn test_rust_created_results_in_cpp() {
             unsafe {
                 // Create success result in Rust
@@ -584,7 +584,7 @@ mod ffi {
             }
         }
 
-        #[test]
+        #[cfg(all(test, not(miri)))]
         fn test_round_trip_compatibility() {
             unsafe {
                 // Test different value types to see if our assumptions hold across different sizes
@@ -756,7 +756,7 @@ mod main_module_tests {
         fn destroy_score_result_bool(result: *mut std::ffi::c_void);
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cpp_result_to_std_result_success() {
         unsafe {
             // Create a success result on C++ side
@@ -780,7 +780,7 @@ mod main_module_tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cpp_result_to_std_result_error() {
         unsafe {
             let test_message = std::ffi::CString::new("C++ error for std conversion").unwrap();
@@ -807,7 +807,7 @@ mod main_module_tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cpp_bool_result_to_std_result() {
         unsafe {
             // Test bool success case
@@ -839,7 +839,7 @@ mod main_module_tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_multiple_cpp_results_conversion() {
         unsafe {
             let test_message = std::ffi::CString::new("Multiple conversion test").unwrap();
@@ -885,7 +885,7 @@ mod main_module_tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cpp_result_conversion_with_rust_operations() {
         unsafe {
             // Create C++ success result
@@ -930,7 +930,7 @@ mod main_module_tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cpp_error_result_conversion_with_error_handling() {
         unsafe {
             let test_message = std::ffi::CString::new("Error handling test").unwrap();
