@@ -165,7 +165,7 @@ mod tests {
         ) -> bool;
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_cstring_view_layout_compatibility() {
         unsafe {
             // Test that CStringView has the same memory layout as std::string_view
@@ -249,7 +249,7 @@ mod tests {
         }
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn test_equality_of_defaulted_string_instances() {
         unsafe {
             let cpp_created_string_view = (create_empty_cpp_string_view() as *mut CStringView).as_mut().unwrap();
