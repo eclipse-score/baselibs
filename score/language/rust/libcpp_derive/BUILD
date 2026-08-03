@@ -30,7 +30,10 @@ rust_proc_macro(
 rust_doc_test(
     name = "doc_test",
     crate = ":libcpp_derive",
-    tags = ["unit"],
+    tags = [
+        "no_rust_doc_test",
+        "unit",
+    ],
 )
 
 cc_library(
