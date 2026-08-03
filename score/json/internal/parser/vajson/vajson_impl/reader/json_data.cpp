@@ -20,8 +20,8 @@
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/reader/json_data.h"
 #include <array>
-#include <fstream>
 #include <limits>
+#include <istream>
 #include <memory>
 #include <sstream>
 #include <utility>
@@ -80,11 +80,31 @@ auto JsonData::FromFile(std::string_view const path) noexcept -> Result<JsonData
     score::filesystem::FileFactory factory{};
     score::filesystem::Path file_path{std::string(path.data(), path.size())};
 
-    auto file_result = factory.Open(file_path, std::ios::in);
+    auto file_result = factory.Open(file_path, std::ios::in | std::ios::binary);
     auto result = MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file");
     if (file_result.has_value())
     {
-        result.emplace(JsonData{std::move(file_result.value())});
+        // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
+        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader's
+        // Snap/Restore backtracking issues repeated seekg/tellg calls, which are expensive on a filebuf but O(1)
+        // on an in-memory stringbuf.
+        std::istream& file{*file_result.value()};
+        file.seekg(0, std::ios::end);
+        const std::streamoff size{file.tellg()};
+        file.seekg(0, std::ios::beg);
+        if (file.fail() || (size < 0))
+        {
+            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
+        }
+        std::string content(static_cast<std::size_t>(size), '\0');
+        // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
+        static_cast<void>(file.read(content.data(), size));
+        if (file.bad() || (file.gcount() != size))
+        {
+            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
+        }
+        std::unique_ptr<std::istream> stream{std::make_unique<std::istringstream>(std::move(content))};
+        result.emplace(JsonData{std::move(stream)});
     }
 
     return result;
