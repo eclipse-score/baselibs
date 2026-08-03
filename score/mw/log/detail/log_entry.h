@@ -82,7 +82,7 @@ Deviation from Rule A0-1-1:
 - A project shall not contain instances of non-volatile variables being given values that are not subsequently used.
 
 Justification:
-- we need to use STRUCT_VISITABLE here and create an instance of LogEntry
+- we need to use SCORE_STRUCT_VISITABLE here and create an instance of LogEntry
 - to get the size of LogEntry for serialization purpose
 */
 // coverity[autosar_cpp14_a18_9_4_violation]
@@ -90,15 +90,15 @@ Justification:
 // coverity[autosar_cpp14_a11_0_2_violation]
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-STRUCT_VISITABLE(LogEntry,
-                     app_id,
-                     ctx_id,
-                     payload,
-                     //  timestamp_steady_nsec,
-                     //  timestamp_system_nsec,
-                     num_of_args,
-                     //  header_buffer,
-                     log_level)
+SCORE_STRUCT_VISITABLE(LogEntry,
+                       app_id,
+                       ctx_id,
+                       payload,
+                       //  timestamp_steady_nsec,
+                       //  timestamp_system_nsec,
+                       num_of_args,
+                       //  header_buffer,
+                       log_level)
 // NOLINTEND(score-struct-usage-compliance) justified by design
 
 }  // namespace detail

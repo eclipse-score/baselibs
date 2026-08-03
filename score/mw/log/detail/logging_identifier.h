@@ -68,7 +68,7 @@ class LoggingIdentifier
     // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
     constexpr static std::size_t kMaxLength{4UL};
 
-    // This variable is public because of necessity to pass it to STRUCT_VISITABLE in log_entry.h
+    // This variable is public because of necessity to pass it to SCORE_STRUCT_VISITABLE in log_entry.h
     // coverity[autosar_cpp14_m11_0_1_violation]
     std::array<std::string_view::value_type, kMaxLength> data{};
 };
@@ -81,7 +81,7 @@ class LoggingIdentifier
 // coverity[autosar_cpp14_a7_1_2_violation]
 // coverity[autosar_cpp14_a0_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-STRUCT_VISITABLE(LoggingIdentifier, data)
+SCORE_STRUCT_VISITABLE(LoggingIdentifier, data)
 
 // NOLINTEND(score-struct-usage-compliance) justified by design
 
