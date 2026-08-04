@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/concurrency/future/interruptible_state.h"
 
+#include <memory>
+
 bool score::concurrency::InterruptibleState<void>::SetValue()
 {
     if ((this->TestAndMarkValueAsSet()) == true)
@@ -32,8 +34,11 @@ bool score::concurrency::InterruptibleState<void>::SetError(score::result::Error
     }
 
     // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+    // The existing object is destroyed first: reusing the storage of a live object without ending its
+    // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+    std::destroy_at(&value_);
     // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-    new (&value_) score::Result<void>{MakeUnexpected<void>(error)};
+    static_cast<void>(::new (&value_) score::Result<void>{MakeUnexpected<void>(error)});
 
     MakeReady();
     TriggerContinuations();
