@@ -1398,5 +1398,9 @@
   {
     "version": "pr-443",
     "url": "https://eclipse-score.github.io/baselibs/pr-443/"
+  },
+  {
+    "version": "gh-readonly-queue/main/pr-443-8cd4451e9055e67d4bc2d51784d064da7ffae6e3",
+    "url": "https://eclipse-score.github.io/baselibs/gh-readonly-queue/main/pr-443-8cd4451e9055e67d4bc2d51784d064da7ffae6e3/"
   }
 ]
