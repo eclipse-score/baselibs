@@ -12,10 +12,14 @@
  ********************************************************************************/
 #include "flatbuffers/array.h"
 
+// flatc-generated see schema: details/array_cast_fixture.fbs
+#include "score/flatbuffers/details/array_cast_fixture_generated.h"
+
 #include <cstdint>
 #include <cstring>
 #include <limits>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "gtest/gtest.h"
@@ -30,12 +34,6 @@ namespace test
 {
 
 using namespace ::flatbuffers;
-
-// Magic-number sentinels used across tests.
-[[maybe_unused]] constexpr int32_t kFirstElement = 10;
-[[maybe_unused]] constexpr int32_t kMiddleElement = 20;
-[[maybe_unused]] constexpr int32_t kLastElement = 30;
-[[maybe_unused]] constexpr int32_t kMutateValue = 42;
 
 // -------------------------------------------------------
 // Minimal Point struct used across tests.
@@ -113,8 +111,8 @@ TEST(ArrayCastTest, CastToArrayConst)
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
     const int32_t raw[2] = {77, 88};
-    constexpr bool is_const = std::is_const_v<std::remove_reference_t<decltype(CastToArray(raw))>>;
-    EXPECT_TRUE(is_const);
+    static_assert(std::is_const_v<std::remove_reference_t<decltype(CastToArray(raw))>>);
+    SUCCEED();
 }
 
 // ---------------------------------------------------------------------------
@@ -935,6 +933,176 @@ TEST(ArrayFaultInjectionTest, FaultCopyFromSpanOverlap)
     auto& arr = CastToArray(raw);
     span<const int32_t, 3> overlapping(raw, 3);  // shares storage with arr -> p1 == p2
     EXPECT_DEATH({ arr.CopyFromSpan(overlapping); }, "");
+}
+
+// --------------------------------------------------------------------------------
+// ArrayCastSafetyGeneratedTest
+//
+// End-to-end test for the generated header. See flatbuffers_array_cast_safety.md.
+// and details/array_cast_fixture.fbs for the schema.
+// --------------------------------------------------------------------------------
+
+namespace
+{
+// Distinct 64-bit values for the [int64:2] field, chosen to also exercise the
+// full 64-bit range so a truncated/endian-wrong reinterpret view would be caught.
+constexpr int64_t kFirst64 = std::numeric_limits<int64_t>::min();
+constexpr int64_t kSecond64 = std::numeric_limits<int64_t>::max() - 7;
+}  // namespace
+
+// End-to-end: build a serialized buffer through the generated, typed API and
+// read every field back through the reinterpret-cast Array view.
+TEST(ArrayCastSafetyGeneratedTest, EndToEndRoundTripThroughGeneratedBuffer)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::CastToArray, ::flatbuffers::CastToArrayOfEnum "
+                   "(via flatc-generated NestedStruct accessors)");
+    RecordProperty("Description", "reinterpret-cast Array view read from a serialized buffer matches written values");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    const int32_t coordinate_values[2] = {10, 20};
+    const arrays_fixture::TestEnum channel_mode_values[2] = {arrays_fixture::TestEnum::B, arrays_fixture::TestEnum::C};
+    const int64_t timestamp_values[2] = {kFirst64, kSecond64};
+
+    FlatBufferBuilder fbb;
+    const arrays_fixture::NestedStruct nested(span<const int32_t, 2>(coordinate_values, 2),
+                                              arrays_fixture::TestEnum::A,
+                                              span<const arrays_fixture::TestEnum, 2>(channel_mode_values, 2),
+                                              span<const int64_t, 2>(timestamp_values, 2));
+    fbb.Finish(arrays_fixture::CreateArraysHolder(fbb, &nested));
+
+    // The produced bytes are a verifiable FlatBuffer
+    Verifier verifier(fbb.GetBufferPointer(), fbb.GetSize());
+    ASSERT_TRUE(arrays_fixture::VerifyArraysHolderBuffer(verifier));
+
+    const arrays_fixture::ArraysHolder* holder = arrays_fixture::GetArraysHolder(fbb.GetBufferPointer());
+    ASSERT_NE(holder, nullptr);
+    const arrays_fixture::NestedStruct* view = holder->nested();
+    ASSERT_NE(view, nullptr);
+
+    // coordinates(): [int:2] read back through CastToArray.
+    ASSERT_NE(view->coordinates(), nullptr);
+    EXPECT_EQ(view->coordinates()->size(), 2u);
+    EXPECT_EQ(view->coordinates()->Get(0), 10);
+    EXPECT_EQ(view->coordinates()->Get(1), 20);
+
+    // status(): scalar enum.
+    EXPECT_EQ(view->status(), arrays_fixture::TestEnum::A);
+
+    // channel_modes(): [TestEnum:2] read back through CastToArrayOfEnum.
+    ASSERT_NE(view->channel_modes(), nullptr);
+    EXPECT_EQ(view->channel_modes()->size(), 2u);
+    EXPECT_EQ(view->channel_modes()->Get(0), arrays_fixture::TestEnum::B);
+    EXPECT_EQ(view->channel_modes()->Get(1), arrays_fixture::TestEnum::C);
+
+    // timestamps(): [int64:2] read back through CastToArray, full 64-bit values preserved.
+    ASSERT_NE(view->timestamps(), nullptr);
+    EXPECT_EQ(view->timestamps()->size(), 2u);
+    EXPECT_EQ(view->timestamps()->Get(0), kFirst64);
+    EXPECT_EQ(view->timestamps()->Get(1), kSecond64);
+}
+
+// Measure #2 (const-correctness): read accessors return const Array<T,N>*, so the
+// aliased buffer cannot be mutated through the view.
+TEST(ArrayCastSafetyGeneratedTest, ReadAccessorsAreConstCorrect)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct read accessor const-correctness");
+    RecordProperty("Description",
+                   "coordinates()/channel_modes()/timestamps() return const Array<T,N>* so the view is read-only");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().coordinates()),
+                               const Array<int32_t, 2>*>::value,
+                  "coordinates() must return const Array<int32_t, 2>*");
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().channel_modes()),
+                               const Array<arrays_fixture::TestEnum, 2>*>::value,
+                  "channel_modes() must return const Array<TestEnum, 2>*");
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().timestamps()),
+                               const Array<int64_t, 2>*>::value,
+                  "timestamps() must return const Array<int64_t, 2>*");
+    SUCCEED();
+}
+
+// Measure #3 (enum type safety): enum arrays route through CastToArrayOfEnum<E>,
+// whose static_assert(sizeof(E) == sizeof(T)) makes a mismatched storage type a
+// compile error. Verify the generated enum's storage matches its array element.
+TEST(ArrayCastSafetyGeneratedTest, EnumArrayStorageTypeIsSizeChecked)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArrayOfEnum size static_assert precondition");
+    RecordProperty("Description", "TestEnum underlying storage equals its int8_t backing array element size");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    static_assert(std::is_same<std::underlying_type<arrays_fixture::TestEnum>::type, int8_t>::value,
+                  "TestEnum must be backed by int8_t");
+    static_assert(sizeof(arrays_fixture::TestEnum) == sizeof(int8_t),
+                  "enum size must match its storage type -- the CastToArrayOfEnum precondition");
+    SUCCEED();
+}
+
+// Measure #4 (write-size safety): the only write path is the constructor taking
+// fixed-extent spans, so a wrong-length write does not compile. Prove it: the
+// struct is constructible from correct-extent spans but not from a wrong extent.
+TEST(ArrayCastSafetyGeneratedTest, WriteExtentIsCompileTimeChecked)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct fixed-extent span constructor");
+    RecordProperty("Description", "constructor binds compile-time extent-2 spans; a wrong-length span is rejected");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    static_assert(std::is_constructible<arrays_fixture::NestedStruct,
+                                        span<const int32_t, 2>,
+                                        arrays_fixture::TestEnum,
+                                        span<const arrays_fixture::TestEnum, 2>,
+                                        span<const int64_t, 2>>::value,
+                  "correct fixed extents must construct");
+    static_assert(!std::is_constructible<arrays_fixture::NestedStruct,
+                                         span<const int32_t, 3>,  // wrong extent for a:[int:2]
+                                         arrays_fixture::TestEnum,
+                                         span<const arrays_fixture::TestEnum, 2>,
+                                         span<const int64_t, 2>>::value,
+                  "a wrong-length span must not construct");
+    static_assert(!std::is_constructible<arrays_fixture::NestedStruct,
+                                         span<const int32_t, 2>,
+                                         arrays_fixture::TestEnum,
+                                         span<const arrays_fixture::TestEnum, 2>,
+                                         span<const int64_t, 1>>::value,  // wrong extent for d:[int64:2]
+                  "a wrong-length span must not construct");
+    SUCCEED();
+}
+
+// Measure #5 (no uninitialized reads): every constructor zero-initializes padding.
+// Construct the struct over two differently poisoned memory regions; because every
+// byte -- data and padding alike -- is written deterministically, the two results
+// must be byte-identical. Leftover garbage in any padding byte would fail this.
+TEST(ArrayCastSafetyGeneratedTest, PaddingIsDeterministicallyZeroInitialized)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct padding zero-initialization");
+    RecordProperty("Description", "construction fully determines all bytes, leaving no uninitialized padding");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    alignas(arrays_fixture::NestedStruct) unsigned char buf_a[sizeof(arrays_fixture::NestedStruct)];
+    alignas(arrays_fixture::NestedStruct) unsigned char buf_b[sizeof(arrays_fixture::NestedStruct)];
+    std::memset(buf_a, 0xAA, sizeof(buf_a));
+    std::memset(buf_b, 0x55, sizeof(buf_b));
+
+    const int32_t a_values[2] = {10, 20};
+    const arrays_fixture::TestEnum c_values[2] = {arrays_fixture::TestEnum::A, arrays_fixture::TestEnum::B};
+    const int64_t d_values[2] = {kFirst64, kSecond64};
+
+    const auto construct = [&](void* where) {
+        new (where) arrays_fixture::NestedStruct(span<const int32_t, 2>(a_values, 2),
+                                                 arrays_fixture::TestEnum::C,
+                                                 span<const arrays_fixture::TestEnum, 2>(c_values, 2),
+                                                 span<const int64_t, 2>(d_values, 2));
+    };
+    construct(buf_a);
+    construct(buf_b);
+
+    EXPECT_EQ(std::memcmp(buf_a, buf_b, sizeof(arrays_fixture::NestedStruct)), 0);
 }
 
 }  // namespace test

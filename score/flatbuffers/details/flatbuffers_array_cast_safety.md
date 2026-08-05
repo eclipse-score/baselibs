@@ -8,71 +8,18 @@ violates MISRA C++:2023 Rule 8.2.5 (use of `reinterpret_cast` to an unrelated cl
 
 This document is the evidence for that claim.
 
-## How the evidence was produced
+## How the evidence is produced
 
-1. Built the compiler from the vendored FlatBuffers dependency:
-   `bazel build @flatbuffers//:flatc --copt=-Wno-error`
-   (`-Wno-error` only because flatc's own sources trip this repo's `-Werror`.)
-2. Ran it on the upstream schema that exercises every fixed-array case —
-   scalar arrays, enum arrays and struct arrays — `tests/arrays_test.fbs`:
-   ```
-   bazel-bin/external/flatbuffers+/flatc --cpp --scoped-enums -o . arrays_test.fbs
-   ```
+The schema [`array_cast_fixture.fbs`](array_cast_fixture.fbs) exercises every
+fixed-array case — a scalar array, an enum scalar, an enum array and a 64-bit
+scalar array. `flatc` compiles it into a `NestedStruct` whose raw C arrays are
+`private` and whose constructor and accessors route through `CastToArray` /
+`CastToArrayOfEnum`. That generated header is the safe, typed API the user sees.
 
-### Schema (`arrays_test.fbs`, excerpt)
-
-```
-namespace MyGame.Example;
-
-enum TestEnum : byte { A, B, C }
-
-struct NestedStruct{
-  a:[int:2];
-  b:TestEnum;
-  c:[TestEnum:2];
-  d:[int64:2];
-}
-```
-
-### Generated C++ (`arrays_test_generated.h`, `NestedStruct`)
-
-```cpp
-FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(8) NestedStruct FLATBUFFERS_FINAL_CLASS {
- private:
-  int32_t a_[2];          // <-- raw C arrays are PRIVATE
-  int8_t  b_;
-  int8_t  c_[2];
-  int8_t  padding0__;  int32_t padding1__;
-  int64_t d_[2];
-
- public:
-  // Constructor: the ONLY write path is CopyFromSpan with a fixed-extent span.
-  NestedStruct(::flatbuffers::span<const int32_t, 2> _a,
-               MyGame::Example::TestEnum _b,
-               ::flatbuffers::span<const MyGame::Example::TestEnum, 2> _c,
-               ::flatbuffers::span<const int64_t, 2> _d)
-      : b_(::flatbuffers::EndianScalar(static_cast<int8_t>(_b))),
-        padding0__(0), padding1__(0) {
-    ::flatbuffers::CastToArray(a_).CopyFromSpan(_a);
-    ::flatbuffers::CastToArrayOfEnum<MyGame::Example::TestEnum>(c_).CopyFromSpan(_c);
-    ::flatbuffers::CastToArray(d_).CopyFromSpan(_d);
-  }
-
-  // Read accessors: internal cast, returning a typed, CONST Array<T,N>*.
-  const ::flatbuffers::Array<int32_t, 2> *a() const {
-    return &::flatbuffers::CastToArray(a_);
-  }
-  MyGame::Example::TestEnum b() const {
-    return static_cast<MyGame::Example::TestEnum>(::flatbuffers::EndianScalar(b_));
-  }
-  const ::flatbuffers::Array<MyGame::Example::TestEnum, 2> *c() const {
-    return &::flatbuffers::CastToArrayOfEnum<MyGame::Example::TestEnum>(c_);
-  }
-  const ::flatbuffers::Array<int64_t, 2> *d() const {
-    return &::flatbuffers::CastToArray(d_);
-  }
-};
-```
+The end-to-end evidence is [`flatbuffers_array_test.cpp`](flatbuffers_array_test.cpp)
+(`ArrayCastSafetyGeneratedTest`), which builds a serialized buffer through
+the generated API and reads every field back through the reinterpret-cast view,
+verifying each measure below.
 
 ## Why this substantiates "measures for correct usage"
 
@@ -98,5 +45,7 @@ The `reinterpret_cast` in `CastToArray` / `CastToArrayOfEnum` is an internal
 implementation detail of `array.h`. The `flatc`-generated header is the safe,
 typed, const-correct API the user sees.
 
-Users must still provide an end-to-end test checking correctness of the
-reinterpret-cast view against their own generated buffers.
+Correctness of the reinterpret-cast view against a generated buffer is
+checked end-to-end by `ArrayCastSafetyGeneratedTest` in
+[`flatbuffers_array_test.cpp`](flatbuffers_array_test.cpp). Users of other
+generated schemas must provide the equivalent test against their own buffers.

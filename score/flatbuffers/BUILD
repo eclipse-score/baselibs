@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("//score/flatbuffers/bazel:codegen.bzl", "generate_cpp")
 
 cc_library(
     name = "flatbufferscpp",
@@ -140,12 +141,19 @@ cc_test(
     ],
 )
 
+generate_cpp(
+    name = "array_cast_fixture_generated",
+    output = "details/array_cast_fixture_generated.h",
+    schema = "details/array_cast_fixture.fbs",
+)
+
 cc_test(
     name = "flatbuffers_cpp_library_test",
     testonly = True,
     srcs = [
         "details/flatbuffers_allocator_test.cpp",
         "details/flatbuffers_array_test.cpp",
+        ":array_cast_fixture_generated",
     ],
     deps = [
         ":flatbufferscpp",

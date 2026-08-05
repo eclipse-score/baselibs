@@ -1,0 +1,31 @@
+// ******************************************************************************
+// Copyright (c) 2026 Contributors to the Eclipse Foundation
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information regarding copyright ownership.
+//
+// This program and the accompanying materials are made available under the
+// terms of the Apache License Version 2.0 which is available at
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// SPDX-License-Identifier: Apache-2.0
+// ******************************************************************************
+
+// Fixture schema for the end-to-end test demanded by flatbuffers_array_cast_safety.md
+namespace score.flatbuffers.test.arrays_fixture;
+
+enum TestEnum : byte { A, B, C }
+
+struct NestedStruct {
+  coordinates:[int:2];
+  status:TestEnum;
+  channel_modes:[TestEnum:2];
+  timestamps:[int64:2];
+}
+
+// root table
+table ArraysHolder {
+  nested:NestedStruct;
+}
+
+root_type ArraysHolder;
