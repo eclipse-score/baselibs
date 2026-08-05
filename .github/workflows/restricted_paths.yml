@@ -35,9 +35,6 @@ jobs:
           list-files: json
           filters: |
             restricted:
-              - 'score/json/!(*parser*|*serializer*)'
-              - 'score/json/!(internal|benchmark)/**/*'
-              - 'score/json/internal/!(parser|model)/**'
               - 'score/language/futurecpp/**'
               - 'score/language/safecpp/test/**'
               - 'score/mw/**'
