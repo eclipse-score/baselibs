@@ -95,7 +95,18 @@ pub mod thread_safety {
 
     /// Marker for a single-threaded resource that must not cross thread
     /// boundaries.
-    pub struct Local;
+    /// The PhantomData that it inherits from is a way to tell the compiler
+    /// not to derive neither `Send` nor `Sync` for this type.
+    /// Although this is not strictly needed for MemoryResource's case,
+    /// as it's by definition not `Send` nor `Sync` as it carries a mutable
+    /// pointer, other types _could_ implement overloads with `Local` and
+    /// those could have the undesired automatic `Send + Sync` derivation.
+    /// AI detected this possibility on its review, and I decided to follow
+    /// its suggestion to make it really explicit that this struct shall
+    /// never be `Send + Sync`. I cannot use use negative implementation of
+    /// traits because that feature is currently only available on unstable,
+    /// therefore the option of using a compile-time only marker was made.
+    pub struct Local(core::marker::PhantomData<std::rc::Rc<()>>);
 
     /// Sealed marker trait implemented only by [`Shared`] and [`Local`].
     pub trait ThreadSafety: sealed::Sealed {}
