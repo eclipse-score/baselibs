@@ -20,6 +20,7 @@ rust_library(
     visibility = ["//visibility:public"],
     deps = [
         "//score/log_rust/score_log",
+        "//score/pal",
     ],
 )
 
@@ -29,5 +30,21 @@ rust_test(
     tags = [
         "unit_tests",
         "ut",
+    ],
+)
+
+rust_test(
+    name = "loom_tests",
+    crate = "allocator",
+    rustc_flags = [
+        "--cfg",
+        "loom",
+    ],
+    tags = [
+        "loom",
+    ],
+    target_compatible_with = ["@platforms//os:linux"],
+    deps = [
+        "@score_crates//:loom",
     ],
 )

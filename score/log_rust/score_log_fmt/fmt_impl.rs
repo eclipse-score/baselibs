@@ -259,6 +259,30 @@ impl<A: ScoreDebug, B: ScoreDebug, C: ScoreDebug, D: ScoreDebug, E: ScoreDebug> 
     }
 }
 
+impl ScoreDebug for core::alloc::LayoutError {
+    fn fmt(&self, f: Writer, spec: &FormatSpec) -> FmtResult {
+        DebugStruct::new(f, spec, "LayoutError").finish()
+    }
+}
+
+impl ScoreDebug for core::alloc::Layout {
+    fn fmt(&self, f: Writer, spec: &FormatSpec) -> FmtResult {
+        // `align` field format must be recreated, as `Debug` is using non-stable `Alignment`.
+        let align_base10 = self.align();
+        let align_log2 = align_base10.trailing_zeros();
+        let align_string = format!("{:?} (1 << {:?})", align_base10, align_log2);
+
+        // Make a custom format spec to hide "".
+        let mut spec_clone = spec.clone();
+        let align_string_spec = spec_clone.display_hint(DisplayHint::NoHint);
+
+        DebugStruct::new(f, spec, "Layout")
+            .field("size", &self.size())
+            .field_with("align", |f| align_string.fmt(f, align_string_spec))
+            .finish()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::test_utils::common_test_debug;
@@ -440,5 +464,17 @@ mod tests {
             vec![987, 654],
         ));
         common_test_debug(("a", "b", (r"0x64", 10, false), "0.1", "true"));
+    }
+
+    #[test]
+    fn test_layout_error_debug() {
+        let layout_error = core::alloc::Layout::from_size_align(1, 3).unwrap_err();
+        common_test_debug(layout_error);
+    }
+
+    #[test]
+    fn test_layout_debug() {
+        let layout = core::alloc::Layout::from_size_align(123, 4).unwrap();
+        common_test_debug(layout);
     }
 }
