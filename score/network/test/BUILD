@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
 
 test_suite(
     name = "unit_tests",
@@ -22,17 +21,6 @@ test_suite(
         ":udp_socket_test",
     ],
     visibility = ["@score_baselibs//score/network:__pkg__"],
-)
-
-py_unittest_qnx_test(
-    name = "unit_tests_qnx",
-    test_cases = [
-        ":ipv4_address_test",
-        ":netutils_qnx_test",
-        ":udp_socket_test",
-        ":vlan_test",
-    ],
-    visibility = ["//visibility:public"],
 )
 
 cc_test(

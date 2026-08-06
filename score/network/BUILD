@@ -12,20 +12,12 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
 
 test_suite(
     name = "unit_tests",
     tests = [
         "@score_baselibs//score/network/test:unit_tests",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
-)
-
-py_unittest_qnx_test(
-    name = "unit_tests_qnx",
-    tags = ["manual"],
-    test_suites = ["@score_baselibs//score/network/test:unit_tests_qnx"],
     visibility = ["//platform/aas/lib:__pkg__"],
 )
 
