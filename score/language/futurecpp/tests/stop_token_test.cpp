@@ -841,7 +841,9 @@ private:
     std::promise<void> token_waiter_is_running_{};
     std::condition_variable token_waiter_has_finished_cv_{};
     std::condition_variable token_waiter_shall_continue_cv_{};
+    // NOLINTNEXTLINE(readability-identifier-naming) keep `_` to make clear it is a member variable
     const std::uint64_t max_num_iterations_;
+    // NOLINTNEXTLINE(readability-identifier-naming) keep `_` to make clear it is a member variable
     const score::cpp::stop_source& stop_source_;
     std::mutex& outer_mutex_;
     score::cpp::jthread the_thread_;
@@ -931,6 +933,7 @@ private:
     bool stop_requester_shall_continue_{false};
     std::condition_variable stop_requester_has_finished_cv_{};
     std::condition_variable stop_requester_shall_continue_cv_{};
+    // NOLINTNEXTLINE(readability-identifier-naming) keep `_` to make clear it is a member variable
     const std::uint64_t max_num_iterations_;
     score::cpp::stop_source& stop_source_;
     token_waiter& token_waiter_;

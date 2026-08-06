@@ -119,9 +119,6 @@ TEST(jthread_test, construct_with_lambda)
     EXPECT_TRUE(called);
 }
 
-// The stack size attribute determines the minimum size (in bytes) that will be allocated for threads created using the
-// thread attributes object attr.
-// https://man7.org/linux/man-pages/man3/pthread_attr_setstacksize.3.html#DESCRIPTION
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#8173756
 TEST(jthread_test, construct_with_stack_size)
@@ -129,40 +126,26 @@ TEST(jthread_test, construct_with_stack_size)
 #if defined(__QNX__)
     GTEST_SKIP() << "test relies on non-available QNX functions";
 #else
-    constexpr score::cpp::jthread::stack_size_hint expected_stack_size{1'024 * 1'024};
-    score::cpp::jthread t{expected_stack_size,
-                   [expected_stack_size]
-                   {
-                       pthread_attr_t attr;
-                       EXPECT_EQ(pthread_getattr_np(pthread_self(), &attr), 0); // not available in QNX
-                       std::size_t actual_stack_size{0};
-                       EXPECT_EQ(pthread_attr_getstacksize(&attr, &actual_stack_size), 0);
-                       EXPECT_EQ(pthread_attr_destroy(&attr), 0);
+    score::cpp::jthread t{score::cpp::jthread::stack_size_hint{16 * 1'024 * 1'024}, [] {}};
 
-                       EXPECT_GE(actual_stack_size, expected_stack_size.value());
-                   }};
+    ::pthread_attr_t attr;
+    EXPECT_EQ(::pthread_getattr_np(t.native_handle(), &attr), 0); // not available in QNX
+    std::size_t stack_size{0};
+    EXPECT_EQ(::pthread_attr_getstacksize(&attr, &stack_size), 0);
+    EXPECT_EQ(::pthread_attr_destroy(&attr), 0);
+
+    // there are 2 ways to set thread attributes
+    //  1. at thread creation time
+    //  2. after thread is created
+    //
+    // test outside of thread to ensure stack size is set at 1.
+    EXPECT_GE(stack_size, 16 * 1'024 * 1'024);
 #endif
 }
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#8173756
-TEST(jthread_test, construct_with_stack_size_and_stop_token)
-{
-    constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
-    score::cpp::jthread t{stack_size,
-                   [](const score::cpp::stop_token& stop_token)
-                   {
-                       while (!stop_token.stop_requested())
-                       {
-                           std::this_thread::yield();
-                       }
-                       EXPECT_TRUE(stop_token.stop_requested());
-                   }};
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#8173756
-TEST(jthread_test, construct_with_max_stack_size_fails)
+TEST(jthread_test, construct_with_huge_stack_size_fails)
 {
     constexpr score::cpp::jthread::stack_size_hint max_stack_size{std::numeric_limits<std::size_t>::max()};
     EXPECT_THROW(score::cpp::jthread(max_stack_size, [] {}), std::system_error);
@@ -173,10 +156,16 @@ TEST(jthread_test, construct_with_max_stack_size_fails)
 /// @requirement CB-#8173756
 TEST(jthread_test, construct_with_name)
 {
+    // construct a name which exceed the maximum thread name length to also test the cut off
     const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
     score::cpp::jthread t{score::cpp::jthread::name_hint{name},
                    []
                    {
+                       // there are 2 ways to set thread attributes
+                       //  1. at thread creation time
+                       //  2. after thread is created
+                       //
+                       // test inside thread because name can only be set at 2.
                        EXPECT_EQ(get_this_thread_name(),
                                  std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
                    }};
@@ -184,45 +173,79 @@ TEST(jthread_test, construct_with_name)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#8173756
-TEST(jthread_test, construct_with_name_and_stop_token)
+TEST(jthread_test, construct_with_priority)
 {
-    const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{score::cpp::jthread::name_hint{name},
-                   [](const score::cpp::stop_token&)
-                   {
-                       EXPECT_EQ(get_this_thread_name(),
-                                 std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
-                   }};
+    // on Linux and QNX SCHED_FIFO allows to modify the priority
+    // SCHED_FIFO needs special rights (for example on Linux)
+
+    const ::sched_param priority{23};
+    const int status{::pthread_setschedparam(::pthread_self(), SCHED_FIFO, &priority)};
+    if (status == EPERM)
+    {
+        GTEST_SKIP() << "insufficient rights to set parameters";
+    }
+    ASSERT_EQ(status, 0);
+
+    score::cpp::jthread t{score::cpp::jthread::priority_hint{42}, []() {}};
+
+    int policy{};
+    ::sched_param param{};
+    EXPECT_EQ(::pthread_getschedparam(t.native_handle(), &policy, &param), 0);
+    EXPECT_EQ(policy, SCHED_FIFO);
+    // there are 2 ways to set thread attributes
+    //  1. at thread creation time
+    //  2. after thread is created
+    //
+    // test outside of thread to ensure priority is set at 1.
+    EXPECT_EQ(param.sched_priority, 42);
 }
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#8173756
-TEST(jthread_test, construct_with_stack_size_and_name)
+TEST(jthread_test, construct_with_invalid_priority_fails)
 {
-    constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
-    const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{stack_size,
-                   score::cpp::jthread::name_hint{name},
-                   []
-                   {
-                       EXPECT_EQ(get_this_thread_name(),
-                                 std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
-                   }};
+    // ensure that chosen priority will cause a failure
+    ASSERT_LT(::sched_get_priority_max(SCHED_OTHER), std::numeric_limits<int>::max());
+    ASSERT_LT(::sched_get_priority_max(SCHED_RR), std::numeric_limits<int>::max());
+    ASSERT_LT(::sched_get_priority_max(SCHED_FIFO), std::numeric_limits<int>::max());
+
+    EXPECT_THROW(score::cpp::jthread(score::cpp::jthread::priority_hint{std::numeric_limits<int>::max()}, [] {}), std::system_error);
 }
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#8173756
-TEST(jthread_test, construct_with_stack_size_and_name_and_stop_token)
+TEST(jthread_test, construct_with_stack_size_and_priority_and_name)
 {
-    constexpr score::cpp::jthread::stack_size_hint stack_size{1'024 * 1'024};
-    const std::string name(score::cpp::detail::thread_name_hint::get_max_thread_name_length(), 'a');
-    score::cpp::jthread t{stack_size,
-                   score::cpp::jthread::name_hint{name},
-                   [](const score::cpp::stop_token&)
-                   {
-                       EXPECT_EQ(get_this_thread_name(),
-                                 std::string(score::cpp::detail::thread_name_hint::get_max_thread_name_length() - 1U, 'a'));
-                   }};
+    // on Linux and QNX SCHED_FIFO allows to modify the priority
+    // SCHED_FIFO needs special rights (for example on Linux)
+
+    const ::sched_param priority{23};
+    const int status{::pthread_setschedparam(::pthread_self(), SCHED_FIFO, &priority)};
+    if (status == EPERM)
+    {
+        GTEST_SKIP() << "insufficient rights to set parameters";
+    }
+    ASSERT_TRUE(status == 0);
+
+    score::cpp::jthread t{score::cpp::jthread::stack_size_hint{16 * 1'024 * 1'024},
+                   score::cpp::jthread::priority_hint{42},
+                   score::cpp::jthread::name_hint{"foo"},
+                   [] { EXPECT_EQ(get_this_thread_name(), "foo"); }};
+
+#if !defined(__QNX__)
+    ::pthread_attr_t attr;
+    EXPECT_EQ(::pthread_getattr_np(t.native_handle(), &attr), 0); // not available in QNX
+    std::size_t stack_size{0};
+    EXPECT_EQ(::pthread_attr_getstacksize(&attr, &stack_size), 0);
+    EXPECT_EQ(::pthread_attr_destroy(&attr), 0);
+    EXPECT_GE(stack_size, 16 * 1'024 * 1'024);
+#endif
+
+    int policy{};
+    ::sched_param param{};
+    EXPECT_EQ(::pthread_getschedparam(t.native_handle(), &policy, &param), 0);
+    EXPECT_EQ(policy, SCHED_FIFO);
+    EXPECT_EQ(param.sched_priority, 42);
 }
 
 /// @testmethods TM_REQUIREMENT

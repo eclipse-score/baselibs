@@ -28,6 +28,4 @@
 #include <score/private/memory_resource/resource_adaptor.hpp>             // IWYU pragma: export
 #include <score/private/memory_resource/unsynchronized_pool_resource.hpp> // IWYU pragma: export
 
-#include <score/algorithm.hpp> // to be removed but removing them may break downstream
-
 #endif // SCORE_LANGUAGE_FUTURECPP_MEMORY_RESOURCE_HPP

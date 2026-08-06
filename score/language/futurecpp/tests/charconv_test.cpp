@@ -36,10 +36,10 @@ protected:
     void check(const T value, score::cpp::string_view expected_str) const
     {
         std::array<char, 32> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), value, 16)};
+        const score::cpp::to_chars_result result{score::cpp::to_chars(str.data(), str.data() + str.size(), value, 16)};
         ASSERT_EQ(result.ec, std::errc{});
-        const score::cpp::string_view result_str{str.data(),
-                                          static_cast<score::cpp::string_view::size_type>(result.ptr - str.data())};
+        const auto length{static_cast<score::cpp::string_view::size_type>(result.ptr - str.data())};
+        const score::cpp::string_view result_str{str.data(), length};
 
         EXPECT_EQ(result_str, expected_str);
     }
@@ -69,32 +69,6 @@ INSTANTIATE_TEST_SUITE_P(Int8ToHexStringCases,
 /// @requirement CB-#7990752
 TEST_P(to_chars_base16_int8_fixture, CorrectConversionTest) { check(std::get<0>(GetParam()), std::get<1>(GetParam())); }
 
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_int8, InsufficientBufferSize)
-{
-    {
-        std::array<char, 3> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int8_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 2> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int8_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-    {
-        std::array<char, 2> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int8_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 1> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int8_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-}
-
 class to_chars_base16_uint8_fixture : public to_chars_base16<std::uint8_t>
 {
 };
@@ -119,22 +93,6 @@ INSTANTIATE_TEST_SUITE_P(UInt8ToHexStringCases,
 TEST_P(to_chars_base16_uint8_fixture, CorrectConversionTest)
 {
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_uint8, InsufficientBufferSize)
-{
-    {
-        std::array<char, 2> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint8_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 1> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint8_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
 }
 
 class to_chars_base16_int16_fixture : public to_chars_base16<std::int16_t>
@@ -171,32 +129,6 @@ TEST_P(to_chars_base16_int16_fixture, CorrectConversionTest)
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
 }
 
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_int16, InsufficientBufferSize)
-{
-    {
-        std::array<char, 5> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int16_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 4> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int16_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-    {
-        std::array<char, 4> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int16_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 3> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int16_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-}
-
 class to_chars_base16_uint16_fixture : public to_chars_base16<std::uint16_t>
 {
 };
@@ -224,22 +156,6 @@ INSTANTIATE_TEST_SUITE_P(UInt16ToHexStringCases,
 TEST_P(to_chars_base16_uint16_fixture, CorrectConversionTest)
 {
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_uint16, InsufficientBufferSize)
-{
-    {
-        std::array<char, 4> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint16_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 3> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint16_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
 }
 
 class to_chars_base16_int32_fixture : public to_chars_base16<std::int32_t>
@@ -284,32 +200,6 @@ TEST_P(to_chars_base16_int32_fixture, CorrectConversionTest)
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
 }
 
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_int32, InsufficientBufferSize)
-{
-    {
-        std::array<char, 9> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int32_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 8> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int32_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-    {
-        std::array<char, 8> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int32_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 7> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int32_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-}
-
 class to_chars_base16_uint32_fixture : public to_chars_base16<std::uint32_t>
 {
 };
@@ -341,22 +231,6 @@ INSTANTIATE_TEST_SUITE_P(UInt32ToHexStringCases,
 TEST_P(to_chars_base16_uint32_fixture, CorrectConversionTest)
 {
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
-}
-
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_uint32, InsufficientBufferSize)
-{
-    {
-        std::array<char, 8> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint32_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 7> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint32_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
 }
 
 class to_chars_base16_int64_fixture : public to_chars_base16<std::int64_t>
@@ -417,32 +291,6 @@ TEST_P(to_chars_base16_int64_fixture, CorrectConversionTest)
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
 }
 
-/// @testmethods TM_REQUIREMENT
-/// @requirement CB-#7990752
-TEST(to_chars_base16_int64, InsufficientBufferSize)
-{
-    {
-        std::array<char, 17> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int64_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 16> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int64_t{-1}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-    {
-        std::array<char, 16> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int64_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc{});
-    }
-    {
-        std::array<char, 15> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::int64_t{}, 16)};
-        EXPECT_EQ(result.ec, std::errc::value_too_large);
-    }
-}
-
 class to_chars_base16_uint64_fixture : public to_chars_base16<std::uint64_t>
 {
 };
@@ -484,19 +332,48 @@ TEST_P(to_chars_base16_uint64_fixture, CorrectConversionTest)
     check(std::get<0>(GetParam()), std::get<1>(GetParam()));
 }
 
+template <typename T>
+class to_chars_base16_typed : public testing::Test
+{
+};
+
+using TestTypes = ::testing::Types<std::uint8_t,
+                                   std::int8_t,
+                                   std::uint16_t,
+                                   std::int16_t,
+                                   std::uint32_t,
+                                   std::int32_t,
+                                   std::uint64_t,
+                                   std::int64_t>;
+TYPED_TEST_SUITE(to_chars_base16_typed, TestTypes, /*unused*/);
+
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#7990752
-TEST(to_chars_base16_uint64, InsufficientBufferSize)
+TYPED_TEST(to_chars_base16_typed, InsufficientBufferSize)
 {
     {
-        std::array<char, 16> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint64_t{}, 16)};
+        std::array<char, 2> str;
+        const score::cpp::to_chars_result result{score::cpp::to_chars(str.data(), str.data() + str.size(), TypeParam{16}, 16)};
         EXPECT_EQ(result.ec, std::errc{});
+        EXPECT_EQ(2, result.ptr - str.data());
     }
     {
-        std::array<char, 15> str;
-        const score::cpp::to_chars_result result{score::cpp::to_chars(str.begin(), str.end(), std::uint64_t{}, 16)};
+        std::array<char, 1> str;
+        const score::cpp::to_chars_result result{score::cpp::to_chars(str.data(), str.data() + str.size(), TypeParam{16}, 16)};
         EXPECT_EQ(result.ec, std::errc::value_too_large);
+        EXPECT_EQ(result.ptr, str.data() + str.size());
+    }
+    {
+        std::array<char, 1> str;
+        const score::cpp::to_chars_result result{score::cpp::to_chars(str.data(), str.data() + str.size(), TypeParam{}, 16)};
+        EXPECT_EQ(result.ec, std::errc{});
+        EXPECT_EQ(1, result.ptr - str.data());
+    }
+    {
+        std::array<char, 0> str;
+        const score::cpp::to_chars_result result{score::cpp::to_chars(str.data(), str.data() + str.size(), TypeParam{}, 16)};
+        EXPECT_EQ(result.ec, std::errc::value_too_large);
+        EXPECT_EQ(result.ptr, str.data() + str.size());
     }
 }
 

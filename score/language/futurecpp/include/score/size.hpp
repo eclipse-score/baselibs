@@ -24,7 +24,6 @@
 #include <score/private/iterator/size.hpp> // IWYU pragma: export
 
 #include <cstddef>
-#include <limits> // to be removed but removing them may break downstream
 
 namespace score::cpp
 {

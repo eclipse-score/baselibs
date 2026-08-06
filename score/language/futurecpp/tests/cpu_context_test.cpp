@@ -33,6 +33,29 @@ namespace
 {
 
 /// @testmethods TM_REQUIREMENT
+/// @requirement CB-#39890557
+TEST(cpu_context_test, constructor_GivenValidAttributes_ExpectConstructible)
+{
+    static_assert(std::is_constructible_v<cpu_context, pmr::polymorphic_allocator<>, cpu_context::worker_count>);
+    static_assert(std::is_constructible_v<cpu_context, cpu_context::worker_count>);
+
+    static_assert(std::is_constructible_v<cpu_context,
+                                          pmr::polymorphic_allocator<>,
+                                          cpu_context::worker_count,
+                                          cpu_context::stack_size_hint,
+                                          cpu_context::priority_hint,
+                                          cpu_context::name_hint>);
+    static_assert(std::is_constructible_v<cpu_context,
+                                          cpu_context::worker_count,
+                                          cpu_context::stack_size_hint,
+                                          cpu_context::priority_hint,
+                                          cpu_context::name_hint>);
+
+    static_assert(!std::is_constructible_v<cpu_context, pmr::polymorphic_allocator<>, cpu_context::worker_count, int>);
+    static_assert(!std::is_constructible_v<cpu_context, cpu_context::worker_count, int>);
+}
+
+/// @testmethods TM_REQUIREMENT
 /// @requirement CB-#39890557, CB-#40946023
 TEST(cpu_context_test, equality_GivenCpuContext_ExpectEqual)
 {

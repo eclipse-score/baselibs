@@ -165,6 +165,7 @@ cc_library(
         "include/score/private/thread/thread.hpp",
         "include/score/private/thread/thread_id.hpp",
         "include/score/private/thread/thread_name_hint.hpp",
+        "include/score/private/thread/thread_priority_hint.hpp",
         "include/score/private/thread/thread_stack_size_hint.hpp",
         "include/score/private/type_traits/conjunction.hpp",
         "include/score/private/type_traits/has_operator_indirection.hpp",

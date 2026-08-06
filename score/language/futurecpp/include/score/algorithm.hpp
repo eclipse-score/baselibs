@@ -28,9 +28,4 @@
 #include <score/private/algorithm/map_to.hpp>         // IWYU pragma: export
 #include <score/private/algorithm/transform_if.hpp>   // IWYU pragma: export
 
-#include <type_traits>    // to be removed but removing them may break downstream
-#include <score/float.hpp>  // to be removed but removing them may break downstream
-#include <score/math.hpp>   // to be removed but removing them may break downstream
-#include <score/narrow.hpp> // to be removed but removing them may break downstream
-
 #endif // SCORE_LANGUAGE_FUTURECPP_ALGORITHM_HPP
