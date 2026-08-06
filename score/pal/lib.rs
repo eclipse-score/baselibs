@@ -27,6 +27,7 @@ pub type c_long = core::ffi::c_long;
 pub type c_ulong = core::ffi::c_ulong;
 pub type size_t = usize;
 pub type c_void = core::ffi::c_void;
+pub type off_t = i64;
 pub type pid_t = i32;
 pub type pthread_t = c_ulong;
 
@@ -61,6 +62,8 @@ pub struct sched_param {
 }
 
 extern "C" {
+    pub fn mmap(addr: *mut c_void, len: size_t, prot: c_int, flags: c_int, fd: c_int, offset: off_t) -> *mut c_void;
+    pub fn munmap(addr: *mut c_void, len: size_t) -> c_int;
     pub fn sysconf(__name: c_int) -> c_long;
     pub fn pthread_self() -> pthread_t;
     pub fn pthread_join(native: pthread_t, value: *mut *mut c_void) -> c_int;
@@ -98,3 +101,32 @@ pub const PTHREAD_INHERIT_SCHED: c_int = 0;
 pub const PTHREAD_EXPLICIT_SCHED: c_int = 1;
 #[cfg(target_os = "nto")]
 pub const PTHREAD_EXPLICIT_SCHED: c_int = 2;
+
+#[cfg(target_os = "linux")]
+pub const _SC_PAGESIZE: c_int = 30;
+#[cfg(target_os = "nto")]
+pub const _SC_PAGESIZE: c_int = 11;
+
+#[cfg(target_os = "linux")]
+pub const PROT_NONE: c_int = 0;
+#[cfg(target_os = "linux")]
+pub const PROT_READ: c_int = 1;
+#[cfg(target_os = "linux")]
+pub const PROT_WRITE: c_int = 2;
+#[cfg(target_os = "linux")]
+pub const PROT_EXEC: c_int = 4;
+
+#[cfg(target_os = "nto")]
+pub const PROT_NONE: c_int = 0x00000000;
+#[cfg(target_os = "nto")]
+pub const PROT_READ: c_int = 0x00000100;
+#[cfg(target_os = "nto")]
+pub const PROT_WRITE: c_int = 0x00000200;
+#[cfg(target_os = "nto")]
+pub const PROT_EXEC: c_int = 0x00000400;
+
+pub const MAP_PRIVATE: c_int = 0x0002;
+#[cfg(target_os = "linux")]
+pub const MAP_ANONYMOUS: c_int = 0x0020;
+#[cfg(target_os = "nto")]
+pub const MAP_ANONYMOUS: c_int = 0x00080000;
