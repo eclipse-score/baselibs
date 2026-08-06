@@ -25,6 +25,7 @@
 #include "score/expected.hpp"
 
 #include <atomic>
+#include <memory>
 #include <mutex>
 #include <vector>
 
@@ -79,8 +80,11 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         }
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // The existing object is destroyed first: reusing the storage of a live object without ending its
+        // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+        std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_) score::Result<Value>{std::move(value)};
+        static_cast<void>(::new (&value_) score::Result<Value>{std::move(value)});
 
         MakeReady();
         TriggerContinuations();
@@ -99,8 +103,11 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         }
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // The existing object is destroyed first: reusing the storage of a live object without ending its
+        // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+        std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_) score::Result<Value>{value};
+        static_cast<void>(::new (&value_) score::Result<Value>{value});
 
         MakeReady();
         TriggerContinuations();
@@ -115,8 +122,11 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         }
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // The existing object is destroyed first: reusing the storage of a live object without ending its
+        // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+        std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_) score::Result<Value>{MakeUnexpected<Value>(error)};
+        static_cast<void>(::new (&value_) score::Result<Value>{MakeUnexpected<Value>(error)});
 
         MakeReady();
         TriggerContinuations();
@@ -203,8 +213,11 @@ class InterruptibleState<Value&> final : public score::concurrency::detail::Type
         }
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // The existing object is destroyed first: reusing the storage of a live object without ending its
+        // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+        std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_) score::Result<std::reference_wrapper<Value>>{std::ref(value)};
+        static_cast<void>(::new (&value_) score::Result<std::reference_wrapper<Value>>{std::ref(value)});
 
         MakeReady();
         TriggerContinuations();
@@ -219,9 +232,12 @@ class InterruptibleState<Value&> final : public score::concurrency::detail::Type
         }
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // The existing object is destroyed first: reusing the storage of a live object without ending its
+        // lifetime is undefined behaviour as soon as score::Result is not trivially destructible.
+        std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_)
-            score::Result<std::reference_wrapper<Value>>{MakeUnexpected<std::reference_wrapper<Value>>(error)};
+        static_cast<void>(::new (&value_) score::Result<std::reference_wrapper<Value>>{
+            MakeUnexpected<std::reference_wrapper<Value>>(error)});
 
         MakeReady();
         TriggerContinuations();
