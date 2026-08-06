@@ -157,7 +157,7 @@ bool verify_rust_result_as_cpp_int32(const void* rust_result,
 // Print memory layout for debugging
 void print_score_result_memory_layout()
 {
-    printf("\n=== BMW Result Memory Layout Analysis ===\n");
+    printf("\n=== SCORE Result Memory Layout Analysis ===\n");
 
     // Create instances to analyze
     score::Result<int32_t> success_result(42);
