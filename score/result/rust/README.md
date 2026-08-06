@@ -1,7 +1,7 @@
 # Result FFI Bindings for Rust
 
 This directory contains Rust FFI bindings that enable seamless interoperability
-between C++ and Rust components using BMW's result types.
+between C++ and Rust components using SCORE's result types.
 
 ## Overview
 
@@ -27,7 +27,7 @@ The Rust bindings provide type-safe, zero-cost abstractions for working with:
 
 ## Calling Sequence
 
-A detailed sequence diagram illustrating the complete FFI flow is available in [sequence.puml](plantuml/sequence.puml), and depicted bellow:
+A detailed sequence diagram illustrating the complete FFI flow is available in [sequence.puml](plantuml/sequence.puml), and depicted below:
 
 ![Result C++ to Rust Integration](plantuml/Result_CppToRust_Integration.svg)
 
@@ -61,19 +61,13 @@ pub fn display_error(error: &ffi::Error) {
 
 ```bash
 # Basic Result example
-bazel run --config=spp_host_gcc //platform/aas/lib/result/rust:result_rs_example
-
-# SafeResult integration
-bazel run --config=spp_host_gcc //platform/aas/lib/result/rust:safe_result_integration_example
-
-# Type mismatch detection
-bazel run --config=spp_host_gcc //platform/aas/lib/result/rust:safe_result_type_mismatch_example
+bazel run //score/result/rust:result_rs_example
 ```
 
 ### Run Tests
 
 ```bash
-bazel test --config=spp_host_gcc //platform/aas/lib/result/rust:...
+bazel test //score/result/rust:...
 ```
 
 ## Safety Considerations
