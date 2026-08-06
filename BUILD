@@ -117,7 +117,7 @@ rust_coverage_report(
         "bl-x86_64-linux",
         "ferrocene-coverage",
     ],
-    query = 'kind("rust_test", //score/...) except //score/log_rust/score_log_fmt_macro:tests',
+    query = 'kind("rust_test", //score/...) except //score/mw/log/rust/score_log_fmt_macro:tests',
     visibility = ["//visibility:public"],
 )
 

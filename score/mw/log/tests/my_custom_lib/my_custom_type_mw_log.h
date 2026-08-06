@@ -14,7 +14,7 @@
 #define SCORE_MW_LOG_TEST_MY_CUSTOM_LIB_MY_CUSTOM_TYPE_MW_LOG_H
 
 #include "score/mw/log/log_stream.h"
-#include "score/mw/log/test/my_custom_lib/my_custom_type.h"
+#include "score/mw/log/tests/my_custom_lib/my_custom_type.h"
 
 namespace my
 {

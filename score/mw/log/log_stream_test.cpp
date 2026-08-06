@@ -15,7 +15,7 @@
 #include "score/mw/log/log_stream_factory.h"
 #include "score/mw/log/recorder_mock.h"
 #include "score/mw/log/runtime.h"
-#include "score/mw/log/test/my_custom_lib/my_custom_type_mw_log.h"
+#include "score/mw/log/tests/my_custom_lib/my_custom_type_mw_log.h"
 
 #include "gtest/gtest.h"
 
