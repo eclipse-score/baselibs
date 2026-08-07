@@ -75,4 +75,4 @@ jobs:
       contents: read
     steps:
       - name: Prune obsolete Bazel caches
-        uses: eclipse-score/cicd-actions/prune-cache@af1be61755b13c1f33b6c250080dc6ac025012f1 # setup-bazel-cache/v0.0.1
+        uses: eclipse-score/cicd-actions/prune-cache@8e69f47b45778afd3b0d069c0456184c4ceeffe7 # prune-cache/v0.0.0
