@@ -1,0 +1,78 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Cache maintenance
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  repository_cache_maintenance:
+    permissions:
+      actions: write
+      contents: read
+    secrets:
+      score-qnx-license: ${{ secrets.SCORE_QNX_LICENSE }}
+      score-qnx-user: ${{ secrets.SCORE_QNX_USER }}
+      score-qnx-password: ${{ secrets.SCORE_QNX_PASSWORD }}
+    uses: eclipse-score/cicd-workflows/.github/workflows/cache-maintenance.yml@cache-fix
+    with:
+      variants: |
+        --config=bl-x86_64-linux //...
+        --config=bl-aarch64-linux //...
+        --config=bl-x86_64-qnx //score/...
+        --config=bl-aarch64-qnx //score/...
+        --config=clang_tidy //...
+        --config=bl-x86_64-linux --config=asan_ubsan_lsan //score/...
+  warmup-build-linux:
+    needs: repository_cache_maintenance
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/build_linux.yml
+  warmup-build-qnx:
+    needs: repository_cache_maintenance
+    if: ${{ github.event_name == 'push' }}
+    permissions:
+      contents: read
+      pull-requests: read
+    secrets: inherit
+    uses: ./.github/workflows/build_qnx.yml
+  warmup-coverage-report:
+    needs: repository_cache_maintenance
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/coverage_report.yml
+  warmup-lint:
+    needs: repository_cache_maintenance
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/lint.yml
+  warmup-sanitizers:
+    needs: repository_cache_maintenance
+    if: ${{ github.event_name == 'push' }}
+    uses: ./.github/workflows/sanitizers_linux.yml
+  delete_old_caches:
+    needs:
+      - warmup-build-linux
+      - warmup-build-qnx
+      - warmup-coverage-report
+      - warmup-lint
+      - warmup-sanitizers
+    if: ${{ !cancelled() && github.event_name == 'push' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Prune obsolete Bazel caches
+        uses: eclipse-score/cicd-actions/prune-cache@af1be61755b13c1f33b6c250080dc6ac025012f1 # setup-bazel-cache/v0.0.1
