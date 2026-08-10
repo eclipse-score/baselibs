@@ -254,7 +254,7 @@ score::os::Mqueue& score::os::Mqueue::instance() noexcept
         // type relationship. Despite AUTOSAR A5-2-4 discouraging reinterpret_cast, it is necessary in this specific
         // scenario.
         // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<impl::MqueueImpl&>(StaticDestructionGuard<impl::MqueueImpl>::GetStorage()));
+        reinterpret_cast<impl::MqueueImpl&>(utils::StaticDestructionGuard<impl::MqueueImpl>::GetStorage()));
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
 }
 

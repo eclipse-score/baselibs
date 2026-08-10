@@ -16,7 +16,7 @@
 #include "score/bitmanipulation/bitmask_operators.h"
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
-#include "score/os/static_destruction_guard.h"
+#include "score/utils/static_destruction_guard.h"
 
 #include "score/expected.hpp"
 #include "score/memory.hpp"
@@ -167,7 +167,7 @@ class MqueueImpl final : public Mqueue
 // coverity[autosar_cpp14_a3_1_1_violation]
 // coverity[autosar_cpp14_a3_3_2_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-static StaticDestructionGuard<MqueueImpl> nifty_counter_mqueue;
+static utils::StaticDestructionGuard<MqueueImpl> nifty_counter_mqueue;
 
 }  // namespace impl
 }  // namespace os

@@ -238,8 +238,8 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 
@@ -314,8 +314,8 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 
@@ -645,13 +645,6 @@ cc_library(
 )
 
 cc_library(
-    name = "static_destruction_guard",
-    hdrs = ["static_destruction_guard.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-)
-
-cc_library(
     name = "mman",
     srcs = ["mman.cpp"],
     hdrs = ["mman.h"],
@@ -663,8 +656,8 @@ cc_library(
         ":fcntl",
         ":object_seam",
         ":rt",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 

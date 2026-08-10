@@ -10,15 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_OS_STATIC_DESTRUCTION_GUARD_H
-#define SCORE_LIB_OS_STATIC_DESTRUCTION_GUARD_H
+#ifndef SCORE_LIB_UTILS_STATIC_DESTRUCTION_GUARD_H
+#define SCORE_LIB_UTILS_STATIC_DESTRUCTION_GUARD_H
 
 #include <cstdint>
 #include <type_traits>
 
 namespace score
 {
-namespace os
+namespace utils
 {
 
 /// \brief An abstraction of the Nifty Counter Idiom which ensures that variables with static storage duration are only
@@ -111,7 +111,7 @@ class StaticDestructionGuard
     }
 };
 
-}  // namespace os
+}  // namespace utils
 }  // namespace score
 
-#endif  // SCORE_LIB_OS_STATIC_DESTRUCTION_GUARD_H
+#endif  // SCORE_LIB_UTILS_STATIC_DESTRUCTION_GUARD_H
