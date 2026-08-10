@@ -19,9 +19,9 @@ load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
 docs(
-    data = [
-        "@score_platform//:needs_json",
-        "@score_process//:needs_json",
+    external_needs = [
+        "@score_platform//:needs_json_file",
+        "@score_process//:needs_json_file",
     ],
     source_dir = "docs",
 )
