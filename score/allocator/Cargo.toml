@@ -23,7 +23,11 @@ license-file.workspace = true
 path = "lib.rs"
 
 [dependencies]
+pal.workspace = true
 score_log.workspace = true
+
+[target.'cfg(loom)'.dependencies]
+loom = { version = "0.7.2", features = ["checkpoint"] }
 
 [lints]
 workspace = true
