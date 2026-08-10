@@ -8,7 +8,7 @@ rust-project.json
 
 # docs build artifacts
 _build
-docs/ubproject.toml
+ubproject.toml
 
 # coverage
 cpp_coverage
