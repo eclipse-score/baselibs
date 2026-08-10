@@ -91,6 +91,10 @@ docs(
             "mount_at": "baselibs/components/utils",
         },
     ],
+    code_targets = [
+        "//score/flatbuffers/bazel:starlark_rule_links",
+        "//score/flatbuffers:flatbufferutils",
+    ],
     external_needs = [
         "@score_platform//:needs_json_file",
         "@score_process_description//:needs_json_file",
