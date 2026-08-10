@@ -1450,5 +1450,9 @@
   {
     "version": "pr-452",
     "url": "https://eclipse-score.github.io/baselibs/pr-452/"
+  },
+  {
+    "version": "pr-453",
+    "url": "https://eclipse-score.github.io/baselibs/pr-453/"
   }
 ]
