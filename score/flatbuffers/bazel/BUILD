@@ -22,3 +22,9 @@ py_binary(
     tags = ["manual"],
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "starlark_rule_links",
+    srcs = [":codegen.bzl"],
+    visibility = ["//visibility:public"],
+)

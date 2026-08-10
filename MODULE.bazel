@@ -123,6 +123,13 @@ git_override(
 
 bazel_dep(name = "score_platform", version = "0.6.4", dev_dependency = True)
 
+# architecture flatbuffer interface
+git_override(
+    module_name = "score_platform",
+    commit = "7a77d2d124da83a2812dc12ba8b0a2e0d2b74b04",
+    remote = "https://github.com/eclipse-score/score",
+)
+
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.8.5")

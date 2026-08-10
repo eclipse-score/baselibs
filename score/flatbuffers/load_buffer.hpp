@@ -29,6 +29,7 @@ namespace score
 
 namespace flatbuffers
 {
+// # req-Id: logic_arc_int_op__flatbuffers__loadbuffer
 
 /// @brief Loads the entire contents of a binary file into a
 /// `std::vector<uint8_t>`.
