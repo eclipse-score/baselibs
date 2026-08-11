@@ -179,34 +179,6 @@ Configuration Fields
     are written.
 
 
-.. comp_req:: Logging Configuration Multiple Log Storage Devices
-   :id: comp_req__log__cfg_sink_multi_dev
-   :status: valid
-   :derived_from: feat_req__logging__sink_multiple_device[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall support configuration of multiple log storage devices.
-
-
-.. comp_req:: Logging Configuration Log Storage Strategy
-   :id: comp_req__log__cfg_sink_strategy
-   :status: valid
-   :derived_from: feat_req__logging__sink_strategy[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall support configuration of the log storage strategy.
-
-
 .. comp_req:: Logging Configuration Internal Buffer Size
    :id: comp_req__log__cfg_buffer_size
    :status: valid
@@ -219,21 +191,6 @@ Configuration Fields
    :version: 1
 
     ``mw::log`` shall allow configuration of the size of the internal buffer.
-
-
-.. comp_req:: Logging Configuration Log Storage Size
-   :id: comp_req__log__cfg_storage_size
-   :status: valid
-   :derived_from: feat_req__logging__config_storage_size[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall allow configuration of the maximum size of all defined
-    log files.
 
 
 .. comp_req:: Logging Configuration Log ECU Identifier
@@ -269,46 +226,6 @@ Configuration Fields
 Log Handling
 ============
 
-.. comp_req:: Log Prioritization
-   :id: comp_req__log__log_prior
-   :status: valid
-   :derived_from: feat_req__logging__prioritization[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall prioritize log messages in case of resource conflicts to
-    ensure critical logs are not lost.
-
-    The order of prioritization shall follow the log level in the following
-    way:
-
-    1. ``Fatal``
-    2. ``Error``
-    3. ``Warn``
-    4. ``Info``
-    5. ``Debug``
-    6. ``Verbose``
-
-
-.. comp_req:: Early Startup Logging
-   :id: comp_req__log__early_startup
-   :status: valid
-   :derived_from: feat_req__logging__early_startup[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall support logging of early startup events to capture
-    critical initialization information.
-
-
 .. comp_req:: Message Loss Detection
    :id: comp_req__log__log_loss_detect
    :status: valid
@@ -323,21 +240,6 @@ Log Handling
     ``mw::log`` shall detect and report any message loss.
 
 
-.. comp_req:: Context-Specific Log Level
-   :id: comp_req__log__context_log_level
-   :status: valid
-   :derived_from: feat_req__logging__context_log_level[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall allow context-specific log level activation at runtime to
-    enable fine-grained control over logging behaviour.
-
-
 .. comp_req:: Custom Log Types
    :id: comp_req__log__cfg_custom_types
    :status: valid
@@ -350,36 +252,6 @@ Log Handling
    :version: 1
 
     ``mw::log`` shall allow extensions for custom log types.
-
-
-.. comp_req:: Non-Recoverable Error Handling Silent
-   :id: comp_req__log__err_nonrec_silent
-   :status: valid
-   :derived_from: feat_req__log__err_handling_nonrec[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    In case of a non-recoverable error, ``mw::log`` shall deactivate without
-    affecting the user application.
-    
-    
-.. comp_req:: Non-Recoverable Error Handling Reporting
-   :id: comp_req__log__err_nonrec_report
-   :status: valid
-   :derived_from: feat_req__log__err_handling_nonrec[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    In case of a non-recoverable error, ``mw::log`` shall set an error state
-    reported on shutdown.
 
 
 Log Message Format
@@ -399,10 +271,13 @@ Log Message Format
     ``mw::log`` shall attach a local timestamp to each log entry.
 
 
-.. comp_req:: Original Timestamp
-   :id: comp_req__log__timestamp_orig
+System Backend
+===============
+
+.. comp_req:: System Logger Backend
+   :id: comp_req__log__system_logger
    :status: valid
-   :derived_from: feat_req__logging__timestamping_original[version==1]
+   :derived_from: feat_req__logging__early_startup[version==1]
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
@@ -410,8 +285,7 @@ Log Message Format
    :belongs_to: comp__logging[version==1]
    :version: 1
 
-    ``mw::log`` shall preserve the original timestamp for log entries that have
-    been routed.
+    ``mw::log`` shall support logging of slog backed for QNX deployments.
 
 
 Console Backend
@@ -460,21 +334,3 @@ Compatibility
    :version: 1
 
     ``mw::log`` shall provide a logging API for C++ and Rust.
-
-
-Non-Functional Requirements
-===========================
-
-.. comp_req:: Storage Resource Consumption
-   :id: comp_req__log__resource_storage
-   :status: valid
-   :derived_from: feat_req__logging__resource_storage[version==1]
-   :reqtype: Non-Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :version: 1
-
-    ``mw::log`` shall minimize storage resource consumption.
-
