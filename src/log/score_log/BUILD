@@ -13,8 +13,8 @@
 
 alias(
     name = "score_log",
-    actual = "//score/log_rust/score_log:score_log",
-    deprecation = "//src/log/score_log:score_log has moved to //score/log_rust/score_log:score_log. " +
+    actual = "//score/mw/log/rust/score_log:score_log",
+    deprecation = "//src/log/score_log:score_log has moved to //score/mw/log/rust/score_log:score_log. " +
                   "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
 )

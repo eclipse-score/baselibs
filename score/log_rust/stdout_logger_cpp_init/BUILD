@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,27 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@rules_rust//rust:defs.bzl", "rust_static_library")
-
-rust_static_library(
-    name = "ffi",
-    srcs = ["ffi.rs"],
-    edition = "2021",
-    visibility = ["//visibility:private"],
-    deps = [
-        "//score/log_rust/score_log",
-        "//score/log_rust/stdout_logger",
-    ],
-)
-
-cc_library(
+alias(
     name = "stdout_logger_cpp_init",
-    srcs = ["stdout_logger_init.cpp"],
-    hdrs = ["stdout_logger_init.h"],
-    include_prefix = "score/mw/log/rust",
+    actual = "//score/mw/log/rust/stdout_logger_cpp_init:stdout_logger_cpp_init",
+    deprecation = "//score/log_rust/stdout_logger_cpp_init:stdout_logger_cpp_init has moved to " +
+                  "//score/mw/log/rust/stdout_logger_cpp_init:stdout_logger_cpp_init. " +
+                  "Update your dependency to the new //score/mw/... label.",
     visibility = ["//visibility:public"],
-    deps = [
-        ":ffi",
-    ],
 )

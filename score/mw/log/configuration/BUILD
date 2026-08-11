@@ -172,7 +172,7 @@ cc_test(
         "@score_baselibs//score/os/mocklib:stdlib_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/os/utils/mocklib:path_mock",
-        #"@score_baselibs//score/mw/log/test/console_logging_environment",
+        #"@score_baselibs//score/mw/log/tests/console_logging_environment",
         "@googletest//:gtest_main",
     ],
 )

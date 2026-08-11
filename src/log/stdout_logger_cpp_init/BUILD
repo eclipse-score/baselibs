@@ -13,9 +13,8 @@
 
 alias(
     name = "stdout_logger_cpp_init",
-    actual = "//score/log_rust/stdout_logger_cpp_init:stdout_logger_cpp_init",
-    deprecation = "//src/log/stdout_logger_cpp_init:stdout_logger_cpp_init has moved to " +
-                  "//score/log_rust/stdout_logger_cpp_init:stdout_logger_cpp_init. " +
+    actual = "//score/mw/log/rust/stdout_logger_cpp_init:stdout_logger_cpp_init",
+    deprecation = "//src/log/stdout_logger_cpp_init:stdout_logger_cpp_init has moved to //score/mw/log/rust/stdout_logger_cpp_init:stdout_logger_cpp_init. " +
                   "Update your dependency to the new //score/... label.",
     visibility = ["//visibility:public"],
 )

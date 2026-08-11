@@ -10,14 +10,25 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
-load("@rules_rust//rust:defs.bzl", "rust_binary")
-
-rust_binary(
-    name = "log_builtin",
-    srcs = glob(["src/**/*.rs"]),
+rust_library(
+    name = "score_log",
+    srcs = glob(["**/*.rs"]),
+    proc_macro_deps = [
+        "//score/mw/log/rust/score_log_fmt_macro",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
-        "//score/mw/log/rust/score_log",
-        "//score/mw/log/rust/stdout_logger",
+        "//score/mw/log/rust/score_log_fmt",
+    ],
+)
+
+rust_test(
+    name = "tests",
+    crate = "score_log",
+    tags = [
+        "unit_tests",
+        "ut",
     ],
 )
