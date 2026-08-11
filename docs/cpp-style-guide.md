@@ -52,7 +52,7 @@ Semantic and declaration rules that `.clang-format` cannot apply, so apply them 
 - Prefer named constants over bare literals, `nullptr`, or `true`/`false` passed as arguments, so the call site explains itself.
 
 ## Comments
-- `//` for ordinary comments, `///` for Doxygen; prefix Doxygen tags with `@` (`@brief`, `@param`, `@return`). Write in English, in complete sentences.
+- `//` for ordinary comments, `///` for Doxygen; prefix Doxygen tags with `@` (`@brief`, `@param`, `@return`).
 - On a public declaration, `@brief` is mandatory; add `@param`/`@return` when non-trivial. Document ownership transfer, whether arguments may be `nullptr`, the lifetime of retained references, thread-safety assumptions, and performance implications. A comment at the definition explains *how* the code works rather than repeating the declaration.
 - Class data members get a short Doxygen comment describing their purpose and any sentinel values.
 - Use `@todo` with the associated GitHub issue for non-trivial TODOs. Mark deprecated APIs with the C++ `[[deprecated("use NewApi instead")]]` attribute.

@@ -126,6 +126,16 @@ bazel build --config=lint -- //score/...
 bazel test --config=bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...
 ```
 
+## General coding commenting guidelines
+
+- Write in English in complete sentences. Be concise.
+- Avoid filler, pleasantries and hedging.
+- Write one sentence per line.
+- Do not decorate sections (e.g. with long ---------- comments).
+- Wrap only when unavoidable, first try to rephrase the comment to fit. Respect formatter column limit.
+- Do not wrap Markdown - rephrase or keep as is.
+- Double spaces between sentences are unnecessary.
+
 ## C++ Coding Conventions
 
 ### Style (naming, files, formatting, comments)
