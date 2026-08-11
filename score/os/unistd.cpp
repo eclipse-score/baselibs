@@ -381,7 +381,7 @@ score::os::Unistd& score::os::Unistd::instance() noexcept
         // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
         // Rationale: Have to use reinterpret_cast here because of the use of GetStorage
         // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<internal::UnistdImpl&>(StaticDestructionGuard<internal::UnistdImpl>::GetStorage())
+        reinterpret_cast<internal::UnistdImpl&>(utils::StaticDestructionGuard<internal::UnistdImpl>::GetStorage())
         // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
     );
 }

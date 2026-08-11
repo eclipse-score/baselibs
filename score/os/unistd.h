@@ -16,7 +16,7 @@
 #include "score/bitmanipulation/bitmask_operators.h"
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
-#include "score/os/static_destruction_guard.h"
+#include "score/utils/static_destruction_guard.h"
 
 #include "score/expected.hpp"
 #include "score/memory.hpp"
@@ -239,7 +239,7 @@ class UnistdImpl final : public Unistd
 // nifty_counter is unique and not reused elsewhere in score::os
 // coverity[autosar_cpp14_a3_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-static StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
+static utils::StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
 
 }  // namespace os
 }  // namespace score

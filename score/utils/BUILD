@@ -16,6 +16,18 @@ load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 
 cc_library(
+    name = "static_destruction_guard",
+    hdrs = ["static_destruction_guard.h"],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
+        "additional_warnings",
+    ],
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "base64",
     srcs = ["base64.cpp"],
     hdrs = ["base64.h"],

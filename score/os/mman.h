@@ -17,7 +17,7 @@
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
 #include "score/os/fcntl.h"
-#include "score/os/static_destruction_guard.h"
+#include "score/utils/static_destruction_guard.h"
 
 #include "score/expected.hpp"
 
@@ -175,7 +175,7 @@ class MmanImpl final : public Mman
 // coverity[autosar_cpp14_a3_1_1_violation]
 // coverity[autosar_cpp14_a3_3_2_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-static StaticDestructionGuard<MmanImpl> nifty_counter;
+static utils::StaticDestructionGuard<MmanImpl> nifty_counter;
 
 }  // namespace internal
 

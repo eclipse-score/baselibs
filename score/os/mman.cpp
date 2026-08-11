@@ -307,7 +307,7 @@ score::os::Mman& score::os::Mman::instance() noexcept
     return select_instance(
         // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
         // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<internal::MmanImpl&>(StaticDestructionGuard<internal::MmanImpl>::GetStorage()));
+        reinterpret_cast<internal::MmanImpl&>(utils::StaticDestructionGuard<internal::MmanImpl>::GetStorage()));
     // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
 }
 
