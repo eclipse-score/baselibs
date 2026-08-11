@@ -1,0 +1,66 @@
+[
+  {
+    "need": "logic_arc_int_op__flatbuffers__generatedcode",
+    "links": {
+      "CodeLinks": [
+        {
+          "file": "score/flatbuffers/bazel/codegen.bzl",
+          "line": 140,
+          "tag": "# req-Id:",
+          "need": "logic_arc_int_op__flatbuffers__generatedcode",
+          "full_line": "# req-Id: logic_arc_int_op__flatbuffers__generatedcode",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ],
+      "TestLinks": []
+    }
+  },
+  {
+    "need": "logic_arc_int_op__flatbuffers__versionreader",
+    "links": {
+      "CodeLinks": [
+        {
+          "file": "score/flatbuffers/i_version_reader.hpp",
+          "line": 30,
+          "tag": "# req-Id:",
+          "need": "logic_arc_int_op__flatbuffers__versionreader",
+          "full_line": "// # req-Id: logic_arc_int_op__flatbuffers__versionreader",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "file": "score/flatbuffers/version_reader.hpp",
+          "line": 23,
+          "tag": "# req-Id:",
+          "need": "logic_arc_int_op__flatbuffers__versionreader",
+          "full_line": "// # req-Id: logic_arc_int_op__flatbuffers__versionreader",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ],
+      "TestLinks": []
+    }
+  },
+  {
+    "need": "logic_arc_int_op__flatbuffers__loadbuffer",
+    "links": {
+      "CodeLinks": [
+        {
+          "file": "score/flatbuffers/load_buffer.hpp",
+          "line": 32,
+          "tag": "# req-Id:",
+          "need": "logic_arc_int_op__flatbuffers__loadbuffer",
+          "full_line": "// # req-Id: logic_arc_int_op__flatbuffers__loadbuffer",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ],
+      "TestLinks": []
+    }
+  }
+]
