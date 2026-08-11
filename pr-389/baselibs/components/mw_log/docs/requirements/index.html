@@ -62,7 +62,7 @@
     <script src="../../../../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
     <script src="../../../../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
     <script src="../../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/log/docs/requirements/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/mw_log/docs/requirements/index';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.17.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
@@ -73,7 +73,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" />
-    <link rel="next" title="memory" href="../../../memory_shared/docs/index.html" />
+    <link rel="next" title="os" href="../../../os/docs/index.html" />
     <link rel="prev" title="Log Frontend Detailed Design" href="../detailed_design/log_frontend_design.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -408,13 +408,13 @@
 
 
 
+<li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../assumptions_of_use/index.html">Assumptions of Use</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../detailed_design/index.html">Detailed Design</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Log Frontend Requirements</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/docs/index.html">result</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../static_reflection_with_serialization/docs/index.html">static_reflection_with_serialization</a></li>
@@ -482,7 +482,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-c51a94e8">
+  <div class="need_container docutils container" id="SNCB-6e2acf60">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -530,7 +530,7 @@
 <h1>Log Frontend Requirements<a class="headerlink" href="#log-frontend-requirements" title="Link to this heading">#</a></h1>
 <section id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-0fa54902">
+<div class="need_container docutils container" id="SNCB-55c1a576">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_file">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -580,7 +580,7 @@ configuration file.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-fd4711f3">
+<div class="need_container docutils container" id="SNCB-2ec9d4f4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_file_loc">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -636,7 +636,7 @@ from the following locations.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2a598d65">
+<div class="need_container docutils container" id="SNCB-4a9e5839">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__global_config">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -687,7 +687,7 @@ from the following locations.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d77b07ba">
+<div class="need_container docutils container" id="SNCB-53688aa4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_defaults">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -738,7 +738,7 @@ that is not available from the configuration files.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-efb7d999">
+<div class="need_container docutils container" id="SNCB-fdf989d3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_precedence">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -793,7 +793,7 @@ following precedence order:</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-aa0d77fb">
+<div class="need_container docutils container" id="SNCB-0c32a666">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_syntax_err">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -843,7 +843,7 @@ continue using other sources of configuration.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-00425a8e">
+<div class="need_container docutils container" id="SNCB-19ec7ab9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_invalid">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -895,7 +895,7 @@ continue using other sources of configuration.</p>
 </div>
 <section id="configuration-fields">
 <h3>Configuration Fields<a class="headerlink" href="#configuration-fields" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-eb23ac0e">
+<div class="need_container docutils container" id="SNCB-5ad2cf98">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_sink_device">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -945,105 +945,7 @@ are written.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f64f24c5">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_sink_multi_dev">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Logging Configuration Multiple Log Storage Devices</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__sink_multiple_device">feat_req__logging__sink_multiple_device</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall support configuration of multiple log storage devices.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__cfg_sink_multi_dev" title="comp_req__log__cfg_sink_multi_dev">comp_req__log__cfg_sink_multi_dev</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-0f43f357">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_sink_strategy">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Logging Configuration Log Storage Strategy</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__sink_strategy">feat_req__logging__sink_strategy</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall support configuration of the log storage strategy.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__cfg_sink_strategy" title="comp_req__log__cfg_sink_strategy">comp_req__log__cfg_sink_strategy</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-030ebacf">
+<div class="need_container docutils container" id="SNCB-e45bd5ee">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_buffer_size">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1092,57 +994,7 @@ are written.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-cbf56ab9">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_storage_size">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Logging Configuration Log Storage Size</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__config_storage_size">feat_req__logging__config_storage_size</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall allow configuration of the maximum size of all defined
-log files.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__cfg_storage_size" title="comp_req__log__cfg_storage_size">comp_req__log__cfg_storage_size</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-8e351b8c">
+<div class="need_container docutils container" id="SNCB-6f331faf">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_log_ecu_id">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1189,7 +1041,7 @@ be a DLT-style ASCII uppercase 4 character string.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-7a145a6b">
+<div class="need_container docutils container" id="SNCB-f734a074">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_log_app_id">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1240,117 +1092,7 @@ which shall be a DLT-style ASCII uppercase 4 character string.</p></td>
 </section>
 <section id="log-handling">
 <h2>Log Handling<a class="headerlink" href="#log-handling" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-6a137329">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__log_prior">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Log Prioritization</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__prioritization">feat_req__logging__prioritization</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall prioritize log messages in case of resource conflicts to
-ensure critical logs are not lost.</p>
-<p>The order of prioritization shall follow the log level in the following
-way:</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Fatal</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Error</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Warn</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Info</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Debug</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Verbose</span></code></p></li>
-</ol>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__log_prior" title="comp_req__log__log_prior">comp_req__log__log_prior</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-b4de33aa">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__early_startup">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Early Startup Logging</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__early_startup">feat_req__logging__early_startup</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall support logging of early startup events to capture
-critical initialization information.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__early_startup" title="comp_req__log__early_startup">comp_req__log__early_startup</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-bffb91fd">
+<div class="need_container docutils container" id="SNCB-a49c8ebe">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__log_loss_detect">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1399,58 +1141,7 @@ critical initialization information.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-450e93cf">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__context_log_level">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Context-Specific Log Level</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__context_log_level">feat_req__logging__context_log_level</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">fulfilled by: <span class="fulfils"><span><a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_dyn__log__log_to_level" title="comp_req__log__context_log_level">comp_arc_dyn__log__log_to_level</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall allow context-specific log level activation at runtime to
-enable fine-grained control over logging behaviour.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__context_log_level" title="comp_req__log__context_log_level">comp_req__log__context_log_level</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-ab481f58">
+<div class="need_container docutils container" id="SNCB-56af7891">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__cfg_custom_types">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1500,110 +1191,10 @@ enable fine-grained control over logging behaviour.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4774e3b8">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__err_nonrec_silent">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Non-Recoverable Error Handling Silent</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__log__err_handling_nonrec">feat_req__log__err_handling_nonrec</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p>In case of a non-recoverable error, <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall deactivate without
-affecting the user application.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__err_nonrec_silent" title="comp_req__log__err_nonrec_silent">comp_req__log__err_nonrec_silent</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="need_container docutils container" id="SNCB-99bc4b71">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__err_nonrec_report">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Non-Recoverable Error Handling Reporting</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__log__err_handling_nonrec">feat_req__log__err_handling_nonrec</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p>In case of a non-recoverable error, <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall set an error state
-reported on shutdown.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__err_nonrec_report" title="comp_req__log__err_nonrec_report">comp_req__log__err_nonrec_report</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </section>
 <section id="log-message-format">
 <h2>Log Message Format<a class="headerlink" href="#log-message-format" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-094e781b">
+<div class="need_container docutils container" id="SNCB-92d2a4ab">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__timestamp_local">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1652,11 +1243,14 @@ reported on shutdown.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a641004d">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__timestamp_orig">
+</section>
+<section id="system-backend">
+<h2>System Backend<a class="headerlink" href="#system-backend" title="Link to this heading">#</a></h2>
+<div class="need_container docutils container" id="SNCB-7d329b3c">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__system_logger">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Original Timestamp</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">System Logger Backend</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -1674,7 +1268,7 @@ reported on shutdown.</p>
 <div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__timestamping_original">feat_req__logging__timestamping_original</a></span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__early_startup">feat_req__logging__early_startup</a></span></span></div>
 <div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 </span></div>
@@ -1683,13 +1277,12 @@ reported on shutdown.</p>
 <td class="meta" colspan="3"></td>
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall preserve the original timestamp for log entries that have
-been routed.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall support logging of slog backed for QNX deployments.</p>
 </div></blockquote>
 </td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__timestamp_orig" title="comp_req__log__timestamp_orig">comp_req__log__timestamp_orig</a></span></span></div>
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__system_logger" title="comp_req__log__system_logger">comp_req__log__system_logger</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
@@ -1705,7 +1298,7 @@ been routed.</p>
 </section>
 <section id="console-backend">
 <h2>Console Backend<a class="headerlink" href="#console-backend" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c2881d05">
+<div class="need_container docutils container" id="SNCB-8f7bf572">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__console_backend">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1736,7 +1329,7 @@ been routed.</p>
 <td class="meta" colspan="3"></td>
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall output log messages to stdout when running unit tests.</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall support output log messages to stdout when running unit tests.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -1757,7 +1350,7 @@ been routed.</p>
 </section>
 <section id="compatibility">
 <h2>Compatibility<a class="headerlink" href="#compatibility" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-16833b29">
+<div class="need_container docutils container" id="SNCB-c6c00dc8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__compat_os">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1806,7 +1399,7 @@ been routed.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2f86a7a9">
+<div class="need_container docutils container" id="SNCB-e5f841c7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__compat_languages">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1831,7 +1424,7 @@ been routed.</p>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__compat_languages">feat_req__logging__compat_languages</a></span></span></div>
 <div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">fulfilled by: <span class="fulfils"><span><a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_sta__log__class_diagram" title="comp_req__log__compat_languages">comp_arc_sta__log__class_diagram</a>, <a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_dyn__log__log_op" title="comp_req__log__compat_languages">comp_arc_dyn__log__log_op</a></span></span></div>
+<div class="line">fulfilled by: <span class="fulfils"><span><a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_sta__log__class_diagram" title="comp_req__log__compat_languages">comp_arc_sta__log__class_diagram</a>, <a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_dyn__log__log_op" title="comp_req__log__compat_languages">comp_arc_dyn__log__log_op</a>, <a class="reference internal" href="../detailed_design/rust_bridge_design.html#comp_arc_dyn__log__log_to_level" title="comp_req__log__compat_languages">comp_arc_dyn__log__log_to_level</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -1844,58 +1437,6 @@ been routed.</p>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__compat_languages" title="comp_req__log__compat_languages">comp_req__log__compat_languages</a></span></span></div>
-</div>
-</td>
-<td class="footer" colspan="2"><div class="needs_footer line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
-</div>
-</td>
-<td class="footer_right" colspan="2"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="non-functional-requirements">
-<h2>Non-Functional Requirements<a class="headerlink" href="#non-functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-a805272c">
-<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__log__resource_storage">
-<tbody>
-<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">Storage Resource Consumption</span></span></span></div>
-</div>
-</td>
-<td class="head_center" colspan="2"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
-<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">NO</span></span></span></div>
-<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
-</div>
-</td>
-<td class="head_right" colspan="2"><div class="needs_head_right line-block">
-<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
-</div>
-</td>
-</tr>
-<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Non-Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
-</span></span></div>
-<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/analysis-infra/logging/docs/requirements/mw-fr_logging_req.html#feat_req__logging__resource_storage">feat_req__logging__resource_storage</a></span></span></div>
-<div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-<div class="line">satisfied by: <span class="satisfied_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
-</span></div>
-</div>
-</td>
-<td class="meta" colspan="3"></td>
-</tr>
-<tr class="content row-odd"><td class="content" colspan="6"><blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall minimize storage resource consumption.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
-<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__log__resource_storage" title="comp_req__log__resource_storage">comp_req__log__resource_storage</a></span></span></div>
 </div>
 </td>
 <td class="footer" colspan="2"><div class="needs_footer line-block">
@@ -1931,11 +1472,11 @@ been routed.</p>
       </div>
     </a>
     <a class="right-next"
-       href="../../../memory_shared/docs/index.html"
+       href="../../../os/docs/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">memory</p>
+        <p class="prev-next-title">os</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1964,9 +1505,9 @@ been routed.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-handling">Log Handling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-message-format">Log Message Format</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-backend">System Backend</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#console-backend">Console Backend</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibility">Compatibility</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-functional-requirements">Non-Functional Requirements</a></li>
 </ul>
   </nav></div>
 
@@ -1974,7 +1515,7 @@ been routed.</p>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/log/docs/requirements/index.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/mw_log/docs/requirements/index.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
