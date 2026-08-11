@@ -77,7 +77,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__context_log_level[version==1]
+   :fulfils: comp_req__log__compat_languages[version==1]
    :belongs_to: comp__logging[version==1]
 
    .. uml:: _assets/log_to_level.puml

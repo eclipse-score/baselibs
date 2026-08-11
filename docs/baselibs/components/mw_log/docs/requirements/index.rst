@@ -302,7 +302,7 @@ Console Backend
    :belongs_to: comp__logging[version==1]
    :version: 1
 
-    ``mw::log`` shall output log messages to stdout when running unit tests.
+    ``mw::log`` shall support output log messages to stdout when running unit tests.
 
 
 Compatibility
