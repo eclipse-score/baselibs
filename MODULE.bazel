@@ -90,6 +90,13 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 bazel_dep(name = "rules_rust", version = "0.68.1-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.10")
+git_override(
+    module_name = "score_crates",
+    commit = "4656dda8f04a3d88c8089f63111195840cfbd9e3",
+    remote = "https://github.com/eclipse-score/score-crates",
+)
+
+bazel_dep(name = "cxx.rs", version = "1.0.186")
 
 bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
 
