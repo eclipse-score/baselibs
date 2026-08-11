@@ -12,13 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. _component_log_requirements:
+.. _component_detailed_design_log:
 
-Requirements
-############
+Detailed Design
+***************
 
-.. document:: Log Requirements
-   :id: doc__log_requirements
+.. document:: Log Detailed Design
+   :id: doc__log_detailed_design
    :status: draft
    :version: 1
    :safety: ASIL_B
@@ -26,21 +26,9 @@ Requirements
    :realizes: wp__requirements_comp[version==1]
    :tags: log
 
-.. comp_req:: Log requirements placeholder
-   :id: comp_req__log__placeholder
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
-   :belongs_to: comp__logging[version==1]
-   :status: valid
-   :version: 1
 
-   Requirement placeholder for diagram rendering.
-   To be replaced with actual requirements.
+.. toctree::
+   :maxdepth: 1
 
-
-.. _component_log_requirements_aou:
-
-AoU Requirements
-################
+   rust_bridge_design.rst
+   log_frontend_design.rst
