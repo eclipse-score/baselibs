@@ -13,6 +13,8 @@
 #ifndef SCORE_LIB_CONCURRENCY_TYPE_TRAITS_H
 #define SCORE_LIB_CONCURRENCY_TYPE_TRAITS_H
 
+#include <score/optional.hpp>
+
 #include <type_traits>
 
 namespace score
@@ -33,6 +35,16 @@ template <typename T>
 inline constexpr bool is_basic_lockable_v = is_basic_lockable<T>::value;
 template <typename T>
 using is_basic_lockable_t = typename is_basic_lockable<T>::type;
+
+template <typename>
+struct is_optional : std::false_type
+{
+};
+
+template <typename U>
+struct is_optional<score::cpp::optional<U>> : std::true_type
+{
+};
 
 }  // namespace score
 
