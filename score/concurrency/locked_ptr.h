@@ -16,6 +16,9 @@
 #include "score/concurrency/type_traits.h"
 #include "score/concurrency/unlock_guard.h"
 
+#include <score/optional.hpp>
+
+#include <functional>
 #include <utility>
 
 namespace score
@@ -200,6 +203,69 @@ class LockedPtr
     [[nodiscard]] explicit operator bool() const noexcept
     {
         return ptr_ != nullptr;
+    }
+
+    /**
+     * @brief Applies a callable to this LockedPtr if the pointer is non-null.
+     *        The callable receives a non-const lvalue reference to this LockedPtr.
+     *        Returns score::cpp::optional containing the result.
+     * @tparam Func Callable type that accepts LockedPtr& and returns a non-void type.
+     * @param f The callable to apply. Must not return void.
+     * @return score::cpp::optional containing the result if non-null, score::cpp::nullopt otherwise.
+     */
+    template <typename Func,
+              typename = std::enable_if_t<std::is_invocable_v<Func, LockedPtr&>>,
+              typename FuncResult = std::invoke_result_t<Func, LockedPtr&>,
+              typename = std::enable_if_t<!std::is_void_v<FuncResult>>>
+    [[nodiscard]] auto transform(Func&& f) & -> score::cpp::optional<FuncResult>
+    {
+        if (ptr_ == nullptr)
+        {
+            return score::cpp::nullopt;
+        }
+        return std::invoke(std::forward<Func>(f), *this);
+    }
+
+    /**
+     * @brief Applies a callable to this LockedPtr if the pointer is non-null.
+     *        The callable receives a const lvalue reference to this LockedPtr.
+     *        Returns score::cpp::optional containing the result.
+     * @tparam Func Callable type that accepts const LockedPtr& and returns a non-void type.
+     * @param f The callable to apply. Must not return void.
+     * @return score::cpp::optional containing the result if non-null, score::cpp::nullopt otherwise.
+     */
+    template <typename Func,
+              typename = std::enable_if_t<std::is_invocable_v<Func, const LockedPtr&>>,
+              typename FuncResult = std::invoke_result_t<Func, const LockedPtr&>,
+              typename = std::enable_if_t<!std::is_void_v<FuncResult>>>
+    [[nodiscard]] auto transform(Func&& f) const& -> score::cpp::optional<FuncResult>
+    {
+        if (ptr_ == nullptr)
+        {
+            return score::cpp::nullopt;
+        }
+        return std::invoke(std::forward<Func>(f), *this);
+    }
+
+    /**
+     * @brief Applies a callable to this LockedPtr if the pointer is non-null.
+     *        The LockedPtr is moved into the callable by value, transferring lock ownership.
+     *        Returns score::cpp::optional containing the result.
+     * @tparam Func Callable type that accepts LockedPtr by value and returns a non-void type.
+     * @param f The callable to apply. Must not return void.
+     * @return score::cpp::optional containing the result if non-null, score::cpp::nullopt otherwise.
+     */
+    template <typename Func,
+              typename = std::enable_if_t<std::is_invocable_v<Func, LockedPtr>>,
+              typename FuncResult = std::invoke_result_t<Func, LockedPtr>,
+              typename = std::enable_if_t<!std::is_void_v<FuncResult>>>
+    [[nodiscard]] auto transform(Func&& f) && -> score::cpp::optional<FuncResult>
+    {
+        if (ptr_ == nullptr)
+        {
+            return score::cpp::nullopt;
+        }
+        return std::invoke(std::forward<Func>(f), std::move(*this));
     }
 
     /**
