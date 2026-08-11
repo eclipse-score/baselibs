@@ -19,6 +19,8 @@ extensions = [
     "score_sphinx_bundle",
 ]
 
+required_in_id = ["baselibs"]
+
 # Not part of the Sphinx doc tree; it's a plain-Markdown style guide referenced
 # directly (e.g. from AGENTS.md), not meant to be rendered as a docs page.
 exclude_patterns = ["cpp-style-guide.md"]
