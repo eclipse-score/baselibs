@@ -33,14 +33,13 @@
 
 .. _baselibs_module_docs:
 
-Module Documents
-================
+Module
+======
 
 .. toctree::
    :maxdepth: 1
    :glob:
 
-   manual/index.rst
+   manuals/index.rst
    safety_mgt/index.rst
-   verification/module_verification_report.rst
    release/release_note.rst
