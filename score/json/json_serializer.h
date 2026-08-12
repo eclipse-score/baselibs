@@ -205,7 +205,8 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
         }
         else
         {
-            score::cpp::ignore = visitor.error.emplace(std::move(field_content).error());
+            // Annotate with the failing field name; field_name is a static const char* from struct_visitable.
+            score::cpp::ignore = visitor.error.emplace(field_content.error().WithUserMessage(field_name));
         }
     }
     else
@@ -220,7 +221,7 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
         }
         else
         {
-            score::cpp::ignore = visitor.error.emplace(Error::kKeyNotFound, "Missing mandatory field in JSON object");
+            score::cpp::ignore = visitor.error.emplace(MakeError(Error::kKeyNotFound, field_name));
         }
     }
 }
