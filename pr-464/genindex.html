@@ -311,10 +311,10 @@ const runMermaid = async (rerun) => {
     all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
-    if ("False" === "True") {
+    if ("True" === "True") {
         const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
         if(mermaids_to_add_zoom > 0) {
-            var svgs = d3.selectAll("");
+            var svgs = d3.selectAll(".mermaid svg");
             if(all_mermaids.length !== mermaids_processed.length) {
                 setTimeout(() => runMermaid(false), 200);
                 return;
@@ -426,7 +426,7 @@ const runMermaid = async (rerun) => {
                 svg.style.maxWidth = '100%';
                 svg.style.sdisplay = 'block';
 
-                if ("False" === "True") {
+                if ("True" === "True") {
                     setTimeout(() => {
                         const g = svg.querySelector('g');
                         if (g) {
@@ -569,7 +569,7 @@ window.runMermaid = runMermaid;</script>
     
   
 
-<a class="navbar-brand logo" href="docs/index.html">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -591,28 +591,28 @@ window.runMermaid = runMermaid;</script>
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/features/index.html">
+  <a class="nav-link nav-internal" href="features/index.html">
     Features
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/module/index.html">
+  <a class="nav-link nav-internal" href="module/index.html">
     Module
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/verification_report/module_verification_report.html">
+  <a class="nav-link nav-internal" href="verification_report/module_verification_report.html">
     Verification Report
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/baselibs/components/index.html">
+  <a class="nav-link nav-internal" href="baselibs/components/index.html">
     Components
   </a>
 </li>
@@ -725,28 +725,28 @@ window.runMermaid = runMermaid;</script>
   <ul class="bd-navbar-elements navbar-nav">
     
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/features/index.html">
+  <a class="nav-link nav-internal" href="features/index.html">
     Features
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/module/index.html">
+  <a class="nav-link nav-internal" href="module/index.html">
     Module
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/verification_report/module_verification_report.html">
+  <a class="nav-link nav-internal" href="verification_report/module_verification_report.html">
     Verification Report
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="docs/baselibs/components/index.html">
+  <a class="nav-link nav-internal" href="baselibs/components/index.html">
     Components
   </a>
 </li>
