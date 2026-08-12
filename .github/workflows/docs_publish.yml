@@ -23,7 +23,12 @@ permissions:
   pull-requests: write
 jobs:
   docs-deploy:
-    if: github.event.workflow_run.conclusion == 'success'
+    # Only publish for events that produce a real, addressable doc version.
+    # merge_group runs are ephemeral (merge-queue checks) and would otherwise
+    # cause unintended Pages publishes / preview-folder churn.
+    if: |
+      github.event.workflow_run.conclusion == 'success' &&
+      contains(fromJSON('["pull_request", "push", "release"]'), github.event.workflow_run.event)
     uses: eclipse-score/cicd-workflows/.github/workflows/docs-publish.yml@33842dcb0a19ca700d159101a34a7f078bada023
     permissions:
       actions: read
