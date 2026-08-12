@@ -74,7 +74,7 @@ class SimpleAllocator : public ::flatbuffers::Allocator
 
 TEST(AllocatorTest, AllocateReturnsNonNull)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::allocate, ::flatbuffers::Allocator::deallocate");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "allocate returns a non-null pointer; deallocate does not crash");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -90,10 +90,10 @@ TEST(AllocatorTest, AllocateReturnsNonNull)
 
 TEST(AllocatorTest, AllocateSingleByte)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::allocate, ::flatbuffers::Allocator::deallocate");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "allocate and deallocate a single byte");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     SimpleAllocator alloc;
     uint8_t* ptr = alloc.allocate(1U);
@@ -105,10 +105,10 @@ TEST(AllocatorTest, AllocateSingleByte)
 
 TEST(AllocatorTest, AllocateLargeRegion)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::allocate, ::flatbuffers::Allocator::deallocate");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "allocate and deallocate a large (1 MiB) region");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     SimpleAllocator alloc;
     constexpr size_t kSize = static_cast<size_t>(1024U) * 1024U;  // 1 MiB
@@ -122,9 +122,7 @@ TEST(AllocatorTest, AllocateLargeRegion)
 
 TEST(AllocatorTest, UsableThroughBasePointer)
 {
-    RecordProperty("FullyVerifies",
-                   "::flatbuffers::Allocator::allocate, ::flatbuffers::Allocator::deallocate, "
-                   "::flatbuffers::Allocator::~Allocator");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "allocator is usable through a base-class pointer; virtual destructor is exercised");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -155,7 +153,7 @@ class AllocatorGrowsBufferTest : public ::testing::TestWithParam<GrowsBufferPara
 
 TEST_P(AllocatorGrowsBufferTest, GrowsBuffer)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward grows the buffer and returns a non-null pointer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -193,7 +191,7 @@ class AllocatorPreservesBackDataTest : public ::testing::TestWithParam<BackDataP
 
 TEST_P(AllocatorPreservesBackDataTest, PreservesBackData)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward copies in_use_back bytes to the tail of the new buffer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -239,7 +237,7 @@ class AllocatorPreservesFrontDataTest : public ::testing::TestWithParam<FrontDat
 
 TEST_P(AllocatorPreservesFrontDataTest, PreservesFrontData)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward copies in_use_front bytes to the head of the new buffer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -286,10 +284,10 @@ class AllocatorPreservesBothDataTest : public ::testing::TestWithParam<BothDataP
 
 TEST_P(AllocatorPreservesBothDataTest, PreservesBothFrontAndBackData)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward preserves both front and back in-use regions simultaneously");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     const auto [old_size, new_size, back_size, front_size] = GetParam();
     SimpleAllocator alloc;
@@ -330,10 +328,10 @@ INSTANTIATE_TEST_SUITE_P(SizeRanges,
 
 TEST(AllocatorReallocateDownwardTest, PreserveFrontAndBackIfAllocatingNewSizeFails)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward preserves front and back if new size cannot be allocated");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     SimpleAllocator alloc;
     constexpr size_t kOldSize = 64U;
@@ -378,10 +376,10 @@ TEST(AllocatorReallocateDownwardTest, PreserveFrontAndBackIfAllocatingNewSizeFai
 
 TEST(AllocatorReallocateDownwardTest, AssertsWhenNewSizeEqualsOldSize)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward asserts when new_size equals old_size");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     EXPECT_DEATH(
         {
@@ -395,10 +393,10 @@ TEST(AllocatorReallocateDownwardTest, AssertsWhenNewSizeEqualsOldSize)
 
 TEST(AllocatorReallocateDownwardTest, AssertsWhenNewSizeSmallerThanOldSize)
 {
-    RecordProperty("FullyVerifies", "::flatbuffers::Allocator::reallocate_downward");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
     RecordProperty("Description", "reallocate_downward asserts when new_size is smaller than old_size");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     EXPECT_DEATH(
         {
