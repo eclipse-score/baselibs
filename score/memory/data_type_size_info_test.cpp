@@ -24,7 +24,8 @@ namespace
 {
 
 constexpr std::size_t kValidSize{32U};
-constexpr std::size_t kValidAlignment{16U};
+constexpr std::size_t kValidAlignment{alignof(std::max_align_t) / 2};
+constexpr std::size_t kOverAlignment{alignof(std::max_align_t) * 2U};
 
 TEST(DataTypeSizeInfoTest, ConstructingWithAlignmentOfZeroTerminates)
 {
@@ -45,6 +46,13 @@ TEST(DataTypeSizeInfoTest, ConstructingWithSizeNotMultipleOfAlignmentTerminates)
     // When constructing a DataTypeSizeInfo with invalid alignment
     // Then the program terminates
     SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(DataTypeSizeInfo(kValidAlignment + 1U, kValidAlignment));
+}
+
+TEST(DataTypeSizeInfoTest, ConstructingWithOveralignedTypeTerminates)
+{
+    // When constructing a DataTypeSizeInfo with invalid alignment
+    // Then the program terminates
+    SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(DataTypeSizeInfo(kOverAlignment, kOverAlignment));
 }
 
 TEST(DataTypeSizeInfoEqualityTest, ObjectsWithSameSizeAndAlignmentCompareTrue)
