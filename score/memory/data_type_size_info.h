@@ -23,14 +23,22 @@ namespace score::memory
 class DataTypeSizeInfo
 {
   public:
+    /// \brief Constructs size and alignment information.
+    /// \param size Size in bytes, which must be a multiple of `alignment`.
+    /// \param alignment Nonzero power-of-two alignment not exceeding `alignof(std::max_align_t)`.
     constexpr DataTypeSizeInfo(const std::size_t size, const std::size_t alignment) : size_{size}, alignment_{alignment}
     {
         const bool is_alignment_power_of_two = ((alignment != 0) && ((alignment & (alignment - 1)) == 0));
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(is_alignment_power_of_two, "The standard requires that alignment is a power of 2!");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(is_alignment_power_of_two,
+                                                    "The standard requires that alignment is a power of 2!");
 
         const bool is_size_multiple_of_alignment = (size % alignment == 0);
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(is_size_multiple_of_alignment,
-                               "The standard requires that size is a multiple of alignment!");
+                                                    "The standard requires that size is a multiple of alignment!");
+
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(
+            alignment <= alignof(std::max_align_t),
+            "alignment exceeds maximum supported alignment (alignof(std::max_align_t)).");
     }
 
     constexpr std::size_t Size() const
