@@ -42,7 +42,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -54,7 +53,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -68,7 +66,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -80,7 +77,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -94,7 +90,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -106,7 +101,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -120,7 +114,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -132,7 +125,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -146,7 +138,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -158,7 +149,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -172,7 +162,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -184,7 +173,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -198,7 +186,6 @@ Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -213,7 +200,6 @@ Non-Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -225,7 +211,6 @@ Non-Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
@@ -237,7 +222,6 @@ Non-Functional Requirements
    :security: NO
    :safety: ASIL_B
    :satisfied_by: comp__baselibs_containers_rust[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
    :status: valid
    :version: 1
 
