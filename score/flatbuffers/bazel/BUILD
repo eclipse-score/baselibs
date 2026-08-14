@@ -22,3 +22,12 @@ py_binary(
     tags = ["manual"],
     visibility = ["//visibility:public"],
 )
+
+py_binary(
+    name = "schema_generator",
+    srcs = ["schema_generator.py"],
+    # "manual" excludes this target from wildcard builds so it is only built for the exec
+    # (host) platform when referenced as a tool via cfg = "exec" in the starlark rules.
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
