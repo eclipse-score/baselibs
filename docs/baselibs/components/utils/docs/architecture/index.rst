@@ -52,7 +52,7 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__utils__base64_encoding[version==1], comp_req__utils__base64_decoding[version==1], comp_req__utils__meyer_singleton_threadsafe[version==1], comp_req__utils__deterministic_behavior[version==1]
+   :fulfils: comp_req__utils__base64_encoding[version==1], comp_req__utils__base64_decoding[version==1], comp_req__utils__threadsafe_singleton[version==1]
    :belongs_to: comp__baselibs_utils[version==1]
 
    .. needarch::

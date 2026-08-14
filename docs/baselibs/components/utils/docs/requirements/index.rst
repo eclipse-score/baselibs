@@ -54,23 +54,8 @@ Functional Requirements
    The Utils component shall provide functions for decoding Base64 data back to its original form.
 
 .. comp_req:: Thread-Safe Singleton Instance Creation
-   :id: comp_req__utils__meyer_singleton_threadsafe
+   :id: comp_req__utils__threadsafe_singleton
    :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__utils_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_utils[version==1]
-
-   The Utils component shall ensure a singleton is created once and safely shared by multiple threads.
-
-Non-Functional Requirements
-===========================
-
-.. comp_req:: Deterministic Behavior
-   :id: comp_req__utils__deterministic_behavior
-   :reqtype: Non-Functional
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library[version==2]
@@ -79,7 +64,7 @@ Non-Functional Requirements
    :satisfied_by: comp__baselibs_utils[version==1]
    :tags: inspected
 
-   The Utils component shall run operations proportional to input size using only stack memory.
+   The Utils component shall provide a thread-safe singleton whose instance is created exactly once when accessed concurrently by multiple threads.
 
 .. needextend:: "__utils__" in id
    :+tags: baselibs, utils
