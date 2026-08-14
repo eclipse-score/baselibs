@@ -19,6 +19,76 @@ load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
 docs(
+    bundles = [
+        {
+            "bundle": "//score/bitmanipulation/docs:docs",
+            "mount_at": "baselibs/components/bitmanipulation",
+        },
+        {
+            "bundle": "//score/concurrency/docs:docs",
+            "mount_at": "baselibs/components/concurrency",
+        },
+        {
+            "bundle": "//score/containers/docs:docs",
+            "mount_at": "baselibs/components/containers",
+        },
+        {
+            "bundle": "//score/containers_rust/docs:docs",
+            "mount_at": "baselibs/components/containers_rust",
+        },
+        {
+            "bundle": "//score/filesystem/docs:docs",
+            "mount_at": "baselibs/components/filesystem",
+        },
+        {
+            "bundle": "//score/flatbuffers/docs:docs",
+            "mount_at": "baselibs/components/flatbuffers",
+        },
+        {
+            "bundle": "//score/hash/docs:docs",
+            "mount_at": "baselibs/components/hash",
+        },
+        {
+            "bundle": "//score/json/docs:docs",
+            "mount_at": "baselibs/components/json",
+        },
+        {
+            "bundle": "//score/language/docs:docs",
+            "mount_at": "baselibs/components/language",
+        },
+        {
+            "bundle": "//score/language/futurecpp/docs:docs",
+            "mount_at": "baselibs/components/language/futurecpp",
+        },
+        {
+            "bundle": "//score/language/safecpp/docs:docs",
+            "mount_at": "baselibs/components/language/safecpp",
+        },
+        {
+            "bundle": "//score/memory/docs:docs",
+            "mount_at": "baselibs/components/memory",
+        },
+        {
+            "bundle": "//score/mw/log/docs:docs",
+            "mount_at": "baselibs/components/mw_log",
+        },
+        {
+            "bundle": "//score/os/docs:docs",
+            "mount_at": "baselibs/components/os",
+        },
+        {
+            "bundle": "//score/result/docs:docs",
+            "mount_at": "baselibs/components/result",
+        },
+        {
+            "bundle": "//score/static_reflection_with_serialization/docs:docs",
+            "mount_at": "baselibs/components/static_reflection_with_serialization",
+        },
+        {
+            "bundle": "//score/utils/docs:docs",
+            "mount_at": "baselibs/components/utils",
+        },
+    ],
     external_needs = [
         "@score_platform//:needs_json_file",
         "@score_process//:needs_json_file",
