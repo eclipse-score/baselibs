@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -12,15 +12,6 @@
 # *******************************************************************************
 
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
-
-test_suite(
-    name = "unit_tests",
-    tests = [
-        "@score_baselibs//score/static_reflection_with_serialization/serialization:unit_tests",
-        "@score_baselibs//score/static_reflection_with_serialization/visitor:unit_tests",
-    ],
-    visibility = ["//visibility:public"],
-)
 
 docs_bundle(
     name = "docs",

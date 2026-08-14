@@ -14,6 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
@@ -491,4 +492,10 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//platform/aas/mw:__pkg__",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

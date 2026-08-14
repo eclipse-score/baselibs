@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 rust_library(
     name = "containers",
@@ -31,4 +32,10 @@ rust_test(
         "unit_tests",
         "ut",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

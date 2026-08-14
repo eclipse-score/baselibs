@@ -13,6 +13,7 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 COMPILER_WARNING_FEATURES = [
     "treat_warnings_as_errors",
@@ -60,5 +61,11 @@ cc_unit_test_suites_for_host_and_qnx(
         "@score_baselibs//score/hash/code/crc:unit_tests",
         "@score_baselibs//score/hash/code/openssl:unit_tests",
     ],
+    visibility = ["//visibility:public"],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
     visibility = ["//visibility:public"],
 )

@@ -30,8 +30,8 @@ Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :tags: baselibs_rust_containers_rust
    :belongs_to: feat__baselibs[version==1]
+   :tags: baselibs_rust_containers_rust
 
 Functional Requirements
 =======================
