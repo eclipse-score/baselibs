@@ -44,20 +44,25 @@ struct IntWrapper
 
 using LPtr2IntW = LockedPtr<IntWrapper, std::unique_lock<MockMutex>>;
 
-auto value_by_10 = [](LPtr2IntW& lp) {
+double ValueBy10(LPtr2IntW& lp)
+{
     return lp->value / 10.0;
-};
-auto cvalue_by_10 = [](const LPtr2IntW& lp) {
-    return lp->value / 10.0;
-};
+}
 
-auto move_ptr = [](LPtr2IntW&& ptr) {
+double CValueBy10(const LPtr2IntW& lp)
+{
+    return lp->value / 10.0;
+}
+
+LPtr2IntW MovePtr(LPtr2IntW&& ptr)
+{
     return std::move(ptr);
-};
+}
 
-auto get_obj = [](const LPtr2IntW& ptr) {
+const IntWrapper* GetObj(const LPtr2IntW& ptr)
+{
     return ptr.get();
-};
+}
 }  // namespace
 
 TEST(LockedPtrTest, ConstructionWithTypes)
@@ -478,15 +483,15 @@ TEST(LockedPtrTest, TransformLvalueRefNotNull)
     LockedPtr lockedptr(&obj, std::unique_lock{mut});
 
     // Invocables accepting lvalue ref
-    EXPECT_EQ(lockedptr.transform(value_by_10), score::cpp::optional{4.2});
+    EXPECT_EQ(lockedptr.transform(ValueBy10), score::cpp::optional{4.2});
 
     // Invocables accepting const lvalue ref
-    EXPECT_EQ(lockedptr.transform(cvalue_by_10), score::cpp::optional{4.2});
+    EXPECT_EQ(lockedptr.transform(CValueBy10), score::cpp::optional{4.2});
 
     // Invocables accepting const lvalue ref transforming const LockedPtr
-    EXPECT_EQ(std::as_const(lockedptr).transform(cvalue_by_10), score::cpp::optional{4.2});
+    EXPECT_EQ(std::as_const(lockedptr).transform(CValueBy10), score::cpp::optional{4.2});
 
-    auto result = lockedptr.transform(value_by_10);
+    auto result = lockedptr.transform(ValueBy10);
     ASSERT_TRUE((std::is_same_v<decltype(result), score::cpp::optional<double>>))
         << "transform should return score::cpp::optional<double>";
 }
@@ -497,8 +502,8 @@ TEST(LockedPtrTest, TransformLvalueRefNull)
     MockMutex mut;
     auto lp = LockedPtr(nullp, std::unique_lock{mut});
 
-    EXPECT_EQ(lp.transform(cvalue_by_10), score::cpp::optional<double>{});
-    EXPECT_EQ(lp.transform(cvalue_by_10), score::cpp::nullopt);
+    EXPECT_EQ(lp.transform(CValueBy10), score::cpp::optional<double>{});
+    EXPECT_EQ(lp.transform(CValueBy10), score::cpp::nullopt);
 }
 
 TEST(LockedPtrTest, TransformRvalueRefNotNull)
@@ -507,7 +512,7 @@ TEST(LockedPtrTest, TransformRvalueRefNotNull)
     MockMutex mut;
     auto lp = LockedPtr(&obj, std::unique_lock{mut});
 
-    EXPECT_EQ(std::move(lp).transform(move_ptr).value().get(), &obj);
+    EXPECT_EQ(std::move(lp).transform(MovePtr).value().get(), &obj);
 }
 
 TEST(LockedPtrTest, TransformRvalueRefNull)
@@ -515,8 +520,8 @@ TEST(LockedPtrTest, TransformRvalueRefNull)
     IntWrapper* nullp = nullptr;
     MockMutex mut;
 
-    EXPECT_EQ(LockedPtr(nullp, std::unique_lock{mut}).transform(get_obj), score::cpp::optional<const IntWrapper*>{});
-    EXPECT_EQ(LockedPtr(nullp, std::unique_lock{mut}).transform(cvalue_by_10), score::cpp::nullopt);
+    EXPECT_EQ(LockedPtr(nullp, std::unique_lock{mut}).transform(GetObj), score::cpp::optional<const IntWrapper*>{});
+    EXPECT_EQ(LockedPtr(nullp, std::unique_lock{mut}).transform(CValueBy10), score::cpp::nullopt);
 }
 
 }  // namespace test
