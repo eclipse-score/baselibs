@@ -39,6 +39,28 @@ namespace
 {
 
 // NOTRACING
+TEST(thread_pool_test, constructor_GivenValidAttributes_ExpectConstructible)
+{
+    static_assert(std::is_constructible_v<thread_pool, pmr::polymorphic_allocator<>, thread_pool::worker_count>);
+    static_assert(std::is_constructible_v<thread_pool, thread_pool::worker_count>);
+
+    static_assert(std::is_constructible_v<thread_pool,
+                                          pmr::polymorphic_allocator<>,
+                                          thread_pool::worker_count,
+                                          thread_pool::stack_size_hint,
+                                          thread_pool::priority_hint,
+                                          thread_pool::name_hint>);
+    static_assert(std::is_constructible_v<thread_pool,
+                                          thread_pool::worker_count,
+                                          thread_pool::stack_size_hint,
+                                          thread_pool::priority_hint,
+                                          thread_pool::name_hint>);
+
+    static_assert(!std::is_constructible_v<thread_pool, pmr::polymorphic_allocator<>, thread_pool::worker_count, int>);
+    static_assert(!std::is_constructible_v<thread_pool, thread_pool::worker_count, int>);
+}
+
+// NOTRACING
 TEST(thread_pool_test, constructor_GivenNonPositiveWorkerCount_ExpectPreconditionViolated)
 {
     SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(thread_pool{thread_pool::worker_count{-10}});

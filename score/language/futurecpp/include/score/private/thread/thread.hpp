@@ -23,6 +23,7 @@
 
 #include <score/private/thread/thread_id.hpp>
 #include <score/private/thread/thread_name_hint.hpp>
+#include <score/private/thread/thread_priority_hint.hpp>
 #include <score/private/thread/thread_stack_size_hint.hpp>
 
 namespace score::cpp
@@ -38,6 +39,7 @@ class thread
 public:
     using id = score::cpp::detail::thread_id;
     using stack_size_hint = score::cpp::detail::thread_stack_size_hint;
+    using priority_hint = score::cpp::detail::thread_priority_hint;
     using name_hint = score::cpp::detail::thread_name_hint;
     using native_handle_type = score::cpp::detail::thread_id::native_handle_type;
 

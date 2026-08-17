@@ -18,6 +18,7 @@
 
 #include <score/algorithm.hpp>
 #include <score/algorithm.hpp> // test include guard
+#include <score/float.hpp>
 
 #include <cmath>
 #include <cstdint>

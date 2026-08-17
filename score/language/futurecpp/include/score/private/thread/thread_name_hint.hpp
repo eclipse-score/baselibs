@@ -33,7 +33,7 @@ namespace score::cpp
 namespace detail
 {
 
-/// \brief `thread_name_hint` is a constructor option for `score::cpp::jthread`.
+/// \brief `thread_name_hint` is a constructor option for `score::cpp::jthread` and `score::cpp::thread_pool`.
 ///
 /// A thread constructed with `thread_name_hint` will have a desired name as if set by `pthread_setname_np()`.
 /// The restrictions from `pthread_setname_np` has to be followed. Otherwise the name is not set and no error is

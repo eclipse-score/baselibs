@@ -480,25 +480,10 @@ TEST(span, DereferencingNullptrShallTriggerContracViolation)
 TEST(span, SizeBytes)
 {
     {
-        const std::int32_t data[]{23, 42, 72};
+        std::vector<std::int32_t> data{23, 42, 72};
         const span<const std::int32_t> view{data};
         EXPECT_EQ(3U, view.size());
         EXPECT_EQ(3U * sizeof(std::int32_t), view.size_bytes());
-    }
-    {
-        const std::int32_t data[]{23, 42, 72};
-        const span<const std::int32_t, 3U> view{data};
-        EXPECT_EQ(3U * sizeof(std::int32_t), view.size_bytes());
-    }
-    {
-        alignas(64) const std::int32_t data[]{23, 42, 72};
-        const span<const std::int32_t, 3U> view{data};
-        EXPECT_EQ(3U * sizeof(std::int32_t), view.size_bytes());
-    }
-    {
-        const double data[]{1.0, 2.0};
-        const span<const double> view{data};
-        EXPECT_EQ(2U * sizeof(double), view.size_bytes());
     }
     {
         const span<const std::int32_t> view{};

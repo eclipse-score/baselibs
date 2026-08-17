@@ -42,24 +42,36 @@ namespace execution
 /// Similar to https://wg21.link/p2079r4 `system_context` but does not represent a system wide context
 class cpu_context
 {
+    template <typename T>
+    using is_attribute = std::disjunction<std::is_same<score::cpp::thread::stack_size_hint, score::cpp::remove_cvref_t<T>>,
+                                          std::is_same<score::cpp::thread::priority_hint, score::cpp::remove_cvref_t<T>>,
+                                          std::is_same<score::cpp::thread::name_hint, score::cpp::remove_cvref_t<T>>>;
+
 public:
     using worker_count = detail::thread_pool_worker_count;
     using stack_size_hint = score::cpp::detail::thread_stack_size_hint;
+    using priority_hint = score::cpp::detail::thread_priority_hint;
     using name_hint = score::cpp::detail::thread_name_hint;
 
     /// \brief Constructs a `cpu_context`.
     ///
-    /// \param count Number of workers to be created.
-    /// \param stack_size Configures the stack size for the worker threads. Defaults to system default stack size.
-    /// \param name Configures the name of the worker threads. Defaults to empty name.
     /// \param allocator Allocator used for internal buffers. Defaults to `score::cpp::pmr::get_default_resource()`.
-    explicit cpu_context(const worker_count count,
-                         const stack_size_hint stack_size = stack_size_hint{0U},
-                         const name_hint& name = name_hint{""},
-                         const pmr::polymorphic_allocator<>& allocator = {})
-        : pool_{count, stack_size, name, allocator}
+    /// \param count Number of workers to be created.
+    /// \param optional_thread_attributes Supported attributes are stack_size_hint, priority_hint and name_hint.
+    /// \{
+    template <typename... Attrs, typename = std::enable_if_t<std::conjunction_v<is_attribute<Attrs>...>>>
+    explicit cpu_context(const pmr::polymorphic_allocator<>& allocator,
+                         const worker_count count,
+                         Attrs&&... optional_thread_attributes)
+        : pool_{allocator, count, std::forward<Attrs>(optional_thread_attributes)...}
     {
     }
+    template <typename... Attrs, typename = std::enable_if_t<std::conjunction_v<is_attribute<Attrs>...>>>
+    explicit cpu_context(const worker_count count, Attrs&&... optional_thread_attributes)
+        : cpu_context{pmr::polymorphic_allocator<>{}, count, std::forward<Attrs>(optional_thread_attributes)...}
+    {
+    }
+    /// \}
 
     /// \brief The `cpu_context` is non-copyable and non-moveable.
     ///
