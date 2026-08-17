@@ -107,7 +107,7 @@ Configuration
     These are hard-coded in the library.
 
 
-.. comp_req:: Logging Configuration Precedence 
+.. comp_req:: Logging Configuration Precedence
    :id: comp_req__log__cfg_precedence
    :status: valid
    :derived_from: feat_req__logging__config_fallback[version==1]
@@ -316,3 +316,8 @@ Compatibility
    :version: 1
 
     ``mw::log`` shall provide a logging API for C++ and Rust.
+
+.. toctree::
+   :maxdepth: 1
+
+   chklst_req_inspection

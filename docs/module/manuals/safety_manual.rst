@@ -15,7 +15,6 @@
 Safety Manual
 =============
 
-.. note:: Document header
 
 .. document:: Baselibs Safety Manual
    :id: doc__baselibs_safety_manual
@@ -29,7 +28,10 @@ Safety Manual
 Introduction/Scope
 ------------------
 
-This is the safety manual for baselibs module which is a collection of several utilities of common use.
+This is the safety manual for ``baselibs`` module which is a collection of several utilities of common use.
+
+The component :need:`comp__log` is deployed in the baselibs repository.
+It is not part of the ``baselibs`` feature but of the ``logging`` feature, so it is covered in the logging safety manual.
 
 Assumed Platform Safety Requirements
 ------------------------------------
