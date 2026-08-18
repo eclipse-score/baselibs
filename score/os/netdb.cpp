@@ -34,12 +34,12 @@ class NetdbImpl final : public Netdb
   public:
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<Error> getnameinfo(const struct sockaddr* sa,
-                                           const socklen_t salen,
-                                           char* host,
-                                           const socklen_t hostlen,
-                                           char* serv,
-                                           const socklen_t servlen,
-                                           const NameFlag flags) const noexcept override
+                                                  const socklen_t salen,
+                                                  char* host,
+                                                  const socklen_t hostlen,
+                                                  char* serv,
+                                                  const socklen_t servlen,
+                                                  const NameFlag flags) const noexcept override
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     {
         if (::getnameinfo(sa, salen, host, hostlen, serv, servlen, nameflag_to_nativeflag(flags)) != 0)

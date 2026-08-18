@@ -75,7 +75,8 @@ TEST_F(SchedMockFixture, Sched_Setscheduler_Call_Expected)
 
 TEST_F(SchedMockFixture, Sched_Yield_Call_Expected)
 {
-    EXPECT_CALL(test_instance_, sched_yield()).WillOnce(testing::Return(score::cpp::expected<std::int32_t, Error>(kPosixOk)));
+    EXPECT_CALL(test_instance_, sched_yield())
+        .WillOnce(testing::Return(score::cpp::expected<std::int32_t, Error>(kPosixOk)));
     EXPECT_TRUE(score::os::Sched::instance().sched_yield().has_value());
 }
 

@@ -28,11 +28,12 @@ class LinuxPthread final : public score::os::Pthread
   public:
     score::cpp::expected_blank<Error> getcpuclockid(const pthread_t id, clockid_t* clock_id) const noexcept override;
 
-    score::cpp::expected_blank<Error> setname_np(const pthread_t thread, const char* const name) const noexcept override;
+    score::cpp::expected_blank<Error> setname_np(const pthread_t thread,
+                                                 const char* const name) const noexcept override;
 
     score::cpp::expected_blank<Error> getname_np(const pthread_t thread,
-                                          char* const name,
-                                          const std::size_t length) const noexcept override;
+                                                 char* const name,
+                                                 const std::size_t length) const noexcept override;
 };
 
 }  // namespace os

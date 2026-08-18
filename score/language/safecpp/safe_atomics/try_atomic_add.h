@@ -15,8 +15,8 @@
 
 #include "score/language/safecpp/safe_atomics/error.h"
 
-#include "score/language/safecpp/safe_math/details/addition_subtraction/addition_subtraction.h"
 #include "score/concurrency/atomic_indirector.h"
+#include "score/language/safecpp/safe_math/details/addition_subtraction/addition_subtraction.h"
 #include "score/result/result.h"
 
 #include <atomic>

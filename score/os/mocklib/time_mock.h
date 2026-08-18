@@ -42,7 +42,10 @@ class TimeMock : public Time
                 timer_create,
                 (const clockid_t, sigevent*, timer_t*),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), timer_delete, (const timer_t), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                timer_delete,
+                (const timer_t),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 timer_settime,
                 (const timer_t, const int32_t, const itimerspec*, itimerspec*),

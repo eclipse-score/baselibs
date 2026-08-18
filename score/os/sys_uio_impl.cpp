@@ -18,8 +18,8 @@ namespace os
 {
 
 score::cpp::expected<std::int64_t, Error> SysUioImpl::writev(const std::int32_t fd,
-                                                      const struct iovec* iovec_ptr,
-                                                      const std::int32_t count) const noexcept
+                                                             const struct iovec* iovec_ptr,
+                                                             const std::int32_t count) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above

@@ -28,7 +28,7 @@ TEST(DlfcnImpl, DlopenSucceedsWithNullFilename)
 {
     RecordProperty("Description", "DlfcnImpl::dlopen succeeds when called with nullptr (global symbol table)");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -41,7 +41,7 @@ TEST(DlfcnImpl, DlopenReturnsErrorForNonexistentLibrary)
 {
     RecordProperty("Description", "DlfcnImpl::dlopen returns an error for a nonexistent library");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen("/no/such/library_xyz.so", Dlfcn::DlOpenFlag::kNow)};
@@ -52,7 +52,7 @@ TEST(DlfcnImpl, DlopenSetsLastDlErrorOnFailure)
 {
     RecordProperty("Description", "DlfcnImpl::dlerror returns a non-null string after a failed dlopen");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen("/no/such/library_xyz.so", Dlfcn::DlOpenFlag::kNow)};
@@ -64,7 +64,7 @@ TEST(DlfcnImpl, DlopenClearsDlErrorOnSuccess)
 {
     RecordProperty("Description", "DlfcnImpl::dlerror returns nullptr after a successful dlopen");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -77,7 +77,7 @@ TEST(DlfcnImpl, DlsymResolvesKnownSymbol)
 {
     RecordProperty("Description", "DlfcnImpl::dlsym resolves a known symbol from the global symbol table");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -93,7 +93,7 @@ TEST(DlfcnImpl, DlsymReturnsErrorForUnknownSymbol)
 {
     RecordProperty("Description", "DlfcnImpl::dlsym returns an error for an unknown symbol");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -108,7 +108,7 @@ TEST(DlfcnImpl, DlsymSetsLastDlErrorOnFailure)
 {
     RecordProperty("Description", "DlfcnImpl::dlerror returns a non-null string after a failed dlsym");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -124,7 +124,7 @@ TEST(DlfcnImpl, DlsymClearsDlErrorOnSuccess)
 {
     RecordProperty("Description", "DlfcnImpl::dlerror returns nullptr after a successful dlsym");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -140,7 +140,7 @@ TEST(DlfcnImpl, DlopenWithCombinedFlags)
 {
     RecordProperty("Description", "DlfcnImpl::dlopen works with combined kNow | kLocal flags");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kNow | Dlfcn::DlOpenFlag::kLocal)};
@@ -153,7 +153,7 @@ TEST(DlfcnImpl, DlopenWithGlobalFlag)
 {
     RecordProperty("Description", "DlfcnImpl::dlopen works with the kGlobal flag");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kNow | Dlfcn::DlOpenFlag::kGlobal)};
@@ -166,7 +166,7 @@ TEST(DlfcnImpl, DlsymAsResolvesKnownFunctionSymbol)
 {
     RecordProperty("Description", "DlsymAs resolves a known symbol and returns a typed function pointer");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -183,7 +183,7 @@ TEST(DlfcnImpl, DlsymAsReturnsErrorForUnknownSymbol)
 {
     RecordProperty("Description", "DlsymAs returns an error when the symbol does not exist");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -198,7 +198,7 @@ TEST(DlfcnImpl, DlcloseSucceedsWithValidHandle)
 {
     RecordProperty("Description", "DlfcnImpl::dlclose succeeds when given a valid handle from dlopen");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     const auto handle_result{dlfcn.dlopen(nullptr, Dlfcn::DlOpenFlag::kLazy)};
@@ -212,7 +212,7 @@ TEST(DlfcnImpl, DlcloseClearsDlErrorOnSuccess)
 {
     RecordProperty("Description", "DlfcnImpl::dlerror returns nullopt after a successful dlclose");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const DlfcnImpl dlfcn{};
     static_cast<void>(dlfcn.dlopen("/no/such/library_xyz.so", Dlfcn::DlOpenFlag::kNow));

@@ -134,7 +134,7 @@ TEST(UT__JsonOps, MoveAndTell)
  */
 TEST(UT__JsonOps, CheckString)
 {
-    std::string_view const expected{"expected string"};
+    const std::string_view expected{"expected string"};
 
     {
         TestStream ts{std::string{expected}};
@@ -189,7 +189,7 @@ TEST(UT__JsonOps, SkipWhitespace)
  */
 TEST(UT__JsonOps, ReadExactly__Unbuffered)
 {
-    std::string const input{"123456789"};
+    const std::string input{"123456789"};
     TestStream ts{input};
 
     std::size_t count{0};
@@ -213,7 +213,7 @@ TEST(UT__JsonOps, ReadExactly__Unbuffered)
  */
 TEST(UT__JsonOps, ReadExactly__UnexpectedEof)
 {
-    std::string const input{"123456789"};
+    const std::string input{"123456789"};
     TestStream ts{input};
 
     const auto result = ts.ops.ReadExactly(input.size() + 1U, [](std::string_view) noexcept {
@@ -232,10 +232,10 @@ TEST(UT__JsonOps, ReadExactly__UnexpectedEof)
  */
 TEST(UT__JsonOps, ReadUntil)
 {
-    std::string const input{"123456789:"};
+    const std::string input{"123456789:"};
     TestStream ts{input};
 
-    std::string_view const expected_content{input.data(), input.size() - 1};
+    const std::string_view expected_content{input.data(), input.size() - 1};
 
     const auto result = ts.ops.ReadUntil(":", [&expected_content](std::string_view view) noexcept {
         ASSERT_EQ(view, expected_content);

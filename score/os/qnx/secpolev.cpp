@@ -30,8 +30,8 @@ class SecpolEvImpl final : public SecpolEv
 {
   public:
     score::cpp::expected_blank<score::os::Error> init(const unsigned flags,
-                                             const unsigned buffer_count,
-                                             const unsigned flush_interval) const noexcept override
+                                                      const unsigned buffer_count,
+                                                      const unsigned flush_interval) const noexcept override
     {
         if (::secpolev_init(flags, buffer_count, flush_interval) != 0)
         {
@@ -130,10 +130,10 @@ class SecpolEvImpl final : public SecpolEv
     }
 
     score::cpp::expected_blank<score::os::Error> get_ability_info(unsigned* id,
-                                                         const char** name,
-                                                         unsigned* flags,
-                                                         uint64_t* start,
-                                                         uint64_t* end) const noexcept override
+                                                                  const char** name,
+                                                                  unsigned* flags,
+                                                                  uint64_t* start,
+                                                                  uint64_t* end) const noexcept override
     {
         if (secpolev_get_ability_info(id, name, flags, start, end) != 0)
         {
@@ -142,8 +142,8 @@ class SecpolEvImpl final : public SecpolEv
         return {};
     }
 
-    score::cpp::expected_blank<score::os::Error> get_path_info(const char** path,
-                                                      secpolev_path_event_status_t* status) const noexcept override
+    score::cpp::expected_blank<score::os::Error> get_path_info(const char** path, secpolev_path_event_status_t* status)
+        const noexcept override
     {
         if (secpolev_get_path_info(path, status) != 0)
         {
@@ -153,8 +153,8 @@ class SecpolEvImpl final : public SecpolEv
     }
 
     score::cpp::expected_blank<score::os::Error> get_custom_perm_info(const char** class_name,
-                                                             const char** perm_name,
-                                                             const char** obj_type) const noexcept override
+                                                                      const char** perm_name,
+                                                                      const char** obj_type) const noexcept override
     {
         if (secpolev_get_custom_perm_info(class_name, perm_name, obj_type) != 0)
         {

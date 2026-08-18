@@ -55,7 +55,8 @@ class JsonBuilder
         if (last_key_.empty())  // LCOV_EXCL_BR_LINE (see comment below)
         {
             // This case never happens.
-            return score::MakeUnexpected(score::json::Error::kParsingError, "Failed to get last key"); /* LCOV_EXCL_LINE */
+            return score::MakeUnexpected(score::json::Error::kParsingError,
+                                         "Failed to get last key"); /* LCOV_EXCL_LINE */
         }
 
         auto node_as_object = node.As<score::json::Object>();

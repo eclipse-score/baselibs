@@ -445,7 +445,8 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForNonExistedRelativePath)
 TEST_F(FilesystemFixture, WeaklyCanonicalForFailedCurrentPath)
 {
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
-        .WillRepeatedly(Return(score::cpp::unexpected<score::os::Error>{score::os::Error::createFromErrno(ENAMETOOLONG)}));
+        .WillRepeatedly(
+            Return(score::cpp::unexpected<score::os::Error>{score::os::Error::createFromErrno(ENAMETOOLONG)}));
 
     const auto path = unit_.WeaklyCanonical("./foo/bar");
 
@@ -1271,7 +1272,8 @@ using RemoveAll = Remove;
 TEST_F(RemoveAll, CanRemoveSingleFile)
 {
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", false);
-    EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt"))).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+    EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt")))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
     const auto result = unit_.RemoveAll("/foo/bar/file.txt");
 
@@ -1340,7 +1342,8 @@ TEST_F(RemoveAll, FailsOnDirectoryRemoval)
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EACCES))));
     EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar")))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EACCES))));
-    EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt"))).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+    EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt")))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
     // When removing the parent directory
     const auto result = unit_.RemoveAll("/foo");

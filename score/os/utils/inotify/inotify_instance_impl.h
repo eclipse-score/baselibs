@@ -92,7 +92,7 @@ class InotifyInstanceImpl : public InotifyInstance
      * @return Descriptor to identify the watch and its associated events
      */
     score::cpp::expected<InotifyWatchDescriptor, Error> AddWatch(safecpp::zstring_view pathname,
-                                                          Inotify::EventMask event_mask) noexcept override;
+                                                                 Inotify::EventMask event_mask) noexcept override;
 
     /**
      * @brief Removes a watch from the inotify instance

@@ -27,21 +27,19 @@
 namespace score::containers
 {
 
-template <
-    typename ElementType,
-    typename Allocator,
-    typename std::enable_if<!std::is_same<Allocator, test::FancyPointerAllocator<ElementType>>::value,
-                            bool>::type = true>
+template <typename ElementType,
+          typename Allocator,
+          typename std::enable_if<!std::is_same<Allocator, test::FancyPointerAllocator<ElementType>>::value,
+                                  bool>::type = true>
 Allocator GetAllocator(score::cpp::pmr::memory_resource&)
 {
     return Allocator();
 }
 
-template <
-    typename ElementType,
-    typename Allocator,
-    typename std::enable_if<std::is_same<Allocator, test::FancyPointerAllocator<ElementType>>::value,
-                            bool>::type = true>
+template <typename ElementType,
+          typename Allocator,
+          typename std::enable_if<std::is_same<Allocator, test::FancyPointerAllocator<ElementType>>::value,
+                                  bool>::type = true>
 Allocator GetAllocator(score::cpp::pmr::memory_resource& memory_resource)
 {
     return test::FancyPointerAllocator<ElementType>{memory_resource};

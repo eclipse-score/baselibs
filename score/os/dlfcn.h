@@ -44,12 +44,14 @@ class Dlfcn
     /// \brief Opens a shared library.
     ///
     /// @return An opaque handle to the loaded library, or an Error on failure.
-    virtual score::cpp::expected<void*, Error> dlopen(const char* const file_name, const DlOpenFlag flags) const noexcept = 0;
+    virtual score::cpp::expected<void*, Error> dlopen(const char* const file_name,
+                                                      const DlOpenFlag flags) const noexcept = 0;
 
     /// \brief Looks up a symbol in a shared library.
     ///
     /// @return The address of the symbol as void*, or an Error if not found.
-    virtual score::cpp::expected<void*, Error> dlsym(void* const handle, const char* const symbol_name) const noexcept = 0;
+    virtual score::cpp::expected<void*, Error> dlsym(void* const handle,
+                                                     const char* const symbol_name) const noexcept = 0;
     /// \brief Closes a shared library handle previously returned by dlopen().
     ///
     /// @return score::cpp::expected_blank<Error> - success or an Error on failure.

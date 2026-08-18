@@ -23,20 +23,21 @@ class FcntlImpl final : public Fcntl
   public:
     constexpr FcntlImpl() = default;
     score::cpp::expected_blank<Error> fcntl(const std::int32_t fd,
-                                     const Fcntl::Command command,
-                                     const Fcntl::Open flags) const noexcept override;
+                                            const Fcntl::Command command,
+                                            const Fcntl::Open flags) const noexcept override;
 
     score::cpp::expected<Fcntl::Open, Error> fcntl(const std::int32_t fd,
-                                            const Fcntl::Command command) const noexcept override;
+                                                   const Fcntl::Command command) const noexcept override;
 
-    score::cpp::expected<std::int32_t, Error> open(const char* const pathname, const Open flags) const noexcept override;
     score::cpp::expected<std::int32_t, Error> open(const char* const pathname,
-                                            const Open flags,
-                                            const Stat::Mode mode) const noexcept override;
+                                                   const Open flags) const noexcept override;
+    score::cpp::expected<std::int32_t, Error> open(const char* const pathname,
+                                                   const Open flags,
+                                                   const Stat::Mode mode) const noexcept override;
 
     score::cpp::expected_blank<Error> posix_fallocate(const std::int32_t fd,
-                                               const off_t offset,
-                                               const off_t len) const noexcept override;
+                                                      const off_t offset,
+                                                      const off_t len) const noexcept override;
 
     score::cpp::expected_blank<Error> flock(const std::int32_t filedes, const Operation op) const noexcept override;
 };

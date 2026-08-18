@@ -22,8 +22,8 @@
 #include <score/span.hpp>
 #include <cstdint>
 
-/// @brief Add custom print functions for gtest. To make it compatible with deviation of score::cpp::span from the standard
-/// with respect to const_iterators.
+/// @brief Add custom print functions for gtest. To make it compatible with deviation of score::cpp::span from the
+/// standard with respect to const_iterators.
 namespace score::cpp
 {
 std::ostream& operator<<(std::ostream& out, const score::cpp::span<const std::uint8_t> span);

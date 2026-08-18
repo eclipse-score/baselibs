@@ -67,9 +67,10 @@ score::cpp::expected<NonBlockingFileDescriptor, Error> NonBlockingFileDescriptor
     return Make(file_descriptor, fcntl_instance, std::move(unistd));
 }
 
-score::cpp::expected<NonBlockingFileDescriptor, Error> NonBlockingFileDescriptor::Make(const std::int32_t file_descriptor,
-                                                                                Fcntl& fcntl,
-                                                                                std::shared_ptr<Unistd> unistd) noexcept
+score::cpp::expected<NonBlockingFileDescriptor, Error> NonBlockingFileDescriptor::Make(
+    const std::int32_t file_descriptor,
+    Fcntl& fcntl,
+    std::shared_ptr<Unistd> unistd) noexcept
 {
     auto expected_flags = fcntl.fcntl(file_descriptor, Fcntl::Command::kFileGetStatusFlags);
     if (!expected_flags.has_value())

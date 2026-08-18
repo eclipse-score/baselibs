@@ -20,8 +20,8 @@ namespace os
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SocketImpl::socket(const Domain domain,
-                                                      const std::int32_t type,
-                                                      const std::int32_t protocol) const noexcept
+                                                             const std::int32_t type,
+                                                             const std::int32_t protocol) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -35,7 +35,8 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::socket(const Domain domain
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected_blank<Error> SocketImpl::listen(const std::int32_t sockfd, const std::int32_t backlog) const noexcept
+score::cpp::expected_blank<Error> SocketImpl::listen(const std::int32_t sockfd,
+                                                     const std::int32_t backlog) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -49,8 +50,8 @@ score::cpp::expected_blank<Error> SocketImpl::listen(const std::int32_t sockfd, 
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t sockfd,
-                                                      struct sockaddr* const addr,
-                                                      socklen_t* const addrlen) const noexcept
+                                                             struct sockaddr* const addr,
+                                                             socklen_t* const addrlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -65,8 +66,8 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> SocketImpl::bind(const std::int32_t sockfd,
-                                            const struct sockaddr* const addr,
-                                            const socklen_t addrlen) const noexcept
+                                                   const struct sockaddr* const addr,
+                                                   const socklen_t addrlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -80,8 +81,8 @@ score::cpp::expected_blank<Error> SocketImpl::bind(const std::int32_t sockfd,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> SocketImpl::connect(const std::int32_t sockfd,
-                                               const struct sockaddr* const addr,
-                                               const socklen_t addrlen) const noexcept
+                                                      const struct sockaddr* const addr,
+                                                      const socklen_t addrlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -95,10 +96,10 @@ score::cpp::expected_blank<Error> SocketImpl::connect(const std::int32_t sockfd,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> SocketImpl::setsockopt(const std::int32_t sockfd,
-                                                  const std::int32_t level,
-                                                  const std::int32_t optname,
-                                                  const void* const optval,
-                                                  const socklen_t optlen) const noexcept
+                                                         const std::int32_t level,
+                                                         const std::int32_t optname,
+                                                         const void* const optval,
+                                                         const socklen_t optlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::setsockopt(sockfd, level, optname, optval, optlen) != 0)
@@ -110,10 +111,10 @@ score::cpp::expected_blank<Error> SocketImpl::setsockopt(const std::int32_t sock
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> SocketImpl::getsockopt(const std::int32_t sockfd,
-                                                  const std::int32_t level,
-                                                  const std::int32_t optname,
-                                                  void* const optval,
-                                                  socklen_t* const optlen) const noexcept
+                                                         const std::int32_t level,
+                                                         const std::int32_t optname,
+                                                         void* const optval,
+                                                         socklen_t* const optlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::getsockopt(sockfd, level, optname, optval, optlen) != 0)
@@ -125,9 +126,9 @@ score::cpp::expected_blank<Error> SocketImpl::getsockopt(const std::int32_t sock
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::recv(const std::int32_t sockfd,
-                                               void* const buf,
-                                               const size_t len,
-                                               const MessageFlag flags) const noexcept
+                                                      void* const buf,
+                                                      const size_t len,
+                                                      const MessageFlag flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::recv(sockfd, buf, len, messageflag_to_nativeflag(flags));
@@ -140,11 +141,11 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recv(const std::int32_t sockfd,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::recvfrom(const std::int32_t sockfd,
-                                                   void* const buf,
-                                                   const size_t len,
-                                                   const MessageFlag flags,
-                                                   sockaddr* const from_address,
-                                                   socklen_t* const address_length) const noexcept
+                                                          void* const buf,
+                                                          const size_t len,
+                                                          const MessageFlag flags,
+                                                          sockaddr* const from_address,
+                                                          socklen_t* const address_length) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::recvfrom(sockfd, buf, len, messageflag_to_nativeflag(flags), from_address, address_length);
@@ -157,11 +158,11 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvfrom(const std::int32_t soc
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::sendto(const std::int32_t sockfd,
-                                                 const void* const buf,
-                                                 const size_t len,
-                                                 const MessageFlag flags,
-                                                 const struct sockaddr* const addr,
-                                                 const socklen_t addrlen) const noexcept
+                                                        const void* const buf,
+                                                        const size_t len,
+                                                        const MessageFlag flags,
+                                                        const struct sockaddr* const addr,
+                                                        const socklen_t addrlen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::sendto(sockfd, buf, len, messageflag_to_nativeflag(flags), addr, addrlen);
@@ -174,8 +175,8 @@ score::cpp::expected<ssize_t, Error> SocketImpl::sendto(const std::int32_t sockf
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::recvmsg(const std::int32_t sockfd,
-                                                  msghdr* const message,
-                                                  const MessageFlag flags) const noexcept
+                                                         msghdr* const message,
+                                                         const MessageFlag flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::recvmsg(sockfd, message, messageflag_to_nativeflag(flags));
@@ -189,10 +190,10 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvmsg(const std::int32_t sock
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 // coverity[misra_cpp_2023_rule_6_9_2_violation]
 score::cpp::expected<ssize_t, Error> SocketImpl::recvmmsg(const std::int32_t sockfd,
-                                                   mmsghdr* msgvec,
-                                                   const unsigned int vlen,
-                                                   const MessageFlag flags,
-                                                   struct timespec* timeout) const noexcept
+                                                          mmsghdr* msgvec,
+                                                          const unsigned int vlen,
+                                                          const MessageFlag flags,
+                                                          struct timespec* timeout) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
@@ -231,9 +232,9 @@ score::cpp::expected<ssize_t, Error> SocketImpl::recvmmsg(const std::int32_t soc
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::send(const std::int32_t sockfd,
-                                               void* const buf,
-                                               const size_t len,
-                                               const MessageFlag flags) const noexcept
+                                                      void* const buf,
+                                                      const size_t len,
+                                                      const MessageFlag flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::send(sockfd, buf, len, messageflag_to_nativeflag(flags));
@@ -246,8 +247,8 @@ score::cpp::expected<ssize_t, Error> SocketImpl::send(const std::int32_t sockfd,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<ssize_t, Error> SocketImpl::sendmsg(const std::int32_t sockfd,
-                                                  const msghdr* const message,
-                                                  const MessageFlag flags) const noexcept
+                                                         const msghdr* const message,
+                                                         const MessageFlag flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const ssize_t ret = ::sendmsg(sockfd, message, messageflag_to_nativeflag(flags));
@@ -259,9 +260,9 @@ score::cpp::expected<ssize_t, Error> SocketImpl::sendmsg(const std::int32_t sock
 }
 
 score::cpp::expected<std::int32_t, Error> SocketImpl::sendmmsg(const std::int32_t sockfd,
-                                                        const mmsghdr* messages_array,
-                                                        const std::uint32_t message_array_length,
-                                                        const MessageFlag flags) const noexcept
+                                                               const mmsghdr* messages_array,
+                                                               const std::uint32_t message_array_length,
+                                                               const MessageFlag flags) const noexcept
 {
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #if defined(__QNX__)

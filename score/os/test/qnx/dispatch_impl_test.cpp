@@ -74,7 +74,7 @@ TEST_F(DispatchImplFixture, NameOpenCloseFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Name Open Close Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const char* const path = "tmp";
     constexpr std::uint32_t flags{0U};
@@ -96,7 +96,7 @@ TEST_F(DispatchImplFixture, dispatch_unblock)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Dispatch Unblock");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -125,7 +125,7 @@ TEST_F(DispatchImplFixture, resmgr_detachReturnsErrorIfPassInvalidId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Resmgr Detach returns Error If Pass Invalid Id");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -143,7 +143,7 @@ TEST_F(DispatchImplFixture, thread_pool_create_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Thread Pool Create Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     thread_pool_attr_t pool_attr{};
     auto pool = unit_->thread_pool_create(&pool_attr, POOL_FLAG_EXIT_SELF);
@@ -156,7 +156,7 @@ TEST_F(DispatchImplFixture, select_attach_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Select Attach Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -180,7 +180,7 @@ TEST_F(DispatchImplFixture, select_attach_frozen_context_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Select Attach Frozen Context Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     constexpr std::int32_t no_chid{-1};
     auto dpp = unit_->dispatch_create_channel(no_chid, DISPATCH_FLAG_NOLOCK);
@@ -211,7 +211,7 @@ TEST_F(DispatchImplFixture, select_detach_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Select Detach Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -237,7 +237,7 @@ TEST_F(DispatchImplFixture, select_detach_not_attached_fd_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Select Detach Not Attached Fd Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -257,7 +257,7 @@ TEST_F(DispatchImplFixture, pulse_attach_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Pulse Attach Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -281,7 +281,7 @@ TEST_F(DispatchImplFixture, pulse_attach_frozen_context_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Pulse Attach Frozen Context Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     constexpr std::int32_t no_chid{-1};
     auto dpp = unit_->dispatch_create_channel(no_chid, DISPATCH_FLAG_NOLOCK);
@@ -316,7 +316,7 @@ TEST_F(DispatchImplFixture, pulse_detach_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Pulse Detach Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -342,7 +342,7 @@ TEST_F(DispatchImplFixture, pulse_detach_not_attached_code_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Pulse Detach Not Attached Code Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto dpp = unit_->dispatch_create();
     ASSERT_TRUE(dpp);
@@ -363,7 +363,7 @@ TEST_F(DispatchImplFixture, msg_deliver_event_returns_error_if_invalid_rcvid)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Msg Deliver Event returns error if invalid rcvid is passed");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     constexpr sigevent* no_event{nullptr};
 
@@ -378,7 +378,7 @@ TEST_F(DispatchImplFixture, msg_deliver_event_flow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Msg Deliver Event flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     constexpr auto kPulseCode{_PULSE_CODE_MINAVAIL + 6};
 
@@ -445,7 +445,7 @@ TEST_F(DispatchImplFixture, thread_pool_start_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Thread Pool Start Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     thread_pool_attr_t pool_attr{};
     auto dpp = ::dispatch_create();

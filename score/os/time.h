@@ -34,17 +34,17 @@ class Time : public ObjectSeam<Time>
     static Time& instance() noexcept;
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_settime(const clockid_t clkid,
-                                                             const struct timespec* const tp) const noexcept = 0;
+                                                                    const struct timespec* const tp) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_gettime(const clockid_t clkid,
-                                                             struct timespec* const tp) const noexcept = 0;
+                                                                    struct timespec* const tp) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_getres(const clockid_t clkid,
-                                                            struct timespec* const res) const noexcept = 0;
+                                                                   struct timespec* const res) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -53,8 +53,8 @@ class Time : public ObjectSeam<Time>
     /// @brief Creates a timer
     /// @see https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/t/timer_create.html
     virtual score::cpp::expected<std::int32_t, Error> timer_create(const clockid_t clock_id,
-                                                            sigevent* const evp,
-                                                            timer_t* const timerid) const noexcept = 0;
+                                                                   sigevent* const evp,
+                                                                   timer_t* const timerid) const noexcept = 0;
 
     /// @brief Deletes a timer
     /// @see https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/t/timer_delete.html
@@ -63,14 +63,14 @@ class Time : public ObjectSeam<Time>
     /// @brief Arms a timer with the given expiration time, disarm it, or set its tolerance
     /// @see https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/t/timer_settime.html
     virtual score::cpp::expected<std::int32_t, Error> timer_settime(const timer_t timerid,
-                                                             const int32_t flags,
-                                                             const itimerspec* const value,
-                                                             itimerspec* const ovalue) const noexcept = 0;
+                                                                    const int32_t flags,
+                                                                    const itimerspec* const value,
+                                                                    itimerspec* const ovalue) const noexcept = 0;
 
     /// @brief Obtains ID of a process CPU-time clock
     /// @see https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/c/clock_getcpuclockid.html
     virtual score::cpp::expected<std::int32_t, Error> clock_getcpuclockid(const pid_t pid,
-                                                                   clockid_t& clock_id) const noexcept = 0;
+                                                                          clockid_t& clock_id) const noexcept = 0;
 
     virtual ~Time() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

@@ -12,10 +12,10 @@
  ********************************************************************************/
 
 #include "score/json/json_writer.h"
-#include "score/language/safecpp/safe_math/safe_math.h"
 #include "score/json/i_json_writer.h"
 #include "score/json/internal/model/error.h"
 #include "score/json/internal/writer/json_serialize/json_serialize.h"
+#include "score/language/safecpp/safe_math/safe_math.h"
 
 #include <score/assert.hpp>
 
@@ -39,8 +39,8 @@ namespace
 
 template <typename T>
 score::Result<void> ToFileInternal(const T& json_data,
-                                 const std::string_view& file_path,
-                                 score::filesystem::IFileFactory& file_factory)
+                                   const std::string_view& file_path,
+                                   score::filesystem::IFileFactory& file_factory)
 {
     const std::string file_path_string{file_path.data(), file_path.size()};
     const auto file = file_factory.Open(file_path_string, std::ios::out | std::ios::trunc);
@@ -94,13 +94,15 @@ inline auto abs_magnitude_unsigned(T val) noexcept
     {
         const auto abs_val = score::safe_math::Abs(val);
         const auto cast_res = score::safe_math::Cast<U>(abs_val);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(cast_res.has_value(), "Safe cast failed in abs_magnitude_unsigned (signed)");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(cast_res.has_value(),
+                                                    "Safe cast failed in abs_magnitude_unsigned (signed)");
         return cast_res.value();
     }
     else
     {
         const auto cast_res = score::safe_math::Cast<U>(val);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(cast_res.has_value(), "Safe cast failed in abs_magnitude_unsigned (unsigned)");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(cast_res.has_value(),
+                                                    "Safe cast failed in abs_magnitude_unsigned (unsigned)");
         return cast_res.value();
     }
 }
@@ -169,7 +171,8 @@ class OptimizedNumPut : public std::num_put<char>
     // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, long long v) const override
     {
-        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE(
+            "This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
     // LCOV_EXCL_STOP
@@ -178,7 +181,8 @@ class OptimizedNumPut : public std::num_put<char>
     // LCOV_EXCL_START see SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE
     iter_type do_put(iter_type out, std::ios_base& s, char_type fill, unsigned long long v) const override
     {
-        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("This code is unreachable with tested toolchains and target platforms");
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE(
+            "This code is unreachable with tested toolchains and target platforms");
         return OptimizedPutForInts(out, s, fill, v);
     }
     // LCOV_EXCL_STOP
@@ -195,9 +199,9 @@ class OptimizedNumPut : public std::num_put<char>
 
 template <typename T>
 score::Result<void> ToFileInternalAtomic(const T& json_data,
-                                       const std::string_view& file_path,
-                                       score::filesystem::IFileFactory& file_factory,
-                                       const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership)
+                                         const std::string_view& file_path,
+                                         score::filesystem::IFileFactory& file_factory,
+                                         const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership)
 
 {
     return file_factory.AtomicUpdate(std::string{file_path}, std::ios::out | std::ios::trunc, atomic_ownership)
@@ -245,14 +249,14 @@ score::Result<std::string> ToBufferInternal(const T& json_data)
 }  // namespace
 
 score::json::JsonWriter::JsonWriter(FileSyncMode file_sync_mode,
-                                  const score::filesystem::AtomicUpdateOwnershipFlags ownership) noexcept
+                                    const score::filesystem::AtomicUpdateOwnershipFlags ownership) noexcept
     : IJsonWriter{}, file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}
 {
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::Object& json_data,
-                                                const std::string_view& file_path,
-                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
+                                                    const std::string_view& file_path,
+                                                    std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)
                ? ToFileInternalAtomic(
@@ -261,8 +265,8 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::Object& j
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& json_data,
-                                                const std::string_view& file_path,
-                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
+                                                    const std::string_view& file_path,
+                                                    std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)
                ? ToFileInternalAtomic(
@@ -271,8 +275,8 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& jso
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json_data,
-                                                const std::string_view& file_path,
-                                                std::shared_ptr<score::filesystem::IFileFactory> file_factory)
+                                                    const std::string_view& file_path,
+                                                    std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
     return (file_sync_mode_ == FileSyncMode::kSynced)
                ? ToFileInternalAtomic(

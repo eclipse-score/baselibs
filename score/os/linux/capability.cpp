@@ -165,10 +165,10 @@ std::int32_t LinuxProcessCapabilitiesImpl::compare(const ProcessCapabilitySets& 
 }
 
 score::cpp::expected<std::int32_t, Error> LinuxProcessCapabilitiesImpl::prctl(const std::int32_t option,
-                                                                       const std::uint64_t arg2,
-                                                                       const std::uint64_t arg3,
-                                                                       const std::uint64_t arg4,
-                                                                       const std::uint64_t arg5) noexcept
+                                                                              const std::uint64_t arg2,
+                                                                              const std::uint64_t arg3,
+                                                                              const std::uint64_t arg4,
+                                                                              const std::uint64_t arg5) noexcept
 {
     const std::int32_t result = ::prctl(option, arg2, arg3, arg4, arg5);
     if (result == -1)
@@ -180,4 +180,4 @@ score::cpp::expected<std::int32_t, Error> LinuxProcessCapabilitiesImpl::prctl(co
 
 }  // NAMESPACE os
 
-}  // NAMESPACE bmw
+}  // namespace score

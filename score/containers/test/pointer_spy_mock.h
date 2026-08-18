@@ -46,4 +46,3 @@ class PointerSpyMock
 }  // namespace score::containers::test
 
 #endif  // SCORE_LIB_CONTAINERS_POINTER_SPY_MOCK_H
-

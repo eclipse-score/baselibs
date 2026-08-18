@@ -156,7 +156,7 @@ inline auto logger_type_info()
                     // needed to copy data to the target location and arithmetic used to get offset from this location
                     // tolerated per design
                     score::cpp::span<Byte> dataSpan{static_cast<Byte*>(data),
-                                             static_cast<typename score::cpp::span<Byte*>::size_type>(size)};
+                                                    static_cast<typename score::cpp::span<Byte*>::size_type>(size)};
                     std::ignore = memcpy(dataSpan.subspan(sizeof(uint32_t)).data(), payload_.first, strsize);
                 }
                 else

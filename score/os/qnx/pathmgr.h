@@ -29,7 +29,7 @@ class Pathmgr : public ObjectSeam<Pathmgr>
     static Pathmgr& instance() noexcept;
 
     virtual score::cpp::expected_blank<Error> pathmgr_symlink(const char* const path,
-                                                       const char* const symlink) const noexcept = 0;
+                                                              const char* const symlink) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> pathmgr_unlink(const char* const symlink) const noexcept = 0;
 
     virtual ~Pathmgr() = default;

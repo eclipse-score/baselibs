@@ -49,7 +49,7 @@ namespace
  /// \threadsafe      TRUE
  /// \reentrant       TRUE
  */
-inline auto SplitStringView(std::string_view const view, std::size_t const pivot) noexcept
+inline auto SplitStringView(const std::string_view view, const std::size_t pivot) noexcept
     -> std::pair<std::string_view, std::string_view>
 {
     return {view.substr(0, pivot), view.substr(pivot)};
@@ -129,7 +129,7 @@ auto JsonOps::Skip(const char character) noexcept -> bool
  *   - Return an error.
  * \endinternal
  */
-auto JsonOps::CheckString(std::string_view const string, std::string_view const error_msg) noexcept
+auto JsonOps::CheckString(const std::string_view string, const std::string_view error_msg) noexcept
     -> score::Result<void>
 {
     return ReadString(string).and_then([&error_msg](bool val) noexcept {
@@ -151,11 +151,11 @@ auto JsonOps::CheckString(std::string_view const string, std::string_view const 
  *   - Return an error.
  * \endinternal
  */
-auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
+auto JsonOps::ReadString(const std::string_view string) noexcept -> Result<bool>
 {
     AssertCondition(!string.empty(), "JsonOps::ReadString: Cannot check for empty string");
 
-    std::size_t const total_size{string.size()};
+    const std::size_t total_size{string.size()};
     bool is_same{true};
     std::string_view to_be_read{string};
     return this
@@ -184,7 +184,7 @@ auto JsonOps::ReadString(std::string_view const string) noexcept -> Result<bool>
  *  - Seek back the number of bytes passed from the current position.
  * \endinternal
  */
-auto JsonOps::RewindIf(const bool condition, std::size_t const num) noexcept -> score::Result<void>
+auto JsonOps::RewindIf(const bool condition, const std::size_t num) noexcept -> score::Result<void>
 {
     score::Result<void> result{};
     if (condition)
@@ -254,7 +254,7 @@ auto JsonOps::SkipWhitespace() noexcept -> bool
  *   - Break.
  * \endinternal
  */
-auto JsonOps::Read(std::uint64_t const num_to_read,
+auto JsonOps::Read(const std::uint64_t num_to_read,
                    const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
     -> Result<std::uint64_t>
 {
@@ -284,7 +284,7 @@ auto JsonOps::Read(std::uint64_t const num_to_read,
  * - If the callback has not been executed and there was no error, execute the callback.
  * \endinternal
  */
-auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
+auto JsonOps::ReadExactly(const std::uint64_t num_to_read,
                           const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
     -> Result<void>
 {
@@ -330,7 +330,7 @@ auto JsonOps::ReadExactly(std::uint64_t const num_to_read,
  *   - Break.
  * \endinternal
  */
-auto JsonOps::ReadUntil(std::string_view const delimiter,
+auto JsonOps::ReadUntil(const std::string_view delimiter,
                         const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
     -> Result<OptChar>
 {
@@ -341,7 +341,7 @@ auto JsonOps::ReadUntil(std::string_view const delimiter,
 
     while (!done)
     {
-        std::int64_t const ch{stream.peek()};
+        const std::int64_t ch{stream.peek()};
 
         if (ch == std::char_traits<char>::eof())
         {
@@ -367,7 +367,7 @@ auto JsonOps::ReadUntil(std::string_view const delimiter,
             {
                 if (!buffer.empty())
                 {
-                    std::string_view const view{buffer.data(), buffer.size()};
+                    const std::string_view view{buffer.data(), buffer.size()};
                     callback(view);
                 }
                 result = Result<OptChar>{OptChar{ch}};

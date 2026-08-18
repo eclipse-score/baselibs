@@ -92,8 +92,8 @@ class Stat : public ObjectSeam<Stat>
     // argument)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::cpp::expected_blank<Error> stat(const char* const file,
-                                            StatBuffer& buf,
-                                            const bool resolve_symlinks = true) const noexcept = 0;
+                                                   StatBuffer& buf,
+                                                   const bool resolve_symlinks = true) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fstat(const std::int32_t fd, StatBuffer& buf) const noexcept = 0;
@@ -115,9 +115,9 @@ class Stat : public ObjectSeam<Stat>
     // resolve_symlinks arg)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::cpp::expected_blank<Error> fchmodat(const std::int32_t fd,
-                                                const char* const path,
-                                                const Mode mode,
-                                                const bool resolve_symlinks = true) const noexcept = 0;
+                                                       const char* const path,
+                                                       const Mode mode,
+                                                       const bool resolve_symlinks = true) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual ~Stat() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

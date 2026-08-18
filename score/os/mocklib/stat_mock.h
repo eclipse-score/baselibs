@@ -26,9 +26,15 @@ class StatMock : public Stat
 {
   public:
     MOCK_METHOD(score::cpp::expected_blank<Error>, stat, (const char*, StatBuffer&, bool), (const, noexcept, override));
-    MOCK_METHOD(score::cpp::expected_blank<Error>, fstat, (const std::int32_t, StatBuffer&), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                fstat,
+                (const std::int32_t, StatBuffer&),
+                (const, noexcept, override));
     MOCK_METHOD(score::cpp::expected_blank<Error>, mkdir, (const char*, const Stat::Mode), (const, noexcept, override));
-    MOCK_METHOD(score::cpp::expected_blank<Error>, chmod, (const char* path, const Mode mode), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                chmod,
+                (const char* path, const Mode mode),
+                (const, noexcept, override));
     MOCK_METHOD(score::cpp::expected_blank<Error>,
                 fchmod,
                 (const std::int32_t, const Stat::Mode),

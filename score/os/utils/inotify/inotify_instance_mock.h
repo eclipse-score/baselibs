@@ -39,7 +39,10 @@ class InotifyInstanceMock : public InotifyInstance
                 (safecpp::zstring_view, Inotify::EventMask),
                 (noexcept, override));
     MOCK_METHOD(score::cpp::expected_blank<Error>, RemoveWatch, (InotifyWatchDescriptor), (noexcept, override));
-    MOCK_METHOD((score::cpp::expected<score::cpp::static_vector<InotifyEvent, max_events>, Error>), Read, (), (noexcept, override));
+    MOCK_METHOD((score::cpp::expected<score::cpp::static_vector<InotifyEvent, max_events>, Error>),
+                Read,
+                (),
+                (noexcept, override));
 };
 
 }  // namespace os

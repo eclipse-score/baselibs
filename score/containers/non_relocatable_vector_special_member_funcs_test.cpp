@@ -90,8 +90,8 @@ using NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture = NonRelocata
 TYPED_TEST_SUITE(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture,
                  NonMoveableAndCopyableElementTypeAllocatorTypes, );
 
-using NonRelocatableVectorSpecialMemberFunctionRecorderFixture = NonRelocatableVectorFixture<
-    ContainerTestTypes<SpecialMemberFunctionRecordingType, test::FancyPointerAllocator>>;
+using NonRelocatableVectorSpecialMemberFunctionRecorderFixture =
+    NonRelocatableVectorFixture<ContainerTestTypes<SpecialMemberFunctionRecordingType, test::FancyPointerAllocator>>;
 
 TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithZeroElementsSetsSizeAndCapacityToZero)
 {

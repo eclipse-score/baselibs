@@ -380,7 +380,7 @@ class DepthCounter final
     auto Pop() noexcept -> std::size_t
     {
 
-        std::size_t const count{this->counter_.top()};
+        const std::size_t count{this->counter_.top()};
 
         this->counter_.pop();
 

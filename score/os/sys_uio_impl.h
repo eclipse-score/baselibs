@@ -24,8 +24,8 @@ class SysUioImpl final : public SysUio
 {
   public:
     score::cpp::expected<std::int64_t, Error> writev(const std::int32_t fd,
-                                              const struct iovec* iovec_ptr,
-                                              const std::int32_t count) const noexcept override;
+                                                     const struct iovec* iovec_ptr,
+                                                     const std::int32_t count) const noexcept override;
 };
 
 }  // namespace os

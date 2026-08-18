@@ -275,7 +275,9 @@ class NonRelocatableVectorPointerInteractionFixture : public ::testing::Test
             // ... and two pointer dereferences take place, capturing which addresses are dereferenced.
             EXPECT_CALL(pointer_spy, Arrow(testing::_))
                 .Times(2)
-                .WillRepeatedly(testing::Invoke([&arrow_args](ElementType* ptr) { arrow_args.push_back(ptr); }));
+                .WillRepeatedly(testing::Invoke([&arrow_args](ElementType* ptr) {
+                    arrow_args.push_back(ptr);
+                }));
 
             // when calling the accessor on the NonRelocatableVector
             result = access(*unit_);
@@ -297,8 +299,9 @@ TEST_F(NonRelocatableVectorPointerInteractionFixture, DataDereferencesBeginAndEn
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
     // when calling data() while spying on the element pointer
-    const auto [data_ptr, arrow_args] =
-        WhenAccessingWhileSpyingOnPointer([](auto& vector) { return vector.data(); });
+    const auto [data_ptr, arrow_args] = WhenAccessingWhileSpyingOnPointer([](auto& vector) {
+        return vector.data();
+    });
 
     // Then two pointer-dereferences happened
     ASSERT_EQ(arrow_args.size(), 2U);
@@ -314,8 +317,9 @@ TEST_F(NonRelocatableVectorPointerInteractionFixture, BeginDereferencesBeginAndE
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
     // when calling begin() while spying on the element pointer
-    const auto [begin_it, arrow_args] =
-        WhenAccessingWhileSpyingOnPointer([](auto& vector) { return vector.begin(); });
+    const auto [begin_it, arrow_args] = WhenAccessingWhileSpyingOnPointer([](auto& vector) {
+        return vector.begin();
+    });
 
     // Then two pointer-dereferences happened
     ASSERT_EQ(arrow_args.size(), 2U);
@@ -331,8 +335,9 @@ TEST_F(NonRelocatableVectorPointerInteractionFixture, EndDereferencesBeginAndEnd
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
     // when calling end() while spying on the element pointer
-    const auto [end_it, arrow_args] =
-        WhenAccessingWhileSpyingOnPointer([](auto& vector) { return vector.end(); });
+    const auto [end_it, arrow_args] = WhenAccessingWhileSpyingOnPointer([](auto& vector) {
+        return vector.end();
+    });
 
     // Then two pointer-dereferences happened
     ASSERT_EQ(arrow_args.size(), 2U);

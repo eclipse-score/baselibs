@@ -37,11 +37,12 @@ class Select : public ObjectSeam<Select>
     /// \return Either concrete OS-dependent instance or respective set mock instance
     static Select& instance() noexcept;
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> select(const std::int32_t nfds,
-                                                               fd_set* const readfds,
-                                                               fd_set* const writefds,
-                                                               fd_set* const exceptfds,
-                                                               struct timeval* const timeout) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> select(
+        const std::int32_t nfds,
+        fd_set* const readfds,
+        fd_set* const writefds,
+        fd_set* const exceptfds,
+        struct timeval* const timeout) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Select() = default;

@@ -36,8 +36,8 @@ class SysWait : public ObjectSeam<SysWait>
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<pid_t, Error> waitpid(const pid_t pid,
-                                                std::int32_t* const stat_loc,
-                                                const std::int32_t options) const noexcept = 0;
+                                                       std::int32_t* const stat_loc,
+                                                       const std::int32_t options) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~SysWait() = default;

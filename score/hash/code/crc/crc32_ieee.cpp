@@ -57,10 +57,11 @@ Result<void> Crc32IeeeHashCalculator::Update(const score::cpp::span<const std::u
 Hash Crc32IeeeHashCalculator::Finalize() noexcept
 {
     const auto checksum = ~checksum_;
-    const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> data{static_cast<std::uint8_t>(checksum & 0xFFU),
-                                                                static_cast<std::uint8_t>((checksum >> 8U) & 0xFFU),
-                                                                static_cast<std::uint8_t>((checksum >> 16U) & 0xFFU),
-                                                                static_cast<std::uint8_t>((checksum >> 24U) & 0xFFU)};
+    const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> data{
+        static_cast<std::uint8_t>(checksum & 0xFFU),
+        static_cast<std::uint8_t>((checksum >> 8U) & 0xFFU),
+        static_cast<std::uint8_t>((checksum >> 16U) & 0xFFU),
+        static_cast<std::uint8_t>((checksum >> 24U) & 0xFFU)};
     return Hash{HashAlgorithm::kCrc32, data};
 }
 

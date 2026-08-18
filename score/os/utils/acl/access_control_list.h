@@ -51,7 +51,8 @@ class AccessControlList : public IAccessControlList
     /// \param predicate Callable that will inspect an entry and return whether or not a match was found.
     ///                  The expected signature of the callable is
     ///                  score::cpp::expected<bool, score::os::Error>(score::os::Acl::Entry)
-    /// \return An entry if a matching one was found, score::cpp::nullopt otherwise, or an error if, during entry inspection,
+    /// \return An entry if a matching one was found, score::cpp::nullopt otherwise, or an error if, during entry
+    /// inspection,
     ///         an error was encountered.
     score::cpp::expected<score::cpp::optional<Acl::Entry>, Error> FindFirstEntry(F&& predicate) const noexcept;
 

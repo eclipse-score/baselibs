@@ -22,7 +22,7 @@ using ::testing::Invoke;
 FilesystemFactoryMockObjects::FilesystemFactoryMockObjects()
 {
     score::cpp::ignore = ON_CALL(*this, CreateInstance())
-                      .WillByDefault(Invoke(this, &FilesystemFactoryMockObjects::MockObjectsCreateInstance));
+                             .WillByDefault(Invoke(this, &FilesystemFactoryMockObjects::MockObjectsCreateInstance));
 }
 
 Filesystem FilesystemFactoryMockObjects::MockObjectsCreateInstance() const noexcept

@@ -26,15 +26,18 @@ class Stdio : public ObjectSeam<Stdio>
   public:
     static Stdio& instance() noexcept;
 
-    virtual score::cpp::expected<FILE*, Error> fopen(const char* const filename, const char* const mode) const noexcept = 0;
+    virtual score::cpp::expected<FILE*, Error> fopen(const char* const filename,
+                                                     const char* const mode) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> fclose(FILE* const stream) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> remove(const char* const pathname) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<Error> rename(const char* const oldname, const char* const newname) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> rename(const char* const oldname,
+                                                     const char* const newname) const noexcept = 0;
 
-    virtual score::cpp::expected<FILE*, Error> popen(const char* const filename, const char* const mode) const noexcept = 0;
+    virtual score::cpp::expected<FILE*, Error> popen(const char* const filename,
+                                                     const char* const mode) const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, Error> pclose(FILE* const stream) const noexcept = 0;
 

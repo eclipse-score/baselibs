@@ -19,7 +19,8 @@
 #include <unistd.h>
 #endif  // __QNX__
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::close(const std::int32_t fd) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::close(
+    const std::int32_t fd) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -30,7 +31,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::cl
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::unlink(const char* const pathname) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::unlink(
+    const char* const pathname) const noexcept
 {
     if (::unlink(pathname) == -1)
     {
@@ -39,8 +41,9 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::un
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::access(const char* const pathname,
-                                                                          const AccessMode mode) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::access(
+    const char* const pathname,
+    const AccessMode mode) const noexcept
 {
     std::uint32_t native_mode{};
     if (static_cast<std::int32_t>(mode & Unistd::AccessMode::kRead) != 0)
@@ -69,7 +72,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ac
 
 // Wrapped function requires C-style array param
 // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe(std::int32_t pipefd[2]) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe(
+    std::int32_t pipefd[2]) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     /* It is immposible to cover the return statement */
@@ -83,7 +87,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pi
     return {};
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::UnistdImpl::dup(const std::int32_t oldfd) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::UnistdImpl::dup(
+    const std::int32_t oldfd) const noexcept
 {
     const std::int32_t output = ::dup(oldfd);
     if (output == -1)
@@ -93,8 +98,9 @@ score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::Unistd
     return output;
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::UnistdImpl::dup2(const std::int32_t oldfd,
-                                                                                const std::int32_t newfd) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::UnistdImpl::dup2(
+    const std::int32_t oldfd,
+    const std::int32_t newfd) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -107,8 +113,8 @@ score::cpp::expected<std::int32_t, score::os::Error> score::os::internal::Unistd
 }
 
 score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::read(const std::int32_t fd,
-                                                                           void* const buf,
-                                                                           const size_t count) const noexcept
+                                                                                      void* const buf,
+                                                                                      const size_t count) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -120,10 +126,11 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl:
     return output;
 }
 
-score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::pread(const std::int32_t fd,
-                                                                            void* const buf,
-                                                                            const size_t count,
-                                                                            const off_t offset) const noexcept
+score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::pread(
+    const std::int32_t fd,
+    void* const buf,
+    const size_t count,
+    const off_t offset) const noexcept
 {
     const ssize_t output = ::pread(fd, buf, count, offset);
     if (output == -1)
@@ -133,9 +140,8 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl:
     return output;
 }
 
-score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::write(const std::int32_t fd,
-                                                                            const void* const buf,
-                                                                            const size_t count) const noexcept
+score::cpp::expected<ssize_t, score::os::Error>
+score::os::internal::UnistdImpl::write(const std::int32_t fd, const void* const buf, const size_t count) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -147,10 +153,11 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl:
     return output;
 }
 
-score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::pwrite(const std::int32_t fd,
-                                                                             const void* const buf,
-                                                                             const size_t count,
-                                                                             const off_t offset) const noexcept
+score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::pwrite(
+    const std::int32_t fd,
+    const void* const buf,
+    const size_t count,
+    const off_t offset) const noexcept
 {
     const ssize_t output = ::pwrite(fd, buf, count, offset);
     if (output == -1)
@@ -160,9 +167,10 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl:
     return output;
 }
 
-score::cpp::expected<off_t, score::os::Error> score::os::internal::UnistdImpl::lseek(const std::int32_t fd,
-                                                                          const off_t offset,
-                                                                          const std::int32_t whence) const noexcept
+score::cpp::expected<off_t, score::os::Error> score::os::internal::UnistdImpl::lseek(
+    const std::int32_t fd,
+    const off_t offset,
+    const std::int32_t whence) const noexcept
 {
     const off_t output = ::lseek(fd, offset, whence);
     if (output == -1)
@@ -172,8 +180,9 @@ score::cpp::expected<off_t, score::os::Error> score::os::internal::UnistdImpl::l
     return output;
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ftruncate(const std::int32_t fd,
-                                                                             const off_t length) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ftruncate(
+    const std::int32_t fd,
+    const off_t length) const noexcept
 {
     if (::ftruncate(fd, length) == -1)
     {
@@ -252,9 +261,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::se
     return {};
 }
 
-score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl::readlink(const char* const path,
-                                                                               char* const buf,
-                                                                               const size_t bufsize) const noexcept
+score::cpp::expected<ssize_t, score::os::Error>
+score::os::internal::UnistdImpl::readlink(const char* const path, char* const buf, const size_t bufsize) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -266,7 +274,8 @@ score::cpp::expected<ssize_t, score::os::Error> score::os::internal::UnistdImpl:
     return output;
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fsync(const std::int32_t fd) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fsync(
+    const std::int32_t fd) const noexcept
 {
     if (::fsync(fd) == -1)
     {
@@ -275,7 +284,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fs
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fdatasync(const std::int32_t fd) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fdatasync(
+    const std::int32_t fd) const noexcept
 {
     if (::fdatasync(fd) == -1)
     {
@@ -284,8 +294,9 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::fd
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::nanosleep(const struct timespec* const req,
-                                                                             struct timespec* const rem) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::nanosleep(
+    const struct timespec* const req,
+    struct timespec* const rem) const noexcept
 {
     if (::nanosleep(req, rem) == -1)
     {
@@ -305,8 +316,9 @@ score::cpp::expected<std::int64_t, score::os::Error> score::os::internal::Unistd
     return output;
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::link(const char* const oldpath,
-                                                                        const char* const newpath) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::link(
+    const char* const oldpath,
+    const char* const newpath) const noexcept
 {
     if (::link(oldpath, newpath) == -1)
     {
@@ -315,8 +327,9 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::li
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::symlink(const char* const path1,
-                                                                           const char* const path2) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::symlink(
+    const char* const path1,
+    const char* const path2) const noexcept
 {
     if (::symlink(path1, path2) == -1)
     {
@@ -325,7 +338,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::sy
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::chdir(const char* const path) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::chdir(
+    const char* const path) const noexcept
 {
     if (::chdir(path) == -1)
     {
@@ -335,8 +349,8 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ch
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::chown(const char* const path,
-                                                                         const uid_t uid,
-                                                                         const gid_t gid) const noexcept
+                                                                                    const uid_t uid,
+                                                                                    const gid_t gid) const noexcept
 {
     if (0 != ::chown(path, uid, gid))
     {
@@ -346,7 +360,7 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ch
 }
 
 score::cpp::expected<char*, score::os::Error> score::os::internal::UnistdImpl::getcwd(char* const buf,
-                                                                           const size_t size) const noexcept
+                                                                                      const size_t size) const noexcept
 {
     char* const result = ::getcwd(buf, size);
     if (nullptr == result)
@@ -361,11 +375,12 @@ std::uint32_t score::os::internal::UnistdImpl::alarm(const std::uint32_t seconds
     return ::alarm(seconds);
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::getpwnam_r(const char* name,
-                                                                              struct passwd* pwd,
-                                                                              char* buffer,
-                                                                              size_t bufsize,
-                                                                              struct passwd** result) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::getpwnam_r(
+    const char* name,
+    struct passwd* pwd,
+    char* buffer,
+    size_t bufsize,
+    struct passwd** result) const noexcept
 {
     if (0 != ::getpwnam_r(name, pwd, buffer, bufsize, result))
     {
@@ -391,7 +406,8 @@ std::unique_ptr<score::os::Unistd> score::os::Unistd::Default() noexcept
     return std::make_unique<internal::UnistdImpl>();
 }
 
-score::cpp::pmr::unique_ptr<score::os::Unistd> score::os::Unistd::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Unistd> score::os::Unistd::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 {
     return score::cpp::pmr::make_unique<internal::UnistdImpl>(memory_resource);
 }

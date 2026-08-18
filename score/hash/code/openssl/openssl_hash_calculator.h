@@ -61,7 +61,8 @@ class OpensslHashCalculator final : public IHashCalculator
                           openssl::StructDigestCtx* const message_digest_context,
                           const openssl::IOpensslLib& openssl);
 
-    std::unique_ptr<openssl::StructDigestCtx, score::cpp::callback<void(openssl::StructDigestCtx*)>> message_digest_context_;
+    std::unique_ptr<openssl::StructDigestCtx, score::cpp::callback<void(openssl::StructDigestCtx*)>>
+        message_digest_context_;
     HashAlgorithm algorithm_;
 
     std::reference_wrapper<const openssl::IOpensslLib> openssl_;

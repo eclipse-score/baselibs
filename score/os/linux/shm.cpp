@@ -13,10 +13,10 @@
 #include "score/os/linux/shm.h"
 
 std::int32_t score::os::shmctl(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage
-                              */
-                             const std::int32_t shmid,
-                             const std::int32_t cmd,
-                             struct shmid_ds* buf)
+                                */
+                               const std::int32_t shmid,
+                               const std::int32_t cmd,
+                               struct shmid_ds* buf)
 {
     return ::shmctl(shmid, cmd, buf);
 }

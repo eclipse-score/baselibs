@@ -20,10 +20,10 @@ namespace os
 /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SelectImpl::select(const std::int32_t nfds,
-                                                               fd_set* const readfds,
-                                                               fd_set* const writefds,
-                                                               fd_set* const exceptfds,
-                                                               struct timeval* const timeout) const noexcept
+                                                                        fd_set* const readfds,
+                                                                        fd_set* const writefds,
+                                                                        fd_set* const exceptfds,
+                                                                        struct timeval* const timeout) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 /* KW_SUPPRESS_END:MISRA.PTR.TO_PTR_TO_PTR:Used parameters match the param requirements of wrapped function */

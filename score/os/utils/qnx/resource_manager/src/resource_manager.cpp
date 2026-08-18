@@ -137,7 +137,8 @@ std::int32_t ResourceManager::InitializeDispatchInterface()
     }
     else
     {
-        this->logger_.LogError() << "Failed to initialize dispatch interface, Error:" << strerror(score::os::geterrno());
+        this->logger_.LogError() << "Failed to initialize dispatch interface, Error:"
+                                 << strerror(score::os::geterrno());
         return kResourceManagerError;
     }
 }
@@ -238,7 +239,8 @@ std::int32_t ResourceManager::AllocateContextStructure()
     }
     else
     {
-        this->logger_.LogError() << "Failed to allocate the context structure. Erro:" << strerror(score::os::geterrno());
+        this->logger_.LogError() << "Failed to allocate the context structure. Erro:"
+                                 << strerror(score::os::geterrno());
         return kResourceManagerError;
     }
 }

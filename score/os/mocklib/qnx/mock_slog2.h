@@ -52,10 +52,10 @@ class MockSlog2 : public Slog2
                 (const, noexcept));
 
     score::cpp::expected<std::int32_t, score::os::Error> slog2f(slog2_buffer_t buffer,
-                                                       std::uint16_t code,
-                                                       std::uint8_t severity,
-                                                       const char* format,
-                                                       ...) const noexcept override;
+                                                                std::uint16_t code,
+                                                                std::uint8_t severity,
+                                                                const char* format,
+                                                                ...) const noexcept override;
 };
 
 }  // namespace qnx

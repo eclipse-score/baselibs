@@ -19,8 +19,8 @@ namespace os
 {
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper Function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> IoctlImpl::ioctl(const std::int32_t d,
-                                            const std::int32_t request,
-                                            void* const arg) const noexcept
+                                                   const std::int32_t request,
+                                                   void* const arg) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper Function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.

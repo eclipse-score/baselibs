@@ -41,7 +41,7 @@ namespace unit_test
  */
 TEST(UT__JsonOps__JsonData, ConstructFromFile)
 {
-    std::string const file{"/tmp/vajson_test.json"};
+    const std::string file{"/tmp/vajson_test.json"};
     std::FILE* const fp{std::fopen(file.c_str(), "w")};
     ASSERT_NE(fp, nullptr);
     ASSERT_EQ(std::fclose(fp), 0);
@@ -81,7 +81,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromCStringView)
  */
 TEST(UT__JsonOps__JsonData, ConstructFromSpan)
 {
-    std::string const data{"doesntmatter"};
+    const std::string data{"doesntmatter"};
     const score::cpp::span<const char> view{data.data(), data.size()};
 
     const Result<JsonData> result{JsonData::FromBuffer(view)};
@@ -110,7 +110,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
 TEST(UT__JsonOps__JsonData, ReadsUtf8Bom)
 {
     // The UTF-8 BOM.
-    std::string const data{'\xEF', '\xBB', '\xBF'};
+    const std::string data{'\xEF', '\xBB', '\xBF'};
 
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{data})};
     ASSERT_TRUE(result.has_value());
@@ -128,7 +128,7 @@ TEST(UT__JsonOps__JsonData, ReadsUtf8Bom)
 TEST(UT__JsonOps__JsonData, FailsOnUnknownBom)
 {
     // The UTF-16 BE BOM (not UTF-8, should not be recognized).
-    std::string const data{'\xFE', '\xFF'};
+    const std::string data{'\xFE', '\xFF'};
 
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{data})};
     ASSERT_TRUE(result.has_value());

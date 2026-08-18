@@ -28,7 +28,8 @@ bool IsOs(const std::string os)
 {
     bool returnValue{false};
     /* Branching is due to hidden exception handling */
-    score::cpp::optional<score::os::SystemInfo> sysInfo = score::os::Uname::instance().GetUname(); /* LCOV_EXCL_BR_LINE */
+    score::cpp::optional<score::os::SystemInfo> sysInfo =
+        score::os::Uname::instance().GetUname(); /* LCOV_EXCL_BR_LINE */
 
     if (sysInfo.has_value())
     {
@@ -38,13 +39,13 @@ bool IsOs(const std::string os)
         std::string sysName{info.sysname};
         /* LCOV_EXCL_BR_STOP */
         score::cpp::ignore = std::transform(sysName.begin(),
-                                     sysName.end(),
-                                     sysName.begin(),
-                                     /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC,MISRA.CONV.INT.SIGN: */
-                                     /* Unsigned char is used for char data handling */
-                                     [](const unsigned char c) {
-                                         return std::tolower(c);
-                                     });
+                                            sysName.end(),
+                                            sysName.begin(),
+                                            /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC,MISRA.CONV.INT.SIGN: */
+                                            /* Unsigned char is used for char data handling */
+                                            [](const unsigned char c) {
+                                                return std::tolower(c);
+                                            });
         /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC,MISRA.CONV.INT.SIGN: */
         const std::size_t found = sysName.find(os);
         returnValue = found != std::string::npos;

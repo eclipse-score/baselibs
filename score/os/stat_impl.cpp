@@ -25,8 +25,8 @@ namespace os
 // This is a wrapper function and it simulates the behaviour of OS function
 // NOLINTNEXTLINE(google-default-arguments) see comment above
 score::cpp::expected_blank<Error> StatImpl::stat(const char* const file,
-                                          struct StatBuffer& buf,
-                                          const bool resolve_symlinks) const noexcept
+                                                 struct StatBuffer& buf,
+                                                 const bool resolve_symlinks) const noexcept
 {
     struct stat native_buffer{};
     int result = 0;
@@ -131,9 +131,9 @@ void StatImpl::stat_to_statbuffer(const struct stat& native_stat, StatBuffer& st
 }
 
 score::cpp::expected_blank<Error> StatImpl::fchmodat(const std::int32_t fd,
-                                              const char* const path,
-                                              const Mode mode,
-                                              const bool resolve_symlinks) const noexcept
+                                                     const char* const path,
+                                                     const Mode mode,
+                                                     const bool resolve_symlinks) const noexcept
 {
     const mode_t native_mode{ModeToInteger(mode)};
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */

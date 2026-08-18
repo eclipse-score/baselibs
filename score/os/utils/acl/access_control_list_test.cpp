@@ -42,7 +42,8 @@ class AclFixture : public Test
     score::os::Acl::FileDescriptor file_descriptor_{17};
     std::string file_path_{"/tmp/test_file"};
     score::os::AccessControlList unit_{file_descriptor_};
-    score::cpp::expected_blank<score::os::Error> error_{score::cpp::make_unexpected(score::os::Error::createFromErrno())};
+    score::cpp::expected_blank<score::os::Error> error_{
+        score::cpp::make_unexpected(score::os::Error::createFromErrno())};
     score::cpp::expected_blank<score::os::Error> no_error_{};
     const score::os::Acl::Entry dummy_entry_{reinterpret_cast<score::os::Acl::Entry>(15)};
 };

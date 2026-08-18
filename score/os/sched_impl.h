@@ -31,20 +31,25 @@ class SchedImpl final : public Sched
 {
   public:
     constexpr SchedImpl() = default;
-    score::cpp::expected<std::int32_t, score::os::Error> sched_getparam(const pid_t pid,
-                                                               struct sched_param* const parms) const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error> sched_getparam(
+        const pid_t pid,
+        struct sched_param* const parms) const noexcept override;
     score::cpp::expected<std::int32_t, score::os::Error> sched_getscheduler(const pid_t pid) const noexcept override;
-    score::cpp::expected<std::int32_t, score::os::Error> sched_setparam(const pid_t pid, const struct sched_param* const parms)
-        const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error> sched_setparam(
+        const pid_t pid,
+        const struct sched_param* const parms) const noexcept override;
     score::cpp::expected<std::int32_t, score::os::Error> sched_setscheduler(
         const pid_t pid,
         const std::int32_t policy,
         const struct sched_param* const parms) const noexcept override;
     score::cpp::expected<std::int32_t, score::os::Error> sched_yield(void) const noexcept override;
-    score::cpp::expected<std::int32_t, score::os::Error> sched_rr_get_interval(const pid_t pid,
-                                                                      struct timespec* const t) const noexcept override;
-    score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_min(const std::int32_t alg) const noexcept override;
-    score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_max(const std::int32_t alg) const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error> sched_rr_get_interval(
+        const pid_t pid,
+        struct timespec* const t) const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_min(
+        const std::int32_t alg) const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_max(
+        const std::int32_t alg) const noexcept override;
 // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
 // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
 // #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
@@ -52,9 +57,8 @@ class SchedImpl final : public Sched
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__QNX__)
-    score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_adjust(std::int32_t prio,
-                                                                          std::int32_t alg,
-                                                                          std::int32_t adjust) const noexcept override;
+    score::cpp::expected<std::int32_t, score::os::Error>
+    sched_get_priority_adjust(std::int32_t prio, std::int32_t alg, std::int32_t adjust) const noexcept override;
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif  //__QNX__
 };
