@@ -182,5 +182,9 @@
   {
     "version": "pr-485",
     "url": "https://eclipse-score.github.io/baselibs/pr-485/"
+  },
+  {
+    "version": "v0.2.11",
+    "url": "https://eclipse-score.github.io/baselibs/v0.2.11/"
   }
 ]
