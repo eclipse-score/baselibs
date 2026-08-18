@@ -58,8 +58,8 @@ General considerations
 
 The Utils library should provide type-safe utility functions and efficient algorithms:
 
-* :need:`comp_req__utils__base64`
-* :need:`comp_req__utils__scoped_operation`
-* :need:`comp_req__utils__deterministic_behavior`
+* :need:`comp_req__utils__base64_encoding`
+* :need:`comp_req__utils__base64_decoding`
+* :need:`comp_req__utils__threadsafe_singleton`
 
 The component should be extensible in the future to support additional utility functions and algorithms as needed.

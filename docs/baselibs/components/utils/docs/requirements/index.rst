@@ -27,8 +27,8 @@ Requirements
 Functional Requirements
 =======================
 
-.. comp_req:: Base64 Encoding and Decoding
-   :id: comp_req__utils__base64
+.. comp_req:: Base64 Encoding
+   :id: comp_req__utils__base64_encoding
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -38,10 +38,10 @@ Functional Requirements
    :satisfied_by: comp__baselibs_utils[version==1]
    :tags: inspected
 
-   The Utils component shall provide functions for encoding data to Base64 format and decoding Base64 data back to its original form.
+   The Utils component shall provide functions for encoding data to Base64 format.
 
-.. comp_req:: Scoped Operation Management
-   :id: comp_req__utils__scoped_operation
+.. comp_req:: Base64 Decoding
+   :id: comp_req__utils__base64_decoding
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -51,14 +51,11 @@ Functional Requirements
    :satisfied_by: comp__baselibs_utils[version==1]
    :tags: inspected
 
-   The Utils component shall provide a functionality that stores a callback and executes it automatically when the class is destructed
+   The Utils component shall provide functions for decoding Base64 data back to its original form.
 
-Non-Functional Requirements
-===========================
-
-.. comp_req:: Deterministic Behavior
-   :id: comp_req__utils__deterministic_behavior
-   :reqtype: Non-Functional
+.. comp_req:: Thread-Safe Singleton Instance Creation
+   :id: comp_req__utils__threadsafe_singleton
+   :reqtype: Functional
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library[version==2]
@@ -67,7 +64,7 @@ Non-Functional Requirements
    :satisfied_by: comp__baselibs_utils[version==1]
    :tags: inspected
 
-   The Utils component shall ensure that all operations complete in a predictable manner and without dynamic memory allocation.
+   The Utils component shall provide a thread-safe singleton whose instance is created exactly once when accessed concurrently by multiple threads.
 
 .. needextend:: "__utils__" in id
    :+tags: baselibs, utils
