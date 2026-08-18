@@ -26,16 +26,25 @@ namespace os
 class UnistdMock : public Unistd
 {
   public:
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, close, (const std::int32_t fd), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                close,
+                (const std::int32_t fd),
+                (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, unlink, (const char* pathname), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                unlink,
+                (const char* pathname),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
                 access,
                 (const char* pathname, AccessMode mode),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, pipe, (std::int32_t pipefd[2]), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                pipe,
+                (std::int32_t pipefd[2]),
+                (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 dup,
@@ -96,9 +105,15 @@ class UnistdMock : public Unistd
                 (const char* path, char* buf, const size_t bufsize),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, fsync, (const std::int32_t fd), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                fsync,
+                (const std::int32_t fd),
+                (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, fdatasync, (const std::int32_t fd), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                fdatasync,
+                (const std::int32_t fd),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
                 nanosleep,
@@ -126,7 +141,10 @@ class UnistdMock : public Unistd
                 (const char* path, uid_t uid, gid_t gid),
                 (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<char*, score::os::Error>), getcwd, (char* buf, size_t size), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<char*, score::os::Error>),
+                getcwd,
+                (char* buf, size_t size),
+                (const, noexcept, override));
 
     MOCK_METHOD((std::uint32_t), alarm, (std::uint32_t), (const, noexcept, override));
 

@@ -66,29 +66,31 @@ class Mqueue : public ObjectSeam<Mqueue>
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:system functions are not hidden as far these counterparts are part of class */
 
     virtual score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
-                                                       const OpenFlag flags,
-                                                       const ModeFlag perm,
-                                                       mq_attr* const attr) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, Error> mq_open(const char* const name, const OpenFlag flags) const noexcept = 0;
+                                                              const OpenFlag flags,
+                                                              const ModeFlag perm,
+                                                              mq_attr* const attr) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
+                                                              const OpenFlag flags) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_unlink(const char* const name) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_send(const mqd_t mqdes,
-                                               const char* const msg_ptr,
-                                               const size_t msg_len,
-                                               const std::uint32_t msg_prio) const noexcept = 0;
+                                                      const char* const msg_ptr,
+                                                      const size_t msg_len,
+                                                      const std::uint32_t msg_prio) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_timedsend(const mqd_t mqdes,
-                                                    const char* const msg_ptr,
-                                                    const size_t msg_len,
-                                                    const std::uint32_t msg_prio,
-                                                    const struct timespec* const timeout) const noexcept = 0;
+                                                           const char* const msg_ptr,
+                                                           const size_t msg_len,
+                                                           const std::uint32_t msg_prio,
+                                                           const struct timespec* const timeout) const noexcept = 0;
     virtual score::cpp::expected<ssize_t, Error> mq_receive(const mqd_t mqdes,
-                                                     char* const msg_ptr,
-                                                     const size_t msg_len,
-                                                     std::uint32_t* const msg_prio) const noexcept = 0;
-    virtual score::cpp::expected<ssize_t, Error> mq_timedreceive(const mqd_t mqdes,
-                                                          char* const msg_ptr,
-                                                          const size_t msg_len,
-                                                          std::uint32_t* const msg_prio,
-                                                          const struct timespec* const timeout) const noexcept = 0;
+                                                            char* const msg_ptr,
+                                                            const size_t msg_len,
+                                                            std::uint32_t* const msg_prio) const noexcept = 0;
+    virtual score::cpp::expected<ssize_t, Error> mq_timedreceive(
+        const mqd_t mqdes,
+        char* const msg_ptr,
+        const size_t msg_len,
+        std::uint32_t* const msg_prio,
+        const struct timespec* const timeout) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_close(const mqd_t mqdes) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_getattr(const mqd_t mqdes, mq_attr& mqstat) const noexcept = 0;
 
@@ -113,35 +115,36 @@ class MqueueImpl final : public Mqueue
   public:
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:system functions are not hidden as far these counterparts are part of class */
     score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
-                                               const OpenFlag flags,
-                                               const ModeFlag perm,
-                                               mq_attr* const attr) const noexcept override;
+                                                      const OpenFlag flags,
+                                                      const ModeFlag perm,
+                                                      mq_attr* const attr) const noexcept override;
 
-    score::cpp::expected<std::int32_t, Error> mq_open(const char* const name, const OpenFlag flags) const noexcept override;
+    score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
+                                                      const OpenFlag flags) const noexcept override;
 
     score::cpp::expected_blank<Error> mq_unlink(const char* const name) const noexcept override;
 
     score::cpp::expected_blank<Error> mq_send(const mqd_t mqdes,
-                                       const char* const msg_ptr,
-                                       const size_t msg_len,
-                                       const std::uint32_t msg_prio) const noexcept override;
+                                              const char* const msg_ptr,
+                                              const size_t msg_len,
+                                              const std::uint32_t msg_prio) const noexcept override;
 
     score::cpp::expected_blank<Error> mq_timedsend(const mqd_t mqdes,
-                                            const char* const msg_ptr,
-                                            const size_t msg_len,
-                                            const std::uint32_t msg_prio,
-                                            const struct timespec* const timeout) const noexcept override;
+                                                   const char* const msg_ptr,
+                                                   const size_t msg_len,
+                                                   const std::uint32_t msg_prio,
+                                                   const struct timespec* const timeout) const noexcept override;
 
     score::cpp::expected<ssize_t, Error> mq_receive(const mqd_t mqdes,
-                                             char* const msg_ptr,
-                                             const size_t msg_len,
-                                             std::uint32_t* const msg_prio) const noexcept override;
+                                                    char* const msg_ptr,
+                                                    const size_t msg_len,
+                                                    std::uint32_t* const msg_prio) const noexcept override;
 
     score::cpp::expected<ssize_t, Error> mq_timedreceive(const mqd_t mqdes,
-                                                  char* const msg_ptr,
-                                                  const size_t msg_len,
-                                                  std::uint32_t* const msg_prio,
-                                                  const struct timespec* const timeout) const noexcept override;
+                                                         char* const msg_ptr,
+                                                         const size_t msg_len,
+                                                         std::uint32_t* const msg_prio,
+                                                         const struct timespec* const timeout) const noexcept override;
 
     score::cpp::expected_blank<Error> mq_close(const mqd_t mqdes) const noexcept override;
 

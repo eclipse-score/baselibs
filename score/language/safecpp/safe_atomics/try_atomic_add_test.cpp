@@ -11,10 +11,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/language/safecpp/safe_atomics/try_atomic_add.h"
+#include "score/concurrency/atomic_mock.h"
 #include "score/language/safecpp/safe_atomics/error.h"
 #include "score/language/safecpp/safe_math/details/test_type_collection.h"
 #include "score/language/safecpp/safe_math/error.h"
-#include "score/concurrency/atomic_mock.h"
 
 #include "gtest/gtest.h"
 #include "score/result/result.h"

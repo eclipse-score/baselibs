@@ -98,7 +98,7 @@ auto cast_to_source_serializable_data_span(const T* data, size_t size) -> score:
     */
     // coverity[autosar_cpp14_m5_2_8_violation]
     return score::cpp::span<const S>{static_cast<const S*>(static_cast<const void*>(data)),
-                              static_cast<typename score::cpp::span<const S>::size_type>(size)};
+                                     static_cast<typename score::cpp::span<const S>::size_type>(size)};
 }
 template <typename S, typename T>
 auto cast_to_destination_serializable_data_span(T* data, size_t size) -> score::cpp::span<S>
@@ -113,7 +113,7 @@ auto cast_to_destination_serializable_data_span(T* data, size_t size) -> score::
     */
     // coverity[autosar_cpp14_m5_2_8_violation]
     return score::cpp::span<S>{static_cast<S*>(static_cast<void*>(data)),
-                        static_cast<typename score::cpp::span<const S>::size_type>(size)};
+                               static_cast<typename score::cpp::span<const S>::size_type>(size)};
 }
 }  //  namespace details
 
@@ -151,7 +151,8 @@ class serializer_helper
         {
             return 0UL;
         }
-        SCORE_LANGUAGE_FUTURECPP_ASSERT(curSize_ <= (std::numeric_limits<offset_t>::max() - static_cast<offset_t>(size)));
+        SCORE_LANGUAGE_FUTURECPP_ASSERT(curSize_ <=
+                                        (std::numeric_limits<offset_t>::max() - static_cast<offset_t>(size)));
         curSize_ += static_cast<offset_t>(size);
         return curSize_ - static_cast<offset_t>(size);
     }
@@ -168,8 +169,8 @@ class serializer_helper
         static_assert(alignof(T) == 1, "attempt to serialize to a not byte aligned type");
         // cast need to obtain offset from this location
         // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic)
-        score::cpp::span<std::uint8_t> dataSpan{base_,
-                                         static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(maxSize_)};
+        score::cpp::span<std::uint8_t> dataSpan{
+            base_, static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(maxSize_)};
         /*
                 Deviation from Rule A5-2-4:
                 - reinterpret_cast shall not be used.
@@ -592,7 +593,8 @@ inline void serialize(const std::vector<T, Alloc>& t, serializer_helper<A>& a, v
             a.template address<S>(static_cast<typename A::offset_t>(offset + sizeof(subsize_s_t)));
         if (n > 0UL)
         {  //  prevents some warnings for a sanity about accessing zero sized container
-            auto destination = score::cpp::span<S>{string_size_location, static_cast<typename score::cpp::span<S>::size_type>(n)};
+            auto destination =
+                score::cpp::span<S>{string_size_location, static_cast<typename score::cpp::span<S>::size_type>(n)};
             const auto source = details::cast_to_source_serializable_data_span<S>(t.data(), n);
             std::ignore = std::copy(source.begin(), source.end(), destination.begin());
         }
@@ -693,7 +695,7 @@ inline void deserialize(const vector_serialized<A, S>& serial, deserializer_help
         //  const cast to suggest that source data shall not be modified
         //  static cast to conform with score::cpp::span type
         const auto source = score::cpp::span<const S>{const_cast<const S*>(vector_contents_address),
-                                               static_cast<typename score::cpp::span<S>::size_type>(n)};
+                                                      static_cast<typename score::cpp::span<S>::size_type>(n)};
         const auto destination = details::cast_to_destination_serializable_data_span<S>(t.data(), n);
         std::ignore = std::copy(source.begin(), source.end(), destination.begin());
     }
@@ -1493,22 +1495,22 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define SCORE_MEMCPY_SERIALIZABLE(tag, ...)                                                                                 \
+#define SCORE_MEMCPY_SERIALIZABLE(tag, ...)                                                                           \
     template <typename A,                                                                                             \
               typename T,                                                                                             \
               std::enable_if_t<std::is_same<__VA_ARGS__, typename std::remove_const<T>::type>::value, std::int32_t> = \
                   0>                                                                                                  \
-    inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                          \
+    inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                        \
     {                                                                                                                 \
-        return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                        \
+        return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                      \
     }                                                                                                                 \
     template <typename SizeType,                                                                                      \
               typename T,                                                                                             \
               std::enable_if_t<std::is_same<__VA_ARGS__, typename std::remove_const<T>::type>::value, std::int32_t> = \
                   0>                                                                                                  \
-    inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                        \
+    inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                      \
     {                                                                                                                 \
-        v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>));   \
+        v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage) tolerated per design
@@ -1520,29 +1522,29 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define SCORE_MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                         \
-    template <typename A, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                              \
+#define SCORE_MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                     \
+    template <typename A, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                                \
     inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                        \
-    {                                                                                                               \
+    {                                                                                                                 \
         return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                      \
-    }                                                                                                               \
-    template <typename SizeType, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                       \
+    }                                                                                                                 \
+    template <typename SizeType, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                         \
     inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                      \
-    {                                                                                                               \
+    {                                                                                                                 \
         v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
 
 // Deprecated aliases kept for backward compatibility.
 // Use SCORE_MEMCPY_SERIALIZABLE and SCORE_MEMCPY_SERIALIZABLE_IF in new code.
 #ifndef MEMCPY_SERIALIZABLE
-#define MEMCPY_SERIALIZABLE(...)                                                                                       \
-    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE is deprecated, use SCORE_MEMCPY_SERIALIZABLE instead.");        \
+#define MEMCPY_SERIALIZABLE(...)                                                                            \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE is deprecated, use SCORE_MEMCPY_SERIALIZABLE instead."); \
     SCORE_MEMCPY_SERIALIZABLE(__VA_ARGS__)
 #endif
 
 #ifndef MEMCPY_SERIALIZABLE_IF
-#define MEMCPY_SERIALIZABLE_IF(...)                                                                                    \
-    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE_IF is deprecated, use SCORE_MEMCPY_SERIALIZABLE_IF instead.");  \
+#define MEMCPY_SERIALIZABLE_IF(...)                                                                               \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE_IF is deprecated, use SCORE_MEMCPY_SERIALIZABLE_IF instead."); \
     SCORE_MEMCPY_SERIALIZABLE_IF(__VA_ARGS__)
 #endif
 

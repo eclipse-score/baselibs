@@ -230,9 +230,6 @@ class MockablePointer
     static inline PointerSpyMock<T>* mock_ = nullptr;
 };
 
-
-
 }  // namespace score::containers::test
 
 #endif  // SCORE_LIB_CONTAINERS_TEST_MOCKABLE_POINTER_H
-

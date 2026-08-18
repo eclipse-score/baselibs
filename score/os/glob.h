@@ -80,7 +80,8 @@ class Glob : public ObjectSeam<Glob>
         std::vector<std::string> paths;
     };
 
-    virtual score::cpp::expected<MatchResult, Error> Match(const std::string& pattern, const Glob::Flag flags) noexcept = 0;
+    virtual score::cpp::expected<MatchResult, Error> Match(const std::string& pattern,
+                                                           const Glob::Flag flags) noexcept = 0;
     virtual ~Glob() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Glob() = default;

@@ -74,8 +74,8 @@ score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init() const noex
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_add_watch(const std::int32_t fd,
-                                                                  const char* const pathname,
-                                                                  const EventMask mask) const noexcept
+                                                                         const char* const pathname,
+                                                                         const EventMask mask) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::uint32_t native_event_mask{score::os::internal::EventMaskToInteger(mask)};
@@ -89,7 +89,7 @@ score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_add_watch(const s
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_rm_watch(const std::int32_t fd,
-                                                                 const std::int32_t wd) const noexcept
+                                                                        const std::int32_t wd) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t ret{::inotify_rm_watch(fd, wd)};

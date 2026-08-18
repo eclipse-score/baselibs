@@ -56,7 +56,10 @@ class PcapMock : public Pcap
                 (pcap_t * p, struct bpf_program* fp),
                 (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected_blank<Error>), pcap_freecode, (struct bpf_program * fp), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
+                pcap_freecode,
+                (struct bpf_program * fp),
+                (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<pcap_dumper_t*, Error>),
                 pcap_dump_open,

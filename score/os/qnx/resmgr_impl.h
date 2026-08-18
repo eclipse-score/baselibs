@@ -30,9 +30,9 @@ class ResMgrImpl final : public ResMgr
   public:
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<size_t, score::os::Error> resmgr_msgwrite(resmgr_context_t* ctp,
-                                                          const void* msg,
-                                                          const size_t size,
-                                                          const size_t offset) const noexcept override;
+                                                                   const void* msg,
+                                                                   const size_t size,
+                                                                   const size_t offset) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 };
 

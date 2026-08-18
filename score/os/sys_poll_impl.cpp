@@ -22,8 +22,8 @@ namespace os
 // This is a wrapper function over system API inside local namespace
 // coverity[autosar_cpp14_m7_3_1_violation]
 score::cpp::expected<std::int32_t, Error> SysPollImpl::poll(struct pollfd* fds,
-                                                     const nfds_t nfds,
-                                                     const std::int32_t timeout) const noexcept
+                                                            const nfds_t nfds,
+                                                            const std::int32_t timeout) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.

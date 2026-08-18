@@ -28,7 +28,8 @@ pthread_t score::os::Pthread::self()
     return ::pthread_self();
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_init(pthread_condattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_init(
+    pthread_condattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of memory for pthread_condattrs. There is no way to reliably create
@@ -42,8 +43,9 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_init(p
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_setpshared(pthread_condattr_t* const attr,
-                                                                          const std::int32_t pshared) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_setpshared(
+    pthread_condattr_t* const attr,
+    const std::int32_t pshared) const noexcept
 {
     const std::int32_t ret = ::pthread_condattr_setpshared(attr, pshared);
     if (ret != 0)
@@ -53,7 +55,8 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_setpsh
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_destroy(pthread_condattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_destroy(
+    pthread_condattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of memory for pthread_condattrs. There is no way to reliably create
@@ -67,8 +70,9 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::condattr_destro
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::cond_init(pthread_cond_t* const cond,
-                                                                const pthread_condattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::cond_init(
+    pthread_cond_t* const cond,
+    const pthread_condattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of resources for pthread_conds. There is no way to reliably create
@@ -96,7 +100,8 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::cond_destroy(pt
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_init(pthread_mutexattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_init(
+    pthread_mutexattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of memory for pthread_mutexattrs. There is no way to reliably
@@ -110,8 +115,9 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_init(
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_setpshared(pthread_mutexattr_t* const attr,
-                                                                           const std::int32_t pshared) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_setpshared(
+    pthread_mutexattr_t* const attr,
+    const std::int32_t pshared) const noexcept
 {
     const std::int32_t ret = ::pthread_mutexattr_setpshared(attr, pshared);
     if (ret != 0)
@@ -121,7 +127,8 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_setps
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_destroy(pthread_mutexattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_destroy(
+    pthread_mutexattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of memory for pthread_mutexattrs. There is no way to reliably
@@ -135,8 +142,9 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutexattr_destr
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_init(pthread_mutex_t* const mutex,
-                                                                 const pthread_mutexattr_t* const attr) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_init(
+    pthread_mutex_t* const mutex,
+    const pthread_mutexattr_t* const attr) const noexcept
 {
     // Manual code analysis:
     // Failure only happens when system runs out of memory for pthread_mutexes, caller has insufficient permissions
@@ -151,7 +159,8 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_init(pthr
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_destroy(pthread_mutex_t* const mutex) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_destroy(
+    pthread_mutex_t* const mutex) const noexcept
 {
     const std::int32_t ret = ::pthread_mutex_destroy(mutex);
     if (ret != 0)

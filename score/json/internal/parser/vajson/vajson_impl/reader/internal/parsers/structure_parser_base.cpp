@@ -178,7 +178,7 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
     if (this->GetJsonOps().Skip(':'))
     {
         result = this->GetState().AddKey().and_then([this, &string](void) noexcept {
-            std::string_view const view{string};
+            const std::string_view view{string};
             this->GetJsonDocument().StoreCurrentKey(view);
 
             return this->OnKey(string);

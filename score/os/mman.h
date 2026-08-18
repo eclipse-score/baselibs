@@ -81,25 +81,24 @@ class Mman : public ObjectSeam<Mman>
 #endif
 
     virtual score::cpp::expected<void*, Error> mmap(void* const addr,
-                                             const std::size_t length,
-                                             const Protection protection,
-                                             const Map flags,
-                                             const std::int32_t fd,
-                                             const std::int64_t offset) const noexcept = 0;
+                                                    const std::size_t length,
+                                                    const Protection protection,
+                                                    const Map flags,
+                                                    const std::int32_t fd,
+                                                    const std::int64_t offset) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> munmap(void* const addr, const std::size_t length) const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, Error> shm_open(const char* const pathname,
-                                                        const Fcntl::Open oflag,
-                                                        const Stat::Mode mode) const noexcept = 0;
+                                                               const Fcntl::Open oflag,
+                                                               const Stat::Mode mode) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> shm_unlink(const char* const pathname) const noexcept = 0;
 
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #if defined(__EXT_POSIX1_200112)
-    virtual score::cpp::expected<std::int32_t, Error> posix_typed_mem_open(const char* name,
-                                                                    const Fcntl::Open oflag,
-                                                                    const PosixTypedMem tflag) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, Error>
+    posix_typed_mem_open(const char* name, const Fcntl::Open oflag, const PosixTypedMem tflag) const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, Error> posix_typed_mem_get_info(
         const std::int32_t fd,
@@ -125,25 +124,25 @@ class MmanImpl final : public Mman
 {
   public:
     score::cpp::expected<void*, Error> mmap(void* const addr,
-                                     const std::size_t length,
-                                     const Protection protection,
-                                     const Map flags,
-                                     const std::int32_t fd,
-                                     const std::int64_t offset) const noexcept override;
+                                            const std::size_t length,
+                                            const Protection protection,
+                                            const Map flags,
+                                            const std::int32_t fd,
+                                            const std::int64_t offset) const noexcept override;
 
     score::cpp::expected_blank<Error> munmap(void* const addr, const std::size_t length) const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> shm_open(const char* const pathname,
-                                                const Fcntl::Open oflag,
-                                                const Stat::Mode mode) const noexcept override;
+                                                       const Fcntl::Open oflag,
+                                                       const Stat::Mode mode) const noexcept override;
 
     score::cpp::expected_blank<Error> shm_unlink(const char* const pathname) const noexcept override;
 
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #if defined(__EXT_POSIX1_200112)
     score::cpp::expected<std::int32_t, Error> posix_typed_mem_open(const char* name,
-                                                            const Fcntl::Open oflag,
-                                                            const PosixTypedMem tflag) const noexcept override;
+                                                                   const Fcntl::Open oflag,
+                                                                   const PosixTypedMem tflag) const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> posix_typed_mem_get_info(
         const std::int32_t fd,

@@ -91,7 +91,8 @@ std::int32_t SimpleReadFunctionTestFixture::private_message_handler(message_cont
 }
 
 // a single iteration of the service thread loop. Returns false for termination request
-score::cpp::expected<bool, std::int32_t> SimpleReadFunctionTestFixture::NextServiceRequest(dispatch_context_t* ctp) noexcept
+score::cpp::expected<bool, std::int32_t> SimpleReadFunctionTestFixture::NextServiceRequest(
+    dispatch_context_t* ctp) noexcept
 {
     score::os::DispatchImpl dispatch;
     const auto block_result = dispatch.dispatch_block(ctp);

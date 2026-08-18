@@ -12,8 +12,8 @@
  ********************************************************************************/
 #include "score/os/semaphore_impl.h"
 
-#include <cerrno>
 #include <time.h>
+#include <cerrno>
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 

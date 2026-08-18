@@ -491,7 +491,7 @@ TEST_F(UT__Number, InvalidNumber)
         unsigned char ch{'a'};
         // 'a' is 0b0110'0001 so after the shift the most significant bit is 1.
         ch = static_cast<unsigned char>(ch << 1);
-        std::string const str(1, static_cast<char>(ch));
+        const std::string str(1, static_cast<char>(ch));
         view sv{str};
 
         Result<UUT> uut{UUT::New(sv)};

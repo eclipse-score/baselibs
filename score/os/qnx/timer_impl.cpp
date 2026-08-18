@@ -21,9 +21,9 @@ namespace qnx
 {
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> TimerImpl::TimerSettime(const timer_t id,
-                                                            const std::int32_t flags,
-                                                            const struct _itimer* const itime,
-                                                            struct _itimer* const oitime) const noexcept
+                                                                     const std::int32_t flags,
+                                                                     const struct _itimer* const itime,
+                                                                     struct _itimer* const oitime) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::TimerSettime(id, flags, itime, oitime) == -1)
@@ -34,8 +34,9 @@ score::cpp::expected_blank<score::os::Error> TimerImpl::TimerSettime(const timer
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, score::os::Error> TimerImpl::TimerCreate(const clockid_t id,
-                                                                   const struct sigevent* const event) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error> TimerImpl::TimerCreate(
+    const clockid_t id,
+    const struct sigevent* const event) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::TimerCreate(id, event);

@@ -38,8 +38,8 @@ class SysUio : public ObjectSeam<SysUio>
     static score::cpp::pmr::unique_ptr<SysUio> Default(score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
     virtual score::cpp::expected<std::int64_t, Error> writev(const std::int32_t fd,
-                                                      const struct iovec* iovec_ptr,
-                                                      const std::int32_t count) const noexcept = 0;
+                                                             const struct iovec* iovec_ptr,
+                                                             const std::int32_t count) const noexcept = 0;
 
     virtual ~SysUio() = default;
 

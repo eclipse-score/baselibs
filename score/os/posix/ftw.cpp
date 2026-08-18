@@ -23,10 +23,10 @@ namespace os
 {
 
 score::cpp::expected<std::int32_t, score::os::Error> FtwPosix::ftw(const char* const path,
-                                                          std::int32_t (*const fn)(const char* fname,
-                                                                                   const struct stat* sbuf,
-                                                                                   std::int32_t flag),
-                                                          const std::int32_t ndirs) const noexcept
+                                                                   std::int32_t (*const fn)(const char* fname,
+                                                                                            const struct stat* sbuf,
+                                                                                            std::int32_t flag),
+                                                                   const std::int32_t ndirs) const noexcept
 {
     const std::int32_t res = ::ftw(path, fn, ndirs);
     if (res == -1)

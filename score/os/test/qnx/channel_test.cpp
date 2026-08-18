@@ -36,9 +36,11 @@ constexpr std::int32_t value{0};
 constexpr std::int32_t code_ptr{1};
 static_assert(sizeof(void*) == sizeof(std::uint64_t), "64-bit 'pointer' pulses");
 constexpr std::uint64_t value_uintptr{0x123456789ABCDEF0UL};
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106] */
+/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106]
+ */
 void* const value_ptr{reinterpret_cast<void*>(value_uintptr)};
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106] */
+/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106]
+ */
 
 constexpr std::int32_t error{EACCES};
 constexpr std::int64_t status{42L};
@@ -73,7 +75,7 @@ TEST_F(ChannelMockTest, MsgReceive)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Receive");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgReceive);
     score::os::Channel::instance().MsgReceive(invalid_id, no_msg, no_bytes, no_info);
@@ -85,7 +87,7 @@ TEST_F(ChannelMockTest, MsgReceivePulse)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message receive Pulse");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgReceivePulse);
     score::os::Channel::instance().MsgReceivePulse(invalid_id, no_msg, no_bytes, no_info);
@@ -97,7 +99,7 @@ TEST_F(ChannelMockTest, MsgReply)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Reply");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgReply);
     score::os::Channel::instance().MsgReply(invalid_id, status, no_reply, no_bytes);
@@ -109,7 +111,7 @@ TEST_F(ChannelMockTest, MsgError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Error");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgError);
     score::os::Channel::instance().MsgError(invalid_id, error);
@@ -121,7 +123,7 @@ TEST_F(ChannelMockTest, MsgSend)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Send");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgSend);
     score::os::Channel::instance().MsgSend(invalid_id, no_msg, no_bytes, no_reply, no_bytes);
@@ -133,7 +135,7 @@ TEST_F(ChannelMockTest, MsgSendPulse)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgSendPulse);
     score::os::Channel::instance().MsgSendPulse(invalid_id, calling_thread_priority, code, value);
@@ -145,7 +147,7 @@ TEST_F(ChannelMockTest, MsgSendPulsePtr)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message send Pulse Ptr");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgSendPulsePtr);
     score::os::Channel::instance().MsgSendPulsePtr(invalid_id, calling_thread_priority, code_ptr, value_ptr);
@@ -157,7 +159,7 @@ TEST_F(ChannelMockTest, MsgDeliverEvent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Message Deliver Event");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgDeliverEvent);
     score::os::Channel::instance().MsgDeliverEvent(invalid_id, no_event);
@@ -169,7 +171,7 @@ TEST_F(ChannelMockTest, ConnectClientInfo)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Client Info");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, ConnectClientInfo);
     score::os::Channel::instance().ConnectClientInfo(invalid_scoid, no_client_info, ngroups);
@@ -181,7 +183,7 @@ TEST_F(ChannelMockTest, ConnectServerInfo)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Client Info");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, ConnectServerInfo);
     score::os::Channel::instance().ConnectServerInfo(kInvalidPid, invalid_id, no_server_info);
@@ -193,7 +195,7 @@ TEST_F(ChannelMockTest, ConnectAttach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Attach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, ConnectAttach);
     score::os::Channel::instance().ConnectAttach(kAttachId, kInvalidPid, invalid_id, kAttachIndex, kAttachFlags);
@@ -205,7 +207,7 @@ TEST_F(ChannelMockTest, ConnectDetach)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Connect Detach");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, ConnectDetach);
     score::os::Channel::instance().ConnectDetach(invalid_id);
@@ -217,7 +219,7 @@ TEST_F(ChannelMockTest, MsgRegisterEvent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Msg Register Event");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgRegisterEvent);
     score::os::Channel::instance().MsgRegisterEvent(no_event, invalid_id);
@@ -229,7 +231,7 @@ TEST_F(ChannelMockTest, MsgUnregisterEvent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Msg Register Event");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(channelmock, MsgUnregisterEvent);
     score::os::Channel::instance().MsgUnregisterEvent(no_event);
@@ -243,7 +245,7 @@ TEST(ChannelTest, CoverUnhappyPaths)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Cover Unhappy Paths");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto& channel = score::os::Channel::instance();
 
@@ -401,7 +403,7 @@ TEST(ChannelTest, CheckHappyFlow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check Happy Flow");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto& channel = score::os::Channel::instance();
     auto& dispatch = score::os::Dispatch::instance();
@@ -454,7 +456,7 @@ TEST(ChannelCreateInstance, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::Channel::Default(memory_resource);

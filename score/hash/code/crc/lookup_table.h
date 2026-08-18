@@ -14,8 +14,8 @@
 #ifndef SCORE_HASH_CODE_CRC_LOOKUP_TABLE_H
 #define SCORE_HASH_CODE_CRC_LOOKUP_TABLE_H
 
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 namespace score
 {

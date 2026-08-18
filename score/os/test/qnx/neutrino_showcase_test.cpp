@@ -55,11 +55,12 @@ struct NeutrinoTest : public ::testing::Test
         const Neutrino::ChannelFlag flags = Neutrino::ChannelFlag::kPrivate,
         const std::string& server_name = std::string());
     score::cpp::expected_blank<score::os::Error> DestroyNamedServer(name_attach_t* name_attach, dispatch_t* dispatch);
-    score::cpp::expected<std::int32_t, score::os::Error> CreateNamedServerClient(const std::string& server_name = std::string());
+    score::cpp::expected<std::int32_t, score::os::Error> CreateNamedServerClient(
+        const std::string& server_name = std::string());
     score::cpp::expected_blank<score::os::Error> DestroyClient(const std::int32_t channel_id);
     score::cpp::expected<std::int32_t, score::os::Error> SetTimerTimeout(const Neutrino::ClockType clock_type,
-                                                                const Neutrino::TimerTimeoutFlag flags,
-                                                                const std::chrono::nanoseconds timeout);
+                                                                         const Neutrino::TimerTimeoutFlag flags,
+                                                                         const std::chrono::nanoseconds timeout);
     score::cpp::expected_blank<score::os::Error> SendMessage(
         const std::int32_t connection_id,
         const iov_t& request,
@@ -74,7 +75,8 @@ struct NeutrinoTest : public ::testing::Test
             std::tuple<const Neutrino::ClockType, const Neutrino::TimerTimeoutFlag, const std::chrono::nanoseconds>>
             timeout = std::nullopt,
         std::optional<_msg_info> message_info = std::nullopt);
-    score::cpp::expected_blank<score::os::Error> ReplyMessage(const std::int32_t receive_message_id, const iov_t& response);
+    score::cpp::expected_blank<score::os::Error> ReplyMessage(const std::int32_t receive_message_id,
+                                                              const iov_t& response);
     void StartWatchdog(std::atomic<bool>& test_done, int max_timeout_ms);
 
     std::string server_name_{};
@@ -119,7 +121,8 @@ void NeutrinoTest::StartWatchdog(std::atomic<bool>& test_done, int max_timeout_m
     });
 }
 
-score::cpp::expected_blank<score::os::Error> NeutrinoTest::DestroyNamedServer(name_attach_t* name_attach, dispatch_t* dispatch)
+score::cpp::expected_blank<score::os::Error> NeutrinoTest::DestroyNamedServer(name_attach_t* name_attach,
+                                                                              dispatch_t* dispatch)
 {
     const auto name_detach = dispatch_->name_detach(name_attach, NAME_FLAG_DETACH_SAVEDPP);
     if (!name_detach.has_value())
@@ -135,9 +138,8 @@ score::cpp::expected_blank<score::os::Error> NeutrinoTest::DestroyNamedServer(na
     return {};
 }
 
-score::cpp::expected<std::tuple<std::int32_t, name_attach_t*, dispatch_t*>, score::os::Error> NeutrinoTest::CreateNamedServer(
-    const Neutrino::ChannelFlag flags,
-    const std::string& server_name)
+score::cpp::expected<std::tuple<std::int32_t, name_attach_t*, dispatch_t*>, score::os::Error>
+NeutrinoTest::CreateNamedServer(const Neutrino::ChannelFlag flags, const std::string& server_name)
 {
     const auto channel_id = neutrino_->ChannelCreate(flags);
     if (!channel_id.has_value())
@@ -160,7 +162,8 @@ score::cpp::expected<std::tuple<std::int32_t, name_attach_t*, dispatch_t*>, scor
     return std::make_tuple(channel_id.value(), name_attach.value(), dispatch_channel.value());
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::CreateNamedServerClient(const std::string& server_name)
+score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::CreateNamedServerClient(
+    const std::string& server_name)
 {
     std::lock_guard<std::mutex> lock{name_open_mutex_};
     score::cpp::expected<std::int32_t, score::os::Error> result{};
@@ -182,9 +185,10 @@ score::cpp::expected_blank<score::os::Error> NeutrinoTest::DestroyClient(const s
     return dispatch_->name_close(connection_id);
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::SetTimerTimeout(const Neutrino::ClockType clock_type,
-                                                                          const Neutrino::TimerTimeoutFlag flags,
-                                                                          const std::chrono::nanoseconds timeout)
+score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::SetTimerTimeout(
+    const Neutrino::ClockType clock_type,
+    const Neutrino::TimerTimeoutFlag flags,
+    const std::chrono::nanoseconds timeout)
 {
     return neutrino_->TimerTimeout(clock_type, flags, nullptr, timeout);
 }
@@ -248,7 +252,7 @@ score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::ReceiveMessag
 }
 
 score::cpp::expected_blank<score::os::Error> NeutrinoTest::ReplyMessage(const std::int32_t receive_message_id,
-                                                               const iov_t& reply)
+                                                                        const iov_t& reply)
 {
     return channel_->MsgReplyv(receive_message_id, 0, &reply, 1);
 }
@@ -259,7 +263,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageSend)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Send");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -337,7 +341,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageSend_1)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Send");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -484,7 +488,7 @@ TEST_F(NeutrinoTest, TimerTimeoutCalledOnMessageReply)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Called On Message Reply");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -570,7 +574,7 @@ TEST_F(NeutrinoTest, TimerTimeoutOnMessageReceive)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout On Message Receive");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto create_server = CreateNamedServer();
     EXPECT_TRUE(create_server.has_value());
@@ -599,7 +603,7 @@ TEST_F(NeutrinoTest, TimerTimeoutNeverCalledWrongFlag)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Never Called Wrong Flag");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -683,7 +687,7 @@ TEST_F(NeutrinoTest, TimerTimeoutNeverCalledChannelUnblockFlag)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Timer Timeout Never Called Channel Unblock Flag");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -777,7 +781,7 @@ TEST_F(NeutrinoTest, TestServerPulseOnClientShutdown)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test Server Pulse On Client Shutdown");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
@@ -846,36 +850,37 @@ TEST_F(NeutrinoTest, TestServerPulseOnClientShutdown)
             EXPECT_TRUE(destroy_named_server.has_value());
         });
 
-    auto client_thread = score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
-        {
-            std::unique_lock<std::mutex> lock(client_server_sync_mutex);
-            client_server_sync.wait(lock, [&is_ready_to_connect]() {
-                return is_ready_to_connect;
-            });
-        }
+    auto client_thread =
+        score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
+            {
+                std::unique_lock<std::mutex> lock(client_server_sync_mutex);
+                client_server_sync.wait(lock, [&is_ready_to_connect]() {
+                    return is_ready_to_connect;
+                });
+            }
 
-        const auto create_client = CreateNamedServerClient();
-        EXPECT_TRUE(create_client.has_value());
+            const auto create_client = CreateNamedServerClient();
+            EXPECT_TRUE(create_client.has_value());
 
-        iov_t request;
-        channel_->SetIovConst(&request, sample_request, kMinMessageSize);
-        char response_message[kMinMessageSize];
-        iov_t response;
-        channel_->SetIov(&response, response_message, kMinMessageSize);
+            iov_t request;
+            channel_->SetIovConst(&request, sample_request, kMinMessageSize);
+            char response_message[kMinMessageSize];
+            iov_t response;
+            channel_->SetIov(&response, response_message, kMinMessageSize);
 
-        const auto clock_type{Neutrino::ClockType::kRealtime};
-        const auto timeout_flag{Neutrino::TimerTimeoutFlag::kReply | Neutrino::TimerTimeoutFlag::kSend};
-        const auto send_message = SendMessage(
-            create_client.value(),
-            request,
-            response,
-            std::make_tuple(clock_type, timeout_flag, std::chrono::milliseconds{kDefaultTimerTimeoutMilliseconds}));
-        EXPECT_TRUE(send_message.has_value());
-        EXPECT_STREQ(response_message, sample_response);
+            const auto clock_type{Neutrino::ClockType::kRealtime};
+            const auto timeout_flag{Neutrino::TimerTimeoutFlag::kReply | Neutrino::TimerTimeoutFlag::kSend};
+            const auto send_message = SendMessage(
+                create_client.value(),
+                request,
+                response,
+                std::make_tuple(clock_type, timeout_flag, std::chrono::milliseconds{kDefaultTimerTimeoutMilliseconds}));
+            EXPECT_TRUE(send_message.has_value());
+            EXPECT_STREQ(response_message, sample_response);
 
-        const auto destroy_client = DestroyClient(create_client.value());
-        EXPECT_TRUE(destroy_client.has_value());
-    });
+            const auto destroy_client = DestroyClient(create_client.value());
+            EXPECT_TRUE(destroy_client.has_value());
+        });
 }
 
 TEST_F(NeutrinoTest, TestSendErrorOnServerDeath)
@@ -884,63 +889,65 @@ TEST_F(NeutrinoTest, TestSendErrorOnServerDeath)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test send Error On Server Death");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
     bool is_ready_to_connect = false;
 
-    auto server_thread = score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
-        const auto create_server = CreateNamedServer();
-        EXPECT_TRUE(create_server.has_value());
+    auto server_thread =
+        score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
+            const auto create_server = CreateNamedServer();
+            EXPECT_TRUE(create_server.has_value());
 
-        {
-            std::lock_guard<std::mutex> lock(client_server_sync_mutex);
-            is_ready_to_connect = true;
-        }
-        client_server_sync.notify_one();
+            {
+                std::lock_guard<std::mutex> lock(client_server_sync_mutex);
+                is_ready_to_connect = true;
+            }
+            client_server_sync.notify_one();
 
-        auto name_attach = std::get<1>(create_server.value());
-        auto dispatch = std::get<2>(create_server.value());
+            auto name_attach = std::get<1>(create_server.value());
+            auto dispatch = std::get<2>(create_server.value());
 
-        std::this_thread::sleep_for(std::chrono::milliseconds{50});
+            std::this_thread::sleep_for(std::chrono::milliseconds{50});
 
-        const auto destroy_named_server = DestroyNamedServer(name_attach, dispatch);
-        EXPECT_TRUE(destroy_named_server.has_value());
-    });
+            const auto destroy_named_server = DestroyNamedServer(name_attach, dispatch);
+            EXPECT_TRUE(destroy_named_server.has_value());
+        });
 
-    auto client_thread = score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
-        {
-            std::unique_lock<std::mutex> lock(client_server_sync_mutex);
-            client_server_sync.wait(lock, [&is_ready_to_connect]() {
-                return is_ready_to_connect;
-            });
-        }
+    auto client_thread =
+        score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
+            {
+                std::unique_lock<std::mutex> lock(client_server_sync_mutex);
+                client_server_sync.wait(lock, [&is_ready_to_connect]() {
+                    return is_ready_to_connect;
+                });
+            }
 
-        const auto create_client = CreateNamedServerClient();
-        EXPECT_TRUE(create_client.has_value());
+            const auto create_client = CreateNamedServerClient();
+            EXPECT_TRUE(create_client.has_value());
 
-        iov_t request;
-        channel_->SetIovConst(&request, sample_request, kMinMessageSize);
-        char response_message[kMinMessageSize];
-        iov_t response;
-        channel_->SetIov(&response, response_message, kMinMessageSize);
+            iov_t request;
+            channel_->SetIovConst(&request, sample_request, kMinMessageSize);
+            char response_message[kMinMessageSize];
+            iov_t response;
+            channel_->SetIov(&response, response_message, kMinMessageSize);
 
-        const auto clock_type{Neutrino::ClockType::kRealtime};
-        const auto timeout_flag{Neutrino::TimerTimeoutFlag::kReply | Neutrino::TimerTimeoutFlag::kSend};
-        const auto timeout = std::chrono::milliseconds{200};
+            const auto clock_type{Neutrino::ClockType::kRealtime};
+            const auto timeout_flag{Neutrino::TimerTimeoutFlag::kReply | Neutrino::TimerTimeoutFlag::kSend};
+            const auto timeout = std::chrono::milliseconds{200};
 
-        const auto before_sending = std::chrono::high_resolution_clock::now();
-        const auto send_message =
-            SendMessage(create_client.value(), request, response, std::make_tuple(clock_type, timeout_flag, timeout));
-        const auto after_receiving = std::chrono::high_resolution_clock::now();
-        EXPECT_GT(timeout, after_receiving - before_sending);
-        EXPECT_FALSE(send_message.has_value());
-        EXPECT_EQ(send_message.error(), score::os::Error::Code::kBadFileDescriptor);
+            const auto before_sending = std::chrono::high_resolution_clock::now();
+            const auto send_message = SendMessage(
+                create_client.value(), request, response, std::make_tuple(clock_type, timeout_flag, timeout));
+            const auto after_receiving = std::chrono::high_resolution_clock::now();
+            EXPECT_GT(timeout, after_receiving - before_sending);
+            EXPECT_FALSE(send_message.has_value());
+            EXPECT_EQ(send_message.error(), score::os::Error::Code::kBadFileDescriptor);
 
-        const auto destroy_client = DestroyClient(create_client.value());
-        EXPECT_TRUE(destroy_client.has_value());
-    });
+            const auto destroy_client = DestroyClient(create_client.value());
+            EXPECT_TRUE(destroy_client.has_value());
+        });
 }
 
 TEST_F(NeutrinoTest, TestClientPulseOnServerDeath)
@@ -949,30 +956,31 @@ TEST_F(NeutrinoTest, TestClientPulseOnServerDeath)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Test Test Client Pulse On Server Death");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::mutex client_server_sync_mutex;
     std::condition_variable client_server_sync;
     bool is_ready_to_connect = false;
     std::int32_t client_connection_id = 0;
 
-    auto server_thread = score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
-        const auto create_server = CreateNamedServer(Neutrino::ChannelFlag::kPrivate);
-        EXPECT_TRUE(create_server.has_value());
+    auto server_thread =
+        score::cpp::jthread([this, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex]() {
+            const auto create_server = CreateNamedServer(Neutrino::ChannelFlag::kPrivate);
+            EXPECT_TRUE(create_server.has_value());
 
-        {
-            std::lock_guard<std::mutex> lock(client_server_sync_mutex);
-            is_ready_to_connect = true;
-        }
-        client_server_sync.notify_one();
+            {
+                std::lock_guard<std::mutex> lock(client_server_sync_mutex);
+                is_ready_to_connect = true;
+            }
+            client_server_sync.notify_one();
 
-        auto name_attach = std::get<1>(create_server.value());
-        auto dispatch = std::get<2>(create_server.value());
+            auto name_attach = std::get<1>(create_server.value());
+            auto dispatch = std::get<2>(create_server.value());
 
-        std::this_thread::sleep_for(std::chrono::milliseconds{50});
-        const auto destroy_named_server = DestroyNamedServer(name_attach, dispatch);
-        EXPECT_TRUE(destroy_named_server.has_value());
-    });
+            std::this_thread::sleep_for(std::chrono::milliseconds{50});
+            const auto destroy_named_server = DestroyNamedServer(name_attach, dispatch);
+            EXPECT_TRUE(destroy_named_server.has_value());
+        });
 
     auto client_thread = score::cpp::jthread(
         [this, &client_connection_id, &is_ready_to_connect, &client_server_sync, &client_server_sync_mutex](
@@ -997,11 +1005,11 @@ TEST_F(NeutrinoTest, TestClientPulseOnServerDeath)
 
     auto client_stop_source = client_thread.get_stop_source();
     auto observer_thread = score::cpp::jthread([this,
-                                         &client_connection_id,
-                                         &client_stop_source,
-                                         &is_ready_to_connect,
-                                         &client_server_sync,
-                                         &client_server_sync_mutex]() {
+                                                &client_connection_id,
+                                                &client_stop_source,
+                                                &is_ready_to_connect,
+                                                &client_server_sync,
+                                                &client_server_sync_mutex]() {
         const auto observe_server = CreateNamedServer(Neutrino::ChannelFlag::kConnectionIdDisconnect, "observe_server");
 
         const auto channel_id = std::get<0>(observe_server.value());

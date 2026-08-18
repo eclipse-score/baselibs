@@ -196,7 +196,7 @@ TEST(UT__Parser, Static__SubParse)
 TEST(UT__Parser, Static__Empty)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
-    std::size_t const num_elements{9};
+    const std::size_t num_elements{9};
 
     for (std::size_t idx{0}; idx < num_elements; ++idx)
     {

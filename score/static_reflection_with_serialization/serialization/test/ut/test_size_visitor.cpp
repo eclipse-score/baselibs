@@ -89,19 +89,19 @@ template <typename ValuesStructT, typename V, typename VP>
 void getValue(const ValuesStructT&, V&, VP ValuesStructT::*);
 
 template <typename ValuesStructT, typename V>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::*fieldMemberPtr)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::* fieldMemberPtr)
 {
     copyAssignment(valueOut, valuesStruct.*fieldMemberPtr);
 }
 
 template <typename ValuesStructT, typename V, typename... Args>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::*fieldMemberPtr, Args...)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::* fieldMemberPtr, Args...)
 {
     copyAssignment(valueOut, valuesStruct.*fieldMemberPtr);
 }
 
 template <typename ValuesStructT, typename V, typename VP, typename... Args>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, VP ValuesStructT::*fieldMemberPtr, Args... args)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, VP ValuesStructT::* fieldMemberPtr, Args... args)
 {
     (void)fieldMemberPtr;
     getValue(valuesStruct, valueOut, args...);
@@ -302,7 +302,7 @@ TYPED_TEST_P(SizeVisitorFixture, whenDataSerializedAndThenDeserializedDataShould
                                     "logging library shall provide an annotation mechanism for data structures to "
                                     "support automatic serialization/deserialization.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     using s = serializer_t<real_alloc_t>;
     using ssize = serialized_size_t<real_alloc_t>;

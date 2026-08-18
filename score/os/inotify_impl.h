@@ -30,13 +30,13 @@ class InotifyImpl final : public Inotify
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
-                                                         const char* const pathname,
-                                                         const EventMask mask) const noexcept override;
+                                                                const char* const pathname,
+                                                                const EventMask mask) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> inotify_rm_watch(const std::int32_t fd,
-                                                        const std::int32_t wd) const noexcept override;
+                                                               const std::int32_t wd) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 };
 

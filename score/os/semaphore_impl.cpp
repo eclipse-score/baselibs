@@ -24,8 +24,8 @@ namespace os
 {
 
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_init(sem_t* const sem,
-                                                   const std::int32_t pshared,
-                                                   const std::uint32_t value) const noexcept
+                                                          const std::int32_t pshared,
+                                                          const std::uint32_t value) const noexcept
 {
     // Manual code analysis:
     // As per QNX documentation function returns error when the given semaphore was previously initialized,
@@ -42,9 +42,9 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_init(sem_t* const sem,
 }
 /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<sem_t*, Error> SemaphoreImpl::sem_open(const char* const pathname,
-                                                     const Semaphore::OpenFlag oflag,
-                                                     const Semaphore::ModeFlag mode,
-                                                     const std::uint32_t value) const noexcept
+                                                            const Semaphore::OpenFlag oflag,
+                                                            const Semaphore::ModeFlag mode,
+                                                            const std::uint32_t value) const noexcept
 /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 {
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg): POSIX method accepts c-style vararg.
@@ -67,7 +67,7 @@ score::cpp::expected<sem_t*, Error> SemaphoreImpl::sem_open(const char* const pa
 }
 /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<sem_t*, Error> SemaphoreImpl::sem_open(const char* const pathname,
-                                                     const Semaphore::OpenFlag oflag) const noexcept
+                                                            const Semaphore::OpenFlag oflag) const noexcept
 /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 {
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg): POSIX method accepts c-style vararg.
@@ -136,7 +136,7 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_unlink(const char* const pa
 }
 /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(sem_t* const sem,
-                                                        const struct timespec* const abs_time) const noexcept
+                                                               const struct timespec* const abs_time) const noexcept
 /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 {
 

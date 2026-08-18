@@ -139,7 +139,8 @@ inline void JsonSerializeStructImpl(Object& visitor, Field&& field, Fields&&... 
     {
         const auto insertion_result =
             visitor.emplace(common::visitor::struct_visitable<T>::field_name(FieldIndex), std::move(field_value));
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(insertion_result.second, "Duplicate field name in struct serialization");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(insertion_result.second,
+                                                    "Duplicate field name in struct serialization");
     }
     JsonSerializeStructImpl<T, FieldIndex + 1, Fields...>(visitor, std::forward<Fields>(fields)...);
 }

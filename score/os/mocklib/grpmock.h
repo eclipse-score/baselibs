@@ -25,7 +25,10 @@ namespace os
 class GrpMock final : public Grp
 {
   public:
-    MOCK_METHOD((score::cpp::expected<GroupBuffer, Error>), getgrnam, (const std::string& group), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<GroupBuffer, Error>),
+                getgrnam,
+                (const std::string& group),
+                (const, noexcept, override));
 };
 
 }  // namespace os

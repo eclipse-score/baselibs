@@ -72,7 +72,8 @@ class ArpaInetInstance final : public score::os::ArpaInet
             // We are using "kInvalidArgument" error code because inet_pton return 0 when 'src' does not contain a
             // character string representing a valid network address in the specified address family, so, it is similar
             // to invalid argument.
-            // @todo: use score::MakeUnexpected instead of score::cpp::make_unexpected after merging this ticket(Ticket-61178).
+            // @todo: use score::MakeUnexpected instead of score::cpp::make_unexpected after merging this
+            // ticket(Ticket-61178).
             return score::cpp::make_unexpected(score::os::Error::Code::kInvalidArgument);
         }
         else if (conversion_state == 1)
@@ -82,11 +83,12 @@ class ArpaInetInstance final : public score::os::ArpaInet
         }
         else
         {
-            // @todo: use score::MakeUnexpected instead of score::cpp::make_unexpected after merging this ticket(Ticket-61178).
-            // Not supported error code returned from 'inet_pton' system call.
-            // NOTE_1: ::inet_pton() returns -1 when the domain is not supported, however, in our case this will never
-            // happen as we pass in the fixed `AF_INET` parameter. So exclude this line from coverage tool.
-            return score::cpp::make_unexpected(score::os::Error::Code::kUnexpected);  // LCOV_EXCL_LINE - see NOTE_1 above
+            // @todo: use score::MakeUnexpected instead of score::cpp::make_unexpected after merging this
+            // ticket(Ticket-61178). Not supported error code returned from 'inet_pton' system call. NOTE_1:
+            // ::inet_pton() returns -1 when the domain is not supported, however, in our case this will never happen as
+            // we pass in the fixed `AF_INET` parameter. So exclude this line from coverage tool.
+            return score::cpp::make_unexpected(
+                score::os::Error::Code::kUnexpected);  // LCOV_EXCL_LINE - see NOTE_1 above
         }
     }
 };

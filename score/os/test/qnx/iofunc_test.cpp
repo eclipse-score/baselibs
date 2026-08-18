@@ -55,7 +55,7 @@ TEST(IoFuncTest, InstanceCall)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Instance Call");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     // check whether instance() returns injection
     score::os::IoFuncQnx mock{};
@@ -87,7 +87,7 @@ TEST_F(IoFuncMockTest, iofunc_attr_init)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Attr Init");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_attr_init);
     unit_->iofunc_attr_init(kNoAttr, kAttrMode, kNoAttr, kNoInfo);
@@ -99,7 +99,7 @@ TEST_F(IoFuncMockTest, iofunc_func_init)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Func Init");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_func_init);
     unit_->iofunc_func_init(kFuncNConnect, kNoConnect, kFuncNIo, kNoIo);
@@ -111,7 +111,7 @@ TEST_F(IoFuncMockTest, iofunc_mount_init)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Mount Init");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_mount_init);
     unit_->iofunc_mount_init(kNoMountPoint, kNoSize);
@@ -123,7 +123,7 @@ TEST_F(IoFuncMockTest, iofunc_close_ocb_default)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Close Ocb Default");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_close_ocb_default);
     unit_->iofunc_close_ocb_default(kNoContext, nullptr, kNoOcb);
@@ -135,7 +135,7 @@ TEST_F(IoFuncMockTest, iofunc_devctl_default)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Devctl Default");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_devctl_default);
     unit_->iofunc_devctl_default(kNoContext, kNoDevctlMsg, kNoOcb);
@@ -147,7 +147,7 @@ TEST_F(IoFuncMockTest, iofunc_write_verify)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Write Verify");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_write_verify);
     unit_->iofunc_write_verify(kNoContext, kNoMsg, kNoOcb, kNoNonBlock);
@@ -159,7 +159,7 @@ TEST_F(IoFuncMockTest, iofunc_read_verify)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Read Verify");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_read_verify);
     unit_->iofunc_read_verify(kNoContext, kNoReadMsg, kNoOcb, kNoNonBlock);
@@ -171,7 +171,7 @@ TEST_F(IoFuncMockTest, iofunc_lseek_default)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Lseek Default");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_CALL(iofuncmock, iofunc_lseek_default);
     unit_->iofunc_lseek_default(nullptr, nullptr, nullptr);
@@ -236,7 +236,7 @@ TEST_F(IoFuncFixture, iofunc_close_ocb_default_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Close Ocb Default Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     extended_dev_attr_t attr{};
@@ -252,7 +252,7 @@ TEST_F(IoFuncFixture, iofunc_mount_init_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Mount Init Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     iofunc_mount_t mount_point{};
     mount_point.flags = 5U;
@@ -269,7 +269,7 @@ TEST_F(IoFuncFixture, iofunc_mount_init_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Mount Init Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     iofunc_mount_t mount_point{};
     mount_point.flags = 5U;
@@ -283,7 +283,7 @@ TEST_F(IoFuncFixture, iofunc_devctl_default_should_return_resmgr_default_with_un
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Devctl Default Should Return Resmgr Default With Unknown Dmcd");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     DevCtl ctl{};
@@ -299,7 +299,7 @@ TEST_F(IoFuncFixture, iofunc_devctl_default_should_return_data_with_dcmd_all_get
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Devctl Default Should Return Data With Dcmd All Getflags");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     DevCtl ctl{};
@@ -316,7 +316,7 @@ TEST_F(IoFuncFixture, iofunc_devctl_default_should_fail_with_dcmd_all_setflags_i
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Devctl Default Should Fail With Dcmd All Setflags Incomplete Message");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     ctp.size = 0;  // making it explicit
@@ -336,7 +336,7 @@ TEST_F(IoFuncFixture, iofunc_devctl_default_should_succeed_with_dcmd_all_setflag
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Devctl Default Should Succeed With Dcmd All Setflags Complete Message");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     ctp.size = sizeof(DevCtl);
@@ -356,7 +356,7 @@ TEST_F(IoFuncFixture, iofunc_write_verifyReturnsErrorIfInvalidCtp)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Write Verify returns Error If Invalid Ctp");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     ctp.rcvid = -1;
@@ -373,7 +373,7 @@ TEST_F(IoFuncFixture, iofunc_read_verifyReturnsErrorIfInvalidCtp)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Read Verify returns Error If Invalid Ctp");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     ctp.rcvid = -1;
@@ -390,7 +390,7 @@ TEST_F(IoFuncFixture, iofunc_lseek_defaultReturnsErrorIfInvalidMsg)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Lseek Default returns Error If Invalid Msg");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     io_lseek_t msg{};
@@ -406,7 +406,7 @@ TEST(IoFuncTest, iofunc_write_verify_fails_for_empty_parameters)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Write Verify Fails For Empty Parameters");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     io_write_t msg{};
@@ -424,7 +424,7 @@ TEST(IoFuncCreateInstance, PMRDefaultShallReturnImplInstance)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "PMR Default Shall Return Impl Instance");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource();
     const auto instance = score::os::IoFunc::Default(memory_resource);
@@ -438,7 +438,7 @@ TEST(IoFuncTest, iofunc_client_info_failure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Client Info Failure");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     struct _client_info* pinfo{nullptr};
@@ -455,7 +455,7 @@ TEST(IoFuncTest, iofunc_client_info_free_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc client_info_free success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct _client_info* pinfo{nullptr};
 
@@ -471,7 +471,7 @@ TEST(IoFuncTest, iofunc_check_access_failure_client_info_nullptr)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Check Access Failure Client Info Nullptr");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     iofunc_attr_t attr{};
@@ -489,7 +489,7 @@ TEST(IoFuncTest, iofunc_check_access_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Check Access Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     iofunc_attr_t attr{};
@@ -510,7 +510,7 @@ TEST(IoFuncTest, iofunc_attr_lock_failure_invalid_mutex)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Attr Lock Failure Invalid Mutex");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     iofunc_attr_t attr{};
     ::pthread_mutex_init(&attr.lock, nullptr);
@@ -529,7 +529,7 @@ TEST(IoFuncTest, iofunc_attr_unlock_failure_invalid_mutex)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Attr Unlock Failure Invalid Mutex");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     iofunc_attr_t attr{};
     ::pthread_mutex_init(&attr.lock, nullptr);
@@ -548,7 +548,7 @@ TEST(IoFuncTest, iofunc_attr_lock_unlock_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Attr Lock Unlock Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     iofunc_attr_t attr{};
 
@@ -566,7 +566,7 @@ TEST(IoFuncTest, iofunc_open_failure_both_attr_nullptr)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Open Failure Both Attr Nullptr");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     io_open_t msg{};
@@ -585,7 +585,7 @@ TEST(IoFuncTest, iofunc_open_success)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Open Success");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     io_open_t msg{};
@@ -606,7 +606,7 @@ TEST(IoFuncTest, iofunc_ocb_attach_failure_invalid_ctp)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Iofunc Ocb Attach Failure Invalid Ctp");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     resmgr_context_t ctp{};
     io_open_t msg{};

@@ -118,21 +118,23 @@ TEST_F(ScopeStateTest, FunctionInvocationFinishesBeforeExpiration)
     std::promise<void> in_invocation_promise{};
     std::promise<void> after_expiration_promise{};
 
-    score::cpp::jthread invoker{[this, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
-        auto lambda = [&in_invocation_promise, &after_expiration_promise]() -> score::cpp::blank {
-            in_invocation_promise.set_value();
-            auto wait_result = after_expiration_promise.get_future().wait_for(std::chrono::milliseconds{10});
-            EXPECT_EQ(wait_result, std::future_status::timeout);
-            return {};
-        };
-        FunctionWrapperImpl<decltype(lambda), score::cpp::blank()> wrapped_lambda{lambda};
-        score::cpp::ignore = state_.InvokeIfNotExpired(wrapped_lambda);
-    }};
-    score::cpp::jthread expirator{[this, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
-        in_invocation_promise.get_future().wait();
-        state_.Expire();
-        after_expiration_promise.set_value();
-    }};
+    score::cpp::jthread invoker{
+        [this, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
+            auto lambda = [&in_invocation_promise, &after_expiration_promise]() -> score::cpp::blank {
+                in_invocation_promise.set_value();
+                auto wait_result = after_expiration_promise.get_future().wait_for(std::chrono::milliseconds{10});
+                EXPECT_EQ(wait_result, std::future_status::timeout);
+                return {};
+            };
+            FunctionWrapperImpl<decltype(lambda), score::cpp::blank()> wrapped_lambda{lambda};
+            score::cpp::ignore = state_.InvokeIfNotExpired(wrapped_lambda);
+        }};
+    score::cpp::jthread expirator{
+        [this, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
+            in_invocation_promise.get_future().wait();
+            state_.Expire();
+            after_expiration_promise.set_value();
+        }};
 }
 
 TEST_F(ScopeStateTest, FunctionInvocationFinishesBeforeExpirationWithStopToken)
@@ -143,21 +145,23 @@ TEST_F(ScopeStateTest, FunctionInvocationFinishesBeforeExpirationWithStopToken)
     score::cpp::stop_source stop_source{};
     ScopeState state{stop_source.get_token()};
 
-    score::cpp::jthread invoker{[&state, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
-        auto lambda = [&in_invocation_promise, &after_expiration_promise]() -> score::cpp::blank {
-            in_invocation_promise.set_value();
-            auto wait_result = after_expiration_promise.get_future().wait_for(std::chrono::milliseconds{10});
-            EXPECT_EQ(wait_result, std::future_status::timeout);
-            return {};
-        };
-        FunctionWrapperImpl<decltype(lambda), score::cpp::blank()> wrapped_lambda{lambda};
-        score::cpp::ignore = state.InvokeIfNotExpired(wrapped_lambda);
-    }};
-    score::cpp::jthread expirator{[&stop_source, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
-        in_invocation_promise.get_future().wait();
-        stop_source.request_stop();
-        after_expiration_promise.set_value();
-    }};
+    score::cpp::jthread invoker{
+        [&state, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
+            auto lambda = [&in_invocation_promise, &after_expiration_promise]() -> score::cpp::blank {
+                in_invocation_promise.set_value();
+                auto wait_result = after_expiration_promise.get_future().wait_for(std::chrono::milliseconds{10});
+                EXPECT_EQ(wait_result, std::future_status::timeout);
+                return {};
+            };
+            FunctionWrapperImpl<decltype(lambda), score::cpp::blank()> wrapped_lambda{lambda};
+            score::cpp::ignore = state.InvokeIfNotExpired(wrapped_lambda);
+        }};
+    score::cpp::jthread expirator{
+        [&stop_source, &in_invocation_promise, &after_expiration_promise](const score::cpp::stop_token&) {
+            in_invocation_promise.get_future().wait();
+            stop_source.request_stop();
+            after_expiration_promise.set_value();
+        }};
 }
 
 }  // namespace

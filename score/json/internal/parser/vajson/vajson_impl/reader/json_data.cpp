@@ -20,8 +20,8 @@
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/reader/json_data.h"
 #include <array>
-#include <limits>
 #include <istream>
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <utility>
@@ -74,7 +74,7 @@ JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonDa
  * - Else return a JsonErrc containing the original error message.
  * \endinternal
  */
-auto JsonData::FromFile(std::string_view const path) noexcept -> Result<JsonData>
+auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData>
 {
     // Open file using score filesystem
     score::filesystem::FileFactory factory{};
@@ -116,7 +116,7 @@ auto JsonData::FromFile(std::string_view const path) noexcept -> Result<JsonData
  * - Create & return the JsonData object.
  * \endinternal
  */
-auto JsonData::FromBuffer(std::string_view const buffer) noexcept -> Result<JsonData>
+auto JsonData::FromBuffer(const std::string_view buffer) noexcept -> Result<JsonData>
 {
     return JsonData::FromBuffer(score::cpp::span<const char>{buffer.data(), buffer.size()});
 }
@@ -127,7 +127,7 @@ auto JsonData::FromBuffer(std::string_view const buffer) noexcept -> Result<Json
  * - Create & return the JsonData object.
  * \endinternal
  */
-auto JsonData::FromBuffer(score::safecpp::zstring_view const buffer) noexcept -> Result<JsonData>
+auto JsonData::FromBuffer(const score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>
 {
     return JsonData::FromBuffer(score::cpp::span<const char>{buffer.data(), buffer.size()});
 }
@@ -183,7 +183,7 @@ auto JsonData::Restore() noexcept -> Result<void>
 
     if (this->has_backup_)
     {
-        std::uint64_t const pos{this->pos_backup_};
+        const std::uint64_t pos{this->pos_backup_};
 
         if (pos > static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max()))
         {
@@ -202,7 +202,7 @@ auto JsonData::Restore() noexcept -> Result<void>
             else
             {
                 // Verify position
-                std::uint64_t const curr{static_cast<std::uint64_t>(this->stream_.get().tellg())};
+                const std::uint64_t curr{static_cast<std::uint64_t>(this->stream_.get().tellg())};
                 if (curr != this->pos_backup_)
                 {
                     result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "Unable to restore original position.");
@@ -232,7 +232,7 @@ auto JsonData::Restore() noexcept -> Result<void>
 void JsonData::ParseBom() noexcept
 {
     constexpr std::array<const char, 3> kUtf8Bom{'\xEF', '\xBB', '\xBF'};
-    std::string_view const view{kUtf8Bom.data(), kUtf8Bom.size()};
+    const std::string_view view{kUtf8Bom.data(), kUtf8Bom.size()};
 
     internal::JsonOps ops{*this};
 

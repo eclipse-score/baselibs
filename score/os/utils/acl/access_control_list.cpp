@@ -73,7 +73,7 @@ score::cpp::expected<bool, ::score::os::Error> IsEntryForUser(
 }
 
 ::score::os::AccessControlList::AccessControlList(const score::os::Acl::FileDescriptor file_descriptor,
-                                                const std::string& file_path)
+                                                  const std::string& file_path)
     : IAccessControlList{}, acl_{}, file_descriptor_{file_descriptor}, file_path_{file_path}
 {
     auto& operating_system = ::score::os::Acl::instance();
@@ -223,9 +223,10 @@ bool ::score::os::AccessControlList::CheckMaskPermissions(
     return ArePermissionsValid(acl_text, mask_pos, permissions);
 }
 
-bool ::score::os::AccessControlList::ArePermissionsValid(const std::string& acl_text,
-                                                       std::size_t mask_pos,
-                                                       const std::vector<::score::os::Acl::Permission>& permissions) const
+bool ::score::os::AccessControlList::ArePermissionsValid(
+    const std::string& acl_text,
+    std::size_t mask_pos,
+    const std::vector<::score::os::Acl::Permission>& permissions) const
 {
     constexpr std::uint8_t kOffsetR{6U};
     constexpr std::uint8_t kOffsetW{7U};

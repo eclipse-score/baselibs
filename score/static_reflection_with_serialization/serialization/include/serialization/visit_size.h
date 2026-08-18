@@ -195,7 +195,8 @@ template <typename SizeType, typename T, typename Alloc, std::enable_if_t<std::i
 inline void visit_as(size_helper<SizeType>& v, const std::vector<T, Alloc>& t)
 {
     auto new_size = v.out + v.vector_offset;
-    SCORE_LANGUAGE_FUTURECPP_ASSERT(new_size <= (std::numeric_limits<SizeType>::max() - static_cast<SizeType>(sizeof(uint16_t))));
+    SCORE_LANGUAGE_FUTURECPP_ASSERT(new_size <=
+                                    (std::numeric_limits<SizeType>::max() - static_cast<SizeType>(sizeof(uint16_t))));
     new_size += static_cast<SizeType>(sizeof(uint16_t));
     // There is no benefit of writing unit test to cover the TRUE case of this condition, it will not have any
     // expectation or assertion because the function will return gracefully without any return values or even

@@ -24,7 +24,7 @@ namespace os
 // instantiated as static via global function, hence procmgr_ability will be used through it.
 // coverity[autosar_cpp14_a0_1_3_violation]
 score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_ability(const pid_t pid,
-                                                                 const std::uint32_t ability) const noexcept
+                                                                          const std::uint32_t ability) const noexcept
 {
     if ((ability & PROCMGR_AOP_SUBRANGE) != 0U)
     {
@@ -55,11 +55,11 @@ score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_ability(const 
 
 // coverity[autosar_cpp14_a0_1_3_violation] , see justification above
 score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_ability(const pid_t pid,
-                                                                 const std::uint32_t ability,
-                                                                 const std::uint32_t subrange_ability,
-                                                                 const std::uint64_t subrange_min,
-                                                                 const std::uint64_t subrange_max,
-                                                                 const std::uint32_t eol) const noexcept
+                                                                          const std::uint32_t ability,
+                                                                          const std::uint32_t subrange_ability,
+                                                                          const std::uint64_t subrange_min,
+                                                                          const std::uint64_t subrange_max,
+                                                                          const std::uint32_t eol) const noexcept
 {
     // Suppressed here because POSIX method accepts c-style vararg
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg) see comment above
@@ -73,7 +73,7 @@ score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_ability(const 
 
 // coverity[autosar_cpp14_a0_1_3_violation] , see justification above
 score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_daemon(const std::int32_t status,
-                                                                const std::uint32_t flags) const noexcept
+                                                                         const std::uint32_t flags) const noexcept
 {
     std::int32_t result = ::procmgr_daemon(status, flags);
     if (result == -1)
@@ -101,7 +101,8 @@ score::cpp::expected<std::int32_t, score::os::Error> ProcMgrImpl::procmgr_event_
 }
 
 // coverity[autosar_cpp14_a0_1_3_violation] , see justification above
-score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_event_notify_delete(const std::int32_t handle) const noexcept
+score::cpp::expected_blank<score::os::Error> ProcMgrImpl::procmgr_event_notify_delete(
+    const std::int32_t handle) const noexcept
 {
     std::int32_t result = ::procmgr_event_notify_delete(handle);
     if (result == -1)
@@ -131,7 +132,8 @@ score::cpp::expected<std::int32_t, score::os::Error> ProcMgrImpl::procmgr_value_
 }
 
 // coverity[autosar_cpp14_a0_1_3_violation] , see justification above
-score::cpp::expected<std::uint64_t, score::os::Error> ProcMgrImpl::procmgr_value_current(const std::int32_t id) const noexcept
+score::cpp::expected<std::uint64_t, score::os::Error> ProcMgrImpl::procmgr_value_current(
+    const std::int32_t id) const noexcept
 {
     std::uint64_t result = ::procmgr_value_current(id);
     if (result == std::numeric_limits<std::uint64_t>::max())

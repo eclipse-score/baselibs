@@ -85,4 +85,3 @@ class MockableAllocator
 }  // namespace score::containers::test
 
 #endif  // SCORE_LIB_CONTAINERS_TEST_MOCKABLE_ALLOCATOR_H
-

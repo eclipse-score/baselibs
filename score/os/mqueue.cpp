@@ -26,9 +26,9 @@ namespace impl
 {
 
 score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const name,
-                                                       const OpenFlag flags,
-                                                       const ModeFlag perm,
-                                                       mq_attr* const attr) const noexcept
+                                                              const OpenFlag flags,
+                                                              const ModeFlag perm,
+                                                              mq_attr* const attr) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function, cppcoreguidelines-pro-type-vararg) see comment above
@@ -40,7 +40,8 @@ score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const 
     return ret; /* KW_SUPPRESS:RH.LEAK: acquired resource not lost, no need to release it if ret == -1 */
 }
 
-score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const name, const OpenFlag flags) const noexcept
+score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const name,
+                                                              const OpenFlag flags) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function, cppcoreguidelines-pro-type-vararg) see comment above
@@ -64,9 +65,9 @@ score::cpp::expected_blank<Error> MqueueImpl::mq_unlink(const char* const name) 
 }
 
 score::cpp::expected_blank<Error> MqueueImpl::mq_send(const mqd_t mqdes,
-                                               const char* const msg_ptr,
-                                               const size_t msg_len,
-                                               const std::uint32_t msg_prio) const noexcept
+                                                      const char* const msg_ptr,
+                                                      const size_t msg_len,
+                                                      const std::uint32_t msg_prio) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -78,10 +79,10 @@ score::cpp::expected_blank<Error> MqueueImpl::mq_send(const mqd_t mqdes,
 }
 
 score::cpp::expected_blank<Error> MqueueImpl::mq_timedsend(const mqd_t mqdes,
-                                                    const char* const msg_ptr,
-                                                    const size_t msg_len,
-                                                    const std::uint32_t msg_prio,
-                                                    const struct timespec* const timeout) const noexcept
+                                                           const char* const msg_ptr,
+                                                           const size_t msg_len,
+                                                           const std::uint32_t msg_prio,
+                                                           const struct timespec* const timeout) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -93,9 +94,9 @@ score::cpp::expected_blank<Error> MqueueImpl::mq_timedsend(const mqd_t mqdes,
 }
 
 score::cpp::expected<ssize_t, Error> MqueueImpl::mq_receive(const mqd_t mqdes,
-                                                     char* const msg_ptr,
-                                                     const size_t msg_len,
-                                                     std::uint32_t* const msg_prio) const noexcept
+                                                            char* const msg_ptr,
+                                                            const size_t msg_len,
+                                                            std::uint32_t* const msg_prio) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -108,10 +109,10 @@ score::cpp::expected<ssize_t, Error> MqueueImpl::mq_receive(const mqd_t mqdes,
 }
 
 score::cpp::expected<ssize_t, Error> MqueueImpl::mq_timedreceive(const mqd_t mqdes,
-                                                          char* const msg_ptr,
-                                                          const size_t msg_len,
-                                                          std::uint32_t* const msg_prio,
-                                                          const struct timespec* const timeout) const noexcept
+                                                                 char* const msg_ptr,
+                                                                 const size_t msg_len,
+                                                                 std::uint32_t* const msg_prio,
+                                                                 const struct timespec* const timeout) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -260,7 +261,8 @@ score::os::Mqueue& score::os::Mqueue::instance() noexcept
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
-score::cpp::pmr::unique_ptr<score::os::Mqueue> score::os::Mqueue::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Mqueue> score::os::Mqueue::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<impl::MqueueImpl>(memory_resource);

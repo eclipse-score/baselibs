@@ -35,8 +35,9 @@ class Secpol : public ObjectSeam<Secpol>
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<secpol_file_t*, score::os::Error> secpol_open(const char* const path,
-                                                                      const std::uint32_t flags) const noexcept = 0;
+    virtual score::cpp::expected<secpol_file_t*, score::os::Error> secpol_open(
+        const char* const path,
+        const std::uint32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */

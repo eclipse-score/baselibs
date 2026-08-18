@@ -68,8 +68,8 @@ std::string MakeIntegerArray(const std::size_t count)
             out.push_back(',');
         }
         // Vary magnitude and sign to exercise the whole integer parser.
-        const std::int64_t value = (i % 2U == 0U) ? static_cast<std::int64_t>(i * 7919U)
-                                                   : -static_cast<std::int64_t>(i * 104729U);
+        const std::int64_t value =
+            (i % 2U == 0U) ? static_cast<std::int64_t>(i * 7919U) : -static_cast<std::int64_t>(i * 104729U);
         out += std::to_string(value);
     }
     out.push_back(']');
@@ -260,10 +260,8 @@ void BM_ParseBuffer(benchmark::State& state)
         }
     }
 
-    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) *
-                            static_cast<std::int64_t>(payload.size()));
-    state.SetItemsProcessed(static_cast<std::int64_t>(state.iterations()) *
-                            static_cast<std::int64_t>(count));
+    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) * static_cast<std::int64_t>(payload.size()));
+    state.SetItemsProcessed(static_cast<std::int64_t>(state.iterations()) * static_cast<std::int64_t>(count));
     state.counters["document_bytes"] = benchmark::Counter(static_cast<double>(payload.size()));
 }
 
@@ -286,8 +284,7 @@ void BM_RealisticConfig_FromBuffer(benchmark::State& state)
             break;
         }
     }
-    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) *
-                            static_cast<std::int64_t>(payload.size()));
+    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) * static_cast<std::int64_t>(payload.size()));
 }
 
 void BM_RealisticConfig_FromFile(benchmark::State& state)
@@ -312,8 +309,7 @@ void BM_RealisticConfig_FromFile(benchmark::State& state)
             break;
         }
     }
-    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) *
-                            static_cast<std::int64_t>(payload.size()));
+    state.SetBytesProcessed(static_cast<std::int64_t>(state.iterations()) * static_cast<std::int64_t>(payload.size()));
 
     static_cast<void>(std::remove(path.c_str()));
 }

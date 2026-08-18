@@ -35,7 +35,7 @@ namespace unit_test
 TEST(UT__JsonOps__OptChar, ValidChar)
 {
     char constexpr value{'a'};
-    internal::OptChar const opt{static_cast<std::int64_t>(value)};
+    const internal::OptChar opt{static_cast<std::int64_t>(value)};
     ASSERT_TRUE(opt.HasValue());
     ASSERT_FALSE(opt.EofFound());
     ASSERT_EQ(opt.Value(), value);
@@ -46,7 +46,7 @@ TEST(UT__JsonOps__OptChar, ValidChar)
  */
 TEST(UT__JsonOps__OptChar, EofChar)
 {
-    internal::OptChar const opt{static_cast<std::int64_t>(-1)};
+    const internal::OptChar opt{static_cast<std::int64_t>(-1)};
     ASSERT_FALSE(opt.HasValue());
     ASSERT_TRUE(opt.EofFound());
     ASSERT_DEATH(opt.Value(), ".*");
@@ -57,8 +57,8 @@ TEST(UT__JsonOps__OptChar, EofChar)
  */
 TEST(UT__JsonOps__OptChar, Comparison)
 {
-    internal::OptChar const opt1{'a'};
-    internal::OptChar const opt2{-1};
+    const internal::OptChar opt1{'a'};
+    const internal::OptChar opt2{-1};
     // NOLINTNEXTLINE(readability/check)
     ASSERT_TRUE(opt1 == 'a');
     ASSERT_FALSE(opt1 == 'b');  // NOLINT(readability/check)

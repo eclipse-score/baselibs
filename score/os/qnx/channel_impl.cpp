@@ -23,9 +23,9 @@ static_assert(sizeof(std::size_t) == sizeof(_Sizet), "unexpected _Sizet");
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 score::cpp::expected<rcvid_t, score::os::Error> ChannelImpl::MsgReceive(const std::int32_t chid,
-                                                               void* const msg,
-                                                               const std::size_t bytes,
-                                                               _msg_info* const info) const noexcept
+                                                                        void* const msg,
+                                                                        const std::size_t bytes,
+                                                                        _msg_info* const info) const noexcept
 /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
@@ -42,9 +42,9 @@ score::cpp::expected<rcvid_t, score::os::Error> ChannelImpl::MsgReceive(const st
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 score::cpp::expected<rcvid_t, score::os::Error> ChannelImpl::MsgReceivev(const std::int32_t chid,
-                                                                const iov_t* const riov,
-                                                                const std::size_t rparts,
-                                                                struct _msg_info* const info) const noexcept
+                                                                         const iov_t* const riov,
+                                                                         const std::size_t rparts,
+                                                                         struct _msg_info* const info) const noexcept
 /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
@@ -61,9 +61,9 @@ score::cpp::expected<rcvid_t, score::os::Error> ChannelImpl::MsgReceivev(const s
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::MsgReceivePulse(const std::int32_t chid,
-                                                                         void* const pulse,
-                                                                         const std::size_t bytes,
-                                                                         _msg_info* const info) const noexcept
+                                                                                  void* const pulse,
+                                                                                  const std::size_t bytes,
+                                                                                  _msg_info* const info) const noexcept
 /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
@@ -79,9 +79,9 @@ score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::MsgReceivePuls
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReply(const rcvid_t rcvid,
-                                                          const std::int64_t status,
-                                                          const void* const msg,
-                                                          const std::size_t bytes) const noexcept
+                                                                   const std::int64_t status,
+                                                                   const void* const msg,
+                                                                   const std::size_t bytes) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -95,9 +95,9 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReply(const rcvid_t
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReplyv(const rcvid_t rcvid,
-                                                           const std::int64_t status,
-                                                           const iov_t* const riov,
-                                                           const std::size_t rparts) const noexcept
+                                                                    const std::int64_t status,
+                                                                    const iov_t* const riov,
+                                                                    const std::size_t rparts) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -110,7 +110,8 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgReplyv(const rcvid_
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgError(const rcvid_t rcvid, const std::int32_t err) const noexcept
+score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgError(const rcvid_t rcvid,
+                                                                   const std::int32_t err) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -124,10 +125,10 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgError(const rcvid_t
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int64_t, score::os::Error> ChannelImpl::MsgSend(const std::int32_t coid,
-                                                                 const void* const smsg,
-                                                                 const std::size_t sbytes,
-                                                                 void* const rmsg,
-                                                                 const std::size_t rbytes) const noexcept
+                                                                          const void* const smsg,
+                                                                          const std::size_t sbytes,
+                                                                          void* const rmsg,
+                                                                          const std::size_t rbytes) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -142,10 +143,10 @@ score::cpp::expected<std::int64_t, score::os::Error> ChannelImpl::MsgSend(const 
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int64_t, score::os::Error> ChannelImpl::MsgSendv(const std::int32_t coid,
-                                                                  const iov_t* const siov,
-                                                                  const std::size_t sparts,
-                                                                  iov_t* const riov,
-                                                                  const std::size_t rparts) const noexcept
+                                                                           const iov_t* const siov,
+                                                                           const std::size_t sparts,
+                                                                           iov_t* const riov,
+                                                                           const std::size_t rparts) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -197,9 +198,9 @@ void ChannelImpl::SetIovConst(iov_t* const msg, const void* const addr, const si
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgSendPulse(const std::int32_t coid,
-                                                              const std::int32_t priority,
-                                                              const std::int32_t code,
-                                                              const std::int32_t value) const noexcept
+                                                                       const std::int32_t priority,
+                                                                       const std::int32_t code,
+                                                                       const std::int32_t value) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -218,9 +219,9 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgSendPulse(const std
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgSendPulsePtr(const std::int32_t coid,
-                                                                 const std::int32_t priority,
-                                                                 const std::int32_t code,
-                                                                 void* const value) const noexcept
+                                                                          const std::int32_t priority,
+                                                                          const std::int32_t code,
+                                                                          void* const value) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -233,8 +234,9 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgSendPulsePtr(const 
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgDeliverEvent(const rcvid_t rcvid,
-                                                                 const struct sigevent* const event) const noexcept
+score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgDeliverEvent(
+    const rcvid_t rcvid,
+    const struct sigevent* const event) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -248,8 +250,8 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgDeliverEvent(const 
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ChannelImpl::ConnectClientInfo(const std::int32_t scoid,
-                                                                   _client_info* const info,
-                                                                   const std::int32_t ngroups) const noexcept
+                                                                            _client_info* const info,
+                                                                            const std::int32_t ngroups) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::ConnectClientInfo(scoid, info, ngroups) == -1)
@@ -259,9 +261,8 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::ConnectClientInfo(cons
     return {};
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::ConnectServerInfo(const pid_t pid,
-                                                                           const std::int32_t coid,
-                                                                           _server_info* const info) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error>
+ChannelImpl::ConnectServerInfo(const pid_t pid, const std::int32_t coid, _server_info* const info) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::ConnectServerInfo(pid, coid, info);
@@ -274,10 +275,10 @@ score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::ConnectServerI
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> ChannelImpl::ConnectAttach(const std::uint32_t reserved,
-                                                                       const pid_t pid,
-                                                                       const std::int32_t chid,
-                                                                       const std::uint32_t index,
-                                                                       const std::int32_t flags) const noexcept
+                                                                                const pid_t pid,
+                                                                                const std::int32_t chid,
+                                                                                const std::uint32_t index,
+                                                                                const std::int32_t flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Suppressed here because usage of this OSAL method is on banned list
@@ -301,7 +302,8 @@ score::cpp::expected_blank<score::os::Error> ChannelImpl::ConnectDetach(const st
     return {};
 }
 
-score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgRegisterEvent(sigevent* const ev, const std::int32_t coid) noexcept
+score::cpp::expected_blank<score::os::Error> ChannelImpl::MsgRegisterEvent(sigevent* const ev,
+                                                                           const std::int32_t coid) noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above

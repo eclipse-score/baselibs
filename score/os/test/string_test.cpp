@@ -27,7 +27,7 @@ TEST(StringTest, StringMemcpy)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringTest String Memcpy");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     char src[] = "ABCDEFGHIJ";
     char dest[11];
@@ -46,7 +46,7 @@ TEST(StringTest, StringMemset)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringTest String Memset");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     char dest[11];
     score::os::String::instance().memset(dest, 'a', 10);
@@ -60,7 +60,7 @@ TEST(StringTest, StringStrError)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StringTest String Str Error");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     for (int i = 0; i < 10; ++i)
     {

@@ -37,8 +37,8 @@ class NonBlockingFileDescriptor
   public:
     static score::cpp::expected<NonBlockingFileDescriptor, Error> Make(const std::int32_t file_descriptor) noexcept;
     static score::cpp::expected<NonBlockingFileDescriptor, Error> Make(const std::int32_t file_descriptor,
-                                                                Fcntl& fcntl,
-                                                                std::shared_ptr<Unistd> unistd) noexcept;
+                                                                       Fcntl& fcntl,
+                                                                       std::shared_ptr<Unistd> unistd) noexcept;
 
     NonBlockingFileDescriptor() = default;
     ~NonBlockingFileDescriptor();
@@ -94,8 +94,9 @@ class AbortableBlockingReader
     /// \return error or the span of read data
     ///         Will return Error::Code::kOperationWasInterruptedBySignal if AbortableBlockingReader is destructed while
     ///         waiting for data.
-    score::cpp::expected<score::cpp::span<std::uint8_t>, Error> Read(const NonBlockingFileDescriptor& file_descriptor,
-                                                       const score::cpp::span<std::uint8_t> buffer) noexcept;
+    score::cpp::expected<score::cpp::span<std::uint8_t>, Error> Read(
+        const NonBlockingFileDescriptor& file_descriptor,
+        const score::cpp::span<std::uint8_t> buffer) noexcept;
 
   private:
     std::shared_ptr<Fcntl> fcntl_;
@@ -111,9 +112,8 @@ class AbortableBlockingReader
 
     score::cpp::expected_blank<Error> WaitForData(const NonBlockingFileDescriptor& file_descriptor) noexcept;
 
-    static score::cpp::expected<std::pair<NonBlockingFileDescriptor, NonBlockingFileDescriptor>, Error> MakeNonBlockingPipe(
-        Fcntl& fcntl,
-        const std::shared_ptr<Unistd>& unistd) noexcept;
+    static score::cpp::expected<std::pair<NonBlockingFileDescriptor, NonBlockingFileDescriptor>, Error>
+    MakeNonBlockingPipe(Fcntl& fcntl, const std::shared_ptr<Unistd>& unistd) noexcept;
 };
 
 }  // namespace os

@@ -25,7 +25,10 @@ namespace os
 class SignalMock : public Signal
 {
   public:
-    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), SigEmptySet, (sigset_t & set), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                SigEmptySet,
+                (sigset_t & set),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 SigAddSet,
                 (sigset_t & set, const std::int32_t signo),

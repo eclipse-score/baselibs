@@ -128,9 +128,10 @@ TEST(NullTerminationCheck, ForEmptyZSpan)
                 ::testing::KilledBySignal{SIGABRT},
                 "");
 
-    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(safecpp::details::zspan<const char>{}),
-                ::testing::KilledBySignal{SIGABRT},
-                "");
+    EXPECT_EXIT(
+        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(safecpp::details::zspan<const char>{}),
+        ::testing::KilledBySignal{SIGABRT},
+        "");
 }
 
 TEST(NullTerminationCheck, ForNonEmptyZSpan)
@@ -244,31 +245,35 @@ TYPED_TEST_SUITE(NullTerminationCheckTest, ViewTypes, /* unused */);
 TYPED_TEST(NullTerminationCheckTest, NoUnderlyingBuffer)
 {
     TypeParam view{};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 TYPED_TEST(NullTerminationCheckTest, NullptrUnderlyingBuffer)
 {
     TypeParam view{nullptr, 3U};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 TYPED_TEST(NullTerminationCheckTest, WithUnderlyingBufferButZeroSizedView)
 {
     typename TypeParam::value_type buffer[] = {'x'};
     TypeParam view{buffer, 0U};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 TYPED_TEST(NullTerminationCheckTest, NullTerminatedEmtpyUnderlyingCharBufferButZeroSizedView)
 {
     typename TypeParam::value_type buffer[] = {'\0'};
     TypeParam view{buffer, 0U};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 TYPED_TEST(NullTerminationCheckTest, NullTerminatedEmtpyUnderlyingCharBuffer)
@@ -289,8 +294,9 @@ TYPED_TEST(NullTerminationCheckTest, NullTerminatedUnderlyingBufferButStringView
 {
     typename TypeParam::value_type buffer[] = "hello world";
     TypeParam view{buffer, 5U};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 TYPED_TEST(NullTerminationCheckTest, NullTerminationEmbeddedInUnderlyingBufferAtLastViewElement)
@@ -304,8 +310,9 @@ TYPED_TEST(NullTerminationCheckTest, NullTerminationEmbeddedInUnderlyingBufferBu
 {
     typename TypeParam::value_type buffer[] = "hello\0world";
     TypeParam view{buffer, 7U};
-    EXPECT_EXIT(
-        score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view), ::testing::KilledBySignal{SIGABRT}, "");
+    EXPECT_EXIT(score::cpp::ignore = safecpp::GetPtrToNullTerminatedUnderlyingBufferOf(view),
+                ::testing::KilledBySignal{SIGABRT},
+                "");
 }
 
 }  // namespace

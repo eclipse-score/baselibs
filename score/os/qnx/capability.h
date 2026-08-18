@@ -24,7 +24,8 @@ namespace os
 class QNXProcessCapabilitiesImpl : public ProcessCapabilities
 {
   public:
-    virtual score::cpp::expected_blank<Error> DropCapabilityFromBoundingSet(const Capability /*capability*/) noexcept override
+    virtual score::cpp::expected_blank<Error> DropCapabilityFromBoundingSet(
+        const Capability /*capability*/) noexcept override
     {
         return {};
     }
@@ -61,10 +62,10 @@ class QNXProcessCapabilitiesImpl : public ProcessCapabilities
     }
 
     virtual score::cpp::expected<std::int32_t, Error> prctl(const std::int32_t /*option*/,
-                                                     const std::uint64_t /*arg2*/,
-                                                     const std::uint64_t /*arg3*/,
-                                                     const std::uint64_t /*arg4*/,
-                                                     const std::uint64_t /*arg5*/) noexcept override
+                                                            const std::uint64_t /*arg2*/,
+                                                            const std::uint64_t /*arg3*/,
+                                                            const std::uint64_t /*arg4*/,
+                                                            const std::uint64_t /*arg5*/) noexcept override
     {
         return {0};
     }

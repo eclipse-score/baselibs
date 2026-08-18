@@ -108,7 +108,7 @@ Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const std::string_v
     else if (hex_repr.size() != exp_size.value())
     {
         return score::MakeUnexpected(score::hash::ErrorCode::kInvalidParameters,
-                                   "String size does not match expected size for the chosen algorithm");
+                                     "String size does not match expected size for the chosen algorithm");
     }
     else
     {
@@ -127,7 +127,7 @@ Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const std::string_v
             if (current_digit == kInvalidCharSentinel)
             {
                 return score::MakeUnexpected(score::hash::ErrorCode::kInvalidParameters,
-                                           "String does not represent an hexadecimal number");
+                                             "String does not represent an hexadecimal number");
             }
 
             if (is_high_byte)

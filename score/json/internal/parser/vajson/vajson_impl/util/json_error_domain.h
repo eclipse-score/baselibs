@@ -116,20 +116,20 @@ inline score::result::Error MakeError(const ErrorCode code, const std::string_vi
     return {static_cast<score::result::ErrorCode>(code), detail::kJsonErrorDomain, user_message};
 }
 
-inline score::result::Error MakeError(score::json::vajson::JsonErrc const error_code,
+inline score::result::Error MakeError(const score::json::vajson::JsonErrc error_code,
                                       const std::string_view user_message = "") noexcept
 {
     return MakeError(static_cast<ErrorCode>(error_code), user_message);
 }
 
 template <typename T>
-inline Result<T> MakeErrorResult(const ErrorCode error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const ErrorCode error_code, const std::string_view user_message = "") noexcept
 {
     return Result<T>{score::unexpect, MakeError(error_code, user_message)};
 }
 
 template <typename T>
-inline Result<T> MakeErrorResult(const JsonErrc error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const JsonErrc error_code, const std::string_view user_message = "") noexcept
 {
     return MakeErrorResult<T>(static_cast<ErrorCode>(error_code), user_message);
 }

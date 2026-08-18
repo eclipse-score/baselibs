@@ -14,12 +14,12 @@
 #ifndef SCORE_LIB_OS_QNX_RESOURCE_MANAGER_H
 #define SCORE_LIB_OS_QNX_RESOURCE_MANAGER_H
 
-#include "score/os/utils/qnx/resource_manager/include/resource.h"
 #include "score/mw/log/logger.h"
+#include "score/os/utils/qnx/resource_manager/include/resource.h"
 
-#include "score/stop_token.hpp"
 #include "score/os/qnx/dispatch_impl.h"
 #include "score/os/qnx/iofunc.h"
+#include "score/stop_token.hpp"
 
 #include <memory>
 #include <string>

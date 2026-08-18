@@ -14,8 +14,8 @@
 #include "score/hash/code/core/i_hash_calculator.h"
 #include "score/hash/code/common/error.h"
 
-#include "score/result/result.h"
 #include "score/mw/log/logging.h"
+#include "score/result/result.h"
 
 #include <score/utility.hpp>
 

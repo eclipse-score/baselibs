@@ -27,7 +27,8 @@ class StatvfsImpl final : public Statvfs
   public:
     constexpr StatvfsImpl() = default;
     /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
-    score::cpp::expected_blank<Error> statvfs(const char* const path, struct statvfs* const buf) const noexcept override;
+    score::cpp::expected_blank<Error> statvfs(const char* const path,
+                                              struct statvfs* const buf) const noexcept override;
     /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 };
 

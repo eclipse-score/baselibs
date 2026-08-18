@@ -348,7 +348,8 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithT
     else
     {
         // FancyPointerAllocator, mirroring PolymorphicOffsetPtrAllocator, detects the overflow via an AMP
-        // precondition rather than a thrown std::exception, so we must use SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED here.
+        // precondition rather than a thrown std::exception, so we must use
+        // SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED here.
         SCORE_LANGUAGE_FUTURECPP_ASSERT_CONTRACT_VIOLATED(initialise_dynamic_array());
     }
 }

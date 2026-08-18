@@ -32,9 +32,15 @@ namespace os
 class MockDirent : public Dirent
 {
   public:
-    MOCK_METHOD((score::cpp::expected<DIR*, score::os::Error>), opendir, (const char* name), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<DIR*, score::os::Error>),
+                opendir,
+                (const char* name),
+                (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<struct dirent*, score::os::Error>), readdir, (DIR * dirp), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<struct dirent*, score::os::Error>),
+                readdir,
+                (DIR * dirp),
+                (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 scandir,

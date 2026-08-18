@@ -16,7 +16,6 @@
 #include "score/containers/test/mockable_pointer.h"
 #include "score/containers/test/pointer_spy_mock.h"
 
-
 namespace score::containers::test
 {
 

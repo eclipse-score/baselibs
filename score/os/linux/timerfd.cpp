@@ -14,26 +14,26 @@
 
 std::int32_t score::os::timerfd_create(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
                                           namespace usage */
-                                     const std::int32_t clock_id,
-                                     const std::int32_t flags)
+                                       const std::int32_t clock_id,
+                                       const std::int32_t flags)
 {
     return ::timerfd_create(clock_id, flags);
 }
 
 std::int32_t score::os::timerfd_gettime(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
                                            namespace usage */
-                                      const std::int32_t fd,
-                                      struct itimerspec* curr_value)
+                                        const std::int32_t fd,
+                                        struct itimerspec* curr_value)
 {
     return ::timerfd_gettime(fd, curr_value);
 }
 
 std::int32_t score::os::timerfd_settime(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
                                            namespace usage */
-                                      const std::int32_t fd,
-                                      const std::int32_t flags,
-                                      const struct itimerspec* new_value,
-                                      struct itimerspec* old_value)
+                                        const std::int32_t fd,
+                                        const std::int32_t flags,
+                                        const struct itimerspec* new_value,
+                                        struct itimerspec* old_value)
 {
     return ::timerfd_settime(fd, flags, new_value, old_value);
 }

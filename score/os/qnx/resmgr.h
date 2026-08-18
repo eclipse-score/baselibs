@@ -32,9 +32,9 @@ class ResMgr
   public:
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<size_t, score::os::Error> resmgr_msgwrite(resmgr_context_t* ctp,
-                                                                  const void* msg,
-                                                                  const size_t size,
-                                                                  const size_t offset) const noexcept = 0;
+                                                                           const void* msg,
+                                                                           const size_t size,
+                                                                           const size_t offset) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~ResMgr() = default;

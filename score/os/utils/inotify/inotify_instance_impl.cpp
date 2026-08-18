@@ -89,8 +89,9 @@ void InotifyInstanceImpl::InternalClose() noexcept
     }
 }
 
-score::cpp::expected<InotifyWatchDescriptor, Error> InotifyInstanceImpl::AddWatch(safecpp::zstring_view pathname,
-                                                                           Inotify::EventMask event_mask) noexcept
+score::cpp::expected<InotifyWatchDescriptor, Error> InotifyInstanceImpl::AddWatch(
+    safecpp::zstring_view pathname,
+    Inotify::EventMask event_mask) noexcept
 {
     if (!(IsValid().has_value()))
     {

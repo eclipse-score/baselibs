@@ -15,8 +15,8 @@
 
 #include "score/containers/test/mockable_pointer.h"
 
-#include <score/memory_resource.hpp>
 #include <score/assert.hpp>
+#include <score/memory_resource.hpp>
 
 #include <cstddef>
 #include <cstdlib>

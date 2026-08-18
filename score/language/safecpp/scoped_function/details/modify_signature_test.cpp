@@ -33,15 +33,16 @@ TEST_F(ModifySignatureTest, RetainsKeyTraitsOfSignature)
 
 TEST_F(ModifySignatureTest, RetainsConst)
 {
-    static_assert(std::is_same_v<ModifySignatureT<std::int32_t(bool) const>, score::cpp::optional<std::int32_t>(bool) const>,
-                  "Types must equal");
+    static_assert(
+        std::is_same_v<ModifySignatureT<std::int32_t(bool) const>, score::cpp::optional<std::int32_t>(bool) const>,
+        "Types must equal");
 }
 
 TEST_F(ModifySignatureTest, RetainsNoexcept)
 {
-    static_assert(
-        std::is_same_v<ModifySignatureT<std::int32_t(bool) noexcept>, score::cpp::optional<std::int32_t>(bool) noexcept>,
-        "Types must equal");
+    static_assert(std::is_same_v<ModifySignatureT<std::int32_t(bool) noexcept>,
+                                 score::cpp::optional<std::int32_t>(bool) noexcept>,
+                  "Types must equal");
 }
 
 TEST_F(ModifySignatureTest, RetainsConstNoexcept)

@@ -25,7 +25,8 @@ InotifyEvent MakeFakeEvent(const std::int32_t wd,
 {
     constexpr auto max_name_length{NAME_MAX};
     constexpr auto terminator_length{1};
-    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(name.size() <= max_name_length, "POSIX restricts name to size NAME_MAX");
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(name.size() <= max_name_length,
+                                                      "POSIX restricts name to size NAME_MAX");
 
     alignas(struct ::inotify_event)
         std::array<char, sizeof(struct ::inotify_event) + max_name_length + terminator_length>

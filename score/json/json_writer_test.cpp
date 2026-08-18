@@ -113,7 +113,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -129,7 +129,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -148,7 +148,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -166,7 +166,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
     this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -184,8 +184,8 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
     this->RecordProperty("Verifies", "5310867");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "Invalid file path returns error when writing unsynced file");
-    this->RecordProperty("TestType", "requirements-based"); // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    this->RecordProperty("TestType", "requirements-based");                // requirements test
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -206,8 +206,8 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
     this->RecordProperty("Verifies", "5310867");
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "Invalid file path returns error when writing with atomic update");
-    this->RecordProperty("TestType", "requirements-based"); // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    this->RecordProperty("TestType", "requirements-based");                // requirements test
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
@@ -243,7 +243,7 @@ TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)
     this->RecordProperty("ASIL", "B");
     this->RecordProperty("Description", "Test integer formatting with type-specific values");
     this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes"); // boundary values
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     this->RecordProperty("Priority", "3");
 
     using T = TypeParam;
