@@ -154,5 +154,9 @@
   {
     "version": "pr-480",
     "url": "https://eclipse-score.github.io/baselibs/pr-480/"
+  },
+  {
+    "version": "pr-481",
+    "url": "https://eclipse-score.github.io/baselibs/pr-481/"
   }
 ]
