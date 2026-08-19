@@ -55,6 +55,7 @@ INSTANTIATE_TEST_SUITE_P(
 
 TEST_P(BufferVersionInfoEqualityTest, OperatorEquals)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "operator== returns true when all fields are equal and false when any field differs");
@@ -65,6 +66,7 @@ TEST_P(BufferVersionInfoEqualityTest, OperatorEquals)
 
 TEST_P(BufferVersionInfoEqualityTest, OperatorNotEquals)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",

@@ -14,7 +14,7 @@
 
 .. mod:: Baselibs
    :id: mod__baselibs
-   :includes: comp__baselibs_json[version==1], comp__baselibs_memory_shared[version==1], comp__baselibs_result[version==1], comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==1], comp__baselibs_filesystem[version==1], comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1], comp__baselibs_safecpp[version==1]
+   :includes: comp__baselibs_static_reflection[version==1], comp__baselibs_result[version==1], comp__log[version==1], comp__baselibs_hash[version==1], comp__baselibs_flatbuffers[version==1], comp__baselibs_abi_compatible_data_types[version==1], comp__baselibs_json[version==1], comp__baselibs_memory_shared[version==1], comp__baselibs_result[version==1], comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==1], comp__baselibs_filesystem[version==1], comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1], comp__baselibs_safecpp[version==1]
    :status: valid
    :version: 1
    :safety: ASIL_B

@@ -103,6 +103,17 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "7.1.0", dev_dependency = True)
+
+# TEMPORARY: pin score_docs_as_code to the ankr_mod_verf_report branch that
+# adds the ``score_module_verification_report`` sub-extension.
+# Tracks eclipse-score/docs-as-code#730. Remove this override once the branch
+# is merged and a release with the extension is published.
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "5c956f596f1ad223c06a3625bf4fa0f12c0da82b",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
 bazel_dep(name = "score_process", version = "2.0.3", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 
