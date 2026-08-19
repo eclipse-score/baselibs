@@ -719,5 +719,90 @@ TEST(JsonSerializerTest, UseCustomSerializationOnVisitableStruct)
     EXPECT_EQ(serialized.As<Object>()->get().count("foo"), 1);
 }
 
+TEST(JsonSerializerTest, TypeMismatchErrorContainsFieldName)
+{
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("Verifies", "::score::json::FromJsonAny");
+    RecordProperty("Description",
+                   "Verify that a type-mismatch deserialization error carries the name of the failing field in its "
+                   "UserMessage");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Priority", "3");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    // Given a JSON where string_val holds a number instead of a string
+    auto source = R"({
+"integer_val": 42,
+"string_val": 999,
+"nested_val": {
+    "nested_int": 43,
+    "nested_bool": true,
+    "nested_array": [44, 45]
+    }
+} )"_json;
+
+    // When deserializing into the struct
+    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+
+    // Then the error code is WrongType and the UserMessage names the offending field
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), Error::kWrongType);
+    EXPECT_EQ(unit.error().UserMessage(), "string_val");
+}
+
+TEST(JsonSerializerTest, MissingMandatoryFieldErrorContainsFieldName)
+{
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("Verifies", "::score::json::FromJsonAny");
+    RecordProperty("Description",
+                   "Verify that a missing-mandatory-field deserialization error carries the name of the absent field "
+                   "in its UserMessage");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Priority", "3");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    // Given a JSON where mandatory integer_val is absent
+    auto source = R"({"string_val": "hello"})"_json;
+
+    // When deserializing into the struct
+    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+
+    // Then the error code is KeyNotFound and the UserMessage names the missing field
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), Error::kKeyNotFound);
+    EXPECT_EQ(unit.error().UserMessage(), "integer_val");
+}
+
+TEST(JsonSerializerTest, NestedTypeMismatchErrorContainsOutermostFieldName)
+{
+    RecordProperty("TestType", "control-flow-analysis"); // data flow
+    RecordProperty("Verifies", "::score::json::FromJsonAny");
+    RecordProperty("Description",
+                   "Verify that a type-mismatch inside a nested struct is reported under the parent field name, "
+                   "because each deserialization level re-stamps the error with its own field key");
+    RecordProperty("ASIL", "QM");
+    RecordProperty("Priority", "3");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    // Given a JSON where nested_val.nested_bool holds a string instead of a bool
+    auto source = R"({
+"integer_val": 42,
+"string_val": "ok",
+"nested_val": {
+    "nested_int": 43,
+    "nested_bool": "not-a-bool",
+    "nested_array": [44, 45]
+    }
+} )"_json;
+
+    // When deserializing into the struct
+    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+
+    // Then the error code is WrongType and the UserMessage names the parent struct field, not the inner field
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), Error::kWrongType);
+    EXPECT_EQ(unit.error().UserMessage(), "nested_val");
+}
+
 }  // namespace
 }  // namespace score::json::test
