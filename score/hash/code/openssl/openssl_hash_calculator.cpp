@@ -61,7 +61,7 @@ Result<OpensslHashCalculator> OpensslHashCalculator::Create(const HashAlgorithm 
 
         case HashAlgorithm::kNone:
         case HashAlgorithm::kCrc32:
-        case HashAlgorithm::kCrc32Unused:
+        case HashAlgorithm::kCrc32Autosar:
         case HashAlgorithm::kLast:
         default:
             mw::log::LogError() << "OpensslHashCalculator::Unknown digest algorithm";
@@ -91,7 +91,7 @@ Result<OpensslHashCalculator> OpensslHashCalculator::Create(const HashAlgorithm 
     return OpensslHashCalculator(algorithm, message_digest_context, openssl);
 }
 
-ResultBlank OpensslHashCalculator::Update(const score::cpp::span<const std::uint8_t> data) noexcept
+Result<void> OpensslHashCalculator::Update(const score::cpp::span<const std::uint8_t> data) noexcept
 {
     if (nullptr == data.data())
     {

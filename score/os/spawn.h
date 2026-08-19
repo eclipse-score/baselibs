@@ -86,8 +86,9 @@ class Spawn : public ObjectSeam<Spawn>
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setpgroup(posix_spawnattr_t* const attrp,
-                                                                                  const pid_t pid) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setpgroup(
+        posix_spawnattr_t* const attrp,
+        const pid_t pid) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -223,22 +224,23 @@ class Spawn : public ObjectSeam<Spawn>
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getnode(
         const posix_spawnattr_t* attrp,
         std::uint32_t* node_p) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setnode(posix_spawnattr_t* attrp,
-                                                                                std::uint32_t node) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getcred(const posix_spawnattr_t* attrp,
-                                                                                uid_t* uid_p,
-                                                                                gid_t* gid_p) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setnode(
+        posix_spawnattr_t* attrp,
+        std::uint32_t node) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error>
+    posix_spawnattr_getcred(const posix_spawnattr_t* attrp, uid_t* uid_p, gid_t* gid_p) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setcred(posix_spawnattr_t* attrp,
-                                                                                uid_t uid,
-                                                                                gid_t gid) const noexcept = 0;
+                                                                                         uid_t uid,
+                                                                                         gid_t gid) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_gettypeid(
         const posix_spawnattr_t* attrp,
         std::uint32_t* type_id_p) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_settypeid(
         posix_spawnattr_t* attrp,
         std::uint32_t type_id) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setasid(posix_spawnattr_t* attrp,
-                                                                                std::uint32_t asid) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setasid(
+        posix_spawnattr_t* attrp,
+        std::uint32_t asid) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_getaslr(
         const posix_spawnattr_t* const attrp,
         posix_spawnattr_aslr_t* aslr) const noexcept = 0;

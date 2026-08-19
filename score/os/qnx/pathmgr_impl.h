@@ -24,7 +24,7 @@ class PathmgrImpl final : public Pathmgr
 {
   public:
     score::cpp::expected_blank<Error> pathmgr_symlink(const char* const path,
-                                               const char* const symlink) const noexcept override;
+                                                      const char* const symlink) const noexcept override;
     score::cpp::expected_blank<Error> pathmgr_unlink(const char* const symlink) const noexcept override;
 };
 

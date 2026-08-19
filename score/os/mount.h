@@ -40,11 +40,11 @@ class Mount : public ObjectSeam<Mount>
     // Wrapper must be backward compatible for the applications that use linux specific mount() (without datalen arg)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::cpp::expected_blank<Error> mount(const char* const special_file,
-                                             const char* const dir,
-                                             const char* const fstype,
-                                             const Mount::Flag flags,
-                                             const void* const data,
-                                             const std::int32_t datalen = -1) const noexcept = 0;
+                                                    const char* const dir,
+                                                    const char* const fstype,
+                                                    const Mount::Flag flags,
+                                                    const void* const data,
+                                                    const std::int32_t datalen = -1) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */

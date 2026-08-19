@@ -36,18 +36,21 @@ class Netutils : public ObjectSeam<Netutils>
   public:
     static Netutils& instance() noexcept;
 
-    virtual score::cpp::expected<std::uint32_t, score::os::Error> get_net_mask(const std::string& ifc_name) const noexcept = 0;
+    virtual score::cpp::expected<std::uint32_t, score::os::Error> get_net_mask(
+        const std::string& ifc_name) const noexcept = 0;
     virtual score::cpp::expected<std::uint32_t, score::os::Error> get_ifcip_address(
         const std::string& ifc_name) const noexcept = 0;
     virtual score::cpp::expected<Ipv4Address, score::os::Error> get_ifc_ip_address_net_mask(
         const std::string& ifc_name) const noexcept = 0;
-    virtual score::cpp::expected<MacAddress, score::os::Error> get_mac_address(const std::string& ifc_name) const noexcept = 0;
+    virtual score::cpp::expected<MacAddress, score::os::Error> get_mac_address(
+        const std::string& ifc_name) const noexcept = 0;
     virtual score::cpp::optional<std::uint32_t> get_default_gateway_ip4() const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> set_ip_address(const std::string& ifc_name,
-                                                               const Ipv4Address& ip_addr) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> set_alias_ip_address(const std::string& ifc_name,
-                                                                     const Ipv4Address& ip_addr) const noexcept = 0;
+                                                                        const Ipv4Address& ip_addr) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> set_alias_ip_address(
+        const std::string& ifc_name,
+        const Ipv4Address& ip_addr) const noexcept = 0;
 
     virtual ~Netutils() = default;
 };

@@ -17,8 +17,8 @@ namespace score::os
 {
 
 score::cpp::expected_blank<Error> FcntlImpl::fcntl(const std::int32_t fd,
-                                            const Command command,
-                                            const Open flags) const noexcept
+                                                   const Command command,
+                                                   const Open flags) const noexcept
 {
     // Because the signature is very specific, we must also restrict the commands we support.
     // Based on the signature this is solely Command::kFileSetStatusFlags
@@ -47,7 +47,8 @@ score::cpp::expected_blank<Error> FcntlImpl::fcntl(const std::int32_t fd,
     return {};
 }
 
-score::cpp::expected<Fcntl::Open, Error> FcntlImpl::fcntl(const std::int32_t fd, const Fcntl::Command command) const noexcept
+score::cpp::expected<Fcntl::Open, Error> FcntlImpl::fcntl(const std::int32_t fd,
+                                                          const Fcntl::Command command) const noexcept
 {
     // Because the signature is very specific, we must also restrict the commands we support.
     // This signature supports more commands, but we restrict to the required commands for the current use cases.
@@ -89,8 +90,8 @@ score::cpp::expected<std::int32_t, Error> FcntlImpl::open(const char* const path
 }
 
 score::cpp::expected<std::int32_t, Error> FcntlImpl::open(const char* const pathname,
-                                                   const Open flags,
-                                                   const Stat::Mode mode) const noexcept
+                                                          const Open flags,
+                                                          const Stat::Mode mode) const noexcept
 {
     const std::int32_t native_flags{internal::fcntl_helper::OpenFlagToInteger(flags)};
     const std::uint32_t native_mode{ModeToInteger(mode)};
@@ -105,8 +106,8 @@ score::cpp::expected<std::int32_t, Error> FcntlImpl::open(const char* const path
 }
 
 score::cpp::expected_blank<Error> FcntlImpl::posix_fallocate(const std::int32_t fd,
-                                                      const off_t offset,
-                                                      const off_t len) const noexcept
+                                                             const off_t offset,
+                                                             const off_t len) const noexcept
 {
     const std::int32_t ret{::posix_fallocate(fd, offset, len)};
     if (ret != 0)

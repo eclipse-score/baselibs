@@ -191,12 +191,14 @@ auto score::json::VajsonParser::OnUnexpectedEvent() noexcept -> score::json::vaj
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
 // coverity[autosar_cpp14_a15_5_3_violation]
-auto score::json::JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<score::json::Any>
+auto score::json::JsonParser::FromFile(const std::string_view file_path) const noexcept
+    -> score::Result<score::json::Any>
 {
     return score::json::VajsonParser::FromFile(file_path);
 }
 
-auto score::json::JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> score::Result<score::json::Any>
+auto score::json::JsonParser::FromBuffer(const std::string_view buffer) const noexcept
+    -> score::Result<score::json::Any>
 {
     return score::json::VajsonParser::FromBuffer(buffer);
 }

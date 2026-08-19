@@ -36,7 +36,7 @@ namespace internal
 {
 VirtualParser::VirtualParser(JsonData& doc) noexcept : parser_{*this, doc} {}
 
-auto VirtualParser::Parse() noexcept -> Result<vajson::Blank>
+auto VirtualParser::Parse() noexcept -> Result<void>
 {
     return this->parser_.Parse();
 }

@@ -477,6 +477,22 @@ TEST(span, DereferencingNullptrShallTriggerContracViolation)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#9338069
+TEST(span, SizeBytes)
+{
+    {
+        std::vector<std::int32_t> data{23, 42, 72};
+        const span<const std::int32_t> view{data};
+        EXPECT_EQ(3U, view.size());
+        EXPECT_EQ(3U * sizeof(std::int32_t), view.size_bytes());
+    }
+    {
+        const span<const std::int32_t> view{};
+        EXPECT_EQ(0U, view.size_bytes());
+    }
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9338069
 TEST(span, AsBytes)
 {
     const std::int32_t data[]{0x0A0A0A0A, 0x0B0B0B0B};
@@ -880,6 +896,7 @@ TEST(span, that_noexcept_api_is_compatible_with_std20_span)
     static_assert(noexcept(GivenSpan()));
     static_assert(noexcept(GivenSpan(x)));
     static_assert(noexcept(GivenSpan().size()));
+    static_assert(noexcept(GivenSpan().size_bytes()));
     static_assert(noexcept(GivenSpan().empty()));
     static_assert(noexcept(GivenSpan().data()));
 

@@ -23,7 +23,8 @@
 namespace score::os
 {
 
-score::cpp::expected<std::int32_t, Error> internal::fcntl_helper::CommandToInteger(const Fcntl::Command command) noexcept
+score::cpp::expected<std::int32_t, Error> internal::fcntl_helper::CommandToInteger(
+    const Fcntl::Command command) noexcept
 {
     // coverity[autosar_cpp14_m6_4_3_violation] see Note 1
     switch (command)
@@ -210,7 +211,8 @@ score::os::Fcntl& score::os::Fcntl::instance() noexcept
 // static function shall not be reused within a namespace.
 // static function here is overloaded and used as a wrapper.
 // coverity[autosar_cpp14_a2_10_4_violation]
-score::cpp::pmr::unique_ptr<score::os::Fcntl> score::os::Fcntl::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Fcntl> score::os::Fcntl::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 {
     return score::cpp::pmr::make_unique<score::os::FcntlImpl>(memory_resource);
 }

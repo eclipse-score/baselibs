@@ -13,8 +13,8 @@
 #include "score/os/utils/thread.h"
 #include "score/os/pthread.h"
 
-#include <score/jthread.hpp>
 #include <gtest/gtest.h>
+#include <score/jthread.hpp>
 
 #include <atomic>
 #include <chrono>
@@ -105,7 +105,7 @@ TEST_F(ThreadNameTest, SetNameFails)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadNameTest Set Name Fails");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const size_t name_length = 200U;
     std::string thread_name(name_length, 'a');
@@ -128,7 +128,7 @@ TEST(ThreadAffinityTest, SetAffinitySucceeds)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ThreadAffinityTest Set Affinity Succeeds");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_TRUE(set_thread_affinity(0));
 }

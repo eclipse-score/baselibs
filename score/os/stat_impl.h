@@ -28,8 +28,8 @@ class StatImpl final : public Stat
     // This is a wrapper function and it simulates the behaviour of OS function
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     score::cpp::expected_blank<Error> stat(const char* const file,
-                                    StatBuffer& buf,
-                                    const bool resolve_symlinks = true) const noexcept override;
+                                           StatBuffer& buf,
+                                           const bool resolve_symlinks = true) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -54,9 +54,9 @@ class StatImpl final : public Stat
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fchmodat(const std::int32_t fd,
-                                        const char* const path,
-                                        const Mode mode,
-                                        const bool resolve_symlinks) const noexcept override;
+                                               const char* const path,
+                                               const Mode mode,
+                                               const bool resolve_symlinks) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
   private:
     void stat_to_statbuffer(const struct stat& native_stat, StatBuffer& stat_buffer) const noexcept;

@@ -23,10 +23,10 @@ class PcapImpl final : public Pcap
 {
   public:
     score::cpp::expected<pcap_t*, Error> pcap_open_live(const char* device,
-                                                 std::int32_t snaplen,
-                                                 std::int32_t promisc,
-                                                 std::int32_t to_ms,
-                                                 char* errbuf) const noexcept override
+                                                        std::int32_t snaplen,
+                                                        std::int32_t promisc,
+                                                        std::int32_t to_ms,
+                                                        char* errbuf) const noexcept override
     {
         pcap_t* handle{nullptr};
         handle = ::pcap_open_live(device, snaplen, promisc, to_ms, errbuf);
@@ -39,7 +39,8 @@ class PcapImpl final : public Pcap
         return handle;
     }
 
-    score::cpp::expected<pcap_t*, Error> pcap_open_dead(std::int32_t linktype, std::int32_t snaplen) const noexcept override
+    score::cpp::expected<pcap_t*, Error> pcap_open_dead(std::int32_t linktype,
+                                                        std::int32_t snaplen) const noexcept override
     {
         pcap_t* handle{nullptr};
         handle = ::pcap_open_dead(linktype, snaplen);
@@ -55,9 +56,9 @@ class PcapImpl final : public Pcap
     }
 
     score::cpp::expected_blank<Error> pcap_loop(pcap_t* p,
-                                         std::int32_t cnt,
-                                         pcap_handler callback,
-                                         u_char* user) const noexcept override
+                                                std::int32_t cnt,
+                                                pcap_handler callback,
+                                                u_char* user) const noexcept override
     {
         if (::pcap_loop(p, cnt, callback, user) == PCAP_ERROR)
         {
@@ -102,17 +103,18 @@ class PcapImpl final : public Pcap
         {
             // NOTE_2: from pcap source code (pcap.c), pcap_geterr() returns the internal errbuf[] array.
             // So it will never be nullptr.
-            return score::cpp::make_unexpected(::score::os::Error::createFromErrno(EBADMSG));  // LCOV_EXCL_LINE see NOTE_2
+            return score::cpp::make_unexpected(
+                ::score::os::Error::createFromErrno(EBADMSG));  // LCOV_EXCL_LINE see NOTE_2
         }
 
         return result;
     }
 
     score::cpp::expected<int, Error> pcap_compile(pcap_t* p,
-                                           struct bpf_program* fp,
-                                           const char* str,
-                                           int optimize,
-                                           bpf_u_int32 netmask) const noexcept override
+                                                  struct bpf_program* fp,
+                                                  const char* str,
+                                                  int optimize,
+                                                  bpf_u_int32 netmask) const noexcept override
     {
         if (p == nullptr)
         {
@@ -169,8 +171,8 @@ class PcapImpl final : public Pcap
         return dumper;
     }
     score::cpp::expected_blank<Error> pcap_dump(u_char* user,
-                                         const struct pcap_pkthdr* h,
-                                         const u_char* sp) const noexcept override
+                                                const struct pcap_pkthdr* h,
+                                                const u_char* sp) const noexcept override
     {
         if (user == nullptr)
         {

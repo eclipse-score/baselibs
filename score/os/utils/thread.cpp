@@ -12,8 +12,8 @@
  ********************************************************************************/
 #include "score/os/utils/thread.h"
 
-#include "score/os/pthread.h"
 #include "score/mw/log/logging.h"
+#include "score/os/pthread.h"
 
 #include <cstring>
 #include <sstream>

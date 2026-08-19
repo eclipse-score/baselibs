@@ -31,7 +31,7 @@ namespace os
 {
 
 score::cpp::expected<sockaddr_in, score::os::Error> GetSockAddrInFromIpAndPort(const score::os::Ipv4Address& address,
-                                                                      const std::uint16_t port);
+                                                                               const std::uint16_t port);
 
 class Ipv4Address;
 
@@ -55,7 +55,8 @@ class UdpSocket
 
     virtual score::cpp::expected_blank<score::os::Error> Bind(const Ipv4Address& address, std::uint16_t port) noexcept;
 
-    virtual score::cpp::expected<ssize_t, Error> TryReceive(unsigned char* const buffer, const std::size_t length) noexcept;
+    virtual score::cpp::expected<ssize_t, Error> TryReceive(unsigned char* const buffer,
+                                                            const std::size_t length) noexcept;
 
     virtual score::cpp::expected<std::tuple<ssize_t, score::os::Ipv4Address>, Error> TryReceiveWithAddress(
         unsigned char* const buffer,
@@ -68,14 +69,14 @@ class UdpSocket
                                           const std::size_t msg_length) noexcept;
 
     virtual score::cpp::expected<ssize_t, Error> TrySendTo(const Ipv4Address& recipient,
-                                                    const std::uint16_t port,
-                                                    const unsigned char* const buffer,
-                                                    const std::size_t length) noexcept;
+                                                           const std::uint16_t port,
+                                                           const unsigned char* const buffer,
+                                                           const std::size_t length) noexcept;
 
     virtual score::cpp::expected_blank<score::os::Error> SetSocketOption(const std::int32_t level,
-                                                                const std::int32_t optname,
-                                                                const void* optval,
-                                                                const socklen_t optlen) noexcept;
+                                                                         const std::int32_t optname,
+                                                                         const void* optval,
+                                                                         const socklen_t optlen) noexcept;
 
     std::int32_t GetFileDescriptor() const noexcept;
 };

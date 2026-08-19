@@ -134,7 +134,8 @@ TEST_F(AUdpSocketWithMockedPosix, OnDestructionClosesTheUnderlyingSocket)
     const auto VALID_FILE_DESCRIPTOR = 10;
     EXPECT_CALL(*socket_mock, socket(_, _, _)).WillOnce(Return(VALID_FILE_DESCRIPTOR));
 
-    EXPECT_CALL(*unistd_mock, close(VALID_FILE_DESCRIPTOR)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(*unistd_mock, close(VALID_FILE_DESCRIPTOR))
+        .WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
 
     auto socket_expected = UdpSocket::Make();
     ASSERT_THAT(socket_expected.has_value(), Eq(true));

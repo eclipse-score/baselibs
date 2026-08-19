@@ -28,7 +28,10 @@ class NeutrinoMock : public Neutrino
 {
   public:
     ~NeutrinoMock() override = default;
-    MOCK_METHOD((score::cpp::expected<int, score::os::Error>), ThreadCtl, (int cmd, void* data), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<int, score::os::Error>),
+                ThreadCtl,
+                (int cmd, void* data),
+                (const, noexcept, override));
     MOCK_METHOD((std::int32_t), InterruptWait_r, (std::int32_t flags, const std::uint64_t* timeout), (override));
     MOCK_METHOD((std::int32_t),
                 InterruptAttachEvent,
@@ -37,7 +40,10 @@ class NeutrinoMock : public Neutrino
     MOCK_METHOD((std::int32_t), InterruptDetach, (std::int32_t id), (override));
     MOCK_METHOD((std::int32_t), InterruptUnmask, (std::int32_t intr, std::int32_t id), (override));
     MOCK_METHOD((std::int32_t), ChannelCreate, (std::uint32_t flags), (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), ChannelCreate, (ChannelFlag flags), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                ChannelCreate,
+                (ChannelFlag flags),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 ChannelDestroy,
                 (const std::int32_t channel_id),

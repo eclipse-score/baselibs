@@ -16,7 +16,7 @@
 #include "score/bitmanipulation/bitmask_operators.h"
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
-#include "score/os/static_destruction_guard.h"
+#include "score/utils/static_destruction_guard.h"
 
 #include "score/expected.hpp"
 #include "score/memory.hpp"
@@ -60,31 +60,32 @@ class Unistd : public ObjectSeam<Unistd>
     virtual score::cpp::expected_blank<score::os::Error> close(const std::int32_t fd) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> access(const char* const pathname,
-                                                       const AccessMode mode) const noexcept = 0;
+                                                                const AccessMode mode) const noexcept = 0;
     // Wrapped function requires C-style array param
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
     virtual score::cpp::expected_blank<score::os::Error> pipe(std::int32_t pipefd[2]) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> dup(const std::int32_t oldfd) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> dup2(const std::int32_t oldfd,
-                                                             const std::int32_t newfd) const noexcept = 0;
+                                                                      const std::int32_t newfd) const noexcept = 0;
     virtual score::cpp::expected<ssize_t, score::os::Error> read(const std::int32_t fd,
-                                                        void* const buf,
-                                                        const size_t count) const noexcept = 0;
+                                                                 void* const buf,
+                                                                 const size_t count) const noexcept = 0;
     virtual score::cpp::expected<ssize_t, score::os::Error> pread(const std::int32_t fd,
-                                                         void* const buf,
-                                                         const size_t count,
-                                                         const off_t offset) const noexcept = 0;
+                                                                  void* const buf,
+                                                                  const size_t count,
+                                                                  const off_t offset) const noexcept = 0;
     virtual score::cpp::expected<ssize_t, score::os::Error> write(const std::int32_t fd,
-                                                         const void* const buf,
-                                                         const size_t count) const noexcept = 0;
+                                                                  const void* const buf,
+                                                                  const size_t count) const noexcept = 0;
     virtual score::cpp::expected<ssize_t, score::os::Error> pwrite(const std::int32_t fd,
-                                                          const void* const buf,
-                                                          const size_t count,
-                                                          const off_t offset) const noexcept = 0;
+                                                                   const void* const buf,
+                                                                   const size_t count,
+                                                                   const off_t offset) const noexcept = 0;
     virtual score::cpp::expected<off_t, score::os::Error> lseek(const std::int32_t fd,
-                                                       const off_t offset,
-                                                       const std::int32_t whence) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> ftruncate(const std::int32_t fd, const off_t length) const noexcept = 0;
+                                                                const off_t offset,
+                                                                const std::int32_t whence) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> ftruncate(const std::int32_t fd,
+                                                                   const off_t length) const noexcept = 0;
     virtual pid_t getpid() const noexcept = 0;
 
     /// @returns the ID of the current thread.
@@ -97,23 +98,23 @@ class Unistd : public ObjectSeam<Unistd>
     virtual score::cpp::expected_blank<score::os::Error> setgid(const gid_t gid) const noexcept = 0;
 
     virtual score::cpp::expected<ssize_t, score::os::Error> readlink(const char* const path,
-                                                            char* const buf,
-                                                            const size_t bufsize) const noexcept = 0;
+                                                                     char* const buf,
+                                                                     const size_t bufsize) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> fsync(const std::int32_t fd) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> fdatasync(const std::int32_t fd) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> nanosleep(const struct timespec* const req,
-                                                          struct timespec* const rem) const noexcept = 0;
+                                                                   struct timespec* const rem) const noexcept = 0;
     virtual score::cpp::expected<std::int64_t, score::os::Error> sysconf(const std::int32_t name) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> link(const char* const oldpath,
-                                                     const char* const newpath) const noexcept = 0;
+                                                              const char* const newpath) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> symlink(const char* const path1,
-                                                        const char* const path2) const noexcept = 0;
+                                                                 const char* const path2) const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> chdir(const char* const path) const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> chown(const char* const path,
-                                                      const uid_t uid,
-                                                      const gid_t gid) const noexcept = 0;
+                                                               const uid_t uid,
+                                                               const gid_t gid) const noexcept = 0;
 
     virtual score::cpp::expected<char*, score::os::Error> getcwd(char* const buf, const size_t size) const noexcept = 0;
 
@@ -122,10 +123,10 @@ class Unistd : public ObjectSeam<Unistd>
     virtual score::cpp::expected_blank<score::os::Error> sync() const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> getpwnam_r(const char* name,
-                                                           struct passwd* pwd,
-                                                           char* buffer,
-                                                           size_t bufsize,
-                                                           struct passwd** result) const noexcept = 0;
+                                                                    struct passwd* pwd,
+                                                                    char* buffer,
+                                                                    size_t bufsize,
+                                                                    struct passwd** result) const noexcept = 0;
 
     virtual ~Unistd() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
@@ -147,7 +148,7 @@ class UnistdImpl final : public Unistd
     score::cpp::expected_blank<score::os::Error> close(const std::int32_t fd) const noexcept override;
     score::cpp::expected_blank<score::os::Error> unlink(const char* const pathname) const noexcept override;
     score::cpp::expected_blank<score::os::Error> access(const char* const pathname,
-                                               const AccessMode mode) const noexcept override;
+                                                        const AccessMode mode) const noexcept override;
 
     // Wrapped function requires C-style array param
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
@@ -156,29 +157,30 @@ class UnistdImpl final : public Unistd
     score::cpp::expected<std::int32_t, score::os::Error> dup(const std::int32_t oldfd) const noexcept override;
 
     score::cpp::expected<std::int32_t, score::os::Error> dup2(const std::int32_t oldfd,
-                                                     const std::int32_t newfd) const noexcept override;
+                                                              const std::int32_t newfd) const noexcept override;
 
     score::cpp::expected<ssize_t, score::os::Error> read(const std::int32_t fd,
-                                                void* const buf,
-                                                const size_t count) const noexcept override;
+                                                         void* const buf,
+                                                         const size_t count) const noexcept override;
 
     score::cpp::expected<ssize_t, score::os::Error> pread(const std::int32_t fd,
-                                                 void* const buf,
-                                                 const size_t count,
-                                                 const off_t offset) const noexcept override;
+                                                          void* const buf,
+                                                          const size_t count,
+                                                          const off_t offset) const noexcept override;
 
     score::cpp::expected<ssize_t, score::os::Error> write(const std::int32_t fd,
-                                                 const void* const buf,
-                                                 const size_t count) const noexcept override;
+                                                          const void* const buf,
+                                                          const size_t count) const noexcept override;
 
     score::cpp::expected<ssize_t, score::os::Error> pwrite(const std::int32_t fd,
-                                                  const void* const buf,
-                                                  const size_t count,
-                                                  const off_t offset) const noexcept override;
+                                                           const void* const buf,
+                                                           const size_t count,
+                                                           const off_t offset) const noexcept override;
     score::cpp::expected<off_t, score::os::Error> lseek(const std::int32_t fd,
-                                               const off_t offset,
-                                               const std::int32_t whence) const noexcept override;
-    score::cpp::expected_blank<score::os::Error> ftruncate(const std::int32_t fd, const off_t length) const noexcept override;
+                                                        const off_t offset,
+                                                        const std::int32_t whence) const noexcept override;
+    score::cpp::expected_blank<score::os::Error> ftruncate(const std::int32_t fd,
+                                                           const off_t length) const noexcept override;
 
     pid_t getpid() const noexcept override;
 
@@ -192,29 +194,29 @@ class UnistdImpl final : public Unistd
     score::cpp::expected_blank<score::os::Error> setuid(const uid_t uid) const noexcept override;
     score::cpp::expected_blank<score::os::Error> setgid(const gid_t gid) const noexcept override;
     score::cpp::expected<ssize_t, score::os::Error> readlink(const char* const path,
-                                                    char* const buf,
-                                                    const size_t bufsize) const noexcept override;
+                                                             char* const buf,
+                                                             const size_t bufsize) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> fsync(const std::int32_t fd) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> fdatasync(const std::int32_t fd) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> nanosleep(const struct timespec* const req,
-                                                  struct timespec* const rem) const noexcept override;
+                                                           struct timespec* const rem) const noexcept override;
 
     score::cpp::expected<std::int64_t, score::os::Error> sysconf(const std::int32_t name) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> link(const char* const oldpath,
-                                             const char* const newpath) const noexcept override;
+                                                      const char* const newpath) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> symlink(const char* const path1,
-                                                const char* const path2) const noexcept override;
+                                                         const char* const path2) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> chdir(const char* const path) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> chown(const char* const path,
-                                              const uid_t uid,
-                                              const gid_t gid) const noexcept override;
+                                                       const uid_t uid,
+                                                       const gid_t gid) const noexcept override;
 
     score::cpp::expected<char*, score::os::Error> getcwd(char* const buf, const size_t size) const noexcept override;
 
@@ -223,10 +225,10 @@ class UnistdImpl final : public Unistd
     score::cpp::expected_blank<score::os::Error> sync() const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> getpwnam_r(const char* name,
-                                                   struct passwd* pwd,
-                                                   char* buffer,
-                                                   size_t bufsize,
-                                                   struct passwd** result) const noexcept override;
+                                                            struct passwd* pwd,
+                                                            char* buffer,
+                                                            size_t bufsize,
+                                                            struct passwd** result) const noexcept override;
 };
 
 }  // namespace internal
@@ -239,7 +241,7 @@ class UnistdImpl final : public Unistd
 // nifty_counter is unique and not reused elsewhere in score::os
 // coverity[autosar_cpp14_a3_1_1_violation]
 // coverity[autosar_cpp14_a2_10_4_violation]
-static StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
+static utils::StaticDestructionGuard<internal::UnistdImpl> nifty_counter;
 
 }  // namespace os
 }  // namespace score

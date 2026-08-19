@@ -46,13 +46,13 @@ namespace internal
 template <typename F, typename T>
 using ReturnsResult = score::IsResult<std::invoke_result_t<F, const T&>>;
 
-/// \brief           Returns bool if the function returns vajson::ResultBlank
+/// \brief           Returns bool if the function returns score::Result<void>
 /// \tparam          F
 ///                  Type of function.
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ReturnsResultVoid = std::is_same<ResultBlank, std::invoke_result_t<F, const T&>>;
+using ReturnsResultVoid = std::is_same<score::Result<void>, std::invoke_result_t<F, const T&>>;
 
 /// \brief           Returns bool if the function returns void
 /// \tparam          F
@@ -84,13 +84,13 @@ using CallableReturnsNoResult = std::enable_if_t<!ReturnsResult<F, T>::value, Ou
 template <typename F, typename T>
 using ArrayReturnsResult = score::IsResult<std::invoke_result_t<F, std::size_t, const T&>>;
 
-/// \brief           Returns bool in case the function returns a Result<vajson::Blank>
+/// \brief           Returns bool in case the function returns a Result<void>
 /// \tparam          F
 ///                  Type of function.
 /// \tparam          T
 ///                  Type of argument.
 template <typename F, typename T>
-using ArrayReturnsResultVoid = std::is_same<Result<vajson::Blank>, std::invoke_result_t<F(std::size_t, const T&)>>;
+using ArrayReturnsResultVoid = std::is_same<Result<void>, std::invoke_result_t<F(std::size_t, const T&)>>;
 
 /// \brief           Returns bool in case the function returns void
 /// \tparam          F
@@ -170,13 +170,13 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, std::string_view>::value, "Must return void");
         return this->Key([&fn](std::string_view s) noexcept {
             std::forward<Fn>(fn)(s);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following key value and executes the given callable
     /// \details         The callable must take the name of the key as an std::string_view and return
-    /// vajson::ResultBlank.
+    /// score::Result<void>.
     ///                  The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
     /// \tparam          Fn
@@ -253,12 +253,12 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, bool>::value, "Must return void");
         return this->Bool([&fn](bool b) noexcept {
             std::forward<Fn>(fn)(b);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following bool value and executes the given callable
-    /// \details         The callable must take the bool and return vajson::ResultBlank.
+    /// \details         The callable must take the bool and return score::Result<void>.
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -310,12 +310,12 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, T>::value, "Must return void");
         return this->Number<T>([&fn](T n) noexcept {
             std::forward<Fn>(fn)(n);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following number value and executes the given callable
-    /// \details         The callable must take the number of type T and return vajson::ResultBlank.
+    /// \details         The callable must take the number of type T and return score::Result<void>.
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -369,12 +369,12 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, std::string_view>::value, "Must return void");
         return this->String([&fn](std::string_view s) noexcept {
             std::forward<Fn>(fn)(s);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following string value and executes the given callable
-    /// \details         The callable must take the string as an std::string_view and return vajson::ResultBlank. The
+    /// \details         The callable must take the string as an std::string_view and return score::Result<void>. The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
     /// \tparam          Fn
@@ -449,14 +449,14 @@ class CompositionParser : public Mixin
         static_assert(ArrayReturnsVoid<Fn, T>::value, "Must return void");
         return this->NumberArray<T>([&fn](std::size_t n, T number) noexcept {
             std::forward<Fn>(fn)(n, number);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following array of numbers and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current number of type T,
     /// and
-    ///                  return vajson::ResultBlank.
+    ///                  return score::Result<void>.
     /// \tparam          T
     ///                  Type of number.
     /// \tparam          Fn
@@ -477,7 +477,7 @@ class CompositionParser : public Mixin
     template <typename T, typename Fn>
     auto NumberArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, T, R>
     {
-        static_assert(ArrayReturnsResultVoid<Fn, T>::value, "Must return vajson::ResultBlank");
+        static_assert(ArrayReturnsResultVoid<Fn, T>::value, "Must return score::Result<void>");
         return this->Array([this, &fn](std::size_t n) noexcept {
             return this
 
@@ -515,13 +515,13 @@ class CompositionParser : public Mixin
         static_assert(ArrayReturnsVoid<Fn, std::string_view>::value, "Must return void");
         return this->StringArray([&fn](std::size_t n, std::string_view s) noexcept {
             std::forward<Fn>(fn)(n, s);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following array of strings and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current string as an
-    ///                  std::string_view, and return vajson::ResultBlank. The provided StringView is only valid until
+    ///                  std::string_view, and return score::Result<void>. The provided StringView is only valid until
     ///                  any other method or parser operating on the same document is called.
     /// \tparam          Fn
     ///                  Type of callable.
@@ -541,7 +541,7 @@ class CompositionParser : public Mixin
     template <typename Fn>
     auto StringArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, std::string_view, R>
     {
-        static_assert(ArrayReturnsResultVoid<Fn, std::string_view>::value, "Must return vajson::ResultBlank");
+        static_assert(ArrayReturnsResultVoid<Fn, std::string_view>::value, "Must return score::Result<void>");
         return this->Array([this, &fn](std::size_t n) noexcept {
             return this
 
@@ -578,13 +578,13 @@ class CompositionParser : public Mixin
         static_assert(ArrayReturnsVoid<Fn, bool>::value, "Must return void");
         return this->BoolArray([&fn](std::size_t n, bool b) noexcept {
             std::forward<Fn>(fn)(n, b);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following array of bools and executes the given callable on every element
     /// \details         The callable must take the current array index as a std::size_t, the current bool value, and
-    ///                  return vajson::ResultBlank.
+    ///                  return score::Result<void>.
     /// \tparam          Fn
     ///                  Type of callable.
     /// \param[in]       fn
@@ -603,7 +603,7 @@ class CompositionParser : public Mixin
     template <typename Fn>
     auto BoolArray(Fn fn) noexcept -> ArrayCallableReturnsResult<Fn, bool, R>
     {
-        static_assert(ArrayReturnsResultVoid<Fn, bool>::value, "Must return vajson::ResultBlank");
+        static_assert(ArrayReturnsResultVoid<Fn, bool>::value, "Must return score::Result<void>");
         return this->Array([this, &fn](std::size_t n) noexcept {
             return this
 
@@ -618,7 +618,7 @@ class CompositionParser : public Mixin
 
     /// \brief           Parses the following binary content and executes the given callable
     /// \details         The callable must take the binary content as score::cpp::span<char const> and return
-    /// vajson::ResultBlank. The
+    /// score::Result<void>. The
     ///                  provided Span is only valid until any other method or parser operating on the same document is
     ///                  called.
     /// \tparam          Fn
@@ -672,7 +672,7 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, Bytes>::value, "Must return void");
         return this->Binary([&fn](Bytes view) noexcept {
             std::forward<Fn>(fn)(view);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
@@ -699,12 +699,12 @@ class CompositionParser : public Mixin
         static_assert(ReturnsVoid<Fn, std::size_t>::value, "Must return void");
         return this->Array([&fn](std::size_t n) noexcept {
             std::forward<Fn>(fn)(n);
-            return vajson::ResultBlank{};
+            return score::Result<void>{};
         });
     }
 
     /// \brief           Parses the following array and executes the given callable on every element
-    /// \details         The callable must take the current array index as a std::size_t and return vajson::ResultBlank.
+    /// \details         The callable must take the current array index as a std::size_t and return score::Result<void>.
     /// The
     ///                  callable is expected to have consumed all tokens representing the element if it returns a
     ///                  successful Result. If the callable is unable to consume all tokens it must return an error
@@ -752,13 +752,13 @@ class CompositionParser : public Mixin
         return Object(
             [&fn](std::string_view key) noexcept {
                 std::forward<Fn>(fn)(key);
-                return vajson::ResultBlank{};
+                return score::Result<void>{};
             },
             object_already_open);
     }
 
     /// \brief           Parses the following object and executes the given callable on every key
-    /// \details         The callable must take the current key as an std::string_view and return vajson::ResultBlank.
+    /// \details         The callable must take the current key as an std::string_view and return score::Result<void>.
     /// The
     ///                  provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called. The callable is expected to have consumed all tokens representing the value

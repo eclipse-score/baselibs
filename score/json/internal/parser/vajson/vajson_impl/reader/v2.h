@@ -22,7 +22,6 @@
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/composition_parser_impl.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/json_data.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/json_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2/parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_array_parser.h"
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_object_parser.h"

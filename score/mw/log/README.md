@@ -282,7 +282,6 @@ LogStream& operator<<(const float) const noexcept;
 LogStream& operator<<(const double) const noexcept;
 LogStream& operator<<(const std::string_view) const noexcept;
 LogStream& operator<<(const std::string&) const noexcept;
-LogStream& operator<<(const score::StringLiteral) const noexcept;
 LogStream& operator<<(const LogHex8& value) const noexcept;
 LogStream& operator<<(const LogHex16& value) const noexcept;
 LogStream& operator<<(const LogHex32& value) const noexcept;

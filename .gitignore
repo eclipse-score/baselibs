@@ -3,10 +3,12 @@ examples/integration/bazel-*
 user.bazelrc
 .cache
 compile_commands.json
+target/
+rust-project.json
 
 # docs build artifacts
 _build
-docs/ubproject.toml
+ubproject.toml
 
 # coverage
 cpp_coverage

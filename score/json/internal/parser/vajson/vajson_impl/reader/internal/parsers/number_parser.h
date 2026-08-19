@@ -39,11 +39,11 @@ template <typename T>
 class NumberParser final : public VirtualParser
 {
     /// \brief           Type of function to be executed when the numbers are read
-    using Fn = score::cpp::move_only_function<ResultBlank(T)>;
+    using Fn = score::cpp::move_only_function<score::Result<void>(T)>;
 
   public:
     /// \brief           Constructs a NumberParser
-    /// \details         Callback must take the number of type T and return vajson::ResultBlank.
+    /// \details         Callback must take the number of type T and return score::Result<void>.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -75,7 +75,7 @@ class NumberParser final : public VirtualParser
     auto OnNumber(JsonNumber number) noexcept -> ParserResult final
     {
 
-        return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](vajson::Blank) noexcept {
+        return number.TryAs<T>().and_then(std::forward<Fn>(this->fn_)).transform([](void) noexcept {
             return ParserState::kFinished;
         });
     }

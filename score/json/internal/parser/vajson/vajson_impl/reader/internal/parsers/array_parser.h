@@ -37,11 +37,11 @@ namespace internal
 class ArrayParser final : public v2::SingleArrayParser
 {
     /// \brief           Type of function to be executed when the keys are read
-    using Fn = score::cpp::move_only_function<ResultBlank(std::size_t)>;
+    using Fn = score::cpp::move_only_function<score::Result<void>(std::size_t)>;
 
   public:
     /// \brief           Constructs an ArrayParser
-    /// \details         Callback must take the array index as a std::size_t and return vajson::ResultBlank.
+    /// \details         Callback must take the array index as a std::size_t and return score::Result<void>.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -65,10 +65,10 @@ class ArrayParser final : public v2::SingleArrayParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnElement() noexcept -> ParserResult final
+    auto OnElement() noexcept -> ParserResult override final
     {
 
-        return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](vajson::Blank) noexcept {
+        return std::forward<Fn>(this->fn_)(this->GetIndex()).transform([](void) noexcept {
             return ParserState::kRunning;
         });
     }

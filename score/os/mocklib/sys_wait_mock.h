@@ -25,7 +25,10 @@ namespace os
 class SysWaitMock : public SysWait
 {
   public:
-    MOCK_METHOD((score::cpp::expected<pid_t, score::os::Error>), wait, (std::int32_t* stat_loc), (override, const, noexcept));
+    MOCK_METHOD((score::cpp::expected<pid_t, score::os::Error>),
+                wait,
+                (std::int32_t* stat_loc),
+                (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<pid_t, score::os::Error>),
                 waitpid,
                 (pid_t pid, std::int32_t* stat_loc, std::int32_t options),

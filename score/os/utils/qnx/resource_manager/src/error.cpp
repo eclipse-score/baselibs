@@ -12,7 +12,7 @@
  ********************************************************************************/
 #include "score/os/utils/qnx/resource_manager/include/error.h"
 
-#include <score/string_view.hpp>
+#include <string_view>
 
 namespace score
 {

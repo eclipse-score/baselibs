@@ -27,8 +27,8 @@ pci_bdf_t PciImpl::pci_bdf(std::uint8_t bus, std::uint8_t dev, std::uint8_t func
     return PCI_BDF(bus, dev, func);
 }
 score::cpp::expected_blank<std::string> PciImpl::pci_device_cfg_rd32(pci_bdf_t bdf,
-                                                              std::uint16_t offset,
-                                                              std::uint32_t* val) const noexcept
+                                                                     std::uint16_t offset,
+                                                                     std::uint32_t* val) const noexcept
 {
     const pci_err_t res = ::pci_device_cfg_rd32(bdf, offset, val);
     if (res != PCI_ERR_OK)
@@ -55,7 +55,8 @@ score::cpp::expected_blank<std::string> PciImpl::pci_device_read_vid(pci_bdf_t b
     }
     return {};
 }
-score::cpp::expected_blank<std::string> PciImpl::pci_device_read_cmd(const pci_bdf_t bdf, pci_cmd_t* const cmd) const noexcept
+score::cpp::expected_blank<std::string> PciImpl::pci_device_read_cmd(const pci_bdf_t bdf,
+                                                                     pci_cmd_t* const cmd) const noexcept
 {
     const pci_err_t res = ::pci_device_read_cmd(bdf, cmd);
     if (res != PCI_ERR_OK)
@@ -65,7 +66,7 @@ score::cpp::expected_blank<std::string> PciImpl::pci_device_read_cmd(const pci_b
     return {};
 }
 score::cpp::expected<pci_devhdl_t, std::string> PciImpl::pci_device_attach(const pci_bdf_t pdf,
-                                                                    const pci_attachFlags_t flags) const noexcept
+                                                                           const pci_attachFlags_t flags) const noexcept
 {
     pci_err_t pci_status = PCI_ERR_OK;
     const pci_devhdl_t devhdl = ::pci_device_attach(pdf, flags, &pci_status);
@@ -90,9 +91,9 @@ score::cpp::expected_blank<std::string> PciImpl::pci_device_detach(pci_devhdl_t 
 }
 
 score::cpp::expected_blank<std::string> PciImpl::pci_device_read_ba(const pci_devhdl_t hdl,
-                                                             int_t* const nba,
-                                                             pci_ba_t* const ba,
-                                                             const pci_reqType_t reg_type) const noexcept
+                                                                    int_t* const nba,
+                                                                    pci_ba_t* const ba,
+                                                                    const pci_reqType_t reg_type) const noexcept
 {
     const pci_err_t res = ::pci_device_read_ba(hdl, nba, ba, reg_type);
     if (res != PCI_ERR_OK)
@@ -103,9 +104,9 @@ score::cpp::expected_blank<std::string> PciImpl::pci_device_read_ba(const pci_de
 }
 
 score::cpp::expected<pci_bdf_t, std::string> PciImpl::pci_device_find(const uint_t idx,
-                                                               const pci_vid_t vid,
-                                                               const pci_did_t did,
-                                                               const pci_ccode_t classcode) const noexcept
+                                                                      const pci_vid_t vid,
+                                                                      const pci_did_t did,
+                                                                      const pci_ccode_t classcode) const noexcept
 {
     const pci_bdf_t res = ::pci_device_find(idx, vid, did, classcode);
     if (res == PCI_BDF_NONE)

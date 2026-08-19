@@ -21,10 +21,13 @@
 #ifndef SCORE_LANGUAGE_FUTURECPP_EXPECTED_HPP
 #define SCORE_LANGUAGE_FUTURECPP_EXPECTED_HPP
 
+#include <score/private/memory/construct_at.hpp>
 #include <score/private/type_traits/remove_cvref.hpp>
+#include <score/private/utility/ignore.hpp>
 #include <score/assert.hpp>
 #include <score/blank.hpp>
 
+#include <memory>
 #include <type_traits>
 #include <utility>
 
@@ -116,11 +119,11 @@ struct destructor_base<T, E, false>
     {
         if (has_value_)
         {
-            value_.~T();
+            std::destroy_at(std::addressof(value_));
         }
         else
         {
-            error_.~E();
+            std::destroy_at(std::addressof(error_));
         }
     }
 
@@ -166,11 +169,11 @@ public:
         this->has_value_ = rhs.has_value_;
         if (rhs.has_value_)
         {
-            static_cast<void>(::new (&this->value_) T{rhs.value_});
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), rhs.value_);
         }
         else
         {
-            static_cast<void>(::new (&this->error_) E{rhs.error_});
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), rhs.error_);
         }
     }
 };
@@ -221,28 +224,28 @@ public:
 
         if (this->has_value_)
         {
-            this->value_.~T();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{rhs.value_});
+                this->value_ = rhs.value_;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{rhs.error_});
+                std::destroy_at(std::addressof(this->value_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), rhs.error_);
                 this->has_value_ = false;
             }
         }
         else
         {
-            this->error_.~E();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{rhs.value_});
+                std::destroy_at(std::addressof(this->error_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), rhs.value_);
                 this->has_value_ = true;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{rhs.error_});
+                this->error_ = rhs.error_;
             }
         }
         return *this;
@@ -280,11 +283,11 @@ public:
         this->has_value_ = rhs.has_value_;
         if (rhs.has_value_)
         {
-            static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::move(rhs).value_);
         }
         else
         {
-            static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), std::move(rhs).error_);
         }
     }
 };
@@ -343,28 +346,28 @@ public:
     {
         if (this->has_value_)
         {
-            this->value_.~T();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+                this->value_ = std::move(rhs).value_;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+                std::destroy_at(std::addressof(this->value_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), std::move(rhs).error_);
                 this->has_value_ = false;
             }
         }
         else
         {
-            this->error_.~E();
             if (rhs.has_value_)
             {
-                static_cast<void>(::new (&this->value_) T{std::move(rhs).value_});
+                std::destroy_at(std::addressof(this->error_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::move(rhs).value_);
                 this->has_value_ = true;
             }
             else
             {
-                static_cast<void>(::new (&this->error_) E{std::move(rhs).error_});
+                this->error_ = std::move(rhs).error_;
             }
         }
         return *this;
@@ -421,8 +424,8 @@ public:
     template <typename U = T, typename = std::enable_if_t<std::is_default_constructible<U>::value>>
     expected() noexcept(std::is_nothrow_default_constructible<T>::value) : base_t{}
     {
+        score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_));
         this->has_value_ = true;
-        static_cast<void>(::new (&this->value_) T{});
     }
 
     ///
@@ -440,8 +443,8 @@ public:
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     explicit constexpr expected(U&& rhs) noexcept(std::is_nothrow_move_constructible<T>::value) : base_t{}
     {
+        score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::forward<U>(rhs));
         this->has_value_ = true;
-        static_cast<void>(::new (&this->value_) T{std::forward<U>(rhs)});
     }
 
     ///
@@ -460,8 +463,8 @@ public:
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     constexpr expected(U&& rhs) noexcept(std::is_nothrow_move_constructible<T>::value) : base_t{}
     {
+        score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::forward<U>(rhs));
         this->has_value_ = true;
-        static_cast<void>(::new (&this->value_) T{std::forward<U>(rhs)});
     }
 
     ///
@@ -472,8 +475,8 @@ public:
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     expected(const unexpected<E>& rhs) noexcept(std::is_nothrow_copy_constructible<E>::value) : base_t{}
     {
+        score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), rhs.error());
         this->has_value_ = false;
-        static_cast<void>(::new (&this->error_) E{rhs.error()});
     }
 
     ///
@@ -485,8 +488,8 @@ public:
     // NOLINTNEXTLINE(google-explicit-constructor) follows C++ Standard
     expected(unexpected<E>&& rhs) noexcept(std::is_nothrow_move_constructible<E>::value) : base_t{}
     {
+        score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), std::move(rhs).error());
         this->has_value_ = false;
-        static_cast<void>(::new (&this->error_) E{std::move(rhs).error()});
     }
 
     ///
@@ -505,14 +508,13 @@ public:
     {
         if (has_value())
         {
-            this->value_.~T();
-            static_cast<void>(::new (&this->value_) T{std::move(rhs)});
+            this->value_ = std::move(rhs);
         }
         else
         {
-            this->error_.~E();
+            std::destroy_at(std::addressof(this->error_));
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::move(rhs));
             this->has_value_ = true;
-            static_cast<void>(::new (&this->value_) T{std::move(rhs)});
         }
         return *this;
     }
@@ -530,14 +532,14 @@ public:
     {
         if (has_value())
         {
-            this->value_.~T();
+            std::destroy_at(std::addressof(this->value_));
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), error.error());
             this->has_value_ = false;
         }
         else
         {
-            this->error_.~E();
+            this->error_ = error.error();
         }
-        static_cast<void>(::new (&this->error_) E{error.error()});
         return *this;
     }
 
@@ -555,14 +557,14 @@ public:
     {
         if (has_value())
         {
-            this->value_.~T();
+            std::destroy_at(std::addressof(this->value_));
+            score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->error_), std::move(error).error());
             this->has_value_ = false;
         }
         else
         {
-            this->error_.~E();
+            this->error_ = std::move(error).error();
         }
-        static_cast<void>(::new (&this->error_) E{std::move(error).error()});
         return *this;
     }
 
@@ -707,11 +709,11 @@ public:
             else
             {
                 E t{std::move(this->error_)};
-                this->error_.~E();
-                static_cast<void>(::new (&this->value_) T{std::move(rhs.value_)});
+                std::destroy_at(std::addressof(this->error_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(this->value_), std::move(rhs.value_));
                 this->has_value_ = true;
-                rhs.value_.~T();
-                static_cast<void>(::new (&rhs.value_) E{std::move(t)});
+                std::destroy_at(std::addressof(rhs.value_));
+                score::cpp::ignore = score::cpp::detail::construct_at(std::addressof(rhs.value_), std::move(t));
                 rhs.has_value_ = false;
             }
         }

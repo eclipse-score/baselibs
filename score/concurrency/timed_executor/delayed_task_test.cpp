@@ -32,7 +32,10 @@ namespace
 class Invokable
 {
   public:
-    MOCK_METHOD(void, Invoke, (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point), (const));
+    MOCK_METHOD(void,
+                Invoke,
+                (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point),
+                (const));
     MOCK_METHOD(void,
                 Invoke,
                 (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point, int, double),
@@ -178,7 +181,8 @@ TEST_F(DelayedTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
     auto unit = DelayedTaskFactory::MakeWithTaskResult<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
-        [](score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point) noexcept -> std::uint8_t {
+        [](score::cpp::stop_token,
+           const score::concurrency::testing::SteadyClock::time_point) noexcept -> std::uint8_t {
             return 42;
         });
 

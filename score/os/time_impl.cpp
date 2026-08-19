@@ -20,7 +20,7 @@ namespace os
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_settime(const clockid_t clkid,
-                                                           const struct timespec* const tp) const noexcept
+                                                                  const struct timespec* const tp) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t ret{::clock_settime(clkid, tp)};
@@ -33,7 +33,7 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::clock_settime(const clockid_
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_gettime(const clockid_t clkid,
-                                                           struct timespec* const tp) const noexcept
+                                                                  struct timespec* const tp) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 
@@ -47,7 +47,7 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::clock_gettime(const clockid_
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getres(const clockid_t clkid,
-                                                          struct timespec* const res) const noexcept
+                                                                 struct timespec* const res) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 
@@ -68,8 +68,8 @@ struct tm* TimeImpl::localtime_r(const time_t* timer, struct tm* tm_local_time) 
 }
 
 score::cpp::expected<std::int32_t, Error> TimeImpl::timer_create(const clockid_t clock_id,
-                                                          sigevent* const evp,
-                                                          timer_t* const timerid) const noexcept
+                                                                 sigevent* const evp,
+                                                                 timer_t* const timerid) const noexcept
 {
     const std::int32_t ret{::timer_create(clock_id, evp, timerid)};
     if (ret < 0)
@@ -90,9 +90,9 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::timer_delete(const timer_t t
 }
 
 score::cpp::expected<std::int32_t, Error> TimeImpl::timer_settime(const timer_t timerid,
-                                                           const int32_t flags,
-                                                           const itimerspec* const value,
-                                                           itimerspec* const ovalue) const noexcept
+                                                                  const int32_t flags,
+                                                                  const itimerspec* const value,
+                                                                  itimerspec* const ovalue) const noexcept
 {
     const std::int32_t ret{::timer_settime(timerid, flags, value, ovalue)};
     if (ret < 0)
@@ -102,7 +102,8 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::timer_settime(const timer_t 
     return ret;
 }
 
-score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getcpuclockid(const pid_t pid, clockid_t& clock_id) const noexcept
+score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getcpuclockid(const pid_t pid,
+                                                                        clockid_t& clock_id) const noexcept
 {
     const std::int32_t ret{::clock_getcpuclockid(pid, &clock_id)};
     if (ret != 0)

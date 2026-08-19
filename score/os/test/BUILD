@@ -12,8 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 package(default_visibility = [
     "@score_baselibs//score/os/test:__subpackages__",
@@ -28,6 +27,7 @@ test_suite(
         ":capability_test",
         ":cpuid_test",
         ":dirent_test",
+        ":dlfcn_impl_test",
         ":errno_test",
         ":fcntl_test",
         ":file_stream_test",
@@ -55,62 +55,6 @@ test_suite(
         ":uname_test",
         ":version_test",
         "@score_baselibs//score/os/test/linux:unit_tests_linux",
-    ],
-    visibility = [
-        "//visibility:public",
-    ],
-)
-
-py_unittest_qnx_test(
-    name = "unit_tests_qnx",
-    test_cases = [
-        ":acl_test",
-        ":arpa_inet_test",
-        ":asil_qm_test",
-        ":capability_test",
-        ":cpuid_test",
-        ":dirent_test",
-        ":errno_test",
-        ":fcntl_test",
-        ":file_stream_test",
-        ":ftw_test",
-        ":getopt_test",
-        ":glob_test",
-        ":grp_test",
-        ":ifaddrs_test",
-        ":inotify_test",
-        ":ioctl_test",
-        ":libgen_test",
-        ":makedev_test",
-        ":memory_allocator_test",
-        ":mount_test",
-        ":mqueue_test",
-        ":net_if_test",
-        ":netdb_test",
-        ":objectseam_test",
-        ":pthread_test",
-        ":sched_mock_test",
-        ":sched_test",
-        ":select_test",
-        ":semaphore_test",
-        ":sigevent_test",
-        ":socket_test",
-        ":spawn_test",
-        ":stat_test",
-        ":statvfs_test",
-        ":stdio_test",
-        ":stdlib_impl_test",
-        ":string_impl_test",
-        ":string_test",
-        ":sys_poll_test",
-        ":sys_uio_test",
-        ":sys_wait_impl_test",
-        ":time_test",
-        ":uname_test",
-        ":version_test",
-    ],
-    test_suites = [
-        "@score_baselibs//score/os/test/qnx:unit_tests_qnx",
     ],
     visibility = [
         "//visibility:public",
@@ -774,5 +718,18 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:version",
+    ],
+)
+
+cc_test(
+    name = "dlfcn_impl_test",
+    srcs = ["dlfcn_impl_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os:dlfcn",
     ],
 )

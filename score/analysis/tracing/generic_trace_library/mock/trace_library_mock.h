@@ -55,13 +55,13 @@ class TraceLibraryMock : public ITraceLibrary
     MOCK_METHOD(TraceResult,
                 Trace,
                 (const TraceClientId client,
-                 const MetaInfoVariants::Type& meta_info,
+                 const MetaInfoVariants::StdType& meta_info,
                  ShmDataChunkList& data,
                  TraceContextId context_id),
                 (override));
     MOCK_METHOD(TraceResult,
                 Trace,
-                (const TraceClientId client, const MetaInfoVariants::Type& meta_info, LocalDataChunkList& data),
+                (const TraceClientId client, const MetaInfoVariants::StdType& meta_info, LocalDataChunkList& data),
                 (noexcept, override));
 };
 

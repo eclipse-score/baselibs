@@ -89,7 +89,7 @@ class BaseInterruptibleState
 
     template <class Rep, class Period>
     score::cpp::expected_blank<Error> WaitFor(const score::cpp::stop_token& stop_token,
-                                       const std::chrono::duration<Rep, Period>& rel_time) noexcept
+                                              const std::chrono::duration<Rep, Period>& rel_time) noexcept
     {
         return WaitByStrategy(
             [this, &stop_token, &rel_time](auto& lock, auto predicate) {
@@ -100,7 +100,7 @@ class BaseInterruptibleState
 
     template <class Clock, class Duration>
     score::cpp::expected_blank<Error> WaitUntil(const score::cpp::stop_token& stop_token,
-                                         const std::chrono::time_point<Clock, Duration>& abs_time) noexcept
+                                                const std::chrono::time_point<Clock, Duration>& abs_time) noexcept
     {
         return WaitByStrategy(
             [this, &stop_token, &abs_time](auto& lock, auto predicate) {
@@ -201,7 +201,8 @@ class BaseInterruptibleState
     // false-positive: the method is used in Wait, WaitFor, WaitUntil
     // coverity[autosar_cpp14_a0_1_3_violation]
     score::cpp::expected_blank<Error> WaitByStrategy(
-        score::cpp::callback<bool(std::unique_lock<std::remove_reference_t<Lockable>>&, score::cpp::callback<bool()>)> wait_strategy,
+        score::cpp::callback<bool(std::unique_lock<std::remove_reference_t<Lockable>>&, score::cpp::callback<bool()>)>
+            wait_strategy,
         const score::cpp::stop_token& stop_token) noexcept
     {
         if (ready_ == true)

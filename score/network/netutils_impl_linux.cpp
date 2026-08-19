@@ -12,11 +12,11 @@
  ********************************************************************************/
 #include "score/network/netutils_impl.h"
 
+#include "score/mw/log/logging.h"
 #include "score/os/ifaddrs.h"
 #include "score/os/ioctl.h"
 #include "score/os/socket.h"
 #include "score/os/unistd.h"
-#include "score/mw/log/logging.h"
 
 #include <ifaddrs.h>
 #include <linux/netlink.h>
@@ -65,11 +65,11 @@ score::cpp::expected<score::os::MacAddress, score::os::Error> NetutilsImpl::get_
         return score::cpp::make_unexpected(ioctl_ret.error());
     }
     return score::os::MacAddress{static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[0]),
-                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[1]),
-                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[2]),
-                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[3]),
-                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[4]),
-                               static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[5])};
+                                 static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[1]),
+                                 static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[2]),
+                                 static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[3]),
+                                 static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[4]),
+                                 static_cast<std::uint8_t>(ifr.ifr_addr.sa_data[5])};
 }
 
 score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() const noexcept
@@ -166,7 +166,7 @@ score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() cons
 }
 
 score::cpp::expected_blank<score::os::Error> NetutilsImpl::set_alias_ip_address(const std::string&,
-                                                                       const Ipv4Address&) const noexcept
+                                                                                const Ipv4Address&) const noexcept
 {
     return score::cpp::make_unexpected(Error::createFromErrno(0));
 }

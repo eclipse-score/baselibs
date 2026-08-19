@@ -21,9 +21,7 @@ namespace filesystem
 namespace
 {
 
-/// @brief As per POSIX specification, readdir() returns a nullptr and sets the error according to errno, if the end of
-/// the directory has been reached. In order for us to be sure, we have to set a specific errno first, before doing any
-/// OS operation.
+/// @brief Sentinel errno-like value used to represent end-of-directory in iterator fallback error reporting.
 constexpr auto END_OF_DIRECTORY = 0;
 }  // namespace
 
@@ -62,10 +60,8 @@ DirectoryIterator::Directory& DirectoryIterator::Directory::operator++()
         if (posix_directory_.has_value())
         {
             // LCOV_EXCL_BR_START no obvious branches here to cover by unit test
-            // seterrno - exceptions?
             // posix_directory_.value() should return value since posix_directory_.has_value() == true
             // coverity[autosar_cpp14_m0_3_2_violation]: indirectly validated through os::Dirent
-            score::os::seterrno(END_OF_DIRECTORY);
             // The reason for banning is, because it's error-prone to use. One should use abstractions e.g. provided by
             // the C++ standard library. Since this library exactly is such abstraction, we can use the OS function.
             // NOLINTNEXTLINE(score-banned-function): See above
@@ -73,20 +69,30 @@ DirectoryIterator::Directory& DirectoryIterator::Directory::operator++()
             // LCOV_EXCL_BR_STOP
             if (directory_entry.has_value())
             {
-                // LCOV_EXCL_BR_START no obvious branches here to cover by unit test
-                const auto& d_name = directory_entry.value()->d_name;
-                // LCOV_EXCL_BR_STOP
-                // NOLINTNEXTLINE(hicpp-no-array-decay, cppcoreguidelines-pro-bounds-array-to-pointer-decay) valid usage
-                const bool is_dot = (d_name == std::string{"."});
-                // NOLINTNEXTLINE(hicpp-no-array-decay, cppcoreguidelines-pro-bounds-array-to-pointer-decay) valid usage
-                const bool is_dot_dot = (d_name == std::string{".."});
-                if (is_dot || is_dot_dot)
+                const auto* dirent_entry = directory_entry.value();
+                if (dirent_entry == nullptr)
                 {
-                    do_one_more_iteration = true;
+                    current_entry_ = DirectoryEntry{};
                 }
                 else
                 {
-                    current_entry_ = DirectoryEntry{path_ / d_name};
+                    // LCOV_EXCL_BR_START no obvious branches here to cover by unit test
+                    const auto& d_name = dirent_entry->d_name;
+                    // LCOV_EXCL_BR_STOP
+                    // NOLINTBEGIN(hicpp-no-array-decay, cppcoreguidelines-pro-bounds-array-to-pointer-decay) valid
+                    // usage
+                    const bool is_dot = (d_name == std::string{"."});
+                    const bool is_dot_dot = (d_name == std::string{".."});
+                    // NOLINTEND(hicpp-no-array-decay, cppcoreguidelines-pro-bounds-array-to-pointer-decay)
+
+                    if (is_dot || is_dot_dot)
+                    {
+                        do_one_more_iteration = true;
+                    }
+                    else
+                    {
+                        current_entry_ = DirectoryEntry{path_ / d_name};
+                    }
                 }
             }
             else
@@ -95,14 +101,7 @@ DirectoryIterator::Directory& DirectoryIterator::Directory::operator++()
                 // directory_entry.has_value() == false, directory_entry.error() should return error
                 const auto directory_entry_error = directory_entry.error();
                 // LCOV_EXCL_BR_STOP
-                if (directory_entry_error == score::os::Error::createFromErrno(END_OF_DIRECTORY))
-                {
-                    current_entry_ = DirectoryEntry{};
-                }
-                else
-                {
-                    SetError(directory_entry_error);
-                }
+                SetError(directory_entry_error);
             }
         }
         else

@@ -29,9 +29,9 @@ class HashCalculatorMock final : public IHashCalculator
     HashCalculatorMock() = default;
     ~HashCalculatorMock() = default;
 
-    MOCK_METHOD(ResultBlank, Update, (const score::cpp::span<const std::uint8_t>), (noexcept, override));
-    MOCK_METHOD(ResultBlank, UpdateFromStream, (std::istream & input), (noexcept, override));
-    MOCK_METHOD(ResultBlank, UpdateFromStream, (std::istream & input, std::int64_t max_read), (override));
+    MOCK_METHOD(Result<void>, Update, (const score::cpp::span<const std::uint8_t>), (noexcept, override));
+    MOCK_METHOD(Result<void>, UpdateFromStream, (std::istream & input), (noexcept, override));
+    MOCK_METHOD(Result<void>, UpdateFromStream, (std::istream & input, std::int64_t max_read), (override));
     MOCK_METHOD(Hash, Finalize, (), (noexcept, override));
 };
 

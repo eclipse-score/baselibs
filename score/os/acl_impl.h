@@ -34,7 +34,8 @@ class AclInstance final : public ::score::os::Acl
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-    score::cpp::expected<Acl::AclCollection, score::os::Error> acl_get_file(const std::string file_path) const noexcept override;
+    score::cpp::expected<Acl::AclCollection, score::os::Error> acl_get_file(
+        const std::string file_path) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -48,7 +49,8 @@ class AclInstance final : public ::score::os::Acl
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-    score::cpp::expected<AclInstance::Tag, score::os::Error> acl_get_tag_type(const Acl::Entry entry) const noexcept override;
+    score::cpp::expected<AclInstance::Tag, score::os::Error> acl_get_tag_type(
+        const Acl::Entry entry) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -61,28 +63,28 @@ class AclInstance final : public ::score::os::Acl
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<score::os::Error> acl_create_entry(Acl::AclCollection* const acl,
-                                                         Acl::Entry* const entry) const noexcept override;
+                                                                  Acl::Entry* const entry) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<score::os::Error> acl_set_tag_type(const Acl::Entry entry,
-                                                         const Acl::Tag tag) const noexcept override;
+                                                                  const Acl::Tag tag) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<score::os::Error> acl_set_qualifier(const Acl::Entry entry,
-                                                          const void* const qualifier) const noexcept override;
+                                                                   const void* const qualifier) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected<bool, score::os::Error> acl_get_perm(const Acl::Permissions permission_set,
-                                                     const Acl::Permission permission) const noexcept override;
+                                                              const Acl::Permission permission) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -101,7 +103,7 @@ class AclInstance final : public ::score::os::Acl
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<score::os::Error> acl_add_perm(const Acl::Permissions permissions,
-                                                     const Acl::Permission permission) const noexcept override;
+                                                              const Acl::Permission permission) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -120,7 +122,7 @@ class AclInstance final : public ::score::os::Acl
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<score::os::Error> acl_set_fd(const Acl::FileDescriptor file_descriptor,
-                                                   const Acl::AclCollection acl) const noexcept override;
+                                                            const Acl::AclCollection acl) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -133,7 +135,7 @@ class AclInstance final : public ::score::os::Acl
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected<char*, score::os::Error> acl_to_text(const Acl::AclCollection& acl,
-                                                     ssize_t* const len_p) const noexcept override;
+                                                              ssize_t* const len_p) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 

@@ -1,0 +1,70 @@
+@startuml log_op
+
+participant "User" as actor
+
+box #LightBlue
+participant "score_log <<module>>" as score_log
+end box
+
+box #LightGreen
+participant "score_log_fmt_macro <<module>>" as score_log_fmt_macro
+end box
+
+box #LightPink
+participant "Logger\n<<Log implementation>>" as logger
+participant "Writer\n<<ScoreWrite implementation>>" as writer
+end box
+
+box #LightYellow
+participant "score_log_fmt\n<<module>>" as score_log_fmt
+participant "ConcreteType\n<<ScoreDebug implementation>>" as score_debug
+end box
+
+actor -> score_log : log!()
+
+alt no-user-provided-logger
+    score_log -> score_log : global_logger()
+end
+
+alt no-user-provided-context
+    score_log -> score_log : module_path()
+end
+
+score_log -> score_log : max_level()
+
+alt log-level-check-failed
+    score_log --> actor
+
+else log-level-check-passed
+    score_log -> score_log_fmt_macro : score_log_format_args!()
+    score_log_fmt_macro --> score_log
+
+    score_log -> logger : log()
+
+    logger -> logger : enabled()
+
+    alt logger-not-enabled
+        logger --> score_log
+
+    else logger-enabled
+        logger -> score_log_fmt : write(writer: ScoreWrite, args: Arguments)
+        loop process-format-string-fragments
+            alt is-literal
+                score_log_fmt -> writer : write_str()
+                writer --> score_log_fmt
+            else is-placeholder
+                score_log_fmt -> score_debug : fmt()
+                score_debug --> score_log_fmt
+
+                score_log_fmt -> writer : write_<type>()
+                writer --> score_log_fmt
+            end
+        end
+
+        score_log_fmt --> logger
+        logger --> score_log
+    end
+    score_log --> actor
+end
+
+@enduml

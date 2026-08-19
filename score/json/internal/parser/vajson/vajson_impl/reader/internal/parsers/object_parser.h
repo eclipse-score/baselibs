@@ -37,11 +37,11 @@ namespace internal
 class ObjectParser final : public v2::SingleObjectParser
 {
     /// \brief           Type of function to be executed when the objects are read
-    using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
+    using Fn = score::cpp::move_only_function<score::Result<void>(StringView)>;
 
   public:
     /// \brief           Constructs an ObjectParser
-    /// \details         Callback must take the object key as an std::string_view and return vajson::ResultBlank.
+    /// \details         Callback must take the object key as an std::string_view and return score::Result<void>.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -72,10 +72,10 @@ class ObjectParser final : public v2::SingleObjectParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnKey(std::string_view key) noexcept -> ParserResult final
+    auto OnKey(std::string_view key) noexcept -> ParserResult override final
     {
 
-        return std::forward<Fn>(this->fn_)(key).transform([](vajson::Blank) noexcept {
+        return std::forward<Fn>(this->fn_)(key).transform([](void) noexcept {
             return ParserState::kRunning;
         });
     }

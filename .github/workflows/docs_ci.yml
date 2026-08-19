@@ -1,0 +1,42 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+name: Documentation CI
+permissions:
+  contents: read
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  release:
+    types: [published]
+  merge_group:
+    types: [checks_requested]
+jobs:
+  docs-verify:
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-docs-verify-target: "//:docs_check"
+  docs-build:
+    needs: [docs-verify]
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-target: "//:docs"
+      retention-days: 3

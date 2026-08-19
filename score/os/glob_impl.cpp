@@ -63,7 +63,8 @@ GlobImpl& GlobImpl::operator=(GlobImpl&& other) noexcept
 // Exception thrown from noexcept lib will result in terminate.
 // Such exception can not be handled by any other means, hence suppressed here to avoid try..catch
 // coverity[autosar_cpp14_a15_5_3_violation]
-score::cpp::expected<Glob::MatchResult, Error> GlobImpl::Match(const std::string& pattern, const Glob::Flag flags) noexcept
+score::cpp::expected<Glob::MatchResult, Error> GlobImpl::Match(const std::string& pattern,
+                                                               const Glob::Flag flags) noexcept
 {
     MatchResult match_result{};
 

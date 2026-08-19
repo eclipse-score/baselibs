@@ -310,7 +310,7 @@ class JsonNumber final
     auto As() const noexcept -> Optional<Integer>
     {
         internal::util::NumberParser parser{};
-        internal::SignedLL const result{parser.LongLong(this->view_)};
+        const internal::SignedLL result{parser.LongLong(this->view_)};
 
         return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
@@ -337,7 +337,7 @@ class JsonNumber final
     auto As() const noexcept -> Optional<Integer>
     {
         internal::util::NumberParser parser{};
-        internal::UnsignedLL const result{parser.UnsignedLongLong(this->view_)};
+        const internal::UnsignedLL result{parser.UnsignedLongLong(this->view_)};
 
         return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
@@ -544,9 +544,9 @@ class JsonNumber final
     /// \endinternal
     auto Validate() const noexcept -> bool
     {
-        std::size_t const size{this->view_.size()};
+        const std::size_t size{this->view_.size()};
 
-        std::size_t const first_digit_pos{(this->view_[0] == '-') ? std::size_t{1} : std::size_t{0}};
+        const std::size_t first_digit_pos{(this->view_[0] == '-') ? std::size_t{1} : std::size_t{0}};
 
         const bool is_multiple_digits{size > (first_digit_pos + 1)};
         bool is_valid{false};

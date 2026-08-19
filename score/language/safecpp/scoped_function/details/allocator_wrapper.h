@@ -55,7 +55,7 @@ class AllocatorWrapper
           // Usage of placement new is intended here and safe as the allocator container is constructed
           // in the pre-allocated memory provided by the allocator wrapper
           // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Tolerated see above
-          allocator_container_{::new(&allocator_container_memory_) AllocatorContainer{allocator}}
+          allocator_container_{::new (&allocator_container_memory_) AllocatorContainer{allocator}}
     {
     }
 
@@ -69,7 +69,7 @@ class AllocatorWrapper
           // Usage of placement new is intended here and safe as the allocator container is constructed
           // in the pre-allocated memory provided by the allocator wrapper
           // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Tolerated see above
-          allocator_container_{::new(&allocator_container_memory_) AllocatorContainer{*other}}
+          allocator_container_{::new (&allocator_container_memory_) AllocatorContainer{*other}}
     {
     }
 
@@ -94,7 +94,7 @@ class AllocatorWrapper
         // coverity[autosar_cpp14_a12_8_4_violation]
         : allocator_container_memory_{},
           // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Tolerated, see copy constructor
-          allocator_container_{::new(&allocator_container_memory_) AllocatorContainer{*other}}
+          allocator_container_{::new (&allocator_container_memory_) AllocatorContainer{*other}}
     {
     }
 

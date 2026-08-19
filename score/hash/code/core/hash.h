@@ -20,7 +20,8 @@
 
 #include <score/span.hpp>
 #include <score/static_vector.hpp>
-#include <score/string_view.hpp>
+
+#include <string_view>
 
 namespace score
 {
@@ -44,7 +45,7 @@ class Hash final
     /// @brief Creates a Hash object from a Hexadecimal string.
     ///
     /// @return Result object that either contains a valid Hash or an error explaining why the string was not valid.
-    static Result<Hash> FromString(const HashAlgorithm algorithm, const score::cpp::string_view& hex_repr);
+    static Result<Hash> FromString(const HashAlgorithm algorithm, const std::string_view& hex_repr);
 
     /// @brief Returns the Hash value's Hexadecimal string representation.
     /// @return String with the Hexadecimal representation.

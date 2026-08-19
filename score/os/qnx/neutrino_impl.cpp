@@ -84,8 +84,8 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ChannelDestroy(const std
 }
 
 score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockAdjust(clockid_t id,
-                                                             const _clockadjust* _new,
-                                                             _clockadjust* old) const noexcept
+                                                                    const _clockadjust* _new,
+                                                                    _clockadjust* old) const noexcept
 {
     const std::int32_t ret{::ClockAdjust(id, _new, old)};
     if (ret == -1)
@@ -96,10 +96,10 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockAdjust(clockid_t id
 }
 
 score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(clockid_t id,
-                                                              TimerFlagsType flags,
-                                                              const sigevent* notify,
-                                                              const std::uint64_t* ntime,
-                                                              std::uint64_t* otime) const noexcept
+                                                                     TimerFlagsType flags,
+                                                                     const sigevent* notify,
+                                                                     const std::uint64_t* ntime,
+                                                                     std::uint64_t* otime) const noexcept
 {
 
     const std::int32_t ret{::TimerTimeout(id, flags, notify, ntime, otime)};

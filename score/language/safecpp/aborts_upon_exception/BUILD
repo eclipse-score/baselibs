@@ -22,6 +22,7 @@ cc_library(
         "additional_warnings",
         "strict_warnings",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -42,6 +43,8 @@ cc_test(
     ],
 )
 
+# Intentionally fails since toolchain does not yet support this feature
+# See https://github.com/eclipse-score/baselibs/issues/7
 cc_test(
     name = "abortsuponexception_toolchain_test",
     size = "small",

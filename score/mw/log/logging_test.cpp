@@ -52,6 +52,22 @@ TEST(Logging, CanSetAndRetrieveDefaultRecorder)
     EXPECT_EQ(&recorder_mock, &GetDefaultLogRecorder());
 }
 
+TEST(Logging, CanRetrieveFallbackRecorder)
+{
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Verify the ability of retrieving the fallback recorder.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("Verifies", "::score::mw::log::GetFallbackLogRecorder");
+    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+
+    // Given nothing
+    // When retrieving the fallback recorder
+    Recorder& fallback_recorder = GetFallbackLogRecorder();
+
+    // Then it returns the same instance on repeated calls
+    EXPECT_EQ(&fallback_recorder, &GetFallbackLogRecorder());
+}
+
 class LoggingFixture : public ::testing::Test
 {
   public:

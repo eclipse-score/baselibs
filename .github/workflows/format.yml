@@ -13,6 +13,7 @@
 name: Formatting checks
 permissions:
   contents: read
+  actions: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -20,19 +21,4 @@ on:
     types: [checks_requested]
 jobs:
   formatting-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@7b265b4accb24997dcb0de449c34d23853709f57
-  clang-format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.19.0
-        with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.job }}
-          repository-cache: true
-          cache-save: ${{ github.event_name == 'push' }}
-      - name: Bazel Build with clang-format
-        run: |
-          bazel build --config clang_format -- //... || true
+    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@f57b605a284ca117bcfd9f83ea427096faaac7d1

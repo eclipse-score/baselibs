@@ -28,7 +28,7 @@ class Crc32IeeeHashCalculator final : public ICrc32HashCalculator
 {
   public:
     Crc32IeeeHashCalculator() noexcept;
-    ResultBlank Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
+    Result<void> Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
     Hash Finalize() noexcept override;
     std::uint_fast32_t GetChecksum() const noexcept override;
 

@@ -12,23 +12,30 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-
-# load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "custom_allocator_mock",
+    name = "mockable_allocator",
     testonly = True,
-    srcs = ["custom_allocator_mock.cpp"],
-    hdrs = ["custom_allocator_mock.h"],
+    srcs = [
+        "mockable_allocator.cpp",
+        "mockable_pointer.cpp",
+        "mockable_pointer_mock_guard.cpp",
+        "pointer_spy_mock.cpp",
+    ],
+    hdrs = [
+        "mockable_allocator.h",
+        "mockable_pointer.h",
+        "mockable_pointer_mock_guard.h",
+        "pointer_spy_mock.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "@score_baselibs//score/containers:__subpackages__",
     ],
     deps = [
         "@googletest//:gtest_main",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:offset_ptr",
     ],
 )
 
@@ -43,10 +50,9 @@ cc_library(
     ],
     deps = [
         ":container_test_types",
+        ":fancy_pointer_allocator",
         "@googletest//:gtest",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/memory/shared:managed_memory_resource",
-        "@score_baselibs//score/memory/shared:polymorphic_offset_ptr_allocator",
     ],
 )
 
@@ -58,5 +64,66 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "@score_baselibs//score/containers:__subpackages__",
+    ],
+)
+
+cc_library(
+    name = "fake_memory_resource",
+    testonly = True,
+    srcs = ["fake_memory_resource.cpp"],
+    hdrs = ["fake_memory_resource.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/containers:__subpackages__",
+    ],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "fake_memory_resource_test",
+    srcs = ["fake_memory_resource_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":fake_memory_resource",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_library(
+    name = "fancy_pointer_allocator",
+    testonly = True,
+    srcs = ["fancy_pointer_allocator.cpp"],
+    hdrs = ["fancy_pointer_allocator.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/containers:__subpackages__",
+    ],
+    deps = [
+        ":mockable_allocator",
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "fancy_pointer_allocator_test",
+    srcs = ["fancy_pointer_allocator_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":fake_memory_resource",
+        ":fancy_pointer_allocator",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_unit_test_suites_for_host_and_qnx(
+    name = "unit_test_suite",
+    cc_unit_tests = [
+        ":fake_memory_resource_test",
+        ":fancy_pointer_allocator_test",
+    ],
+    visibility = [
+        "//visibility:public",
     ],
 )

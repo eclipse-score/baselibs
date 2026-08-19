@@ -1,0 +1,79 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+[workspace]
+resolver = "2"
+# Split to default members without tests and examples.
+# Used when executing cargo from project root.
+default-members = [
+    "score/containers_rust",
+    "score/sync",
+    "score/allocator",
+    "score/pal",
+    "score/thread",
+    "score/log_rust/score_log_fmt_macro",
+    "score/log_rust/stdout_logger",
+    "score/testing_macros",
+    "score/language/rust/libcpp",
+    "score/language/rust/libcpp_derive",
+    "score/result/rust",
+    "score/language/rust/memres",
+]
+# Include tests and examples as a member for IDE support and Bazel builds.
+members = [
+    "score/containers_rust",
+    "score/sync",
+    "score/allocator",
+    "score/pal",
+    "score/thread",
+    "score/language/rust/memres",
+    "score/log_rust/score_log",
+    "score/log_rust/score_log_fmt",
+    "score/log_rust/score_log_fmt_macro",
+    "score/log_rust/stdout_logger",
+    "score/testing_macros",
+    "score/language/rust/libcpp",
+    "score/language/rust/libcpp_derive",
+    "score/result/rust",
+    "examples/log_builtin",
+    "examples/log_custom",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+license-file = "LICENSE.md"
+authors = ["S-CORE Contributors"]
+readme = "README.md"
+
+[workspace.dependencies]
+containers = { path = "score/containers_rust" }
+score_log = { path = "score/log_rust/score_log" }
+score_log_fmt = { path = "score/log_rust/score_log_fmt" }
+score_log_fmt_macro = { path = "score/log_rust/score_log_fmt_macro" }
+stdout_logger = { path = "score/log_rust/stdout_logger" }
+allocator = { path = "score/allocator" }
+testing_macros = { path = "score/testing_macros" }
+pal = { path = "score/pal" }
+thread = { path = "score/thread" }
+libcpp = { path = "score/language/rust/libcpp" }
+libcpp_derive = { path = "score/language/rust/libcpp_derive" }
+memres = { path = "score/language/rust/memres" }
+
+[workspace.lints.clippy]
+std_instead_of_core = "warn"
+alloc_instead_of_core = "warn"
+
+[workspace.lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(loom)'] }
+missing_docs = "warn"

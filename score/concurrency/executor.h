@@ -40,8 +40,8 @@ class Executor
 {
   protected:
     template <typename CallableType, typename... ArgumentTypes>
-    using EnableIfIsCallable =
-        typename std::enable_if<score::cpp::is_invocable<CallableType, const score::cpp::stop_token&, ArgumentTypes...>::value>::type;
+    using EnableIfIsCallable = typename std::enable_if<
+        score::cpp::is_invocable<CallableType, const score::cpp::stop_token&, ArgumentTypes...>::value>::type;
 
   public:
     explicit Executor(score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource())

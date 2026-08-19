@@ -31,8 +31,8 @@ class Ioctl : public ObjectSeam<Ioctl>
     static Ioctl& instance() noexcept;
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace*/
     virtual score::cpp::expected_blank<Error> ioctl(const std::int32_t d,
-                                             const std::int32_t request,
-                                             void* const arg) const noexcept = 0;
+                                                    const std::int32_t request,
+                                                    void* const arg) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
 
     virtual ~Ioctl() = default;

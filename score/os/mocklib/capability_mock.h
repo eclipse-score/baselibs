@@ -30,7 +30,10 @@ class ProcessCapabilitiesMock : public ProcessCapabilities
                 DropCapabilityFromBoundingSet,
                 (Capability capability),
                 (noexcept, override));
-    MOCK_METHOD((score::cpp::expected<ProcessCapabilitySets, Error>), GetProcessCapabilitySets, (), (noexcept, override));
+    MOCK_METHOD((score::cpp::expected<ProcessCapabilitySets, Error>),
+                GetProcessCapabilitySets,
+                (),
+                (noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 SetProcessCapabilitySets,
                 (const ProcessCapabilitySets& process_capabilities),

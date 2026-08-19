@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+#include "score/mw/log/logging.h"
 #include "score/os/socket.h"
 #include "score/os/utils/tcp_keep_alive.h"
-#include "score/mw/log/logging.h"
 
 bool score::os::TcpKeepAlive(int sockfd)
 {

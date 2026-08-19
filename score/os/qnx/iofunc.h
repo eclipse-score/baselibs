@@ -52,7 +52,7 @@ class IoFunc : public ObjectSeam<IoFunc>
                                   resmgr_io_funcs_t* const io) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> iofunc_mount_init(iofunc_mount_t* const mountp,
-                                                         const size_t size) const noexcept = 0;
+                                                                const size_t size) const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, std::int32_t> iofunc_close_ocb_default(
         resmgr_context_t* const ctp,
@@ -60,46 +60,52 @@ class IoFunc : public ObjectSeam<IoFunc>
         iofunc_ocb_t* const ocb) const noexcept = 0;
 
     // non-error return values are EOK (no data to reply), -1 (data to reply), _RESMGR_DEFAULT (to be handled by client)
-    virtual score::cpp::expected<std::int32_t, std::int32_t> iofunc_devctl_default(resmgr_context_t* const ctp,
-                                                                            io_devctl_t* const msg,
-                                                                            iofunc_ocb_t* const ocb) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, std::int32_t> iofunc_devctl_default(
+        resmgr_context_t* const ctp,
+        io_devctl_t* const msg,
+        iofunc_ocb_t* const ocb) const noexcept = 0;
 
     // the use case for the error is to feed it back to the framework, so, std::int32_t
-    virtual score::cpp::expected_blank<std::int32_t> iofunc_write_verify(resmgr_context_t* const ctp,
-                                                                  io_write_t* const msg,
-                                                                  iofunc_ocb_t* const ocb,
-                                                                  std::int32_t* const nonblock) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::int32_t> iofunc_write_verify(
+        resmgr_context_t* const ctp,
+        io_write_t* const msg,
+        iofunc_ocb_t* const ocb,
+        std::int32_t* const nonblock) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<std::int32_t> iofunc_read_verify(resmgr_context_t* const ctp,
-                                                                 io_read_t* const msg,
-                                                                 iofunc_ocb_t* const ocb,
-                                                                 std::int32_t* const nonblock) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::int32_t> iofunc_read_verify(
+        resmgr_context_t* const ctp,
+        io_read_t* const msg,
+        iofunc_ocb_t* const ocb,
+        std::int32_t* const nonblock) const noexcept = 0;
 
-    virtual score::cpp::expected<std::int32_t, std::int32_t> iofunc_lseek_default(resmgr_context_t* const ctp,
-                                                                           io_lseek_t* const msg,
-                                                                           iofunc_ocb_t* const ocb) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, std::int32_t> iofunc_lseek_default(
+        resmgr_context_t* const ctp,
+        io_lseek_t* const msg,
+        iofunc_ocb_t* const ocb) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext(resmgr_context_t* ctp,
-                                                                     const std::int32_t ioflag,
-                                                                     struct _client_info** info) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext(
+        resmgr_context_t* ctp,
+        const std::int32_t ioflag,
+        struct _client_info** info) const noexcept = 0;
 
     virtual score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext_free(
         struct _client_info** info) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<std::int32_t> iofunc_check_access(resmgr_context_t* ctp,
-                                                                  const iofunc_attr_t* attr,
-                                                                  mode_t checkmode,
-                                                                  const struct _client_info* info) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::int32_t> iofunc_check_access(
+        resmgr_context_t* ctp,
+        const iofunc_attr_t* attr,
+        mode_t checkmode,
+        const struct _client_info* info) const noexcept = 0;
 
     virtual score::cpp::expected_blank<std::int32_t> iofunc_attr_lock(iofunc_attr_t* const attr) const noexcept = 0;
 
     virtual score::cpp::expected_blank<std::int32_t> iofunc_attr_unlock(iofunc_attr_t* const attr) const noexcept = 0;
 
     virtual score::cpp::expected_blank<std::int32_t> iofunc_open(resmgr_context_t* const ctp,
-                                                          io_open_t* const msg,
-                                                          iofunc_attr_t* const attr,
-                                                          iofunc_attr_t* const dattr,
-                                                          struct _client_info* const info) const noexcept = 0;
+                                                                 io_open_t* const msg,
+                                                                 iofunc_attr_t* const attr,
+                                                                 iofunc_attr_t* const dattr,
+                                                                 struct _client_info* const info) const noexcept = 0;
 
     virtual score::cpp::expected_blank<std::int32_t> iofunc_ocb_attach(
         resmgr_context_t* const ctp,
@@ -130,6 +136,18 @@ class IoFunc : public ObjectSeam<IoFunc>
 
     virtual void iofunc_notify_remove(resmgr_context_t* const ctp, iofunc_notify_t* const nop) const noexcept = 0;
 
+    virtual std::int32_t iofunc_close_dup_default(resmgr_context_t* ctp,
+                                                  io_close_t* msg,
+                                                  iofunc_ocb_t* ocb) const noexcept = 0;
+
+    virtual std::int32_t iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                                 void* reserved,
+                                                 iofunc_ocb_t* ocb) const noexcept = 0;
+
+    virtual std::int32_t iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                                   void* reserved,
+                                                   iofunc_ocb_t* ocb) const noexcept = 0;
+
     IoFunc() = default;
     virtual ~IoFunc() = default;
 
@@ -155,50 +173,55 @@ class IoFuncQnx final : public IoFunc
                           _client_info* const info) const noexcept override;
 
     score::cpp::expected_blank<Error> iofunc_mount_init(iofunc_mount_t* const mountp,
-                                                 const size_t size) const noexcept override;
+                                                        const size_t size) const noexcept override;
 
-    score::cpp::expected<std::int32_t, std::int32_t> iofunc_close_ocb_default(resmgr_context_t* const ctp,
-                                                                       void* const reserved,
-                                                                       iofunc_ocb_t* const ocb) const noexcept override;
+    score::cpp::expected<std::int32_t, std::int32_t> iofunc_close_ocb_default(
+        resmgr_context_t* const ctp,
+        void* const reserved,
+        iofunc_ocb_t* const ocb) const noexcept override;
 
-    score::cpp::expected<std::int32_t, std::int32_t> iofunc_devctl_default(resmgr_context_t* const ctp,
-                                                                    io_devctl_t* const msg,
-                                                                    iofunc_ocb_t* const ocb) const noexcept override;
+    score::cpp::expected<std::int32_t, std::int32_t> iofunc_devctl_default(
+        resmgr_context_t* const ctp,
+        io_devctl_t* const msg,
+        iofunc_ocb_t* const ocb) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_write_verify(resmgr_context_t* const ctp,
-                                                          io_write_t* const msg,
-                                                          iofunc_ocb_t* const ocb,
-                                                          std::int32_t* const nonblock) const noexcept override;
+                                                                 io_write_t* const msg,
+                                                                 iofunc_ocb_t* const ocb,
+                                                                 std::int32_t* const nonblock) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_read_verify(resmgr_context_t* const ctp,
-                                                         io_read_t* const msg,
-                                                         iofunc_ocb_t* const ocb,
-                                                         std::int32_t* const nonblock) const noexcept override;
+                                                                io_read_t* const msg,
+                                                                iofunc_ocb_t* const ocb,
+                                                                std::int32_t* const nonblock) const noexcept override;
 
-    score::cpp::expected<std::int32_t, std::int32_t> iofunc_lseek_default(resmgr_context_t* const ctp,
-                                                                   io_lseek_t* const msg,
-                                                                   iofunc_ocb_t* const ocb) const noexcept override;
+    score::cpp::expected<std::int32_t, std::int32_t> iofunc_lseek_default(
+        resmgr_context_t* const ctp,
+        io_lseek_t* const msg,
+        iofunc_ocb_t* const ocb) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext(resmgr_context_t* ctp,
-                                                             const std::int32_t ioflag,
-                                                             struct _client_info** info) const noexcept override;
+                                                                    const std::int32_t ioflag,
+                                                                    struct _client_info** info) const noexcept override;
 
-    score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext_free(struct _client_info** info) const noexcept override;
+    score::cpp::expected_blank<std::int32_t> iofunc_client_info_ext_free(
+        struct _client_info** info) const noexcept override;
 
-    score::cpp::expected_blank<std::int32_t> iofunc_check_access(resmgr_context_t* ctp,
-                                                          const iofunc_attr_t* attr,
-                                                          mode_t checkmode,
-                                                          const struct _client_info* info) const noexcept override;
+    score::cpp::expected_blank<std::int32_t> iofunc_check_access(
+        resmgr_context_t* ctp,
+        const iofunc_attr_t* attr,
+        mode_t checkmode,
+        const struct _client_info* info) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_attr_lock(iofunc_attr_t* const attr) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_attr_unlock(iofunc_attr_t* const attr) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_open(resmgr_context_t* const ctp,
-                                                  io_open_t* const msg,
-                                                  iofunc_attr_t* const attr,
-                                                  iofunc_attr_t* const dattr,
-                                                  struct _client_info* const info) const noexcept override;
+                                                         io_open_t* const msg,
+                                                         iofunc_attr_t* const attr,
+                                                         iofunc_attr_t* const dattr,
+                                                         struct _client_info* const info) const noexcept override;
 
     score::cpp::expected_blank<std::int32_t> iofunc_ocb_attach(
         resmgr_context_t* const ctp,
@@ -226,6 +249,18 @@ class IoFuncQnx final : public IoFunc
                                       const std::int32_t index) const noexcept override;
 
     void iofunc_notify_remove(resmgr_context_t* const ctp, iofunc_notify_t* const nop) const noexcept override;
+
+    std::int32_t iofunc_close_dup_default(resmgr_context_t* ctp,
+                                          io_close_t* msg,
+                                          iofunc_ocb_t* ocb) const noexcept override;
+
+    std::int32_t iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                         void* reserved,
+                                         iofunc_ocb_t* ocb) const noexcept override;
+
+    std::int32_t iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                           void* reserved,
+                                           iofunc_ocb_t* ocb) const noexcept override;
 };
 
 }  // namespace os

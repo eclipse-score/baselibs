@@ -45,15 +45,16 @@ class NeutrinoImpl final : public Neutrino
     score::cpp::expected<std::int32_t, Error> ChannelDestroy(const std::int32_t channel_id) const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> ClockAdjust(clockid_t id,
-                                                   const _clockadjust* _new,
-                                                   _clockadjust* old) const noexcept override;
+                                                          const _clockadjust* _new,
+                                                          _clockadjust* old) const noexcept override;
 
     std::uint64_t ClockCycles() const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> ClockId(pid_t pid, std::int32_t tid) const noexcept override;
 
     [[deprecated(
-        "SPP_DEPRECATION: Please use other overloads of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t, Error>
+        "SPP_DEPRECATION: Please use other overloads of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t,
+                                                                                                      Error>
     TimerTimeout(clockid_t id,
                  TimerFlagsType flags,
                  const sigevent* notify,
@@ -65,7 +66,8 @@ class NeutrinoImpl final : public Neutrino
     // same default arguments as the function they override, or else shall not specify any default arguments.”
     // Rationale: This is intented, we don't force users to fill the otime parameter unless needed
     [[deprecated(
-        "SPP_DEPRECATION: Please use the latest overload of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t, Error>
+        "SPP_DEPRECATION: Please use the latest overload of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t,
+                                                                                                          Error>
     TimerTimeout(const Neutrino::ClockType clock_type,
                  const Neutrino::TimerTimeoutFlag flags,
                  const struct sigevent* notify,

@@ -40,15 +40,6 @@ namespace vajson
 /// \brief           Null-terminated C-string
 using CStr = const char*;
 
-/// \brief            Unqualified access to Result
-/// \tparam          T                  Type of value.
-template <typename T>
-using Result = score::Result<T>;
-
-using Blank = score::cpp::blank;
-
-using ResultBlank = score::Result<score::cpp::blank>;
-
 /// \brief           Unqualified access to ErrorDomain
 using ErrorDomain = score::result::ErrorDomain;
 
@@ -93,7 +84,7 @@ class JsonErrorDomain final : public ErrorDomain
     /// - Otherwise:
     ///   - Return "unknown error".
     /// \endinternal
-    auto MessageFor(const Errc& error_code) const noexcept -> std::string_view final
+    auto MessageFor(const Errc& error_code) const noexcept -> std::string_view override final
     {
         Errc errc{error_code};
         constexpr static std::array<std::string_view, 6> kMessages{{
@@ -125,20 +116,20 @@ inline score::result::Error MakeError(const ErrorCode code, const std::string_vi
     return {static_cast<score::result::ErrorCode>(code), detail::kJsonErrorDomain, user_message};
 }
 
-inline score::result::Error MakeError(score::json::vajson::JsonErrc const error_code,
+inline score::result::Error MakeError(const score::json::vajson::JsonErrc error_code,
                                       const std::string_view user_message = "") noexcept
 {
     return MakeError(static_cast<ErrorCode>(error_code), user_message);
 }
 
 template <typename T>
-inline Result<T> MakeErrorResult(const ErrorCode error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const ErrorCode error_code, const std::string_view user_message = "") noexcept
 {
     return Result<T>{score::unexpect, MakeError(error_code, user_message)};
 }
 
 template <typename T>
-inline Result<T> MakeErrorResult(const JsonErrc error_code, std::string_view const user_message = "") noexcept
+inline Result<T> MakeErrorResult(const JsonErrc error_code, const std::string_view user_message = "") noexcept
 {
     return MakeErrorResult<T>(static_cast<ErrorCode>(error_code), user_message);
 }
@@ -160,18 +151,18 @@ auto Filter(Result<T> result, Pred pred, score::result::Error error) noexcept ->
     return result;
 }
 
-/// \brief           Discards the value of a Result (converts to vajson::ResultBlank)
+/// \brief           Discards the value of a Result (converts to score::Result<void>)
 /// \tparam          T  Value type of the Result.
 /// \param[in]       result  The Result to drop.
-/// \return          vajson::ResultBlank with same error state.
+/// \return          score::Result<void> with same error state.
 template <typename T>
-auto Drop(Result<T> result) noexcept -> vajson::ResultBlank
+auto Drop(Result<T> result) noexcept -> score::Result<void>
 {
     if (result.has_value())
     {
-        return vajson::ResultBlank{vajson::Blank{}};
+        return score::Result<void>{};
     }
-    return vajson::ResultBlank{score::unexpect, result.error()};
+    return score::Result<void>{score::unexpect, result.error()};
 }
 
 /// \brief           Inspects (peeks at) a Result without transforming it
@@ -250,14 +241,48 @@ constexpr auto Ok(T value) noexcept -> Result<T>
 /// - Otherwise:
 ///   - Return an Error created from the given arguments.
 /// \endinternal
-inline auto MakeResult(bool value, ErrorCode error) noexcept -> vajson::ResultBlank
+inline auto MakeResult(bool value, ErrorCode error) noexcept -> score::Result<void>
 {
-    return value ? vajson::ResultBlank{} : score::MakeUnexpected<vajson::Blank>(MakeError(error, ""));
+    return value ? score::Result<void>{} : score::MakeUnexpected<void>(MakeError(error, ""));
 }
 
-inline auto MakeResult(bool value, score::result::Error error) noexcept -> vajson::ResultBlank
+/// \brief           Creates a Result from a boolean value
+/// \param[in]       value
+///                  to check.
+/// \param[in]       error
+///                  Specific error code.
+/// \return          The empty Result if true, or the specified error.
+/// \pre             -
+/// \context         ANY
+/// \threadsafe      FALSE
+/// \reentrant       FALSE
+/// \internal
+/// - If the value is true:
+///   - Return an empty Result.
+/// - Otherwise:
+///   - Return an Error created from the given arguments.
+/// \endinternal
+inline auto MakeResult(bool value, score::result::Error error) noexcept -> score::Result<void>
 {
-    return value ? vajson::ResultBlank{} : score::MakeUnexpected<vajson::Blank>(error);
+    return value ? score::Result<void>{} : score::MakeUnexpected<void>(error);
+}
+/// \brief           Creates a Result from an Optional
+///     \tparam          T
+///                  Type of Optional.
+/// \param[in]       value
+///                  to check.
+/// \param[in]       error
+///                  Specific error code.
+/// \return          The empty Result if true, or the specified error.
+/// \pre             -
+/// \context         ANY
+/// \threadsafe      FALSE
+/// \reentrant       FALSE
+template <typename T>
+inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -> Result<T>
+{
+    // VCA_VAJSON_EXTERNAL_CALL
+    return value.has_value() ? Result<T>{value.value()} : score::MakeUnexpected<T>(error);
 }
 
 /// \brief           Assert that a condition holds

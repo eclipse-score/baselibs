@@ -5,7 +5,7 @@ Foundational C++ libraries providing common functionality for S-CORE modules, fr
 ## Documentation
 
 - **[Base Libraries Feature Documentation](https://eclipse-score.github.io/score/main/features/baselibs/index.html)**: High-level feature overview.
-- **[Base Libraries Module Documentation](https://eclipse-score.github.io/score/main/modules/baselibs/index.html)**: Detailed module documentation, including architecture and component requirements.
+- **[Base Libraries Module Documentation](https://eclipse-score.github.io/baselibs)**: Detailed module documentation, including architecture and component requirements.
 - **Detailed Design**: Each library includes a `README.md` with usage examples and API details in its respective `score/` subdirectory.
 
 ## Using Base Libraries

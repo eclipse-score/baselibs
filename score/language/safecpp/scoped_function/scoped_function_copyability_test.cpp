@@ -62,8 +62,8 @@ TEST_F(CopyabilityScopedFunctionTest, CopyConstructionUsesSuppliedAllocator)
     Scope<> scope{};
     bool called{false};
 
-    auto function =
-        score::cpp::make_obj_using_allocator<CopyableScopedFunction<void(), allocator_type>>(allocator, scope, [&called]() {
+    auto function = score::cpp::make_obj_using_allocator<CopyableScopedFunction<void(), allocator_type>>(
+        allocator, scope, [&called]() {
             called = true;
         });
 

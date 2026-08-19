@@ -29,20 +29,20 @@ class SemaphoreImpl final : public Semaphore
     constexpr SemaphoreImpl() = default;
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<Error> sem_init(sem_t* const sem,
-                                        const std::int32_t pshared,
-                                        const std::uint32_t value) const noexcept override;
+                                               const std::int32_t pshared,
+                                               const std::uint32_t value) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
-                                          const Semaphore::OpenFlag oflag,
-                                          const Semaphore::ModeFlag mode,
-                                          const std::uint32_t value) const noexcept override;
+                                                 const Semaphore::OpenFlag oflag,
+                                                 const Semaphore::ModeFlag mode,
+                                                 const std::uint32_t value) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
-                                          const Semaphore::OpenFlag oflag) const noexcept override;
+                                                 const Semaphore::OpenFlag oflag) const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
@@ -63,7 +63,12 @@ class SemaphoreImpl final : public Semaphore
 
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<Error> sem_timedwait(sem_t* const sem,
-                                             const struct timespec* const abs_time) const noexcept override;
+                                                    const struct timespec* const abs_time) const noexcept override;
+    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
+
+    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
+    score::cpp::expected_blank<Error> sem_timedwait_monotonic(sem_t* const sem, const struct timespec* const abs_time)
+        const noexcept override;
     /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override  */
 
     /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */

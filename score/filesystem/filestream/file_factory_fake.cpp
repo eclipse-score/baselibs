@@ -111,8 +111,8 @@ FileFactoryFake::FileFactoryFake(IStringStreamCollection& collection) : FileFact
 }
 
 score::Result<std::unique_ptr<std::iostream>> FileFactoryFake::FakeOpenWithMode(const Path& path,
-                                                                              const std::ios_base::openmode mode,
-                                                                              const os::Stat::Mode create_mode) const
+                                                                                const std::ios_base::openmode mode,
+                                                                                const os::Stat::Mode create_mode) const
 {
     score::cpp::ignore = mode;  // not supported, Ticket-36536
     score::cpp::ignore = create_mode;
@@ -144,8 +144,9 @@ Result<std::unique_ptr<FileStream>> FileFactoryFake::FakeAtomicUpdate(const Path
 std::stringstream& FileFactoryFake::Get(const Path& path) const
 {
     auto stream_result = collection_.get().OpenStringStream(path);
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(stream_result.has_value(),
-                       "The Get()-function should be exucuted for valid paths that exist in the collection.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(
+        stream_result.has_value(),
+        "The Get()-function should be exucuted for valid paths that exist in the collection.");
     return stream_result.value().get();
 }
 

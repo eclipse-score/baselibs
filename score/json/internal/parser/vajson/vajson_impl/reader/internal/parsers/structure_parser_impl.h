@@ -122,7 +122,7 @@ template <typename Implementer>
 auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult
 {
 
-    return this->implementer_.get().GetChild().Parse().transform([](vajson::Blank) noexcept {
+    return this->implementer_.get().GetChild().Parse().transform([](void) noexcept {
         return ParserState::kRunning;
     });
 }

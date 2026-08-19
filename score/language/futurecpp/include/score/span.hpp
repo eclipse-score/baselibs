@@ -289,6 +289,11 @@ public:
     /// \return  Number of elements in the row.
     size_type size() const noexcept { return base_.size(); }
 
+    /// \brief Returns the size of the sequence in bytes.
+    ///
+    /// \return  Size of the sequence in bytes.
+    size_type size_bytes() const noexcept { return base_.size() * sizeof(T); }
+
     /// \brief checks if the span is empty
     ///
     /// @return true if span is empty (size==0); false otherwise.
@@ -418,8 +423,7 @@ private:
 template <typename T>
 span<const std::uint8_t> as_bytes(const span<T> view) noexcept
 {
-    const std::size_t size_bytes{view.size() * sizeof(T)};
-    return {reinterpret_cast<const std::uint8_t*>(view.data()), size_bytes};
+    return {reinterpret_cast<const std::uint8_t*>(view.data()), view.size_bytes()};
 }
 
 } // namespace score::cpp

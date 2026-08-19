@@ -18,8 +18,8 @@
 #include "score/os/qnx/capability.h"
 #endif
 
-#include "score/os/errno_logging.h"
 #include "score/mw/log/logging.h"
+#include "score/os/errno_logging.h"
 #include <utility>
 
 namespace score
@@ -76,7 +76,8 @@ score::cpp::expected_blank<Error> ProcessCapabilities::DropUnwantedCapabilities(
         }
     }
 
-    score::cpp::expected<ProcessCapabilitySets, Error> get_process_capabilities_result = this->GetProcessCapabilitySets();
+    score::cpp::expected<ProcessCapabilitySets, Error> get_process_capabilities_result =
+        this->GetProcessCapabilitySets();
     if (!get_process_capabilities_result.has_value())
     {
         mw::log::LogError() << "Failed to get current process capability sets: "
@@ -123,7 +124,8 @@ score::cpp::expected_blank<Error> ProcessCapabilities::ActivateRequiredCapabilit
         return {};
     }
 
-    score::cpp::expected<ProcessCapabilitySets, Error> get_process_capabilities_result = this->GetProcessCapabilitySets();
+    score::cpp::expected<ProcessCapabilitySets, Error> get_process_capabilities_result =
+        this->GetProcessCapabilitySets();
     if (!get_process_capabilities_result.has_value())
     {
         mw::log::LogError() << "Failed to get current process capability sets: "

@@ -20,7 +20,8 @@ std::unique_ptr<score::os::Pthread> score::os::Pthread::Default() noexcept
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
-score::cpp::pmr::unique_ptr<score::os::Pthread> score::os::Pthread::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Pthread> score::os::Pthread::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::QnxPthread>(memory_resource);
@@ -30,7 +31,7 @@ score::cpp::pmr::unique_ptr<score::os::Pthread> score::os::Pthread::Default(scor
 /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */
 
 score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::setname_np(const pthread_t thread,
-                                                                    const char* const name) const noexcept
+                                                                               const char* const name) const noexcept
 {
     // Manual code analysis:
     // Implementation in QNX differs from documentation. Function always returns without error when thread exists. Even
@@ -45,8 +46,8 @@ score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::setname_np(c
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::getname_np(const pthread_t thread,
-                                                                    char* const name,
-                                                                    const std::size_t length) const noexcept
+                                                                               char* const name,
+                                                                               const std::size_t length) const noexcept
 {
     if (length > static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))  // LCOV_EXCL_BR_LINE
     {
@@ -68,7 +69,7 @@ score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::getname_np(c
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::getcpuclockid(const pthread_t id,
-                                                                       clockid_t* clock_id) const noexcept
+                                                                                  clockid_t* clock_id) const noexcept
 {
     // Manual code analysis:
     //  Negative Test:- ::pthread_getcpuclockid() on QNX is documented as returning ESRCH if the value specified by id

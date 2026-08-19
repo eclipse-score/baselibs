@@ -38,11 +38,11 @@ namespace internal
 class BoolParser final : public VirtualParser
 {
     /// \brief           Type of function to be executed when bool values are read
-    using Fn = score::cpp::move_only_function<vajson::ResultBlank(bool)>;
+    using Fn = score::cpp::move_only_function<score::Result<void>(bool)>;
 
   public:
     /// \brief           Constructs a BoolParser
-    /// \details         Callback must take the bool and return vajson::ResultBlank.
+    /// \details         Callback must take the bool and return score::Result<void>.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -68,10 +68,10 @@ class BoolParser final : public VirtualParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnBool(bool v) noexcept -> ParserResult final
+    auto OnBool(bool v) noexcept -> ParserResult override final
     {
 
-        return vajson::ResultBlank{std::forward<Fn>(this->fn_)(v)}.transform([](vajson::Blank) noexcept {
+        return score::Result<void>{std::forward<Fn>(this->fn_)(v)}.transform([](void) noexcept {
             return ParserState::kFinished;
         });
     }
@@ -83,7 +83,7 @@ class BoolParser final : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    auto OnUnexpectedEvent() noexcept -> ParserResult override final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a boolean.");
     }

@@ -49,7 +49,7 @@ class OpensslHashCalculator final : public IHashCalculator
     static Result<OpensslHashCalculator> Create(const HashAlgorithm algorithm,
                                                 const openssl::IOpensslLib& openssl = GetDefaultOpenSslImpl()) noexcept;
 
-    ResultBlank Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
+    Result<void> Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
 
     Hash Finalize() noexcept override;
 
@@ -61,7 +61,8 @@ class OpensslHashCalculator final : public IHashCalculator
                           openssl::StructDigestCtx* const message_digest_context,
                           const openssl::IOpensslLib& openssl);
 
-    std::unique_ptr<openssl::StructDigestCtx, score::cpp::callback<void(openssl::StructDigestCtx*)>> message_digest_context_;
+    std::unique_ptr<openssl::StructDigestCtx, score::cpp::callback<void(openssl::StructDigestCtx*)>>
+        message_digest_context_;
     HashAlgorithm algorithm_;
 
     std::reference_wrapper<const openssl::IOpensslLib> openssl_;

@@ -61,7 +61,8 @@ TEST_F(AtomicFileBufTest, TestFailureOnSync)
 {
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(testing::Return(-1));
-    EXPECT_CALL(*unistd_, unlink(StrEq("from_path"))).WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
+        .WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
 
     auto result = atomic_filebuf.Close();
     EXPECT_FALSE(result.has_value());
@@ -72,9 +73,11 @@ TEST_F(AtomicFileBufTest, TestFailureOnFsync)
 {
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
-    EXPECT_CALL(*unistd_, fsync(_)).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+    EXPECT_CALL(*unistd_, fsync(_))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
     EXPECT_CALL(atomic_filebuf, close()).Times(0);
-    EXPECT_CALL(*unistd_, unlink(StrEq("from_path"))).WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
+        .WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
 
     auto result = atomic_filebuf.Close();
     EXPECT_FALSE(result.has_value());
@@ -87,7 +90,8 @@ TEST_F(AtomicFileBufTest, TestFailureOnClose)
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, fsync(_)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
     EXPECT_CALL(atomic_filebuf, close()).WillOnce(Return(nullptr));
-    EXPECT_CALL(*unistd_, unlink(StrEq("from_path"))).WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
+        .WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
 
     auto result = atomic_filebuf.Close();
     EXPECT_FALSE(result.has_value());
@@ -99,8 +103,10 @@ TEST_F(AtomicFileBufTest, TestFailureOnRename)
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, fsync(_)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
     EXPECT_CALL(atomic_filebuf, close()).WillOnce(Return(&atomic_filebuf));
-    EXPECT_CALL(*stdio_, rename(_, _)).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
-    EXPECT_CALL(*unistd_, unlink(StrEq("from_path"))).WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(*stdio_, rename(_, _))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
+        .WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
 
     auto result = atomic_filebuf.Close();
     EXPECT_FALSE(result.has_value());

@@ -19,6 +19,7 @@ cc_library(
     name = "datetime_converter",
     srcs = ["datetime_converter.cpp"],
     hdrs = ["datetime_converter.h"],
+    deprecation = "This target is deprecated due to known bugs and error prone implementation. It will be removed in the future. If you need it please comment in https://github.com/eclipse-score/baselibs/pull/471",
     visibility = ["//visibility:public"],
 )
 

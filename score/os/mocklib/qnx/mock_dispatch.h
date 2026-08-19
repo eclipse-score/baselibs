@@ -44,9 +44,15 @@ class MockDispatch : public Dispatch
                 (const char* name, std::int32_t flags),
                 (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), name_close, (std::int32_t fd), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                name_close,
+                (std::int32_t fd),
+                (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>), dispatch_create, (), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>),
+                dispatch_create,
+                (),
+                (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>),
                 dispatch_create_channel,

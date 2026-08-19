@@ -1,0 +1,54 @@
+@startuml
+hide empty members
+set namespaceSeparator ::
+namespace score {
+namespace json {
+namespace vajson {
+
+   class LevelValidator {}
+
+   class CompositionParser<VirtualParser> {}
+
+   class VirtualParser {}
+
+   class StructureParser<VirtualParser> {}
+   class StructureParserBase<logic> {}
+
+   class JsonData {}
+   class JsonOps {}
+
+   namespace v2 {
+      class SingleArrayParser {}
+
+      class SingleObjectParser {}
+
+      class Parser {}
+
+      SingleArrayParser --|> Parser
+      SingleArrayParser --> score::json::vajson::LevelValidator
+
+      SingleObjectParser --|> Parser
+      SingleObjectParser --> score::json::vajson::LevelValidator
+
+      Parser --|> score::json::vajson::CompositionParser
+      Parser --> score::json::vajson::JsonData
+   }
+
+   CompositionParser --|> VirtualParser
+   CompositionParser --> JsonData
+
+   VirtualParser --> StructureParser
+
+   StructureParser --> JsonData
+   StructureParser --|> StructureParserBase
+   StructureParser --> VirtualParser
+   StructureParser --> JsonOps
+
+   JsonOps --> JsonData
+   JsonOps --> OptChar
+
+}
+}
+}
+
+@enduml

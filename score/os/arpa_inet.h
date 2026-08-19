@@ -17,8 +17,8 @@
 #include "score/os/errno.h"
 #include "score/os/netinet_in.h"
 
-#include <score/expected.hpp>
 #include <arpa/inet.h>
+#include <score/expected.hpp>
 
 #include <cstdint>
 

@@ -42,9 +42,7 @@ namespace common
 namespace visitor
 {
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Char used as a byte representation. */
 using OneByte = char;
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Char used as a byte representation. */
 
 namespace payload_tags
 {
@@ -100,7 +98,7 @@ auto cast_to_source_serializable_data_span(const T* data, size_t size) -> score:
     */
     // coverity[autosar_cpp14_m5_2_8_violation]
     return score::cpp::span<const S>{static_cast<const S*>(static_cast<const void*>(data)),
-                              static_cast<typename score::cpp::span<const S>::size_type>(size)};
+                                     static_cast<typename score::cpp::span<const S>::size_type>(size)};
 }
 template <typename S, typename T>
 auto cast_to_destination_serializable_data_span(T* data, size_t size) -> score::cpp::span<S>
@@ -115,7 +113,7 @@ auto cast_to_destination_serializable_data_span(T* data, size_t size) -> score::
     */
     // coverity[autosar_cpp14_m5_2_8_violation]
     return score::cpp::span<S>{static_cast<S*>(static_cast<void*>(data)),
-                        static_cast<typename score::cpp::span<const S>::size_type>(size)};
+                               static_cast<typename score::cpp::span<const S>::size_type>(size)};
 }
 }  //  namespace details
 
@@ -123,12 +121,6 @@ template <typename T>
 struct is_serialized_type : public std::false_type
 {
 };
-
-/* KW_SUPPRESS_START:MISRA.LOGIC.OPERATOR.NOT_BOOL: False positive: all boolean expressions are correct. */
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Reinterpret needs to be used to cast to ptr. */
-/* KW_SUPPRESS_START:MISRA.FUNC.UNUSEDPAR: False positive: all templates arguments are used. */
-/* KW_SUPPRESS_START:MISRA.VAR.NEEDS.CONST: False positive for some cases: Variables in templates are modified. */
-/* KW_SUPPRESS_START:AUTOSAR.FUNC.TMPL.EXPLICIT_SPEC: False positive: no specialization is used. */
 
 template <typename A>
 class serializer_helper
@@ -142,11 +134,9 @@ class serializer_helper
     serializer_helper(std::uint8_t* base, offset_t maxSize, offset_t startSize)
         : base_(base), maxSize_(maxSize), curSize_(startSize)
     {
-        /* KW_SUPPRESS_START: MISRA.USE.EXPANSION: Macro for assertion is tolerated by decision. */
         SCORE_LANGUAGE_FUTURECPP_ASSERT(base != nullptr);
         SCORE_LANGUAGE_FUTURECPP_ASSERT(startSize > static_cast<offset_t>(0));
         SCORE_LANGUAGE_FUTURECPP_ASSERT(startSize <= maxSize);
-        /* KW_SUPPRESS_END: MISRA.USE.EXPANSION */
     }
 
     offset_t advance(std::size_t size)
@@ -161,7 +151,8 @@ class serializer_helper
         {
             return 0UL;
         }
-        SCORE_LANGUAGE_FUTURECPP_ASSERT(curSize_ <= (std::numeric_limits<offset_t>::max() - static_cast<offset_t>(size)));
+        SCORE_LANGUAGE_FUTURECPP_ASSERT(curSize_ <=
+                                        (std::numeric_limits<offset_t>::max() - static_cast<offset_t>(size)));
         curSize_ += static_cast<offset_t>(size);
         return curSize_ - static_cast<offset_t>(size);
     }
@@ -176,11 +167,10 @@ class serializer_helper
     {
         static_assert(std::is_standard_layout<T>::value, "attempt to serialize to a non-StandardLayout type");
         static_assert(alignof(T) == 1, "attempt to serialize to a not byte aligned type");
-        /* KW_SUPPRESS_START:MISRA.PTR.ARITH:Needed to get offset from this location */
-        // reinterpret cast need to cast to different pointer type
-        // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic) same as KW
-        score::cpp::span<std::uint8_t> dataSpan{base_,
-                                         static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(maxSize_)};
+        // cast need to obtain offset from this location
+        // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+        score::cpp::span<std::uint8_t> dataSpan{
+            base_, static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(maxSize_)};
         /*
                 Deviation from Rule A5-2-4:
                 - reinterpret_cast shall not be used.
@@ -189,22 +179,15 @@ class serializer_helper
             inside base_ into type specified (T).
         */
         // coverity[autosar_cpp14_a5_2_4_violation]
-        return reinterpret_cast<T*>(  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast) jusified
+        return reinterpret_cast<T*>(  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast) justified
             dataSpan.subspan(static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(size)).data());
-        // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic) same as KW
-        /* KW_SUPPRESS_END:MISRA.PTR.ARITH:Needed to get offset from this location */
+        // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
     }
 
-    /* KW_SUPPRESS_START: MISRA.USE.EXPANSION: False positive: it is not macro. */
   private:
-    /* KW_SUPPRESS_END: MISRA.USE.EXPANSION: False positive: it is not macro. */
-    /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
-    /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: False positive: it is struct member. */
     std::uint8_t* const base_;
     const offset_t maxSize_;
-    /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: False positive: it is struct member. */
     offset_t curSize_;
-    /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
 };
 
 template <typename A>
@@ -226,7 +209,6 @@ class deserializer_helper
     {
         static_assert(std::is_standard_layout<T>::value, "attempt to deserialize from a non-StandardLayout type");
         static_assert(alignof(T) == 1, "attempt to deserialize from a not byte aligned type");
-        /* KW_SUPPRESS_START: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False positive. */
         /*
                 Deviation from Rule A4-7-1:
                 - An integer expression shall not lead to data loss.
@@ -237,14 +219,9 @@ class deserializer_helper
         // coverity[autosar_cpp14_a4_7_1_violation]
         if (size + sizeof(T) * n > maxSize_)
         {
-            /* KW_SUPPRESS_END: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False positive. */
-            /* KW_SUPPRESS_START: MISRA.ONEDEFRULE.VAR: False positive. */
             out_of_bounds_ = true;
-            /* KW_SUPPRESS_END: MISRA.ONEDEFRULE.VAR: False positive. */
             return nullptr;
         }
-        /* KW_SUPPRESS_START:MISRA.PTR.ARITH:Needed to get offset from this location */
-        /* KW_SUPPRESS_START: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False positive. */
         // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic) justified
         score::cpp::span<const std::uint8_t> dataSpan{
             base_, static_cast<typename score::cpp::span<const std::uint8_t* const>::size_type>(maxSize_)};
@@ -259,8 +236,6 @@ class deserializer_helper
         return reinterpret_cast<T*>(  // NOLINT(cppcoreguidelines-pro-type-reinterpret-cast) justified
             dataSpan.subspan(static_cast<typename score::cpp::span<std::uint8_t* const>::size_type>(size)).data());
         // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic) justified
-        /* KW_SUPPRESS_END: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False positive. */
-        /* KW_SUPPRESS_END:MISRA.PTR.ARITH:Needed to get offset from this location */
     }
 
     bool getInvalidFormat() const
@@ -286,30 +261,12 @@ class deserializer_helper
         invalid_format_ = true;
     }
 
-    /* KW_SUPPRESS_START: MISRA.USE.EXPANSION: False positive: it is not macro. */
   private:
-    /* KW_SUPPRESS_END: MISRA.USE.EXPANSION: False positive: it is not macro. */
-    /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
-    /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: False positive: it is struct member. */
     const std::uint8_t* const base_;
     const offset_t maxSize_;
-    /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: False positive: it is struct member. */
-    /* KW_SUPPRESS_START: MISRA.ONEDEFRULE.VAR: False positive. */
     bool invalid_format_;
     bool zero_offset_;
-    /* KW_SUPPRESS_START: MISRA.OBJ.TYPE.COMPAT: This is struct field and constness of another struct's field has no
-     * meaning. */
-    /* KW_SUPPRESS_START: MISRA.OBJ.TYPE.IDENT: This is struct field and constness of another struct's field has no
-     * meaning. */
-    /* KW_SUPPRESS_START: MISRA.LINKAGE.EXTERN: False positive. */
     bool out_of_bounds_;
-    /* KW_SUPPRESS_END: MISRA.LINKAGE.EXTERN: False positive. */
-    /* KW_SUPPRESS_END: MISRA.OBJ.TYPE.IDENT: This is struct field and constness of another struct's field has no
-     * meaning. */
-    /* KW_SUPPRESS_END: MISRA.OBJ.TYPE.COMPAT: This is struct field and constness of another struct's field has no
-     * meaning. */
-    /* KW_SUPPRESS_END: MISRA.ONEDEFRULE.VAR: False positive. */
-    /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
 };
 
 // memcpy_serialized
@@ -325,7 +282,6 @@ struct is_serialized_type<memcpy_serialized<N>> : public std::true_type
 {
 };
 
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 template <typename A, typename T>
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
@@ -355,7 +311,6 @@ inline void deserialize(const memcpy_serialized<sizeof(T)>& serial, deserializer
     std::ignore = std::memcpy(&t, serial.arr.data(), sizeof(T));
     // NOLINTEND(score-banned-function) tolerated per design
 }
-/* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 
 // array_serialized
 
@@ -512,8 +467,6 @@ struct is_serialized_type<vector_serialized<A, S>> : public std::true_type
 namespace detail
 {
 
-/* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
 template <typename T, std::enable_if_t<has_clear<T>::value, std::int32_t> = 0>
 inline void clear(T& t)
 {
@@ -550,8 +503,6 @@ inline void resize(T& t, size_t n)
         t.push_back(typename T::value_type{});
     }
 }
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
-/* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
 
 }  // namespace detail
 
@@ -589,13 +540,11 @@ inline void serialize(const T& t, serializer_helper<A>& a, vector_serialized<A, 
             a.template address<S>(static_cast<typename A::offset_t>(offset + sizeof(subsize_s_t)));
         for (std::size_t i = 0UL; i != n; ++i)
         {
-            /* KW_SUPPRESS_START:MISRA.PTR.ARITH:Needed to get offset from this location */
             // Suppress AUTOSAR C++14 M5-0-15 rule findings. This rule stated: "indexing shall be the only
             // form of pointer arithmetic"
             // False positive, no pointer arithmetic applied to pointer string_size_location
             // coverity[autosar_cpp14_m5_0_15_violation]
             serialize(*(t.cbegin() + static_cast<std::ptrdiff_t>(i)), a, string_size_location[i]);
-            /* KW_SUPPRESS_END:MISRA.PTR.ARITH:Needed to get offset from this location */
         }
     }
 }
@@ -644,7 +593,8 @@ inline void serialize(const std::vector<T, Alloc>& t, serializer_helper<A>& a, v
             a.template address<S>(static_cast<typename A::offset_t>(offset + sizeof(subsize_s_t)));
         if (n > 0UL)
         {  //  prevents some warnings for a sanity about accessing zero sized container
-            auto destination = score::cpp::span<S>{string_size_location, static_cast<typename score::cpp::span<S>::size_type>(n)};
+            auto destination =
+                score::cpp::span<S>{string_size_location, static_cast<typename score::cpp::span<S>::size_type>(n)};
             const auto source = details::cast_to_source_serializable_data_span<S>(t.data(), n);
             std::ignore = std::copy(source.begin(), source.end(), destination.begin());
         }
@@ -690,9 +640,7 @@ inline void deserialize(const vector_serialized<A, S>& serial, deserializer_help
     detail::resize(t, n);
     for (std::size_t i = 0; i != n; ++i)
     {
-        /* KW_SUPPRESS_START:MISRA.PTR.ARITH:Needed to get offset from this location */
         deserialize(vector_contents_address[i], a, *(t.begin() + static_cast<std::ptrdiff_t>(i)));
-        /* KW_SUPPRESS_END:MISRA.PTR.ARITH:Needed to get offset from this location */
     }
 }
 
@@ -747,7 +695,7 @@ inline void deserialize(const vector_serialized<A, S>& serial, deserializer_help
         //  const cast to suggest that source data shall not be modified
         //  static cast to conform with score::cpp::span type
         const auto source = score::cpp::span<const S>{const_cast<const S*>(vector_contents_address),
-                                               static_cast<typename score::cpp::span<S>::size_type>(n)};
+                                                      static_cast<typename score::cpp::span<S>::size_type>(n)};
         const auto destination = details::cast_to_destination_serializable_data_span<S>(t.data(), n);
         std::ignore = std::copy(source.begin(), source.end(), destination.begin());
     }
@@ -889,7 +837,6 @@ inline void deserialize_parameter_pack(const pair_serialized<S1, S2>& serial,
 
 // serializing tuples
 
-/* KW_SUPPRESS_START: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 template <typename A, typename S, typename... Args, std::size_t... I>
 inline void serialize_tuple_start(const std::tuple<Args...>& t,
                                   serializer_helper<A>& a,
@@ -928,7 +875,6 @@ template <typename A, typename S>
 struct struct_serializer_visitor
 {
   public:
-    /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: template struct field used in another template function. */
     /*
        Maintaining compatibility and avoiding performance overhead outweighs POD Type (class) based design for this
        particular struct. The Type is Simple Template type and does not require invariance (interface OR custom
@@ -938,7 +884,6 @@ struct struct_serializer_visitor
     serializer_helper<A>& a;
     // coverity[autosar_cpp14_m11_0_1_violation]
     S& serializer;
-    /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: template struct field used in another template function. */
 };
 
 template <typename A, typename S, typename T, typename... Args>
@@ -962,7 +907,6 @@ inline void serialize(const T& t, serializer_helper<A>& a, S& serial)
 template <typename A, typename S>
 struct struct_deserializer_visitor
 {
-    /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: Intended by the design of this templated code. */
     /*
        Maintaining compatibility and avoiding performance overhead outweighs POD Type (class) based design for this
        particular struct. The Type is Simple Template type and does not require invariance (interface OR custom
@@ -972,7 +916,6 @@ struct struct_deserializer_visitor
     deserializer_helper<A>& a;
     // coverity[autosar_cpp14_m11_0_1_violation]
     const S& s;
-    /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: Intended by the design of this templated code. */
 };
 
 template <typename A, typename S, typename T, typename... Args>
@@ -1029,8 +972,6 @@ struct memcpy_serialized_descriptor
     using payload_type = memcpy_serialized<sizeof(T)>;
 };
 
-/* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
 template <typename A,
           typename T,
           std::enable_if_t<(std::is_integral<T>::value) && (std::is_signed<T>::value), std::int32_t> = 0>
@@ -1083,8 +1024,6 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
 {
     return memcpy_serialized_descriptor<payload_tags::unsigned_le, T>();
 }
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
-/* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
 
 template <typename A, size_t N>
 // This is false positive, Overload signatures are different.
@@ -1128,7 +1067,6 @@ struct array_serialized_descriptor
     static constexpr size_t element_number = N;
 };
 
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE: intentionally */
 template <typename A, typename T, size_t N>
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
@@ -1137,7 +1075,6 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, const T (& /*unused*/)[N
 {  // NOLINT(modernize-avoid-c-arrays) intentionally
     return array_serialized_descriptor<A, T, N>();
 }
-/* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE: intentionally */
 
 template <typename A, typename T, size_t N>
 // This is false positive, Overload signatures are different.
@@ -1195,7 +1132,6 @@ struct vector_serialized_descriptor
     using payload_type = vector_serialized<A, typename element_type::payload_type>;
 };
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
 template <typename A,
           typename T,
           std::enable_if_t<::score::common::visitor::is_vector_serializable<T>::value, std::int32_t> = 0>
@@ -1217,7 +1153,6 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
 {
     return vector_serialized_descriptor<A, typename T::value_type>();
 }
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
 
 template <typename A, typename T>
 inline auto visit_parameter_pack(serialized_visitor<A>& /*unused*/, T& /*unused*/)
@@ -1402,7 +1337,6 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, const score::cpp::option
 {
     return pack_serialized_descriptor<A, optional_pack_desc, char, T>();
 }
-/* KW_SUPPRESS_END: MISRA.FUNC.UNUSEDPAR.UNNAMED: Unused variables needed for correct template deduction. */
 
 // This is false positive, because it's declared in this file in namespace score::common::visitor.
 // so different namespaces are used to organize and encapsulate code,
@@ -1434,10 +1368,7 @@ class deserialization_result_t
         return zero_offset_;
     }
 
-    /* KW_SUPPRESS_START: MISRA.USE.EXPANSION: False positive: it is not macro. */
   private:
-    /* KW_SUPPRESS_END: MISRA.USE.EXPANSION: False positive: it is not macro. */
-    /* KW_SUPPRESS_START: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
     // This flag is set if tried to deserialize behind the boundary of the data array
     const bool out_of_bounds_;
 
@@ -1446,7 +1377,6 @@ class deserialization_result_t
 
     // This flag is set if the offset of a dynamic element (in static payload) is 0 (as a result of too little buffer)
     const bool zero_offset_;
-    /* KW_SUPPRESS_END: MISRA.MEMB.NOT_PRIVATE: False positive: it is private member. */
 };
 
 // serializer_t (encapsulating the visitors and the helpers)
@@ -1528,7 +1458,6 @@ class serializer_t
         {
             return deserialization_result_t{true, false, false};
         }
-        /* KW_SUPPRESS_START: MISRA.CAST.CONST: False positive: constness is preserved. */
         // cast to different pointer type
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast) [score-qualified-nolint]
         /*
@@ -1546,17 +1475,10 @@ class serializer_t
         */
         // coverity[autosar_cpp14_a5_2_4_violation]
         ::score::common::visitor::deserialize(*reinterpret_cast<const serialized_type* const>(data), a, t);
-        /* KW_SUPPRESS_END: MISRA.CAST.CONST: False positive: constness is preserved. */
 
         return deserialization_result_t{a.getOutOfBounds(), a.getInvalidFormat(), a.getZeroOffset()};
     }
 };
-
-/* KW_SUPPRESS_END:AUTOSAR.FUNC.TMPL.EXPLICIT_SPEC: False positive: no specialization is used. */
-/* KW_SUPPRESS_END:MISRA.VAR.NEEDS.CONST: False positive for some cases: Variables in templates are modified. */
-/* KW_SUPPRESS_END:MISRA.FUNC.UNUSEDPAR: False positive: all templates arguments are used. */
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:Reinterpret needs to be used to cast to ptr */
-/* KW_SUPPRESS_END:MISRA.LOGIC.OPERATOR.NOT_BOOL: False positive: all boolean expressions are correct. */
 
 }  // namespace visitor
 
@@ -1564,8 +1486,6 @@ class serializer_t
 
 }  // namespace score
 
-/* KW_SUPPRESS_START:MISRA.USE.DEFINE: intentionally. */
-/* KW_SUPPRESS_START:MISRA.DEFINE.NOPARS: Correct usage of macro. */
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage) same as KW
 /// \public
 /*
@@ -1575,22 +1495,22 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define MEMCPY_SERIALIZABLE(tag, ...)                                                                                 \
+#define SCORE_MEMCPY_SERIALIZABLE(tag, ...)                                                                           \
     template <typename A,                                                                                             \
               typename T,                                                                                             \
               std::enable_if_t<std::is_same<__VA_ARGS__, typename std::remove_const<T>::type>::value, std::int32_t> = \
                   0>                                                                                                  \
-    inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                          \
+    inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                        \
     {                                                                                                                 \
-        return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                        \
+        return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                      \
     }                                                                                                                 \
     template <typename SizeType,                                                                                      \
               typename T,                                                                                             \
               std::enable_if_t<std::is_same<__VA_ARGS__, typename std::remove_const<T>::type>::value, std::int32_t> = \
                   0>                                                                                                  \
-    inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                        \
+    inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                      \
     {                                                                                                                 \
-        v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>));   \
+        v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage) tolerated per design
@@ -1602,18 +1522,30 @@ class serializer_t
 */
 // coverity[autosar_cpp14_a16_0_1_violation]
 // coverity[autosar_cpp14_m16_0_6_violation]
-#define MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                         \
-    template <typename A, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                              \
+#define SCORE_MEMCPY_SERIALIZABLE_IF(tag, T, ...)                                                                     \
+    template <typename A, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                                \
     inline auto visit_as(::score::common::visitor::serialized_visitor<A>&, T&)                                        \
-    {                                                                                                               \
+    {                                                                                                                 \
         return ::score::common::visitor::memcpy_serialized_descriptor<tag, T>();                                      \
-    }                                                                                                               \
-    template <typename SizeType, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                       \
+    }                                                                                                                 \
+    template <typename SizeType, typename T, std::enable_if_t<__VA_ARGS__, std::int32_t> = 0>                         \
     inline void visit_as(::score::common::visitor::size_helper<SizeType>& v, T&)                                      \
-    {                                                                                                               \
+    {                                                                                                                 \
         v.out += static_cast<SizeType>(sizeof(::score::common::visitor::memcpy_serialized<sizeof(std::decay_t<T>)>)); \
     }
-/* KW_SUPPRESS_END:MISRA.DEFINE.NOPARS: Correct usage of macro. */
-/* KW_SUPPRESS_END:MISRA.USE.DEFINE: intentionally. */
+
+// Deprecated aliases kept for backward compatibility.
+// Use SCORE_MEMCPY_SERIALIZABLE and SCORE_MEMCPY_SERIALIZABLE_IF in new code.
+#ifndef MEMCPY_SERIALIZABLE
+#define MEMCPY_SERIALIZABLE(...)                                                                            \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE is deprecated, use SCORE_MEMCPY_SERIALIZABLE instead."); \
+    SCORE_MEMCPY_SERIALIZABLE(__VA_ARGS__)
+#endif
+
+#ifndef MEMCPY_SERIALIZABLE_IF
+#define MEMCPY_SERIALIZABLE_IF(...)                                                                               \
+    SCORE_DEPRECATE_MACRO_USE("MEMCPY_SERIALIZABLE_IF is deprecated, use SCORE_MEMCPY_SERIALIZABLE_IF instead."); \
+    SCORE_MEMCPY_SERIALIZABLE_IF(__VA_ARGS__)
+#endif
 
 #endif  // SCORE_COMMON_SERIALIZATION_INCLUDE_SERIALIZATION_VISIT_SERIALIZE_H

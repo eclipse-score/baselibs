@@ -1,0 +1,185 @@
+@startuml
+activate Application
+Application --> Stream : open()
+
+activate Stream
+Stream --> Application
+deactivate Stream
+
+Application --> JsonData : JsonData(Stream&)
+
+activate JsonData
+JsonData --> InputStream : InputStream(Stream&)
+
+activate InputStream
+InputStream --> JsonData
+deactivate InputStream
+
+JsonData --> JsonData : ParseBom()
+activate JsonData #LightGrey
+
+JsonData --> JsonOps : JsonOps(JsonData&)
+
+activate JsonOps
+JsonOps --> JsonData
+deactivate JsonOps
+
+JsonData --> JsonOps : ReadString()
+
+activate JsonOps
+JsonOps --> JsonOps : Read()
+
+activate JsonOps #LightGrey
+JsonOps --> InputStream : Read()
+
+activate InputStream
+InputStream --> JsonOps
+deactivate InputStream
+
+deactivate JsonOps
+
+JsonOps --> JsonOps : SplitStringView()
+JsonOps --> JsonOps : RewindIf()
+JsonOps --> JsonData
+deactivate JsonOps
+
+deactivate JsonData
+JsonData --> Application
+deactivate JsonData
+
+Application --> Parser : Parser(JsonData&)
+
+activate Parser
+Parser --> VirtualParser : Parser(JsonData&)
+
+activate VirtualParser
+VirtualParser --> StructureParser : StructureParser(JsonData&)
+
+activate StructureParser
+StructureParser --> JsonOps : JsonOps(JsonData&)
+
+activate JsonOps
+JsonOps --> StructureParser
+deactivate JsonOps
+
+StructureParser --> VirtualParser
+deactivate StructureParser
+
+VirtualParser --> Parser
+deactivate VirtualParser
+
+Parser --> Application
+deactivate Parser
+
+Application --> Parser : Parse()
+
+activate Parser
+Parser --> VirtualParser : Parse()
+
+activate VirtualParser
+VirtualParser --> StructureParser : Parse()
+
+activate StructureParser
+StructureParser --> JsonOps : SkipWhitespace()
+
+activate JsonOps
+JsonOps --> JsonOps : SkipUntil()
+activate JsonOps #LightGrey
+JsonOps --> InputStream : Find()
+
+activate InputStream
+InputStream --> JsonOps
+deactivate InputStream
+deactivate JsonOps
+
+JsonOps --> StructureParser
+deactivate JsonOps
+
+loop ParserState == kRunning
+StructureParser --> StructureParser : ParseValue()
+activate StructureParser #LightGrey
+
+StructureParser --> JsonOps : SkipWhitespace()
+
+activate JsonOps
+JsonOps --> JsonOps : SkipUntil()
+activate JsonOps #LightGrey
+JsonOps --> InputStream : Find()
+
+activate InputStream
+InputStream --> JsonOps
+deactivate InputStream
+deactivate JsonOps
+
+JsonOps --> StructureParser
+deactivate JsonOps
+
+StructureParser --> JsonData : GetClearedStringBuffer()
+activate JsonData
+JsonData --> StructureParser
+deactivate JsonData
+
+StructureParser --> JsonOps : Take()
+activate JsonOps
+
+JsonOps --> JsonOps : TryTake()
+activate JsonOps #LightGrey
+JsonOps --> InputStream : Get()
+activate InputStream
+InputStream --> JsonOps
+deactivate InputStream
+deactivate JsonOps
+
+JsonOps --> StructureParser
+deactivate JsonOps
+
+StructureParser --> StructureParser : ParseStartObject()
+activate StructureParser #DarkGray
+note right : For instance, an opening curly bracket was found
+
+StructureParser --> DepthCounter : AddObject()
+activate DepthCounter
+DepthCounter --> DepthCounter : AddElement()
+DepthCounter --> DepthCounter : CheckLastElement()
+alt Last element is a value
+DepthCounter --> StructureParser : Error Invalid JSON
+else Last element is an opening curly bracket
+DepthCounter --> StructureParser : Error Invalid JSON
+else
+  alt Last element is a key
+  DepthCounter --> DepthCounter : Pop key from stack
+  end
+  DepthCounter --> DepthCounter : Push opening curly bracket onto stack
+  DepthCounter --> DepthCounter : Push new counter onto stack
+  DepthCounter --> StructureParser
+  deactivate DepthCounter
+end
+
+StructureParser --> VirtualParser : OnStartObject()
+
+activate VirtualParser #LightGrey
+VirtualParser --> Parser : OnStartObject()
+
+activate Parser #LightGrey
+note left : Call to user implementation
+...
+Parser --> VirtualParser
+deactivate Parser
+
+VirtualParser --> StructureParser
+deactivate VirtualParser
+
+deactivate StructureParser
+deactivate StructureParser
+end
+
+StructureParser --> VirtualParser
+deactivate StructureParser
+
+VirtualParser --> Parser
+deactivate VirtualParser
+
+Parser --> Application
+deactivate Parser
+
+@enduml

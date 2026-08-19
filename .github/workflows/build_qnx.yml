@@ -20,42 +20,62 @@ on:
   merge_group:
     types: [checks_requested]
   workflow_call:
+  workflow_dispatch:
 jobs:
   qnx-build:
-    name: Build and Test ${{ matrix.bazel-config }}
+    name: Build and Test ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - bazel-config: bl-x86_64-qnx
+          - name: bl-x86_64-qnx
+            bazel-config: bl-x86_64-qnx
+            working-directory: "."
+            bazel-target: "//score/..."
+            bazel-disk-cache: bl-x86_64-qnx
             bazel-test-target: >-
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
-              -//score/memory/shared:shared_memory_factory_test
-              -//score/memory/shared:shared_memory_resource_open_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
-          - bazel-config: bl-aarch64-qnx
+          - name: bl-aarch64-qnx
+            bazel-config: bl-aarch64-qnx
+            working-directory: "."
+            bazel-target: "//score/..."
+            bazel-disk-cache: bl-aarch64-qnx
             bazel-test-target: >-
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
-              -//score/memory/shared:shared_memory_factory_test
-              -//score/memory/shared:shared_memory_resource_open_test
               -//score/os/utils/inotify:unit_test
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
-    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@7b265b4accb24997dcb0de449c34d23853709f57
+          - name: x86_64-qnx (examples/integration)
+            bazel-config: x86_64-qnx
+            working-directory: "examples/integration"
+            bazel-target: "//..."
+            bazel-disk-cache: x86_64-qnx-integration
+            bazel-test-target: "//..."
+          - name: aarch64-qnx (examples/integration)
+            bazel-config: aarch64-qnx
+            working-directory: "examples/integration"
+            bazel-target: "//..."
+            bazel-disk-cache: aarch64-qnx-integration
+            bazel-test-target: "//..."
+            extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
+    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@3eb9c766349cf0c2225fef29f76601c6e7858688
     permissions:
       contents: read
       pull-requests: read
     with:
-      bazel-target: "//score/..."
+      bazel-target: ${{ matrix.bazel-target }}
       bazel-config: ${{ matrix.bazel-config }}
       bazel-test-target: ${{ matrix.bazel-test-target }}
       credential-helper: ".github/tools/qnx_credential_helper.py"
-      bazel-disk-cache: ${{ matrix.bazel-config }}
+      bazel-disk-cache: ${{ matrix.bazel-disk-cache }}
+      working-directory: ${{ matrix.working-directory }}
+      extra-bazel-test-flags: ${{ matrix.extra-bazel-test-flags }}
     secrets:
       score-qnx-license: ${{ secrets.SCORE_QNX_LICENSE }}
       score-qnx-user: ${{ secrets.SCORE_QNX_USER }}

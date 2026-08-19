@@ -37,19 +37,21 @@ class Sysctl : public ObjectSeam<Sysctl>
     static Sysctl& instance() noexcept;
 
     virtual score::cpp::expected_blank<Error> sysctl(std::int32_t* const name,
-                                              const std::size_t namelen,
-                                              void* const oldp,
-                                              std::size_t* const oldlenp,
-                                              void* const newp,
-                                              const std::size_t newlen) const noexcept = 0;
+                                                     const std::size_t namelen,
+                                                     void* const oldp,
+                                                     std::size_t* const oldlenp,
+                                                     void* const newp,
+                                                     const std::size_t newlen) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> sysctlbyname(const char* sname,
-                                                    void* const oldp,
-                                                    std::size_t* const oldlenp,
-                                                    void* const newp,
-                                                    const std::size_t newlen) const noexcept = 0;
+                                                           void* const oldp,
+                                                           std::size_t* const oldlenp,
+                                                           void* const newp,
+                                                           const std::size_t newlen) const noexcept = 0;
 
-    virtual score::cpp::expected_blank<Error> sysctlnametomib(const char* sname, int* mibp, size_t* sizep) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sysctlnametomib(const char* sname,
+                                                              int* mibp,
+                                                              size_t* sizep) const noexcept = 0;
 
     virtual ~Sysctl() = default;
 };

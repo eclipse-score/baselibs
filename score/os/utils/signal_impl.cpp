@@ -68,7 +68,7 @@ score::cpp::expected<std::int32_t, Error> SignalImpl::PthreadSigMask(const sigse
 }
 
 score::cpp::expected<std::int32_t, Error> SignalImpl::PthreadSigMask(const std::int32_t how,
-                                                              const sigset_t& set) const noexcept
+                                                                     const sigset_t& set) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -77,8 +77,8 @@ score::cpp::expected<std::int32_t, Error> SignalImpl::PthreadSigMask(const std::
 }
 
 score::cpp::expected<std::int32_t, Error> SignalImpl::PthreadSigMask(const std::int32_t how,
-                                                              const sigset_t& set,
-                                                              sigset_t& oldset) const noexcept
+                                                                     const sigset_t& set,
+                                                                     sigset_t& oldset) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -134,7 +134,7 @@ score::cpp::expected<std::int32_t, Error> SignalImpl::IsSignalBlocked(const std:
     return SignalImpl::SigIsMember(signals, signal_id);
 }
 score::cpp::expected<std::int32_t, Error> SignalImpl::SigIsMember(sigset_t& signals,
-                                                           const std::int32_t signal_id) const noexcept
+                                                                  const std::int32_t signal_id) const noexcept
 {
     const std::int32_t ret = ::sigismember(&signals, signal_id);
     return ConvertReturnValueToExpected(ret);
@@ -158,8 +158,8 @@ score::cpp::expected<std::int32_t, Error> SignalImpl::SigWait(const sigset_t& se
 /* LCOV_EXCL_STOP */
 
 score::cpp::expected<std::int32_t, Error> SignalImpl::SigAction(const std::int32_t signum,
-                                                         const struct sigaction& action,
-                                                         struct sigaction& old_action) const noexcept
+                                                                const struct sigaction& action,
+                                                                struct sigaction& old_action) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above

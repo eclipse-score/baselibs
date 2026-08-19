@@ -20,3 +20,10 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
 )
+
+cc_library(
+    name = "macro_deprecation",
+    hdrs = ["deprecation.h"],
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score:__subpackages__"],
+)

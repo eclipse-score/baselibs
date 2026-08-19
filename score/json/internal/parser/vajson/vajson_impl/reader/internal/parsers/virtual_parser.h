@@ -91,7 +91,7 @@ class VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    virtual auto Parse() noexcept -> Result<vajson::Blank>;
+    virtual auto Parse() noexcept -> Result<void>;
 
     /// \brief           Parses file until the current parser is finished
     /// \details         Parserstate will be kRunning to allow for further parsing.

@@ -44,7 +44,7 @@ class InotifyInstanceFacade : public InotifyInstance
     }
 
     score::cpp::expected<InotifyWatchDescriptor, Error> AddWatch(safecpp::zstring_view pathname,
-                                                          Inotify::EventMask event_mask) noexcept override
+                                                                 Inotify::EventMask event_mask) noexcept override
     {
         return inotify_instance_mock_.AddWatch(pathname, event_mask);
     }

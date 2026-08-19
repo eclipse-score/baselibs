@@ -37,9 +37,9 @@ class TimedExecutor
     constexpr static bool IsInvocable() noexcept
     {
         return score::cpp::is_invocable<CallableType,
-                                 const score::cpp::stop_token&,
-                                 const typename Clock::time_point,
-                                 ArgumentTypes...>::value;
+                                        const score::cpp::stop_token&,
+                                        const typename Clock::time_point,
+                                        ArgumentTypes...>::value;
     }
 
   public:

@@ -30,8 +30,9 @@ class Sched : public ObjectSeam<Sched>
   public:
     static Sched& instance() noexcept;
 
-    virtual score::cpp::expected<std::int32_t, score::os::Error> sched_getparam(const pid_t pid, struct sched_param* const parms)
-        const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> sched_getparam(
+        const pid_t pid,
+        struct sched_param* const parms) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> sched_getscheduler(const pid_t pid) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> sched_setparam(
         const pid_t pid,
@@ -41,8 +42,9 @@ class Sched : public ObjectSeam<Sched>
         const std::int32_t policy,
         const struct sched_param* const parms) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> sched_yield(void) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> sched_rr_get_interval(const pid_t pid, struct timespec* const t)
-        const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> sched_rr_get_interval(
+        const pid_t pid,
+        struct timespec* const t) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_min(
         const std::int32_t alg) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> sched_get_priority_max(

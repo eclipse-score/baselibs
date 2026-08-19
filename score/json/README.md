@@ -267,7 +267,7 @@ struct Size
     std::string unit{};
 };
 
-STRUCT_VISITABLE(Size, width, height, unit)
+SCORE_STRUCT_VISITABLE(Size, width, height, unit)
 
 void SerializeToJsonAny()
 {

@@ -36,7 +36,8 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_init(posix_
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_destroy(posix_spawnattr_t* const attrp) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_destroy(
+    posix_spawnattr_t* const attrp) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // Manual code analysis:
@@ -53,8 +54,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_destroy(pos
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getflags(const posix_spawnattr_t* const attrp,
-                                                                       std::int16_t* const flags_p) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getflags(
+    const posix_spawnattr_t* const attrp,
+    std::int16_t* const flags_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_getflags(attrp, flags_p);
@@ -67,7 +69,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getflags(co
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setflags(posix_spawnattr_t* const attrp,
-                                                                       const std::int16_t flags) const noexcept
+                                                                              const std::int16_t flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_setflags(attrp, flags);
@@ -79,8 +81,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setflags(po
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigdefault(const posix_spawnattr_t* const attrp,
-                                                                            sigset_t* const sigset_p) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigdefault(
+    const posix_spawnattr_t* const attrp,
+    sigset_t* const sigset_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_getsigdefault(attrp, sigset_p);
@@ -107,7 +110,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigdefau
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigmask(const posix_spawnattr_t* const attrp,
-                                                                         sigset_t* const sigset_p) const noexcept
+                                                                                sigset_t* const sigset_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_getsigmask(attrp, sigset_p);
@@ -119,8 +122,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigmask(
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigmask(posix_spawnattr_t* const attrp,
-                                                                         const sigset_t* const sigset_p) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigmask(
+    posix_spawnattr_t* const attrp,
+    const sigset_t* const sigset_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_setsigmask(attrp, sigset_p);
@@ -133,7 +137,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigmask(
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getpgroup(const posix_spawnattr_t* const attrp,
-                                                                        pid_t* const pid_p) const noexcept
+                                                                               pid_t* const pid_p) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_getpgroup(attrp, pid_p);
@@ -146,7 +150,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getpgroup(c
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setpgroup(posix_spawnattr_t* const attrp,
-                                                                        const pid_t pid) const noexcept
+                                                                               const pid_t pid) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_setpgroup(attrp, pid);
@@ -200,8 +204,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getschedpol
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setschedpolicy(posix_spawnattr_t* const attrp,
-                                                                             const std::int32_t policy) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setschedpolicy(
+    posix_spawnattr_t* const attrp,
+    const std::int32_t policy) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawnattr_setschedpolicy(attrp, policy);
@@ -263,9 +268,10 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_ad
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_adddup2(posix_spawn_file_actions_t* const fact_p,
-                                                                               const std::int32_t fd,
-                                                                               const std::int32_t new_fd) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_adddup2(
+    posix_spawn_file_actions_t* const fact_p,
+    const std::int32_t fd,
+    const std::int32_t new_fd) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawn_file_actions_adddup2(fact_p, fd, new_fd);
@@ -277,11 +283,12 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_ad
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_addopen(posix_spawn_file_actions_t* const fact_p,
-                                                                               const std::int32_t new_fd,
-                                                                               const char* const path,
-                                                                               const std::int32_t oflags,
-                                                                               const mode_t omode) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawn_file_actions_addopen(
+    posix_spawn_file_actions_t* const fact_p,
+    const std::int32_t new_fd,
+    const char* const path,
+    const std::int32_t oflags,
+    const mode_t omode) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::posix_spawn_file_actions_addopen(fact_p, new_fd, path, oflags, omode);
@@ -346,8 +353,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnp(
 #if defined(__QNX__)
 // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if __QNX__ >= 800
-score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_getrunmask_np(const posix_spawnattr_t* attrp,
-                                                                              std::uint64_t* runmask_p) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_getrunmask_np(
+    const posix_spawnattr_t* attrp,
+    std::uint64_t* runmask_p) const noexcept
 {
     const std::int32_t result = ::pthread_spawnattr_getrunmask_np(attrp, runmask_p);
     if (result != 0)
@@ -357,8 +365,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_getrunmas
     return result;
 }
 
-score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_setrunmask_np(posix_spawnattr_t* attrp,
-                                                                              std::uint64_t runmask) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_setrunmask_np(
+    posix_spawnattr_t* attrp,
+    std::uint64_t runmask) const noexcept
 {
     const std::int32_t result = ::pthread_spawnattr_setrunmask_np(attrp, runmask);
     if (result != 0)
@@ -370,7 +379,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::pthread_spawnattr_setrunmas
 // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #else
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getrunmask(const posix_spawnattr_t* attrp,
-                                                                         std::uint32_t* runmask_p) const noexcept
+                                                                                std::uint32_t* runmask_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getrunmask(attrp, runmask_p);
     if (result != 0)
@@ -381,7 +390,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getrunmask(
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setrunmask(posix_spawnattr_t* attrp,
-                                                                         std::uint32_t runmask) const noexcept
+                                                                                std::uint32_t runmask) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setrunmask(attrp, runmask);
     if (result != 0)
@@ -393,7 +402,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setrunmask(
 // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #endif
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getxflags(const posix_spawnattr_t* attrp,
-                                                                        std::uint32_t* flags_p) const noexcept
+                                                                               std::uint32_t* flags_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getxflags(attrp, flags_p);
     if (result != 0)
@@ -404,7 +413,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getxflags(c
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setxflags(posix_spawnattr_t* attrp,
-                                                                        std::uint32_t flags) const noexcept
+                                                                               std::uint32_t flags) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setxflags(attrp, flags);
     if (result != 0)
@@ -415,7 +424,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setxflags(p
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigignore(const posix_spawnattr_t* attrp,
-                                                                           sigset_t* sigset_p) const noexcept
+                                                                                  sigset_t* sigset_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getsigignore(attrp, sigset_p);
     if (result != 0)
@@ -425,8 +434,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getsigignor
     return result;
 }
 
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigignore(posix_spawnattr_t* attrp,
-                                                                           const sigset_t* sigset_p) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigignore(
+    posix_spawnattr_t* attrp,
+    const sigset_t* sigset_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setsigignore(attrp, sigset_p);
     if (result != 0)
@@ -437,7 +447,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setsigignor
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getstackmax(const posix_spawnattr_t* attrp,
-                                                                          std::uint32_t* size_p) const noexcept
+                                                                                 std::uint32_t* size_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getstackmax(attrp, size_p);
     if (result != 0)
@@ -448,7 +458,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getstackmax
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setstackmax(posix_spawnattr_t* attrp,
-                                                                          std::uint32_t size) const noexcept
+                                                                                 std::uint32_t size) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setstackmax(attrp, size);
     if (result != 0)
@@ -459,7 +469,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setstackmax
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getnode(const posix_spawnattr_t* attrp,
-                                                                      std::uint32_t* node_p) const noexcept
+                                                                             std::uint32_t* node_p) const noexcept
 {
     // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if (_NTO_VERSION <= 710)
@@ -479,7 +489,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getnode(con
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setnode(posix_spawnattr_t* attrp,
-                                                                      std::uint32_t node) const noexcept
+                                                                             std::uint32_t node) const noexcept
 {
     // coverity[autosar_cpp14_a16_0_1_violation] see rationale above
 #if (_NTO_VERSION <= 710)
@@ -499,8 +509,8 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setnode(pos
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getcred(const posix_spawnattr_t* attrp,
-                                                                      uid_t* uid_p,
-                                                                      gid_t* gid_p) const noexcept
+                                                                             uid_t* uid_p,
+                                                                             gid_t* gid_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getcred(attrp, uid_p, gid_p);
     if (result != 0)
@@ -511,8 +521,8 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getcred(con
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setcred(posix_spawnattr_t* attrp,
-                                                                      uid_t uid,
-                                                                      gid_t gid) const noexcept
+                                                                             uid_t uid,
+                                                                             gid_t gid) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setcred(attrp, uid, gid);
     if (result != 0)
@@ -523,7 +533,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setcred(pos
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_gettypeid(const posix_spawnattr_t* attrp,
-                                                                        std::uint32_t* type_id_p) const noexcept
+                                                                               std::uint32_t* type_id_p) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_gettypeid(attrp, type_id_p);
     if (result != 0)
@@ -534,7 +544,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_gettypeid(c
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_settypeid(posix_spawnattr_t* attrp,
-                                                                        std::uint32_t type_id) const noexcept
+                                                                               std::uint32_t type_id) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_settypeid(attrp, type_id);
     if (result != 0)
@@ -545,7 +555,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_settypeid(p
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setasid(posix_spawnattr_t* attrp,
-                                                                      std::uint32_t asid) const noexcept
+                                                                             std::uint32_t asid) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setasid(attrp, asid);
     if (result != 0)
@@ -555,8 +565,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setasid(pos
     return result;
 }
 
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getaslr(const posix_spawnattr_t* const attrp,
-                                                                      posix_spawnattr_aslr_t* aslr) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getaslr(
+    const posix_spawnattr_t* const attrp,
+    posix_spawnattr_aslr_t* aslr) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_getaslr(attrp, aslr);
     if (result != 0)
@@ -566,8 +577,9 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getaslr(con
     return result;
 }
 
-score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setaslr(posix_spawnattr_t* const attrp,
-                                                                      const posix_spawnattr_aslr_t aslr) const noexcept
+score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setaslr(
+    posix_spawnattr_t* const attrp,
+    const posix_spawnattr_aslr_t aslr) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setaslr(attrp, aslr);
     if (result != 0)
@@ -578,7 +590,7 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setaslr(pos
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setcwd_np(posix_spawnattr_t* const attrp,
-                                                                        const std::int32_t dirfd) const noexcept
+                                                                               const std::int32_t dirfd) const noexcept
 {
     const std::int32_t result = ::posix_spawnattr_setcwd_np(attrp, dirfd);
     if (result != 0)

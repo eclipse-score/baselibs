@@ -22,9 +22,11 @@
 #include <score/private/thread/this_thread.hpp> // IWYU pragma: export
 #include <score/private/thread/thread.hpp>      // IWYU pragma: export
 
+#include <pthread.h>
+
 #include <algorithm>
 #include <memory>
-#include <pthread.h>
+#include <optional>
 #include <system_error>
 #include <tuple>
 #include <type_traits>
@@ -33,6 +35,7 @@
 #include <score/private/thread/pthread_attr.hpp>
 #include <score/private/type_traits/invoke_traits.hpp>
 #include <score/private/utility/ignore.hpp>
+#include <score/private/utility/make_offset_index_sequence.hpp>
 #include <score/apply.hpp>
 #include <score/stop_token.hpp>
 #include <score/string.hpp>
@@ -69,11 +72,13 @@ class jthread
 {
     template <typename T>
     using is_thread_attribute = std::disjunction<std::is_same<score::cpp::thread::stack_size_hint, score::cpp::remove_cvref_t<T>>,
+                                                 std::is_same<score::cpp::thread::priority_hint, score::cpp::remove_cvref_t<T>>,
                                                  std::is_same<score::cpp::thread::name_hint, score::cpp::remove_cvref_t<T>>>;
 
 public:
     using id = score::cpp::thread::id;
     using stack_size_hint = score::cpp::thread::stack_size_hint;
+    using priority_hint = score::cpp::thread::priority_hint;
     using name_hint = score::cpp::thread::name_hint;
     using native_handle_type = score::cpp::thread::native_handle_type;
 
@@ -108,80 +113,46 @@ public:
     /// The completion of the invocation of the constructor synchronizes-with (as defined in std::memory_order) the
     /// beginning of the invocation of the copy of f on the new thread of execution.
     ///
-    /// This constructor does not participate in overload resolution if score::cpp::remove_cvref_t<Function> is the same
-    /// type as score::cpp::jthread.
+    /// Thread attributes can be used to define additional implementation-defined behaviors on a `jthread` object.
+    /// The following thread attributes are supported
+    ///  - stack_size A hint to set the desired stack size.
+    ///  - priority A hint to set the desired thread priority.
+    ///  - name A hint to set the thread name.
     ///
-    /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
-    /// true.
-    template <typename F,
-              typename... Args,
-              typename = std::enable_if_t<!std::is_same<score::cpp::remove_cvref_t<F>, jthread>::value //
-                                          && !is_thread_attribute<F>::value>>
-    explicit jthread(F&& f, Args&&... args)
-        : jthread(stack_size_hint{0U}, name_hint{""}, std::forward<F>(f), std::forward<Args>(args)...)
-    {
-        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
-                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
-    }
-
-    /// \brief Creates new jthread object and associates it with a thread of execution with the given stack size.
+    /// The stack_size must be have a minimum value that depend on the operating system. On Unix-like operating systems,
+    /// this minimum value is defined by PTHREAD_STACK_MIN. If `stack_size` is 0 the thread attribute will be ignored.
     ///
-    /// The stack_size must be have a minimum value that depends on the operating system. On Unix-like operating
-    /// systems, this minimum value is defined by PTHREAD_STACK_MIN. If `stack_size` is 0 the thread attribute will be
-    /// ignored.
-    ///
-    /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
-    /// true.
-    template <typename F, typename... Args, typename = std::enable_if_t<!is_thread_attribute<F>::value>>
-    explicit jthread(const stack_size_hint stack_size, F&& f, Args&&... args)
-        : jthread(stack_size, name_hint{""}, std::forward<F>(f), std::forward<Args>(args)...)
-    {
-        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
-                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
-    }
-
-    /// \brief Creates new jthread object and associates it with a thread of execution with the given name.
+    /// The priority must follow the platform dependent restrictions. On some platforms setting the priority needs
+    /// special rights.
     ///
     /// The name must follow the platform dependent restrictions. On Linux the name length must not exceed 16
-    /// characters, on QNX `_NTO_THREAD_NAME_MAX`. If the name cannot be set no error is reported.
+    /// characters. On QNX `_NTO_THREAD_NAME_MAX`. If the name cannot be set no error is reported.
+    ///
+    /// \param args The general pattern is "<attribute>{0,} <invocable>{1} <arguments>{0,}".
     ///
     /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
     /// true.
-    template <typename F, typename... Args, typename = std::enable_if_t<!is_thread_attribute<F>::value>>
-    explicit jthread(const name_hint& name, F&& f, Args&&... args)
-        : jthread(stack_size_hint{0U}, name, std::forward<F>(f), std::forward<Args>(args)...)
+    ///
+    template <typename... Args,
+              typename Arg0 = typename std::tuple_element<0U, std::tuple<Args..., void>>::type,
+              typename = std::enable_if_t<(sizeof...(Args) > 0U) &&
+                                          (!std::is_same<score::cpp::remove_cvref_t<Arg0>, jthread>::value)>>
+    explicit jthread(Args&&... args) : stop_source_{}, native_handle_{}
     {
-        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
-                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
-    }
+        // According to http://wg21.link/p2019r8
+        // Let `i` be the smallest value such that `decay_t<Args...[i]>` is not a thread attribute type.
+        static constexpr auto i{find_first_non_thread_attribute<Args...>()};
+        // If no such `i` exists, the program is ill-formed.
+        static_assert(i != sizeof...(Args), "no invocable found");
 
-    /// \brief Creates new jthread object and associates it with a thread of execution with the given stack size and
-    /// name.
-    ///
-    /// The stack_size must be have a minimum value that depends on the operating system. On Unix-like operating
-    /// systems, this minimum value is defined by PTHREAD_STACK_MIN. If `stack_size` is 0 the thread attribute will be
-    /// ignored.
-    ///
-    /// The name must follow the platform dependent restrictions. On Linux the name length must not exceed 16
-    /// characters, on QNX `_NTO_THREAD_NAME_MAX`. If the name cannot be set no error is reported.
-    ///
-    /// \post get_id() not equal to score::cpp::jthread::id() (i.e. joinable is true), and get_stop_source().stop_possible() is
-    /// true.
-    template <typename F, typename... Args>
-    jthread(const stack_size_hint stack_size, const name_hint& name, F&& f, Args&&... args)
-        : stop_source_{}, native_handle_{}
-    {
-        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...> ||
-                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<Args>...>);
-
-        if constexpr (std::is_invocable_v<std::decay_t<F>, std::decay_t<Args>...>)
-        {
-            create_thread(stack_size, name, std::forward<F>(f), std::forward<Args>(args)...);
-        }
-        else
-        {
-            create_thread(stack_size, name, std::forward<F>(f), stop_source_.get_token(), std::forward<Args>(args)...);
-        }
+        //  0 1 2 3 4 5
+        //  i                   no attribute and invocable with 5 arguments
+        //      i               2 attributes and invocable with 3 arguments
+        //            i         5 attributes and invocable with 0 arguments
+        //              i       6 attributes and no invocable -> ill-formed
+        split_arguments(std::forward_as_tuple(std::forward<Args>(args)...),
+                        std::make_index_sequence<i>{},
+                        score::cpp::make_offset_index_sequence<i, sizeof...(Args) - i>{});
     }
 
     /// \brief Move constructor.
@@ -389,22 +360,33 @@ private:
         return nullptr;
     }
 
-    template <typename Function, typename... Args>
-    void create_thread(const stack_size_hint stack_size, const name_hint& name, Function&& f, Args&&... args)
+    template <typename F, typename... FArgs>
+    void create_thread(const std::optional<stack_size_hint>& stack_size,
+                       const std::optional<priority_hint>& priority,
+                       const score::cpp::string_view name,
+                       F&& f,
+                       FArgs&&... args)
     {
-        using invocable = std::tuple<score::cpp::pmr::string, std::decay_t<Function>, std::tuple<std::decay_t<Args>...>>;
+        using invocable = std::tuple<score::cpp::pmr::string, std::decay_t<F>, std::tuple<std::decay_t<FArgs>...>>;
         auto p = std::make_unique<invocable>(
-            name.value().to_string(), std::forward<Function>(f), std::make_tuple(std::forward<Args>(args)...));
+            name.to_string(), std::forward<F>(f), std::make_tuple(std::forward<FArgs>(args)...));
 
         int status{};
-        if (stack_size == stack_size_hint{0U})
+        if ((!stack_size.has_value()) && (!priority.has_value()))
         {
             status = ::pthread_create(&native_handle_, nullptr, &start_routine<invocable>, p.get());
         }
         else
         {
-            detail::pthread_attr attr;
-            attr.set_stack_size(stack_size.value());
+            detail::pthread_attr attr{};
+            if (stack_size.has_value())
+            {
+                attr.set_stack_size(stack_size->value());
+            }
+            if (priority.has_value())
+            {
+                attr.set_priority(priority->value());
+            }
 
             status = ::pthread_create(&native_handle_, &attr.native_handle(), &start_routine<invocable>, p.get());
         }
@@ -415,6 +397,102 @@ private:
         }
 
         score::cpp::ignore = p.release(); // ownership was transferred to start_routine()
+    }
+
+    template <typename F, typename... FArgs>
+    void select_stop_token(const std::optional<stack_size_hint>& stack_size,
+                           const std::optional<priority_hint>& priority,
+                           const score::cpp::string_view name,
+                           F&& f,
+                           FArgs&&... fargs)
+    {
+        static_assert(std::is_invocable_v<std::decay_t<F>, std::decay_t<FArgs>...> ||
+                      std::is_invocable_v<std::decay_t<F>, stop_token, std::decay_t<FArgs>...>);
+
+        if constexpr (std::is_invocable_v<std::decay_t<F>, std::decay_t<FArgs>...>)
+        {
+            create_thread(stack_size, priority, name, std::forward<F>(f), std::forward<FArgs>(fargs)...);
+        }
+        else
+        {
+            create_thread(stack_size,
+                          priority,
+                          name,
+                          std::forward<F>(f),
+                          stop_source_.get_token(),
+                          std::forward<FArgs>(fargs)...);
+        }
+    }
+
+    template <typename... Ts>
+    static constexpr std::size_t find_first_non_thread_attribute()
+    {
+        constexpr std::array<bool, sizeof...(Ts)> mask{is_thread_attribute<Ts>::value...};
+        for (std::size_t i{0}; i < mask.size(); ++i)
+        {
+            if (!mask[i])
+            {
+                return i;
+            }
+        }
+        return sizeof...(Ts);
+    }
+
+    template <typename Attr, typename... Ts>
+    struct is_unique_attribute : std::true_type
+    {
+    };
+    template <typename Attr, typename T, typename... Ts>
+    struct is_unique_attribute<Attr, T, Ts...> : std::integral_constant<bool,
+                                                                        !std::is_same_v<Attr, score::cpp::remove_cvref_t<T>> //
+                                                                            && is_unique_attribute<Attr, Ts...>::value>
+    {
+    };
+
+    template <typename Attr>
+    static const Attr* get_attribute()
+    {
+        return nullptr;
+    }
+    template <typename Attr, typename T, typename... Ts>
+    static const Attr* get_attribute(const T& head, const Ts&... tail)
+    {
+        if constexpr (std::is_same_v<T, Attr>)
+        {
+            static_assert(is_unique_attribute<Attr, Ts...>::value, "attribute is not unique");
+            return &head;
+        }
+        return get_attribute<Attr>(tail...);
+    }
+
+    template <typename Tuple, size_t... As, size_t... Fs, typename = std::enable_if_t<(sizeof...(Fs) > 0U)>>
+    void split_arguments(Tuple&& all_args, std::index_sequence<As...>, std::index_sequence<Fs...>)
+    {
+        static_assert(sizeof...(As) + sizeof...(Fs) == std::tuple_size_v<Tuple>);
+
+        std::optional<stack_size_hint> stack_size{};
+        std::optional<priority_hint> priority{};
+        score::cpp::string_view name{""};
+
+        if (const auto* const attr{get_attribute<stack_size_hint>(std::get<As>(all_args)...)}; attr != nullptr)
+        {
+            // According to http://wg21.link/p2019r8
+            //  If `size == 0` is true the thread attribute should be ignored.
+            if (attr->value() != 0U)
+            {
+                stack_size = *attr;
+            }
+        }
+        if (const auto* const attr{get_attribute<priority_hint>(std::get<As>(all_args)...)}; attr != nullptr)
+        {
+            priority = *attr;
+        }
+        if (const auto* const attr{get_attribute<name_hint>(std::get<As>(all_args)...)}; attr != nullptr)
+        {
+            name = attr->value();
+        }
+
+        select_stop_token(stack_size, priority, name, std::get<Fs>(std::forward<Tuple>(all_args))...);
     }
 
     stop_source stop_source_;

@@ -35,17 +35,17 @@ class ProcMgr : public ObjectSeam<ProcMgr>
     // so please add your use cases as separate ad-hoc function signatures if you cannot find a matching already
     // implemented one.
 
+    virtual score::cpp::expected_blank<score::os::Error> procmgr_ability(const pid_t pid, const std::uint32_t ability)
+        const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> procmgr_ability(const pid_t pid,
-                                                                const std::uint32_t ability) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> procmgr_ability(const pid_t pid,
-                                                                const std::uint32_t ability,
-                                                                const std::uint32_t subrange_ability,
-                                                                const std::uint64_t subrange_min,
-                                                                const std::uint64_t subrange_max,
-                                                                const std::uint32_t eol) const noexcept = 0;
+                                                                         const std::uint32_t ability,
+                                                                         const std::uint32_t subrange_ability,
+                                                                         const std::uint64_t subrange_min,
+                                                                         const std::uint64_t subrange_max,
+                                                                         const std::uint32_t eol) const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> procmgr_daemon(const std::int32_t status,
-                                                               const std::uint32_t flags) const noexcept = 0;
+                                                                        const std::uint32_t flags) const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, score::os::Error> procmgr_event_notify_add(
         const std::uint32_t flags,

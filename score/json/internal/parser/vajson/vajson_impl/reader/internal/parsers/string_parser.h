@@ -37,11 +37,11 @@ namespace internal
 class StringParser : public VirtualParser
 {
     /// \brief           Type of function to be executed when the strings are read
-    using Fn = score::cpp::move_only_function<ResultBlank(StringView)>;
+    using Fn = score::cpp::move_only_function<score::Result<void>(StringView)>;
 
   public:
     /// \brief           Constructs a StringParser
-    /// \details         Callback must take the string as a std::string_view and return vajson::ResultBlank.
+    /// \details         Callback must take the string as a std::string_view and return score::Result<void>.
     /// \param[in]       doc
     ///                  JSON document to parse.
     /// \param[in]       fn
@@ -67,10 +67,10 @@ class StringParser : public VirtualParser
     /// - Otherwise:
     ///   - Return the error of the callback.
     /// \endinternal
-    auto OnString(StringView str) noexcept -> ParserResult final
+    auto OnString(StringView str) noexcept -> ParserResult override final
     {
 
-        return this->fn_(str).transform([](vajson::Blank) noexcept {
+        return this->fn_(str).transform([](void) noexcept {
             return ParserState::kFinished;
         });
     }
@@ -82,7 +82,7 @@ class StringParser : public VirtualParser
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
-    auto OnUnexpectedEvent() noexcept -> ParserResult final
+    auto OnUnexpectedEvent() noexcept -> ParserResult override final
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "Expected to parse a string.");
     }

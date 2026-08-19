@@ -43,10 +43,10 @@ class Inotify : public ObjectSeam<Inotify>
 
     virtual score::cpp::expected<std::int32_t, Error> inotify_init() const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
-                                                                 const char* const pathname,
-                                                                 const EventMask mask) const noexcept = 0;
+                                                                        const char* const pathname,
+                                                                        const EventMask mask) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, Error> inotify_rm_watch(const std::int32_t fd,
-                                                                const std::int32_t wd) const noexcept = 0;
+                                                                       const std::int32_t wd) const noexcept = 0;
 
     virtual ~Inotify() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

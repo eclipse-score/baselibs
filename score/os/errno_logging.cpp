@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/errno_logging.h"
-#include "score/os/errno.h"
 #include "score/mw/log/log_stream.h"
+#include "score/os/errno.h"
 #include <string_view>
 
 // Suppress "AUTOSAR C++14 A3-2-2" rule finding: "A binary arithmetic operator and a bitwise
@@ -20,7 +20,8 @@
 // which needs to return reference to self to support cascading. Here '<<' is not a left shift operator but an overload
 // for logging the respective types. code analysis tools tend to assume otherwise hence a false positive.
 // coverity[autosar_cpp14_a13_2_2_violation]
-score::mw::log::LogStream& score::os::operator<<(score::mw::log::LogStream& log_stream, const score::os::Error& error) noexcept
+score::mw::log::LogStream& score::os::operator<<(score::mw::log::LogStream& log_stream,
+                                                 const score::os::Error& error) noexcept
 {
     log_stream << "An OS error has occurred with error code: ";
 

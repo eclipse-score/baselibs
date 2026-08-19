@@ -53,10 +53,12 @@ class FileUtilsTest : public ::testing::Test
     const Result<FileStatus> error_is_directory = MakeUnexpected(filesystem::ErrorCode::kCouldNotRetrieveStatus);
     const Result<void> error_permissions = MakeUnexpected(filesystem::ErrorCode::kCouldNotChangePermissions);
     const score::cpp::expected_blank<score::os::Error> os_no_error{};
-    const score::cpp::expected_blank<score::os::Error> os_enoent = score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
+    const score::cpp::expected_blank<score::os::Error> os_enoent =
+        score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
     const score::cpp::expected<os::GroupBuffer, score::os::Error> os_getgrnam_enoent =
         score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
-    const score::cpp::expected_blank<score::os::Error> os_eio = score::cpp::make_unexpected(score::os::Error::createFromErrno(EIO));
+    const score::cpp::expected_blank<score::os::Error> os_eio =
+        score::cpp::make_unexpected(score::os::Error::createFromErrno(EIO));
 
     // mocks
     score::os::MockGuard<score::filesystem::StandardFilesystemMock> filesystemMock_;
@@ -69,8 +71,8 @@ class FileUtilsTest : public ::testing::Test
 
     // others
     const score::os::Stat::Mode permissions = score::os::Stat::Mode::kReadWriteExecUser |
-                                            score::os::Stat::Mode::kReadWriteExecGroup |
-                                            score::os::Stat::Mode::kReadOthers | score::os::Stat::Mode::kExecOthers;
+                                              score::os::Stat::Mode::kReadWriteExecGroup |
+                                              score::os::Stat::Mode::kReadOthers | score::os::Stat::Mode::kExecOthers;
 
     // object for test
     score::filesystem::FileUtils unit_{*filesystemMock_, *filefactory_mock_};
@@ -487,7 +489,8 @@ class FileUtilsTest_OpenUniqueFile : public ::testing::Test
     static constexpr int valid_file_descriptor_{42};
 
     const score::cpp::expected_blank<score::os::Error> os_no_error_{};
-    const score::cpp::expected_blank<score::os::Error> os_eio_ = score::cpp::make_unexpected(score::os::Error::createFromErrno(EIO));
+    const score::cpp::expected_blank<score::os::Error> os_eio_ =
+        score::cpp::make_unexpected(score::os::Error::createFromErrno(EIO));
 
     std::stringbuf buffer_{};
     std::unique_ptr<std::iostream> iostream_{std::make_unique<std::iostream>(&buffer_)};

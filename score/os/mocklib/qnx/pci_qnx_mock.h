@@ -48,7 +48,10 @@ class PciMock : public Pci
                 pci_device_attach,
                 (const pci_bdf_t pdf, const pci_attachFlags_t flags),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<std::string>), pci_device_detach, (pci_devhdl_t), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<std::string>),
+                pci_device_detach,
+                (pci_devhdl_t),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<std::string>),
                 pci_device_read_ba,
                 (const pci_devhdl_t hdl, int_t* const nba, pci_ba_t* const ba, const pci_reqType_t reg_type),

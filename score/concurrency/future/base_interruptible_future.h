@@ -172,8 +172,9 @@ class BaseInterruptibleFuture
      * - the relative time passed
      */
     template <class Representation, class Period>
-    score::cpp::expected_blank<Error> WaitFor(const score::cpp::stop_token& stop_token,
-                                       const std::chrono::duration<Representation, Period>& rel_time) const noexcept
+    score::cpp::expected_blank<Error> WaitFor(
+        const score::cpp::stop_token& stop_token,
+        const std::chrono::duration<Representation, Period>& rel_time) const noexcept
     {
         if (state_ptr_ != nullptr)
         {
@@ -196,7 +197,7 @@ class BaseInterruptibleFuture
      */
     template <class Clock, class Duration>
     score::cpp::expected_blank<Error> WaitUntil(const score::cpp::stop_token& stop_token,
-                                         const std::chrono::time_point<Clock, Duration>& abs_time) const noexcept
+                                                const std::chrono::time_point<Clock, Duration>& abs_time) const noexcept
     {
         if (state_ptr_ != nullptr)
         {
@@ -274,7 +275,8 @@ class BaseInterruptibleFuture
                                bool> = true>
     static void CallContinuationWithoutState(Callable callback)
     {
-        auto error = score::MakeUnexpected<std::reference_wrapper<std::remove_reference_t<LocalValue>>>(Error::kNoState);
+        auto error =
+            score::MakeUnexpected<std::reference_wrapper<std::remove_reference_t<LocalValue>>>(Error::kNoState);
         CallAndIgnoreResult(callback, error);
     }
 

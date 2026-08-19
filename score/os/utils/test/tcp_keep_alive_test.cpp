@@ -41,9 +41,10 @@ TEST_F(TcpKeepAliveTest, TcpKeepAlive)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TcpKeepAliveTest Tcp Keep Alive");
     RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     int socketfd = 0;
-    EXPECT_CALL(socketMock, setsockopt(socketfd, _, _, _, _)).WillRepeatedly(Return(score::cpp::expected_blank<Error>{}));
+    EXPECT_CALL(socketMock, setsockopt(socketfd, _, _, _, _))
+        .WillRepeatedly(Return(score::cpp::expected_blank<Error>{}));
     TcpKeepAlive(socketfd);
 }

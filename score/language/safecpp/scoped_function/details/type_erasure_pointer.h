@@ -49,7 +49,8 @@ class TypeErasurePointerDeleter
     // coverity[autosar_cpp14_a8_4_10_violation]
     void operator()(Interface* const interface_pointer) const
     {
-        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(memory_resource_ != nullptr, "Deallocation failed with nullptr memory resource");
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(memory_resource_ != nullptr,
+                                                          "Deallocation failed with nullptr memory resource");
         interface_pointer->~Interface();
         memory_resource_->deallocate(interface_pointer, size_, align_);
     }
@@ -67,8 +68,9 @@ template <class T>
 using TypeErasurePointer = std::unique_ptr<T, TypeErasurePointerDeleter>;
 
 template <class Implementation, class... Args>
-TypeErasurePointer<Implementation> MakeTypeErasurePointer(score::cpp::pmr::polymorphic_allocator<Implementation> allocator,
-                                                          Args&&... args)
+TypeErasurePointer<Implementation> MakeTypeErasurePointer(
+    score::cpp::pmr::polymorphic_allocator<Implementation> allocator,
+    Args&&... args)
 {
     constexpr std::size_t number_of_elements{1U};
     Implementation* const implementation = allocator.allocate(number_of_elements);

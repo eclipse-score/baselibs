@@ -25,7 +25,10 @@ namespace os
 class StatvfsMock : public Statvfs
 {
   public:
-    MOCK_METHOD(score::cpp::expected_blank<Error>, statvfs, (const char* path, struct statvfs*), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                statvfs,
+                (const char* path, struct statvfs*),
+                (const, noexcept, override));
 };
 
 }  // namespace os

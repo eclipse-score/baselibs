@@ -767,6 +767,7 @@ public:
     }
 
 private:
+    // NOLINTNEXTLINE(readability-identifier-naming) keep `_` to make clear it is a member variable
     const M m_;
     T& v_;
 };

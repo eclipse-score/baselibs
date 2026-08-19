@@ -32,10 +32,15 @@ namespace test
 
 namespace
 {
+template <typename Lock>
+using LPtr2int = LockedPtr<int, Lock>;
+
 struct IntWrapper
 {
     int value;
 };
+
+using LPtr2IntW = LockedPtr<IntWrapper, std::unique_lock<MockMutex>>;
 }  // namespace
 
 TEST(LockedPtrTest, ConstructionWithTypes)
@@ -72,53 +77,161 @@ TEST(LockedPtrTest, SwappingWithTypes)
         << "LockedPtr with shared_lock should be swappable";
 }
 
-TEST(LockedPtrTest, TFunctionsWithTypes)
+TEST(LockedPtrTest, DereferenceTests)
 {
-    // Functions working with T
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<int, BasicLockableArchetype>::operator*),
-                                                     LockedPtr<int, BasicLockableArchetype>*>,
-                                int&>))
-        << "LockedPtr::operator*() should return int&";
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<const int, BasicLockableArchetype>::operator*),
-                                                     LockedPtr<const int, BasicLockableArchetype>*>,
-                                const int&>))
-        << "LockedPtr::operator*() should return const int&";
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<int, BasicLockableArchetype>::operator->),
-                                                     LockedPtr<int, BasicLockableArchetype>*>,
-                                int*>))
-        << "LockedPtr::operator->() should return int*";
-    EXPECT_TRUE(
-        (std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<const int, BasicLockableArchetype>::operator->),
-                                             LockedPtr<const int, BasicLockableArchetype>*>,
-                        const int*>))
-        << "LockedPtr::operator->() should return const int*";
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<int, BasicLockableArchetype>::get),
-                                                     LockedPtr<int, BasicLockableArchetype>*>,
-                                int*>))
-        << "LockedPtr::get() should return int*";
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<const int, BasicLockableArchetype>::get),
-                                                     LockedPtr<const int, BasicLockableArchetype>*>,
-                                const int*>))
-        << "LockedPtr::get() should return const int*";
+    int x = 10;
+    LPtr2int<BasicLockableArchetype> lp_basic{&x, BasicLockableArchetype{}};
+
+    EXPECT_EQ(*lp_basic, 10);
+    EXPECT_EQ(*std::as_const(lp_basic), 10);
+
+    *lp_basic = 20;
+    EXPECT_EQ(*lp_basic, 20);
+    EXPECT_EQ(*std::as_const(lp_basic), 20);
+
+    decltype(auto) x_ref = *lp_basic;
+    EXPECT_TRUE((std::is_same_v<decltype(x_ref), int&>)) << "LockedPtr::operator* should return int&";
+
+    decltype(auto) cx_ref = *std::as_const(lp_basic);
+    EXPECT_TRUE((std::is_same_v<decltype(cx_ref), const int&>)) << "LockedPtr::operator* should return const int&";
 }
 
-TEST(LockedPtrTest, LockFunctionsWithTypes)
+TEST(LockedPtrTest, PtrUsageTests)
 {
-    // Functions working with Lock
-    EXPECT_TRUE((std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<int, BasicLockableArchetype>::unlock_guard),
-                                                     LockedPtr<int, BasicLockableArchetype>*>,
-                                UnlockGuard<BasicLockableArchetype>>))
-        << "LockedPtr::unlock_guard() should return UnlockGuard<BasicLockableArchetype>";
-    EXPECT_TRUE(
-        (std::is_same_v<std::invoke_result_t<decltype(&LockedPtr<int, std::unique_lock<std::mutex>>::unlock_guard),
-                                             LockedPtr<int, std::unique_lock<std::mutex>>*>,
-                        UnlockGuard<std::unique_lock<std::mutex>>>))
-        << "LockedPtr::unlock_guard() should return UnlockGuard<unique_lock>";
-    EXPECT_TRUE((std::is_same_v<
-                 std::invoke_result_t<decltype(&LockedPtr<int, std::shared_lock<std::shared_mutex>>::unlock_guard),
-                                      LockedPtr<int, std::shared_lock<std::shared_mutex>>*>,
-                 UnlockGuard<std::shared_lock<std::shared_mutex>>>))
-        << "LockedPtr::unlock_guard() should return UnlockGuard<shared_lock>";
+    IntWrapper obj{42};
+    MockMutex mut{};
+
+    LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+    EXPECT_EQ(lp_obj->value, 42);
+    EXPECT_EQ(std::as_const(lp_obj)->value, 42);
+
+    lp_obj->value = 100;
+    EXPECT_EQ(lp_obj->value, 100);
+    EXPECT_EQ(std::as_const(lp_obj)->value, 100);
+}
+
+TEST(LockedPtrTest, GetTests)
+{
+    IntWrapper obj{42};
+    MockMutex mut{};
+
+    LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+    EXPECT_EQ(lp_obj.get(), &obj);
+    EXPECT_EQ(std::as_const(lp_obj).get(), &obj);
+
+    decltype(auto) x_ptr = lp_obj.get();
+    EXPECT_TRUE((std::is_same_v<decltype(x_ptr), IntWrapper*>)) << "LockedPtr::get() should return IntWrapper*";
+
+    decltype(auto) cx_ptr = std::as_const(lp_obj).get();
+    EXPECT_TRUE((std::is_same_v<decltype(cx_ptr), const IntWrapper*>))
+        << "LockedPtr::get() should return const IntWrapper*";
+}
+
+TEST(LockedPtrTest, UnlockGuardBasicLockableArchetypeTests)
+{
+    int x = 42;
+
+    LPtr2int<BasicLockableArchetype> lp_basic{&x, BasicLockableArchetype{}};
+
+    {
+        auto ug_basic = lp_basic.unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(ug_basic), UnlockGuard<BasicLockableArchetype>>))
+            << "unlock_guard() should return UnlockGuard<BasicLockableArchetype>";
+    }
+
+    {
+        auto cug_basic = std::as_const(lp_basic).unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(cug_basic), UnlockGuard<BasicLockableArchetype>>))
+            << "unlock_guard() should return UnlockGuard<BasicLockableArchetype>";
+    }
+}
+
+TEST(LockedPtrTest, UnlockGuardUniqueLockTests)
+{
+    int x = 42;
+
+    std::mutex mut{};
+    LPtr2int<std::unique_lock<std::mutex>> lp_mut{&x, std::unique_lock{mut}};
+
+    {
+        auto ug_mut = lp_mut.unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(ug_mut), UnlockGuard<std::unique_lock<std::mutex>>>))
+            << "unlock_guard() should return UnlockGuard<std::unique_lock<std::mutex>>";
+    }
+
+    {
+        auto cug_mut = std::as_const(lp_mut).unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(cug_mut), UnlockGuard<std::unique_lock<std::mutex>>>))
+            << "unlock_guard() should return UnlockGuard<std::unique_lock<std::mutex>>";
+    }
+
+    {
+        IntWrapper obj{42};
+        MockMutex mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+        EXPECT_TRUE(mut.is_locked());
+        {
+            auto ug = lp_obj.unlock_guard();
+            EXPECT_FALSE(mut.is_locked());
+        }
+        EXPECT_TRUE(mut.is_locked());
+    }
+
+    {
+        IntWrapper obj{42};
+        MockMutex mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
+        EXPECT_TRUE(mut.is_locked());
+        {
+            auto cug = std::as_const(lp_obj).unlock_guard();
+            EXPECT_FALSE(mut.is_locked());
+        }
+        EXPECT_TRUE(mut.is_locked());
+    }
+}
+
+TEST(LockedPtrTest, UnlockGuardSharedLockTests)
+{
+    int x = 42;
+
+    std::shared_mutex sh_mut{};
+    LPtr2int<std::shared_lock<std::shared_mutex>> lp_sh{&x, std::shared_lock{sh_mut}};
+
+    {
+        auto ug_sh = lp_sh.unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(ug_sh), UnlockGuard<std::shared_lock<std::shared_mutex>>>))
+            << "unlock_guard() should return UnlockGuard<std::shared_lock<std::shared_mutex>>";
+    }
+
+    {
+        auto cug_sh = std::as_const(lp_sh).unlock_guard();
+        EXPECT_TRUE((std::is_same_v<decltype(cug_sh), UnlockGuard<std::shared_lock<std::shared_mutex>>>))
+            << "unlock_guard() should return UnlockGuard<std::shared_lock<std::shared_mutex>>";
+    }
+
+    {
+        IntWrapper obj{42};
+        MockSharedMutex mut{};
+        LockedPtr lp_obj{&obj, std::shared_lock<MockSharedMutex>{mut}};
+        EXPECT_TRUE(mut.is_shared_locked());
+        {
+            auto ug = lp_obj.unlock_guard();
+            EXPECT_FALSE(mut.is_shared_locked());
+        }
+        EXPECT_TRUE(mut.is_shared_locked());
+    }
+
+    {
+        IntWrapper obj{42};
+        MockSharedMutex mut{};
+        LockedPtr lp_obj{&obj, std::shared_lock<MockSharedMutex>{mut}};
+        EXPECT_TRUE(mut.is_shared_locked());
+        {
+            auto cug = std::as_const(lp_obj).unlock_guard();
+            EXPECT_FALSE(mut.is_shared_locked());
+        }
+        EXPECT_TRUE(mut.is_shared_locked());
+    }
 }
 
 TEST(LockedPtrTest, NonConstWithUniqueLock)

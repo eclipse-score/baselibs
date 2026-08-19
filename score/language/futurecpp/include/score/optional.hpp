@@ -172,7 +172,7 @@ public:
     /// Reset the optional to an empty state.
     optional& operator=(nullopt_t) noexcept
     {
-        reset();
+        base_ = std::nullopt;
         return *this;
     }
 
@@ -204,10 +204,13 @@ public:
     {
         static_assert(std::is_copy_constructible<T>::value && std::is_copy_assignable<T>::value, "failed");
 
-        reset();
         if (other.has_value())
         {
-            score::cpp::ignore = base_.emplace(*other);
+            base_ = *other;
+        }
+        else
+        {
+            reset();
         }
         return *this;
     }
@@ -222,13 +225,26 @@ public:
     {
         static_assert(std::is_move_constructible<T>::value && std::is_move_assignable<T>::value, "failed");
 
-        reset();
         if (other.has_value())
         {
-            score::cpp::ignore = base_.emplace(*other);
+            base_ = std::move(*other);
+        }
+        else
+        {
+            reset();
         }
         return *this;
     }
+
+    /// \brief Conversion to std::optional.
+    ///
+    /// \note non-standard. but simplifies transition to `std::optional`
+    /// \{
+    // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversion to `std::optional`
+    operator std::optional<T>&() & { return base_; }
+    operator const std::optional<T>&() const& { return base_; }
+    operator std::optional<T>() && { return std::move(base_); }
+    /// \}
 
     /// \brief Constructs the contained value in-place
     ///
@@ -331,7 +347,7 @@ public:
     ///
     /// \sa value
     /// \return The internal value if available, otherwise return the provided default
-    constexpr value_type value_or(const value_type& value) const { return this->has_value() ? **this : value; }
+    constexpr value_type value_or(const value_type& value) const { return base_.value_or(value); }
 
     /// \brief If *this contains a value, destroy that value as if by value().T::~T(). Otherwise, there are no
     /// effects.
@@ -494,181 +510,181 @@ private:
 template <typename U>
 bool operator==(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return (!lhs.has_value() && !rhs.has_value()) || ((lhs.has_value() && rhs.has_value()) && (*lhs == *rhs));
+    return static_cast<const std::optional<U>&>(lhs) == static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
 bool operator!=(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return !(lhs == rhs);
+    return static_cast<const std::optional<U>&>(lhs) != static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
 bool operator<(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return (lhs.has_value() && rhs.has_value() && (*lhs < *rhs)) || (!lhs.has_value() && rhs.has_value());
+    return static_cast<const std::optional<U>&>(lhs) < static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
 bool operator<=(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return !(rhs < lhs);
+    return static_cast<const std::optional<U>&>(lhs) <= static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
 bool operator>(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return rhs < lhs;
+    return static_cast<const std::optional<U>&>(lhs) > static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
 bool operator>=(const optional<U>& lhs, const optional<U>& rhs)
 {
-    return !(lhs < rhs);
+    return static_cast<const std::optional<U>&>(lhs) >= static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator==(const optional<U>& lhs, score::cpp::nullopt_t)
+bool operator==(const optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return !lhs.has_value();
+    return static_cast<const std::optional<U>&>(lhs) == std::nullopt;
 }
 
 template <typename U>
-bool operator==(score::cpp::nullopt_t, const optional<U>& rhs)
+bool operator==(score::cpp::nullopt_t, const optional<U>& rhs) noexcept
 {
-    return !rhs.has_value();
+    return std::nullopt == static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator!=(const optional<U>& lhs, score::cpp::nullopt_t)
+bool operator!=(const optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return lhs.has_value();
+    return static_cast<const std::optional<U>&>(lhs) != std::nullopt;
 }
 
 template <typename U>
-bool operator!=(score::cpp::nullopt_t, const optional<U>& rhs)
+bool operator!=(score::cpp::nullopt_t, const optional<U>& rhs) noexcept
 {
-    return rhs.has_value();
+    return std::nullopt != static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator<(const score::cpp::optional<U>&, score::cpp::nullopt_t)
+bool operator<(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return false;
+    return static_cast<const std::optional<U>&>(lhs) < std::nullopt;
 }
 
 template <typename U>
-bool operator<(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs)
+bool operator<(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs) noexcept
 {
-    return rhs.has_value();
+    return std::nullopt < static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator<=(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t)
+bool operator<=(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return !lhs.has_value();
+    return static_cast<const std::optional<U>&>(lhs) <= std::nullopt;
 }
 
 template <typename U>
-bool operator<=(score::cpp::nullopt_t, const score::cpp::optional<U>&)
+bool operator<=(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs) noexcept
 {
-    return true;
+    return std::nullopt <= static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator>(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t)
+bool operator>(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return lhs.has_value();
+    return static_cast<const std::optional<U>&>(lhs) > std::nullopt;
 }
 
 template <typename U>
-bool operator>(score::cpp::nullopt_t, const score::cpp::optional<U>&)
+bool operator>(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs) noexcept
 {
-    return false;
+    return std::nullopt > static_cast<const std::optional<U>&>(rhs);
 }
 
 template <typename U>
-bool operator>=(const score::cpp::optional<U>&, score::cpp::nullopt_t)
+bool operator>=(const score::cpp::optional<U>& lhs, score::cpp::nullopt_t) noexcept
 {
-    return true;
+    return static_cast<const std::optional<U>&>(lhs) >= std::nullopt;
 }
 
 template <typename U>
-bool operator>=(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs)
+bool operator>=(score::cpp::nullopt_t, const score::cpp::optional<U>& rhs) noexcept
 {
-    return !rhs.has_value();
+    return std::nullopt >= static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator==(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs == rhs) : false;
+    return static_cast<const std::optional<T>&>(lhs) == rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator==(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs == *rhs) : false;
+    return lhs == static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator!=(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs != rhs) : true;
+    return static_cast<const std::optional<T>&>(lhs) != rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator!=(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs != *rhs) : true;
+    return lhs != static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator<(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs < rhs) : true;
+    return static_cast<const std::optional<T>&>(lhs) < rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator<(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs < *rhs) : false;
+    return lhs < static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator<=(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs <= rhs) : true;
+    return static_cast<const std::optional<T>&>(lhs) <= rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator<=(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs <= *rhs) : false;
+    return lhs <= static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator>(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs > rhs) : false;
+    return static_cast<const std::optional<T>&>(lhs) > rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator>(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs > *rhs) : true;
+    return lhs > static_cast<const std::optional<U>&>(rhs);
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<U>>::value>::type>
 bool operator>=(const optional<T>& lhs, const U& rhs)
 {
-    return lhs.has_value() ? (*lhs >= rhs) : false;
+    return static_cast<const std::optional<T>&>(lhs) >= rhs;
 }
 
-template <typename T, typename U>
+template <typename T, typename U, typename = typename std::enable_if<!is_optional<score::cpp::remove_cvref_t<T>>::value>::type>
 bool operator>=(const T& lhs, const optional<U>& rhs)
 {
-    return rhs.has_value() ? (lhs >= *rhs) : true;
+    return lhs >= static_cast<const std::optional<U>&>(rhs);
 }
 
 /// \brief Creates an optional object from its arguments
