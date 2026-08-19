@@ -38,11 +38,11 @@
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
@@ -399,29 +399,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/docs/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filesystem/docs/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../../../hash/docs/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../json/docs/index.html">JSON-Library</a></li>
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../../../memory_shared/docs/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../mw_log/docs/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/docs/index.html">os</a></li>
@@ -500,7 +479,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-86570347">
+  <div class="need_container docutils container" id="SNCB-c4181f91">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__utils_req_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -564,8 +543,8 @@
 <p>It is mandatory to fill in the “passed” column with “yes” or “no” for each checklist item and additionally to add in the remarks why it is passed or not passed.
 In case of “no” an issue link to the issue tracking system has to be added in the last column (if not solved in the same issue).
 See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id8">
-<caption><span class="caption-number">Table 41 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-number">Table 46 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 9.1%" />
 <col style="width: 27.3%" />
@@ -601,24 +580,23 @@ See also <a class="external_link reference external" href="https://eclipse-score
 <tr class="row-even"><td><p>REQ_02_02</p></td>
 <td><p>Is the requirement description <em>unambiguous</em> ?</p></td>
 <td><p>Especially search for “weak words” like “about”, “etc.”, “relevant” and others (see the internet documentation on this). This check shall be supported by tooling.</p></td>
-<td><p>NO</p></td>
-<td><p><a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior" title="comp_req__utils__deterministic_behavior"><em class="xref need">Deterministic Behavior (comp_req__utils__deterministic_behavior)</em></a> - “predictable manner” is a weak, un-measurable phrase</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>REQ_02_03</p></td>
 <td><p>Is the requirement description <em>atomic</em> ?</p></td>
 <td><p>A good way to think about this is to consider if the requirement may be tested by one (positive) test case or needs more of these. The requirement formulation template should also avoid being non-atomic already. Note that there are cases where also non-atomic requirements are the better ones, for example if those are better understandable.</p></td>
-<td><p>NO</p></td>
-<td><p><a class="reference internal" href="index.html#comp_req__utils__base64" title="comp_req__utils__base64"><em class="xref need">Base64 Encoding and Decoding (comp_req__utils__base64)</em></a> - Non-atomic, covers both encodding and decoding in single requirement
-<a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior" title="comp_req__utils__deterministic_behavior"><em class="xref need">Deterministic Behavior (comp_req__utils__deterministic_behavior)</em></a> - Non-atomic, combines “predictable manner” and “without dynamic memory allocation” in one statement.</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-even"><td><p>REQ_02_04</p></td>
 <td><p>Is the requirement description <em>feasible</em> ?</p></td>
 <td><p>If at the time of the inspection the requirement has already some implementation, the answer is yes. This can be checked via traces, but also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/requirements_engineering/guidance/requirements_process_reqs.html#gd_req__req_attr_impl">gd_req__req_attr_impl</a> shows this. In case the requirement has no implementation at the time of inspection (i.e. not implemented at least as “proof-of-concept”), a development expert should be invited to the Pull-Request review to explicitly check this item.</p></td>
-<td><p>NO</p></td>
-<td><p><a class="reference internal" href="index.html#comp_req__utils__scoped_operation" title="comp_req__utils__scoped_operation"><em class="xref need">Scoped Operation Management (comp_req__utils__scoped_operation)</em></a> - different component , not belong to utils , need to move</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>REQ_02_05</p></td>
 <td><p>Is the requirement description <em>independent from implementation</em> ?</p></td>
@@ -644,9 +622,9 @@ See also <a class="external_link reference external" href="https://eclipse-score
 <tr class="row-even"><td><p>REQ_05_01</p></td>
 <td><p>Do the software requirements consider <em>timing constraints</em>?</p></td>
 <td><p>This checkpoint encourages to think about timing constraints even if those are not explicitly mentioned in the parent requirement. If the reviewer of a requirement already knows or suspects that the code execution will be consuming a lot of time, one should think of the expectation of a “user”.</p></td>
-<td><p>NO</p></td>
-<td><p><a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior" title="comp_req__utils__deterministic_behavior"><em class="xref need">Deterministic Behavior (comp_req__utils__deterministic_behavior)</em></a> uses “predictable manner” but defines no timing bounds. Requirement should be removed or rewritten.</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>REQ_06_01</p></td>
 <td><p>Does the requirement consider <em>external interfaces</em>?</p></td>
@@ -665,33 +643,23 @@ See also <a class="external_link reference external" href="https://eclipse-score
 <tr class="row-odd"><td><p>REQ_07_02</p></td>
 <td><p>Is the attribute <em>security</em> set correctly?</p></td>
 <td><p>For component requirements this checklist item is supported by automated check: “Every requirement which satisfies a feature requirement with security attribute set to YES inherits this”. But the component requirements/architecture may additionally also be subject to a <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/security_analysis/security_analysis_workproducts.html#wp__sw_component_security_analysis">wp__sw_component_security_analysis</a>.</p></td>
-<td><p>NO</p></td>
-<td><p>All requirements have declare security “NO”, but the parent document (<a class="reference internal" href="index.html#doc__utils_lib_requirements" title="doc__utils_lib_requirements"><em class="xref need">Utils Library Requirements (doc__utils_lib_requirements)</em></a>), the component (<a class="reference internal" href="../architecture/index.html#comp__baselibs_utils" title="comp__baselibs_utils"><em class="xref need">Utils (comp__baselibs_utils)</em></a>), and all architecture interface operations are marked security “YES”. This is a direct inconsistency.</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/pull/387">PR #387</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-even"><td><p>REQ_08_01</p></td>
 <td><p>Is the requirement <em>verifiable</em>?</p></td>
 <td><p>If at the time of the inspection already tests are created for the requirement, the answer is yes. This can be checked via traces, but also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/requirements_engineering/guidance/requirements_process_reqs.html#gd_req__req_attr_test_covered">gd_req__req_attr_test_covered</a> shows this. In case the requirement is not sufficiently traced to test cases already, a test expert is invited to the inspection to give their opinion whether the requirement is formulated in a way that supports test development and the available test infrastructure is sufficient to perform the test.</p></td>
-<td><p>NO</p></td>
-<td><p>Following requirement needs clarification before testability can be confirmed:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior" title="comp_req__utils__deterministic_behavior"><em class="xref need">Deterministic Behavior (comp_req__utils__deterministic_behavior)</em></a></p></li>
-</ul>
-<p>Following requirements are directly testable:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="index.html#comp_req__utils__base64" title="comp_req__utils__base64"><em class="xref need">Base64 Encoding and Decoding (comp_req__utils__base64)</em></a></p></li>
-<li><p><a class="reference internal" href="index.html#comp_req__utils__scoped_operation" title="comp_req__utils__scoped_operation"><em class="xref need">Scoped Operation Management (comp_req__utils__scoped_operation)</em></a></p></li>
-</ul>
-</td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td><p>Requirements are verifiable by test cases</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>REQ_08_02</p></td>
 <td><p>Is the requirement verifiable by design or code review in case it is not feasibly testable?</p></td>
 <td><p>In very rare cases a requirement may not be verifiable by test cases, for example a specific non-functional requirement. In this case a requirement analysis verifies the requirement by design/code review. If such a requirement is in scope of this inspection, please check this here and link to the respective review record. A test expert is invited to the inspection to confirm their opinion that the requirement is not testable.</p></td>
-<td><p>NO</p></td>
-<td><p><a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior" title="comp_req__utils__deterministic_behavior"><em class="xref need">Deterministic Behavior (comp_req__utils__deterministic_behavior)</em></a> - No code review record is linked. The implementation contradicts the requirement
-<code class="docutils literal notranslate"><span class="pre">EncodeBase64/DecodeBase64</span></code> use heap-allocated <code class="docutils literal notranslate"><span class="pre">std::string/std::vector</span></code>. Requirement should be removed or rewritten.</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="row-even"><td><p>REQ_09_01</p></td>
 <td><p>Do the requirements that define a safety mechanism specify the error reaction leading to a safe state?</p></td>
@@ -703,10 +671,9 @@ See also <a class="external_link reference external" href="https://eclipse-score
 <tr class="row-odd"><td><p>REQ_10_01</p></td>
 <td><p>Is the requirement description <em>complete</em> ?</p></td>
 <td><p>For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).</p></td>
-<td><p>NO</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">score/utils/meyer_singleton/</span></code> (MeyerSingleton) is part of the utils component but has no component requirement.
-<a class="reference internal" href="index.html#comp_req__utils__scoped_operation" title="comp_req__utils__scoped_operation"><em class="xref need">Scoped Operation Management (comp_req__utils__scoped_operation)</em></a> is satisfied_by <a class="reference internal" href="../architecture/index.html#comp__baselibs_utils" title="comp__baselibs_utils"><em class="xref need">Utils (comp__baselibs_utils)</em></a> but its implementation is in <code class="docutils literal notranslate"><span class="pre">score/scope_exit/</span></code>, not <code class="docutils literal notranslate"><span class="pre">score/utils/</span></code>. Component boundary needs clarification.</p></td>
-<td><p><a class="reference external" href="https://github.com/eclipse-score/baselibs/issues/395">Issue #395</a></p></td>
+<td><p>YES</p></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -731,15 +698,15 @@ See also <a class="external_link reference external" href="https://eclipse-score
 </tr>
 </thead>
 <tbody>
-<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__base64">comp_req__utils__base64</a></p></td>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__base64_decoding">comp_req__utils__base64_decoding</a></p></td>
 <td class="needs_status"><p>valid</p></td>
 <td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>utils</p></td>
 </tr>
-<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__deterministic_behavior">comp_req__utils__deterministic_behavior</a></p></td>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__base64_encoding">comp_req__utils__base64_encoding</a></p></td>
 <td class="needs_status"><p>valid</p></td>
 <td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>utils</p></td>
 </tr>
-<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__scoped_operation">comp_req__utils__scoped_operation</a></p></td>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__utils__threadsafe_singleton">comp_req__utils__threadsafe_singleton</a></p></td>
 <td class="needs_status"><p>valid</p></td>
 <td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>utils</p></td>
 </tr>
@@ -809,7 +776,7 @@ See also <a class="external_link reference external" href="https://eclipse-score
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/utils/docs/requirements/chklst_req_inspection.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main//home/runner/work/baselibs/baselibs/docs/baselibs/components/utils/docs/requirements/chklst_req_inspection.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
