@@ -1,6 +1,6 @@
 ..
    # *******************************************************************************
-   # Copyright (c) 2025 Contributors to the Eclipse Foundation
+   # Copyright (c) 2026 Contributors to the Eclipse Foundation
    #
    # See the NOTICE file(s) distributed with this work for additional
    # information regarding copyright ownership.
@@ -12,15 +12,11 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-log_frontend
-############
+
+Component Architecture
+======================
 
 .. toctree::
-   :maxdepth: 1
 
-   requirements/index
-   architecture/index
-   safety_analysis/fmea
-   safety_analysis/dfa
-   safety_analysis/aou_requirements
-   detailed_design/index
+   component_architecture
+   chklst_arc_inspection

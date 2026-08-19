@@ -197,3 +197,7 @@ Assumptions of Use
    This requirement shall be verified for each assigned application. The whole
    dependency tree of **all** included libraries shall be also verified on this
    requirement in the application use case and by application developers.
+
+
+.. needextend:: is_external == False and "__log__" in id
+   :+tags: logging

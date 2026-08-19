@@ -32,3 +32,4 @@ Detailed Design
 
    rust_bridge_design.rst
    log_frontend_design.rst
+   chklst_impl_inspection.rst
