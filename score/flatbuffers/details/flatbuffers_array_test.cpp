@@ -1,0 +1,1110 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+#include "flatbuffers/array.h"
+
+// flatc-generated see schema: details/array_cast_fixture.fbs
+#include "score/flatbuffers/details/array_cast_fixture_generated.h"
+
+#include <cstdint>
+#include <cstring>
+#include <limits>
+#include <type_traits>
+#include <utility>
+#include <vector>
+
+#include "gtest/gtest.h"
+
+namespace score
+{
+
+namespace flatbuffers
+{
+
+namespace test
+{
+
+using namespace ::flatbuffers;
+
+// -------------------------------------------------------
+// Minimal Point struct used across tests.
+// -------------------------------------------------------
+struct Point
+{
+    int32_t x;
+    int32_t y;
+
+    bool operator==(const Point& other) const
+    {
+        return x == other.x && y == other.y;
+    }
+};
+
+// ---------------------------------------------------------------------------
+// MISRA classification of the cast helpers (applies to the whole file)
+//
+// CastToArray / CastToArrayOfEnum from flatbuffers/array.h reinterpret_cast a
+// raw T[length] into an Array<T, length>. This deliberately violates:
+//   - MISRA C++:2023 Rule 8.2.5 (use of reinterpret_cast).
+//     Rule 8.2.5 exempts casts whose target is a pointer to
+//     void, char, unsigned char or std::byte (possibly cv-qualified), or an
+//     integer type holding the pointer value, but this cast targets a pointer
+//     to an unrelated class type (Array<T, length>*), so no exception applies.
+// The third-party header marks these functions as risky itself ("Use with
+// care.", TODO: move to `internal`) and guarantees no defined behaviour with
+// respect to object lifetime / strict aliasing; it only works because
+// Array<T> is a pure layout wrapper with no data members of its own.
+//
+// Justification:
+//
+// Array isn't a real value type; it's a reinterpret-cast view onto bytes that
+// already exist inside a FlatBuffer, lifespan concerns are out of scope.
+//
+// User facing is the the FlatBuffers compiler generated header, which has measures
+// for correct usage.
+//
+// Users need to provide end to end tests checking corretness of the
+// reinterpret-cast view.
+//
+// See flatbuffers_array_cast_safety.md for details
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// ArrayCastTest
+// Tests casting raw C arrays to flatbuffers::Array.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayCastTest, CastToArray)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArray");
+    RecordProperty("Description", "casting a raw C array to flatbuffers::Array preserves elements");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {10, 20, 30};
+    auto& arr = CastToArray(raw);
+    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(arr.Get(0), 10);
+    EXPECT_EQ(arr.Get(1), 20);
+    EXPECT_EQ(arr.Get(2), 30);
+
+    int32_t raw1[1] = {42};
+    auto& arr1 = CastToArray(raw1);
+    EXPECT_EQ(arr1.size(), 1u);
+    EXPECT_EQ(arr1.Get(0), 42);
+}
+
+TEST(ArrayCastTest, CastToArrayConst)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArray");
+    RecordProperty("Description", "const array cast produces a const-referenced Array");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const int32_t raw[2] = {77, 88};
+    static_assert(std::is_const_v<std::remove_reference_t<decltype(CastToArray(raw))>>);
+    SUCCEED();
+}
+
+// ---------------------------------------------------------------------------
+// ArrayIndexTest
+// Tests Array<T, N>::operator[].
+// ---------------------------------------------------------------------------
+
+TEST(ArrayIndexTest, ReturnsSameAsGet)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::operator[]");
+    RecordProperty("Description", "operator[] returns same value as Get for every index");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    uint16_t raw[4] = {100, 200, 300, 400};
+    auto& arr = CastToArray(raw);
+    for (uint16_t i = 0; i < arr.size(); ++i)
+    {
+        EXPECT_EQ(arr[i], arr.Get(i));
+    }
+}
+
+// ---------------------------------------------------------------------------
+// ArrayMutateTest
+// Tests Array<T, N>::Mutate.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayMutateTest, ScalarInPlaceMutation)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::Array<T, N>::Mutate, ::flatbuffers::Array<T, N>::MutateImpl(true_type)");
+    RecordProperty("Description", "in-place mutation of scalar array elements");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    int32_t raw[3] = {1, 2, 3};
+    auto& arr = CastToArray(raw);
+
+    arr.Mutate(0, 100);
+    EXPECT_EQ(arr.Get(0), 100);
+
+    arr.Mutate(2, 0);
+    EXPECT_EQ(arr.Get(2), 0);
+
+    arr.Mutate(1, std::numeric_limits<int32_t>::max());
+    EXPECT_EQ(arr.Get(1), std::numeric_limits<int32_t>::max());
+}
+
+// ---------------------------------------------------------------------------
+// ArrayIteratorTest
+// Tests Array<T, N>::begin, Array<T, N>::end.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayIteratorTest, ForwardIteration)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::begin, ::flatbuffers::Array<T, N>::end");
+    RecordProperty("Description", "forward iteration yields expected elements in order");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[4] = {5, 10, 15, 20};
+    const auto& arr = CastToArray(raw);
+
+    int count = 0;
+    int expected[] = {5, 10, 15, 20};
+    for (auto it = arr.begin(); it != arr.end(); ++it)
+    {
+        EXPECT_EQ(*it, expected[count]);
+        ++count;
+    }
+    EXPECT_EQ(count, 4);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayReverseIteratorTest
+// Tests Array<T, N>::rbegin, Array<T, N>::rend.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayReverseIteratorTest, ReverseIteration)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::rbegin, ::flatbuffers::Array<T, N>::rend");
+    RecordProperty("Description", "reverse iteration yields elements in reverse order");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {1, 2, 3};
+    const auto& arr = CastToArray(raw);
+
+    std::vector<int32_t> rev;
+    for (auto it = arr.rbegin(); it != arr.rend(); ++it)
+    {
+        rev.push_back(*it);
+    }
+    ASSERT_EQ(rev.size(), 3u);
+    EXPECT_EQ(rev[0], 3);
+    EXPECT_EQ(rev[1], 2);
+    EXPECT_EQ(rev[2], 1);
+}
+
+// ---------------------------------------------------------------------------
+// ArraySizeTest
+// Tests Array<T, N>::size.
+// ---------------------------------------------------------------------------
+
+TEST(ArraySizeTest, ReturnsTemplateSize)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::size");
+    RecordProperty("Description", "size() returns the template parameter N");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[5] = {};
+    auto& arr = CastToArray(raw);
+    EXPECT_EQ(arr.size(), 5u);
+
+    // size() returns the template parameter N, which is part of the Array type.
+    // CastToArray is not constexpr (it reinterpret_casts, which is banned in
+    // constant expressions), so we cannot form a constexpr Array object. But N
+    // is fixed at compile time regardless: assert it through the type, using
+    // decltype's unevaluated context so no cast is actually performed.
+    using ArrayType = std::remove_reference_t<decltype(CastToArray(raw))>;
+    static_assert(std::is_same_v<ArrayType, Array<int32_t, 5>>, "CastToArray must bake N==5 into the Array type");
+}
+
+// ---------------------------------------------------------------------------
+// ArrayMakeSpanTest
+// Tests make_span, make_bytes_span.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayMakeSpanTest, SpanFromArray)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::make_span(Array<T, N>&)");
+    RecordProperty("Description", "make_span creates a fixed-size span over array data");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {100, 200, 300};
+    auto& arr = CastToArray(raw);
+    auto s = make_span(arr);
+    EXPECT_EQ(s.size(), 3u);
+    EXPECT_EQ(s[0], 100);
+    EXPECT_EQ(s[1], 200);
+    EXPECT_EQ(s[2], 300);
+}
+
+TEST(ArrayMakeSpanTest, BytesSpanFromArray)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::make_bytes_span(Array<T, N>&)");
+    RecordProperty("Description", "make_bytes_span returns span over raw bytes");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[2] = {0, 0};
+    auto& arr = CastToArray(raw);
+    auto bs = make_bytes_span(arr);
+    EXPECT_EQ(bs.size(), 2u * sizeof(int32_t));
+}
+
+// ---------------------------------------------------------------------------
+// ArrayDataTest
+// Tests Array<T, N>::Data(), Array<T, N>::data().
+// ---------------------------------------------------------------------------
+
+TEST(ArrayDataTest, DataPointers)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::Data, ::flatbuffers::Array<T, N>::data");
+    RecordProperty("Description", "Data() and data() return pointers to underlying storage");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {1, 2, 3};
+    auto& arr = CastToArray(raw);
+    EXPECT_EQ(reinterpret_cast<const uint8_t*>(raw), static_cast<const uint8_t*>(arr.Data()));
+    EXPECT_EQ(raw, arr.data());
+}
+
+// ---------------------------------------------------------------------------
+// ArrayEqualityTest
+// Tests operator==.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayEqualityTest, ScalarEquality)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::operator==");
+    RecordProperty("Description", "operator== compares all elements for equality");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t a[3] = {1, 2, 3};
+    int32_t b[3] = {1, 2, 3};
+    int32_t c[3] = {1, 2, 4};
+
+    auto& aa = CastToArray(a);
+    auto& ab = CastToArray(b);
+    auto& ac = CastToArray(c);
+
+    EXPECT_TRUE(aa == ab);
+    EXPECT_FALSE(aa == ac);
+    EXPECT_TRUE(aa == aa);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayEnumTest
+// Tests CastToArrayOfEnum, GetEnum.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayEnumTest, CastToArrayOfEnum)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArrayOfEnum");
+    RecordProperty("Description", "CastToArrayOfEnum casts raw array to Array of enum type");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    enum class Color : int32_t
+    {
+        Red = 0,
+        Green = 1,
+        Blue = 2
+    };
+    int32_t raw[3] = {0, 1, 2};
+    auto& arr = CastToArrayOfEnum<Color>(raw);
+    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(0)), 0);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(1)), 1);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(2)), 2);
+}
+
+TEST(ArrayEnumTest, GetEnum)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::GetEnum");
+    RecordProperty("Description", "GetEnum retrieves element cast to enum type");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    enum class Fruit : int32_t
+    {
+        Apple = 0,
+        Banana = 1,
+        Cherry = 2
+    };
+    int32_t raw[3] = {0, 1, 2};
+    auto& arr = CastToArray(raw);
+    EXPECT_EQ(arr.GetEnum<Fruit>(0), Fruit::Apple);
+    EXPECT_EQ(arr.GetEnum<Fruit>(1), Fruit::Banana);
+    EXPECT_EQ(arr.GetEnum<Fruit>(2), Fruit::Cherry);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayConstIteratorsTest
+// Tests cbegin, cend, crbegin, crend.
+//
+// Note on iterators in flatbuffers (why "const_iterator" behaves oddly):
+// Unlike the STL, a flatbuffers::Array exposes no mutable-vs-const iterator
+// pair. begin/end/cbegin/cend all return the SAME const_iterator type (and the
+// reverse variants the same const_reverse_iterator); there is no non-const
+// iterator, even on a non-const Array. Mutation is done via Array::Mutate, not
+// through iterators.
+//
+// What operator* yields depends on the element kind, via
+// IndirectHelper<T>::return_type -- it is NOT the STL's `const T&`:
+//   * scalar T (e.g. int32_t): returns T BY VALUE -- a copy, not a reference
+//     into the buffer. Immutability comes from value semantics, not const.
+//   * struct/non-scalar T (e.g. Point): returns const T* -- a pointer into the
+//     buffer. Structs are stored inline, so the pointer aliases the buffer;
+//     no copy is made. (See ArrayStructTest.IterationYieldsPointers.)
+// This is why `*it = x` never compiles: for scalars *it is a prvalue, and for
+// structs it is a pointer, not an assignable lvalue element.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayConstIteratorsTest, CBeginCEnd)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::cbegin, ::flatbuffers::Array<T, N>::cend");
+    RecordProperty("Description", "cbegin/cend produce read-only forward iterators");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {10, 20, 30};
+    const auto& arr = CastToArray(raw);
+
+    int32_t expected[] = {10, 20, 30};
+    int idx = 0;
+    // For scalars, cbegin yields values, not references into the buffer —
+    // the buffer cannot be mutated through the iterator.
+    static_assert(!std::is_reference_v<decltype(*arr.cbegin())>, "cbegin dereferences to a value, not a reference");
+    for (auto it = arr.cbegin(); it != arr.cend(); ++it)
+    {
+        EXPECT_EQ(*it, expected[idx]);
+        ++idx;
+    }
+    EXPECT_EQ(idx, 3);
+}
+
+TEST(ArrayConstIteratorsTest, IteratorTypesMatch)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::Array<T, N>::begin, ::flatbuffers::Array<T, N>::end, "
+                   "::flatbuffers::Array<T, N>::cbegin, ::flatbuffers::Array<T, N>::cend, "
+                   "::flatbuffers::Array<T, N>::rbegin, ::flatbuffers::Array<T, N>::rend, "
+                   "::flatbuffers::Array<T, N>::crbegin, ::flatbuffers::Array<T, N>::crend");
+    RecordProperty("Description",
+                   "begin/end/cbegin/cend share one const_iterator type; the reverse variants share "
+                   "one const_reverse_iterator type -- there is no separate mutable iterator");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Deliberately a non-const Array: even so, begin()/end() return const_iterator.
+    int32_t raw[3] = {1, 2, 3};
+    auto& arr = CastToArray(raw);
+    using ArrayType = std::remove_reference_t<decltype(arr)>;
+
+    static_assert(std::is_same_v<decltype(arr.begin()), ArrayType::const_iterator>, "begin must return const_iterator");
+    static_assert(std::is_same_v<decltype(arr.end()), ArrayType::const_iterator>, "end must return const_iterator");
+    static_assert(std::is_same_v<decltype(arr.cbegin()), ArrayType::const_iterator>,
+                  "cbegin must return const_iterator");
+    static_assert(std::is_same_v<decltype(arr.cend()), ArrayType::const_iterator>, "cend must return const_iterator");
+
+    static_assert(std::is_same_v<decltype(arr.rbegin()), ArrayType::const_reverse_iterator>,
+                  "rbegin must return const_reverse_iterator");
+    static_assert(std::is_same_v<decltype(arr.rend()), ArrayType::const_reverse_iterator>,
+                  "rend must return const_reverse_iterator");
+    static_assert(std::is_same_v<decltype(arr.crbegin()), ArrayType::const_reverse_iterator>,
+                  "crbegin must return const_reverse_iterator");
+    static_assert(std::is_same_v<decltype(arr.crend()), ArrayType::const_reverse_iterator>,
+                  "crend must return const_reverse_iterator");
+
+    SUCCEED();
+}
+
+TEST(ArrayConstIteratorsTest, CRBeginCREnd)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::crbegin, ::flatbuffers::Array<T, N>::crend");
+    RecordProperty("Description", "crbegin/crend produce const reverse iterators");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {1, 2, 3};
+    const auto& arr = CastToArray(raw);
+
+    std::vector<int32_t> result;
+    for (auto it = arr.crbegin(); it != arr.crend(); ++it)
+    {
+        result.push_back(*it);
+    }
+    ASSERT_EQ(result.size(), 3u);
+    EXPECT_EQ(result[0], 3);
+    EXPECT_EQ(result[1], 2);
+    EXPECT_EQ(result[2], 1);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayMutableDataTest
+// Tests mutable Data() and data().
+// ---------------------------------------------------------------------------
+
+TEST(ArrayMutableDataTest, MutableData)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::Data");
+    RecordProperty("Description", "mutable Data() returns writable uint8_t pointer");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[2] = {0, 0};
+    auto& arr = CastToArray(raw);
+    uint8_t* mutable_ptr = arr.Data();
+    EXPECT_NE(mutable_ptr, nullptr);
+    int32_t val = 42;
+    std::memcpy(mutable_ptr, &val, sizeof(val));
+    EXPECT_EQ(arr.Get(0), 42);
+    EXPECT_EQ(arr.Get(1), 0);
+}
+
+TEST(ArrayMutableDataTest, MutableDataTyped)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::data");
+    RecordProperty("Description", "mutable data() returns writable T* pointer");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {1, 2, 3};
+    auto& arr = CastToArray(raw);
+    int32_t* typed_ptr = arr.data();
+    EXPECT_EQ(typed_ptr, raw);
+    typed_ptr[1] = 99;
+    EXPECT_EQ(arr.Get(1), 99);
+    EXPECT_EQ(arr.Get(0), 1);
+    EXPECT_EQ(arr.Get(2), 3);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayStructTest
+// Tests struct-related Array functionality.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayStructTest, GetMutablePointerStruct)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::GetMutablePointer");
+    RecordProperty("Description", "GetMutablePointer on struct array returns writable pointer");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point raw[2] = {{1, 2}, {3, 4}};
+    auto& arr = CastToArray(raw);
+    Point* p = arr.GetMutablePointer(0);
+    ASSERT_NE(p, nullptr);
+    p->x = 100;
+    p->y = 200;
+    EXPECT_EQ(arr.Get(0)->x, 100);
+    EXPECT_EQ(arr.Get(0)->y, 200);
+    EXPECT_EQ(arr.Get(1)->x, 3);
+    EXPECT_EQ(arr.Get(1)->y, 4);
+}
+
+TEST(ArrayStructTest, MutateStruct)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::Array<T, N>::Mutate, ::flatbuffers::Array<T, N>::MutateImpl(false_type)");
+    RecordProperty("Description", "Mutate replaces a struct element in place, leaving others unchanged");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point raw[2] = {{10, 20}, {30, 40}};
+    auto& arr = CastToArray(raw);
+    Point new_val = {50, 60};
+    arr.Mutate(1, new_val);
+    EXPECT_EQ(arr.Get(1)->x, 50);
+    EXPECT_EQ(arr.Get(1)->y, 60);
+    EXPECT_EQ(arr.Get(0)->x, 10);
+    EXPECT_EQ(arr.Get(0)->y, 20);
+}
+
+TEST(ArrayStructTest, IterationYieldsPointers)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::begin, ::flatbuffers::Array<T, N>::end");
+    RecordProperty("Description", "for non-scalar element types operator* yields a const T* into the buffer");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point raw[3] = {{1, 2}, {3, 4}, {5, 6}};
+    const auto& arr = CastToArray(raw);
+
+    // Unlike scalar arrays (operator* returns T by value) and the STL
+    // (operator* returns const T&), a struct Array's iterator dereferences
+    // to IndirectHelper<T>::return_type == const T* -- a pointer into the
+    // buffer. Elements are stored inline, so the pointer aliases the source.
+    static_assert(std::is_pointer_v<decltype(*arr.begin())>, "struct iterator dereferences to a pointer");
+    static_assert(std::is_same_v<decltype(*arr.begin()), const Point*>, "struct iterator dereferences to const T*");
+
+    int idx = 0;
+    const Point expected[] = {{1, 2}, {3, 4}, {5, 6}};
+    for (auto it = arr.begin(); it != arr.end(); ++it)
+    {
+        const Point* p = *it;
+        ASSERT_NE(p, nullptr);
+        EXPECT_EQ(*p, expected[idx]);
+        // the pointer aliases the underlying buffer, no copy is made
+        EXPECT_EQ(p, &raw[idx]);
+        ++idx;
+    }
+    EXPECT_EQ(idx, 3);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayCopyFromSpanTest
+// Tests Array<T, N>::CopyFromSpan.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayCopyFromSpanTest, Scalar)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpan");
+    RecordProperty("Description", "CopyFromSpan with scalar (span-observable) path");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {0, 0, 0};
+    auto& arr = CastToArray(raw);
+
+    const int32_t src[3] = {7, 8, 9};
+    span<const int32_t, 3> src_span(src, 3);
+    arr.CopyFromSpan(src_span);
+
+    EXPECT_EQ(arr.Get(0), 7);
+    EXPECT_EQ(arr.Get(1), 8);
+    EXPECT_EQ(arr.Get(2), 9);
+}
+
+TEST(ArrayCopyFromSpanTest, Struct)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpan");
+    RecordProperty("Description", "CopyFromSpan with struct type");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point raw[2] = {{0, 0}, {0, 0}};
+    auto& arr = CastToArray(raw);
+
+    const Point src[2] = {{11, 22}, {33, 44}};
+    span<const Point, 2> src_span(src, 2);
+    arr.CopyFromSpan(src_span);
+
+    EXPECT_EQ(arr.Get(0)->x, 11);
+    EXPECT_EQ(arr.Get(0)->y, 22);
+    EXPECT_EQ(arr.Get(1)->x, 33);
+    EXPECT_EQ(arr.Get(1)->y, 44);
+}
+
+// ---------------------------------------------------------------------------
+// ArrayConstSpanTest
+// Tests make_span with const Array.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayConstSpanTest, MakeSpanConst)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::make_span(const Array<T, N>&)");
+    RecordProperty("Description", "make_span with const Array");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const int32_t raw[3] = {5, 10, 15};
+    const auto& arr = CastToArray(raw);
+    auto s = make_span(arr);
+
+    // make_span on a const Array yields a read-only span: its element type is
+    // const, so elements cannot be written through it.
+    static_assert(std::is_const_v<decltype(s)::element_type>,
+                  "make_span(const Array) must produce a span of const elements");
+    static_assert(std::is_const_v<std::remove_reference_t<decltype(s[0])>>,
+                  "operator[] on a const span yields a const reference");
+
+    EXPECT_EQ(s.size(), 3u);
+    EXPECT_EQ(s[0], 5);
+    EXPECT_EQ(s[1], 10);
+    EXPECT_EQ(s[2], 15);
+}
+
+TEST(ArrayConstSpanTest, MakeBytesSpanConst)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::make_bytes_span(const Array<T, N>&)");
+    RecordProperty("Description", "make_bytes_span with const Array");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const int32_t raw[2] = {1, 2};
+    const auto& arr = CastToArray(raw);
+    auto bs = make_bytes_span(arr);
+    EXPECT_EQ(bs.size(), 2u * sizeof(int32_t));
+    EXPECT_EQ(bs.data(), arr.Data());
+}
+
+TEST(ArrayConstSpanTest, ConstCastToArrayOfEnum)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArrayOfEnum");
+    RecordProperty("Description", "const CastToArrayOfEnum");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    enum class Color : int32_t
+    {
+        Red = 0,
+        Green = 1,
+        Blue = 2
+    };
+    const int32_t raw[3] = {0, 1, 2};
+    const auto& arr = CastToArrayOfEnum<Color>(raw);
+    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(0)), 0);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(1)), 1);
+    EXPECT_EQ(static_cast<int32_t>(arr.Get(2)), 2);
+}
+
+// ---------------------------------------------------------------------------
+// ArraySpanObservableTest
+// Tests is_span_observable.
+//
+// Only the true path is exercised. is_span_observable is false in two cases,
+// neither of which is reachable in this build:
+//   1. T is a pointer. Array<T, N> is documented to carry only POD data
+//      (scalars or structs), and its public factories (CastToArray /
+//      CastToArrayOfEnum) cannot produce a pointer element type, so a pointer
+//      T cannot be instantiated here.
+//   2. T is a multi-byte scalar on a big-endian platform. FlatBuffers stores
+//      scalars little-endian, so their raw bytes are only span-observable when
+//      FLATBUFFERS_LITTLEENDIAN holds (or sizeof(T) == 1). The test targets are
+//      little-endian, so this branch is never taken; forcing it would require a
+//      big-endian toolchain that is out of scope for these unit tests.
+// ---------------------------------------------------------------------------
+
+TEST(ArraySpanObservableTest, StaticAssertions)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::is_span_observable");
+    RecordProperty("Description", "is_span_observable static member for scalar and struct types");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    static_assert(Array<int32_t, 3>::is_span_observable, "int32_t should be span-observable on LE");
+    static_assert(Array<uint16_t, 2>::is_span_observable, "uint16_t should be span-observable on LE");
+    static_assert(Array<int64_t, 1>::is_span_observable, "int64_t should be span-observable on LE");
+    static_assert(Array<uint8_t, 4>::is_span_observable, "uint8_t should always be span-observable");
+    static_assert(Array<int8_t, 2>::is_span_observable, "int8_t should always be span-observable");
+    static_assert(Array<Point, 2>::is_span_observable, "POD struct should be span-observable");
+
+    EXPECT_TRUE((Array<int32_t, 3>::is_span_observable));
+    EXPECT_TRUE((Array<uint8_t, 4>::is_span_observable));
+    EXPECT_TRUE((Array<Point, 2>::is_span_observable));
+}
+
+// ---------------------------------------------------------------------------
+// CopyFromSpanImplTest
+// Direct access helper for CopyFromSpanImpl true_type and false_type paths.
+// ---------------------------------------------------------------------------
+
+// Exposes the protected CopyFromSpanImpl overloads so both paths can be tested
+// regardless of platform endianness:
+//   observable    -> memcpy path (raw bytes match native layout)
+//   non-observable -> element-wise Mutate path (with endian conversion)
+template <typename T, uint16_t N>
+struct ArrayTestAccess : public Array<T, N>
+{
+    void CallCopyObservable(span<const T, N> src)
+    {
+        this->CopyFromSpanImpl(true_type(), src);
+    }
+    void CallCopyNonObservable(span<const T, N> src)
+    {
+        this->CopyFromSpanImpl(false_type(), src);
+    }
+};
+
+TEST(CopyFromSpanImplTest, Observable)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpanImpl(true_type)");
+    RecordProperty("Description", "CopyFromSpanImpl(true_type) — memcpy path");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {0, 0, 0};
+    auto& accessor = *reinterpret_cast<ArrayTestAccess<int32_t, 3>*>(raw);
+
+    const int32_t src[3] = {10, 20, 30};
+    span<const int32_t, 3> src_span(src, 3);
+    accessor.CallCopyObservable(src_span);
+
+    EXPECT_EQ(raw[0], 10);
+    EXPECT_EQ(raw[1], 20);
+    EXPECT_EQ(raw[2], 30);
+}
+
+TEST(CopyFromSpanImplTest, NonObservableScalar)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpanImpl(false_type)");
+    RecordProperty("Description", "CopyFromSpanImpl(false_type) — element-wise Mutate path for scalars");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    int32_t raw[3] = {0, 0, 0};
+    auto& accessor = *reinterpret_cast<ArrayTestAccess<int32_t, 3>*>(raw);
+
+    const int32_t src[3] = {100, 200, 300};
+    span<const int32_t, 3> src_span(src, 3);
+    accessor.CallCopyNonObservable(src_span);
+
+    EXPECT_EQ(raw[0], 100);
+    EXPECT_EQ(raw[1], 200);
+    EXPECT_EQ(raw[2], 300);
+}
+
+TEST(CopyFromSpanImplTest, NonObservableStruct)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpanImpl(false_type)");
+    RecordProperty("Description", "CopyFromSpanImpl(false_type) with struct type");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point raw[2] = {{0, 0}, {0, 0}};
+    auto& accessor = *reinterpret_cast<ArrayTestAccess<Point, 2>*>(raw);
+
+    const Point src[2] = {{7, 8}, {9, 10}};
+    span<const Point, 2> src_span(src, 2);
+    accessor.CallCopyNonObservable(src_span);
+
+    EXPECT_EQ(raw[0].x, 7);
+    EXPECT_EQ(raw[0].y, 8);
+    EXPECT_EQ(raw[1].x, 9);
+    EXPECT_EQ(raw[1].y, 10);
+}
+
+// ---------------------------------------------------------------------------
+// OffsetSpecializationTest
+// Tests the Array<Offset<void>, N> specialization.
+// ---------------------------------------------------------------------------
+
+TEST(OffsetSpecializationTest, Data)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<Offset<void>, N>::Data");
+    RecordProperty(
+        "Description",
+        "Data() on the Array<Offset<void>,N> specialization exposes the underlying offset bytes for reading");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    constexpr uint16_t kCount = 2;
+    const uint8_t expected[kCount * sizeof(uoffset_t)] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+    alignas(Array<Offset<void>, kCount>) uint8_t buf[sizeof(expected)];
+    std::memcpy(buf, expected, sizeof(buf));
+
+    const auto& arr = *reinterpret_cast<const Array<Offset<void>, kCount>*>(buf);
+
+    // Data() points at the underlying storage...
+    ASSERT_EQ(arr.Data(), buf);
+    // ...and every raw offset byte is readable through it.
+    EXPECT_EQ(std::memcmp(arr.Data(), expected, sizeof(expected)), 0);
+}
+
+TEST(OffsetSpecializationTest, StructArrayEquality)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::operator==");
+    RecordProperty("Description", "operator== on struct arrays");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Point a[2] = {{1, 2}, {3, 4}};
+    Point b[2] = {{1, 2}, {3, 4}};
+    Point c[2] = {{1, 2}, {3, 5}};
+
+    auto& aa = CastToArray(a);
+    auto& ab = CastToArray(b);
+    auto& ac = CastToArray(c);
+
+    EXPECT_EQ(aa, ab);
+    EXPECT_FALSE(aa == ac);  // EXPECT_NE cannot be used "no match for 'operator!='"
+    EXPECT_EQ(aa, aa);
+}
+
+TEST(OffsetSpecializationTest, SizeType)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::size_type");
+    RecordProperty("Description", "size_type is uint16_t");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    static_assert(std::is_same<Array<int32_t, 3>::size_type, uint16_t>::value, "size_type must be uint16_t");
+}
+
+// ---------------------------------------------------------------------------
+// ArrayFaultInjectionTest
+// Fault injection tests for Array.
+// ---------------------------------------------------------------------------
+
+TEST(ArrayFaultInjectionTest, OffsetSpecializationOperatorIndexDeathTest)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<Offset<void>, N>::operator[]");
+    RecordProperty("Description", "Array<Offset<void>, N>::operator[] triggers assert(false) at runtime");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    alignas(Array<Offset<void>, 2>) uint8_t buf[sizeof(Array<Offset<void>, 2>)] = {};
+    const auto& arr = *reinterpret_cast<const Array<Offset<void>, 2>*>(buf);
+    EXPECT_DEATH({ arr[0]; }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultGetOutOfBounds)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::Get");
+    RecordProperty("Description", "Get() with index == size triggers assert(false)");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    int32_t raw[3] = {1, 2, 3};
+    const auto& arr = CastToArray(raw);
+    EXPECT_DEATH({ arr.Get(3u); }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultGetMutablePointerOutOfBounds)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::GetMutablePointer");
+    RecordProperty("Description", "GetMutablePointer() with index == size triggers assert(false)");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    Point raw[2] = {{1, 2}, {3, 4}};
+    auto& arr = CastToArray(raw);
+    EXPECT_DEATH({ arr.GetMutablePointer(2u); }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultMutateScalarOutOfBounds)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::Array<T, N>::Mutate, ::flatbuffers::Array<T, N>::MutateImpl(true_type)");
+    RecordProperty("Description", "Mutate() with index == size triggers assert(false)");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    int32_t raw[3] = {0, 0, 0};
+    auto& arr = CastToArray(raw);
+    EXPECT_DEATH({ arr.Mutate(3u, 42); }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultMutateStructOutOfBounds)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::MutateImpl(false_type)");
+    RecordProperty("Description", "Mutate() with index == size on struct triggers assert(false) via false_type path");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    Point raw[2] = {{0, 0}, {0, 0}};
+    auto& arr = CastToArray(raw);
+    const Point p = {1, 2};
+    EXPECT_DEATH({ arr.Mutate(2u, p); }, "");
+}
+
+TEST(ArrayFaultInjectionTest, FaultCopyFromSpanOverlap)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::Array<T, N>::CopyFromSpan");
+    RecordProperty("Description", "CopyFromSpan with a source span overlapping the array triggers assert(false)");
+    RecordProperty("TestType", "fault-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    int32_t raw[3] = {1, 2, 3};
+    auto& arr = CastToArray(raw);
+    span<const int32_t, 3> overlapping(raw, 3);  // shares storage with arr -> p1 == p2
+    EXPECT_DEATH({ arr.CopyFromSpan(overlapping); }, "");
+}
+
+// --------------------------------------------------------------------------------
+// ArrayCastSafetyGeneratedTest
+//
+// End-to-end test for the generated header. See flatbuffers_array_cast_safety.md.
+// and details/array_cast_fixture.fbs for the schema.
+// --------------------------------------------------------------------------------
+
+namespace
+{
+// Distinct 64-bit values for the [int64:2] field, chosen to also exercise the
+// full 64-bit range so a truncated/endian-wrong reinterpret view would be caught.
+constexpr int64_t kFirst64 = std::numeric_limits<int64_t>::min();
+constexpr int64_t kSecond64 = std::numeric_limits<int64_t>::max() - 7;
+}  // namespace
+
+// End-to-end: build a serialized buffer through the generated, typed API and
+// read every field back through the reinterpret-cast Array view.
+TEST(ArrayCastSafetyGeneratedTest, EndToEndRoundTripThroughGeneratedBuffer)
+{
+    RecordProperty("FullyVerifies",
+                   "::flatbuffers::CastToArray, ::flatbuffers::CastToArrayOfEnum "
+                   "(via flatc-generated NestedStruct accessors)");
+    RecordProperty("Description", "reinterpret-cast Array view read from a serialized buffer matches written values");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    const int32_t coordinate_values[2] = {10, 20};
+    const arrays_fixture::TestEnum channel_mode_values[2] = {arrays_fixture::TestEnum::B, arrays_fixture::TestEnum::C};
+    const int64_t timestamp_values[2] = {kFirst64, kSecond64};
+
+    FlatBufferBuilder fbb;
+    const arrays_fixture::NestedStruct nested(span<const int32_t, 2>(coordinate_values, 2),
+                                              arrays_fixture::TestEnum::A,
+                                              span<const arrays_fixture::TestEnum, 2>(channel_mode_values, 2),
+                                              span<const int64_t, 2>(timestamp_values, 2));
+    fbb.Finish(arrays_fixture::CreateArraysHolder(fbb, &nested));
+
+    // The produced bytes are a verifiable FlatBuffer
+    Verifier verifier(fbb.GetBufferPointer(), fbb.GetSize());
+    ASSERT_TRUE(arrays_fixture::VerifyArraysHolderBuffer(verifier));
+
+    const arrays_fixture::ArraysHolder* holder = arrays_fixture::GetArraysHolder(fbb.GetBufferPointer());
+    ASSERT_NE(holder, nullptr);
+    const arrays_fixture::NestedStruct* view = holder->nested();
+    ASSERT_NE(view, nullptr);
+
+    // coordinates(): [int:2] read back through CastToArray.
+    ASSERT_NE(view->coordinates(), nullptr);
+    EXPECT_EQ(view->coordinates()->size(), 2u);
+    EXPECT_EQ(view->coordinates()->Get(0), 10);
+    EXPECT_EQ(view->coordinates()->Get(1), 20);
+
+    // status(): scalar enum.
+    EXPECT_EQ(view->status(), arrays_fixture::TestEnum::A);
+
+    // channel_modes(): [TestEnum:2] read back through CastToArrayOfEnum.
+    ASSERT_NE(view->channel_modes(), nullptr);
+    EXPECT_EQ(view->channel_modes()->size(), 2u);
+    EXPECT_EQ(view->channel_modes()->Get(0), arrays_fixture::TestEnum::B);
+    EXPECT_EQ(view->channel_modes()->Get(1), arrays_fixture::TestEnum::C);
+
+    // timestamps(): [int64:2] read back through CastToArray, full 64-bit values preserved.
+    ASSERT_NE(view->timestamps(), nullptr);
+    EXPECT_EQ(view->timestamps()->size(), 2u);
+    EXPECT_EQ(view->timestamps()->Get(0), kFirst64);
+    EXPECT_EQ(view->timestamps()->Get(1), kSecond64);
+}
+
+// Measure #2 (const-correctness): read accessors return const Array<T,N>*, so the
+// aliased buffer cannot be mutated through the view.
+TEST(ArrayCastSafetyGeneratedTest, ReadAccessorsAreConstCorrect)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct read accessor const-correctness");
+    RecordProperty("Description",
+                   "coordinates()/channel_modes()/timestamps() return const Array<T,N>* so the view is read-only");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().coordinates()),
+                               const Array<int32_t, 2>*>::value,
+                  "coordinates() must return const Array<int32_t, 2>*");
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().channel_modes()),
+                               const Array<arrays_fixture::TestEnum, 2>*>::value,
+                  "channel_modes() must return const Array<TestEnum, 2>*");
+    static_assert(std::is_same<decltype(std::declval<const arrays_fixture::NestedStruct>().timestamps()),
+                               const Array<int64_t, 2>*>::value,
+                  "timestamps() must return const Array<int64_t, 2>*");
+    SUCCEED();
+}
+
+// Measure #3 (enum type safety): enum arrays route through CastToArrayOfEnum<E>,
+// whose static_assert(sizeof(E) == sizeof(T)) makes a mismatched storage type a
+// compile error. Verify the generated enum's storage matches its array element.
+TEST(ArrayCastSafetyGeneratedTest, EnumArrayStorageTypeIsSizeChecked)
+{
+    RecordProperty("FullyVerifies", "::flatbuffers::CastToArrayOfEnum size static_assert precondition");
+    RecordProperty("Description", "TestEnum underlying storage equals its int8_t backing array element size");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    static_assert(std::is_same<std::underlying_type<arrays_fixture::TestEnum>::type, int8_t>::value,
+                  "TestEnum must be backed by int8_t");
+    static_assert(sizeof(arrays_fixture::TestEnum) == sizeof(int8_t),
+                  "enum size must match its storage type -- the CastToArrayOfEnum precondition");
+    SUCCEED();
+}
+
+// Measure #4 (write-size safety): the only write path is the constructor taking
+// fixed-extent spans, so a wrong-length write does not compile. Prove it: the
+// struct is constructible from correct-extent spans but not from a wrong extent.
+TEST(ArrayCastSafetyGeneratedTest, WriteExtentIsCompileTimeChecked)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct fixed-extent span constructor");
+    RecordProperty("Description", "constructor binds compile-time extent-2 spans; a wrong-length span is rejected");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "boundary-value-analysis");
+
+    static_assert(std::is_constructible<arrays_fixture::NestedStruct,
+                                        span<const int32_t, 2>,
+                                        arrays_fixture::TestEnum,
+                                        span<const arrays_fixture::TestEnum, 2>,
+                                        span<const int64_t, 2>>::value,
+                  "correct fixed extents must construct");
+    static_assert(!std::is_constructible<arrays_fixture::NestedStruct,
+                                         span<const int32_t, 3>,  // wrong extent for a:[int:2]
+                                         arrays_fixture::TestEnum,
+                                         span<const arrays_fixture::TestEnum, 2>,
+                                         span<const int64_t, 2>>::value,
+                  "a wrong-length span must not construct");
+    static_assert(!std::is_constructible<arrays_fixture::NestedStruct,
+                                         span<const int32_t, 2>,
+                                         arrays_fixture::TestEnum,
+                                         span<const arrays_fixture::TestEnum, 2>,
+                                         span<const int64_t, 1>>::value,  // wrong extent for d:[int64:2]
+                  "a wrong-length span must not construct");
+    SUCCEED();
+}
+
+// Measure #5 (no uninitialized reads): every constructor zero-initializes padding.
+// Construct the struct over two differently poisoned memory regions; because every
+// byte -- data and padding alike -- is written deterministically, the two results
+// must be byte-identical. Leftover garbage in any padding byte would fail this.
+TEST(ArrayCastSafetyGeneratedTest, PaddingIsDeterministicallyZeroInitialized)
+{
+    RecordProperty("FullyVerifies", "flatc-generated NestedStruct padding zero-initialization");
+    RecordProperty("Description", "construction fully determines all bytes, leaving no uninitialized padding");
+    RecordProperty("TestType", "unit-test");
+    RecordProperty("DerivationTechnique", "requirements-based");
+
+    alignas(arrays_fixture::NestedStruct) unsigned char buf_a[sizeof(arrays_fixture::NestedStruct)];
+    alignas(arrays_fixture::NestedStruct) unsigned char buf_b[sizeof(arrays_fixture::NestedStruct)];
+    std::memset(buf_a, 0xAA, sizeof(buf_a));
+    std::memset(buf_b, 0x55, sizeof(buf_b));
+
+    const int32_t a_values[2] = {10, 20};
+    const arrays_fixture::TestEnum c_values[2] = {arrays_fixture::TestEnum::A, arrays_fixture::TestEnum::B};
+    const int64_t d_values[2] = {kFirst64, kSecond64};
+
+    const auto construct = [&](void* where) {
+        new (where) arrays_fixture::NestedStruct(span<const int32_t, 2>(a_values, 2),
+                                                 arrays_fixture::TestEnum::C,
+                                                 span<const arrays_fixture::TestEnum, 2>(c_values, 2),
+                                                 span<const int64_t, 2>(d_values, 2));
+    };
+    construct(buf_a);
+    construct(buf_b);
+
+    EXPECT_EQ(std::memcmp(buf_a, buf_b, sizeof(arrays_fixture::NestedStruct)), 0);
+}
+
+}  // namespace test
+}  // namespace flatbuffers
+}  // namespace score
