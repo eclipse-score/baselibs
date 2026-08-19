@@ -20,7 +20,7 @@ test_suite(
         ":pthread_test",
         ":unistd_test",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
+    visibility = ["@score_baselibs//score/os/test:__subpackages__"],
 )
 
 cc_test(

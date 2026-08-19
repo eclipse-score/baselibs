@@ -243,9 +243,6 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
-    visibility = [
-        "//platform/aas/unit/qnx/resource_manager:__subpackages__",
-    ],
     deps = [
         "@score_baselibs//score/os/qnx:iofunc",
         "@score_baselibs//score/os/qnx:resmgr",

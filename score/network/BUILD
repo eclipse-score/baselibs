@@ -18,7 +18,6 @@ test_suite(
     tests = [
         "@score_baselibs//score/network/test:unit_tests",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
 )
 
 cc_library(
