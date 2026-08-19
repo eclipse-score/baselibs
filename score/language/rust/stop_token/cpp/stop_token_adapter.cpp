@@ -47,9 +47,9 @@ bool StopSourceRequestStop(const score::cpp::stop_source& source) noexcept
     return const_cast<score::cpp::stop_source&>(source).request_stop();
 }
 
-std::shared_ptr<score::cpp::stop_token> StopSourceGetToken(const score::cpp::stop_source& source) noexcept
+std::unique_ptr<score::cpp::stop_token> StopSourceGetToken(const score::cpp::stop_source& source) noexcept
 {
-    return std::make_shared<score::cpp::stop_token>(source.get_token());
+    return std::make_unique<score::cpp::stop_token>(source.get_token());
 }
 
 bool StopSourceEqual(const score::cpp::stop_source& lhs, const score::cpp::stop_source& rhs) noexcept
@@ -57,14 +57,14 @@ bool StopSourceEqual(const score::cpp::stop_source& lhs, const score::cpp::stop_
     return lhs == rhs;
 }
 
-std::shared_ptr<score::cpp::stop_token> MakeDefaultStopToken() noexcept
+std::unique_ptr<score::cpp::stop_token> MakeStopToken() noexcept
 {
-    return std::make_shared<score::cpp::stop_token>();
+    return std::make_unique<score::cpp::stop_token>();
 }
 
-std::shared_ptr<score::cpp::stop_source> MakeStopSource() noexcept
+std::unique_ptr<score::cpp::stop_source> MakeStopSource() noexcept
 {
-    return std::make_shared<score::cpp::stop_source>();
+    return std::make_unique<score::cpp::stop_source>();
 }
 
 }  // namespace score::language::rust::stop_token

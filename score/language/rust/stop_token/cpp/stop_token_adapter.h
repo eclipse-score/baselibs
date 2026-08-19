@@ -40,16 +40,16 @@ bool StopSourceStopPossible(const score::cpp::stop_source& source) noexcept;
 bool StopSourceRequestStop(const score::cpp::stop_source& source) noexcept;
 
 /// @brief Returns a token associated with a stop source.
-std::shared_ptr<score::cpp::stop_token> StopSourceGetToken(const score::cpp::stop_source& source) noexcept;
+std::unique_ptr<score::cpp::stop_token> StopSourceGetToken(const score::cpp::stop_source& source) noexcept;
 
 /// @brief Returns whether two stop sources share the same stop state.
 bool StopSourceEqual(const score::cpp::stop_source& lhs, const score::cpp::stop_source& rhs) noexcept;
 
 /// @brief Creates a default-constructed stop token.
-std::shared_ptr<score::cpp::stop_token> MakeDefaultStopToken() noexcept;
+std::unique_ptr<score::cpp::stop_token> MakeStopToken() noexcept;
 
 /// @brief Creates a stop source with a new stop state.
-std::shared_ptr<score::cpp::stop_source> MakeStopSource() noexcept;
+std::unique_ptr<score::cpp::stop_source> MakeStopSource() noexcept;
 
 }  // namespace score::language::rust::stop_token
 

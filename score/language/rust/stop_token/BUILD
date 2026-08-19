@@ -40,12 +40,6 @@ rust_library(
     ],
 )
 
-alias(
-    name = "rust",
-    actual = ":stop_token",
-    visibility = ["//visibility:public"],
-)
-
 rust_test(
     name = "stop_token_test",
     crate = ":stop_token",
