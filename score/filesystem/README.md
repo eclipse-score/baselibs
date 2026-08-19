@@ -40,7 +40,7 @@ See the latest updates on Jira epic: broken_link_j/Ticket-32228
 ## The library entry point
 
 The single entry point helps to reduce dependencies to single parts in the production/test code.
-To include the library, use the bazel target "//platform/aas/lib/filesystem"
+To include the library, use the bazel target "//score/filesystem"
 and the header file "score/filesystem/filesystem.h".
 It is recommended to use the IFilesystemFactory class, which provides access to the library's interfaces.
 

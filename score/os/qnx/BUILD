@@ -146,7 +146,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "//platform/aas/network/xnm:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
@@ -409,7 +408,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "//platform/aas/os/secpol/secpollog:__pkg__",
         "@score_baselibs//score/os/mocklib/qnx:__pkg__",
     ],
     deps = [
@@ -470,7 +468,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
-        "//platform/aas/intc/configure_persistency:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [

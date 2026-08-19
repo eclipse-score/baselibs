@@ -91,10 +91,6 @@ cc_library(
     hdrs = ["endianness.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "//platform/aas/lib/serialization:__subpackages__",
-        "//platform/aas/pas/sysmon/library:__subpackages__",
-    ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
