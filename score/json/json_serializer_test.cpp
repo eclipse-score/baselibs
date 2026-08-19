@@ -775,7 +775,7 @@ TEST(JsonSerializerTest, MissingMandatoryFieldErrorContainsFieldName)
 
 TEST(JsonSerializerTest, NestedTypeMismatchErrorContainsOutermostFieldName)
 {
-    RecordProperty("TestType", "control-flow-analysis"); // data flow
+    RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("Verifies", "::score::json::FromJsonAny");
     RecordProperty("Description",
                    "Verify that a type-mismatch inside a nested struct is reported under the parent field name, "
