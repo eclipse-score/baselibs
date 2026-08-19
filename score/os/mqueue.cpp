@@ -245,18 +245,7 @@ mode_t MqueueImpl::modeflag_to_nativeflag(const ModeFlag flags) const noexcept
 
 score::os::Mqueue& score::os::Mqueue::instance() noexcept
 {
-    return select_instance(
-
-        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
-        // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
-        // Rationale: Reinterpret_cast is used here to ensure proper type handling of the underlying storage
-        // (StaticDestructionGuard<impl::MqueueImpl>::GetStorage()), allowing correct object destruction. This usage is
-        // considered safe in this context, as it involves casting an object from static storage with a well-defined
-        // type relationship. Despite AUTOSAR A5-2-4 discouraging reinterpret_cast, it is necessary in this specific
-        // scenario.
-        // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<impl::MqueueImpl&>(utils::StaticDestructionGuard<impl::MqueueImpl>::GetStorage()));
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
+    return select_instance(utils::StaticDestructionGuard<impl::MqueueImpl>::GetStorage());
 }
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */

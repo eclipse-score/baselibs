@@ -301,16 +301,7 @@ score::cpp::pmr::unique_ptr<score::os::Mman> score::os::Mman::Default(
 
 score::os::Mman& score::os::Mman::instance() noexcept
 {
-    // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
-    // Reinterpret_cast is used here to ensure proper type handling of the underlying storage
-    // (StaticDestructionGuard<impl::MmanImpl>::GetStorage()), allowing correct object destruction. This usage is
-    // considered safe in this context, as it involves casting an object from static storage with a well-defined type
-    // relationship. Despite AUTOSAR A5-2-4 discouraging reinterpret_cast, it is necessary in this specific scenario.
-    return select_instance(
-        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
-        // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<internal::MmanImpl&>(utils::StaticDestructionGuard<internal::MmanImpl>::GetStorage()));
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
+    return select_instance(utils::StaticDestructionGuard<internal::MmanImpl>::GetStorage());
 }
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */

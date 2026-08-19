@@ -391,14 +391,7 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ge
 
 score::os::Unistd& score::os::Unistd::instance() noexcept
 {
-    return select_instance(
-        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast) see rationale below
-        // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
-        // Rationale: Have to use reinterpret_cast here because of the use of GetStorage
-        // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<internal::UnistdImpl&>(utils::StaticDestructionGuard<internal::UnistdImpl>::GetStorage())
-        // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
-    );
+    return select_instance(utils::StaticDestructionGuard<internal::UnistdImpl>::GetStorage());
 }
 
 std::unique_ptr<score::os::Unistd> score::os::Unistd::Default() noexcept
