@@ -118,6 +118,12 @@ impl StopToken {
     }
 }
 
+impl Default for StopToken {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl PartialEq for ffi::stop_source {
     fn eq(&self, other: &Self) -> bool {
         ffi::stop_source_equal(self, other)
@@ -171,6 +177,12 @@ impl StopSource {
     /// Returns an owned token associated with this source's stop state.
     pub fn get_token(&self) -> StopToken {
         StopToken::from_inner(ffi::stop_source_get_token(self.as_ffi()))
+    }
+}
+
+impl Default for StopSource {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
