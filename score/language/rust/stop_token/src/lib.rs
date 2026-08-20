@@ -71,17 +71,64 @@ mod ffi {
     impl UniquePtr<stop_source> {}
 }
 
-/// Opaque view of C++ `score::cpp::stop_token`.
-pub use ffi::stop_token as StopToken;
+impl PartialEq for ffi::stop_token {
+    fn eq(&self, other: &Self) -> bool {
+        ffi::stop_token_equal(self, other)
+    }
+}
 
-/// Opaque view of C++ `score::cpp::stop_source`.
-pub use ffi::stop_source as StopSource;
+impl Eq for ffi::stop_token {}
+
+/// Owned Rust wrapper around C++ `score::cpp::stop_token`.
+#[derive(Eq, PartialEq)]
+pub struct StopToken(cxx::UniquePtr<ffi::stop_token>);
 
 /// SAFETY: StopToken is meant to be used on multi-threaded use-cases as is described at:
 /// score/language/futurecpp/include/score/private/stop_token/stop_token.hpp
 /// Therefore it is safe to move and share these objects between threads.
 unsafe impl Send for StopToken {}
 unsafe impl Sync for StopToken {}
+
+impl StopToken {
+    /// Creates an owned, default-constructed token without associated stop state.
+    pub fn new() -> Self {
+        Self::from_inner(ffi::make_stop_token())
+    }
+
+    fn from_inner(inner: cxx::UniquePtr<ffi::stop_token>) -> Self {
+        if inner.is_null() {
+            std::process::abort();
+        }
+
+        Self(inner)
+    }
+
+    fn as_ffi(&self) -> &ffi::stop_token {
+        self.0.as_ref().unwrap_or_else(|| std::process::abort())
+    }
+
+    /// Returns whether a stop request has been made on this token's stop state.
+    pub fn stop_requested(&self) -> bool {
+        ffi::stop_token_stop_requested(self.as_ffi())
+    }
+
+    /// Returns whether this token has associated stop state that can be stopped.
+    pub fn stop_possible(&self) -> bool {
+        ffi::stop_token_stop_possible(self.as_ffi())
+    }
+}
+
+impl PartialEq for ffi::stop_source {
+    fn eq(&self, other: &Self) -> bool {
+        ffi::stop_source_equal(self, other)
+    }
+}
+
+impl Eq for ffi::stop_source {}
+
+/// Owned Rust wrapper around C++ `score::cpp::stop_source`.
+#[derive(Eq, PartialEq)]
+pub struct StopSource(cxx::UniquePtr<ffi::stop_source>);
 
 /// SAFETY: StopSource is a means to share a `stop_state` and that class uses atomics to guarantee
 /// that the state is consistent between threads, as described at:
@@ -90,65 +137,42 @@ unsafe impl Sync for StopToken {}
 unsafe impl Send for StopSource {}
 unsafe impl Sync for StopSource {}
 
-impl StopToken {
-    /// Creates an owned, default-constructed token without associated stop state.
-    pub fn make() -> cxx::UniquePtr<Self> {
-        ffi::make_stop_token()
-    }
-
-    /// Returns whether a stop request has been made on this token's stop state.
-    pub fn stop_requested(&self) -> bool {
-        ffi::stop_token_stop_requested(self)
-    }
-
-    /// Returns whether this token has associated stop state that can be stopped.
-    pub fn stop_possible(&self) -> bool {
-        ffi::stop_token_stop_possible(self)
-    }
-}
-
-impl PartialEq for StopToken {
-    fn eq(&self, other: &Self) -> bool {
-        ffi::stop_token_equal(self, other)
-    }
-}
-
-impl Eq for StopToken {}
-
 impl StopSource {
     /// Creates an owned source with a new associated stop state.
-    pub fn make() -> cxx::UniquePtr<Self> {
-        ffi::make_stop_source()
+    pub fn new() -> Self {
+        let source_ptr = ffi::make_stop_source();
+
+        if source_ptr.is_null() {
+            std::process::abort();
+        }
+
+        Self(source_ptr)
+    }
+
+    fn as_ffi(&self) -> &ffi::stop_source {
+        self.0.as_ref().unwrap_or_else(|| std::process::abort())
     }
 
     /// Returns whether a stop request has been made on this source's stop state.
     pub fn stop_requested(&self) -> bool {
-        ffi::stop_source_stop_requested(self)
+        ffi::stop_source_stop_requested(self.as_ffi())
     }
 
     /// Returns whether this source has associated stop state.
     pub fn stop_possible(&self) -> bool {
-        ffi::stop_source_stop_possible(self)
+        ffi::stop_source_stop_possible(self.as_ffi())
     }
 
     /// Requests stop on the associated stop state.
     pub fn request_stop(&self) -> bool {
-        ffi::stop_source_request_stop(self)
+        ffi::stop_source_request_stop(self.as_ffi())
     }
 
     /// Returns an owned token associated with this source's stop state.
-    pub fn get_token(&self) -> cxx::UniquePtr<StopToken> {
-        ffi::stop_source_get_token(self)
+    pub fn get_token(&self) -> StopToken {
+        StopToken::from_inner(ffi::stop_source_get_token(self.as_ffi()))
     }
 }
-
-impl PartialEq for StopSource {
-    fn eq(&self, other: &Self) -> bool {
-        ffi::stop_source_equal(self, other)
-    }
-}
-
-impl Eq for StopSource {}
 
 #[cfg(test)]
 mod tests {
@@ -156,8 +180,7 @@ mod tests {
 
     #[test]
     fn default_token_has_no_stop_state() {
-        let token = StopToken::make();
-        let token = token.as_ref().expect("default token must be allocated");
+        let token = StopToken::new();
 
         assert!(!token.stop_requested());
         assert!(!token.stop_possible());
@@ -165,14 +188,13 @@ mod tests {
 
     #[test]
     fn source_requests_stop_visible_to_its_token() {
-        let source = StopSource::make();
-        let token = source.as_ref().expect("stop source must be allocated").get_token();
-        let token = token.as_ref().expect("source token must be allocated");
+        let source = StopSource::new();
+        let token = source.get_token();
 
-        assert!(source.as_ref().expect("stop source must be allocated").stop_possible());
+        assert!(source.stop_possible());
         assert!(!token.stop_requested());
-        assert!(source.as_ref().expect("stop source must be allocated").request_stop());
+        assert!(source.request_stop());
         assert!(token.stop_requested());
-        assert!(!source.as_ref().expect("stop source must be allocated").request_stop());
+        assert!(!source.request_stop());
     }
 }
