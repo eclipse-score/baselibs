@@ -23,6 +23,7 @@ namespace
 
 TEST(IdlParserTest, VersionStringIsNonEmptyAndHasDotSeparatedFormat)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__asil");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "FLATBUFFERS_VERSION() returns a non-empty string in X.Y.Z format");

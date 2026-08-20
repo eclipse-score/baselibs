@@ -24,6 +24,7 @@ namespace unit_test
 
 TEST(FlatbuffersErrorDomainTest, ProvidesMessageForEveryErrorCode)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__verification, comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",

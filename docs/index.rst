@@ -55,6 +55,14 @@ The Components documentation provides detailed documentation for each individual
 
    baselibs/components/index
 
+Reporting
+---------
+
+.. toctree::
+   :maxdepth: 1
+
+   reporting/module_verification_report
+
 
 Quick Start - Building and Testing
 ==================================

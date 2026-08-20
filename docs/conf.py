@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+
 project = "S-CORE Baselibs"
 project_url = "https://eclipse-score.github.io/baselibs"
 version = "0.1"
