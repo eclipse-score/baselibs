@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_library(
     name = "flatbufferscpp",
@@ -177,4 +178,10 @@ cc_test(
         "//score/flatbuffers/common:buffer_version_envelope",
         "@googletest//:gtest_main",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

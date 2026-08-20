@@ -15,6 +15,6 @@ load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 docs_bundle(
     name = "docs",
-    source_dir = ".",
+    source_dir = "docs",
     visibility = ["//visibility:public"],
 )

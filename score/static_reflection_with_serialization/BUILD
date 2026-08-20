@@ -11,11 +11,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+
 test_suite(
     name = "unit_tests",
     tests = [
         "@score_baselibs//score/static_reflection_with_serialization/serialization:unit_tests",
         "@score_baselibs//score/static_reflection_with_serialization/visitor:unit_tests",
     ],
+    visibility = ["//visibility:public"],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
     visibility = ["//visibility:public"],
 )

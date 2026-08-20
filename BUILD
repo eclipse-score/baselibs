@@ -21,71 +21,71 @@ load(":qemu.bzl", "qemu_aarch64")
 docs(
     bundles = [
         {
-            "bundle": "//score/bitmanipulation/docs:docs",
+            "bundle": "//score/bitmanipulation:docs",
             "mount_at": "baselibs/components/bitmanipulation",
         },
         {
-            "bundle": "//score/concurrency/docs:docs",
+            "bundle": "//score/concurrency:docs",
             "mount_at": "baselibs/components/concurrency",
         },
         {
-            "bundle": "//score/containers/docs:docs",
+            "bundle": "//score/containers:docs",
             "mount_at": "baselibs/components/containers",
         },
         {
-            "bundle": "//score/containers_rust/docs:docs",
+            "bundle": "//score/containers_rust:docs",
             "mount_at": "baselibs/components/containers_rust",
         },
         {
-            "bundle": "//score/filesystem/docs:docs",
+            "bundle": "//score/filesystem:docs",
             "mount_at": "baselibs/components/filesystem",
         },
         {
-            "bundle": "//score/flatbuffers/docs:docs",
+            "bundle": "//score/flatbuffers:docs",
             "mount_at": "baselibs/components/flatbuffers",
         },
         {
-            "bundle": "//score/hash/docs:docs",
+            "bundle": "//score/hash:docs",
             "mount_at": "baselibs/components/hash",
         },
         {
-            "bundle": "//score/json/docs:docs",
+            "bundle": "//score/json:docs",
             "mount_at": "baselibs/components/json",
         },
         {
-            "bundle": "//score/language/docs:docs",
+            "bundle": "//score/language:docs",
             "mount_at": "baselibs/components/language",
         },
         {
-            "bundle": "//score/language/futurecpp/docs:docs",
+            "bundle": "//score/language/futurecpp:docs",
             "mount_at": "baselibs/components/language/futurecpp",
         },
         {
-            "bundle": "//score/language/safecpp/docs:docs",
+            "bundle": "//score/language/safecpp:docs",
             "mount_at": "baselibs/components/language/safecpp",
         },
         {
-            "bundle": "//score/memory/docs:docs",
+            "bundle": "//score/memory:docs",
             "mount_at": "baselibs/components/memory",
         },
         {
-            "bundle": "//score/mw/log/docs:docs",
+            "bundle": "//score/mw/log:docs",
             "mount_at": "baselibs/components/mw_log",
         },
         {
-            "bundle": "//score/os/docs:docs",
+            "bundle": "//score/os:docs",
             "mount_at": "baselibs/components/os",
         },
         {
-            "bundle": "//score/result/docs:docs",
+            "bundle": "//score/result:docs",
             "mount_at": "baselibs/components/result",
         },
         {
-            "bundle": "//score/static_reflection_with_serialization/docs:docs",
+            "bundle": "//score/static_reflection_with_serialization:docs",
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },
         {
-            "bundle": "//score/utils/docs:docs",
+            "bundle": "//score/utils:docs",
             "mount_at": "baselibs/components/utils",
         },
     ],

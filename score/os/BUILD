@@ -13,6 +13,7 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_library(
     name = "acl",
@@ -929,4 +930,10 @@ cc_library(
         "@platforms//os:qnx": ["@score_baselibs//score/os/qnx:qnx_version"],
         "//conditions:default": [],
     }),
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )
