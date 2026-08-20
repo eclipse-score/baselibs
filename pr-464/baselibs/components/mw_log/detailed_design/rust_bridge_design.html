@@ -398,39 +398,22 @@
 <li class="toctree-l1"><a class="reference internal" href="../../containers_rust/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filesystem/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../flatbuffers/index.html">FlatBuffers-Library</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../../hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json/index.html">JSON-Library</a></li>
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">memory</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../assumptions_of_use/index.html">Assumptions of Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Log Frontend Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Component Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../safety_analysis/dfa.html">DFA (Dependent Failure Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../safety_analysis/aou_requirements.html">Assumptions of Use</a></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Rust Bridge Detailed Design</a></li>
 <li class="toctree-l3"><a class="reference internal" href="log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Log Frontend Requirements</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../os/index.html">os</a></li>
@@ -529,7 +512,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="static-diagrams-for-unit-interactions">
 <h2>Static Diagrams for Unit Interactions<a class="headerlink" href="#static-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-e56ceb1e">
+<div class="need_container docutils container" id="SNCB-e3d235c9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__log__class_diagram">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -548,7 +531,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">logging</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__compat_languages" title="comp_arc_sta__log__class_diagram">comp_req__log__compat_languages</a>, <a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_custom_types" title="comp_arc_sta__log__class_diagram">comp_req__log__cfg_custom_types</a></span></span></div>
@@ -578,7 +562,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="dynamic-diagrams-for-unit-interactions">
 <h2>Dynamic Diagrams for Unit Interactions<a class="headerlink" href="#dynamic-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-65dab64d">
+<div class="need_container docutils container" id="SNCB-6435c59e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_op">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -597,7 +581,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">logging</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__compat_languages" title="comp_arc_dyn__log__log_op">comp_req__log__compat_languages</a>, <a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_custom_types" title="comp_arc_dyn__log__log_op">comp_req__log__cfg_custom_types</a></span></span></div>
@@ -624,7 +609,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ee274316">
+<div class="need_container docutils container" id="SNCB-be35d086">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_to_level">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -643,7 +628,8 @@ Those units are not described in architecture, as they all form a monolithic log
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">logging</span></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/modules/logging/logging/docs/architecture/index.html#comp__logging">comp__logging</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__log__compat_languages" title="comp_arc_dyn__log__log_to_level">comp_req__log__compat_languages</a></span></span></div>

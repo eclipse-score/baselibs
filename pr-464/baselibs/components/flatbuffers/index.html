@@ -402,29 +402,8 @@
 <li class="toctree-l2"><a class="reference internal" href="architecture/index.html">FlatBuffers Component Architecture</a></li>
 </ul>
 </details></li>
-
-
-
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../json/index.html">JSON-Library</a></li>
-
-
-
-
-
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../memory/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mw_log/index.html">log_frontend</a></li>
@@ -494,7 +473,7 @@
                   
   <section id="flatbuffers-library">
 <h1>FlatBuffers-Library<a class="headerlink" href="#flatbuffers-library" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-ec785ec2">
+<div class="need_container docutils container" id="SNCB-50aca741">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__flatbuffers">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -540,9 +519,8 @@
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</section>
 <section id="abstract">
-<h1>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">#</a></h1>
+<h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">#</a></h2>
 <p>This component request proposes the integration of Google FlatBuffers <a class="footnote-reference brackets" href="#flatbuffers" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> providing
 serialization, zero-copy read access, and structural verification of FlatBuffers data, as well as code
 generation via the <code class="docutils literal notranslate"><span class="pre">flatc</span></code> compiler.</p>
@@ -556,7 +534,7 @@ aggressive start-up time requirements, as it eliminates the need for runtime par
 </ul>
 </section>
 <section id="motivation">
-<h1>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h1>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
 <p>Module-specific configuration is a cross-cutting concern that impacts system startup time and
 development efficiency. For read-only configuration scenarios, runtime parsing approaches can
 limit startup performance in time-critical applications.</p>
@@ -571,7 +549,7 @@ limit startup performance in time-critical applications.</p>
 </dl>
 </section>
 <section id="rationale">
-<h1>Rationale<a class="headerlink" href="#rationale" title="Link to this heading">#</a></h1>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Link to this heading">#</a></h2>
 <p>Real-world experience with complex modules (e.g. diagnostics, SOME/IP) demonstrates that read-only
 configuration scenarios benefit significantly from zero-copy access patterns. For these use cases,
 FlatBuffers is ideal as it allows zero-copy data access. The schema-driven code generation further
@@ -579,7 +557,7 @@ accelerates development by providing type-safe access patterns, reducing both im
 and the potential for configuration-related runtime errors.</p>
 </section>
 <section id="specification">
-<h1>Specification<a class="headerlink" href="#specification" title="Link to this heading">#</a></h1>
+<h2>Specification<a class="headerlink" href="#specification" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">flatc</span></code> compiler of FlatBuffers <a class="footnote-reference brackets" href="#flatbuffers" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> generates code for serializing, accessing, and verifying
 FlatBuffers binary data.</p>
 <p>The FlatBuffers-Library provides features defined in <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/docs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a>.
@@ -589,7 +567,7 @@ to be ensured by the user.</p>
 <p>In addition, opt-in common buffer identification functionality is provided to allow identification of a buffer
 without further schema information. For details, refer to <a class="reference internal" href="requirements/index.html#comp_req__flatbuffers__buffer_identification" title="comp_req__flatbuffers__buffer_identification"><em class="xref need">Common Buffer Identification (comp_req__flatbuffers__buffer_identification)</em></a>.</p>
 <section id="schema-evolution">
-<h2>Schema Evolution<a class="headerlink" href="#schema-evolution" title="Link to this heading">#</a></h2>
+<h3>Schema Evolution<a class="headerlink" href="#schema-evolution" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt>Backward compatibility is maintained through:</dt><dd><ul class="simple">
 <li><p>Optional fields for new parameters</p></li>
@@ -600,7 +578,7 @@ without further schema information. For details, refer to <a class="reference in
 </dl>
 </section>
 <section id="build-integration">
-<h2>Build Integration<a class="headerlink" href="#build-integration" title="Link to this heading">#</a></h2>
+<h3>Build Integration<a class="headerlink" href="#build-integration" title="Link to this heading">#</a></h3>
 <dl class="simple">
 <dt>Build system integration provides reusable rules for:</dt><dd><ul class="simple">
 <li><p>Buffer serialization from module-specific schema and provided JSON data</p></li>
@@ -610,9 +588,9 @@ without further schema information. For details, refer to <a class="reference in
 </dl>
 </section>
 <section id="supported-use-cases">
-<h2>Supported use cases<a class="headerlink" href="#supported-use-cases" title="Link to this heading">#</a></h2>
+<h3>Supported use cases<a class="headerlink" href="#supported-use-cases" title="Link to this heading">#</a></h3>
 <section id="module-configuration">
-<h3>Module configuration<a class="headerlink" href="#module-configuration" title="Link to this heading">#</a></h3>
+<h4>Module configuration<a class="headerlink" href="#module-configuration" title="Link to this heading">#</a></h4>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../../_images/config_use_case_overview.drawio.svg"><img alt="Configuration use case overview" src="../../../_images/config_use_case_overview.drawio.svg" style="width: 70%;" />
 </a>
@@ -625,7 +603,7 @@ without further schema information. For details, refer to <a class="reference in
 <div class="line">The <code class="docutils literal notranslate"><span class="pre">flatc</span></code> compiler can convert binary config data (<code class="docutils literal notranslate"><span class="pre">config.bin</span></code>) back to JSON using the schema (<code class="docutils literal notranslate"><span class="pre">config.fbs</span></code>) for debugging purposes.</div>
 </div>
 <section id="identification-and-versioning">
-<h4>Identification and Versioning<a class="headerlink" href="#identification-and-versioning" title="Link to this heading">#</a></h4>
+<h5>Identification and Versioning<a class="headerlink" href="#identification-and-versioning" title="Link to this heading">#</a></h5>
 <dl class="simple">
 <dt>FlatBuffers binary files do not contain embedded schema information. Schema identification requires:</dt><dd><ul class="simple">
 <li><p>Embedded version fields in the schema root table</p></li>
@@ -637,11 +615,11 @@ without further schema information. For details, refer to <a class="reference in
 </section>
 </section>
 <section id="future-use-cases">
-<h2>Future use cases<a class="headerlink" href="#future-use-cases" title="Link to this heading">#</a></h2>
+<h3>Future use cases<a class="headerlink" href="#future-use-cases" title="Link to this heading">#</a></h3>
 <p>Future use cases are not yet in scope and may require extension of the existing module requirements
 and assumptions of use.</p>
 <section id="storage-format-read-write-modify">
-<h3>Storage format (read/write/modify)<a class="headerlink" href="#storage-format-read-write-modify" title="Link to this heading">#</a></h3>
+<h4>Storage format (read/write/modify)<a class="headerlink" href="#storage-format-read-write-modify" title="Link to this heading">#</a></h4>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../../_images/storage_format_use_case_overview.drawio.svg"><img alt="Storage format use case overview" src="../../../_images/storage_format_use_case_overview.drawio.svg" style="width: 70%;" />
 </a>
@@ -658,7 +636,7 @@ high-frequency write scenarios. Long-lived storage further benefits from schema 
 allowing stored files to remain compatible across software updates without requiring a format migration step.</p>
 </section>
 <section id="payload-format-communication">
-<h3>Payload format (communication)<a class="headerlink" href="#payload-format-communication" title="Link to this heading">#</a></h3>
+<h4>Payload format (communication)<a class="headerlink" href="#payload-format-communication" title="Link to this heading">#</a></h4>
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../../_images/payload_format_use_case_overview.drawio.svg"><img alt="Payload format use case overview" src="../../../_images/payload_format_use_case_overview.drawio.svg" style="width: 50%;" />
 </a>
@@ -681,15 +659,15 @@ communication on the sender side.</p>
 </section>
 </section>
 <section id="backwards-compatibility">
-<h1>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Link to this heading">#</a></h1>
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Link to this heading">#</a></h2>
 <p>Module configuration: Switching from JSON to FlatBuffers for module configuration is not backwards compatible.</p>
 </section>
 <section id="security-impact">
-<h1>Security Impact<a class="headerlink" href="#security-impact" title="Link to this heading">#</a></h1>
+<h2>Security Impact<a class="headerlink" href="#security-impact" title="Link to this heading">#</a></h2>
 <p>Module configuration: No change expected when compared to the JSON-based configuration approach.</p>
 </section>
 <section id="safety-impact">
-<h1>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h1>
+<h2>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h2>
 <p><strong>Tool Qualification</strong>: <code class="docutils literal notranslate"><span class="pre">flatc</span></code> compiler qualification is limited to the buffer serialization use case.
 Brief qualification is supplemented by module-specific validation.</p>
 <dl class="simple">
@@ -704,25 +682,25 @@ Module testing contributes to <code class="docutils literal notranslate"><span c
 Test from configuration data (JSON) to value verification in access APIs.</p>
 </section>
 <section id="license-impact">
-<h1>License Impact<a class="headerlink" href="#license-impact" title="Link to this heading">#</a></h1>
+<h2>License Impact<a class="headerlink" href="#license-impact" title="Link to this heading">#</a></h2>
 <p>None. FlatBuffers is licensed under the Apache License Version 2.0.</p>
 </section>
 <section id="how-to-teach-this">
-<h1>How to Teach This<a class="headerlink" href="#how-to-teach-this" title="Link to this heading">#</a></h1>
+<h2>How to Teach This<a class="headerlink" href="#how-to-teach-this" title="Link to this heading">#</a></h2>
 <p>Developer adoption requires practical examples and reusable patterns.
 The FlatBuffers-Library should provide examples for reference implementations.</p>
 </section>
 <section id="rejected-ideas">
-<h1>Rejected Ideas<a class="headerlink" href="#rejected-ideas" title="Link to this heading">#</a></h1>
+<h2>Rejected Ideas<a class="headerlink" href="#rejected-ideas" title="Link to this heading">#</a></h2>
 <p><strong>Protocol Buffers</strong>: Requires runtime parsing and memory allocation, defeating startup time objectives.</p>
 <p><strong>Custom binary formats</strong>: Higher development and maintenance overhead compared to proven FlatBuffers ecosystem.</p>
 </section>
 <section id="open-issues">
-<h1>Open Issues<a class="headerlink" href="#open-issues" title="Link to this heading">#</a></h1>
+<h2>Open Issues<a class="headerlink" href="#open-issues" title="Link to this heading">#</a></h2>
 <p>No open issues identified yet.</p>
 </section>
 <section id="footnotes">
-<h1>Footnotes<a class="headerlink" href="#footnotes" title="Link to this heading">#</a></h1>
+<h2>Footnotes<a class="headerlink" href="#footnotes" title="Link to this heading">#</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="flatbuffers" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
@@ -730,6 +708,7 @@ The FlatBuffers-Library should provide examples for reference implementations.</
 <p><a class="reference external" href="https://google.github.io/flatbuffers/">https://google.github.io/flatbuffers/</a></p>
 </aside>
 </aside>
+</section>
 </section>
 
 
@@ -779,37 +758,35 @@ The FlatBuffers-Library should provide examples for reference implementations.</
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">FlatBuffers-Library</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale">Rationale</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a><ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schema-evolution">Schema Evolution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-integration">Build Integration</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-use-cases">Supported use cases</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-configuration">Module configuration</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#identification-and-versioning">Identification and Versioning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rationale">Rationale</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#schema-evolution">Schema Evolution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-integration">Build Integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-use-cases">Supported use cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#module-configuration">Module configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#identification-and-versioning">Identification and Versioning</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-use-cases">Future use cases</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#storage-format-read-write-modify">Storage format (read/write/modify)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#payload-format-communication">Payload format (communication)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#future-use-cases">Future use cases</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#storage-format-read-write-modify">Storage format (read/write/modify)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#payload-format-communication">Payload format (communication)</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#backwards-compatibility">Backwards Compatibility</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#security-impact">Security Impact</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-impact">Safety Impact</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#license-impact">License Impact</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-teach-this">How to Teach This</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rejected-ideas">Rejected Ideas</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#open-issues">Open Issues</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backwards-compatibility">Backwards Compatibility</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-impact">Security Impact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-impact">Safety Impact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license-impact">License Impact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-teach-this">How to Teach This</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rejected-ideas">Rejected Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#open-issues">Open Issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#footnotes">Footnotes</a></li>
 </ul>
-
   </nav></div>
 
   <div class="sidebar-secondary-item">
