@@ -110,7 +110,7 @@ bazel_dep(name = "score_docs_as_code", version = "7.1.0", dev_dependency = True)
 # is merged and a release with the extension is published.
 git_override(
     module_name = "score_docs_as_code",
-    commit = "5c956f596f1ad223c06a3625bf4fa0f12c0da82b",
+    commit = "4ea902eda75ad0b3fd7dcd3c331ad8ba40cd05dc",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
