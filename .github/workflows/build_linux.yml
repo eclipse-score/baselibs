@@ -20,6 +20,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*"
   merge_group:
     types: [checks_requested]
   workflow_call:
@@ -32,6 +34,7 @@ jobs:
       matrix:
         include:
           - name: bl-x86_64-linux
+            artifact-name: x86_64-linux
             bazel-config: bl-x86_64-linux
             working-directory: "."
             bazel-build-target: "//..."
@@ -40,6 +43,7 @@ jobs:
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
             bazel-test-extra-flags: ""
           - name: bl-aarch64-linux
+            artifact-name: aarch64-linux
             bazel-config: bl-aarch64-linux
             working-directory: "."
             bazel-build-target: "//..."
@@ -51,6 +55,7 @@ jobs:
               -//score/os/test:socket_test
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
           - name: x86_64-linux (examples/integration)
+            artifact-name: x86_64-linux-integration
             bazel-config: x86_64-linux
             working-directory: "examples/integration"
             bazel-build-target: "//..."
@@ -79,9 +84,31 @@ jobs:
         working-directory: ${{ matrix.working-directory }}
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Upload test logs on failure
-        if: failure()
+      - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: bazel-testlogs-${{ matrix.name }}
-          path: ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
+          name: test-report-${{ matrix.artifact-name }}
+          path: |
+            ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
+            ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
+          retention-days: 5
+          if-no-files-found: warn
+  docs-verify:
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-docs-verify-target: "//:docs_check"
+  docs-build:
+    needs: [docs-verify, linux-build-and-test]
+    # Still build docs (with whatever test results were uploaded) even if
+    # linux-build-and-test failed; only skip if docs-verify itself failed.
+    if: always() && needs.docs-verify.result == 'success'
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-target: "//:docs"
+      retention-days: 5
+      tests-report-artifact: "test-report-x86_64-linux"
