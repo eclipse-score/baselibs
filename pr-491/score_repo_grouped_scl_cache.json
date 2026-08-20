@@ -1,1 +1,1958 @@
-[]
+[
+  {
+    "repo": {
+      "name": "local_repo",
+      "hash": "",
+      "url": ""
+    },
+    "needs": [
+      {
+        "need": "comp_req__flatbuffers__asil",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "IdlParserTest__VersionStringIsNonEmptyAndHasDotSeparatedFormat",
+              "file": "score/flatbuffers/details/idl_parser_test.cpp",
+              "line": 24,
+              "need": "comp_req__flatbuffers__asil",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__serialization",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "AllocatorTest__AllocateReturnsNonNull",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 75,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateSingleByte",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 91,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateLargeRegion",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 106,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__UsableThroughBasePointer",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 123,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__PreserveFrontAndBackIfAllocatingNewSizeFails",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 329,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeEqualsOldSize",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 377,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeSmallerThanOldSize",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 394,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/0",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/1",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/2",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/3",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/0",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/1",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/2",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/0",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/1",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/2",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/0",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/1",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/2",
+              "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__buffer_identification",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "VersionReaderTest__GetVersionRejectsNullPointer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 111,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsEmptyBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 127,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsTooSmallBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 143,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsInvalidBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 160,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsBufferWithMissingIdentifier",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 177,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__MissingIdentifierNotDetectedWideSchema",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 221,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__MissingIdentifierNotDetectedDeduplicatedRootVtable",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 293,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WrongFieldBuffers/VersionReaderWrongFieldTest__GetVersionRejectsBufferWithVersionInfoInWrongField/WrongField",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 385,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WrongFieldBuffers/VersionReaderWrongFieldTest__GetVersionRejectsBufferWithVersionInfoInWrongField/WrongFieldSimilarType",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 385,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/EqualMidValues",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/IdentifierMinVsMid",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/IdentifierMaxVsMid",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/MajorMinVsMinPlusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/MajorMaxVsMaxMinusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/MinorMinVsMinPlusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorEquals/MinorMaxVsMaxMinusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 56,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/EqualMidValues",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/IdentifierMinVsMid",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/IdentifierMaxVsMid",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/MajorMinVsMinPlusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/MajorMaxVsMaxMinusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/MinorMinVsMinPlusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/BufferVersionInfoEqualityTest__OperatorNotEquals/MinorMaxVsMaxMinusOne",
+              "file": "score/flatbuffers/details/buffer_version_info_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionVectorRejectsEmptyVector",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 128,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionSpanRejectsNullPointer",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 145,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsGarbageBuffer",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 162,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsTooSmallBuffer",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 190,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsBufferWithoutVersionInfo",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 219,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsWrongTypeMarker",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 248,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsNullTypeMarker",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 276,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsEmptyTypeMarker",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 305,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionReturnsNullDataPointerWhenEnvelopeIsNull",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 341,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsBufferWithNullIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 359,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionBufferNullByteIdentifierTest__BuildingBufferWithNullByteIdentifierAborts",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 457,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "InvalidIdentifier/InvalidIdentifierTest__GetVersionRejectsBufferWithInvalidIdentifier/MinInvalidByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 417,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "InvalidIdentifier/InvalidIdentifierTest__GetVersionRejectsBufferWithInvalidIdentifier/MaxInvalidByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 417,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__ReadsIdentifierAndVersionCorrectly/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__version_check",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__VerifyVersionVectorRejectsEmptyVector",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 538,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__VerifyVersionPropagatesGetVersionError",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 558,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionExactMatchSucceeds/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 617,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 683,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenMinorEquals/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 715,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "skipped",
+              "result_text": "score/flatbuffers/details/version_reader_test.cpp:756 minor == 0: no value below it can serve as minimum"
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "skipped",
+              "result_text": "score/flatbuffers/details/version_reader_test.cpp:756 minor == 0: no value below it can serve as minimum"
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 745,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "skipped",
+              "result_text": "score/flatbuffers/details/version_reader_test.cpp:793 minor == UINT16_MAX: no value above it can serve as minimum"
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 781,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "skipped",
+              "result_text": "score/flatbuffers/details/version_reader_test.cpp:793 minor == UINT16_MAX: no value above it can serve as minimum"
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 822,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinMinVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinMajorMinorOne",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MajorOneMinMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/TypicalValues",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxMajorNearMaxMinor",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxMaxVersion",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BoundaryValues/VersionBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxByteIdentifier",
+              "file": "score/flatbuffers/details/version_reader_test.cpp",
+              "line": 859,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FlatbuffersErrorDomainTest__ProvidesMessageForEveryErrorCode",
+              "file": "score/flatbuffers/details/error_test.cpp",
+              "line": 25,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__access",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "LoadBufferPublicApiTest__VectorOverloadSuccessPathReturnsEmptyVector",
+              "file": "score/flatbuffers/details/load_buffer_test.cpp",
+              "line": 497,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadBufferPublicApiTest__PmrVectorOverloadSuccessPathReturnsEmpty",
+              "file": "score/flatbuffers/details/load_buffer_test.cpp",
+              "line": 519,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsRegularFileContents",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 126,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsEmptyFileAsEmptyVector",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 140,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsBinaryContentIncludingNullBytes",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 153,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsSingleByteFile",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 167,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsLarge5MBFileCorrectly",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 181,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "LoadFlatbufferTest__LoadsFileContainingOnlyNullBytes",
+              "file": "score/flatbuffers/test/load_buffer_test.cpp",
+              "line": 201,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__verification",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "FlatbuffersErrorDomainTest__ProvidesMessageForEveryErrorCode",
+              "file": "score/flatbuffers/details/error_test.cpp",
+              "line": 25,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
