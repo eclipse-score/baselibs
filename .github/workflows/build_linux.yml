@@ -54,6 +54,27 @@ jobs:
               -//score/os/test:errno_test
               -//score/os/test:socket_test
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
+          - name: bl-x86_64-linux-llvm
+            artifact-name: x86_64-linux-llvm
+            bazel-config: bl-x86_64-linux-llvm
+            working-directory: "."
+            bazel-build-target: "//..."
+            bazel-test-target: >-
+              //...
+              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+            bazel-test-extra-flags: ""
+          - name: bl-aarch64-linux-llvm
+            artifact-name: aarch64-linux-llvm
+            bazel-config: bl-aarch64-linux-llvm
+            working-directory: "."
+            bazel-build-target: "//..."
+            bazel-test-target: >-
+              //...
+              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+              -//score/os/test:acl_test
+              -//score/os/test:errno_test
+              -//score/os/test:socket_test
+            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
           - name: x86_64-linux (examples/integration)
             artifact-name: x86_64-linux-integration
             bazel-config: x86_64-linux
@@ -72,7 +93,7 @@ jobs:
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
       - name: Install QEMU
-        if: matrix.bazel-config == 'bl-aarch64-linux'
+        if: contains(matrix.bazel-config, 'aarch64-linux')
         run: |
           sudo apt-get update
           sudo apt install -y qemu-user
