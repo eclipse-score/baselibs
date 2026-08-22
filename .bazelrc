@@ -52,6 +52,14 @@ build:bl-x86_64-linux --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-li
 build:bl-x86_64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
 test:bl-x86_64-linux --config=_bl_common
 
+build:bl-x86_64-linux-llvm --platforms=@score_bazel_platforms//:x86_64-linux
+build:bl-x86_64-linux-llvm --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+build:bl-x86_64-linux-llvm --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+# The copts must be handeled by toolchain features
+# Once https://github.com/eclipse-score/score_cpp_policies/issues/15 is resolved we can remove this line
+build:bl-x86_64-linux-llvm --copt=-Wno-error=deprecated-declarations
+test:bl-x86_64-linux-llvm --config=_bl_common
+
 # Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
 build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
 build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
@@ -60,6 +68,17 @@ test:bl-aarch64-linux --config=_bl_common
 test:bl-aarch64-linux --test_timeout=300
 test:bl-aarch64-linux --run_under=//:qemu_aarch64
 test:bl-aarch64-linux --test_tag_filters=-no_rust_doc_test
+
+build:bl-aarch64-linux-llvm --platforms=@score_bazel_platforms//:aarch64-linux
+build:bl-aarch64-linux-llvm --extra_toolchains=@llvm_toolchain//:cc-toolchain-aarch64-linux
+build:bl-aarch64-linux-llvm --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_linux_gnu
+# The copts must be handeled by toolchain features
+# Once https://github.com/eclipse-score/score_cpp_policies/issues/15 is resolved we can remove this line
+build:bl-aarch64-linux-llvm --copt=-Wno-error=deprecated-declarations
+test:bl-aarch64-linux-llvm --config=_bl_common
+test:bl-aarch64-linux-llvm --test_timeout=300
+test:bl-aarch64-linux-llvm --run_under=//:qemu_aarch64
+test:bl-aarch64-linux-llvm --test_tag_filters=-no_rust_doc_test
 
 # Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
 build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix

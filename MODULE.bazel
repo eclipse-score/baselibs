@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -52,6 +52,7 @@ use_repo(
     gcc,
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
+    "score_gcc_x86_64_toolchain_pkg",
     "score_qcc_aarch64_toolchain",
     "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
@@ -154,10 +155,46 @@ bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
 llvm.toolchain(
+    cxx_standard = {"": "c++17"},
+    link_libs = {"": [
+        "-lrt",
+        "-latomic",
+    ]},
     llvm_version = "22.1.7",
-    stdlib = {"linux-x86_64": "stdc++"},
+    stdlib = {"": "stdc++"},
+)
+
+# Reuse the sysroot (and libstdc++ headers) shipped with the S-CORE GCC toolchain
+# package for the hermetic LLVM toolchain.
+llvm.sysroot(
+    label = "@score_gcc_x86_64_sysroot//x86_64-unknown-linux-gnu/sysroot:sysroot",
+    targets = ["linux-x86_64"],
+)
+llvm.sysroot(
+    label = "@score_gcc_aarch64_sysroot//aarch64-unknown-linux-gnu/sysroot:sysroot",
+    targets = ["linux-aarch64"],
 )
 use_repo(llvm, "llvm_toolchain")
+
+gcc_sysroot = use_repo_rule("//third_party/gcc_sysroot:repository.bzl", "gcc_sysroot")
+
+# GCC package tarball, laid out so the sysroot directory is its own Bazel
+# package (required by the LLVM sysroot mechanism).
+gcc_sysroot(
+    name = "score_gcc_x86_64_sysroot",
+    sha256 = "c65e21725d4d9993bab0b4ef2aed7065a4bf1b0f232a068d778eb670f80daa60",
+    strip_prefix = "x86_64-unknown-linux-gnu",
+    triple = "x86_64-unknown-linux-gnu",
+    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.5/x86_64-unknown-linux-gnu_gcc15.tar.gz",
+)
+
+gcc_sysroot(
+    name = "score_gcc_aarch64_sysroot",
+    sha256 = "ff9fe6caed22f15a1dd87a93bff5cfa1536b5dddcff3364827f97ebc01a494a1",
+    strip_prefix = "aarch64-unknown-linux-gnu",
+    triple = "aarch64-unknown-linux-gnu",
+    url = "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.5/aarch64-unknown-linux-gnu_gcc15.tar.gz",
+)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
