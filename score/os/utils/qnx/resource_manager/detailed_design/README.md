@@ -53,8 +53,8 @@ The core implementation of the resource manager has the following dependencies w
    - score/os/qnx:resmgr
    - score/os/qnx:types
    - score/os/qnx:dispatch
-   - platform/aas/lib/os:errno
-   - platform/aas/lib/result
+   - score/os:errno
+   - score/result
 - BMW::Middleware Logging library to monitor and notify the system with a proper state for the resource manager.
     - platform/aas/ara/log
 - QNX Standard Libraries for c/c++.
@@ -66,9 +66,9 @@ The following diagram represents behavior of the resource manager during the Run
 
 <img alt="Resource Manager Core runtime sequence diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_RuntimeSequenceDiagram.puml">
 
-![Resource Manager Core activity diagram - Initialize](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Initialize.puml)
+![Resource Manager Core activity diagram - Initialize](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Initialize.puml)
 
-![Resource Manager Core activity diagram - Run](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/safe-posix-platform/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Run.puml)
+![Resource Manager Core activity diagram - Run](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/utils/qnx/resource_manager/detailed_design/ResourceManager_ActivityDiagram_Run.puml)
 
 ## Performance
 ### Limitations and Constraints

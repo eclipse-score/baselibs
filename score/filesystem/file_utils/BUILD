@@ -54,7 +54,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         "//visibility:public",  # platform_only
-        # "@ddad//platform/aas:__subpackages__",
     ],
     deps = [
         "@score_baselibs//score/filesystem:error",

@@ -19,7 +19,6 @@ cc_library(
     srcs = ["network_interface_mock.cpp"],
     hdrs = ["network_interface_mock.h"],
     visibility = [
-        "//platform/aas/pas/sysmon:__subpackages__",
         "@score_baselibs//score/os/linux/utils/test:__subpackages__",
     ],
     deps = [

@@ -2,7 +2,7 @@
 
 Two motivations exist for preventing the use of C++ exceptions:
 - Safety-relevant applications should avoid use of exceptions, further details
-  can be found under [safety concept](broken_link_g/swh/xpad_documentation/blob/de289f4cbe231e3c164b9026b85589e5752a0b66/architecture/architecture_concept/safety/README.md#c-exceptions)
+  can be found under the safety concept
   and the [AEP-002: C++ Embedded Guidelines](broken_link_cf/pages/viewpage.action?pageId=193061641)
 - C++ exceptions can cause performance issues since uncaught exceptions may
   cause a thread to hang with elevated processor use, rather than terminate.
