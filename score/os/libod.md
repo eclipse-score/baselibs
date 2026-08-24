@@ -367,6 +367,8 @@ The stdlib exports the following function:
 * `exit` - This function is used to exit the calling program. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/e/exit.html
 * `quick_exit` - This function is used to exit the calling program without completely cleaning up resources. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/q/quick_exit.html
 * `getenv` - This function gets the value of an environment variable. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/g/getenv.html
+* `setenv` - This function sets the value of an environment variable. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/setenv.html
+* `unsetenv` - This function unsets the value of an environment variable. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/u/unsetenv.html
 * `realpath` - This function resolves a pathname. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/r/realpath.html
 * `mkstemp` - This function makes a unique temporary filename and open the file. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/m/mkstemp.html
 * `mkstemps` - This function makes a unique temporary filename and open the file. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/m/mkstemp.html

@@ -34,6 +34,8 @@ class StdlibImpl final : public Stdlib
     void quick_exit(const int status) const noexcept override;
     /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: Function is wrapped */
     char* getenv(const char* const name) const noexcept override;
+    int setenv(const char* const name, const char* const value, int overwrite) const noexcept override;
+    int unsetenv(const char* const name) const noexcept override;
     Result<void*> calloc(size_t num_of_elements, size_t size) const noexcept override;
     void free(void* ptr) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME: Function is wrapped */
