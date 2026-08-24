@@ -29,6 +29,8 @@ class StdlibMock : public Stdlib
     MOCK_METHOD(void, exit, (int), (const, noexcept, override));
     MOCK_METHOD(void, quick_exit, (int), (const, noexcept, override));
     MOCK_METHOD(char*, getenv, (const char*), (const, noexcept, override));
+    MOCK_METHOD(int, setenv, (const char*, const char*, int), (const, noexcept, override));
+    MOCK_METHOD(int, unsetenv, (const char*), (const, noexcept, override));
     MOCK_METHOD(Result<void*>, calloc, (size_t, size_t), (const, noexcept, override));
     MOCK_METHOD(void, free, (void*), (const, noexcept, override));
     MOCK_METHOD(Result<char*>, realpath, (const char*, char*), (const, noexcept, override));
