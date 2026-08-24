@@ -187,8 +187,8 @@ Non-Functional Requirements
 
    The Memory library shall ensure shared memory data structures remain valid regardless of process virtual address space mappings.
 
-.. needextend:: "__memory__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs
 
-.. needextend:: "__memory__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: memory

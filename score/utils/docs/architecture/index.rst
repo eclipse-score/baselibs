@@ -88,6 +88,9 @@ Interfaces
    :version: 1
    :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
 
+.. needextend:: c.this_doc() and type == "logic_arc_int_op"
+   :+tags: baselibs, utils
+
 .. logic_arc_int_op:: Destructor
    :id: logic_arc_int_op__utils__scoped_op_destruct
    :security: YES

@@ -199,5 +199,5 @@ Assumptions of Use
    requirement in the application use case and by application developers.
 
 
-.. needextend:: is_external == False and "__log__" in id
+.. needextend:: c.this_doc() and type == "aou_req"
    :+tags: logging

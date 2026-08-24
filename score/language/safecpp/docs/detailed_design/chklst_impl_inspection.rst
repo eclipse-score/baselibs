@@ -18,6 +18,7 @@
    :version: 1
    :safety: ASIL_B
    :security: YES
+   :tags: safecpp
    :realizes: wp__sw_implementation_inspection[version==1]
 
 

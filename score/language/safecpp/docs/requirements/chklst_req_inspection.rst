@@ -19,6 +19,7 @@
    :version: 1
    :safety: ASIL_B
    :security: YES
+   :tags: safecpp
    :realizes: wp__requirements_inspect[version==1]
 
 Requirement Inspection Checklist

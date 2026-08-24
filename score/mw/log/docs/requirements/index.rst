@@ -49,7 +49,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall load configurations from an application-specific
@@ -63,7 +63,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     The application specific file shall be the first valid configuration file
@@ -82,7 +82,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall load configurations from a global configuration file.
@@ -98,7 +98,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall fall back to a default value for a configuration item
@@ -114,7 +114,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     For each configuration field, ``mw::log`` shall resolve values using the
@@ -132,7 +132,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall discard any configuration files with syntax errors and
@@ -146,7 +146,7 @@ Configuration
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall discard any invalid configuration fields.
@@ -164,7 +164,7 @@ Configuration Fields
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall support configuration of a file path specifying where log
@@ -178,7 +178,7 @@ Configuration Fields
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall allow configuration of the size of the internal buffer.
@@ -191,7 +191,7 @@ Configuration Fields
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
    ``mw::log`` shall support configuration of an ECU log identifier, which shall
@@ -205,7 +205,7 @@ Configuration Fields
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
    ``mw::log`` shall support configuration of an application log identifier,
@@ -222,7 +222,7 @@ Log Handling
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall detect and report any message loss.
@@ -235,7 +235,7 @@ Log Handling
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall allow extensions for custom log types.
@@ -251,7 +251,7 @@ Log Message Format
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall attach a local timestamp to each log entry.
@@ -267,7 +267,7 @@ System Backend
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall support logging of slog backed for QNX deployments.
@@ -283,7 +283,7 @@ Console Backend
    :reqtype: Functional
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall support output log messages to stdout when running unit tests.
@@ -299,7 +299,7 @@ Compatibility
    :reqtype: Interface
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall support QNX and Linux operating systems, encapsulated via OSAL.
@@ -312,10 +312,13 @@ Compatibility
    :reqtype: Interface
    :security: NO
    :safety: ASIL_B
-   :satisfied_by: comp__logging[version==1]
+   :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall provide a logging API for C++ and Rust.
+
+.. needextend:: c.this_doc() and type == "comp_req"
+   :+tags: logging
 
 .. toctree::
    :maxdepth: 1

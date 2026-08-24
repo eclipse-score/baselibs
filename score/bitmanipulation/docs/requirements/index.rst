@@ -138,5 +138,5 @@ Assumptions of Use (AoU)
 
    Note: The library provides no internal thread safety guarantees.
 
-.. needextend:: "__bitmanipulation__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, bitmanipulation

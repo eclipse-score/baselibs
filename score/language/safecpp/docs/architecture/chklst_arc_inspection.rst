@@ -19,6 +19,7 @@
    :version: 1
    :safety: ASIL_B
    :security: YES
+   :tags: safecpp
    :realizes: wp__sw_arch_verification[version==1]
 
 Architecture Inspection Checklist

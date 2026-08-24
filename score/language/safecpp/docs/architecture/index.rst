@@ -231,3 +231,9 @@ Interfaces
    :status: valid
    :version: 1
    :included_by: logic_arc_int__baselibs__string_view[version==1]
+
+.. needextend:: c.this_doc() and type == "logic_arc_int_op"
+   :+tags: baselibs
+
+.. needextend:: c.this_doc() and type != ""
+   :+tags: safecpp

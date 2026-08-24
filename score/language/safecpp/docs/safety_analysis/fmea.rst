@@ -22,6 +22,7 @@ FMEA (Failure Modes and Effects Analysis)
    :version: 1
    :safety: ASIL_B
    :security: NO
+   :tags: safecpp
    :realizes: wp__sw_component_fmea[version==1]
 
 .. note:: Use the content of the document to describe e.g. why a fault model is not applicable for the diagram.
