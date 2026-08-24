@@ -460,7 +460,7 @@
                   
   <section id="dfa-dependent-failure-analysis">
 <h1>DFA (Dependent Failure Analysis)<a class="headerlink" href="#dfa-dependent-failure-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-161b05b1">
+<div class="need_container docutils container" id="SNCB-d4d42808">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__baselibs_dfa">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -761,7 +761,7 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <section id="dfa">
 <h1>DFA<a class="headerlink" href="#dfa" title="Link to this heading">#</a></h1>
 <p>For all identified applicable failure initiators, the DFA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-85b9a241">
+<div class="need_container docutils container" id="SNCB-3fb8bdc3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -809,7 +809,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-16b5a6c0">
+<div class="need_container docutils container" id="SNCB-3865fc41">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__locked_ressource">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -841,7 +841,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <td class="meta" colspan="3"></td>
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><p>Only components “filesystem” and “memory_shared” should have the problem (“bitmanipulation” should not be affected due to shortness of execution)
-“memory_shared” cares for this by above linked feature requirement and <a class="reference internal" href="../../baselibs/components/memory_shared/docs/requirements/index.html#comp_req__memory__atomic_ops" title="comp_req__memory__atomic_ops"><em class="xref need">Atomic Operations in Shared... (comp_req__memory__atomic_ops)</em></a>.
+“memory_shared” cares for this by above linked feature requirement and <a class="reference internal" href="../../baselibs/components/memory/requirements/index.html#comp_req__memory__atomic_ops" title="comp_req__memory__atomic_ops"><em class="xref need">Atomic Operations in Shared... (comp_req__memory__atomic_ops)</em></a>.
 “filesystem” component may fail on this but this is covered by common platform aou linked above.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
@@ -858,7 +858,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-eb402e08">
+<div class="need_container docutils container" id="SNCB-36fde20d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_file_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -882,7 +882,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/filesystem/docs/requirements/index.html#aou_req__filesystem__thread_safety" title="feat_saf_dfa__baselibs__conc_file_access">aou_req__filesystem__thread_safety</a></span></span></div>
+<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/filesystem/requirements/index.html#aou_req__filesystem__thread_safety" title="feat_saf_dfa__baselibs__conc_file_access">aou_req__filesystem__thread_safety</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__conc_file_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
 </div>
@@ -905,7 +905,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-db2205ae">
+<div class="need_container docutils container" id="SNCB-63e8d81e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -929,7 +929,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/bitmanipulation/docs/requirements/index.html#aou_req__bitmanipulation__concurrent_access" title="feat_saf_dfa__baselibs__conc_memory_access">aou_req__bitmanipulation__concurrent_access</a></span></span></div>
+<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/bitmanipulation/requirements/index.html#aou_req__bitmanipulation__concurrent_access" title="feat_saf_dfa__baselibs__conc_memory_access">aou_req__bitmanipulation__concurrent_access</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__conc_memory_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
 </div>
@@ -952,7 +952,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a4e8b744">
+<div class="need_container docutils container" id="SNCB-6a8b0e8e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__blocked_execution">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1000,7 +1000,7 @@ all blocks should be detected by unit testing.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-820f8606">
+<div class="need_container docutils container" id="SNCB-50527461">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__cpu_starvation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
