@@ -33,6 +33,9 @@ common --//score/json:base_library=nlohmann
 # Import central S-CORE toolchain configuration
 try-import %workspace%/score.bazelrc/score_toolchain.bazelrc
 
+# Register S-CORE default host toolchains globally as the default build configuration
+build --config=_score_common
+
 build --java_language_version=17
 build --tool_java_language_version=17
 build --java_runtime_version=remotejdk_17

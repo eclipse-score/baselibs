@@ -22,7 +22,7 @@ bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4")
 bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
 
 # GCC Toolchains
-gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc")
+gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 
 ## Linux Toolchains
 gcc.toolchain(
@@ -72,6 +72,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 ferrocene = use_extension(
     "@score_toolchains_rust//extensions:ferrocene_toolchain_ext.bzl",
     "ferrocene_toolchain_ext",
+    dev_dependency = True,
 )
 ferrocene.toolchain(
     name = "ferrocene_aarch64_ebclfsa",
