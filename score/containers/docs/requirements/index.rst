@@ -174,8 +174,8 @@ Assumptions of Use (AoU)
 
    The user shall ensure that element types are copy constructible, move constructible and destructible, and additionally for intrusive containers that they provide the required intrusive node members.
 
-.. needextend:: "__containers__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs
 
-.. needextend:: "__containers__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: containers

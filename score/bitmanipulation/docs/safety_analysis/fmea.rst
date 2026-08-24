@@ -151,3 +151,6 @@ For all identified applicable failure initiators, the FMEA is performed in the f
 
    Wrongly defined Enum values are not checked by Bitmanipulation component, the output of the action may be unexpected.
    So the user has to make sure this is done in a right way, covered by the linked AoU.
+
+.. needextend:: c.this_doc() and type == "comp_saf_fmea"
+   :+tags: baselibs, bitmanipulation
