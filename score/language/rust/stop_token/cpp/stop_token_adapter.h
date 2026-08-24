@@ -14,7 +14,7 @@
 #ifndef SCORE_LANGUAGE_RUST_STOP_TOKEN_CPP_STOP_TOKEN_ADAPTER_H
 #define SCORE_LANGUAGE_RUST_STOP_TOKEN_CPP_STOP_TOKEN_ADAPTER_H
 
-#include <score/stop_token.hpp>
+#include "score/stop_token.hpp"
 
 #include <memory>
 

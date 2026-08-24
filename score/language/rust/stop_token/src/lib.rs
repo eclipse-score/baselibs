@@ -92,29 +92,22 @@ unsafe impl Sync for StopToken {}
 impl StopToken {
     /// Creates an owned, default-constructed token without associated stop state.
     pub fn new() -> Self {
-        Self::from_inner(ffi::make_stop_token())
-    }
-
-    fn from_inner(inner: cxx::UniquePtr<ffi::stop_token>) -> Self {
+        let inner = ffi::make_stop_token();
         if inner.is_null() {
-            std::process::abort();
+            panic!("Got NULL pointer when creating StopToken");
         }
 
         Self(inner)
     }
 
-    fn as_ffi(&self) -> &ffi::stop_token {
-        self.0.as_ref().unwrap_or_else(|| std::process::abort())
-    }
-
     /// Returns whether a stop request has been made on this token's stop state.
     pub fn stop_requested(&self) -> bool {
-        ffi::stop_token_stop_requested(self.as_ffi())
+        ffi::stop_token_stop_requested(&self.0)
     }
 
     /// Returns whether this token has associated stop state that can be stopped.
     pub fn stop_possible(&self) -> bool {
-        ffi::stop_token_stop_possible(self.as_ffi())
+        ffi::stop_token_stop_possible(&self.0)
     }
 }
 
@@ -149,34 +142,30 @@ impl StopSource {
         let source_ptr = ffi::make_stop_source();
 
         if source_ptr.is_null() {
-            std::process::abort();
+            panic!("Got NULL pointer when creating StopSource")
         }
 
         Self(source_ptr)
     }
 
-    fn as_ffi(&self) -> &ffi::stop_source {
-        self.0.as_ref().unwrap_or_else(|| std::process::abort())
-    }
-
     /// Returns whether a stop request has been made on this source's stop state.
     pub fn stop_requested(&self) -> bool {
-        ffi::stop_source_stop_requested(self.as_ffi())
+        ffi::stop_source_stop_requested(&self.0)
     }
 
     /// Returns whether this source has associated stop state.
     pub fn stop_possible(&self) -> bool {
-        ffi::stop_source_stop_possible(self.as_ffi())
+        ffi::stop_source_stop_possible(&self.0)
     }
 
     /// Requests stop on the associated stop state.
     pub fn request_stop(&self) -> bool {
-        ffi::stop_source_request_stop(self.as_ffi())
+        ffi::stop_source_request_stop(&self.0)
     }
 
     /// Returns an owned token associated with this source's stop state.
     pub fn get_token(&self) -> StopToken {
-        StopToken::from_inner(ffi::stop_source_get_token(self.as_ffi()))
+        StopToken(ffi::stop_source_get_token(&self.0))
     }
 }
 

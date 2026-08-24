@@ -26,5 +26,8 @@ path = "src/lib.rs"
 [dependencies]
 cxx = "1.0.186"
 
+[build-dependencies]
+cxx-build = "1.0.186"
+
 [lints]
 workspace = true

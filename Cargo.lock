@@ -343,6 +343,7 @@ name = "stop_token"
 version = "0.0.1"
 dependencies = [
  "cxx",
+ "cxx-build",
 ]
 
 [[package]]
