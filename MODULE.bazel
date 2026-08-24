@@ -313,4 +313,3 @@ git_override(
 #
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
