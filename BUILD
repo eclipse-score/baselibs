@@ -91,7 +91,7 @@ docs(
     ],
     external_needs = [
         "@score_platform//:needs_json_file",
-        "@score_process//:needs_json_file",
+        "@score_process_description//:needs_json_file",
     ],
     source_dir = "docs",
 )
