@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 Contributors to the Eclipse Foundation
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,10 +19,8 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<Syslog> Syslog::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<SyslogImpl>(memory_resource);
 }
