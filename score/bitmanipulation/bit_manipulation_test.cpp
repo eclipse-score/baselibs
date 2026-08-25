@@ -236,14 +236,19 @@ TEST(SetBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
-                   "Check that SetBit returns false when the bit position exceeds the width of a uint8_t value.");
+                   "Check that SetBit returns false and leaves the value unmodified when the bit position exceeds "
+                   "the width of a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    std::uint8_t input{0};  // 00000000
+    constexpr std::uint8_t expectedResult{0b1011'0101U};  // must stay unchanged
+    std::uint8_t input{expectedResult};
 
     EXPECT_FALSE(::score::platform::SetBit(input, 8U));
+    EXPECT_EQ(input, expectedResult);
+
     EXPECT_FALSE(::score::platform::SetBit(input, 10U));
+    EXPECT_EQ(input, expectedResult);
 }
 
 TEST(ClearBit, WithUInt8)
@@ -284,14 +289,19 @@ TEST(ClearBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
-                   "Check that ClearBit returns false when the bit position exceeds the width of a uint8_t value.");
+                   "Check that ClearBit returns false and leaves the value unmodified when the bit position exceeds "
+                   "the width of a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    std::uint8_t input{0};  // 00000000
+    constexpr std::uint8_t expectedResult{0b1011'0101U};  // must stay unchanged
+    std::uint8_t input{expectedResult};
 
     EXPECT_FALSE(::score::platform::ClearBit(input, 8U));
+    EXPECT_EQ(input, expectedResult);
+
     EXPECT_FALSE(::score::platform::ClearBit(input, 10U));
+    EXPECT_EQ(input, expectedResult);
 }
 
 TEST(ToggleBit, WithUInt8)
@@ -334,14 +344,19 @@ TEST(ToggleBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
-                   "Check that ToggleBit returns false when the bit position exceeds the width of a uint8_t value.");
+                   "Check that ToggleBit returns false and leaves the value unmodified when the bit position exceeds "
+                   "the width of a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    std::uint8_t input{0};  // 00000000
+    constexpr std::uint8_t expectedResult{0b1011'0101U};  // must stay unchanged
+    std::uint8_t input{expectedResult};
 
     EXPECT_FALSE(::score::platform::ToggleBit(input, 8U));
+    EXPECT_EQ(input, expectedResult);
+
     EXPECT_FALSE(::score::platform::ToggleBit(input, 10U));
+    EXPECT_EQ(input, expectedResult);
 }
 
 TEST(CheckBit, WithUInt8)
