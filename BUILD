@@ -14,6 +14,7 @@
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
+load("@score_docs_as_code//:bzl/docs_and_test.bzl", "docs_and_test")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
@@ -94,6 +95,28 @@ docs(
         "@score_process_description//:needs_json_file",
     ],
     source_dir = "docs",
+)
+
+# Builds/serves the module verification report for a small, known-good subset
+# of //score/... with coverage. The full //score/... tree currently has ~20
+# pre-existing, unrelated build failures under bl-aarch64-linux (deprecated
+# logging API under -Werror=deprecated-declarations, and a Rust nightly-only
+# feature used by score_log_fmt), so this uses a reduced scope sufficient to
+# validate the docs_and_test integration and coverage report rendering.
+#
+# Extra Bazel flags (e.g. --config=…) go on the command line after --, e.g.::
+#
+#     bazel run //:module_verification_report -- --test-flag=--config=bl-aarch64-linux
+#
+# See @score_docs_as_code//:bzl/docs_and_test.bzl for the underlying driver.
+docs_and_test(
+    name = "module_verification_report",
+    test_targets = [
+        "//score/bitmanipulation/...",
+        "//score/flatbuffers/...",
+        "//score/filesystem/...",
+    ],
+    docs_target = "//:docs",
 )
 
 # Generate `compile_commands.json`.

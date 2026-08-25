@@ -127,6 +127,7 @@ class VersionReaderTest : public ::testing::Test
 
 TEST_F(VersionReaderTest, GetVersionVectorRejectsEmptyVector)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -143,6 +144,7 @@ TEST_F(VersionReaderTest, GetVersionVectorRejectsEmptyVector)
 
 TEST_F(VersionReaderTest, GetVersionSpanRejectsNullPointer)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "kNullDataPointer is returned when span.data() is null");
@@ -159,6 +161,7 @@ TEST_F(VersionReaderTest, GetVersionSpanRejectsNullPointer)
 
 TEST_F(VersionReaderTest, GetVersionRejectsGarbageBuffer)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -186,6 +189,7 @@ TEST_F(VersionReaderTest, GetVersionRejectsGarbageBuffer)
 
 TEST_F(VersionReaderTest, GetVersionRejectsTooSmallBuffer)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -214,6 +218,7 @@ TEST_F(VersionReaderTest, GetVersionRejectsTooSmallBuffer)
 
 TEST_F(VersionReaderTest, GetVersionRejectsBufferWithoutVersionInfo)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -242,6 +247,7 @@ TEST_F(VersionReaderTest, GetVersionRejectsBufferWithoutVersionInfo)
 
 TEST_F(VersionReaderTest, GetVersionRejectsWrongTypeMarker)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -269,6 +275,7 @@ TEST_F(VersionReaderTest, GetVersionRejectsWrongTypeMarker)
 
 TEST_F(VersionReaderTest, GetVersionRejectsNullTypeMarker)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -297,6 +304,7 @@ TEST_F(VersionReaderTest, GetVersionRejectsNullTypeMarker)
 
 TEST_F(VersionReaderTest, GetVersionRejectsEmptyTypeMarker)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -332,6 +340,7 @@ static const score::flatbuffers::BufferVersionEnvelope* ReturnNullEnvelope(const
 
 TEST_F(VersionReaderTest, GetVersionReturnsNullDataPointerWhenEnvelopeIsNull)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -349,6 +358,7 @@ TEST_F(VersionReaderTest, GetVersionReturnsNullDataPointerWhenEnvelopeIsNull)
 
 TEST_F(VersionReaderTest, GetVersionRejectsBufferWithNullIdentifier)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -406,6 +416,7 @@ INSTANTIATE_TEST_SUITE_P(
 
 TEST_P(InvalidIdentifierTest, GetVersionRejectsBufferWithInvalidIdentifier)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -445,6 +456,7 @@ TEST_P(InvalidIdentifierTest, GetVersionRejectsBufferWithInvalidIdentifier)
 // constructed, so GetVersion / VerifyVersion can never observe a \x00 identifier.
 TEST(VersionBufferNullByteIdentifierTest, BuildingBufferWithNullByteIdentifierAborts)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -486,6 +498,7 @@ INSTANTIATE_TEST_SUITE_P(
 
 TEST_P(VersionBufferParamTest, ReadsIdentifierAndVersionCorrectly)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__buffer_identification");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "GetVersion correctly extracts identifier, major and minor from a built buffer");
@@ -524,6 +537,7 @@ TEST_P(VersionBufferParamTest, ReadsIdentifierAndVersionCorrectly)
 
 TEST_F(VersionReaderTest, VerifyVersionVectorRejectsEmptyVector)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -543,6 +557,7 @@ TEST_F(VersionReaderTest, VerifyVersionVectorRejectsEmptyVector)
 
 TEST_F(VersionReaderTest, VerifyVersionPropagatesGetVersionError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -574,6 +589,7 @@ TEST_F(VersionReaderTest, VerifyVersionPropagatesGetVersionError)
 
 TEST_P(VersionBufferParamTest, VerifyVersionExactMatchSucceeds)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -600,6 +616,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionExactMatchSucceeds)
 
 TEST_P(VersionBufferParamTest, VerifyVersionFailsOnMajorMismatch)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -632,6 +649,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionFailsOnMajorMismatch)
 
 TEST_P(VersionBufferParamTest, VerifyVersionFailsOnMinorMismatch)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -664,6 +682,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionFailsOnMinorMismatch)
 
 TEST_P(VersionBufferParamTest, VerifyVersionFailsOnIdentifierMismatch)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -695,6 +714,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionFailsOnIdentifierMismatch)
 
 TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumSucceedsWhenMinorEquals)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -724,6 +744,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumSucceedsWhenMinorEquals)
 
 TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -759,6 +780,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumSucceedsWhenActualMinorI
 
 TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumFailsWhenActualMinorIsLower)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty(
@@ -799,6 +821,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumFailsWhenActualMinorIsLo
 
 TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumFailsOnIdentifierMismatch)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty(
@@ -835,6 +858,7 @@ TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumFailsOnIdentifierMismatc
 
 TEST_P(VersionBufferParamTest, VerifyVersionMinorMinimumFailsOnMajorMismatch)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__version_check");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",

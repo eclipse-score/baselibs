@@ -43,6 +43,7 @@ using UnderlyingType = std::underlying_type_t<MyBitmask>;
 
 TEST(MyBitmask, UnderlyingValuesMatchExpectations)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::a), 1);
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::b), 2);
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::c), 4);
@@ -50,6 +51,7 @@ TEST(MyBitmask, UnderlyingValuesMatchExpectations)
 
 TEST(MyBitmask, SupportsOperatorOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a | MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = MyBitmask::b | MyBitmask::c;
@@ -58,6 +60,7 @@ TEST(MyBitmask, SupportsOperatorOr)
 
 TEST(MyBitmask, SupportsOperatorAnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     auto func = [](MyBitmask bitmask) {
         EXPECT_TRUE(bitmask & MyBitmask::a);
         EXPECT_TRUE(bitmask & MyBitmask::b);
@@ -69,6 +72,7 @@ TEST(MyBitmask, SupportsOperatorAnd)
 
 TEST(MyBitmask, SupportsOperatorXor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a ^ MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = bitmask ^ MyBitmask::b;
@@ -77,6 +81,7 @@ TEST(MyBitmask, SupportsOperatorXor)
 
 TEST(MyBitmask, SupportsOperatorNot)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
     bitmask = ~bitmask;
 
@@ -87,6 +92,7 @@ TEST(MyBitmask, SupportsOperatorNot)
 
 TEST(MyBitmask, SupportsAssignOperatorAnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask &= MyBitmask::b;
@@ -96,6 +102,7 @@ TEST(MyBitmask, SupportsAssignOperatorAnd)
 
 TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::b};
 
     bitmask &= MyBitmask::b;
@@ -105,6 +112,7 @@ TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::b;
@@ -114,6 +122,7 @@ TEST(MyBitmask, SupportsAssignOperatorOr)
 
 TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::a;
@@ -123,6 +132,7 @@ TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorXOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::b;
@@ -132,6 +142,7 @@ TEST(MyBitmask, SupportsAssignOperatorXOr)
 
 TEST(MyBitmask, SupportsAssignOperatorXOrMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::a;

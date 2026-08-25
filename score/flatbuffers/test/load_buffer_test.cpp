@@ -125,6 +125,7 @@ void ExpectPmrVectorLoad(const score::filesystem::Path& path, const score::os::E
 
 TEST_F(LoadFlatbufferTest, LoadsRegularFileContents)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "loaded content from file");
@@ -138,6 +139,7 @@ TEST_F(LoadFlatbufferTest, LoadsRegularFileContents)
 
 TEST_F(LoadFlatbufferTest, LoadsEmptyFileAsEmptyVector)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "empty file is loaded as empty vector");
@@ -150,6 +152,7 @@ TEST_F(LoadFlatbufferTest, LoadsEmptyFileAsEmptyVector)
 
 TEST_F(LoadFlatbufferTest, LoadsBinaryContentIncludingNullBytes)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "null bytes are not truncated, file is read in binary mode");
@@ -163,6 +166,7 @@ TEST_F(LoadFlatbufferTest, LoadsBinaryContentIncludingNullBytes)
 
 TEST_F(LoadFlatbufferTest, LoadsSingleByteFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "single byte is loaded from file");
@@ -176,6 +180,7 @@ TEST_F(LoadFlatbufferTest, LoadsSingleByteFile)
 
 TEST_F(LoadFlatbufferTest, LoadsLarge5MBFileCorrectly)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "large content is loaded from file");
@@ -195,6 +200,7 @@ TEST_F(LoadFlatbufferTest, LoadsLarge5MBFileCorrectly)
 
 TEST_F(LoadFlatbufferTest, LoadsFileContainingOnlyNullBytes)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description", "only nulls is loaded from file");
@@ -208,6 +214,7 @@ TEST_F(LoadFlatbufferTest, LoadsFileContainingOnlyNullBytes)
 
 TEST_F(LoadFlatbufferTest, NonexistentFileReturnsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("Description", "kNoSuchFileOrDirectory is returned if file does not exist");
@@ -220,6 +227,7 @@ TEST_F(LoadFlatbufferTest, NonexistentFileReturnsError)
 
 TEST_F(LoadFlatbufferTest, NoReadPermissionReturnsPermissionDenied)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("Description", "kPermissionDenied is returned if the file cannot be accessed");
@@ -238,6 +246,7 @@ TEST_F(LoadFlatbufferTest, NoReadPermissionReturnsPermissionDenied)
 
 TEST_F(LoadFlatbufferTest, DirectoryPathFailsOnReadWithIsADirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("Description", "kIsADirectory is returned if path is a directory instead of a file");
@@ -250,6 +259,7 @@ TEST_F(LoadFlatbufferTest, DirectoryPathFailsOnReadWithIsADirectory)
 
 TEST_F(LoadFlatbufferTest, PmrOverloadFailsOnResize)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "interface-test");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("Description",

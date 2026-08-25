@@ -137,6 +137,7 @@ class LoadFlatbufferTest : public ::testing::Test
 
 TEST_F(LoadFlatbufferTest, OpenFailureReturnsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     const auto open_error = score::os::Error::createFromErrno(ENOENT);
     EXPECT_CALL(os_.fcntl, open(_, _)).WillOnce(Return(score::cpp::make_unexpected(open_error)));
 
@@ -149,6 +150,7 @@ TEST_F(LoadFlatbufferTest, OpenFailureReturnsError)
 
 TEST_F(LoadFlatbufferTest, FstatFailureReturnsErrorAndClosesFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
 
     const auto stat_error = score::os::Error::createFromErrno(EIO);
@@ -164,6 +166,7 @@ TEST_F(LoadFlatbufferTest, FstatFailureReturnsErrorAndClosesFile)
 
 TEST_F(LoadFlatbufferTest, NegativeFileSizeReturnsErrorAndClosesFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulClose();
 
@@ -182,6 +185,7 @@ TEST_F(LoadFlatbufferTest, NegativeFileSizeReturnsErrorAndClosesFile)
 
 TEST_F(LoadFlatbufferTest, ReadFailureReturnsErrorAndClosesFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
     SetUpSuccessfulClose();
@@ -198,6 +202,7 @@ TEST_F(LoadFlatbufferTest, ReadFailureReturnsErrorAndClosesFile)
 
 TEST_F(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
     SetUpSuccessfulClose();
@@ -214,6 +219,7 @@ TEST_F(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
 
 TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     const std::vector<uint8_t> expected_data{'A', 'B', 'C', 'D', 'E'};
 
     SetUpSuccessfulOpen();
@@ -247,6 +253,7 @@ TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
 
 TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     const std::vector<uint8_t> expected_data{'X', 'Y'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
@@ -272,6 +279,7 @@ TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
 
 TEST_F(LoadFlatbufferTest, EmptyFileReturnsEmptyVector)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(0);
     SetUpSuccessfulClose();
@@ -285,6 +293,7 @@ TEST_F(LoadFlatbufferTest, EmptyFileReturnsEmptyVector)
 
 TEST_F(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(0);
 
@@ -300,6 +309,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
 
 TEST_F(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     const std::vector<uint8_t> expected_data{'Z'};
 
     SetUpSuccessfulOpen();
@@ -318,6 +328,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
 
 TEST_F(LoadFlatbufferTest, CloseFailureAfterReadErrorPropagatesOriginalError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
 
@@ -336,6 +347,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterReadErrorPropagatesOriginalError)
 
 TEST_F(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(4);
     SetUpSuccessfulClose();
@@ -358,6 +370,7 @@ TEST_F(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
 
 TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(4);
     SetUpSuccessfulClose();
@@ -379,6 +392,7 @@ TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
 
 TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     const std::vector<uint8_t> expected_data{'I'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
@@ -405,6 +419,7 @@ TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
 
 TEST_F(LoadFlatbufferTest, CloseFailureAfterFstatErrorPropagatesFstatError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
 
     const auto stat_error = score::os::Error::createFromErrno(EBADF);
@@ -422,6 +437,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterFstatErrorPropagatesFstatError)
 
 TEST_F(LoadFlatbufferTest, ResizeBadAllocReturnsEnomemAndClosesFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
     SetUpSuccessfulClose();
@@ -436,6 +452,7 @@ TEST_F(LoadFlatbufferTest, ResizeBadAllocReturnsEnomemAndClosesFile)
 
 TEST_F(LoadFlatbufferTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(kTestFileSize);
     SetUpSuccessfulClose();
@@ -450,6 +467,7 @@ TEST_F(LoadFlatbufferTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
 
 TEST_F(LoadFlatbufferTest, CloseFailureAfterNegativeSizePropagatesInvalidArgument)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     SetUpSuccessfulOpen();
 
     EXPECT_CALL(os_.stat, fstat(kTestFd, _))
@@ -478,6 +496,7 @@ const score::filesystem::Path kNonExistent{"/tmp/score_flatbuffers_nonexistent_x
 
 TEST(LoadBufferPublicApiTest, VectorOverloadSuccessPathReturnsEmptyVector)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("DerivationTechnique", "boundary-values");
 
@@ -488,6 +507,7 @@ TEST(LoadBufferPublicApiTest, VectorOverloadSuccessPathReturnsEmptyVector)
 
 TEST(LoadBufferPublicApiTest, VectorOverloadErrorPathReturnsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("TestType", "fault-injection");
 
@@ -498,6 +518,7 @@ TEST(LoadBufferPublicApiTest, VectorOverloadErrorPathReturnsError)
 
 TEST(LoadBufferPublicApiTest, PmrVectorOverloadSuccessPathReturnsEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("DerivationTechnique", "boundary-values");
 
@@ -509,6 +530,7 @@ TEST(LoadBufferPublicApiTest, PmrVectorOverloadSuccessPathReturnsEmpty)
 
 TEST(LoadBufferPublicApiTest, PmrVectorOverloadErrorPathReturnsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("TestType", "fault-injection");
 
