@@ -17,10 +17,8 @@ Components
 
 .. toctree::
    :maxdepth: 1
-   :glob:
 
-   language/index
-   ./*/docs/index
+   abi_compatible_data_types/docs/index
 
    
 Overview

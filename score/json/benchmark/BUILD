@@ -17,7 +17,6 @@ cc_binary(
     name = "json_parser_benchmark",
     srcs = ["json_parser_benchmark.cpp"],
     tags = ["benchmark"],
-    visibility = ["//platform/aas/lib/json:__subpackages__"],
     deps = [
         "@google_benchmark//:benchmark_main",
         "@score_baselibs//score/json",

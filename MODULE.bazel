@@ -102,7 +102,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "7.1.0", dev_dependency = True)
+bazel_dep(name = "score_docs_as_code", version = "8.0.0", dev_dependency = True)
 git_override(
     module_name = "score_docs_as_code",
     commit = "5402638e533e75133743c42d2d01bd411a62f75a",

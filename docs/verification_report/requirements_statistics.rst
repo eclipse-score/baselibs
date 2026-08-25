@@ -21,6 +21,24 @@ results. Use the tables below to drill down into individual requirements.
        max-width: 100%;
        height: auto;
      }
+     /* The "Tests" column lists every test linked to a requirement as a single
+        "; "-separated inline string. In a narrow column that renders as an
+        unreadable wall of text. Render each linked test on its own line
+        instead, like a plain list, and drop the "; " separators. */
+     table.compact-needtable td.needs_testlink p {
+       margin: 0;
+     }
+     table.compact-needtable td.needs_testlink a {
+       display: block;
+       padding: 0.15em 0;
+       word-break: break-word;
+     }
+     table.compact-needtable td.needs_testlink a:not(:last-child) {
+       border-bottom: 1px solid #eee;
+     }
+     table.compact-needtable td.needs_testlink em {
+       display: none;
+     }
    </style>
 
 Overview
@@ -61,4 +79,5 @@ verifying them.
 .. needtable:: REQUIREMENTS WITH TESTS
    :filter: type == "comp_req" and status == "valid" and testlink != ""
    :columns: id;title;satisfied_by as "Satisfied by";safety as "Safety";testlink as "Tests"
+   :colwidths: 10,20,10,8,52
    :class: compact-needtable

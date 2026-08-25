@@ -36,7 +36,6 @@ cc_unit_test_suites_for_host_and_qnx(
     test_suites_from_sub_packages = [
         "@score_baselibs//score/os/utils/interprocess:unit_tests",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
 )
 
 cc_test(

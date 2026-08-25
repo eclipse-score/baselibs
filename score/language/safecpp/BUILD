@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
@@ -24,4 +25,10 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//visibility:public",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )
