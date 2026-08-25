@@ -29,6 +29,10 @@ associated components.
 .. module-verification-report::
    :module-id: mod__baselibs
    :feature-id: feat__baselibs
+   :safety: ASIL_B
+   :security: YES
+   :status: valid
+   :verification-method: test_and_inspection
    :components: comp__baselibs_json,
                comp__baselibs_memory_shared,
                comp__baselibs_result,

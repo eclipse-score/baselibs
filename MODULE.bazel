@@ -103,18 +103,13 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "7.1.0", dev_dependency = True)
-
-# TEMPORARY: pin score_docs_as_code to the ankr_mod_verf_report branch that
-# adds the ``score_module_verification_report`` sub-extension.
-# Tracks eclipse-score/docs-as-code#730. Remove this override once the branch
-# is merged and a release with the extension is published.
 git_override(
     module_name = "score_docs_as_code",
-    commit = "4ea902eda75ad0b3fd7dcd3c331ad8ba40cd05dc",
+    commit = "5402638e533e75133743c42d2d01bd411a62f75a",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
-bazel_dep(name = "score_process", version = "2.0.3", dev_dependency = True)
+bazel_dep(name = "score_process_description", version = "2.1.2", dev_dependency = True)
 bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 
 # score_tooling declares trlc and lobster as regular bazel_deps with their own
@@ -132,7 +127,7 @@ git_override(
     remote = "https://github.com/bmw-software-engineering/lobster.git",
 )
 
-bazel_dep(name = "score_platform", version = "0.6.4", dev_dependency = True)
+bazel_dep(name = "score_platform", version = "0.7.1", dev_dependency = True)
 
 ## Configure the python toolchain
 
