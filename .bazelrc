@@ -82,17 +82,6 @@ test:bl-aarch64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:bl-aarch64-qnx --test_tag_filters=
 test:bl-aarch64-qnx --test_lang_filters=cc,rust
 
-# Ferrocene Rust coverage config
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_rustc_flag=-Cinstrument-coverage
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_rustc_flag=-Clink-dead-code
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_rustc_flag=-Ccodegen-units=1
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_rustc_flag=-Cdebuginfo=2
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Cinstrument-coverage
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Clink-dead-code
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Ccodegen-units=1
-build:ferrocene-coverage --@rules_rust//rust/settings:extra_exec_rustc_flag=-Cdebuginfo=2
-test:ferrocene-coverage --run_under=@score_tooling//coverage:llvm_profile_wrapper
-
 # Clippy linting for Rust
 build:lint --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
 build:lint --output_groups=+rules_lint_human
