@@ -1372,9 +1372,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "SetBit__OverflowWithUInt8",
+    "name": "SetBit__WithNegativeInt32",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
     "line": "235",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__bitmanipulation__bit_operations",
+    "FullyVerifies": null
+  },
+  {
+    "name": "SetBit__OverflowWithUInt8",
+    "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+    "line": "252",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1388,7 +1402,7 @@
   {
     "name": "ClearBit__WithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "249",
+    "line": "271",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1402,7 +1416,7 @@
   {
     "name": "ClearBit__WithUInt64",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "264",
+    "line": "286",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1416,7 +1430,7 @@
   {
     "name": "ClearBit__OverflowWithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "283",
+    "line": "305",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1430,7 +1444,7 @@
   {
     "name": "ToggleBit__WithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "297",
+    "line": "324",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1444,7 +1458,7 @@
   {
     "name": "ToggleBit__WithUInt64",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "313",
+    "line": "340",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1458,7 +1472,7 @@
   {
     "name": "ToggleBit__OverflowWithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "333",
+    "line": "360",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1472,7 +1486,7 @@
   {
     "name": "CheckBit__WithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "347",
+    "line": "379",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1486,7 +1500,7 @@
   {
     "name": "CheckBit__WithUInt64",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "361",
+    "line": "393",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1500,7 +1514,7 @@
   {
     "name": "CheckBit__OverflowWithUInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "377",
+    "line": "409",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1514,7 +1528,7 @@
   {
     "name": "GetByte__FromUint8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "391",
+    "line": "423",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1528,7 +1542,7 @@
   {
     "name": "GetByte__FromInt8",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "403",
+    "line": "435",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1542,7 +1556,7 @@
   {
     "name": "GetByte__FromUint16",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "415",
+    "line": "447",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1556,7 +1570,7 @@
   {
     "name": "GetByte__FromInt16",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "428",
+    "line": "460",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1570,7 +1584,7 @@
   {
     "name": "GetByte__FromUint32",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "442",
+    "line": "474",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1584,7 +1598,7 @@
   {
     "name": "GetByte__FromInt32",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "457",
+    "line": "489",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1598,7 +1612,7 @@
   {
     "name": "GetByte__FromUint64",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "473",
+    "line": "505",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -1612,7 +1626,7 @@
   {
     "name": "GetByte__FromInt64",
     "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-    "line": "494",
+    "line": "526",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
