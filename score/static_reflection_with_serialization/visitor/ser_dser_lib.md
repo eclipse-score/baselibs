@@ -13,8 +13,8 @@ Good tutorials can be found on youtube:
 Serialization & deserialization is used by datarouter for both verbose and non-verbose DLT messages logging.
 The implementation resides under the following locations:
 
-* <broken_link_g/swh/safe-posix-platform/tree/master/score/static_reflection_with_serialization/serialization>
-* <broken_link_g/swh/safe-posix-platform/tree/master/score/static_reflection_with_serialization/visitor>
+* [score/static_reflection_with_serialization/serialization](../serialization)
+* [score/static_reflection_with_serialization/visitor](.)
 
 C++ does not support reflection e.g. like Java or C#; so in order do inspect the content of a structure the
 implementation is using macros and templates to generate ser/dser code. Only simple linear memory types are

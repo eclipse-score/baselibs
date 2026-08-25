@@ -74,7 +74,7 @@ There are some use-cases that are not yet covered by it, thus we have a custom e
 
 The single entry point helps to isolate library users from internal changes.
 The library's single entry point consists of:
-- bazel target: //platform/aas/lib/filesystem.
+- bazel target: //score/filesystem.
 - header file: "score/filesystem/filesystem.h".
 - factory: IFilesystemFactory class.
 

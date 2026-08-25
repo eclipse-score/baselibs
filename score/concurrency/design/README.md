@@ -67,7 +67,7 @@ implementing a custom API to handle the stop requests, the official C++ API seem
 our use case (and will ensure future proofness).
 
 Since we cannot rely on C++20 features right now, we use the implementation `score::cpp::jthread` within
-[AMP](broken_link_g/swh/amp).
+[score::cpp](../../language/futurecpp) (formerly known as AMP).
 
 ## SynchronizedQueue
 

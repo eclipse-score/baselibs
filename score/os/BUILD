@@ -249,7 +249,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:ifaddrs_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -281,7 +280,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:netdb_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -342,7 +340,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
         "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
@@ -543,7 +540,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:socket_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/pas/sysmon:__subpackages__",
     ],
 )
 

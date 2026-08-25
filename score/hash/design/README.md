@@ -61,7 +61,7 @@ The Openssl wrapper functions are:
 There are two factories that implement IHashCalculatorFactory: SafeHashCalculatorFactory and HashCalculatorFactory. As
 the name implies, SafeHashCalculatorFactory is safe to use in safety-critical code. However, this factory will not make
 use of OpenSSL, which reduces the number of available digest implementations. SafeHashCalculatorFactory is part of the
-FFI-marked bazel target //platform/aas/lib/hash:safe_hash which safety-critical software may depend on.
+FFI-marked bazel target //score/hash:safe_hash which safety-critical software may depend on.
 
 # How to use the factories
 
