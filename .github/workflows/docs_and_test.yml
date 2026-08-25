@@ -32,6 +32,10 @@ jobs:
           level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
+      - name: Install Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
