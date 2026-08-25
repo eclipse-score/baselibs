@@ -232,6 +232,23 @@ TEST(SetBit, WithUInt64)
     EXPECT_EQ(input, expectedResult);
 }
 
+TEST(SetBit, WithNegativeInt32)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("Description",
+                   "Check that SetBit sets the requested bit of a negative (sign-bit-set) int32_t value, i.e. "
+                   "the internal unsigned promotion and narrowing back to a signed type do not corrupt the result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    std::int32_t input{-2};                     // 0xFFFFFFFE
+    constexpr std::int32_t expectedResult{-1};  // 0xFFFFFFFF
+
+    EXPECT_TRUE(::score::platform::SetBit(input, 0U));
+
+    EXPECT_EQ(input, expectedResult);
+}
+
 TEST(SetBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
