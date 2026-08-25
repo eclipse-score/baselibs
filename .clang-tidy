@@ -1,4 +1,18 @@
----
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+# Local override on top of the centralized @score_cpp_policies//clang_tidy baseline.
+# Starting the Checks list with `-*` resets the check set inherited from the
+# baseline, so the checks enabled below are the only ones that apply here.
 Checks: >
   -*,
   misc-confusable-identifiers,
@@ -17,27 +31,28 @@ Checks: >
   readability-simplify-subscript-expr,
   readability-string-compare,
   readability-uniqueptr-delete-release,
-
+WarningsAsErrors: >
+  *
 ExtraArgsBefore:
   - '-Wno-error=deprecated-declarations'
-
+  # The LLVM toolchain injects `-imacros .../redacted_dates.h`, redefining
+  # __DATE__/__TIME__/__TIMESTAMP__ for reproducible builds. This otherwise
+  # triggers a clang-diagnostic-builtin-macro-redefined warning on every
+  # single translation unit, unrelated to this repository's own code.
+  - '-Wno-builtin-macro-redefined'
 CheckOptions:
   - key: misc-uniqueptr-reset-release.IncludeStyle
     value: "llvm"
-
   - key: readability-avoid-return-with-void-value.StrictMode
     value: true
-
   - key: readability-enum-initial-value.AllowExplicitZeroFirstInitialValue
     value: true
   - key: readability-enum-initial-value.AllowExplicitSequentialInitialValues
     value: true
-
   - key: readability-identifier-naming.MacroDefinitionCase
     value: UPPER_CASE
   - key: readability-identifier-naming.NamespaceCase
     value: lower_case
-
   - key: readability-simplify-subscript-expr.Types
     value: >
       ::score::futurecpp::basic_string_view;
@@ -50,7 +65,6 @@ CheckOptions:
       ::std::basic_string;
       ::std::vector;
       ::std::span
-
   - key: readability-string-compare.StringLikeClasses
     value: >
       ::score::futurecpp::basic_string_view;
@@ -58,6 +72,5 @@ CheckOptions:
       ::score::safecpp::basic_zstring_view;
       ::std::basic_string_view;
       ::std::basic_string
-
   - key: readability-uniqueptr-delete-release.PreferResetCall
     value: true

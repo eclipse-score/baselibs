@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H_
-#define SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H_
+#ifndef SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H
+#define SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H
 
 #include "score/network/sock_async/sock_async.h"
 #include "score/network/sock_async/sock_ctrl.h"
@@ -41,6 +41,6 @@ class SocketTcp final : public SocketAsync, public std::enable_shared_from_this<
 }  // namespace os
 }  // namespace score
 
-#endif  // SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H_
+#endif  // SCORE_LIB_OS_UTILS_NETWORK_SOCKETTCP_H
 
 // class SocketCtrl;

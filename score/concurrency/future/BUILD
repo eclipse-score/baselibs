@@ -76,6 +76,7 @@ cc_gtest_unit_test(
     deps = [
         ":future",
         ":test_types",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 

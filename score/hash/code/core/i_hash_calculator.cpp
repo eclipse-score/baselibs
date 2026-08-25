@@ -78,7 +78,7 @@ class StreamConsumer
         block_size = 0;
     }
 
-    const score::cpp::span<const std::uint8_t> ConvertToSpan() const noexcept
+    score::cpp::span<const std::uint8_t> ConvertToSpan() const noexcept
     {
         // Suppress "UNUSED C++14 A5-2-4" rule finding: "Reinterpret_cast shall not be used":
         // The `Update` method requires a span of bytes (uint8_t) as input.

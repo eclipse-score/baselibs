@@ -109,10 +109,12 @@ Rust (`.rs`), Python (`.py`), Starlark (`.bzl`), BUILD files — use `#` comment
 ### clang-tidy (C++)
 
 ```bash
-bazel build --config=clang_tidy -- //score/...
+bazel build --config=bl-x86_64-linux --config=clang-tidy -- //... -//score/language/futurecpp/...
 ```
 
-Config: `.clang-tidy-minimal` at repo root.
+Config: `.clang-tidy` at repo root. `score/language/futurecpp` is excluded via the negative
+target pattern above (not via BUILD file tags) since it intentionally mirrors upstream
+standard-library conventions rather than this repo's own style.
 
 ### Rust clippy
 
