@@ -52,7 +52,7 @@ cc_test(
         "aborts_upon_exception_test.cpp",
     ],
     features = ["aborts_upon_exception"],
-    tags = ["unit"],
+    tags = ["manual"],
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",

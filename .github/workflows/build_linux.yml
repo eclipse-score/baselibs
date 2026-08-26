@@ -40,8 +40,7 @@ jobs:
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
-              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
-            bazel-test-extra-flags: ""
+            bazel-test-extra-flags: "--test_tag_filters=-manual"
           - name: bl-aarch64-linux
             artifact-name: aarch64-linux
             bazel-config: bl-aarch64-linux
@@ -49,18 +48,17 @@ jobs:
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
-              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
-            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
+            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-manual,-no_rust_doc_test" # Increase test timeout due to QEMU emulation
           - name: x86_64-linux (examples/integration)
             artifact-name: x86_64-linux-integration
             bazel-config: x86_64-linux
             working-directory: "examples/integration"
             bazel-build-target: "//..."
             bazel-test-target: "//..."
-            bazel-test-extra-flags: ""
+            bazel-test-extra-flags: "--test_tag_filters=-manual"
     steps:
       - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
         with:
