@@ -179,7 +179,7 @@ impl Default for StopSource {
 mod tests {
     use super::{StopSource, StopToken};
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn default_token_has_no_stop_state() {
         let token = StopToken::new();
 
@@ -187,7 +187,7 @@ mod tests {
         assert!(!token.stop_possible());
     }
 
-    #[test]
+    #[cfg(all(test, not(miri)))]
     fn source_requests_stop_visible_to_its_token() {
         let source = StopSource::new();
         let token = source.get_token();
