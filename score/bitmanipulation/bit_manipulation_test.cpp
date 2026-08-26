@@ -422,7 +422,7 @@ TEST(CheckBit, OverflowWithUInt8)
 
 TEST(GetByte, FromUint8)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the single byte of a uint8_t value unchanged.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -434,7 +434,7 @@ TEST(GetByte, FromUint8)
 
 TEST(GetByte, FromInt8)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the single byte of a signed int8_t value unchanged.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -446,7 +446,7 @@ TEST(GetByte, FromInt8)
 
 TEST(GetByte, FromUint16)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the correct byte at each position of a uint16_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -459,7 +459,7 @@ TEST(GetByte, FromUint16)
 
 TEST(GetByte, FromInt16)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int16_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -473,7 +473,7 @@ TEST(GetByte, FromInt16)
 
 TEST(GetByte, FromUint32)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the correct byte at each position of a uint32_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -488,7 +488,7 @@ TEST(GetByte, FromUint32)
 
 TEST(GetByte, FromInt32)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int32_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -504,7 +504,7 @@ TEST(GetByte, FromInt32)
 
 TEST(GetByte, FromUint64)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a uint64_t value, the widest "
                    "supported integral type.");
@@ -525,7 +525,7 @@ TEST(GetByte, FromUint64)
 
 TEST(GetByte, FromInt64)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int64_t value, the "
                    "widest supported integral type.");

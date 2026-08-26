@@ -53,7 +53,7 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==1],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==2],comp_req__bitmanipulation__byte_extraction[version==1],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
    :belongs_to: comp__baselibs_bit_manipulation[version==1]
 
    .. needarch::
@@ -103,14 +103,6 @@ Interfaces
 
 .. logic_arc_int_op:: Test Bit
    :id: logic_arc_int_op__baselibs__test_bit
-   :security: NO
-   :safety:  ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__bit_manipulation[version==1]
-
-.. logic_arc_int_op:: Set (Half)-Byte
-   :id: logic_arc_int_op__baselibs__set_byte
    :security: NO
    :safety:  ASIL_B
    :status: valid
