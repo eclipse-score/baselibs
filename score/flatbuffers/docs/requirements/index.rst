@@ -273,5 +273,5 @@ AoU Requirements
       the data integrity measures required by :need:`aou_req__flatbuffers__data_integrity`.
 
 
-.. needextend:: "__flatbuffers__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs

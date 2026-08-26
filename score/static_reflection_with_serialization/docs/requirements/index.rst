@@ -1,4 +1,4 @@
- ..
+..
    # *******************************************************************************
    # Copyright (c) 2026 Contributors to the Eclipse Foundation
    #
@@ -102,5 +102,5 @@ Requirements
 
    The library shall provide compile-time safety and efficiency of serialization operations with minimal runtime overhead.
 
-.. needextend:: "__static_reflect_serial__" in id
+.. needextend:: c.this_doc() and type == "comp_req"
    :+tags: static_reflect

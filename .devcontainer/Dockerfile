@@ -10,16 +10,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-repos:
-  - repo: local
-    hooks:
-      - id: copyright-fix
-        name: //:copyright.fix
-        entry: bazel run //:copyright.fix
-        language: system
-        pass_filenames: false
-      - id: format-fix
-        name: //:format.fix
-        entry: bazel run //:format.fix
-        language: system
-        pass_filenames: false
+
+# Use Dockerfile to get dependabot version bumps after new image is released
+FROM ghcr.io/eclipse-score/devcontainer:v1.4.1

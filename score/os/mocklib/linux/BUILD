@@ -19,9 +19,6 @@ cc_library(
     srcs = ["mntent_mock.cpp"],
     hdrs = ["mntent_mock.h"],
     target_compatible_with = ["@platforms//os:linux"],
-    visibility = [
-        "//platform/aas/pas/sysmon:__subpackages__",
-    ],
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",

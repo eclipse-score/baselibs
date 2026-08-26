@@ -180,5 +180,5 @@ Assumptions of Use (AoU)
 
    Note: Filesystem operations are subject to underlying OS and storage performance.
 
-.. needextend:: "__filesystem__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, filesystem

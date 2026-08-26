@@ -112,7 +112,7 @@ Non-Functional Requirements
    The safecpp library shall provide a mechanism which automatically registers a termination handler
    which ensures that code coverage data is also persisted upon any process exit (e.g. during gtest's Death Tests).
 
-.. needextend:: "__safecpp__" in id
+.. needextend:: c.this_doc() and type == "comp_req"
    :+tags: baselibs
-.. needextend:: "safecpp" in id
+.. needextend:: c.this_doc() and type != ""
    :+tags: safecpp

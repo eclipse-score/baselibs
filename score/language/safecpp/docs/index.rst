@@ -21,7 +21,7 @@ safecpp
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :tags: baselibs_safecpp
+   :tags: baselibs_safecpp, safecpp
    :realizes: wp__cmpt_request[version==1]
 
 

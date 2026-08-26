@@ -168,8 +168,8 @@ AoU Requirements
 
    Note: This can be done by the hosting process and system configuration (e.g. by using dm-verity).
 
-.. needextend:: "__json__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs
 
-.. needextend:: "__json__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: json

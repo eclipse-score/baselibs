@@ -95,3 +95,6 @@ Interfaces
       :safety: <QM|ASIL_B>
       :fulfils: <link to component requirement id>
       :language: cpp
+
+.. needextend:: c.this_doc() and type == "comp_arc_sta"
+   :+tags: logging

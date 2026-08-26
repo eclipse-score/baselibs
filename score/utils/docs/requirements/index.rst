@@ -66,5 +66,5 @@ Functional Requirements
 
    The Utils component shall provide a thread-safe singleton whose instance is created exactly once when accessed concurrently by multiple threads.
 
-.. needextend:: "__utils__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, utils

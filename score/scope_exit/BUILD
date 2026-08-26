@@ -63,7 +63,6 @@ cc_unit_test_suites_for_host_and_qnx(
         ":flag_owner_test",
         ":scope_exit_test",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
 )
 
 clang_tidy_extra_checks(

@@ -19,7 +19,7 @@ from pathlib import Path
 
 
 INCLUDE_PATH = Path("target/qnx7/usr/include")
-SAFE_HEADERS_PATH = Path("platform/aas/lib/os/interface/qnx/safe_headers.txt")
+SAFE_HEADERS_PATH = Path("score/os/interface/qnx/safe_headers.txt")
 
 
 def parse_safe_headers(path):

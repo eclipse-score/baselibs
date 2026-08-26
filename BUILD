@@ -14,7 +14,8 @@
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
-load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
+load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker")
+load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
@@ -91,7 +92,7 @@ docs(
     ],
     external_needs = [
         "@score_platform//:needs_json_file",
-        "@score_process//:needs_json_file",
+        "@score_process_description//:needs_json_file",
     ],
     source_dir = "docs",
 )
@@ -119,14 +120,14 @@ copyright_checker(
     name = "copyright",
     srcs = [
         ".github",
+        "BUILD",
+        "MODULE.bazel",
         "bazel",
         "docs",
         "examples",
+        "qemu.bzl",
         "score",
         "third_party",
-        "//:BUILD",
-        "//:MODULE.bazel",
-        "//:qemu.bzl",
     ],
     config = "@score_tooling//cr_checker/resources:config",
     exclusion = "//:cr_checker_exclusion",
@@ -181,21 +182,10 @@ dash_license_checker(
     visibility = ["//visibility:public"],
 )
 
-rust_coverage_report(
-    name = "rust_coverage",
-    bazel_configs = [
-        "bl-x86_64-linux",
-        "ferrocene-coverage",
-    ],
-    query = 'kind("rust_test", //score/...) except //score/log_rust/score_log_fmt_macro:tests',
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "rust_coverage_report",
-    actual = ":rust_coverage",
-    visibility = ["//visibility:public"],
-)
+# TODO: rust_coverage_report was removed by score_tooling >= 2.1.0
+# //:rust_coverage and //:rust_coverage_report are gone until the repo migrates
+# to the new score_coverage_scope/score_coverage_reporter LLVM pipeline
+# https://github.com/eclipse-score/baselibs/issues/512
 
 qemu_aarch64()
 

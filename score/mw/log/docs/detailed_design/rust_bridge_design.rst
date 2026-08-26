@@ -53,7 +53,7 @@ Static Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1]
-   :belongs_to: comp__logging[version==1]
+   :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/class_diagram.puml
 
@@ -67,7 +67,7 @@ Dynamic Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1]
-   :belongs_to: comp__logging[version==1]
+   :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/log_op.puml
 
@@ -78,6 +78,9 @@ Dynamic Diagrams for Unit Interactions
    :safety: ASIL_B
    :status: valid
    :fulfils: comp_req__log__compat_languages[version==1]
-   :belongs_to: comp__logging[version==1]
+   :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/log_to_level.puml
+
+.. needextend:: c.this_doc() and type != ""
+   :+tags: logging

@@ -23,7 +23,7 @@ verify the assumptions of use and **adhere to the safety manual**.
 See [QM and ASIL B qualification](#qm-and-asil-b-certification) for more details.
 
 We intentionally restrict the visibility of the individual OSAL modules so that new use cases are first reviewed by an
-OSAL maintainer. If your library needs for example `//platform/aas/lib/os:unistd` the visibility could be added if
+OSAL maintainer. If your library needs for example `//score/os:unistd` the visibility could be added if
 agreed with OSAL maintainers.
 
 ## Architecture
@@ -33,7 +33,7 @@ grouped by portability.
 
 <img alt="OSAL package" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/os/diagrams/osal_arch.puml">
 
-* **`//platform/aas/lib/os`**
+* **`//score/os`**
     * Contains OS-agnostic low-level APIs that should do nothing more than wrap the underlying OS call
 * **`//score/os/utils`**
     * Contains OS-agnostic high-level APIs that may contain some commonly used sequences for the purpose of reuse
@@ -57,7 +57,7 @@ for [`fcntl(3p)`](https://www.man7.org/linux/man-pages/man3/fcntl.3p.html).
 ### Public API
 
 OSAL provides a low-level and high-level public API. Since OSAL doesn't leak any POSIX/QNX/Linux APIs, the OSAL APIs
-often return [`score::cpp::expected`](broken_link_g/swh/amp/blob/master/include/score/expected.hpp), which is
+often return [`score::cpp::expected`](../language/futurecpp/include/score/expected.hpp), which is
 similar to `ara::core::Result` and `score::Result` and stores either the actual return value or an error code.
 See [Error Handling](#error-handling) for more details.
 
@@ -85,9 +85,7 @@ score::os::Pthread::instance().getname_np(thread.native_handle(), name.data(), k
 ##### Usage of Singletons
 
 OSAL currently uses singletons (score::os::Something::instance) in many places, but this is not an ideal design
-pattern. (
-See: [Design Guidelines: Singletons](broken_link_g/swh/xpad_documentation/blob/master/enhancement_proposals/proposals/14_software_design_guidelines.md#singleton))
-It has provided historical benefit by allowing easier migration from free functions in the POSIX API to use of the OSAL,
+pattern. It has provided historical benefit by allowing easier migration from free functions in the POSIX API to use of the OSAL,
 but we should aim to take the next step in migration by properly instantiating implementations in our applications. This
 means:
 

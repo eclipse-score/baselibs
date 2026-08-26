@@ -1,4 +1,3 @@
-
 ..
    # *******************************************************************************
    # Copyright (c) 2026 Contributors to the Eclipse Foundation
@@ -290,8 +289,8 @@ Assumptions of Use (AoU)
 
    Users shall implement appropriate synchronization mechanisms when sharing state between tasks, as the library only guarantees thread-safe task submission and execution scheduling.
 
-.. needextend:: "__concurrency__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs
 
-.. needextend:: "__concurrency__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: concurrency

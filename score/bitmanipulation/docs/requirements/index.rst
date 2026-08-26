@@ -43,8 +43,20 @@ Functional Requirements
 
    The bit manipulation component shall provide an API for setting, clearing, toggling, and checking individual bits for any integral type up to 64 bits, returning boolean success status.
 
-.. comp_req:: Support for Byte and Half-Byte Operations
+.. comp_req:: Support for Byte and Half-Byte Types
    :id: comp_req__bitmanipulation__byte_operations
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__bitmanipulation[version==2]
+   :status: valid
+   :version: 2
+   :satisfied_by: comp__baselibs_bit_manipulation[version==1]
+
+   The bit manipulation component shall provide byte and half-byte types, with a byte composable from and decomposable into two half-bytes.
+
+.. comp_req:: Support for Byte Extraction
+   :id: comp_req__bitmanipulation__byte_extraction
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -52,9 +64,8 @@ Functional Requirements
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_bit_manipulation[version==1]
-   :tags: inspected
 
-   The bit manipulation component shall provide an API for extracting and setting bytes and half-bytes for any integral type up to 64 bits, returning boolean success status.
+   The bit manipulation component shall provide an API to extract the byte at a given position from any integral type up to 64 bits.
 
 .. comp_req:: Support for Bitmask Operators for Enum Classes
    :id: comp_req__bitmanipulation__bitmask_operators
@@ -138,5 +149,5 @@ Assumptions of Use (AoU)
 
    Note: The library provides no internal thread safety guarantees.
 
-.. needextend:: "__bitmanipulation__" in id
+.. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, bitmanipulation
