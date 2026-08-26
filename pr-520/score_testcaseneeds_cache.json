@@ -34960,7 +34960,7 @@
   {
     "name": "VajsonSerializeTest__SerializesObjectKeysUsingStringComparisonAdaptor",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "38",
+    "line": "39",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -34974,7 +34974,7 @@
   {
     "name": "VajsonSerializeTest__SerializesTopLevelList",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "47",
+    "line": "48",
     "result": "passed",
     "repo_name": null,
     "hash": null,
