@@ -1,5 +1,561 @@
 [
   {
+    "need": "comp_req__bitmanipulation__bitmask_operators",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "MyBitmask__SupportsOperatorOr",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 45,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsOperatorAnd",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 58,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsOperatorXor",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 75,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsOperatorNot",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 89,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorAnd",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 104,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorAndMatching",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 119,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorOr",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 135,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorOrMatching",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 150,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorXOr",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 166,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "MyBitmask__SupportsAssignOperatorXOrMatching",
+          "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+          "line": 180,
+          "need": "comp_req__bitmanipulation__bitmask_operators",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__bitmanipulation__byte_operations",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "HalfByte__CanBeConstructedFromUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 29,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HalfByte__CanBeConstructedFromUInt16IfInRange",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 42,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HalfByte__CanBeConstructedFromBigUInt8ButUpperHalfIsDropped",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 55,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 69,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromUInt16IfInRange",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 81,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromTwoHalfBytes",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 94,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromTwoBigHalfBytes",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 111,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromTwoZeroHalfBytes",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 128,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Byte__CanBeConstructedFromTwoHalfBytesWithMaxValue",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 143,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Extract__UpperHalfByteFromAByte",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 158,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Extract__LowerHalfByteFromAByte",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 172,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Extract__LowerHalfByteFromAByteCanBeConvertedToUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 186,
+          "need": "comp_req__bitmanipulation__byte_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__bitmanipulation__bit_operations",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SetBit__WithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 201,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SetBit__WithUInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 216,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SetBit__WithNegativeInt32",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 235,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ClearBit__WithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 271,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ClearBit__WithUInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 286,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ToggleBit__WithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 324,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ToggleBit__WithUInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 340,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "CheckBit__WithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 379,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "CheckBit__WithUInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 393,
+          "need": "comp_req__bitmanipulation__bit_operations",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__bitmanipulation__bounds_safety",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SetBit__OverflowWithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 252,
+          "need": "comp_req__bitmanipulation__bounds_safety",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ClearBit__OverflowWithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 305,
+          "need": "comp_req__bitmanipulation__bounds_safety",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ToggleBit__OverflowWithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 360,
+          "need": "comp_req__bitmanipulation__bounds_safety",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "CheckBit__OverflowWithUInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 409,
+          "need": "comp_req__bitmanipulation__bounds_safety",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__bitmanipulation__byte_extraction",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "GetByte__FromUint8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 423,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 435,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint16",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 447,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt16",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 460,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint32",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 474,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt32",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 489,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 505,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 526,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__flatbuffers__serialization",
     "links": {
       "CodeLinks": [],
