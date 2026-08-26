@@ -20,13 +20,13 @@ namespace
 template <typename T>
 score::Result<void> SerializeToStream(std::ostream& out_stream, const T& json_data)
 {
-    auto serializer = amsr::json::DocumentSerializer{std::ref(out_stream)};
+    auto serializer = score::json::vajson::DocumentSerializer{std::ref(out_stream)};
     static_cast<void>(std::move(serializer) << json_data);
     if (out_stream.fail())
     {
-        return score::Result<void>{score::unexpect,
-                                   score::json::MakeError(score::json::Error::kUnknownError,
-                                                          "vaJSON serializer failed to write to stream")};
+        return score::Result<void>{
+            score::unexpect,
+            score::json::MakeError(score::json::Error::kUnknownError, "vaJSON serializer failed to write to stream")};
     }
     return {};
 }

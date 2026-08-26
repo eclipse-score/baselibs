@@ -10,52 +10,44 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Implementation of methods for object type.
- *
- *********************************************************************************************************************/
+/// \file
+/// \brief Implementation of methods for object type.
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H
+#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <utility>
 
 #include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
-namespace amsr {
-namespace json {
+namespace score
+{
+namespace json
+{
+namespace vajson
+{
 
-inline namespace types {
-/*!
- * \brief           Serialize every key-value pair as a JSON key followed by a JSON value
- * \vprivate        Vector component internal API
- *
- * \spec
- * requires true;
- * \endspec
- */
+inline namespace types
+{
+/// \brief Serialize every key-value pair as a JSON key followed by a JSON value
 template <typename Range, typename KeyFn, typename ValueFn>
 template <typename KS>
-auto PairRangeSerializer<Range, KeyFn, ValueFn>::operator()(KS os) const noexcept -> KS {
-  // VCA_VAJSON_THIS_DEREF
-  // VECTOR NCL MisraC++2023-11.6.1: MD_JSON_MISRAC++2023-11.6.1_range_based_initialization
-  for (auto const& pair : this->map_.get()) {
-    // VCA_VAJSON_THIS_DEREF
-    ObjectSerializerValue osv{std::move(os) << this->key_function_(pair.first)};
-    // VCA_VAJSON_THIS_DEREF
-    os = std::move(osv) << this->value_function_(pair.second);
-  }
-  return os;
+auto PairRangeSerializer<Range, KeyFn, ValueFn>::operator()(KS os) const noexcept -> KS
+{
+    for (const auto& pair : this->map_.get())
+    {
+        ObjectSerializerValue osv{std::move(os) << this->key_function_(pair.first)};
+        os = std::move(osv) << this->value_function_(pair.second);
+    }
+    return os;
 }
 
 // clang-format off
 }  // namespace types
 // clang-format on
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H_
+}  // namespace score
+#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_IMPL_H

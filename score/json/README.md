@@ -340,7 +340,7 @@ since they would require high amount of work. Please be aware and note:
 For the most up to date information on Requirements please follow the provided links to CodeBeamer.
 
 Adaptive Platform SW Safety Requirements
-- [The users of the vaJson ibrary SHALL guarantee the integrity of the data used to initialize the `amsr::json::JsonData` buffer.](broken_link_c/issue/6576406)
+- [The users of the vaJson Library SHALL guarantee the integrity of the data used to initialize the `score::json::vajson::JsonData` buffer.](broken_link_c/issue/6576406)
 
 [SW Component Requirements](broken_link_c/tracker/566325?workingSetId=-1&layout_name=document&subtreeRoot=5310849)
 - The JSON-Library shall support at least the functional set of RFC-8259.

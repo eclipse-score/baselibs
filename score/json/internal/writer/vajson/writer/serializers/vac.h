@@ -10,21 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  A collection of serializers for native libVac types.
- *
- *      \details  Single include for all libVac types.
- *
- *********************************************************************************************************************/
+/// \file
+/// \brief A collection of serializers for native libVac types.
+/// \details Single include for all libVac types.
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_VAC_H
+#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_VAC_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/writer/vajson/writer/serializers/vac/primitives.h"
 #include "score/json/internal/writer/vajson/writer/serializers/vac/sequence_containers.h"
 #include "score/json/internal/writer/vajson/writer/serializers/vac/variant.h"
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_VAC_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_VAC_H

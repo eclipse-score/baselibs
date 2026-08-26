@@ -65,23 +65,4 @@ enum class EncodingType : std::uint8_t
 }  // namespace json
 }  // namespace score
 
-namespace amsr
-{
-namespace json
-{
-
-template <typename T>
-using Optional = score::json::vajson::Optional<T>;
-
-using CStringView = score::json::vajson::CStringView;
-using StringView = score::json::vajson::StringView;
-using String = score::json::vajson::String;
-using Bytes = score::json::vajson::Bytes;
-using EncodingType = score::json::vajson::EncodingType;
-
-using score::json::vajson::operator""sv;
-
-}  // namespace json
-}  // namespace amsr
-
 #endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H_

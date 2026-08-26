@@ -281,7 +281,6 @@ inline auto MakeResult(bool value, score::result::Error error) noexcept -> score
 template <typename T>
 inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -> Result<T>
 {
-    // VCA_VAJSON_EXTERNAL_CALL
     return value.has_value() ? Result<T>{value.value()} : score::MakeUnexpected<T>(error);
 }
 
@@ -310,15 +309,5 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
 }  // namespace vajson
 }  // namespace json
 }  // namespace score
-
-namespace amsr
-{
-namespace json
-{
-
-using score::json::vajson::AssertCondition;
-
-}  // namespace json
-}  // namespace amsr
 
 #endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H_

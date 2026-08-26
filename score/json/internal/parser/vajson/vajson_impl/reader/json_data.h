@@ -65,7 +65,7 @@ class JsonData final
 
   public:
     /// \brief           Class JsonOps must have access to the InputStream but no other classes
-    friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
+    friend class internal::JsonOps;
 
     /// \brief           Initializes a JSON data object using a constructed reader
     /// \param[in]       input_stream

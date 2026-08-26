@@ -10,21 +10,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  A collection of serializers for native STD & STL types.
- *
- *      \details  Single include for all STD &STL types.
- *
- *********************************************************************************************************************/
+/// \file
+/// \brief A collection of serializers for native STD & STL types.
+/// \details Single include for all STD &STL types.
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STL_H
+#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STL_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/writer/vajson/writer/serializers/stl/associative_containers.h"
 #include "score/json/internal/writer/vajson/writer/serializers/stl/primitives.h"
 #include "score/json/internal/writer/vajson/writer/serializers/stl/sequence_containers.h"
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STL_H

@@ -10,62 +10,47 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Serializer for length tags.
- *
- *********************************************************************************************************************/
+/// \file
+/// \brief Serializer for length tags.
 
-#ifndef LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H_
-#define LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H
+#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <array>
 #include <cstdint>
 
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 
-namespace amsr {
-namespace json {
-namespace internal {
-/*!
- * \brief           Serializes a length value as big endian
- * \vprivate        component private
- *
- * \param[in]       os
- *                  Stream to write to.
- * \param[in]       length
- *                  to serialize.
- *
- * \context         ANY
- * \pre             -
- * \threadsafe      FALSE
- * \reentrant       FALSE
- * \spec
- * requires true;
- * \endspec
- *
- * \internal
- * - Copy each byte of the value to byte buffer, big-endian byte order,
- * - Write byte buffer to the stream.
- * \endinternal
- */
-inline void SerializeLength(WriterType os, std::uint32_t const length) noexcept {
-  constexpr std::size_t kPrefixSize{sizeof(std::uint32_t)};
+namespace score
+{
+namespace json
+{
+namespace vajson
+{
+namespace internal
+{
+/// \brief Serializes a length value as big endian
+/// \details
+/// - Copy each byte of the value to byte buffer, big-endian byte order,
+/// - Write byte buffer to the stream.
+/// \param[in] os Stream to write to.
+/// \param[in] length to serialize.
+inline void SerializeLength(WriterType os, const std::uint32_t length) noexcept
+{
+    constexpr std::size_t kPrefixSize{sizeof(std::uint32_t)};
 
-  std::array<std::uint8_t, kPrefixSize> arr{};
-  arr[0] = static_cast<std::uint8_t>((length >> 24) & 0xffu);
-  arr[1] = static_cast<std::uint8_t>((length >> 16) & 0xffu);
-  arr[2] = static_cast<std::uint8_t>((length >> 8) & 0xffu);
-  arr[3] = static_cast<std::uint8_t>(length & 0xffu);
+    std::array<std::uint8_t, kPrefixSize> arr{};
+    arr[0] = static_cast<std::uint8_t>((length >> 24) & 0xffu);
+    arr[1] = static_cast<std::uint8_t>((length >> 16) & 0xffu);
+    arr[2] = static_cast<std::uint8_t>((length >> 8) & 0xffu);
+    arr[3] = static_cast<std::uint8_t>(length & 0xffu);
 
-  // VCA_VAJSON_OUTPUTSTREAM
-  os.get().write(reinterpret_cast<const char*>(arr.data()), kPrefixSize);
+    os.get().write(reinterpret_cast<const char*>(arr.data()), kPrefixSize);
 }
 
 }  // namespace internal
+}  // namespace vajson
 }  // namespace json
-}  // namespace amsr
+}  // namespace score
 
-#endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_LENGTH_SERIALIZER_H

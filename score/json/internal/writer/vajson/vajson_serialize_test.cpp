@@ -33,7 +33,8 @@ TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
     const auto result = VajsonToBuffer(Any{std::move(root)});
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result,
-              std::string{"{\"boolean\":true,\"list\":[null,{\"number\":7}],\"string\":\"line1\\n\\\"quoted\\\"\\\\line2\"}"});
+              std::string{
+                  "{\"boolean\":true,\"list\":[null,{\"number\":7}],\"string\":\"line1\\n\\\"quoted\\\"\\\\line2\"}"});
 }
 TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
 {

@@ -124,21 +124,21 @@ score::json::VajsonSerialize --> score::json::Error : use
 score::json::VajsonSerialize --> score::Result : use
 
 
-enum amsr::json::ParserState #LightSteelBlue
+enum score::json::vajson::ParserState #LightSteelBlue
 
 
-enum amsr::json::JsonErrc #LightSteelBlue
+enum score::json::vajson::JsonErrc #LightSteelBlue
 
 
-class amsr::json::ParserResult <<typedef>> #LightSteelBlue
+class score::json::vajson::ParserResult <<typedef>> #LightSteelBlue
 
 
-class amsr::json::v2::Parser #LightSteelBlue
+class score::json::vajson::v2::Parser #LightSteelBlue
 
 
-class amsr::json::JsonData #LightSteelBlue
+class score::json::vajson::JsonData #LightSteelBlue
 
-amsr::json::v2::Parser <|-- score::json::VajsonParser
+score::json::vajson::v2::Parser <|-- score::json::VajsonParser
 
 
 class score::json::VajsonParser #LightSteelBlue {
@@ -149,10 +149,10 @@ class score::json::VajsonParser #LightSteelBlue {
 score::json::VajsonParser *-- score::json::Any
 score::json::VajsonParser --> score::json::Error : use
 score::json::VajsonParser --> score::Result : use
-score::json::VajsonParser --> amsr::json::ParserResult : use
-score::json::VajsonParser --> amsr::json::ParserState : use
-score::json::VajsonParser --> amsr::json::JsonErrc : use
-score::json::VajsonParser --> amsr::json::JsonData : use
+score::json::VajsonParser --> score::json::vajson::ParserResult : use
+score::json::VajsonParser --> score::json::vajson::ParserState : use
+score::json::VajsonParser --> score::json::vajson::JsonErrc : use
+score::json::VajsonParser --> score::json::vajson::JsonData : use
 
 
 class score::json::NlohmannParser #LightSteelBlue {
