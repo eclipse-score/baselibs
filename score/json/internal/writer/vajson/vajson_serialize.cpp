@@ -22,24 +22,28 @@ score::Result<void> SerializeToStream(std::ostream& out_stream, const T& json_da
 {
     auto serializer = score::json::vajson::DocumentSerializer{std::ref(out_stream)};
     static_cast<void>(std::move(serializer) << json_data);
+
+    // A default constructed Result<void> already carries the success state.
+    score::Result<void> result{};
     if (out_stream.fail())
     {
-        return score::Result<void>{
+        result = score::Result<void>{
             score::unexpect,
             score::json::MakeError(score::json::Error::kUnknownError, "vaJSON serializer failed to write to stream")};
     }
-    return {};
+
+    return result;
 }
 template <typename T>
 score::Result<std::string> SerializeToBuffer(const T& json_data)
 {
     std::ostringstream out_stream{};
-    auto result = SerializeToStream(out_stream, json_data);
-    if (!result.has_value())
-    {
-        return score::Unexpected{result.error()};
-    }
-    return out_stream.str();
+
+    // and_then keeps a single exit point: the buffer is only extracted once serialization succeeded,
+    // and any error is forwarded unchanged.
+    return SerializeToStream(out_stream, json_data).and_then([&out_stream](auto&&...) -> score::Result<std::string> {
+        return out_stream.str();
+    });
 }
 }  // namespace
 namespace score

@@ -20,6 +20,7 @@
 #include <score/assert.hpp>
 #include <score/utility.hpp>
 #include <cstdint>
+#include <optional>
 #include <ostream>
 #include <string>
 #include <utility>
@@ -50,24 +51,33 @@ auto SerializeNumber(score::json::vajson::GenericValueSerializer<Next>&& seriali
                      const score::json::Number& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next
 {
+    // The serializer is consumed by whichever alternative matches, so the outcome is parked in an
+    // optional to keep a single exit point. Number::As() re-parses the value on every call, hence the
+    // chain stays an else-if: the alternatives must be probed lazily, in order.
+    std::optional<typename score::json::vajson::GenericValueSerializer<Next>::Next> serialized{};
+
     if (const auto unsigned_value = value.As<std::uint64_t>(); unsigned_value.has_value())
     {
-        return std::move(serializer) << score::json::vajson::JNumber(*unsigned_value);
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*unsigned_value));
     }
-    if (const auto signed_value = value.As<std::int64_t>(); signed_value.has_value())
+    else if (const auto signed_value = value.As<std::int64_t>(); signed_value.has_value())
     {
-        return std::move(serializer) << score::json::vajson::JNumber(*signed_value);
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*signed_value));
     }
-    if (const auto float_value = value.As<float>(); float_value.has_value())
+    else if (const auto float_value = value.As<float>(); float_value.has_value())
     {
-        return std::move(serializer) << score::json::vajson::JNumber(*float_value);
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*float_value));
     }
-    if (const auto double_value = value.As<double>(); double_value.has_value())
+    else if (const auto double_value = value.As<double>(); double_value.has_value())
     {
-        return std::move(serializer) << score::json::vajson::JNumber(*double_value);
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*double_value));
     }
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(false, "Unable to serialize score::json::Number with vaJSON adapter.");
-    return std::move(serializer) << score::json::vajson::JNull();
+    else
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNull());
+    }
+
+    return *std::move(serialized);
 }
 template <typename Next>
 auto SerializeList(score::json::vajson::GenericValueSerializer<Next>&& serializer,
@@ -104,31 +114,37 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
                     const score::json::Any& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next
 {
+    // See SerializeNumber() for why the outcome is parked in an optional rather than returned directly.
+    std::optional<typename score::json::vajson::GenericValueSerializer<Next>::Next> serialized{};
+
     if (const auto object = value.As<score::json::Object>(); object.has_value())
     {
-        return SerializeObject(std::move(serializer), object->get());
+        serialized.emplace(SerializeObject(std::move(serializer), object->get()));
     }
-    if (const auto list = value.As<score::json::List>(); list.has_value())
+    else if (const auto list = value.As<score::json::List>(); list.has_value())
     {
-        return SerializeList(std::move(serializer), list->get());
+        serialized.emplace(SerializeList(std::move(serializer), list->get()));
     }
-    if (const auto string_value = value.As<std::string>(); string_value.has_value())
+    else if (const auto string_value = value.As<std::string>(); string_value.has_value())
     {
-        return std::move(serializer) << score::json::vajson::JString(string_value->get());
+        serialized.emplace(std::move(serializer) << score::json::vajson::JString(string_value->get()));
     }
-    if (const auto null_value = value.As<score::json::Null>(); null_value.has_value())
+    else if (const auto null_value = value.As<score::json::Null>(); null_value.has_value())
     {
         score::cpp::ignore = null_value;
-        return std::move(serializer) << score::json::vajson::JNull();
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNull());
     }
-    if (const auto number = value.As<score::json::Number>(); number.has_value())
+    else if (const auto number = value.As<score::json::Number>(); number.has_value())
     {
-        return SerializeNumber(std::move(serializer), number->get());
+        serialized.emplace(SerializeNumber(std::move(serializer), number->get()));
     }
-    const auto boolean = value.As<bool>();
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(boolean.has_value(),
-                                                "Unable to determine score::json::Any type for vaJSON serialization.");
-    return std::move(serializer) << score::json::vajson::JBool(*boolean);
+    else
+    {
+        const auto boolean = value.As<bool>();
+        serialized.emplace(std::move(serializer) << score::json::vajson::JBool(*boolean));
+    }
+
+    return *std::move(serialized);
 }
 }  // namespace vajson
 }  // namespace writer
