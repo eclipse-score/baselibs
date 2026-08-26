@@ -38,8 +38,8 @@ build:score-eb-aarch64 --platforms=@score_bazel_platforms//:aarch64-linux-sdk_0.
 
 build:score-autosd-x86_64 --config=_score_common
 build:score-autosd-x86_64 --force_pic
-build:score-autosd-aarch64 --platforms=@score_bazel_platforms//:x86_64-linux-autosd10
-build:score-autosd-aarch64 --extra_toolchains=@score_autosd10_x86_64_toolchain//:x86_64-linux-autosd10
+build:score-autosd-x86_64 --platforms=@score_bazel_platforms//:x86_64-linux-autosd10
+build:score-autosd-x86_64 --extra_toolchains=@score_autosd10_x86_64_toolchain//:x86_64-linux-autosd10
 
 build:score-autosd-aarch64 --force_pic
 build:score-autosd-aarch64 --platforms=@score_bazel_platforms//:aarch64-linux-autosd10

@@ -105,7 +105,7 @@ use_repo(
 qcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 qcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
-    sdp_version = "8.0.0",
+    sdp_version = "8.0.4",
     target_cpu = "aarch64",
     target_os = "qnx",
     use_default_package = True,
@@ -113,7 +113,7 @@ qcc.toolchain(
 )
 qcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
-    sdp_version = "8.0.0",
+    sdp_version = "8.0.4",
     target_cpu = "x86_64",
     target_os = "qnx",
     use_default_package = True,
