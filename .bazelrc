@@ -30,6 +30,7 @@ common --action_env=ANDROID_HOME=""
 
 common --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
 common --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+common --extra_toolchains=//bazel/toolchains:baselibs_libclang_toolchain
 common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 common --//score/json:base_library=nlohmann
 

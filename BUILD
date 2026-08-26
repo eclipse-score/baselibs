@@ -14,7 +14,7 @@
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
-load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "use_format_targets")
+load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "rust_coverage_report", "setup_starpls", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
@@ -105,6 +105,13 @@ refresh_compile_commands(
     targets = {
         "//...": "",
     },
+)
+
+# Required for the VS Code Bazel extension's `starpls` language server
+# (BUILD/MODULE.bazel syntax highlighting, hover, go-to-definition, etc.).
+setup_starpls(
+    name = "starpls_server",
+    visibility = ["//visibility:public"],
 )
 
 # Generate `rust_project.json`.

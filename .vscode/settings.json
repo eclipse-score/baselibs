@@ -1,4 +1,9 @@
 {
+    "bazel.lsp.command": "bazel",
+    "bazel.lsp.args": [
+        "run",
+        "//:starpls_server"
+    ],
     "[rust]": {
         "editor.defaultFormatter": "rust-lang.rust-analyzer",
         "editor.rulers": [

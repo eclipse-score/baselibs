@@ -2,5 +2,12 @@
     "name": "eclipse-s-core",
     "build": {
       "dockerfile": "Dockerfile"
+    },
+    "forwardPorts": [8000],
+    "portsAttributes": {
+      "8000": {
+        "label": "live_preview (Sphinx docs)",
+        "onAutoForward": "notify"
+      }
     }
 }
