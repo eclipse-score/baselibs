@@ -12,7 +12,7 @@
  ********************************************************************************/
 #include "score/json/vajson_json_writer.h"
 #include "score/json/internal/model/error.h"
-#include "score/json/internal/writer/vajson/vajson_serialize.h"
+#include "score/json/internal/parser/vajson/vajson_impl/vajson_serialize.h"
 namespace
 {
 template <typename T>

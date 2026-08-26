@@ -14,8 +14,8 @@
 #define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_VAJSON_SERIALIZE_H
 #include "score/json/internal/model/any.h"
 #include "score/json/internal/model/error.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer_impl.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/generic_value_serializer_impl.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/key_serializer.h"
 #include "score/result/result.h"
 #include <score/assert.hpp>
 #include <score/utility.hpp>
@@ -90,7 +90,7 @@ auto SerializeObject(amsr::json::GenericValueSerializer<Next>&& serializer,
                    auto value_serializer = std::move(next) << ObjectKeySerializer{}(element.first);
                    next = SerializeValue(std::move(value_serializer), element.second);
                }
-               return std::move(next);
+               return next;
            });
 }
 template <typename Next>

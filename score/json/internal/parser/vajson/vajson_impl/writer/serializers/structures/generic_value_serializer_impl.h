@@ -21,8 +21,8 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/generic_value_serializer.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/key_serializer.h"
 
 namespace amsr {
 namespace json {

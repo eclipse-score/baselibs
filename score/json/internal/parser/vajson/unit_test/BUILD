@@ -25,6 +25,7 @@ cc_test(
     ],
     deps = [
         "//score/json/internal/parser/vajson:vajson_parser",
+        "//score/json/internal/parser/vajson/vajson_impl:vajson_serialize",
         "@googletest//:gtest_main",
     ],
 )

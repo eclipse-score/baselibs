@@ -11,6 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+
 package(default_visibility = ["@score_baselibs//score/json:__subpackages__"])
 
 cc_library(
@@ -52,6 +55,26 @@ cc_library(
         "util/json_error_domain.h",
         "util/number.h",
         "util/types.h",
+        "writer/serializers.h",
+        "writer/serializers/stl.h",
+        "writer/serializers/stl/associative_containers.h",
+        "writer/serializers/stl/primitives.h",
+        "writer/serializers/stl/sequence_containers.h",
+        "writer/serializers/structures/generic_value_serializer.h",
+        "writer/serializers/structures/generic_value_serializer_impl.h",
+        "writer/serializers/structures/key_serializer.h",
+        "writer/serializers/structures/serializer.h",
+        "writer/serializers/util/escaped_json_string.h",
+        "writer/serializers/util/length_serializer.h",
+        "writer/serializers/vac.h",
+        "writer/serializers/vac/primitives.h",
+        "writer/serializers/vac/sequence_containers.h",
+        "writer/serializers/vac/variant.h",
+        "writer/types/array_type.h",
+        "writer/types/basic_types.h",
+        "writer/types/bin_types.h",
+        "writer/types/object_type.h",
+        "writer/types/object_type_impl.h",
     ],
     includes = [
         "include",
@@ -61,6 +84,20 @@ cc_library(
         "@score_baselibs//score/filesystem",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/string_view:zstring_view",
+        "@score_baselibs//score/result",
+    ],
+)
+
+cc_library(
+    name = "vajson_serialize",
+    srcs = ["vajson_serialize.cpp"],
+    hdrs = ["vajson_serialize.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    deps = [
+        ":vajson_impl",
+        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
     ],
 )

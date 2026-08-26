@@ -23,8 +23,8 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include "score/json/internal/writer/vajson/writer/serializers/stl/associative_containers.h"
-#include "score/json/internal/writer/vajson/writer/serializers/stl/primitives.h"
-#include "score/json/internal/writer/vajson/writer/serializers/stl/sequence_containers.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/stl/associative_containers.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/stl/primitives.h"
+#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/stl/sequence_containers.h"
 
 #endif  // LIB_VAJSON_INCLUDE_AMSR_JSON_WRITER_SERIALIZERS_STL_H_
