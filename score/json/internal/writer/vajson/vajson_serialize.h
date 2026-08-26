@@ -90,7 +90,7 @@ auto SerializeObject(amsr::json::GenericValueSerializer<Next>&& serializer,
                    auto value_serializer = std::move(next) << ObjectKeySerializer{}(element.first);
                    next = SerializeValue(std::move(value_serializer), element.second);
                }
-               return std::move(next);
+               return next;
            });
 }
 template <typename Next>

@@ -11,45 +11,28 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+# Declarations of the serialization backend seam. Exactly one backend provides the definitions; which one is
+# selected by the `//score/json:writer_library` flag below.
 cc_library(
-    name = "vajson_serialize",
-    srcs = ["vajson_serialize.cpp"],
-    hdrs = ["vajson_serialize.h"] + glob([
-        "writer/**/*.h",
-    ]),
+    name = "writer_backend",
+    hdrs = ["writer_backend.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
-        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
     ],
 )
 
-cc_library(
-    name = "vajson_backend",
-    srcs = ["vajson_backend.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
-    deps = [
-        ":vajson_serialize",
-        "@score_baselibs//score/json/internal/writer:writer_backend",
-    ],
-)
-
-cc_test(
-    name = "vajson_serialize_test",
-    srcs = ["vajson_serialize_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    deps = [
-        ":vajson_serialize",
-        "@googletest//:gtest_main",
-    ],
+alias(
+    name = "writer",
+    actual = select({
+        "@score_baselibs//score/json:writer_library_json_serialize": "@score_baselibs//score/json/internal/writer/json_serialize:json_serialize_backend",
+        "@score_baselibs//score/json:writer_library_vajson": "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
+    }),
+    visibility = ["@score_baselibs//score/json:__pkg__"],
 )

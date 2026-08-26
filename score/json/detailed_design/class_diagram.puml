@@ -76,6 +76,7 @@ class score::json::JsonWriter {
 
 score::json::JsonWriter --> score::json::Error : use
 score::json::JsonWriter --> score::json::JsonSerialize : use
+score::json::JsonWriter --> score::json::VajsonSerialize : use
 
 
 interface score::json::IJsonParser {
@@ -107,6 +108,20 @@ score::json::JsonSerialize --> score::json::List : use
 score::json::JsonSerialize --> score::json::Null : use
 score::json::JsonSerialize --> score::json::Error : use
 score::json::JsonSerialize --> score::Result : use
+
+
+class score::json::VajsonSerialize #LightSteelBlue {
+  +VajsonSerialize(out_stream: std::ostream)
+  +operator<<(json_data: score::json::Object): score::Result<void>
+  +operator<<(json_data: score::json::List): score::Result<void>
+  +operator<<(json_data: score::json::Any): score::Result<void>
+}
+
+score::json::VajsonSerialize --> score::json::Any : use
+score::json::VajsonSerialize --> score::json::Object : use
+score::json::VajsonSerialize --> score::json::List : use
+score::json::VajsonSerialize --> score::json::Error : use
+score::json::VajsonSerialize --> score::Result : use
 
 
 enum amsr::json::ParserState #LightSteelBlue

@@ -167,7 +167,7 @@ constexpr auto JKey(std::string_view s) noexcept -> JKeyType { return JKeyType{s
  * requires true;
  * \endspec
  */
-constexpr auto JKey(std::string const& s) noexcept -> JKeyType { return JKey(std::string_view(s)); }
+inline auto JKey(std::string const& s) noexcept -> JKeyType { return JKey(std::string_view(s)); }
 
 inline namespace literals {
 /*!
