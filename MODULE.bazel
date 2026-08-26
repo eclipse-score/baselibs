@@ -103,6 +103,14 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
 bazel_dep(name = "score_platform", version = "0.7.1")
 
+# Playground experiment: point score_platform at the local score checkout
+# instead of the registry version, so we can reference its docs/features
+# RST sources (e.g. the baselibs feature requirements) directly.
+local_path_override(
+    module_name = "score_platform",
+    path = "../score",
+)
+
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.8.5")
@@ -136,7 +144,11 @@ llvm.toolchain(
     llvm_version = "22.1.7",
     stdlib = {"linux-x86_64": "stdc++"},
 )
-use_repo(llvm, "llvm_toolchain")
+
+# "llvm_toolchain_llvm" exposes the raw LLVM distribution (libclang.so, C++
+# include dirs), needed to register our own libclang_toolchain for
+# score_tooling's unit()/component() cpp_parser (see //bazel/toolchains).
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
