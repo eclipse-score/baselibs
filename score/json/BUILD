@@ -128,7 +128,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl:vajson_serialize",
+        "@score_baselibs//score/json/internal/writer/vajson:vajson_serialize",
     ],
 )
 

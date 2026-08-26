@@ -24,7 +24,7 @@
 #include <array>
 #include <cstdint>
 
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 
 namespace amsr {
 namespace json {

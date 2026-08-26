@@ -26,7 +26,7 @@
  *********************************************************************************************************************/
 #include <utility>
 
-#include "score/json/internal/parser/vajson/vajson_impl/writer/types/array_type.h"
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
 
 #include "score/span.hpp"
 #include "score/vector.hpp"

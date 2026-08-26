@@ -23,9 +23,9 @@
  *********************************************************************************************************************/
 #include <utility>
 
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/generic_value_serializer.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/serializer.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/types/object_type.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {

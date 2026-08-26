@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/json/internal/parser/vajson/vajson_impl/vajson_serialize.h"
+#include "score/json/internal/writer/vajson/vajson_serialize.h"
 
 #include <gtest/gtest.h>
 namespace score

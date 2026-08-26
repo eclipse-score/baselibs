@@ -22,12 +22,12 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/structures/serializer.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/util/escaped_json_string.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/serializers/util/length_serializer.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/types/array_type.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/types/basic_types.h"
-#include "score/json/internal/parser/vajson/vajson_impl/writer/types/object_type.h"
+#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/length_serializer.h"
+#include "score/json/internal/writer/vajson/writer/types/array_type.h"
+#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace amsr {
 namespace json {

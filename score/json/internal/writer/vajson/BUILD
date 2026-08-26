@@ -11,20 +11,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-cc_test(
-    name = "vajson_impl_unit_tests",
-    srcs = glob(["**/*.cpp"]),
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    local_defines = ["VAJSON"],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
+cc_library(
+    name = "vajson_serialize",
+    srcs = ["vajson_serialize.cpp"],
+    hdrs = ["vajson_serialize.h"] + glob([
+        "writer/**/*.h",
+    ]),
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
-        "//score/json/internal/parser/vajson:vajson_parser",
+        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result",
+    ],
+)
+
+cc_test(
+    name = "vajson_serialize_test",
+    srcs = ["vajson_serialize_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    deps = [
+        ":vajson_serialize",
         "@googletest//:gtest_main",
     ],
 )
