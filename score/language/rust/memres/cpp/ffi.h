@@ -14,6 +14,7 @@
 #ifndef SCORE_LANGUAGE_RUST_MEMRES_CPP_FFI_H
 #define SCORE_LANGUAGE_RUST_MEMRES_CPP_FFI_H
 
+#include <score/memory_resource.hpp>
 #include <cstddef>
 
 // Forward-declare the C++ types exposed through the extern "C" interface so
@@ -21,10 +22,6 @@
 namespace score::language::rust::memres
 {
 class MemResHandle;
-}
-namespace score::cpp::pmr
-{
-class memory_resource;
 }
 
 extern "C" {

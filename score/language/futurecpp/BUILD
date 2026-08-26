@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 load("//score/language/futurecpp:copts.bzl", "SCORE_LANGUAGE_FUTURECPP_ASSERT_DEFINES", "SCORE_LANGUAGE_FUTURECPP_TEST_COPTS", "SCORE_LANGUAGE_FUTURECPP_TEST_LINKOPTS")
 
 config_setting(
@@ -268,4 +269,10 @@ cc_library(
     strip_include_prefix = "include",
     visibility = ["//score/language/futurecpp/tests:__subpackages__"],
     deps = [":math"],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

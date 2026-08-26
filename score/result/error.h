@@ -103,6 +103,13 @@ class Error final
         return user_messages_;
     }
 
+    /// \brief Returns a copy of this error with an updated user message.
+    /// \return Copy preserving code and domain with the provided user message
+    [[nodiscard]] constexpr Error WithUserMessage(const std::string_view user_message) const noexcept
+    {
+        return Error{code_, *domain_, user_message};
+    }
+
   private:
     score::result::ErrorCode code_;
     const score::result::ErrorDomain* domain_;
