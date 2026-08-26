@@ -170,5 +170,9 @@
   {
     "version": "v0.2.12",
     "url": "https://eclipse-score.github.io/baselibs/v0.2.12/"
+  },
+  {
+    "version": "pr-520",
+    "url": "https://eclipse-score.github.io/baselibs/pr-520/"
   }
 ]
