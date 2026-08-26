@@ -42,7 +42,7 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Run Bazel Coverage
         run: |
-          bazel coverage --config=bl-x86_64-linux --test_tag_filters=-manual -- //score/...
+          bazel coverage --config=bl-x86_64-linux -- //score/...
       - name: Generate HTML Coverage Report
         run: |
           genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat" \
