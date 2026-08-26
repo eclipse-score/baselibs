@@ -15,7 +15,17 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.2", dev_dependency = True)
+# the extra_known_features required the inclusion of score_cpp_policies in the root module
+bazel_dep(name = "score_cpp_policies", version = "0.1.0", dev_dependency = True)
+
+SCORE_GCC_WARNING_FEATURES_POLICY = [
+    "@score_cpp_policies//warnings/gcc/features:minimal_warnings",
+    "@score_cpp_policies//warnings/gcc/features:strict_warnings",
+    "@score_cpp_policies//warnings/gcc/features:all_wall_warnings",
+    # not including warnings as errors for now so that the build does not fail
+    #"@score_cpp_policies//warnings/gcc/features:warnings_as_errors",
+]
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -24,6 +34,7 @@ gcc.toolchain(
     target_os = "linux",
     use_default_package = True,
     version = "12.2.0",
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
 )
 gcc.toolchain(
     name = "score_gcc_aarch64_toolchain",
@@ -31,6 +42,8 @@ gcc.toolchain(
     target_os = "linux",
     use_default_package = True,
     version = "12.2.0",
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
+    
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
@@ -39,6 +52,7 @@ gcc.toolchain(
     target_os = "qnx",
     use_default_package = True,
     version = "12.2.0",
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
@@ -47,6 +61,7 @@ gcc.toolchain(
     target_os = "qnx",
     use_default_package = True,
     version = "12.2.0",
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
 )
 use_repo(
     gcc,
@@ -135,6 +150,7 @@ llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", 
 llvm.toolchain(
     llvm_version = "22.1.7",
     stdlib = {"linux-x86_64": "stdc++"},
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
 )
 use_repo(llvm, "llvm_toolchain")
 
