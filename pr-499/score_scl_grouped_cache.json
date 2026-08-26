@@ -275,102 +275,6 @@
           "repo_name": "local_repo",
           "hash": "",
           "url": ""
-        },
-        {
-          "name": "GetByte__FromUint8",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 423,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromInt8",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 435,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromUint16",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 447,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromInt16",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 460,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromUint32",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 474,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromInt32",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 489,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromUint64",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 505,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "GetByte__FromInt64",
-          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
-          "line": 526,
-          "need": "comp_req__bitmanipulation__byte_operations",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
         }
       ]
     }
@@ -537,6 +441,110 @@
           "file": "score/bitmanipulation/bit_manipulation_test.cpp",
           "line": 409,
           "need": "comp_req__bitmanipulation__bounds_safety",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__bitmanipulation__byte_extraction",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "GetByte__FromUint8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 423,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt8",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 435,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint16",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 447,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt16",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 460,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint32",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 474,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt32",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 489,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromUint64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 505,
+          "need": "comp_req__bitmanipulation__byte_extraction",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "GetByte__FromInt64",
+          "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+          "line": 526,
+          "need": "comp_req__bitmanipulation__byte_extraction",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",

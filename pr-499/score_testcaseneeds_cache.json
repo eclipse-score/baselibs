@@ -1536,7 +1536,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1550,7 +1550,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1564,7 +1564,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1578,7 +1578,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1592,7 +1592,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1606,7 +1606,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1620,7 +1620,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
@@ -1634,7 +1634,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__bitmanipulation__byte_operations",
+    "PartiallyVerifies": "comp_req__bitmanipulation__byte_extraction",
     "FullyVerifies": null
   },
   {
