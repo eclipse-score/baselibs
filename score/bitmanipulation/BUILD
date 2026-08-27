@@ -15,7 +15,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
-load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "architectural_design", "assumptions_of_use", "component", "component_requirements", "dependable_element", "unit")
+load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "architectural_design", "assumptions_of_use", "component", "component_requirements", "dependability_analysis", "dependable_element", "fmea", "unit")
 
 # Exposes the raw RST source containing the comp_req directives, e.g. for
 # other consumers that don't need TrlcProviderInfo.
@@ -169,9 +169,51 @@ component(
 # Static architecture diagram (SEooC -> component_bitmanipulation -> its 2
 # units). Validated at build time against the actual unit()/component()
 # structure below; the build fails if they drift apart.
+#
+# public_api documents the free functions in bit_manipulation.h as a single
+# aggregate "BitOperations" interface item. FailureMode.interface (see
+# docs/safety_analysis/trlc/failuremodes.trlc) references it by its TRLC-style
+# alias "BitmanipulationAPI.BitOperations", which is what lets the
+# dependability_analysis() traceability test resolve the "Failure Modes -> 
+# Architecture" up-reference (see arch_design wiring on
+# dependability_analysis_bitmanipulation below).
 architectural_design(
     name = "arch_design_bitmanipulation",
     static = ["docs/architecture/static_design.puml"],
+    public_api = ["docs/architecture/public_api.puml"],
+    visibility = ["//visibility:public"],
+)
+
+# TRLC re-expression of the failure modes/control measures already analysed as
+# prose in docs/safety_analysis/fmea.rst, for the dependable_element()-flavoured
+# fmea()/dependability_analysis() pipeline (renders its own fmea.rst page +
+# FailureMode/ControlMeasure lobster traceability). root_causes links each
+# failure mode down to its control measure via one FTA diagram per failure
+# mode (TopEvent/BasicEvent alias == TRLC fully-qualified record name), which
+# is what the dependability_analysis() traceability test (bazel test) checks.
+fmea(
+    name = "fmea_bitmanipulation",
+    arch_design = ":arch_design_bitmanipulation",
+    controlmeasures = ["docs/safety_analysis/trlc/controlmeasures.trlc"],
+    failuremodes = ["docs/safety_analysis/trlc/failuremodes.trlc"],
+    root_causes = [
+        "docs/safety_analysis/trlc/fta_constraint_violation.puml",
+        "docs/safety_analysis/trlc/fta_late_return.puml",
+        "docs/safety_analysis/trlc/fta_no_return.puml",
+        "docs/safety_analysis/trlc/fta_wrong_input.puml",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# arch_design (not fmea()'s own same-named attribute, which is currently
+# unused by the fmea rule implementation) is what actually feeds the
+# architectural_design target's public_api into the combined lobster
+# traceability report as the "Architecture" pool that "Failure Modes" must
+# trace up to.
+dependability_analysis(
+    name = "dependability_analysis_bitmanipulation",
+    fmea = [":fmea_bitmanipulation"],
+    arch_design = ":arch_design_bitmanipulation",
     visibility = ["//visibility:public"],
 )
 
@@ -191,16 +233,17 @@ architectural_design(
 # lobster traceability chain here no longer sees baselibs' other 13,
 # unrelated feature requirements.
 #
-# dependability_analysis/tests are empty for now: docs/safety_analysis/*.rst
-# has no fmea()/dfa() Bazel targets yet (those rules consume .trlc sources,
-# not the current .rst prose), and there are no system-level integration
-# tests beyond the unit tests already wired via unit().
+# dependability_analysis wraps fmea_bitmanipulation (see above), a TRLC
+# re-expression of the failure modes/control measures already analysed as
+# prose in docs/safety_analysis/fmea.rst. tests is empty for now: there are
+# no system-level integration tests beyond the unit tests already wired via
+# unit().
 dependable_element(
     name = "dependable_element_bitmanipulation",
     assumptions_of_use = [":aous_bitmanipulation"],
     requirements = ["@score_platform//docs/features/baselibs/requirements:feat_req_bitmanipulation"],
     architectural_design = [":arch_design_bitmanipulation"],
-    dependability_analysis = [],
+    dependability_analysis = [":dependability_analysis_bitmanipulation"],
     components = [":component_bitmanipulation"],
     tests = [],
     integrity_level = "B",
