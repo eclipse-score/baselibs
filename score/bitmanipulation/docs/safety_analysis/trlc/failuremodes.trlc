@@ -1,0 +1,62 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
+// TRLC re-expression of the failure modes already analysed (as prose,
+// ".. comp_saf_fmea::" directives) in ../fmea.rst, for use with the
+// dependable_element()-flavoured fmea() Bazel rule. See
+// ../../safety_analysis/fmea.rst for the original fault-model rationale
+// (MF_01_xx / CO_01_xx / EX_01_xx) this file is derived from.
+
+package BitmanipulationSafetyAnalysis
+
+import ScoreReq
+
+ScoreReq.FailureMode BitmanipulationNoReturn {
+    guidewords    = [ScoreReq.Guideword.LossOfFunction]
+    description   = "Bitmanipulation does not return / execute: a request is not received, not sent, or execution is lost."
+    failureeffect = "Bitmanipulation is not executed; if a safety function relies on its result, this may violate the containing safety requirements."
+    rationale     = "Covers MF_01_01 (message not received), MF_01_06 (message not sent) and EX_01_04 (loss of execution)."
+    safety        = ScoreReq.Asil.B
+    interface     = "BitmanipulationAPI.BitOperations"
+    version       = 1
+}
+
+ScoreReq.FailureMode BitmanipulationLateReturn {
+    guidewords    = [ScoreReq.Guideword.TooLate, ScoreReq.Guideword.PartialFunction]
+    description   = "Bitmanipulation returns too late or stalls before completing."
+    failureeffect = "Bitmanipulation is executed too late or stalls, so its safety requirements may be violated."
+    rationale     = "Covers MF_01_02 (message received too late) and EX_01_06 (processing not complete / infinite loop)."
+    safety        = ScoreReq.Asil.B
+    interface     = "BitmanipulationAPI.BitOperations"
+    version       = 1
+}
+
+ScoreReq.FailureMode BitmanipulationConstraintViolation {
+    guidewords    = [ScoreReq.Guideword.TooEarly, ScoreReq.Guideword.TooLate]
+    description   = "A bit-position or field constraint boundary (minimum or maximum) is violated by the caller-supplied input."
+    failureeffect = "If constraints are violated there may be out-of-bounds memory corruption."
+    rationale     = "Covers CO_01_01 (minimum constraint boundary violated) and CO_01_02 (maximum constraint boundary violated)."
+    safety        = ScoreReq.Asil.B
+    interface     = "BitmanipulationAPI.BitOperations"
+    version       = 1
+}
+
+ScoreReq.FailureMode BitmanipulationWrongInput {
+    guidewords    = [ScoreReq.Guideword.Corrupted]
+    description   = "Enum values describing bit positions are wrongly defined by the caller, so the expected bit(s) are not the ones actually acted upon."
+    failureeffect = "If enums are wrongly defined, the expectation of what bit(s) are set will not be met."
+    rationale     = "Covers MF_01_05 (message / input is corrupted)."
+    safety        = ScoreReq.Asil.B
+    interface     = "BitmanipulationAPI.BitOperations"
+    version       = 1
+}
