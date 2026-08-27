@@ -24,3 +24,14 @@ build it first with::
 
 .. lobster-traceability-report::
    bazel-bin/score/bitmanipulation/dependable_element_bitmanipulation_index_report.json
+
+Checklists
+##########
+
+Inspection checklists for this component (requirements, architecture and
+implementation inspection):
+
+.. needtable::
+   :filter: id in ["doc__bitmanipulation_req_inspection", "doc__bitmanipulation_arc_inspection", "doc__bitmanipulation_impl_inspection"]
+   :columns: id;title;status
+   :style: table

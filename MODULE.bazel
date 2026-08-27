@@ -101,25 +101,29 @@ bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
-# Playground experiment: point score_docs_as_code at a local checkout (with a
-# new score_lobster_report Sphinx extension that renders a pre-built Lobster
+# Playground experiment: point score_docs_as_code at the
+# playground/bitmanipulation-seooc-lobster-report branch (with a new
+# score_lobster_report Sphinx extension that renders a pre-built Lobster
 # traceability JSON report, e.g. from dependable_element()/component(), as a
 # table directly on a docs page). This mirrors how score_source_code_linker
 # reads bazel-testlogs off disk at Sphinx build time instead of depending on
 # the (testonly) test targets through the Bazel graph.
-local_path_override(
+git_override(
     module_name = "score_docs_as_code",
-    path = "../docs-as-code",
+    commit = "ec3576f23a1b66a98c0cd2b68af938f2d638a8b7",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
 bazel_dep(name = "score_platform", version = "0.7.1")
 
-# Playground experiment: point score_platform at the local score checkout
-# instead of the registry version, so we can reference its docs/features
-# RST sources (e.g. the baselibs feature requirements) directly.
-local_path_override(
+# Playground experiment: point score_platform at the
+# playground/bitmanipulation-seooc branch of the score checkout instead of
+# the registry version, so we can reference its docs/features RST sources
+# (e.g. the baselibs feature requirements) directly.
+git_override(
     module_name = "score_platform",
-    path = "../score",
+    commit = "875df24ba6983546c0e2ed619436eb25fc216ccf",
+    remote = "https://github.com/eclipse-score/score.git",
 )
 
 ## Configure the python toolchain
