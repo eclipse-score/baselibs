@@ -48,18 +48,18 @@ Additional Verification Measures
 
 .. SMI:: SMI-JSON-PRIVATE-InitializeJSONWithIoIntegrityStream
 
-   **The user of MICROSAR Adaptive Safe shall ensure that IoIntegrityStream is used when initializing vaJson from an input stream where safety requirements are assumed.**
+   **The user of the embedded software shall ensure that IoIntegrityStream is used when initializing vaJson from an input stream where safety requirements are assumed.**
 
    This SMI is stated as PRIVATE and thus it is applicable only to direct users of vaJson.
 
    During initialization of vaJson, a user-initialized input filestream can be passed. The Technical Reference uses std::fstream::in as an example.
-   If safety requirements are to be assumed, the user shall verify that a stream opened by amsr::iointegritystream::IntegrityFileStream is passed.
+   If safety requirements are to be assumed, the user shall verify that the integrirty of the provided filestream is ensured.
 
    Verification can be performed e.g. by review.
 
 .. SMI:: SMI-JSON-InitializeJSONWithBuffer
 
-   **The user of MICROSAR Adaptive Safe shall ensure the integrity of the character buffer used to initialize vaJson where safety requirements are assumed.**
+   **The user of the embedded software shall ensure the integrity of the character buffer used to initialize vaJson where safety requirements are assumed.**
 
    During initialization of vaJson, a user-initialized character buffer can be passed. The Technical Reference uses ara::core::StringView and
    ara::core::Span<char> as an example.  If safety requirements are to be assumed, the user shall verify the data integrity of the provided character buffer.
@@ -69,7 +69,7 @@ Additional Verification Measures
 
 .. SMI:: SMI-JSON-InitializeJSONWithFilePath
 
-   **The user of MICROSAR Adaptive Safe shall ensure the integrity of a file whose path is used to intialize vaJson where safety requirements are assumed.**
+   **The user of the embedded software shall ensure the integrity of a file whose path is used to intialize vaJson where safety requirements are assumed.**
 
    During initialization of vaJson, a file path can be passed. If safety requirements are to be assumed, the user shall verify the integrity of
    the file to which the path points. The file's integrity must be ensured for as long as the JsonData or ParserFile object exists.
@@ -83,8 +83,8 @@ Safety Requirements Required From Other Components
 
    **This component requires common types/API functionality as an assumed safety requirement (TSR-112401, TSR-112402, TSR-112404-TSR-112409) from LibVac.**
 
-   The used amsr-vector-fs-libvac library shall provide common types/API functionality as safety requirement.
-   If the amsr-vector-fs-libvac library from MICROSAR Adaptive Safe is used, this dependency  is fulfilled.
+   The used libvac library shall provide common types/API functionality as safety requirement.
+   If the libvac library from the embedded software is used, this dependency  is fulfilled.
 
 .. SMI:: SMI-JSON-PRIVATE-LibOsAbstraction
 
@@ -92,15 +92,15 @@ Safety Requirements Required From Other Components
 
    This includes functionality for converting integers between host and network byte order.
 
-   The used amsr-vector-fs-libosabstraction library shall provide functionality byte order conversions as safety requirement.
-   If the amsr-vector-fs-libosabstraction library from MICROSAR Adaptive Safe is used, this dependency is fulfilled.
+   The used libosabstraction library shall provide functionality byte order conversions as safety requirement.
+   If the libosabstraction library from the embedded software is used, this dependency is fulfilled.
 
 .. SMI:: SMI-JSON-PRIVATE-CharacterConversion
 
    **This component requires conversions of primitive types to strings as an assumed safety requirement (TSR-112401, TSR-112402, TSR-112404-TSR-112409) from CharacterConversion.**
 
-   The used amsr-vector-fs-characterconversion library shall provide functionality to perform conversions between primitive types and strings.
-   If the amsr-vector-fs-characterconversion library from MICROSAR Adaptive Safe is used, this dependency is fulfilled.
+   The used characterconversion library shall provide functionality to perform conversions between primitive types and strings.
+   If the characterconversion library from the embedded software is used, this dependency is fulfilled.
 
 
 

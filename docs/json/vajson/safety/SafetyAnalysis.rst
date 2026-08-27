@@ -1,16 +1,16 @@
-Safety Analysis of amsr-vector-fs-vajson
-========================================
+Safety Analysis of vajson
+=========================
 
 The following TSRs are allocated to this component:
 
-- TSR-112401 **MICROSAR Adaptive Safe shall provide a mechanism to initialize itself and its controlled hardware.**
-- TSR-112402 **MICROSAR Adaptive Safe shall provide a mechanism to store and retrieve information to/from non-volatile memory by means of a key-value storage.**
-- TSR-112404 **MICROSAR Adaptive Safe shall provide mechanisms to protect communication between ECUs.**
-- TSR-112405 **MICROSAR Adaptive Safe shall provide mechanisms to communicate between its applications.**
-- TSR-112406 **MICROSAR Adaptive Safe shall provide a mechanism to detect faults in program flow.**
-- TSR-112407 **MICROSAR Adaptive Safe shall provide a mechanism to detect stuck software.**
-- TSR-112408 **MICROSAR Adaptive Safe shall provide a mechanism to detect deadline violations.**
-- TSR-112409 **MICROSAR Adaptive Safe shall provide a mechanism to switch between operating modes.**
+- TSR-112401 **The embedded software shall provide a mechanism to initialize itself and its controlled hardware.**
+- TSR-112402 **The embedded software shall provide a mechanism to store and retrieve information to/from non-volatile memory by means of a key-value storage.**
+- TSR-112404 **The embedded software shall provide mechanisms to protect communication between ECUs.**
+- TSR-112405 **The embedded software shall provide mechanisms to communicate between its applications.**
+- TSR-112406 **The embedded software shall provide a mechanism to detect faults in program flow.**
+- TSR-112407 **The embedded software shall provide a mechanism to detect stuck software.**
+- TSR-112408 **The embedded software shall provide a mechanism to detect deadline violations.**
+- TSR-112409 **The embedded software shall provide a mechanism to switch between operating modes.**
 
 The component uses the following exit criteria:
 
@@ -21,7 +21,7 @@ The component uses the following exit criteria:
 Safety Analysis for TSR-112401, TSR-112402, TSR-112404, TSR-112405, TSR-112406, TSR-112407, TSR-112408, TSR-112409
 ------------------------------------------------------------------------------------------------------------------
 
-All TSRs can be analyzed together, since for amsr-vector-fs-vajson the effect on those TSRs is always equivalent.
+All TSRs can be analyzed together, since for vajson the effect on those TSRs is always equivalent.
 
 
 - CREQ-Json-Validation *vaJson shall provide a service to check the well-formedness of JSON data.*
