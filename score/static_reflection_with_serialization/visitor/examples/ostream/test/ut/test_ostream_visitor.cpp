@@ -35,7 +35,7 @@ struct S2
     int f1, f2;
 };
 
-STRUCT_VISITABLE(S2, f1, f2)
+SCORE_STRUCT_VISITABLE(S2, f1, f2)
 
 }  // namespace test
 
@@ -76,8 +76,8 @@ struct SS2S3
     S3 s3;
 };
 
-STRUCT_VISITABLE(S3, f1, f2, f3)
-STRUCT_VISITABLE(SS2S3, s2, s3)
+SCORE_STRUCT_VISITABLE(S3, f1, f2, f3)
+SCORE_STRUCT_VISITABLE(SS2S3, s2, s3)
 
 /// @req{VISIT-OSTREAM-COMPOUND}
 TEST(ostream_visitor, compound)

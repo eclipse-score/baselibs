@@ -13,6 +13,7 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_library(
     name = "acl",
@@ -248,7 +249,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:ifaddrs_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -280,7 +280,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:netdb_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -341,7 +340,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
         "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
@@ -542,7 +540,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:socket_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/pas/sysmon:__subpackages__",
     ],
 )
 
@@ -929,4 +926,10 @@ cc_library(
         "@platforms//os:qnx": ["@score_baselibs//score/os/qnx:qnx_version"],
         "//conditions:default": [],
     }),
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

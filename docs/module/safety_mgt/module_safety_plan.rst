@@ -381,6 +381,72 @@ Component filesystem Work products List
           - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
           - component integration not needed (no sub-components and units are independent)
 
+Component log_frontend Work products List
+-----------------------------------------
+
+.. list-table:: Component log_frontend Work products
+        :header-rows: 1
+
+        * - Work product Id
+          - Link to process
+          - Process status
+          - Link to WP
+
+        * - :need:`wp__requirements_comp`
+          - :need:`gd_temp__req_comp_req`
+          - :ndf:`copy('status', need_id='gd_temp__req_comp_req')`
+          - :need:`doc__log_requirements`
+
+        * - :need:`wp__requirements_comp_aou`
+          - :need:`gd_temp__req_aou_req`
+          - :ndf:`copy('status', need_id='gd_temp__req_aou_req')`
+          - :need:`doc__log_assumptions_of_use`
+
+        * - :need:`wp__requirements_inspect`
+          - :need:`gd_chklst__req_inspection`
+          - :ndf:`copy('status', need_id='gd_chklst__req_inspection')`
+          - :need:`doc__log_req_inspection`
+
+        * - :need:`wp__component_arch`
+          - :need:`gd_temp__arch_comp`
+          - :ndf:`copy('status', need_id='gd_temp__arch_comp')`
+          - :need:`doc__log_architecture`
+
+        * - :need:`wp__sw_arch_verification`
+          - :need:`gd_chklst__arch_inspection_checklist`
+          - :ndf:`copy('status', need_id='gd_chklst__arch_inspection_checklist')`
+          - :need:`doc__log_arc_inspection`
+
+        * - :need:`wp__sw_component_fmea`
+          - :need:`gd_temp__comp_saf_fmea`
+          - :ndf:`copy('status', need_id='gd_temp__comp_saf_fmea')`
+          - :need:`doc__log_fmea`
+
+        * - :need:`wp__sw_component_dfa`
+          - :need:`gd_temp__comp_saf_dfa`
+          - :ndf:`copy('status', need_id='gd_temp__comp_saf_dfa')`
+          - :need:`doc__log_dfa`
+
+        * - :need:`wp__sw_implementation`
+          - :need:`gd_guidl__implementation`
+          - :ndf:`copy('status', need_id='gd_guidl__implementation')`
+          - `log .h/.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/mw/log>`_, :need:`doc__log_detailed_design`
+
+        * - :need:`wp__verification_sw_unit_test`
+          - :need:`gd_guidl__verification_guide`
+          - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
+          - `log/test.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/mw/log>`_
+
+        * - :need:`wp__sw_implementation_inspection`
+          - :need:`gd_chklst__impl_inspection_checklist`
+          - :ndf:`copy('status', need_id='gd_chklst__impl_inspection_checklist')`
+          - :need:`doc__log_impl_inspection`
+
+        * - :need:`wp__verification_comp_int_test`
+          - :need:`gd_guidl__verification_guide`
+          - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
+          - component integration not needed - done in the frame of logging module
+
 Component result Work products List
 -----------------------------------
 

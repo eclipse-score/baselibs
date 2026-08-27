@@ -13,8 +13,8 @@ Good tutorials can be found on youtube:
 Serialization & deserialization is used by datarouter for both verbose and non-verbose DLT messages logging.
 The implementation resides under the following locations:
 
-* <broken_link_g/swh/safe-posix-platform/tree/master/score/static_reflection_with_serialization/serialization>
-* <broken_link_g/swh/safe-posix-platform/tree/master/score/static_reflection_with_serialization/visitor>
+* [score/static_reflection_with_serialization/serialization](../serialization)
+* [score/static_reflection_with_serialization/visitor](.)
 
 C++ does not support reflection e.g. like Java or C#; so in order do inspect the content of a structure the
 implementation is using macros and templates to generate ser/dser code. Only simple linear memory types are
@@ -41,7 +41,7 @@ struct real_alloc_t {
     using subsize_t = uint16_t;  /*size type holding the info about size of each element, e.g. len of string is 2*/
 };
 
-STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
+SCORE_STRUCT_VISITABLE(UptimeTick, counter, uptime, for_measurements);
 
 int main(int argc, char** argv) {
     using namespace ::score::common::visitor;

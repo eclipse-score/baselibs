@@ -55,7 +55,7 @@ rectangle "OS-agnostic Code" #F0FFF0 {
   }
 
   rectangle "Platform Layer" #F8FFF8 {
-    package "//platform/aas/lib/os" as os_generic {
+    package "//score/os" as os_generic {
       component module_a [
         :module_a
         << QM >>

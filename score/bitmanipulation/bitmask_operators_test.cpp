@@ -21,6 +21,7 @@ namespace score
 namespace test
 {
 
+// Enumerators must be distinct, non-zero powers of two, per aou_req__bitmanipulation__enum_constraints.
 enum class MyBitmask : std::int32_t
 {
     a = 1,
@@ -41,15 +42,13 @@ namespace
 {
 using UnderlyingType = std::underlying_type_t<MyBitmask>;
 
-TEST(MyBitmask, UnderlyingValuesMatchExpectations)
-{
-    EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::a), 1);
-    EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::b), 2);
-    EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::c), 4);
-}
-
 TEST(MyBitmask, SupportsOperatorOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description", "Check that operator| combines two bitmask enumerators into their bitwise union.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a | MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = MyBitmask::b | MyBitmask::c;
@@ -58,6 +57,12 @@ TEST(MyBitmask, SupportsOperatorOr)
 
 TEST(MyBitmask, SupportsOperatorAnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description",
+                   "Check that operator& reports whether each queried bit is present in a combined bitmask.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     auto func = [](MyBitmask bitmask) {
         EXPECT_TRUE(bitmask & MyBitmask::a);
         EXPECT_TRUE(bitmask & MyBitmask::b);
@@ -69,6 +74,12 @@ TEST(MyBitmask, SupportsOperatorAnd)
 
 TEST(MyBitmask, SupportsOperatorXor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description",
+                   "Check that operator^ combines two bitmask enumerators into their bitwise exclusive-or.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a ^ MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = bitmask ^ MyBitmask::b;
@@ -77,6 +88,11 @@ TEST(MyBitmask, SupportsOperatorXor)
 
 TEST(MyBitmask, SupportsOperatorNot)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description", "Check that operator~ inverts all bits of a bitmask enumerator.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a};
     bitmask = ~bitmask;
 
@@ -87,6 +103,12 @@ TEST(MyBitmask, SupportsOperatorNot)
 
 TEST(MyBitmask, SupportsAssignOperatorAnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description",
+                   "Check that operator&= clears bits of a bitmask that are not present in the right-hand operand.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask &= MyBitmask::b;
@@ -96,6 +118,13 @@ TEST(MyBitmask, SupportsAssignOperatorAnd)
 
 TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty(
+        "Description",
+        "Check that operator&= leaves a bitmask unchanged when the right-hand operand matches the same bit.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     MyBitmask bitmask{MyBitmask::b};
 
     bitmask &= MyBitmask::b;
@@ -105,6 +134,12 @@ TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description",
+                   "Check that operator|= sets additional bits of a bitmask from the right-hand operand.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::b;
@@ -114,6 +149,13 @@ TEST(MyBitmask, SupportsAssignOperatorOr)
 
 TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty(
+        "Description",
+        "Check that operator|= leaves a bitmask unchanged when the right-hand operand matches an already-set bit.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::a;
@@ -123,6 +165,11 @@ TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorXOr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description", "Check that operator^= toggles bits of a bitmask from the right-hand operand.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::b;
@@ -132,6 +179,11 @@ TEST(MyBitmask, SupportsAssignOperatorXOr)
 
 TEST(MyBitmask, SupportsAssignOperatorXOrMatching)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("Description", "Check that operator^= clears a bitmask to zero when XOR-ed with itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::a;

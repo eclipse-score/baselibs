@@ -1225,11 +1225,9 @@ class optional_pack_desc
     static const OneByte* field_name(std::size_t index)
     {
         /*
-        The mapping originates in
-        broken_link_g/swh/ddad/blob/ff4cddc43777f0d3746669b4c34a9cf135dad88e/score/static_reflection_with_serialization/serialization/include/serialization/visit_serialize.h#L283-L288
-        to give score::cpp::optional type's has_value flag and data a field name which is needed for fibex
-        generation. This is needed since score::cpp::optional's member variables are private and it is not
-        plausible to change it to make them traceable.
+        The mapping below gives score::cpp::optional type's has_value flag and data a field name which is
+        needed for fibex generation. This is needed since score::cpp::optional's member variables are private
+        and it is not plausible to change it to make them traceable.
         */
 
         const char* result;
