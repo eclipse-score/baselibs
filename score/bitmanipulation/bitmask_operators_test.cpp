@@ -43,6 +43,12 @@ using UnderlyingType = std::underlying_type_t<MyBitmask>;
 
 TEST(MyBitmask, UnderlyingValuesMatchExpectations)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "design-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that a scoped enum's power-of-two enumerators keep their expected underlying integer values.");
+
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::a), 1);
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::b), 2);
     EXPECT_EQ(static_cast<UnderlyingType>(MyBitmask::c), 4);
@@ -50,6 +56,12 @@ TEST(MyBitmask, UnderlyingValuesMatchExpectations)
 
 TEST(MyBitmask, SupportsOperatorOr)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator| combines two bitmask enum values into their bitwise union.");
+
     MyBitmask bitmask{MyBitmask::a | MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = MyBitmask::b | MyBitmask::c;
@@ -58,6 +70,12 @@ TEST(MyBitmask, SupportsOperatorOr)
 
 TEST(MyBitmask, SupportsOperatorAnd)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator& reports whether individual flags are present in a combined bitmask value.");
+
     auto func = [](MyBitmask bitmask) {
         EXPECT_TRUE(bitmask & MyBitmask::a);
         EXPECT_TRUE(bitmask & MyBitmask::b);
@@ -69,6 +87,12 @@ TEST(MyBitmask, SupportsOperatorAnd)
 
 TEST(MyBitmask, SupportsOperatorXor)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator^ toggles flags between two bitmask enum values as expected.");
+
     MyBitmask bitmask{MyBitmask::a ^ MyBitmask::b};
     EXPECT_EQ(static_cast<UnderlyingType>(bitmask), 3);
     bitmask = bitmask ^ MyBitmask::b;
@@ -77,6 +101,12 @@ TEST(MyBitmask, SupportsOperatorXor)
 
 TEST(MyBitmask, SupportsOperatorNot)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator~ inverts all flags of a bitmask enum value.");
+
     MyBitmask bitmask{MyBitmask::a};
     bitmask = ~bitmask;
 
@@ -87,6 +117,12 @@ TEST(MyBitmask, SupportsOperatorNot)
 
 TEST(MyBitmask, SupportsAssignOperatorAnd)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator&= updates a bitmask value in place to the intersection with another value.");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask &= MyBitmask::b;
@@ -96,6 +132,12 @@ TEST(MyBitmask, SupportsAssignOperatorAnd)
 
 TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator&= leaves a bitmask value unchanged when ANDed with itself.");
+
     MyBitmask bitmask{MyBitmask::b};
 
     bitmask &= MyBitmask::b;
@@ -105,6 +147,12 @@ TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorOr)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator|= updates a bitmask value in place to the union with another value.");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::b;
@@ -114,6 +162,12 @@ TEST(MyBitmask, SupportsAssignOperatorOr)
 
 TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator|= leaves a bitmask value unchanged when ORed with itself.");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask |= MyBitmask::a;
@@ -123,6 +177,12 @@ TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 
 TEST(MyBitmask, SupportsAssignOperatorXOr)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator^= updates a bitmask value in place by toggling the flags of another value.");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::b;
@@ -132,6 +192,12 @@ TEST(MyBitmask, SupportsAssignOperatorXOr)
 
 TEST(MyBitmask, SupportsAssignOperatorXOrMatching)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    ::testing::Test::RecordProperty("Description", "Check that operator^= clears a bitmask value to zero when XORed with itself.");
+
     MyBitmask bitmask{MyBitmask::a};
 
     bitmask ^= MyBitmask::a;

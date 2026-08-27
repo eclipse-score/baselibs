@@ -28,6 +28,12 @@ using ::testing::Eq;
 
 TEST(HalfByte, CanBeConstructedFromUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a HalfByte can be constructed from a uint8_t value that fits in 4 bits and stores it unchanged.");
+
     constexpr HalfByte value{std::uint8_t{4u}};
 
     EXPECT_THAT(value, Eq(4u));
@@ -35,6 +41,12 @@ TEST(HalfByte, CanBeConstructedFromUInt8)
 
 TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a HalfByte can be constructed from a uint16_t value that fits in the valid 4-bit range.");
+
     constexpr HalfByte value{std::uint16_t{4u}};
 
     EXPECT_THAT(value, Eq(4u));
@@ -42,6 +54,12 @@ TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
 
 TEST(HalfByte, CanBeConstructedFromBigUInt8ButUpperHalfIsDropped)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that constructing a HalfByte from a uint8_t value exceeding 4 bits truncates to the lower nibble instead of failing.");
+
     constexpr HalfByte value{std::uint8_t{77u}};  // 01001101
 
     EXPECT_THAT(value, Eq(13u));
@@ -49,6 +67,12 @@ TEST(HalfByte, CanBeConstructedFromBigUInt8ButUpperHalfIsDropped)
 
 TEST(Byte, CanBeConstructedFromUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte can be constructed from a uint8_t value and stores it unchanged.");
+
     constexpr Byte value{std::uint8_t{4u}};
 
     EXPECT_THAT(value, Eq(4u));
@@ -56,6 +80,12 @@ TEST(Byte, CanBeConstructedFromUInt8)
 
 TEST(Byte, CanBeConstructedFromUInt16IfInRange)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte can be constructed from a uint16_t value that fits in the valid 8-bit range.");
+
     constexpr Byte value{std::uint16_t{4u}};
 
     EXPECT_THAT(value, Eq(4u));
@@ -63,6 +93,12 @@ TEST(Byte, CanBeConstructedFromUInt16IfInRange)
 
 TEST(Byte, CanBeConstructedFromTwoHalfBytes)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte can be assembled from an upper and lower HalfByte into the expected combined 8-bit value.");
+
     constexpr HalfByte upperHalfByte{std::uint8_t{13u}};  // 00001101
     constexpr HalfByte lowerHalfByte{std::uint8_t{4u}};   // 00000100
 
@@ -73,6 +109,12 @@ TEST(Byte, CanBeConstructedFromTwoHalfBytes)
 
 TEST(Byte, CanBeConstructedFromTwoBigHalfBytes)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte assembled from two HalfBytes constructed from out-of-range nibble values still combines the truncated nibbles correctly.");
+
     constexpr HalfByte upperHalfByte{77u};  // 01001101
     constexpr HalfByte lowerHalfByte{36u};  // 00100100
 
@@ -83,6 +125,12 @@ TEST(Byte, CanBeConstructedFromTwoBigHalfBytes)
 
 TEST(Byte, CanBeConstructedFromTwoZeroHalfBytes)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte assembled from two zero-valued HalfBytes yields zero.");
+
     constexpr HalfByte zeroUpperHalfByte{0};  // 00000000
     constexpr HalfByte zeroLowerHalfByte{0};  // 00000000
 
@@ -93,6 +141,12 @@ TEST(Byte, CanBeConstructedFromTwoZeroHalfBytes)
 
 TEST(Byte, CanBeConstructedFromTwoHalfBytesWithMaxValue)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a Byte assembled from two maximum-value HalfBytes yields the maximum 8-bit value.");
+
     constexpr HalfByte halfByteWithMaxValue{255};  // 11111111
 
     constexpr Byte combinedByte{halfByteWithMaxValue, halfByteWithMaxValue};
@@ -102,6 +156,12 @@ TEST(Byte, CanBeConstructedFromTwoHalfBytesWithMaxValue)
 
 TEST(Extract, UpperHalfByteFromAByte)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that UpperHalfByte() extracts the upper nibble of a Byte.");
+
     constexpr Byte input{212u};  // 11010100
 
     constexpr auto upperHalfByte = input.UpperHalfByte();
@@ -111,6 +171,12 @@ TEST(Extract, UpperHalfByteFromAByte)
 
 TEST(Extract, LowerHalfByteFromAByte)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that LowerHalfByte() extracts the lower nibble of a Byte.");
+
     constexpr Byte input{212};  // 11010100
 
     constexpr auto lowerHalfByte = input.LowerHalfByte();
@@ -120,6 +186,12 @@ TEST(Extract, LowerHalfByteFromAByte)
 
 TEST(Extract, LowerHalfByteFromAByteCanBeConvertedToUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that a HalfByte extracted via LowerHalfByte() converts back to the expected uint8_t value.");
+
     constexpr Byte input{212};  // 11010100
 
     const std::uint8_t lowerHalfByteAsUInt8{input.LowerHalfByte()};
@@ -129,6 +201,12 @@ TEST(Extract, LowerHalfByteFromAByteCanBeConvertedToUInt8)
 
 TEST(SetBit, WithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that SetBit sets the requested bit of a uint8_t and returns true.");
+
     std::uint8_t input{0};                     // 00000000
     constexpr std::uint8_t expectedResult{4};  // 00000100
 
@@ -139,6 +217,12 @@ TEST(SetBit, WithUInt8)
 
 TEST(SetBit, WithUInt64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that SetBit sets the requested bit of a uint64_t and returns true.");
+
     // 00000000'00000000'00000000'00000000'00000000'00000000'00000000'00000000
     std::uint64_t input{0};
     // 00000000'00000000'00000100'00000000'00000000'00000000'00000000'00000000
@@ -151,6 +235,12 @@ TEST(SetBit, WithUInt64)
 
 TEST(SetBit, OverflowWithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("Description", "Check that SetBit returns false and leaves the value unmodified when the bit index exceeds the type's width.");
+
     std::uint8_t input{0};  // 00000000
 
     EXPECT_FALSE(::score::platform::SetBit(input, 8U));
@@ -159,6 +249,12 @@ TEST(SetBit, OverflowWithUInt8)
 
 TEST(ClearBit, WithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that ClearBit clears the requested bit of a uint8_t and returns true.");
+
     std::uint8_t input{24};                    // 00011000
     constexpr std::uint8_t expectedResult{8};  // 00001000
 
@@ -169,6 +265,12 @@ TEST(ClearBit, WithUInt8)
 
 TEST(ClearBit, WithUInt64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that ClearBit clears the requested bit of a uint64_t and returns true.");
+
     // 00000000'00000000'00011000'00000000'00000000'00000000'00000000'00000000
     std::uint64_t input{26388279066624ULL};
     // 00000000'00000000'00001000'00000000'00000000'00000000'00000000'00000000
@@ -181,6 +283,12 @@ TEST(ClearBit, WithUInt64)
 
 TEST(ClearBit, OverflowWithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("Description", "Check that ClearBit returns false and leaves the value unmodified when the bit index exceeds the type's width.");
+
     std::uint8_t input{0};  // 00000000
 
     EXPECT_FALSE(::score::platform::ClearBit(input, 8U));
@@ -189,6 +297,12 @@ TEST(ClearBit, OverflowWithUInt8)
 
 TEST(ToggleBit, WithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that ToggleBit flips the requested bit of a uint8_t and returns true.");
+
     std::uint8_t input{24};                     // 00011000
     constexpr std::uint8_t expectedResult{20};  // 00010100
 
@@ -200,6 +314,12 @@ TEST(ToggleBit, WithUInt8)
 
 TEST(ToggleBit, WithUInt64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that ToggleBit flips the requested bit of a uint64_t and returns true.");
+
     // 00000000'00000000'00011000'00000000'00000000'00000000'00000000'00000000
     std::uint64_t input{26388279066624ULL};
     // 00000000'00000000'00010100'00000000'00000000'00000000'00000000'00000000
@@ -213,6 +333,12 @@ TEST(ToggleBit, WithUInt64)
 
 TEST(ToggleBit, OverflowWithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("Description", "Check that ToggleBit returns false and leaves the value unmodified when the bit index exceeds the type's width.");
+
     std::uint8_t input{0};  // 00000000
 
     EXPECT_FALSE(::score::platform::ToggleBit(input, 8U));
@@ -221,6 +347,12 @@ TEST(ToggleBit, OverflowWithUInt8)
 
 TEST(CheckBit, WithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that CheckBit correctly reports set and unset bits of a uint8_t.");
+
     std::uint8_t input{24};  // 00011000
 
     ASSERT_TRUE(::score::platform::CheckBit(input, 3U));
@@ -229,6 +361,12 @@ TEST(CheckBit, WithUInt8)
 
 TEST(CheckBit, WithUInt64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    ::testing::Test::RecordProperty("Description", "Check that CheckBit correctly reports set and unset bits of a uint64_t.");
+
     // 00000000'00000000'00011000'00000000'00000000'00000000'00000000'00000000
     std::uint64_t input{26388279066624ULL};
 
@@ -238,6 +376,12 @@ TEST(CheckBit, WithUInt64)
 
 TEST(CheckBit, OverflowWithUInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    ::testing::Test::RecordProperty("Description", "Check that CheckBit returns false when the bit index exceeds the type's width.");
+
     std::uint8_t input{0};  // 00000000
 
     EXPECT_FALSE(::score::platform::CheckBit(input, 8U));
@@ -246,6 +390,12 @@ TEST(CheckBit, OverflowWithUInt8)
 
 TEST(GetByte, FromUint8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<0> extracts the only byte of a uint8_t unchanged.");
+
     std::uint8_t input{42};
     const auto extracted_byte = ::score::platform::GetByte<0>(input);
     EXPECT_EQ(extracted_byte, input);
@@ -253,6 +403,12 @@ TEST(GetByte, FromUint8)
 
 TEST(GetByte, FromInt8)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<0> extracts the only byte of an int8_t unchanged.");
+
     std::int8_t input{42};
     const auto extracted_byte = ::score::platform::GetByte<0>(input);
     EXPECT_EQ(extracted_byte, input);
@@ -260,6 +416,12 @@ TEST(GetByte, FromInt8)
 
 TEST(GetByte, FromUint16)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the two bytes of a uint16_t in the correct order.");
+
     std::uint16_t input{0x0A0B};
 
     EXPECT_EQ(::score::platform::GetByte<1>(input), 0x0A);
@@ -268,6 +430,12 @@ TEST(GetByte, FromUint16)
 
 TEST(GetByte, FromInt16)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the two bytes of an int16_t in the correct order.");
+
     std::int16_t input{0x0A0B};
 
     EXPECT_EQ(::score::platform::GetByte<1>(input), 0x0A);
@@ -276,6 +444,12 @@ TEST(GetByte, FromInt16)
 
 TEST(GetByte, FromUint32)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the four bytes of a uint32_t in the correct order.");
+
     std::uint32_t input{0x0A0B0C0D};
 
     EXPECT_EQ(::score::platform::GetByte<3>(input), 0x0A);
@@ -286,6 +460,12 @@ TEST(GetByte, FromUint32)
 
 TEST(GetByte, FromInt32)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the four bytes of an int32_t in the correct order.");
+
     std::int32_t input{0x0A0B0C0D};
 
     EXPECT_EQ(::score::platform::GetByte<3>(input), 0x0A);
@@ -296,6 +476,12 @@ TEST(GetByte, FromInt32)
 
 TEST(GetByte, FromUint64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the eight bytes of a uint64_t in the correct order.");
+
     std::uint64_t input{0x0A0B0C0D04030201};
 
     EXPECT_EQ(::score::platform::GetByte<7>(input), 0x0A);
@@ -310,6 +496,12 @@ TEST(GetByte, FromUint64)
 
 TEST(GetByte, FromInt64)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    ::testing::Test::RecordProperty("Description", "Check that GetByte<N> extracts each of the eight bytes of an int64_t in the correct order.");
+
     std::int64_t input{0x0A0B0C0D04030201};
 
     EXPECT_EQ(::score::platform::GetByte<7>(input), 0x0A);
