@@ -67,14 +67,15 @@ class Pthread : public ObjectSeam<Pthread>
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_setname_np.3.html
     ///
-    virtual score::cpp::expected_blank<Error> setname_np(const pthread_t thread, const char* const name) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> setname_np(const pthread_t thread,
+                                                         const char* const name) const noexcept = 0;
 
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_setname_np.3.html
     ///
     virtual score::cpp::expected_blank<Error> getname_np(const pthread_t thread,
-                                                  char* const name,
-                                                  const std::size_t length) const noexcept = 0;
+                                                         char* const name,
+                                                         const std::size_t length) const noexcept = 0;
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_condattr_init.3p.html
     ///
@@ -84,7 +85,7 @@ class Pthread : public ObjectSeam<Pthread>
     /// https://man7.org/linux/man-pages/man3/pthread_condattr_setpshared.3p.html
     ///
     virtual score::cpp::expected_blank<Error> condattr_setpshared(pthread_condattr_t* const attr,
-                                                           const std::int32_t pshared) const noexcept;
+                                                                  const std::int32_t pshared) const noexcept;
 
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_condattr_destroy.3p.html
@@ -95,7 +96,7 @@ class Pthread : public ObjectSeam<Pthread>
     /// https://man7.org/linux/man-pages/man3/pthread_cond_init.3p.html
     ///
     virtual score::cpp::expected_blank<Error> cond_init(pthread_cond_t* const cond,
-                                                 const pthread_condattr_t* const attr) const noexcept;
+                                                        const pthread_condattr_t* const attr) const noexcept;
 
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_cond_init.3p.html
@@ -111,7 +112,7 @@ class Pthread : public ObjectSeam<Pthread>
     /// https://man7.org/linux/man-pages/man3/pthread_mutexattr_setpshared.3p.html
     ///
     virtual score::cpp::expected_blank<Error> mutexattr_setpshared(pthread_mutexattr_t* const attr,
-                                                            const std::int32_t pshared) const noexcept;
+                                                                   const std::int32_t pshared) const noexcept;
 
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_mutexattr_init.3.html
@@ -122,7 +123,7 @@ class Pthread : public ObjectSeam<Pthread>
     /// https://man7.org/linux/man-pages/man3/pthread_mutex_init.3p.html
     ///
     virtual score::cpp::expected_blank<Error> mutex_init(pthread_mutex_t* const mutex,
-                                                  const pthread_mutexattr_t* const attr) const noexcept;
+                                                         const pthread_mutexattr_t* const attr) const noexcept;
 
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_mutex_destroy.3p.html
@@ -140,9 +141,10 @@ class Pthread : public ObjectSeam<Pthread>
     ///
     /// https://man7.org/linux/man-pages/man3/pthread_setschedparam.3.html
     ///
-    virtual score::cpp::expected_blank<score::os::Error> pthread_getschedparam(const pthread_t thread,
-                                                                      std::int32_t* const policy,
-                                                                      struct sched_param* const param) const noexcept;
+    virtual score::cpp::expected_blank<score::os::Error> pthread_getschedparam(
+        const pthread_t thread,
+        std::int32_t* const policy,
+        struct sched_param* const param) const noexcept;
 
   protected:
     Pthread() = default;

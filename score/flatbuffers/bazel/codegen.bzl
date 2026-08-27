@@ -22,6 +22,10 @@ def _generate_cpp_impl(ctx):
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
 
+    # Collect include directories from included .fbs files
+    include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
+    include_dirs = {files.dirname: True for files in include_files}
+
     # flatc generates <basename>_generated.h by default
     # Use temporary subdirectory based on target to avoid conflicts
     default_name = fbs_file.basename.replace(".fbs", "_generated.h")
@@ -71,7 +75,10 @@ def _generate_cpp_impl(ctx):
     #
     # --no-includes (NOT USED)
     #   Don't generate include statements for included schemas.
-    #   DECISION: Not used - includes are standard practice for dependent schemas
+    #   DECISION: Not used - suppressing the #include directives does NOT inline or generate
+    #   the dependent types.  The generated code still references types from included schemas
+    #   (e.g. score::flatbuffers::BufferVersion) so the dependency must be satisfied by the
+    #   consumer anyway, just without the generated header's guidance.
     #
     # --cpp-include (NOT USED)
     #   Add custom #include in generated file (e.g., --cpp-include "my_custom_include.h").
@@ -81,11 +88,13 @@ def _generate_cpp_impl(ctx):
     args.add("--cpp")
     args.add("--cpp-std", "c++11")
     args.add("--scoped-enums")
+    for inc_dir in include_dirs:
+        args.add("-I", inc_dir)
     args.add("-o", generated_file.dirname)
     args.add(fbs_file.path)
 
     ctx.actions.run(
-        inputs = [fbs_file],
+        inputs = [fbs_file] + include_files,
         outputs = [generated_file],
         executable = flatc,
         arguments = [args],
@@ -110,23 +119,59 @@ generate_cpp = rule(
             mandatory = True,
             doc = "The name of the generated C++ header file",
         ),
+        "includes": attr.label_list(
+            allow_files = [".fbs"],
+            default = [],
+            doc = "Additional .fbs files required to resolve include directives in the schema.",
+        ),
         "_flatc": attr.label(
             default = "@flatbuffers//:flatc",
             executable = True,
             cfg = "exec",
             doc = "The flatc compiler (absolute path from flatbuffers repository)",
         ),
+        "_buffer_version_fbs": attr.label(
+            default = "@score_baselibs//score/flatbuffers/common:buffer_version.fbs",
+            allow_single_file = [".fbs"],
+            doc = "Automatically included buffer_version.fbs for common buffer version support.",
+        ),
     },
     doc = """Generates a C++ header file from a FlatBuffer schema (.fbs) file.
-    
+
     This rule uses the flatc compiler from the @flatbuffers repository with
     absolute paths, making it usable outside of this repository.
-    
+
+    @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
+    automatically. The schema must include buffer_version.fbs manually if it uses
+    the common buffer version (e.g. `include "buffer_version.fbs";`).
+
+    Included schema headers are NOT generated automatically
+    -------------------------------------------------------
+    flatc only generates a C++ header for the schema passed directly to it.
+    Schemas referenced via `include` directives are used for type resolution at
+    compile time but their corresponding `*_generated.h` headers are NOT emitted
+    as side-effects of this rule.
+
+    The generated header will still contain `#include "<dependency>_generated.h"`
+    directives for every included schema.  Those headers must therefore be made
+    available separately:
+
+    * For `buffer_version.fbs` (the standard version envelope): the header is
+      already available via
+      `@score_baselibs//score/flatbuffers/common:buffer_version_generated_bare`,
+      which is re-exported by `@score_baselibs//score/flatbuffers:flatbufferutils`.
+      Any target that depends on `flatbufferutils` automatically inherits it and
+      no extra dep is needed.
+
+    * For any other included schema: create a separate `generate_cpp` target for
+      that schema and add it to the `deps` of the consuming `cc_*` target.
+
     Example:
         generate_cpp(
             name = "demo_flatbuffer",
             schema = "demo.fbs",
             output = "demo_config.h",
+            includes = ["some_other.fbs"],
         )
     """,
 )

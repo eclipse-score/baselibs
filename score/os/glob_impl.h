@@ -31,7 +31,8 @@ class GlobImpl final : public Glob
     GlobImpl(GlobImpl&&) noexcept;
     GlobImpl& operator=(GlobImpl&&) noexcept;
 
-    score::cpp::expected<Glob::MatchResult, Error> Match(const std::string& pattern, const Glob::Flag flags) noexcept override;
+    score::cpp::expected<Glob::MatchResult, Error> Match(const std::string& pattern,
+                                                         const Glob::Flag flags) noexcept override;
 
   private:
     glob_t buffer_;

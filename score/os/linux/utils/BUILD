@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "network_interface",
@@ -22,7 +22,6 @@ cc_library(
     linkopts = ["-lrt"],
     target_compatible_with = ["@platforms//os:linux"],
     visibility = [
-        "//platform/aas/pas/sysmon:__subpackages__",
         "@score_baselibs//score/os/linux/utils/mocklib:__subpackages__",
         "@score_baselibs//score/os/linux/utils/test:__subpackages__",
     ],

@@ -183,8 +183,8 @@ score::Result<void> StandardFilesystem::CopyFile(const Path& from, const Path& t
 // Refer on top for suppression justification
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 score::Result<void> StandardFilesystem::CopyFile(const Path& from,
-                                               const Path& to,
-                                               const CopyOptions copy_option) const noexcept
+                                                 const Path& to,
+                                                 const CopyOptions copy_option) const noexcept
 {
     const auto from_status = Status(from);
     if ((!from_status.has_value()) || (from_status.value().Type() != FileType::kRegular))
@@ -336,8 +336,8 @@ score::Result<void> StandardFilesystem::Permissions(const Path& path, const Perm
 }
 
 score::Result<void> StandardFilesystem::Permissions(const Path& path,
-                                                  const Perms permissions,
-                                                  const PermOptions options) const noexcept
+                                                    const Perms permissions,
+                                                    const PermOptions options) const noexcept
 {
     if (!IsValid(options))
     {

@@ -79,24 +79,30 @@ protected:
 /// keeping track of the last queue to receive new work.
 class thread_pool
 {
+    template <typename T>
+    using is_attribute = std::disjunction<std::is_same<score::cpp::thread::stack_size_hint, score::cpp::remove_cvref_t<T>>,
+                                          std::is_same<score::cpp::thread::priority_hint, score::cpp::remove_cvref_t<T>>,
+                                          std::is_same<score::cpp::thread::name_hint, score::cpp::remove_cvref_t<T>>>;
+
 public:
     using worker_count = detail::thread_pool_worker_count;
     using stack_size_hint = score::cpp::detail::thread_stack_size_hint;
+    using priority_hint = score::cpp::detail::thread_priority_hint;
     using name_hint = score::cpp::detail::thread_name_hint;
 
     /// \brief Create a new thread pool object using the `allocator` and tuned to the specified options.
     ///
     /// \pre count > 0
     ///
-    /// \param count Number of workers to be created.
-    /// \param stack_size Stack size for the worker threads. Defaults to system default stack size.
-    /// \param name Configures the name of the worker threads. Defaults to empty name.
     /// \param allocator Allocator used for internal buffers. Defaults to `score::cpp::pmr::get_default_resource()`.
-    explicit thread_pool(const worker_count count,
-                         const stack_size_hint stack_size = stack_size_hint{0U},
-                         const name_hint& name = name_hint{""},
-                         const score::cpp::pmr::polymorphic_allocator<>& allocator = {})
-        : sync_point_{count.value()}
+    /// \param count Number of workers to be created.
+    /// \param optional_thread_attributes Supported attributes are stack_size_hint, priority_hint and name_hint.
+    /// \{
+    template <typename... Attrs, typename = std::enable_if_t<std::conjunction_v<is_attribute<Attrs>...>>>
+    explicit thread_pool(const score::cpp::pmr::polymorphic_allocator<>& allocator,
+                         const worker_count count,
+                         Attrs&&... optional_thread_attributes)
+        : sync_point_{count.value() + 1} // +1 for worker threads + dtor
         , worker_count_{[worker_count = count.value()]()
                         {
                             SCORE_LANGUAGE_FUTURECPP_PRECONDITION(worker_count > 0);
@@ -110,8 +116,7 @@ public:
 
         for (std::uint32_t i{0U}; i < worker_count_; ++i)
         {
-            static_cast<void>(threads_.emplace_back(stack_size,
-                                                    name,
+            static_cast<void>(threads_.emplace_back(optional_thread_attributes...,
                                                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                                                     [this, index = i](const score::cpp::stop_token token)
                                                     { work(token, index); }));
@@ -120,6 +125,12 @@ public:
         SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(worker_count_ == queues_.size());
         SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(worker_count_ == threads_.size());
     }
+    template <typename... Attrs, typename = std::enable_if_t<std::conjunction_v<is_attribute<Attrs>...>>>
+    explicit thread_pool(const worker_count count, Attrs&&... optional_thread_attributes)
+        : thread_pool{score::cpp::pmr::polymorphic_allocator<>{}, count, std::forward<Attrs>(optional_thread_attributes)...}
+    {
+    }
+    ///\}
 
     thread_pool(const thread_pool&) = delete;
     thread_pool(thread_pool&&) = delete;
@@ -139,6 +150,10 @@ public:
         {
             q.abort();
         }
+
+        // sync with worker threads because `q.abort()` might hold the queue mutex
+        // while `.try_to_pop()` in worker thread would return without a task--thus skipping `task->disable()`
+        sync_point_.count_down();
     }
 
     /// \brief Enqueues a task into one of the available queues.
@@ -183,7 +198,7 @@ private:
             }
         }
 
-        sync_point_.arrive_and_wait(); // wait for all worker threads stop stealing from `queues_[queue_index]`
+        sync_point_.arrive_and_wait(); // dtor aborted all queues and all worker threads stopped stealing from queues
 
         base_task* task{queues_[queue_index].try_to_pop()};
         while (task != nullptr)

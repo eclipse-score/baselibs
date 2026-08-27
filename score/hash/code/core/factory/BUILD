@@ -44,7 +44,7 @@ cc_library(
         "hash_calculator_factory_mock.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":factory",
     ],

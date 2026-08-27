@@ -602,7 +602,8 @@ void Path::Parse(const string_type& path) noexcept
     // At this point the parts_ array should contain the parts of the path separated by the preferred_separator,
     // or should contain at least by the preferred_separator itself.
     // LCOV_EXCL_BR_START caused by SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(parts_.size() != 0U, "At this point the parts_ array should contain at least one element.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(parts_.size() != 0U,
+                                                "At this point the parts_ array should contain at least one element.");
     // LCOV_EXCL_BR_STOP
 
     const auto is_multipart = (parts_.size() > 1U);
@@ -778,13 +779,14 @@ Path::iterator::reference Path::iterator::operator*() const noexcept
     if (path_.value().get().parts_.empty())
     {
         // LCOV_EXCL_BR_START caused by SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(!is_at_end_, "The end()-iterator should not be dereferenced (path with one part only).");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(
+            !is_at_end_, "The end()-iterator should not be dereferenced (path with one part only).");
         return *path_;
         // LCOV_EXCL_BR_STOP
     }
     // LCOV_EXCL_BR_START caused by SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(cur_ != path_.value().get().parts_.end(),
-                           "The end()-iterator should not be dereferenced (multiple parts path).");
+                                                "The end()-iterator should not be dereferenced (multiple parts path).");
     // LCOV_EXCL_BR_STOP
     return *cur_;
 }

@@ -33,9 +33,11 @@ class AllocatorAwareErasedType
   public:
     virtual ~AllocatorAwareErasedType() noexcept = default;
 
-    [[nodiscard]] virtual TypeErasurePointer<Interface> Copy(score::cpp::pmr::polymorphic_allocator<Interface>) const = 0;
+    [[nodiscard]] virtual TypeErasurePointer<Interface> Copy(
+        score::cpp::pmr::polymorphic_allocator<Interface>) const = 0;
 
-    [[nodiscard]] virtual TypeErasurePointer<Interface> Move(score::cpp::pmr::polymorphic_allocator<Interface>) noexcept = 0;
+    [[nodiscard]] virtual TypeErasurePointer<Interface> Move(
+        score::cpp::pmr::polymorphic_allocator<Interface>) noexcept = 0;
 };
 
 }  // namespace score::safecpp::details

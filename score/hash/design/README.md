@@ -17,7 +17,7 @@ and hash algorithm.
 In order to avoid the user knowing which implementation to use, we introduce a factory that allows easy creation of
 hashes, or the hash calculator.
 
-![Static Design](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/swh/ddad_score/hash/design/ClassDiagram.uxf)
+<img alt="Static Design" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/hash/design/ClassDiagram.puml">
 
 # CRC32 implementation
 
@@ -61,7 +61,7 @@ The Openssl wrapper functions are:
 There are two factories that implement IHashCalculatorFactory: SafeHashCalculatorFactory and HashCalculatorFactory. As
 the name implies, SafeHashCalculatorFactory is safe to use in safety-critical code. However, this factory will not make
 use of OpenSSL, which reduces the number of available digest implementations. SafeHashCalculatorFactory is part of the
-FFI-marked bazel target //platform/aas/lib/hash:safe_hash which safety-critical software may depend on.
+FFI-marked bazel target //score/hash:safe_hash which safety-critical software may depend on.
 
 # How to use the factories
 

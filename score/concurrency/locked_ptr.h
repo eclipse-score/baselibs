@@ -116,7 +116,16 @@ class LockedPtr
      * @brief Dereference operator to access the underlying object.
      * @return Reference to the underlying object.
      */
-    T& operator*()
+    [[nodiscard]] T& operator*()
+    {
+        return *ptr_;
+    }
+
+    /**
+     * @brief Dereference operator to access the underlying object.
+     * @return Reference to the underlying object.
+     */
+    [[nodiscard]] const T& operator*() const
     {
         return *ptr_;
     }
@@ -125,7 +134,16 @@ class LockedPtr
      * @brief Pointer access to the underlying object.
      * @return Pointer to the underlying object.
      */
-    T* operator->()
+    [[nodiscard]] T* operator->()
+    {
+        return ptr_;
+    }
+
+    /**
+     * @brief Pointer access to the underlying object.
+     * @return Pointer to the underlying object.
+     */
+    [[nodiscard]] const T* operator->() const
     {
         return ptr_;
     }
@@ -135,7 +153,17 @@ class LockedPtr
      * @return Pointer to the underlying object.
      * @remarks This does not transfer ownership; the LockedPtr still manages the lock.
      */
-    [[nodiscard]] T* get() const noexcept
+    [[nodiscard]] T* get() noexcept
+    {
+        return ptr_;
+    }
+
+    /**
+     * @brief Gets the raw pointer to the underlying object.
+     * @return Pointer to the underlying object.
+     * @remarks This does not transfer ownership; the LockedPtr still manages the lock.
+     */
+    [[nodiscard]] const T* get() const noexcept
     {
         return ptr_;
     }
@@ -148,6 +176,18 @@ class LockedPtr
      *          Moving the LockedPtr while an UnlockGuard exists is also Undefined Behaviour.
      */
     [[nodiscard]] UnlockGuard<Lock> unlock_guard()
+    {
+        return UnlockGuard<Lock>{lock_};
+    }
+
+    /**
+     * @brief Creates an UnlockGuard that temporarily unlocks the Lock.
+     * @return An UnlockGuard that unlocks the Lock for its lifetime.
+     * @remarks It is Undefined Behaviour if the returned UnlockGuard outlives the LockedPtr.
+     *          The UnlockGuard should be destroyed before the LockedPtr is destroyed.
+     *          Moving the LockedPtr while an UnlockGuard exists is also Undefined Behaviour.
+     */
+    [[nodiscard]] UnlockGuard<Lock> unlock_guard() const
     {
         return UnlockGuard<Lock>{lock_};
     }
@@ -230,7 +270,7 @@ class LockedPtr
 
   private:
     T* ptr_;
-    Lock lock_;
+    mutable Lock lock_;
 };
 
 }  // namespace concurrency

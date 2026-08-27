@@ -46,14 +46,20 @@ class MockPthread : public Pthread
                 (const pthread_t thread, char* const name, const std::size_t length),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<Error>, condattr_init, (pthread_condattr_t * attr), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                condattr_init,
+                (pthread_condattr_t * attr),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<Error>,
                 condattr_setpshared,
                 (pthread_condattr_t * attr, int pshared),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<Error>, condattr_destroy, (pthread_condattr_t * attr), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                condattr_destroy,
+                (pthread_condattr_t * attr),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<Error>,
                 cond_init,
@@ -62,7 +68,10 @@ class MockPthread : public Pthread
 
     MOCK_METHOD(score::cpp::expected_blank<Error>, cond_destroy, (pthread_cond_t * cond), (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<Error>, mutexattr_init, (pthread_mutexattr_t * attr), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                mutexattr_init,
+                (pthread_mutexattr_t * attr),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<Error>,
                 mutexattr_setpshared,
@@ -79,7 +88,10 @@ class MockPthread : public Pthread
                 (pthread_mutex_t * mutex, const pthread_mutexattr_t* attr),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<Error>, mutex_destroy, (pthread_mutex_t * mutex), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<Error>,
+                mutex_destroy,
+                (pthread_mutex_t * mutex),
+                (const, noexcept, override));
 
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
                 pthread_setschedparam,

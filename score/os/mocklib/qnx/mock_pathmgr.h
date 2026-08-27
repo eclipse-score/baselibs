@@ -29,7 +29,10 @@ class MockPathmgr : public Pathmgr
                 pathmgr_symlink,
                 (const char* const path, const char* const symlink),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<Error>), pathmgr_unlink, (const char* const symlink), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
+                pathmgr_unlink,
+                (const char* const symlink),
+                (const, noexcept, override));
 };
 
 }  // namespace os

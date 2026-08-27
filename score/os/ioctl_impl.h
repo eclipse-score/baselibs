@@ -28,8 +28,8 @@ class IoctlImpl final : public Ioctl
   private:
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace*/
     score::cpp::expected_blank<Error> ioctl(const std::int32_t d,
-                                     const std::int32_t request,
-                                     void* const arg) const noexcept override;
+                                            const std::int32_t request,
+                                            void* const arg) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper Function is identifiable through namespace usage */
 };
 }  // namespace os

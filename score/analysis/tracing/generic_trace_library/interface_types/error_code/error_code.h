@@ -109,7 +109,7 @@ class GenericTraceAPIErrorDomain final : public score::result::ErrorDomain
 };
 
 score::result::Error MakeError(const score::analysis::tracing::ErrorCode code,
-                             const std::string_view user_message = "") noexcept;
+                               const std::string_view user_message = "") noexcept;
 
 /// @brief helper function to check if error is recoverable
 /// @param[in] code  error code to check

@@ -13,6 +13,7 @@
 #ifndef SCORE_MW_LOG_RUNTIME_H
 #define SCORE_MW_LOG_RUNTIME_H
 
+#include "score/utils/meyer_singleton/meyer_singleton.h"
 #include "score/mw/log/logger_container.h"
 #include "score/mw/log/recorder.h"
 
@@ -20,17 +21,6 @@
 
 namespace score
 {
-namespace singleton
-{
-
-// Suppress "AUTOSAR C++14 M3-2-3".
-// Rationale: This is a forward declaration that does not vioalate this rule.
-template <typename Object, template <class> class AtomicIndirectorType>
-// coverity[autosar_cpp14_m3_2_3_violation]
-class MeyerSingleton;
-
-}  // namespace singleton
-
 namespace mw
 {
 namespace log
@@ -53,7 +43,7 @@ class Runtime final
     // private and the user should initialize the Runtime via GetRecorder(). The MeyerSingleton class is used to create
     // the Runtime singleton. Therefore, MeyerSingleton needs access to the private Runtime constructor.
     // coverity[autosar_cpp14_a11_3_1_violation]
-    friend class singleton::MeyerSingleton<Runtime, memory::shared::AtomicIndirectorReal>;
+    friend class score::singleton::MeyerSingleton<Runtime, score::memory::shared::AtomicIndirectorReal>;
 
   public:
     /// \brief Implements a singleton, so no copying or moving

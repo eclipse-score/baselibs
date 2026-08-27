@@ -35,23 +35,11 @@ jobs:
           list-files: json
           filters: |
             restricted:
-              - 'score/analysis/**'
-              - 'score/concurrency/**'
-              - 'score/containers/**'
-              - 'score/datetime_converter/**'
-              - 'score/filesystem/**'
-              - 'score/json/**'
               - 'score/language/futurecpp/**'
-              - 'score/language/safecpp/**'
-              - 'score/memory/**'
+              - 'score/language/safecpp/test/**'
               - 'score/mw/**'
-              - 'score/network/**'
-              - 'score/os/**'
-              - 'score/quality/compiler_warnings/**'
-              - 'score/scope_exit/**'
-              - 'score/static_reflection_with_serialization/**'
-              - 'score/string_manipulation/**'
-              - 'score/utils/**'
+              - 'score/memory/shared/**'
+              - 'score/memory/design/shared_memory/**'
       - name: Block PR if restricted files are changed
         if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
         env:

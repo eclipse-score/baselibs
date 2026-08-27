@@ -12,11 +12,11 @@
  ********************************************************************************/
 #include "score/network/netutils_impl.h"
 
+#include "score/mw/log/logging.h"
 #include "score/os/ifaddrs.h"
 #include "score/os/ioctl.h"
 #include "score/os/socket.h"
 #include "score/os/unistd.h"
-#include "score/mw/log/logging.h"
 
 #include <arpa/inet.h>
 #include <ifaddrs.h>
@@ -67,11 +67,11 @@ score::cpp::expected<score::os::MacAddress, score::os::Error> NetutilsImpl::get_
             // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)
             score::os::Ifaddrs::instance().freeifaddrs(ifa_list);
             return score::os::MacAddress{static_cast<std::uint8_t>(if_mac[0]),
-                                       static_cast<std::uint8_t>(if_mac[1]),
-                                       static_cast<std::uint8_t>(if_mac[2]),
-                                       static_cast<std::uint8_t>(if_mac[3]),
-                                       static_cast<std::uint8_t>(if_mac[4]),
-                                       static_cast<std::uint8_t>(if_mac[5])};
+                                         static_cast<std::uint8_t>(if_mac[1]),
+                                         static_cast<std::uint8_t>(if_mac[2]),
+                                         static_cast<std::uint8_t>(if_mac[3]),
+                                         static_cast<std::uint8_t>(if_mac[4]),
+                                         static_cast<std::uint8_t>(if_mac[5])};
         }
     }
 
@@ -117,8 +117,8 @@ score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() cons
         return gateway_addr;
     }
 
-    score::mw::log::LogDebug(kLogContext) << static_cast<const char*>(__func__)
-                                        << "rtm->rtm_pid : " << cur_rt.header.rtm_pid;
+    score::mw::log::LogDebug(kLogContext)
+        << static_cast<const char*>(__func__) << "rtm->rtm_pid : " << cur_rt.header.rtm_pid;
     // Suppressed here because usage of banned OSAL method in OSAL modules is allowed."
     // NOLINTNEXTLINE(score-banned-function) see comment above
     const auto write_ret = score::os::Unistd::instance().write(socketfd, &cur_rt, cur_rt.header.rtm_msglen);
@@ -162,8 +162,9 @@ score::cpp::optional<std::uint32_t> NetutilsImpl::get_default_gateway_ip4() cons
     return gateway_addr;
 }
 
-score::cpp::expected_blank<score::os::Error> NetutilsImpl::set_alias_ip_address(const std::string& ifc_name,
-                                                                       const Ipv4Address& ip_addr) const noexcept
+score::cpp::expected_blank<score::os::Error> NetutilsImpl::set_alias_ip_address(
+    const std::string& ifc_name,
+    const Ipv4Address& ip_addr) const noexcept
 {
     const auto sockfd = Socket::instance().socket(Socket::Domain::kIPv4, SOCK_DGRAM, 0);
     if (!sockfd.has_value())

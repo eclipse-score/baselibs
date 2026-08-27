@@ -42,8 +42,8 @@ class TaskResultBase
   public:
     explicit TaskResultBase(score::cpp::stop_source stop_source) noexcept;
     virtual ~TaskResultBase() noexcept = default;
-    /// \brief abort will notify the underlying task via score::cpp::stop_token that it should stop its execution. There is no
-    /// guarantee that the execution will also be aborted, since we can only use a cooperative manner.
+    /// \brief abort will notify the underlying task via score::cpp::stop_token that it should stop its execution. There
+    /// is no guarantee that the execution will also be aborted, since we can only use a cooperative manner.
     ///
     /// The behavior is undefined if valid() is false before the call to this function.
     void Abort() noexcept

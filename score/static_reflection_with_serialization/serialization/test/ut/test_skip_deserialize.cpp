@@ -50,15 +50,15 @@ struct S3s
     int f3;
 };
 
-STRUCT_VISITABLE(S, f1, f2, f3, f4)
+SCORE_STRUCT_VISITABLE(S, f1, f2, f3, f4)
 
-STRUCT_VISITABLE(S1, f1, f2, f3, f4)
+SCORE_STRUCT_VISITABLE(S1, f1, f2, f3, f4)
 static_assert(::score::common::visitor::is_payload_compatible<S1, S>(), "shall be compatible");
 
-STRUCT_VISITABLE(S2, f1, f2, f3, f4)
+SCORE_STRUCT_VISITABLE(S2, f1, f2, f3, f4)
 static_assert(::score::common::visitor::is_payload_compatible<S2, S>(), "shall be compatible");
 
-STRUCT_VISITABLE(S3s, f1, f2, f3)
+SCORE_STRUCT_VISITABLE(S3s, f1, f2, f3)
 
 }  // namespace test
 
@@ -72,7 +72,7 @@ TEST(serializer_visitor, skip_deserialize)
                    "Logging library shall provide an annotation mechanism for data structures to support automatic "
                    "serialization/deserialization.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     // S has an "added" std::vector member compared to S3;, it should be detected as incompatible
     EXPECT_FALSE((::score::common::visitor::is_payload_compatible<test::S3s, test::S>()));
 
@@ -106,7 +106,7 @@ TEST(serializer_visitor, skip_deserialize_test_overflow)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Skip deserialization in case the data to be serialized is bigger than the buffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<char, 4> buffer;
     using serializer = ::score::common::visitor::logging_serializer;

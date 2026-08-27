@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 exports_files([
     "capability.h",
@@ -66,9 +66,6 @@ cc_library(
     ],
     target_compatible_with = ["@platforms//os:linux"],
     visibility = [
-        "//platform/aas/ara/tsync:__subpackages__",
-        "//platform/aas/pas/crash_handler:__pkg__",
-        "//platform/aas/pas/sysmon:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [

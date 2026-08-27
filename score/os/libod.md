@@ -3,17 +3,17 @@
 ## Introduction
 The purpose of OS lib is to give application developers abstraction layer towards Operating system.
 OS functionalities are accessible as `cc_library` bazel targets.
-> FFI tagged libraries can be used in ASIL-B safety components for detail see broken_link_g/swh/xpad_documentation/blob/2ba9ae612e204979c21ec86567e57459e20ea06b/enhancement_proposals/proposals/16_common_libraries.md
+> FFI tagged libraries can be used in ASIL-B safety components
 Following libraries are simple wrappers with no additional logic to OS function. For this libraries only basic description will be added, no static, dynamic architecture will be done.
 
 By default return type can be  wrapped is into one of following
 
 `score::cpp::expected` - score::cpp::expected - A container for an expected value or an error p0323r4:  https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0323r4.html .
-Please refer: broken_link_g/swh/amp/blob/master/include/score/expected.hpp
+Please refer: ../language/futurecpp/include/score/expected.hpp
 
 `score::cpp::expected_blank` -  usage with functions that don't return a value.
 
-see broken_link_g/swh/amp for details on amp
+see score/language/futurecpp for details
 
 
 ## acl
@@ -54,7 +54,7 @@ The internal functions for the acl library are as follows:
 * object_seam
 
 ## utils/acl
-Higher level abstraction for `platform/aas/lib/os:acl`.
+Higher level abstraction for `score/os:acl`.
 
 The `utils/acl` library exports the following functions:
 * `AllowUser` - This function assigns the given permission towards the given user. This can be invoked multiple times for any number of user and permission combinations.
@@ -68,10 +68,10 @@ The internal functions for the acl library are as follows:
 * `CheckMaskPermissions` - This function is used to check if the mask in the acl text matches given permissions.
 * `ArePermissionsValid` - This function is used to check if the given permissions are set in the acl text.
 ### External Dependencies
-* platform/aas/lib/os:acl
+* score/os:acl
 * errno
-* platform/aas/lib/result
-* @amp
+* score/result
+* score/language/futurecpp
 
 ## dirent
 OS-independent abstraction of dirent (format of directory entries) see
@@ -100,7 +100,7 @@ This also provides the following internal function:
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## fcntl
 Fcntl lib provides the control over an open file. This function used for manipulating file descriptors. It provides a way to control various aspects of files and file descriptors beyond what can be done with basic file I/O system calls like open, read, write, and close.
@@ -118,7 +118,7 @@ The fcntl lib helper functions are as follows:
 * errno
 * object_seam
 * stat
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## getopt
 Parse options from a command line.
@@ -149,7 +149,7 @@ This library also provides following functions:
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## inotify_instance_impl
 
@@ -206,7 +206,7 @@ It provides the following methods:
 * fcntl
 * sys_poll
 * unistd
-* @amp
+* score/language/futurecpp
 
 ## ioctl
 The ioctl lib is used to control device-specific operations on file descriptors
@@ -265,23 +265,24 @@ This library provides the following internal function:
 * errno
 * object_seam
 * static_destruction_guard
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## semaphore
 This lib exports the following OS functions:
 
-* `sem_init` - This is a wrapper over the os sem_init(). This function is to initialize an unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_init.html
-* `sem_open` - This function after converting openflag to nativeflag and the modeflag to nativeflag(depending on the parameters) calls the os sem_open(). Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_open.html
-* `sem_wait` - This is a wrapper over the os sem_wait(). This function wait on a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_wait.html
-* `sem_post` - This is a wrapper over the os sem_post(). This function increment a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_post.html
-* `sem_close` - This is a wrapper over the os sem_close(). This function is to close a named semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_close.html
-* `sem_unlink` - This is a wrapper over the os sem_unlink(). This function is to destroy a named semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_unlink.html
-* `sem_timedwait` - This is a wrapper over the os sem_timedwait(). This function waits on a named or unnamed semaphore, with a timeout. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
-* `sem_getvalue` - This is a wrapper over the os sem_getvalue(). This function is to get the value of a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/s/sem_getvalue.html
+* `sem_init` - This is a wrapper over the os sem_init(). This function is to initialize an unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_init.html
+* `sem_open` - This function after converting openflag to nativeflag and the modeflag to nativeflag(depending on the parameters) calls the os sem_open(). Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_open.html
+* `sem_wait` - This is a wrapper over the os sem_wait(). This function wait on a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_wait.html
+* `sem_post` - This is a wrapper over the os sem_post(). This function increment a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_post.html
+* `sem_close` - This is a wrapper over the os sem_close(). This function is to close a named semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_close.html
+* `sem_unlink` - This is a wrapper over the os sem_unlink(). This function is to destroy a named semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_unlink.html
+* `sem_timedwait` - This is a wrapper over the os sem_timedwait(). This function waits on a named or unnamed semaphore, with a timeout. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
+* `sem_timedwait_monotonic` - This is a wrapper over the os sem_timedwait_monotonic() on QNX and sem_clockwait() with CLOCK_MONOTONIC on Linux (glibc). It behaves like sem_timedwait() but measures the absolute timeout against CLOCK_MONOTONIC, so the timeout is unaffected by wall-clock adjustments. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_timedwait.html
+* `sem_getvalue` - This is a wrapper over the os sem_getvalue(). This function is to get the value of a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_getvalue.html
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## statvfs
 This function provides the detailed information about a mounted file system. This exports the following function:
@@ -290,7 +291,7 @@ This function provides the detailed information about a mounted file system. Thi
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## unistd
 The unistd lib functions are used for handling various low-level, system-call-like functionalities such as file operations, process control, and communication.This exports the following function:
@@ -329,7 +330,7 @@ The unistd lib functions are used for handling various low-level, system-call-li
 * errno
 * object_seam
 * static_destruction_guard
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## mount
 mount lib provides the functionality for mounting/unmounting a filesystem. It extends the functional;ity to convert the mount flag to read only mode.
@@ -340,7 +341,7 @@ The mount library exports the following functions:
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## stdio
 The stdio lib provides a set of functions for input and output operations.
@@ -356,7 +357,7 @@ The stdio library exports the following function:
 ### External Dependencies
 * errno
 * object_seam
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## stdlib
 The stdlib library offers functionalities for system-level operations, process termination, environment manipulation, and file management, essential for robust and efficient system programming.
@@ -423,7 +424,7 @@ The mman library exports the following functions:
 * object_seam
 * rt
 * static_destruction_guard
-* //platform/aas/lib/bitmanipulation:bitmask_operators
+* //score/bitmanipulation:bitmask_operators
 
 ## errno
 This abstraction is an operating system independent version of error codes. This will be used as part of any functions return code within the os abstraction which consists of an `score::cpp::expected`.
@@ -434,13 +435,13 @@ The errno provides the following functions:
 * `ToString` - This function turns the error into a string
 * `ToStringContainer` - This function wraps error into an array of 32 characters
 ### External Dependencies
-* @amp
+* score/language/futurecpp
 
 ## errno_logging
 This is Global overload of a LogStream operator to enable translation from error to human readable representation
 ### External Dependencies
 * errno
-* //platform/aas/mw/log:log_stream
+* //score/mw/log:log_stream
 
 ## pthread
 The pthread library allows for creating and managing threads, which are a way of achieving concurrency.
@@ -578,10 +579,10 @@ The MQueue class provides the following functions:
 * `get_mq_st_mode` - This function calls the MQueuePrivate::get_mq_st_mode()
 ### External Dependencies
 * errno
-* @amp
-* //platform/aas/lib/os:mqueue
-* //platform/aas/lib/os:stat
-* //platform/aas/lib/utils
+* score/language/futurecpp
+* //score/os:mqueue
+* //score/os:stat
+* //score/utils
 
 ## signal_headers, signal
 The signal library is used for variour signal functionalities.
@@ -601,8 +602,8 @@ The signal library provides the following functions:
 * `Kill` - This function calls os kill(). It send a signal SIGTERM to a process or a group of processes. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/k/kill.html
 
 ### External Dependencies
-* //platform/aas/lib/os:errno
-* @amp
+* //score/os:errno
+* score/language/futurecpp
 
 ## thread_headers, thread
 The thread library is used to set or get the thread name.
@@ -612,8 +613,8 @@ This library exposes the following functions:
 * `set_thread_name` - This function calls Pthread::setname_np() and sets the provided name to the thread.
 * `get_thread_name` - This function calls Pthread::getname_np() and returns the string
 ### External Dependencies
-* //platform/aas/lib/logging:headers
-* //platform/aas/lib/os:pthread
+* //score/mw/log
+* //score/os:pthread
 
 ## high_resolution_steady_clock
 In QNX, `std::chrono::steady_clock` only offers millisecond resolution. Hence, another clock must be used under QNX to obtain a higher resolution. From QNX SDP 8.39.10 on, nanosecond resolution can be acheived by using `std::chrono::high_resolution_clock` instead since it utilizes QNX's `ClockCycles()`. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/c/clockcycles.html)
@@ -629,7 +630,7 @@ This library exports the following functions for mutex:
 * `unlock` - This function calls os pthread_mutex_unlock(). Releases the lock held by the execution agent. Throws no exceptions.
 * `try_lock` - This function calls os pthread_mutex_trylock()Attempts to acquire the lock for the current execution agent (thread, process, task) without blocking. If an exception is thrown, no lock is obtained. It true if the lock was acquired, false otherwise
 ### External Dependencies
-* @amp
+* score/language/futurecpp
 
 ## interprocess_conditional_variable
 The InterprocessConditionalVariable would be used to coordinate actions between different processes. Upon careting the InterprocessConditionalVariable the os pthread_condattr_init(), pthread_condattr_setpshared(), pthread_cond_init() would be called sequentially. Upon destrotying the InterprocessConditionalVariable, the os pthread_cond_destroy() would be called.
@@ -640,7 +641,7 @@ This library provides the following functions:
 * `wait` - This function calls os pthread_cond_wait(). It wait on a condition variable. Reference: https://www.qnx.com/developers/docs/7.1/#com.qnx.doc.neutrino.lib_ref/topic/p/pthread_cond_wait.html
 ### External Dependencies
 * interprocess_mutex
-* @amp
+* score/language/futurecpp
 
 ## stdout_pipe
 The stdout_pipe library is used to create or stop/close/clean the pipe for std out.
@@ -657,9 +658,9 @@ The library provides the following internal functions:
 * `cleanup` - This function call the close()and then restoreOriginalFD() for cleanup.
 * `closePipe` -  This function calls Unistd::close to close the pipe.
 ### External Dependencies
-* //platform/aas/lib/logging:headers
-* //platform/aas/lib/os:asil_qm
-* @amp
+* //score/mw/log
+* //score/os:asil_qm
+* score/language/futurecpp
 
 ## path_header, path
 The path library is used to retrive the path such as base name, parent directory name, execution program name.
@@ -669,9 +670,9 @@ This library provides the following functions:
 * `get_parent_dir` - This function is used to retrive the parent directory name. It uses Libgen::dirname() for this purpose.
 * `get_exec_path` - This function is used retrive the the pathname of the executing program and NULL if the pathname of the executing program cannot be determined.
 ### External Dependencies
-* //platform/aas/lib/os:libgen
-* //platform/aas/lib/os:unistd
-* @amp
+* //score/os:libgen
+* //score/os:unistd
+* score/language/futurecpp
 
 ## machine_header, machine
 The machine library is used to check if it is QEMU or SCTF
@@ -680,7 +681,7 @@ This library provides the following functions:
 * `is_qemu` - This function is to check if it is on QEMU
 * `is_sctf` - This fucntion is to checck if it is SCTF
 ### External Dependencies
-//platform/aas/lib/os:stdlib
+//score/os:stdlib
 
 ## detect_os
 The detect_os library is to check for the os type. It checks is the os is QNX or Linux
@@ -690,7 +691,7 @@ This library provides the following functions:
 * `IsQnx` - This function checks if the os is QNX. It uses the IsOs() function for this purpose.
 * `IsOs` - This function returns true if the input string is same as that of the system name.
 ### External Dependencies
-//platform/aas/lib/os:asil_qm
+//score/os:asil_qm
 
 ## Design rationales
 EPIC for OSAL implementation broken_link_j/Ticket-12624

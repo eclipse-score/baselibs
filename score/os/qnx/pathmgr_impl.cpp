@@ -20,7 +20,7 @@ namespace os
 {
 
 score::cpp::expected_blank<Error> PathmgrImpl::pathmgr_symlink(const char* const path,
-                                                        const char* const symlink) const noexcept
+                                                               const char* const symlink) const noexcept
 {
     if (::pathmgr_symlink(path, symlink) == -1)
     {

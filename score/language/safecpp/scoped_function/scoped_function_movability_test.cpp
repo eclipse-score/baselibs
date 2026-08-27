@@ -180,7 +180,7 @@ TEST_F(MoveOnlyScopedFunctionMovabilityTest,
     CopyableScopedFunction<void(), score::cpp::pmr::polymorphic_allocator<std::byte>> function{
         std::allocator_arg, allocator, scope, []() noexcept {}};
     MoveOnlyScopedFunction<void(), score::cpp::pmr::polymorphic_allocator<std::byte>> function_move{std::move(function),
-                                                                                             allocator};
+                                                                                                    allocator};
 
     EXPECT_EQ(instrumented_memory_resource.GetNumberOfAllocations(), 1);
 }

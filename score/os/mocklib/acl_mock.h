@@ -44,8 +44,14 @@ class AclMock : public Acl
                 (AclCollection, EntryIndex),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<Tag, score::os::Error>), acl_get_tag_type, (Entry), (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), acl_set_tag_type, (Entry, Tag), (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<void*, score::os::Error>), acl_get_qualifier, (Entry), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                acl_set_tag_type,
+                (Entry, Tag),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<void*, score::os::Error>),
+                acl_get_qualifier,
+                (Entry),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 acl_set_qualifier,
                 (Entry, const void*),
@@ -60,8 +66,14 @@ class AclMock : public Acl
                 acl_add_perm,
                 (Permissions, Permission),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), acl_calc_mask, (AclCollection*), (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), acl_valid, (AclCollection), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                acl_calc_mask,
+                (AclCollection*),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                acl_valid,
+                (AclCollection),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 acl_set_fd,
                 (FileDescriptor, AclCollection),

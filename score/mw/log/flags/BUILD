@@ -45,14 +45,15 @@ config_setting(
 )
 
 bool_flag(
-    name = "KDltTrace_Logging",
+    name = "shm_dma_enabled",
     build_setting_default = False,
 )
 
 config_setting(
-    name = "DltTrace_Logging",
+    name = "config_use_shm_dma_enabled",
     flag_values = {
-        ":KDltTrace_Logging": "True",
+        ":KRemote_Logging": "True",
+        ":shm_dma_enabled": "True",
     },
     visibility = [
         "@score_baselibs//score/mw/log:__subpackages__",

@@ -1,0 +1,131 @@
+@startuml backend_selection
+
+title mw::log - Two-Layer Backend Selection Flow
+
+skinparam defaultFontSize 12
+skinparam activityFontSize 11
+skinparam partitionFontSize 12
+skinparam arrowColor #444444
+skinparam activityBorderColor #444444
+skinparam partitionBorderColor #888888
+
+|#LightBlue|Layer 1: Integrator|
+|#LightYellow|Layer 2: User (logging.json)|
+|#LightGreen|Runtime Initialization (Runtime::Runtime)|
+
+|Runtime Initialization (Runtime::Runtime)|
+start
+:Runtime::Runtime() called\n(Meyer's Singleton - first caller triggers init);
+
+|Layer 1: Integrator|
+:ReadBackendConfig()\n""/opt/libmwlog/backend_config.json"";
+note right
+  **backend_config.json**
+  Lists which .so files to dlopen().
+  Integrator concern - makes
+  backends available.
+  ----
+  {
+    "backends": [
+      "libmwlog_file_backend.so",
+      "libmwlog_remote_backend.so"
+    ]
+  }
+end note
+
+if (Config file found?) then (yes)
+  :DynamicBackendLoader::LoadConfiguredBackends\n(backend_filenames);
+  repeat
+    :For each filename in config;
+    :Build absolute path:\n/opt/libmwlog/backends/<filename>;
+    if (File exists?) then (no)
+      :Report WARNING\n(not deployed);
+    else (yes)
+      :dlopen(absolute_path,\nRTLD_NOW | RTLD_LOCAL);
+      if (dlopen() OK?) then (no)
+        :Report ERROR;
+      else (yes)
+        :dlsym - MwLogVersion();
+        if (ABI version matches?) then (no)
+          :Report ERROR\n(ABI mismatch);
+        else (yes)
+          :dlsym - MwLogRegisterBackends();
+          :MwLogRegisterBackends() called;
+          :RegisterBackend(LogMode, CreatorFn)\n - writes slot in gBackendCreators[];
+          note right
+            gBackendCreators[] is now populated
+            for this backend's LogMode slot.
+            The .so remains mapped for
+            process lifetime (no dlclose).
+          end note
+        endif
+      endif
+    endif
+  repeat while (more backends?)
+
+else (no / missing)
+  :No backends loaded\n - gBackendCreators[] has\nonly built-in console slot;
+endif
+
+|Runtime Initialization (Runtime::Runtime)|
+note right
+  **State after Layer 1:**
+  gBackendCreators[] slots populated
+  for each successfully loaded .so.
+end note
+
+|Layer 2: User (logging.json)|
+:RegistryAwareRecorderFactory::\nCreateFromConfiguration();
+:TargetConfigReader reads\n""logging.json"" - Configuration;
+note right
+  **logging.json**
+  Selects which available backends
+  to instantiate - User concern, runtime config.
+  ----
+  {
+    "logMode": "kRemote|kFile"
+  }
+end note
+
+:config.GetLogMode() -\nunordered_set<LogMode>\n{kRemote, kFile};
+
+repeat
+  :For each LogMode in user's logMode set;
+  if (IsBackendAvailable(mode)?\ngBackendCreators[slot] != nullptr) then (yes)
+    :CreateRecorderForMode(mode, config, mem)\n - calls gBackendCreators[slot](config, mem);
+    :Recorder instantiated\n - added to recorders vector;
+  else (no - .so not loaded by integrator)
+    :Report ERROR:\n"Requested log mode not available.\nFalling back to console.";
+    if (Console available && not yet added?) then (yes)
+      :Add console recorder as fallback;
+    endif
+  endif
+repeat while (more modes?)
+
+|Runtime Initialization (Runtime::Runtime)|
+if (recorders vector empty?) then (yes)
+  :return EmptyRecorder (no-op stub);
+else if (exactly one recorder?) then (yes)
+  :default_recorder_ = single recorder;
+else (multiple)
+  :default_recorder_ =\nCompositeRecorder\n(multiplexes to all);
+endif
+
+:Runtime init complete\ngBackendCreators[] immutable\nfor process lifetime;
+stop
+
+legend right
+  |= Symbol |= Meaning |
+  |<#LightBlue>   | Integrator configuration layer |
+  |<#LightYellow>   | User configuration layer |
+  |<#LightGreen>   | Runtime initialization |
+
+  **Key invariant (REQ-DD-7):**
+  LoadConfiguredBackends() (Layer 1) always
+  completes before CreateFromConfiguration()
+  (Layer 2) reads gBackendCreators[].
+  No synchronization needed - same thread,
+  same constructor, Meyer's Singleton guarantee.
+end legend
+
+@enduml

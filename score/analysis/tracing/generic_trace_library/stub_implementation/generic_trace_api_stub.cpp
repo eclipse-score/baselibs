@@ -70,7 +70,7 @@ RegisterTraceDoneCallBackResult GenericTraceAPI::RegisterTraceDoneCB(const Trace
 }
 
 TraceResult GenericTraceAPI::Trace(const TraceClientId client,
-                                   const MetaInfoVariants::Type& meta_info,
+                                   const MetaInfoVariants::StdType& meta_info,
                                    ShmDataChunkList& data,
                                    TraceContextId context_id)
 {
@@ -82,7 +82,7 @@ TraceResult GenericTraceAPI::Trace(const TraceClientId client,
 }
 
 TraceResult GenericTraceAPI::Trace(const TraceClientId client,
-                                   const MetaInfoVariants::Type& meta_info,
+                                   const MetaInfoVariants::StdType& meta_info,
                                    LocalDataChunkList& data) noexcept
 {
     if (gMock != nullptr)

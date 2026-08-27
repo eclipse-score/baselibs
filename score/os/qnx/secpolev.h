@@ -39,25 +39,27 @@ class SecpolEv : public ObjectSeam<SecpolEv>
     static SecpolEv& instance() noexcept;
 
     virtual score::cpp::expected_blank<score::os::Error> init(const unsigned flags,
-                                                     const unsigned buffer_count,
-                                                     const unsigned flush_interval) const noexcept = 0;
+                                                              const unsigned buffer_count,
+                                                              const unsigned flush_interval) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> shutdown(secpolev_shutdown_type_t type) const noexcept = 0;
-    virtual score::cpp::expected<secpolev_event_type_t, score::os::Error> wait_event(unsigned* flags) const noexcept = 0;
+    virtual score::cpp::expected<secpolev_event_type_t, score::os::Error> wait_event(
+        unsigned* flags) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> flush(void) const noexcept = 0;
     virtual uint64_t get_dropped_event_count() const noexcept = 0;
     virtual score::cpp::expected<pid_t, score::os::Error> get_pid() const noexcept = 0;
     virtual score::cpp::expected<const char*, score::os::Error> get_process_name() const noexcept = 0;
     virtual score::cpp::expected<const char*, score::os::Error> get_process_type() const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> get_ability_info(unsigned* id,
-                                                                 const char** name,
-                                                                 unsigned* flags,
-                                                                 uint64_t* start,
-                                                                 uint64_t* end) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> get_path_info(const char** path,
-                                                              secpolev_path_event_status_t* status) const noexcept = 0;
+                                                                          const char** name,
+                                                                          unsigned* flags,
+                                                                          uint64_t* start,
+                                                                          uint64_t* end) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> get_path_info(
+        const char** path,
+        secpolev_path_event_status_t* status) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> get_custom_perm_info(const char** class_name,
-                                                                     const char** perm_name,
-                                                                     const char** obj_type) const noexcept = 0;
+                                                                              const char** perm_name,
+                                                                              const char** obj_type) const noexcept = 0;
 
     virtual ~SecpolEv() = default;
 };

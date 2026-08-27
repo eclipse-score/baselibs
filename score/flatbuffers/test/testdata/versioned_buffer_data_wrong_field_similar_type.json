@@ -1,0 +1,10 @@
+{
+  "similar_to_version_info": {
+    "some_string": "version_info_like_struct",
+    "some_val1": 1,
+    "some_val2": 2
+  },
+  "component_name": "test_component",
+  "advanced_settings": {
+  }
+}

@@ -152,8 +152,8 @@ score::Result<off_t> SimpleReadFunction::getOffset(const io_read_t* msg, const R
             break;
 
         default:
-            result =
-                score::MakeUnexpected(ErrorCode::kUnsupportedFunction, "get offset error because of unknown offset type");
+            result = score::MakeUnexpected(ErrorCode::kUnsupportedFunction,
+                                           "get offset error because of unknown offset type");
             break;
     }
 

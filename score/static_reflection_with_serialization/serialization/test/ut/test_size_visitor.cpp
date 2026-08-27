@@ -89,19 +89,19 @@ template <typename ValuesStructT, typename V, typename VP>
 void getValue(const ValuesStructT&, V&, VP ValuesStructT::*);
 
 template <typename ValuesStructT, typename V>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::*fieldMemberPtr)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::* fieldMemberPtr)
 {
     copyAssignment(valueOut, valuesStruct.*fieldMemberPtr);
 }
 
 template <typename ValuesStructT, typename V, typename... Args>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::*fieldMemberPtr, Args...)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, V ValuesStructT::* fieldMemberPtr, Args...)
 {
     copyAssignment(valueOut, valuesStruct.*fieldMemberPtr);
 }
 
 template <typename ValuesStructT, typename V, typename VP, typename... Args>
-void getValue(const ValuesStructT& valuesStruct, V& valueOut, VP ValuesStructT::*fieldMemberPtr, Args... args)
+void getValue(const ValuesStructT& valuesStruct, V& valueOut, VP ValuesStructT::* fieldMemberPtr, Args... args)
 {
     (void)fieldMemberPtr;
     getValue(valuesStruct, valueOut, args...);
@@ -150,12 +150,12 @@ class CustomAllocator : public std::allocator<T>
     };
 };
 
-STRUCT_VISITABLE(S1, f1)
+SCORE_STRUCT_VISITABLE(S1, f1)
 
 using MemcpyType = std::chrono::steady_clock::time_point;
 
-// MEMCPY_SERIALIZABLE(MemcpyType, score::common::visitor::payload_tags::unsigned_le)
-MEMCPY_SERIALIZABLE(payload_tags::unsigned_le, MemcpyType)
+// SCORE_MEMCPY_SERIALIZABLE(MemcpyType, score::common::visitor::payload_tags::unsigned_le)
+SCORE_MEMCPY_SERIALIZABLE(payload_tags::unsigned_le, MemcpyType)
 
 struct CustomFloat
 {
@@ -172,9 +172,9 @@ struct is_custom_float : std::is_same<T, CustomFloat>
 {
 };
 
-MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le,
-                       T,
-                       is_custom_float<std::remove_const_t<T>>::value)
+SCORE_MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float_le,
+                             T,
+                             is_custom_float<std::remove_const_t<T>>::value)
 
 struct S2
 {
@@ -185,8 +185,7 @@ struct S2
         return f1 == op2.f1;
     }
 };
-
-STRUCT_VISITABLE(S2, f1)
+SCORE_STRUCT_VISITABLE(S2, f1)
 
 struct S3
 {
@@ -198,7 +197,7 @@ struct S3
     }
 };
 
-STRUCT_VISITABLE(S3, f1)
+SCORE_STRUCT_VISITABLE(S3, f1)
 
 struct InitialTypeValues
 {
@@ -302,7 +301,7 @@ TYPED_TEST_P(SizeVisitorFixture, whenDataSerializedAndThenDeserializedDataShould
                                     "logging library shall provide an annotation mechanism for data structures to "
                                     "support automatic serialization/deserialization.");
     ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     using s = serializer_t<real_alloc_t>;
     using ssize = serialized_size_t<real_alloc_t>;

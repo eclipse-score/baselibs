@@ -95,11 +95,11 @@ std::int32_t umountimp(const char* const target)
 // Wrapper must be backward compatible for the applications that use linux specific mount() (without datalen arg)
 // NOLINTNEXTLINE(google-default-arguments) see comment above
 score::cpp::expected_blank<Error> MountImpl::mount(const char* const special_file,
-                                            const char* const dir,
-                                            const char* const fstype,
-                                            const Mount::Flag flags,
-                                            const void* const data,
-                                            const std::int32_t datalen) const noexcept
+                                                   const char* const dir,
+                                                   const char* const fstype,
+                                                   const Mount::Flag flags,
+                                                   const void* const data,
+                                                   const std::int32_t datalen) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     // Manual code analysis:

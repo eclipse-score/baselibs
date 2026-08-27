@@ -78,105 +78,106 @@ class Socket : public ObjectSeam<Socket>
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> socket(const Domain domain,
-                                                      const std::int32_t type,
-                                                      const std::int32_t protocol) const noexcept = 0;
+                                                             const std::int32_t type,
+                                                             const std::int32_t protocol) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> bind(const std::int32_t sockfd,
-                                            const struct sockaddr* const addr,
-                                            const socklen_t addrlen) const noexcept = 0;
+                                                   const struct sockaddr* const addr,
+                                                   const socklen_t addrlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<Error> listen(const std::int32_t sockfd, const std::int32_t backlog) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> listen(const std::int32_t sockfd,
+                                                     const std::int32_t backlog) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> accept(const std::int32_t sockfd,
-                                                      struct sockaddr* const addr,
-                                                      socklen_t* const addrlen) const noexcept = 0;
+                                                             struct sockaddr* const addr,
+                                                             socklen_t* const addrlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> connect(const std::int32_t sockfd,
-                                               const struct sockaddr* const addr,
-                                               const socklen_t addrlen) const noexcept = 0;
+                                                      const struct sockaddr* const addr,
+                                                      const socklen_t addrlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> setsockopt(const std::int32_t sockfd,
-                                                  const std::int32_t level,
-                                                  const std::int32_t optname,
-                                                  const void* const optval,
-                                                  const socklen_t optlen) const noexcept = 0;
+                                                         const std::int32_t level,
+                                                         const std::int32_t optname,
+                                                         const void* const optval,
+                                                         const socklen_t optlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> getsockopt(const std::int32_t sockfd,
-                                                  const std::int32_t level,
-                                                  const std::int32_t optname,
-                                                  void* const optval,
-                                                  socklen_t* const optlen) const noexcept = 0;
+                                                         const std::int32_t level,
+                                                         const std::int32_t optname,
+                                                         void* const optval,
+                                                         socklen_t* const optlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> recv(const std::int32_t sockfd,
-                                               void* const buf,
-                                               const size_t len,
-                                               const MessageFlag flags) const noexcept = 0;
+                                                      void* const buf,
+                                                      const size_t len,
+                                                      const MessageFlag flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> recvfrom(const std::int32_t sockfd,
-                                                   void* const buf,
-                                                   const size_t len,
-                                                   const MessageFlag flags,
-                                                   sockaddr* const addr,
-                                                   socklen_t* const addrlen) const noexcept = 0;
+                                                          void* const buf,
+                                                          const size_t len,
+                                                          const MessageFlag flags,
+                                                          sockaddr* const addr,
+                                                          socklen_t* const addrlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> sendto(const std::int32_t sockfd,
-                                                 const void* const buf,
-                                                 const size_t len,
-                                                 const MessageFlag flags,
-                                                 const struct sockaddr* const addr,
-                                                 const socklen_t addrlen) const noexcept = 0;
+                                                        const void* const buf,
+                                                        const size_t len,
+                                                        const MessageFlag flags,
+                                                        const struct sockaddr* const addr,
+                                                        const socklen_t addrlen) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> recvmsg(const std::int32_t sockfd,
-                                                  msghdr* const message,
-                                                  const MessageFlag flags) const noexcept = 0;
+                                                         msghdr* const message,
+                                                         const MessageFlag flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> recvmmsg(const std::int32_t sockfd,
-                                                   mmsghdr* msgvec,
-                                                   const unsigned int vlen,
-                                                   const MessageFlag flags,
-                                                   struct timespec* timeout) const noexcept = 0;
+                                                          mmsghdr* msgvec,
+                                                          const unsigned int vlen,
+                                                          const MessageFlag flags,
+                                                          struct timespec* timeout) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> send(const std::int32_t sockfd,
-                                               void* const buf,
-                                               const size_t len,
-                                               const MessageFlag flags) const noexcept = 0;
+                                                      void* const buf,
+                                                      const size_t len,
+                                                      const MessageFlag flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ssize_t, Error> sendmsg(const std::int32_t sockfd,
-                                                  const msghdr* const message,
-                                                  const MessageFlag flags) const noexcept = 0;
+                                                         const msghdr* const message,
+                                                         const MessageFlag flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     //  Returns the number of bytes sent
     virtual score::cpp::expected<std::int32_t, Error> sendmmsg(const std::int32_t sockfd,
-                                                        const mmsghdr* messages_array,
-                                                        const std::uint32_t message_array_length,
-                                                        const MessageFlag flags) const noexcept = 0;
+                                                               const mmsghdr* messages_array,
+                                                               const std::uint32_t message_array_length,
+                                                               const MessageFlag flags) const noexcept = 0;
 
     virtual ~Socket() = default;
 

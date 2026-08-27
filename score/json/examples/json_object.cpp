@@ -12,8 +12,8 @@
  ********************************************************************************/
 #include "score/json/json_parser.h"
 
-#include "score/os/unistd.h"
 #include "score/mw/log/logging.h"
+#include "score/os/unistd.h"
 
 int main()
 {
@@ -47,7 +47,7 @@ int main()
         if (element.second.As<std::string>().has_value())
         {
             score::mw::log::LogInfo() << element.first.GetAsStringView().data()                   // key
-                                    << ": " << element.second.As<std::string>().value().get();  // value
+                                      << ": " << element.second.As<std::string>().value().get();  // value
         }
     }
 

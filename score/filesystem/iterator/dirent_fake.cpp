@@ -67,9 +67,8 @@ score::cpp::expected<struct dirent*, score::os::Error> DirentFake::FakeReaddir(D
     auto& dir_stream = dir_stream_iterator->second;
     if (dir_stream.current_ == dir_stream.filelist_.end())
     {
-        // according to score::os::DirentImpl in case of end of directory
-        // the unexpected error from errno should be returned instead of nullptr
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        // return nullptr represents valid response as end if directory iteration and not an error
+        return static_cast<struct dirent*>(nullptr);
     }
     const std::string& name = *dir_stream.current_;
     ++dir_stream.current_;

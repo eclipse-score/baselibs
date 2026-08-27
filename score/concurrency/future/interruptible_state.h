@@ -35,7 +35,8 @@ namespace concurrency
 namespace detail
 {
 using TypedBaseInterruptibleState =
-    score::concurrency::detail::BaseInterruptibleState<std::mutex, score::concurrency::InterruptibleConditionalVariable>;
+    score::concurrency::detail::BaseInterruptibleState<std::mutex,
+                                                       score::concurrency::InterruptibleConditionalVariable>;
 
 template <class>
 struct IsScoped : std::false_type
@@ -219,7 +220,8 @@ class InterruptibleState<Value&> final : public score::concurrency::detail::Type
 
         // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        new (&value_) score::Result<std::reference_wrapper<Value>>{MakeUnexpected<std::reference_wrapper<Value>>(error)};
+        new (&value_)
+            score::Result<std::reference_wrapper<Value>>{MakeUnexpected<std::reference_wrapper<Value>>(error)};
 
         MakeReady();
         TriggerContinuations();

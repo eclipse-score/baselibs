@@ -32,8 +32,8 @@ class FsCryptoImpl final : public FsCrypto
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fs_crypto_domain_remove(const char* path,
-                                                       int domain,
-                                                       int* preply) const noexcept override;
+                                                              int domain,
+                                                              int* preply) const noexcept override;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 
@@ -55,8 +55,8 @@ class FsCryptoImpl final : public FsCrypto
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fs_crypto_domain_query(const char* path,
-                                                      int domain,
-                                                      int* preply) const noexcept override;
+                                                             int domain,
+                                                             int* preply) const noexcept override;
 
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
@@ -78,8 +78,8 @@ class FsCryptoImpl final : public FsCrypto
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fs_crypto_file_set_domain(const char* path,
-                                                         int domain,
-                                                         int* preply) const noexcept override;
+                                                                int domain,
+                                                                int* preply) const noexcept override;
 
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */

@@ -12,7 +12,8 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_library(
     name = "acl",
@@ -238,8 +239,8 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 
@@ -248,7 +249,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:ifaddrs_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -257,7 +257,10 @@ cc_library(
     srcs = [
         "semaphore.cpp",
         "semaphore_impl.cpp",
-    ],
+    ] + select({
+        "@platforms//os:qnx": ["semaphore_impl_qnx.cpp"],
+        "//conditions:default": ["semaphore_impl_linux.cpp"],
+    }),
     hdrs = [
         "semaphore.h",
         "semaphore_impl.h",
@@ -277,7 +280,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:netdb_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
     ],
 )
 
@@ -311,8 +313,8 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 
@@ -338,7 +340,6 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = [
         ":__subpackages__",
-        "//platform/aas/network/xnm:__subpackages__",
         "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],
@@ -539,7 +540,6 @@ alias(
     actual = "@score_baselibs//score/os/mocklib:socket_mock",
     visibility = [
         ":__subpackages__",
-        "//platform/aas/pas/sysmon:__subpackages__",
     ],
 )
 
@@ -583,6 +583,27 @@ cc_library(
 )
 
 cc_library(
+    name = "dlfcn",
+    srcs = [
+        "dlfcn_impl.cpp",
+    ],
+    hdrs = [
+        "dlfcn.h",
+        "dlfcn_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [
+        ":errno",
+        "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/language/futurecpp",
+    ],
+)
+
+cc_library(
     name = "string",
     srcs = [
         "string.cpp",
@@ -621,13 +642,6 @@ cc_library(
 )
 
 cc_library(
-    name = "static_destruction_guard",
-    hdrs = ["static_destruction_guard.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-)
-
-cc_library(
     name = "mman",
     srcs = ["mman.cpp"],
     hdrs = ["mman.h"],
@@ -639,8 +653,8 @@ cc_library(
         ":fcntl",
         ":object_seam",
         ":rt",
-        ":static_destruction_guard",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
+        "@score_baselibs//score/utils:static_destruction_guard",
     ],
 )
 
@@ -912,4 +926,10 @@ cc_library(
         "@platforms//os:qnx": ["@score_baselibs//score/os/qnx:qnx_version"],
         "//conditions:default": [],
     }),
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

@@ -21,6 +21,7 @@
 #include <static_reflection_with_serialization/visitor/visit.h>
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <optional>
 #include <utility>
@@ -138,7 +139,8 @@ inline void JsonSerializeStructImpl(Object& visitor, Field&& field, Fields&&... 
     {
         const auto insertion_result =
             visitor.emplace(common::visitor::struct_visitable<T>::field_name(FieldIndex), std::move(field_value));
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(insertion_result.second, "Duplicate field name in struct serialization");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(insertion_result.second,
+                                                    "Duplicate field name in struct serialization");
     }
     JsonSerializeStructImpl<T, FieldIndex + 1, Fields...>(visitor, std::forward<Fields>(fields)...);
 }
@@ -204,7 +206,8 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
         }
         else
         {
-            score::cpp::ignore = visitor.error.emplace(std::move(field_content).error());
+            // Annotate with the failing field name; field_name is a static const char* from struct_visitable.
+            score::cpp::ignore = visitor.error.emplace(field_content.error().WithUserMessage(field_name));
         }
     }
     else
@@ -219,7 +222,7 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
         }
         else
         {
-            score::cpp::ignore = visitor.error.emplace(Error::kKeyNotFound, "Missing mandatory field in JSON object");
+            score::cpp::ignore = visitor.error.emplace(MakeError(Error::kKeyNotFound, field_name));
         }
     }
 }

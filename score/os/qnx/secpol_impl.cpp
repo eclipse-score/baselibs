@@ -25,7 +25,7 @@ namespace details
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<secpol_file_t*, score::os::Error> SecpolImpl::secpol_open(const char* const path,
-                                                                      const std::uint32_t flags) const noexcept
+                                                                               const std::uint32_t flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     secpol_file_t* const result = ::secpol_open(path, flags);
@@ -62,9 +62,10 @@ score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_posix_sp
 }
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_transition_type(secpol_file_t* const handle,
-                                                                               const char* const name,
-                                                                               const std::uint32_t flags) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_transition_type(
+    secpol_file_t* const handle,
+    const char* const name,
+    const std::uint32_t flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::secpol_transition_type(handle, name, flags);

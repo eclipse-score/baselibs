@@ -270,7 +270,8 @@ TEST_F(FileFactoryTestWithFcntlMock, AtomicUpdateFileHandleFailedOnOpen)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnStat)
 {
-    EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+    EXPECT_CALL(*stat_, stat(_, _, _))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
     static constexpr auto kFaultyTargetFile{"path"};
     Path test_dir = test_tmpdir_ / kFaultyTargetFile;
 
@@ -292,7 +293,8 @@ TEST_F(FileFactoryTestWithStatMock, OpenForAtomicUpdateWithOwnershipChange)
     ON_CALL(*stat_, stat(_, _, _)).WillByDefault(Invoke(set_mode));
 
     // access(W_OK) confirms write permission
-    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
     // Expecting a call to chown
     EXPECT_CALL(*unistd_, chown(_, _, _)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
@@ -311,7 +313,8 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnChown)
         return score::cpp::expected_blank<os::Error>{};
     };
     EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));
-    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
     EXPECT_CALL(*unistd_, chown(_, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
     static constexpr auto kFaultyTargetFile{"path"};
@@ -355,7 +358,8 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateSucceedsWhenWriteAccessGranted)
     };
     EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));
     // access(W_OK) confirms write permission
-    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+    EXPECT_CALL(*unistd_, access(_, os::Unistd::AccessMode::kWrite))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
     static constexpr auto kTestFileName{"writable_file"};
     Path test_filename = test_tmpdir_ / kTestFileName;

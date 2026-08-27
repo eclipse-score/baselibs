@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.1", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
@@ -34,7 +34,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
-    sdp_version = "8.0.3",
+    sdp_version = "8.0.4",
     target_cpu = "x86_64",
     target_os = "qnx",
     use_default_package = True,
@@ -42,7 +42,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
-    sdp_version = "8.0.3",
+    sdp_version = "8.0.4",
     target_cpu = "aarch64",
     target_os = "qnx",
     use_default_package = True,
@@ -58,7 +58,7 @@ use_repo(
     "score_qcc_x86_64_toolchain_pkg",
 )
 
-bazel_dep(name = "score_rules_imagefs", version = "0.0.3", dev_dependency = True)
+bazel_dep(name = "score_rules_imagefs", version = "0.0.4", dev_dependency = True)
 
 imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
 imagefs.toolchain(
@@ -81,22 +81,31 @@ use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolc
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
-bazel_dep(name = "boost.container", version = "1.83.0.bcr.4")
-bazel_dep(name = "boost.interprocess", version = "1.83.0.bcr.4")
 bazel_dep(name = "download_utils", version = "1.2.2")
 bazel_dep(name = "rules_cc", version = "0.2.17")
 bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
+## Configure the Rust toolchain
+
+bazel_dep(name = "rules_rust", version = "0.68.1-score")
+bazel_dep(name = "score_rust_policies", version = "0.0.5")
+bazel_dep(name = "score_crates", version = "0.0.11")
+bazel_dep(name = "cxx.rs", version = "1.0.186")
+
+bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
+
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "4.0.3", dev_dependency = True)
-bazel_dep(name = "score_process", version = "1.5.4", dev_dependency = True)
-bazel_dep(name = "score_tooling", version = "1.2.0", dev_dependency = True)
-bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)
+bazel_dep(name = "score_docs_as_code", version = "8.0.1")
+bazel_dep(name = "score_process_description", version = "2.1.2")
+
+bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
+
+bazel_dep(name = "score_platform", version = "0.7.1")
 
 ## Configure the python toolchain
 
-bazel_dep(name = "rules_python", version = "1.8.3", dev_dependency = True)
+bazel_dep(name = "rules_python", version = "1.8.5")
 
 PYTHON_VERSION = "3.12"
 
@@ -117,36 +126,31 @@ python.toolchain(
 
 bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
-bazel_dep(name = "aspect_rules_lint", version = "2.3.0", dev_dependency = True)
+bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
 bazel_dep(name = "score_bazel_tools_cc", version = "0.1.0", dev_dependency = True)
-bazel_dep(name = "score_qnx_unit_tests", version = "0.1.0", dev_dependency = True)
-bazel_dep(name = "toolchains_llvm", version = "1.4.0", dev_dependency = True)
+bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
+bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
 llvm.toolchain(
-    llvm_version = "19.1.1",
+    llvm_version = "22.1.7",
     stdlib = {"linux-x86_64": "stdc++"},
 )
 use_repo(llvm, "llvm_toolchain")
-
-register_toolchains(
-    "@llvm_toolchain//:all",
-    dev_dependency = True,
-)
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
 deb(
     name = "acl-deb",
     build = "//third_party/acl:acl.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.2.52-3build1_amd64.deb"],
+    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.3.1-1_amd64.deb"],
     visibility = ["//visibility:public"],
 )
 
 deb(
     name = "acl-deb-aarch64",
     build = "//third_party/acl:acl.BUILD",
-    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.2.52-3build1_arm64.deb"],
+    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.3.1-1_arm64.deb"],
     visibility = ["//visibility:public"],
 )
 
@@ -184,8 +188,33 @@ deb(
 )
 
 bazel_dep(name = "flatbuffers", version = "25.12.19")
+
+# flatbuffers@25.12.19 is a non-dev dependency that transitively pulls
+# grpc -> googleapis -> grpc-java@1.66.0 into all consumers. grpc-java@1.66.0
+# contains a broken use_repo declaration that Bazel 8.x rejects as a hard error.
+#
+# The upstream fix in flatbuffers (google/flatbuffers@2b8e4d3) upgrades grpc to
+# 1.76.0, which drops the problematic grpc-java@1.66.0 dependency. Until that
+# commit is included in a flatbuffers release, this direct dependency of a transitive
+# dependency serves as a mitigation.
+#
+# TODO: Remove once flatbuffers releases a version containing the following fix.
+# https://github.com/google/flatbuffers/commit/2b8e4d3af04a6c38c7a7e19460fc26faa3608c9e
+bazel_dep(name = "grpc-java", version = "1.75.0.bcr.1")
 bazel_dep(name = "nlohmann_json", version = "3.11.3")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
+
+# Hedron's Compile Commands Extractor for Bazel
+# https://github.com/hedronvision/bazel-compile-commands-extractor
+bazel_dep(name = "hedron_compile_commands", dev_dependency = True)
+git_override(
+    module_name = "hedron_compile_commands",
+    commit = "abb61a688167623088f8768cc9264798df6a9d10",
+    patch_strip = 1,
+    # Patch for support for Bazel 8.6.0.
+    patches = ["//patches:hedron_compile_commands_env_vars.patch"],
+    remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
+)
 
 #############################################################
 #
@@ -193,4 +222,4 @@ bazel_dep(name = "bazel_skylib", version = "1.9.0")
 #
 #############################################################
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "0.1.2")
+bazel_dep(name = "score_bazel_platforms", version = "1.0.0")

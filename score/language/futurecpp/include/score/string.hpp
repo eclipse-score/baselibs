@@ -56,13 +56,20 @@ string to_string(const double value, memory_resource* const resource);
 } // namespace pmr
 } // namespace score::cpp
 
+// cert-dcl58-cpp Given the clang-tidy-check objective, the following findings are false positive since documented
+// standard variation points are used for std::hash customizations. See https://en.cppreference.com/cpp/utility/hash
+// Using `struct ::std::hash` as suggested by the check triggers a syntax error in GCC which is a known
+// GCC defect: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66892
+// NOLINTBEGIN(cert-dcl58-cpp)
+namespace std
+{
 // More recent standard libraries already provide
 // `template<typename A> struct hash<std::basic_string<char, std::char_traits<char>, A>>`
 // for arbitrary allocators A, but our currently used standard library doesn't, which is why we
 // have to define them ourselves.
 // \{
 template <>
-struct std::hash<score::cpp::pmr::string>
+struct hash<score::cpp::pmr::string>
 {
     std::size_t operator()(const score::cpp::pmr::string& s) const noexcept
     {
@@ -70,7 +77,7 @@ struct std::hash<score::cpp::pmr::string>
     }
 };
 template <>
-struct std::hash<score::cpp::pmr::u16string>
+struct hash<score::cpp::pmr::u16string>
 {
     std::size_t operator()(const score::cpp::pmr::u16string& s) const noexcept
     {
@@ -78,7 +85,7 @@ struct std::hash<score::cpp::pmr::u16string>
     }
 };
 template <>
-struct std::hash<score::cpp::pmr::u32string>
+struct hash<score::cpp::pmr::u32string>
 {
     std::size_t operator()(const score::cpp::pmr::u32string& s) const noexcept
     {
@@ -86,7 +93,7 @@ struct std::hash<score::cpp::pmr::u32string>
     }
 };
 template <>
-struct std::hash<score::cpp::pmr::wstring>
+struct hash<score::cpp::pmr::wstring>
 {
     std::size_t operator()(const score::cpp::pmr::wstring& s) const noexcept
     {
@@ -94,5 +101,8 @@ struct std::hash<score::cpp::pmr::wstring>
     }
 };
 // \}
+
+} // namespace std
+// NOLINTEND(cert-dcl58-cpp)
 
 #endif // SCORE_LANGUAGE_FUTURECPP_STRING_HPP

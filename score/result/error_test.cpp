@@ -186,6 +186,34 @@ TEST(Error, CanLogCustomMessageToOstream)
     EXPECT_EQ(stream.str(), "Error Second Error! occurred with message Foo");
 }
 
+TEST(Error, WithUserMessagePreservesCodeAndDomain)
+{
+    // Given an error with a known code/domain
+    const score::result::Error original{MyErrorCode::kSecondError, "original message"};
+
+    // When creating a copy with a new user message
+    const score::result::Error updated = original.WithUserMessage("updated message");
+
+    // Then code/domain are preserved while the user message is replaced
+    EXPECT_EQ(updated, original);
+    EXPECT_EQ(*updated, *original);
+    EXPECT_EQ(updated.Message(), original.Message());
+    EXPECT_EQ(updated.UserMessage(), "updated message");
+}
+
+TEST(Error, WithUserMessageCanClearUserMessage)
+{
+    // Given an error with an existing user message
+    const score::result::Error original{MyErrorCode::kFirstError, "has message"};
+
+    // When creating a copy with an empty user message
+    const score::result::Error updated = original.WithUserMessage("");
+
+    // Then the user message is cleared
+    EXPECT_EQ(updated, original);
+    EXPECT_TRUE(updated.UserMessage().empty());
+}
+
 }  // namespace
 }  // namespace result
 }  // namespace score

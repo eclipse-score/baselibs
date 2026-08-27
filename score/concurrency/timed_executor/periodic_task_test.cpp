@@ -32,7 +32,10 @@ namespace
 class Invokable
 {
   public:
-    MOCK_METHOD(void, Invoke, (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point), (const));
+    MOCK_METHOD(void,
+                Invoke,
+                (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point),
+                (const));
     MOCK_METHOD(void,
                 Invoke,
                 (score::cpp::stop_token, const score::concurrency::testing::SteadyClock::time_point, int, double),
@@ -81,7 +84,8 @@ class PeriodicTaskTest : public ::testing::Test
     }
 
     Invokable invokable_{};
-    score::concurrency::testing::SteadyClock::time_point first_execution_{score::concurrency::testing::SteadyClock::now()};
+    score::concurrency::testing::SteadyClock::time_point first_execution_{
+        score::concurrency::testing::SteadyClock::now()};
     score::concurrency::testing::SteadyClock::duration interval_{std::chrono::milliseconds{100}};
     std::promise<void> promise_{};
     score::cpp::stop_source stop_source_{};
@@ -196,7 +200,8 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackWithCorrectAttributes)
         score::cpp::pmr::get_default_resource(),
         first_execution_,
         interval_,
-        [this](score::cpp::stop_token stop_token, const score::concurrency::testing::SteadyClock::time_point time_point) {
+        [this](score::cpp::stop_token stop_token,
+               const score::concurrency::testing::SteadyClock::time_point time_point) {
             invokable_.Invoke(std::move(stop_token), time_point);
         });
 
@@ -238,7 +243,8 @@ TEST_F(PeriodicTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
         score::cpp::pmr::get_default_resource(),
         first_execution_,
         interval_,
-        [](const score::cpp::stop_token&, const score::concurrency::testing::SteadyClock::time_point) noexcept -> void {});
+        [](const score::cpp::stop_token&, const score::concurrency::testing::SteadyClock::time_point) noexcept -> void {
+        });
 
     // When executing the function call operator
     unit.second->GetStopSource().request_stop();
@@ -253,12 +259,13 @@ TEST_F(PeriodicTaskTest, WillTerminateWhenCalculationOfTimePointForNextExecution
 {
     first_execution_ = score::concurrency::testing::SteadyClock::time_point::max() - std::chrono::milliseconds{1};
     score::concurrency::testing::SteadyClock::modify_time(first_execution_ -
-                                                        score::concurrency::testing::SteadyClock::now());
+                                                          score::concurrency::testing::SteadyClock::now());
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         first_execution_,
         interval_,
-        [](const score::cpp::stop_token&, const score::concurrency::testing::SteadyClock::time_point) noexcept -> void {});
+        [](const score::cpp::stop_token&, const score::concurrency::testing::SteadyClock::time_point) noexcept -> void {
+        });
 
     EXPECT_EXIT((*unit)(unit->GetStopSource().get_token()), ::testing::KilledBySignal(SIGABRT), "");
 }

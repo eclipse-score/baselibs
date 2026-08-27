@@ -21,11 +21,15 @@
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_THREAD_PTHREAD_ATTR_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_THREAD_PTHREAD_ATTR_HPP
 
-#include <cstddef>
-#include <pthread.h>
-#include <system_error>
-
 #include <score/assert.hpp>
+
+#include <pthread.h>
+#include <sched.h>
+
+#include <cstddef>
+#include <cstdint>
+#include <system_error>
+#include <type_traits>
 
 namespace score::cpp
 {
@@ -67,6 +71,45 @@ public:
         if (status != 0)
         {
             throw std::system_error{status, std::system_category(), "pthread_attr_setstacksize"};
+        }
+    }
+
+    void set_priority(const std::int32_t priority)
+    {
+        // sched_param::sched_priority is defined as an `int`
+        // https://pubs.opengroup.org/onlinepubs/009604299/basedefs/sched.h.html
+        // so make sure it matches with the fixed size type `std::int32_t`
+        static_assert(std::is_same_v<decltype(std::declval<::sched_param>().sched_priority), std::int32_t>);
+
+        // pthread_attr_setschedparam needs PTHREAD_EXPLICIT_SCHED to be set
+        // PTHREAD_EXPLICIT_SCHED specifies that the scheduling policy and associated attributes are to be set to the
+        // corresponding values from the attribute object. because we only want to set the priority and keep the
+        // inherited policy
+        //  1. first query the current parameters
+        //  2. modify the priority only
+
+        int policy{};
+        ::sched_param param{};
+        if (const int status{::pthread_getschedparam(::pthread_self(), &policy, &param)}; status != 0)
+        {
+            throw std::system_error{status, std::system_category(), "pthread_getschedparam"};
+        }
+
+        param.sched_priority = priority;
+
+        if (const int status{::pthread_attr_setinheritsched(&native_handle_, PTHREAD_EXPLICIT_SCHED)}; status != 0)
+        {
+            throw std::system_error{status, std::system_category(), "pthread_attr_setinheritsched"};
+        }
+
+        if (const int status{::pthread_attr_setschedpolicy(&native_handle_, policy)}; status != 0)
+        {
+            throw std::system_error{status, std::system_category(), "pthread_attr_setschedpolicy"};
+        }
+
+        if (const int status{::pthread_attr_setschedparam(&native_handle_, &param)}; status != 0)
+        {
+            throw std::system_error{status, std::system_category(), "pthread_attr_setschedparam"};
         }
     }
 

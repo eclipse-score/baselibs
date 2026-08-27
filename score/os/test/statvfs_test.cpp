@@ -29,7 +29,7 @@ TEST(StatvfsTest, StatvfsSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatvfsTest Statvfs Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     char tmp_dir_template[] = "statvfs_test.XXXXXX";
     char* result = ::mkdtemp(tmp_dir_template);
@@ -60,7 +60,7 @@ TEST(StatvfsTest, StatvfsFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "StatvfsTest Statvfs Failure");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct statvfs buf;
     std::string invalid_path = "/invalid/path";

@@ -14,6 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 cc_gtest_unit_test(
     name = "intrusive_list_test",
@@ -38,10 +39,9 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/containers/test:allocator_test_type_helpers",
         "@score_baselibs//score/containers/test:container_test_types",
-        "@score_baselibs//score/containers/test:custom_allocator_mock",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
-        "@score_baselibs//score/memory/shared:types",
-        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -59,9 +59,10 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/containers/test:allocator_test_type_helpers",
         "@score_baselibs//score/containers/test:container_test_types",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
+        "@score_baselibs//score/containers/test:mockable_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
-        "@score_baselibs//score/memory/shared:types",
-        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -79,10 +80,10 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/containers/test:allocator_test_type_helpers",
         "@score_baselibs//score/containers/test:container_test_types",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-        "@score_baselibs//score/memory/shared:types",
-        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -100,10 +101,10 @@ cc_unit_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/containers/test:allocator_test_type_helpers",
         "@score_baselibs//score/containers/test:container_test_types",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-        "@score_baselibs//score/memory/shared:types",
-        "@score_baselibs//score/memory/shared/fake:fake_memory_resources",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )
@@ -156,7 +157,16 @@ cc_unit_test_suites_for_host_and_qnx(
         ":non_relocatable_vector_special_member_funcs_test",
         ":intrusive_list_test",
     ],
+    test_suites_from_sub_packages = [
+        "@score_baselibs//score/containers/test:unit_test_suite",
+    ],
     visibility = [
         "//visibility:public",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

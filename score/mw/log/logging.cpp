@@ -86,3 +86,8 @@ void score::mw::log::SetLogRecorder(score::mw::log::Recorder* const recorder) no
 {
     score::mw::log::detail::Runtime::SetRecorder(recorder);
 }
+
+score::mw::log::Recorder& score::mw::log::GetFallbackLogRecorder() noexcept
+{
+    return score::mw::log::detail::Runtime::GetFallbackRecorder();
+}

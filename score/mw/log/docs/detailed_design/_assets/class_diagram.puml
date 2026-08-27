@@ -1,0 +1,267 @@
+@startuml class_diagram
+
+package "score_log crate" {
+    note as score_log_desc
+        Implementation of logging front-end.
+        Based on 'log' library.
+    end note
+
+    +interface Log <<trait>> {
+        +enabled(&self, metadata: &Metadata<_>) : bool
+        +log(&self, record: &Record) : ()
+        +flush(&self) : ()
+    }
+
+    +class Record<'a> <<struct>> {
+        -metadata: Metadata<'a>
+        -args: Arguments<'a>
+        -module_path: Option<MaybeStaticStr<'a>>
+        -file: Option<MaybeStaticStr<'a>>
+        -line: Option<u32>
+
+        +builder() : RecordBuilder
+        +args() : Arguments
+        +metadata() : Metadata
+        +level() : Level
+        +context() : String
+        +module_path() : Option<String>
+        +file() : Option<String>
+        +line() : Option<String>
+    }
+
+    +class Metadata<'a> <<struct>> {
+        -level: Level
+        -context: String
+
+        +builder(): MetadataBuilder
+        +level(): Level
+        +context(): String
+    }
+
+    Log --> Record
+    Log --> Metadata
+
+    +enum Level <<enum>> {
+        Fatal
+        Error
+        Warn
+        Info
+        Debug
+        Trace
+    }
+
+    +enum LevelFilter <<enum>> {
+        Off
+        Fatal
+        Error
+        Warn
+        Info
+        Debug
+        Trace
+    }
+
+    class score_log <<module>> {
+        {static} -LOGGER: &dyn Log
+
+        +set_global_logger(logger: Box<dyn Log>) : Result<(), SetLoggerError>
+        +set_max_level(level: LevelFilter) : ()
+        +max_level() : LevelFilter
+        +global_logger() : &'static dyn Log
+
+        +log!(context: &str, level: Level, ...) : ()
+        +log_enabled!(context: &str, level: Level) : bool
+        +fatal!(...) : ()
+        +error!(...) : ()
+        +warn!(...) : ()
+        +info!(...) : ()
+        +debug!(...) : ()
+        +trace!(...) : ()
+    }
+
+    note top
+        Functions are used for global logger configuration.
+
+        <code>
+        let logger = Box::new(ExampleLogger);
+        set_global_logger(logger).unwrap();
+        set_max_level(LevelFilter::Fatal);
+        </code>
+
+        Macros are used for logging. Examples:
+
+        <code>
+        log!(logger: logger_instance, Level::Fatal, "FATAL");
+        info!("INFO: {}", i);
+        error!(logger: logger_instance, "ERROR: {}", true);
+        </code>
+    end note
+
+    score_log -- Log
+    score_log -- Level
+    score_log -- LevelFilter
+}
+
+package "score_log_fmt crate" {
+    note as score_log_fmt_desc
+        Formatting interface, similar to 'std::fmt'.
+        Expanded with support for non-string variables.
+    end note
+
+    +interface ScoreWrite <<trait>> {
+        +write_bool(&mut self, v: &bool, spec: &FormatSpec) : Result
+        +write_f32(&mut self, v: &f32, spec: &FormatSpec) : Result
+        +write_f64(&mut self, v: &f64, spec: &FormatSpec) : Result
+        +write_i8(&mut self, v: &i8, spec: &FormatSpec) : Result
+        +write_i16(&mut self, v: &i16, spec: &FormatSpec) : Result
+        +write_i32(&mut self, v: &i32, spec: &FormatSpec) : Result
+        +write_i64(&mut self, v: &i64, spec: &FormatSpec) : Result
+        +write_u8(&mut self, v: &u8, spec: &FormatSpec) : Result
+        +write_u16(&mut self, v: &u16, spec: &FormatSpec) : Result
+        +write_u32(&mut self, v: &u32, spec: &FormatSpec) : Result
+        +write_u64(&mut self, v: &u64, spec: &FormatSpec) : Result
+        +write_str(&mut self, v: &str, spec: &FormatSpec) : Result
+    }
+
+    +class FormatSpec <<struct>> {
+        -display_hint : DisplayHint
+        -fill : char
+        -align : Option<Alignment>
+        -sign : Option<Sign>
+        -alternate : bool
+        -zero_pad : bool
+        -debug_as_hex : Option<DebugAsHex>
+        -width : Option<u16>
+        -precision : Option<u16>
+
+        +display_hint(&mut self, display_hint: DisplayHint) : &mut Self
+        +fill(&mut self, fill: char) : &mut Self
+        +align(&mut self, align: Option<Alignment>) : &mut Self
+        +sign(&mut self, sign: Option<Sign>) : &mut Self
+        +alternate(&mut self, alternate: bool) : &mut Self
+        +zero_pad(&mut self, zero_pad: bool) : &mut Self
+        +debug_as_hex(&mut self, debug_as_hex: Option<DebugAsHex>) : &mut Self
+        +width(&mut self, width: Option<u16>) : &mut Self
+        +precision(&mut self, precision: Option<u16>) : &mut Self
+
+        +display_hint(&self) : DisplayHint
+        +fill(&self) : char
+        +align(&self) : Option<Alignment>
+        +sign(&self) : Option<Sign>
+        +alternate(&self) : bool
+        +zero_pad(&self) : bool
+        +debug_as_hex(&self) : Option<DebugAsHex>
+        +width(&self) : Option<u16>
+        +precision(&self) : Option<u16>
+    }
+
+    +class Placeholder<'a> <<struct>> {
+        -value: NonNull<()>
+        -formatter: fn(NonNull<()>, &mut dyn ScoreWrite, &FormatSpec) : Result
+        -spec: FormatSpec
+        -_lifetime: PhantomData<&'a ()>
+
+        +new(value: &ScoreDebug, spec: FormatSpec) : Self
+
+        +fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) : Result
+    }
+
+    FormatSpec *-- Placeholder
+
+    +enum Fragment<'a> <<enum>> {
+        Literal(&'a str)
+        Placeholder(Placeholder<'a>)
+    }
+
+    Fragment *-- Placeholder
+
+    +class Arguments<'a> <<struct>> {
+        +0: [Fragment<'a>]
+    }
+
+    Arguments *-- Fragment
+
+    +interface ScoreDebug <<trait>> {
+        +fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) : Result
+    }
+
+    ' Placeholders are dependent on "ScoreDebug" trait implementations.
+    Placeholder --> ScoreDebug
+
+    ' Trait implementations rely on "ScoreWrite".
+    ScoreDebug --> ScoreWrite
+
+    class score_log_fmt <<module>> {
+        +write(output: &mut dyn ScoreWrite, args: Arguments<'_>) : Result
+
+        +score_write!(format_string: &str, args...) : Result
+    }
+    note top
+        Provided macros can be used for implementing custom formatting traits.
+
+        <code>
+        struct Point {
+            x: i32,
+            y: i32,
+        }
+
+        impl ScoreDebug for Point {
+            fn fmt(&self, f: &mut dyn ScoreWrite, spec: &FormatSpec) -> Result {
+                score_write!(f, "[{}, {}]", self.x, self.y)
+            }
+        }
+        </code>
+    end note
+
+    score_log_fmt -- Arguments
+}
+
+package "score_log_fmt_macro crate" {
+    +class score_log_fmt_macro <<module>> {
+        +score_log_format_args!(format_string: &str, args...) : Arguments<'_>
+    }
+
+    note top
+        Procedural macro crate containing custom 'format_args' implementation, normally provided by Rust compiler.
+        Used by format string processing macros. Connections omitted for clarity.
+    end note
+}
+
+package "score_log_subscriber crate" {
+    note as score_log_subscriber_desc
+        Example of backend implementation.
+    end note
+
+    +class ExampleLog <<struct>> {
+        +enabled(&self, metadata: &Metadata<_>) : bool
+        +log(&self, record: &Record) : ()
+        +flush(&self) : ()
+    }
+
+    ExampleLog ..|> Log
+
+    +class ExampleScoreWrite <<struct>> {
+        +write_bool(&mut self, v: &bool, spec: &FormatSpec) : Result
+        +write_f32(&mut self, v: &f32, spec: &FormatSpec) : Result
+        +write_f64(&mut self, v: &f64, spec: &FormatSpec) : Result
+        +write_i8(&mut self, v: &i8, spec: &FormatSpec) : Result
+        +write_i16(&mut self, v: &i16, spec: &FormatSpec) : Result
+        +write_i32(&mut self, v: &i32, spec: &FormatSpec) : Result
+        +write_i64(&mut self, v: &i64, spec: &FormatSpec) : Result
+        +write_u8(&mut self, v: &u8, spec: &FormatSpec) : Result
+        +write_u16(&mut self, v: &u16, spec: &FormatSpec) : Result
+        +write_u32(&mut self, v: &u32, spec: &FormatSpec) : Result
+        +write_u64(&mut self, v: &u64, spec: &FormatSpec) : Result
+        +write_str(&mut self, v: &str, spec: &FormatSpec) : Result
+    }
+
+    ExampleScoreWrite ..|> ScoreWrite
+    ExampleLog *-- ExampleScoreWrite
+}
+
+"score_log crate" -[hidden]down-> "score_log_fmt crate"
+"score_log crate" -[hidden]up-> "score_log_fmt_macro crate"
+
+"score_log crate" -[hidden]down------> "score_log_subscriber crate"
+"score_log_fmt crate" -[hidden]down------> "score_log_subscriber crate"
+
+@enduml

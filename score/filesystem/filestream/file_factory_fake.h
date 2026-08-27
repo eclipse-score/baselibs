@@ -43,11 +43,11 @@ class FileFactoryFake : public FileFactoryMock
 
   private:
     [[nodiscard]] score::Result<std::unique_ptr<std::iostream>> FakeOpenWithMode(const Path& path,
-                                                                               std::ios_base::openmode mode,
-                                                                               os::Stat::Mode create_mode) const;
+                                                                                 std::ios_base::openmode mode,
+                                                                                 os::Stat::Mode create_mode) const;
 
     [[nodiscard]] score::Result<std::unique_ptr<std::iostream>> FakeOpen(const Path& path,
-                                                                       std::ios_base::openmode mode) const
+                                                                         std::ios_base::openmode mode) const
     {
         return FakeOpenWithMode(path, mode, os::Stat::Mode::kNone);
     }

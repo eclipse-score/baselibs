@@ -22,11 +22,11 @@ namespace qnx
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<void*, Error> MmanQnxImpl::mmap(void* const addr,
-                                              const std::size_t length,
-                                              const std::int32_t protection,
-                                              const std::int32_t flags,
-                                              const std::int32_t fd,
-                                              const std::int64_t offset) const noexcept
+                                                     const std::size_t length,
+                                                     const std::int32_t protection,
+                                                     const std::int32_t flags,
+                                                     const std::int32_t fd,
+                                                     const std::int64_t offset) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     void* const ret{::mmap(addr, length, protection, flags, fd, offset)};
@@ -48,11 +48,11 @@ score::cpp::expected<void*, Error> MmanQnxImpl::mmap(void* const addr,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<void*, Error> MmanQnxImpl::mmap64(void* addr,
-                                                const std::size_t length,
-                                                const std::int32_t protection,
-                                                const std::int32_t flags,
-                                                const std::int32_t fd,
-                                                const std::int64_t offset) const noexcept
+                                                       const std::size_t length,
+                                                       const std::int32_t protection,
+                                                       const std::int32_t flags,
+                                                       const std::int32_t fd,
+                                                       const std::int64_t offset) const noexcept
 {
 #if defined(__QNX__) && defined(__LP64__)
     // On LP64 QNX, mmap already uses 64-bit offsets.
@@ -82,7 +82,7 @@ score::cpp::expected_blank<Error> MmanQnxImpl::munmap(void* const addr, const st
 }
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<uintptr_t, Error> MmanQnxImpl::mmap_device_io(const std::size_t length,
-                                                            const uint64_t address) const noexcept
+                                                                   const uint64_t address) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const uintptr_t ret{::mmap_device_io(length, address)};
@@ -103,7 +103,7 @@ score::cpp::expected<uintptr_t, Error> MmanQnxImpl::mmap_device_io(const std::si
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> MmanQnxImpl::munmap_device_io(const uintptr_t address,
-                                                                 const std::size_t length) const noexcept
+                                                                        const std::size_t length) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t ret{::munmap_device_io(address, length)};
@@ -117,8 +117,8 @@ score::cpp::expected<std::int32_t, Error> MmanQnxImpl::munmap_device_io(const ui
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_open(const char* const pathname,
-                                                         const std::int32_t oflag,
-                                                         const mode_t mode) const noexcept
+                                                                const std::int32_t oflag,
+                                                                const mode_t mode) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
@@ -133,7 +133,7 @@ score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_open(const char* cons
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_open_handle(const shm_handle_t handle,
-                                                                const std::int32_t flags) const noexcept
+                                                                       const std::int32_t flags) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
@@ -148,10 +148,10 @@ score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_open_handle(const shm
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_create_handle(const std::int32_t fd,
-                                                                  const pid_t pid,
-                                                                  const std::int32_t flags,
-                                                                  shm_handle_t* const handlep,
-                                                                  const std::uint32_t options) const noexcept
+                                                                         const pid_t pid,
+                                                                         const std::int32_t flags,
+                                                                         shm_handle_t* const handlep,
+                                                                         const std::uint32_t options) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
@@ -166,9 +166,9 @@ score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_create_handle(const s
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_ctl(std::int32_t fd,
-                                                        const std::int32_t flags,
-                                                        const std::uint64_t paddr,
-                                                        const std::uint64_t size) const noexcept
+                                                               const std::int32_t flags,
+                                                               const std::uint64_t paddr,
+                                                               const std::uint64_t size) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
@@ -182,10 +182,10 @@ score::cpp::expected<std::int32_t, Error> MmanQnxImpl::shm_ctl(std::int32_t fd,
 }
 
 score::cpp::expected_blank<Error> MmanQnxImpl::mem_offset(const void* addr,
-                                                   const std::int32_t fd,
-                                                   const std::size_t length,
-                                                   off_t* offset,
-                                                   std::size_t* contig_len) const noexcept
+                                                          const std::int32_t fd,
+                                                          const std::size_t length,
+                                                          off_t* offset,
+                                                          std::size_t* contig_len) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::mem_offset(addr, fd, length, offset, contig_len) == -1)
@@ -197,10 +197,10 @@ score::cpp::expected_blank<Error> MmanQnxImpl::mem_offset(const void* addr,
 
 /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> MmanQnxImpl::mem_offset64(const void* addr,
-                                                     const std::int32_t fd,
-                                                     const std::size_t length,
-                                                     off64_t* offset,
-                                                     std::size_t* contig_len) const noexcept
+                                                            const std::int32_t fd,
+                                                            const std::size_t length,
+                                                            off64_t* offset,
+                                                            std::size_t* contig_len) const noexcept
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 #if defined(__QNX__) && defined(__LP64__)

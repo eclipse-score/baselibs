@@ -1,0 +1,4 @@
+# `rustfmt` should not be used with local configuration.
+# Use Bazel target for formatting.
+# E.g., `bazel run //:format.fix_Rust_with_rustfmt`
+DO_NOT_USE_LOCAL_RUSTFMT_TOML = false

@@ -75,7 +75,8 @@ TEST_F(DirentFakeFixture, DirectoryIterator)
 TEST_F(DirentFakeFixture, RecursiveDirectoryIterator)
 {
     std::list<std::string> filelist;
-    for (const auto& entry : RecursiveDirectoryIterator{"/tmp"})
+    RecursiveDirectoryIterator recurIterator{"/tmp"};
+    for (const auto& entry : recurIterator)
     {
         filelist.emplace_back(entry.GetPath().CStr());
     }
@@ -88,8 +89,9 @@ TEST_F(DirentFakeFixture, RecursiveDirectoryIterator)
     EXPECT_TRUE(Contains(filelist, "/tmp/bar/baz"));
     EXPECT_TRUE(Contains(filelist, "/tmp/bar/baz/file1"));
     EXPECT_TRUE(Contains(filelist, "/tmp/baz"));
-}
 
+    EXPECT_TRUE(recurIterator.HasValue());
+}
 TEST_F(DirentFakeFixture, OpendirForNonExisted)
 {
     auto& unit = filesystem_mock_->GetDirentFake();

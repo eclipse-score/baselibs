@@ -35,10 +35,13 @@ struct to_chars_result
 };
 
 /// \{
-/// \brief Converts value into a character string by successively filling the range [first, last), where [first, last)
-/// is required to be a valid range.
+/// \brief Converts value into a character string by successively filling the range [first, last)
 ///
-/// \pre Only base = 16 for hex conversion is supported.
+/// @note offered for backward-compatibility and only supports base 16. Use `std::to_chars` instead
+///
+/// \pre [first, last) is required to be a valid range
+/// \pre Only base = 16 for hex conversion is supported
+///
 /// \returns Returns an lowercase string of where the characters correspond to the bytes of value in big-endian order.
 /// E.g. to_chars(first, last, 0xcafe, 16) returns "cafe"
 to_chars_result to_chars(char* first, char* last, std::int8_t value, int base = 10);

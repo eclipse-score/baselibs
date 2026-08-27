@@ -102,10 +102,10 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, InstantiationUsesSpecifiedAllocator
     score::cpp::pmr::polymorphic_allocator<std::byte> allocator{&instrumented_memory_resource};
 
     const std::int32_t expected_data{15};
-    const auto pointer =
-        MakeAllocatorAwareTypeErasurePointer<SomeInterface,
-                                             SomeInterfaceImpl,
-                                             score::cpp::pmr::polymorphic_allocator<std::byte>>(allocator, expected_data);
+    const auto pointer = MakeAllocatorAwareTypeErasurePointer<SomeInterface,
+                                                              SomeInterfaceImpl,
+                                                              score::cpp::pmr::polymorphic_allocator<std::byte>>(
+        allocator, expected_data);
     EXPECT_EQ(pointer->GetData(), expected_data);
 
     EXPECT_EQ(instrumented_memory_resource.GetNumberOfAllocations(), 1);
@@ -132,8 +132,8 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, CanCopyConstructWithNewAllocator)
                                                         SomeInterfaceImpl,
                                                         score::cpp::pmr::polymorphic_allocator<std::byte>>(
         score::cpp::pmr::polymorphic_allocator<std::byte>{}, expected_data);
-    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>> copied_pointer{
-        std::allocator_arg, allocator, pointer};
+    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>>
+        copied_pointer{std::allocator_arg, allocator, pointer};
 
     pointer->SetData(14);
     EXPECT_EQ(copied_pointer->GetData(), expected_data);
@@ -235,8 +235,8 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, CanMoveConstructWithNewAllocator)
                                                         SomeInterfaceImpl,
                                                         score::cpp::pmr::polymorphic_allocator<std::byte>>(
         score::cpp::pmr::polymorphic_allocator<std::byte>{}, expected_data);
-    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>> moved_pointer{
-        std::allocator_arg, allocator, std::move(pointer)};
+    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>>
+        moved_pointer{std::allocator_arg, allocator, std::move(pointer)};
 
     EXPECT_EQ(moved_pointer->GetData(), expected_data);
     EXPECT_EQ(instrumented_memory_resource.GetNumberOfAllocations(), 1);
@@ -469,12 +469,13 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, DoesNotReallocateDuringMoveConstruc
     score::cpp::pmr::polymorphic_allocator<std::byte> allocator{&instrumented_memory_resource};
 
     const std::int32_t data{15};
-    auto pointer = MakeAllocatorAwareTypeErasurePointer<SomeInterface,
-                                                        SomeInterfaceImpl,
-                                                        score::cpp::pmr::polymorphic_allocator<std::byte>>(allocator, data);
+    auto pointer =
+        MakeAllocatorAwareTypeErasurePointer<SomeInterface,
+                                             SomeInterfaceImpl,
+                                             score::cpp::pmr::polymorphic_allocator<std::byte>>(allocator, data);
 
-    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>> moved_pointer{
-        std::allocator_arg, allocator, std::move(pointer)};
+    const AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>>
+        moved_pointer{std::allocator_arg, allocator, std::move(pointer)};
 
     EXPECT_EQ(instrumented_memory_resource.GetNumberOfAllocations(), 1);
 }
@@ -485,9 +486,10 @@ TEST_F(AllocatorAwareTypeErasurePointerTest, DoesNotReallocateDuringMoveAssignme
     score::cpp::pmr::polymorphic_allocator<std::byte> allocator{&instrumented_memory_resource};
 
     const std::int32_t data{15};
-    auto pointer = MakeAllocatorAwareTypeErasurePointer<SomeInterface,
-                                                        SomeInterfaceImpl,
-                                                        score::cpp::pmr::polymorphic_allocator<std::byte>>(allocator, data);
+    auto pointer =
+        MakeAllocatorAwareTypeErasurePointer<SomeInterface,
+                                             SomeInterfaceImpl,
+                                             score::cpp::pmr::polymorphic_allocator<std::byte>>(allocator, data);
 
     AllocatorAwareTypeErasurePointer<SomeInterface, score::cpp::pmr::polymorphic_allocator<std::byte>> moved_pointer{
         allocator};

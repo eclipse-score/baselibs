@@ -66,10 +66,10 @@ class AllocatorAwareTypeErasurePointer : public AllocatorAwareTypeErasurePointer
     {
     }
 
-    template <
-        class Implementation,
-        std::enable_if_t<!std::is_base_of_v<AllocatorAwareTypeErasurePointerBase, score::cpp::remove_cvref_t<Implementation>>,
-                         bool> = true>
+    template <class Implementation,
+              std::enable_if_t<
+                  !std::is_base_of_v<AllocatorAwareTypeErasurePointerBase, score::cpp::remove_cvref_t<Implementation>>,
+                  bool> = true>
     AllocatorAwareTypeErasurePointer(std::allocator_arg_t,
                                      const Allocator& allocator,
                                      TypeErasurePointer<Implementation> impl)
@@ -359,8 +359,9 @@ auto MakeAllocatorAwareTypeErasurePointer(const Allocator& allocator, Args&&... 
     static_assert(std::is_base_of_v<Interface, Implementation>, "Implementation must inherit from Interface");
     static_assert(std::is_constructible_v<Implementation, Args...>, "Implementation must be constructible with Args");
 
-    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(allocator == Allocator{allocator},
-                                 "Copies of the allocator must be able to deallocate previously allocated memory");
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(
+        allocator == Allocator{allocator},
+        "Copies of the allocator must be able to deallocate previously allocated memory");
 
     score::cpp::pmr::resource_adaptor<Allocator> resource_adaptor{allocator};
     score::cpp::pmr::polymorphic_allocator<Implementation> polymorphic_allocator{&resource_adaptor};
@@ -379,7 +380,8 @@ template <class Interface, class Alloc>
 // This rule states:"Non-standard entities shall not be added to standard namespaces.".
 // Rationale: This is a standard way to add a template specialization for a standard template.
 // coverity[autosar_cpp14_a17_6_1_violation]
-struct uses_allocator<score::safecpp::details::AllocatorAwareTypeErasurePointer<Interface, Alloc>, Alloc> : std::true_type
+struct uses_allocator<score::safecpp::details::AllocatorAwareTypeErasurePointer<Interface, Alloc>, Alloc>
+    : std::true_type
 {
 };
 

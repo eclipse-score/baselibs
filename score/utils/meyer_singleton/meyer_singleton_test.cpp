@@ -12,8 +12,8 @@
  ********************************************************************************/
 #include "score/utils/meyer_singleton/meyer_singleton.h"
 
-#include "score/memory/shared/atomic_indirector.h"
-#include "score/memory/shared/atomic_mock.h"
+#include "score/concurrency/atomic_indirector.h"
+#include "score/concurrency/atomic_mock.h"
 #include "score/utils/meyer_singleton/test/single_test_per_process_fixture.h"
 
 #include <score/assert_support.hpp>
@@ -32,7 +32,7 @@ namespace
 using namespace ::testing;
 
 template <typename T>
-using AtomicIndirectorMock = memory::shared::AtomicIndirectorMock<T>;
+using AtomicIndirectorMock = concurrency::AtomicIndirectorMock<T>;
 
 constexpr int kDummyInt{10U};
 constexpr double kDummyDouble{2.0};
@@ -90,7 +90,7 @@ class AtomicMockGuard
     AtomicMockGuard(AtomicMockGuard&&) noexcept = delete;
     AtomicMockGuard& operator=(AtomicMockGuard&&) & noexcept = delete;
 
-    memory::shared::AtomicMock<InitializationState> atomic_mock_{};
+    concurrency::AtomicMock<InitializationState> atomic_mock_{};
 };
 
 class MeyerSingletonFixture : public test::SingleTestPerProcessFixture
@@ -292,7 +292,8 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingAfterCallingGetInstanceWithCalla
 
         // When calling GetInstance
         // Then the program terminates
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingleton<InitializationTrackedClass>::GetInstance());
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingleton<InitializationTrackedClass>::GetInstance());
     });
 }
 
@@ -316,7 +317,8 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInst
         // When calling GetInstance
         // Then the program terminates
         using MeyerSingletonType = MeyerSingleton<DummyClass, AtomicIndirectorMock>;
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingletonType::GetInstance(kDummyInt, kDummyDouble));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore =
+                                                              MeyerSingletonType::GetInstance(kDummyInt, kDummyDouble));
     });
 }
 
@@ -328,8 +330,9 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingAfterCallingGetInsta
 
         // When calling GetInstanceInitializedWithCallable
         // Then the program terminates
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingleton<DummyClass>::GetInstanceInitializedWithCallable(
-                                         CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingleton<DummyClass>::GetInstanceInitializedWithCallable(
+                CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
     });
 }
 
@@ -353,8 +356,9 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingWhileOtherThreadIsCa
         // When calling GetInstance
         // Then the program terminates
         using MeyerSingletonType = MeyerSingleton<DummyClass, AtomicIndirectorMock>;
-        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(score::cpp::ignore = MeyerSingletonType::GetInstanceInitializedWithCallable(
-                                         CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
+        SCORE_LANGUAGE_FUTURECPP_EXPECT_CONTRACT_VIOLATED(
+            score::cpp::ignore = MeyerSingletonType::GetInstanceInitializedWithCallable(
+                CreateDummyInitializationCallback(kDummyInt, kDummyDouble)));
     });
 }
 

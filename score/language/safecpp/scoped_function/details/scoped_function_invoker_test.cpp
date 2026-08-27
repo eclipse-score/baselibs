@@ -151,8 +151,8 @@ TYPED_TEST(ScopedFunctionInvokerTest, ReturnTypeIsSameAsInvokerTypeNoExcept)
         typename details::ScopedFunctionInvoker<kNoExcept, WrappedCallableType>::template CallableType<
             ScopedFunctionInvokerTestScopedFunction<CallableType>>;
 
-    using ExpectedCallableType = score::cpp::optional<std::uint8_t> (*)(ScopedFunctionInvokerTestScopedFunction<CallableType>&,
-                                                                 std::int32_t) noexcept(kNoExcept);
+    using ExpectedCallableType = score::cpp::optional<std::uint8_t> (*)(
+        ScopedFunctionInvokerTestScopedFunction<CallableType>&, std::int32_t) noexcept(kNoExcept);
 
     // When comparing the Callable types
     // Then they should be equal

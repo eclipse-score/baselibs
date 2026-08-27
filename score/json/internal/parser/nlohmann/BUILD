@@ -36,6 +36,7 @@ cc_library(
     deps = [
         ":json_builder",
         "@nlohmann_json//:json",
+        "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],

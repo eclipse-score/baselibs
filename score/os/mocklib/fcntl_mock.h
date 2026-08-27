@@ -33,7 +33,10 @@ class FcntlMock : public Fcntl
                 fcntl,
                 (const std::int32_t, const Fcntl::Command),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), open, (const char*, Fcntl::Open), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                open,
+                (const char*, Fcntl::Open),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 open,
                 (const char*, Fcntl::Open, Stat::Mode),

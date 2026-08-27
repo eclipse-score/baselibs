@@ -109,7 +109,7 @@ StandardFilesystemFake::Entry::Entry(const FileType file_type, const Perms permi
     last_write_time_ = std::chrono::system_clock::now();
     file_status_ = FileStatus(file_type, permissions);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE((file_type == FileType::kRegular) || (file_type == FileType::kDirectory),
-                       "Only regular files and directories are supported.");
+                                            "Only regular files and directories are supported.");
     if (file_type == FileType::kRegular)
     {
         file_ = std::make_unique<std::stringstream>();
@@ -231,7 +231,7 @@ StandardFilesystemFake::CreateEntry(const Path& path, const FileType file_type, 
 {
     const auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_path = weakly_canonical_path_result.value();
     const std::string filename = weakly_canonical_path.Filename();
     if (filename.empty())
@@ -268,7 +268,7 @@ Result<std::shared_ptr<StandardFilesystemFake::Entry>> StandardFilesystemFake::F
     }
     const auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_path = weakly_canonical_path_result.value();
     std::shared_ptr<Entry> current_entry = root_;
     auto path_iterator = weakly_canonical_path.begin();
@@ -321,7 +321,7 @@ Result<void> StandardFilesystemFake::FakeCreateDirectories(const Path& path) con
 {
     const auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_path = weakly_canonical_path_result.value();
     std::shared_ptr<Entry> current_entry = root_;
     auto path_iterator = weakly_canonical_path.begin();
@@ -359,8 +359,10 @@ Result<void> StandardFilesystemFake::CopyFileInternal(const Path& source, const 
     const auto dest_exists_result = Exists(destination);
     // The following checks should exist in CopyFile functions. Here we double check it.
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(source_entry.has_value(), "Failed the source file existence check.");
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(source_entry.value()->IsTypeRegularFile(), "Failed the source file type check.");
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(dest_exists_result.has_value(), "Failed the destination file existence check.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(source_entry.value()->IsTypeRegularFile(),
+                                            "Failed the source file type check.");
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(dest_exists_result.has_value(),
+                                            "Failed the destination file existence check.");
     //
     if (dest_exists_result.value())
     {
@@ -383,7 +385,7 @@ Result<void> StandardFilesystemFake::FakeRemove(const Path& path) const noexcept
 {
     auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_path = weakly_canonical_path_result.value();
     auto parent_entry = FindEntry(weakly_canonical_path.ParentPath());
     if (!parent_entry.has_value())
@@ -413,7 +415,7 @@ Result<void> StandardFilesystemFake::FakeRemoveAll(const Path& path) const noexc
 {
     auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_path = weakly_canonical_path_result.value();
     auto parent_entry = FindEntry(weakly_canonical_path.ParentPath());
     if (!parent_entry.has_value())
@@ -498,7 +500,7 @@ Result<void> StandardFilesystemFake::FakeSetCurrentPath(const Path& path) noexce
     {
         const auto weakly_canonical_path_result = FakeWeaklyCanonical(path);
         SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_path_result.has_value(),
-                           "In current version FakeWeaklyCanonical() always returns value.");
+                                                "In current version FakeWeaklyCanonical() always returns value.");
         current_directory_ = weakly_canonical_path_result.value();
         return {};
     }
@@ -542,7 +544,7 @@ Result<void> StandardFilesystemFake::FakeCreateHardLink(const Path& oldpath, con
     }
     const auto weakly_canonical_newpath_result = FakeWeaklyCanonical(newpath);
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(weakly_canonical_newpath_result.has_value(),
-                       "In current version FakeWeaklyCanonical() always returns value.");
+                                            "In current version FakeWeaklyCanonical() always returns value.");
     const Path weakly_canonical_newpath = weakly_canonical_newpath_result.value();
     const std::string filename = weakly_canonical_newpath.Filename();
     if (filename.empty())
@@ -574,7 +576,7 @@ Result<uint64_t> StandardFilesystemFake::FakeHardLinkCount(const Path& path) noe
         return MakeUnexpected(ErrorCode::kFileOrDirectoryDoesNotExist);
     }
     SCORE_LANGUAGE_FUTURECPP_ASSERT_MESSAGE(entry.value()->IsTypeRegularFile() || entry.value()->IsTypeDirectory(),
-                       "Only regular files and directories are supported.");
+                                            "Only regular files and directories are supported.");
     if (entry.value()->IsTypeRegularFile())
     {
         return entry.value().use_count() - 1;
@@ -633,8 +635,8 @@ Result<bool> StandardFilesystemFake::FakeIsEmpty(const Path& path) const noexcep
 }
 
 score::Result<void> StandardFilesystemFake::FakeCopyFile(const Path& from,
-                                                       const Path& dest,
-                                                       const CopyOptions copy_option) const noexcept
+                                                         const Path& dest,
+                                                         const CopyOptions copy_option) const noexcept
 {
     const auto from_status = Status(from);
     if ((!from_status.has_value()) || (from_status.value().Type() != FileType::kRegular))

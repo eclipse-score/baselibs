@@ -54,9 +54,10 @@ class JsonSerialize final
 
   private:
     bool Serialize(const score::json::Any& value, const std::uint16_t tab_count);
-    template <typename T,
-              std::enable_if_t<!(std::is_same<T, score::json::List>::value || std::is_same<T, score::json::Object>::value),
-                               bool> = true>
+    template <
+        typename T,
+        std::enable_if_t<!(std::is_same<T, score::json::List>::value || std::is_same<T, score::json::Object>::value),
+                         bool> = true>
     bool SerializeIfType(const score::json::Any& json_data);
     template <typename T,
               std::enable_if_t<std::is_same<T, score::json::List>::value || std::is_same<T, score::json::Object>::value,

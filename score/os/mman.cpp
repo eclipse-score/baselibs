@@ -29,11 +29,11 @@ namespace internal
 {
 
 score::cpp::expected<void*, Error> MmanImpl::mmap(void* const addr,
-                                           const std::size_t length,
-                                           const Protection protection,
-                                           const Map flags,
-                                           const std::int32_t fd,
-                                           const std::int64_t offset) const noexcept
+                                                  const std::size_t length,
+                                                  const Protection protection,
+                                                  const Map flags,
+                                                  const std::int32_t fd,
+                                                  const std::int64_t offset) const noexcept
 {
     void* const ret{::mmap(addr, length, ProtectionToInteger(protection), MapFlagsToInteger(flags), fd, offset)};
     /* KW_SUPPRESS_START:AUTOSAR.CAST.CSTYLE:Cast is happening outside our code domain */
@@ -61,8 +61,8 @@ score::cpp::expected_blank<Error> MmanImpl::munmap(void* const addr, const std::
 }
 
 score::cpp::expected<std::int32_t, Error> MmanImpl::shm_open(const char* const pathname,
-                                                      const Fcntl::Open oflag,
-                                                      const Stat::Mode mode) const noexcept
+                                                             const Fcntl::Open oflag,
+                                                             const Stat::Mode mode) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -92,8 +92,8 @@ score::cpp::expected_blank<Error> MmanImpl::shm_unlink(const char* const pathnam
 // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__EXT_POSIX1_200112)
 score::cpp::expected<std::int32_t, Error> MmanImpl::posix_typed_mem_open(const char* name,
-                                                                  const Fcntl::Open oflag,
-                                                                  const PosixTypedMem tflag) const noexcept
+                                                                         const Fcntl::Open oflag,
+                                                                         const PosixTypedMem tflag) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -106,8 +106,9 @@ score::cpp::expected<std::int32_t, Error> MmanImpl::posix_typed_mem_open(const c
     return ret;
 }
 
-score::cpp::expected<std::int32_t, Error> MmanImpl::posix_typed_mem_get_info(const std::int32_t fd,
-                                                                      struct posix_typed_mem_info* info) const noexcept
+score::cpp::expected<std::int32_t, Error> MmanImpl::posix_typed_mem_get_info(
+    const std::int32_t fd,
+    struct posix_typed_mem_info* info) const noexcept
 {
     std::int32_t ret{::posix_typed_mem_get_info(fd, info)};
     if (ret != 0)
@@ -291,7 +292,8 @@ std::unique_ptr<score::os::Mman> score::os::Mman::Default() noexcept
 // static function shall not be reused within a namespace.
 // static function here is overloaded and used as a wrapper.
 // coverity[autosar_cpp14_a2_10_4_violation]
-score::cpp::pmr::unique_ptr<score::os::Mman> score::os::Mman::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Mman> score::os::Mman::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<internal::MmanImpl>(memory_resource);
@@ -299,16 +301,7 @@ score::cpp::pmr::unique_ptr<score::os::Mman> score::os::Mman::Default(score::cpp
 
 score::os::Mman& score::os::Mman::instance() noexcept
 {
-    // Suppress “AUTOSAR_Cpp14_A5_2_4” rule finding: “Reinterpret_cast shall not be used.”
-    // Reinterpret_cast is used here to ensure proper type handling of the underlying storage
-    // (StaticDestructionGuard<impl::MmanImpl>::GetStorage()), allowing correct object destruction. This usage is
-    // considered safe in this context, as it involves casting an object from static storage with a well-defined type
-    // relationship. Despite AUTOSAR A5-2-4 discouraging reinterpret_cast, it is necessary in this specific scenario.
-    return select_instance(
-        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
-        // coverity[autosar_cpp14_a5_2_4_violation]
-        reinterpret_cast<internal::MmanImpl&>(StaticDestructionGuard<internal::MmanImpl>::GetStorage()));
-    // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast): safe usage of reintrpret_cast
+    return select_instance(utils::StaticDestructionGuard<internal::MmanImpl>::GetStorage());
 }
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */

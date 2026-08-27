@@ -54,20 +54,25 @@ class Semaphore : public ObjectSeam<Semaphore>
     };
 
     virtual score::cpp::expected_blank<Error> sem_init(sem_t* const sem,
-                                                const std::int32_t pshared,
-                                                const std::uint32_t value) const noexcept = 0;
+                                                       const std::int32_t pshared,
+                                                       const std::uint32_t value) const noexcept = 0;
     virtual score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
-                                                  const OpenFlag oflag,
-                                                  const ModeFlag mode,
-                                                  const std::uint32_t value) const noexcept = 0;
-    virtual score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname, const OpenFlag oflag) const noexcept = 0;
+                                                         const OpenFlag oflag,
+                                                         const ModeFlag mode,
+                                                         const std::uint32_t value) const noexcept = 0;
+    virtual score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
+                                                         const OpenFlag oflag) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_wait(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_post(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_close(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_timedwait(sem_t* const sem,
-                                                     const struct timespec* const abs_time) const noexcept = 0;
-    virtual score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept = 0;
+                                                            const struct timespec* const abs_time) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_timedwait_monotonic(
+        sem_t* const sem,
+        const struct timespec* const abs_time) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem,
+                                                           std::int32_t* const sval) const noexcept = 0;
 
     virtual ~Semaphore() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

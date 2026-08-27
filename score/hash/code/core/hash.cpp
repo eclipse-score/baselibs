@@ -97,7 +97,7 @@ score::cpp::pmr::string Hash::ToString() const
     return hex_repr;
 }
 
-Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const score::cpp::string_view& hex_repr)
+Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const std::string_view& hex_repr)
 {
     const score::cpp::optional<std::uint8_t> exp_size = HashSizeInCharacters(algorithm);
 
@@ -108,7 +108,7 @@ Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const score::cpp::s
     else if (hex_repr.size() != exp_size.value())
     {
         return score::MakeUnexpected(score::hash::ErrorCode::kInvalidParameters,
-                                   "String size does not match expected size for the chosen algorithm");
+                                     "String size does not match expected size for the chosen algorithm");
     }
     else
     {
@@ -127,7 +127,7 @@ Result<Hash> Hash::FromString(const HashAlgorithm algorithm, const score::cpp::s
             if (current_digit == kInvalidCharSentinel)
             {
                 return score::MakeUnexpected(score::hash::ErrorCode::kInvalidParameters,
-                                           "String does not represent an hexadecimal number");
+                                             "String does not represent an hexadecimal number");
             }
 
             if (is_high_byte)

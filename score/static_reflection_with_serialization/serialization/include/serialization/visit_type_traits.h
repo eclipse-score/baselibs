@@ -53,12 +53,10 @@ struct has_clear<T, detail::void_t<decltype(std::declval<T>().clear())>> : std::
 template <typename T>
 struct is_resizeable
 {
-    /* KW_SUPPRESS_START: MISRA.LOGIC.NOT_BOOL: false positive */
     // It is used by is_vector_serializable to enable it or not.
     // coverity[autosar_cpp14_a0_1_1_violation : FALSE]
     static constexpr bool value = ((has_resize<T>::value || has_clear<T>::value) ||
                                    (std::is_default_constructible<T>::value && std::is_copy_assignable<T>::value));
-    /* KW_SUPPRESS_END: MISRA.LOGIC.NOT_BOOL: false positive */
 };
 
 template <typename T, typename = void, typename = void>
@@ -74,11 +72,9 @@ struct is_vector_serializable<
                    decltype(std::declval<T>().cbegin()),
                    decltype(std::declval<T>().size()),
                    decltype(std::declval<T>().push_back(std::declval<typename T::value_type>())),
-                   /* KW_SUPPRESS_START: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
                    typename std::enable_if<is_resizeable<T>::value>::type>> : std::true_type
 {
 };
-/* KW_SUPPRESS_END: AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: false positive */
 
 }  // namespace visitor
 }  // namespace common

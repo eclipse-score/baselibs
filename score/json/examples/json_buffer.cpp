@@ -12,8 +12,8 @@
  ********************************************************************************/
 #include "score/json/json_parser.h"
 
-#include "score/os/unistd.h"
 #include "score/mw/log/logging.h"
+#include "score/os/unistd.h"
 
 const char json_buffer[] = R"(
 {

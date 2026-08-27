@@ -41,7 +41,10 @@ class MockTimer : public Timer
                 (const timer_t id, const std::int32_t flags, const struct _itimer* itime, struct _itimer* oitime),
                 (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, TimerDestroy, (const timer_t id), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                TimerDestroy,
+                (const timer_t id),
+                (const, noexcept, override));
 };
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */

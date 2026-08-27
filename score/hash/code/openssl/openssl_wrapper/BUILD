@@ -46,7 +46,7 @@ cc_library(
         "openssl_lib_mock.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/hash:__subpackages__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":openssl_lib",
         "@googletest//:gtest",

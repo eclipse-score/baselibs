@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/qnx/sigevent_qnx_impl.h"
+#include "score/mw/log/logging.h"
 #include "score/os/sigevent_error.h"
 #include "score/os/sigevent_impl.h"
-#include "score/mw/log/logging.h"
 
 #include <sys/siginfo.h>
 

@@ -13,69 +13,102 @@
 name: Bazel Build (Linux)
 permissions:
   contents: read
+  actions: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
   push:
     branches:
       - main
+    tags:
+      - "v*"
   merge_group:
     types: [checks_requested]
   workflow_call:
 jobs:
   linux-build-and-test:
-    name: Build and Test ${{ matrix.bazel-config }}
+    name: Build and Test ${{ matrix.name }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         include:
-          - bazel-config: bl-x86_64-linux
-            bazel-build-target: "//score/..."
+          - name: bl-x86_64-linux
+            artifact-name: x86_64-linux
+            bazel-config: bl-x86_64-linux
+            working-directory: "."
+            bazel-build-target: "//..."
             bazel-test-target: >-
-              //score/...
+              //...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
             bazel-test-extra-flags: ""
-          - bazel-config: bl-aarch64-linux
-            bazel-build-target: "//score/..."
+          - name: bl-aarch64-linux
+            artifact-name: aarch64-linux
+            bazel-config: bl-aarch64-linux
+            working-directory: "."
+            bazel-build-target: "//..."
             bazel-test-target: >-
-              //score/...
+              //...
               -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800" # Increase test timeout due to QEMU emulation
+          - name: x86_64-linux (examples/integration)
+            artifact-name: x86_64-linux-integration
+            bazel-config: x86_64-linux
+            working-directory: "examples/integration"
+            bazel-build-target: "//..."
+            bazel-test-target: "//..."
+            bazel-test-extra-flags: ""
     steps:
+      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
+        with:
+          level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Free Disk Space (Ubuntu)
-        uses: eclipse-score/cicd-workflows/.github/actions/free_disk_space@7e109c9e97670ec621adaea1c21721c18212a96d
-      - name: Setup Bazel
-        uses: bazel-contrib/setup-bazel@0.18.0
+      - name: Setup Bazel Cache
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
-          bazelisk-cache: true
-          disk-cache: ${{ github.job }}_${{ matrix.bazel-config }}
-          repository-cache: true
-          cache-save: ${{ github.event_name == 'push' }}
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
       - name: Install QEMU
         if: matrix.bazel-config == 'bl-aarch64-linux'
         run: |
           sudo apt-get update
           sudo apt install -y qemu-user
       - name: Bazel Build
+        working-directory: ${{ matrix.working-directory }}
         run: |
           bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
       - name: Bazel Test
+        working-directory: ${{ matrix.working-directory }}
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Bazel test integration as module
-        if: matrix.bazel-config == 'bl-x86_64-linux'
-        run: |
-          # Test that baselibs works when consumed as an external module dependency
-          cd examples/integration && bazel build //... && bazel mod deps --lockfile_mode=update
-      - name: Upload test logs on failure
-        if: failure()
+      - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: bazel-testlogs-${{ matrix.bazel-config }}
-          path: bazel-testlogs/**/test.log
+          name: test-report-${{ matrix.artifact-name }}
+          path: |
+            ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
+            ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
+          retention-days: 5
+          if-no-files-found: warn
+  docs-verify:
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-docs-verify-target: "//:docs_check"
+  docs-build:
+    needs: [docs-verify, linux-build-and-test]
+    # Still build docs (with whatever test results were uploaded) even if
+    # linux-build-and-test failed; only skip if docs-verify itself failed.
+    if: always() && needs.docs-verify.result == 'success'
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    permissions:
+      contents: read
+    with:
+      bazel-target: "//:docs"
+      retention-days: 5
+      tests-report-artifact: "test-report-x86_64-linux"

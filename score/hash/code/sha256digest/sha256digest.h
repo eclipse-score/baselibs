@@ -104,7 +104,7 @@ class Sha256Digest final : public IHashCalculator
   public:
     Sha256Digest() noexcept;
 
-    ResultBlank Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
+    Result<void> Update(const score::cpp::span<const std::uint8_t> data) noexcept override;
     Hash Finalize() noexcept override;
 
   private:

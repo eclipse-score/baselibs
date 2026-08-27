@@ -21,14 +21,11 @@ cc_library(
     hdrs = ["vajson_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    target_compatible_with = select({
-        "@score_baselibs//score/json:base_library_nlohmann": ["@platforms//:incompatible"],
-        "@score_baselibs//score/json:base_library_vajson": [],
-    }),
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
-        # vajson target removed
+        "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
         "@score_baselibs//score/result",
     ],
 )

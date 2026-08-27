@@ -38,24 +38,27 @@ class Pci : public ObjectSeam<Pci>
     virtual pci_bdf_t pci_bdf(std::uint8_t bus, std::uint8_t dev, std::uint8_t func) const noexcept = 0;
     // TODO: Ticket-25608 Replace score::cpp::expected with score::Result
     virtual score::cpp::expected_blank<std::string> pci_device_cfg_rd32(pci_bdf_t bdf,
-                                                                 std::uint16_t offset,
-                                                                 std::uint32_t* val) const noexcept = 0;
-    virtual score::cpp::expected_blank<std::string> pci_device_read_vid(pci_bdf_t bdf, pci_vid_t* vid) const noexcept = 0;
-    virtual score::cpp::expected_blank<std::string> pci_device_read_did(pci_bdf_t bdf, pci_did_t* did) const noexcept = 0;
+                                                                        std::uint16_t offset,
+                                                                        std::uint32_t* val) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::string> pci_device_read_vid(pci_bdf_t bdf,
+                                                                        pci_vid_t* vid) const noexcept = 0;
+    virtual score::cpp::expected_blank<std::string> pci_device_read_did(pci_bdf_t bdf,
+                                                                        pci_did_t* did) const noexcept = 0;
     virtual score::cpp::expected_blank<std::string> pci_device_read_cmd(const pci_bdf_t bdf,
-                                                                 pci_cmd_t* const cmd) const noexcept = 0;
+                                                                        pci_cmd_t* const cmd) const noexcept = 0;
     virtual score::cpp::expected<pci_devhdl_t, std::string> pci_device_attach(
         const pci_bdf_t pdf,
         const pci_attachFlags_t flags) const noexcept = 0;
     virtual score::cpp::expected_blank<std::string> pci_device_detach(pci_devhdl_t device_handle) const noexcept = 0;
     virtual score::cpp::expected_blank<std::string> pci_device_read_ba(const pci_devhdl_t hdl,
-                                                                int_t* const nba,
-                                                                pci_ba_t* const ba,
-                                                                const pci_reqType_t reg_type) const noexcept = 0;
-    virtual score::cpp::expected<pci_bdf_t, std::string> pci_device_find(const uint_t idx,
-                                                                  const pci_vid_t vid,
-                                                                  const pci_did_t did,
-                                                                  const pci_ccode_t classcode) const noexcept = 0;
+                                                                       int_t* const nba,
+                                                                       pci_ba_t* const ba,
+                                                                       const pci_reqType_t reg_type) const noexcept = 0;
+    virtual score::cpp::expected<pci_bdf_t, std::string> pci_device_find(
+        const uint_t idx,
+        const pci_vid_t vid,
+        const pci_did_t did,
+        const pci_ccode_t classcode) const noexcept = 0;
 
     virtual ~Pci() = default;
 };

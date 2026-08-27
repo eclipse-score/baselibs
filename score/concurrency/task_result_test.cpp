@@ -51,9 +51,10 @@ TEST_F(TaskResultTest, CanWaitForVoidReturn)
 TEST_F(TaskResultTest, CanRetrieveReturnType)
 {
     // Given a task that is executed
-    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {
-        return 42;
-    });
+    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
+                                                      [](const score::cpp::stop_token&) {
+                                                          return 42;
+                                                      });
     (*(task.second))(score::cpp::stop_token{});
 
     // When waiting for its result
@@ -66,7 +67,8 @@ TEST_F(TaskResultTest, CanRetrieveReturnType)
 TEST_F(TaskResultTest, CanAbortTask)
 {
     // Given a task that is executed
-    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {});
+    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
+                                                      [](const score::cpp::stop_token&) {});
     (*(task.second))(task.second->GetStopSource().get_token());
 
     // When trying to abort the task
@@ -79,7 +81,8 @@ TEST_F(TaskResultTest, CanAbortTask)
 TEST_F(TaskResultTest, ReportsAbortedState)
 {
     // Given a task that is executed and _not_ yet aborted
-    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {});
+    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
+                                                      [](const score::cpp::stop_token&) {});
     (*(task.second))(task.second->GetStopSource().get_token());
     ASSERT_FALSE(task.first.Aborted());
 
@@ -93,9 +96,10 @@ TEST_F(TaskResultTest, ReportsAbortedState)
 TEST_F(TaskResultTest, SharedTaskResultCanBeCopied)
 {
     // Given a task that is executed
-    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {
-        return 42;
-    });
+    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
+                                                      [](const score::cpp::stop_token&) {
+                                                          return 42;
+                                                      });
     (*(task.second))(score::cpp::stop_token{});
 
     SharedTaskResult<int> shared_task = task.first.Share();
@@ -114,9 +118,10 @@ TEST_F(TaskResultTest, SharedTaskResultCanBeCopied)
 
 TEST_F(TaskResultTest, TaskResultIsInvalidAfterBeingShared)
 {
-    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), [](const score::cpp::stop_token&) {
-        return 42;
-    });
+    auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
+                                                      [](const score::cpp::stop_token&) {
+                                                          return 42;
+                                                      });
     (*(task.second))(score::cpp::stop_token{});
     auto shared_task = task.first.Share();
 
@@ -169,8 +174,8 @@ class TaskResultContinuationTest : public ::testing::Test
     {
         task_result.Then(
             safecpp::MoveOnlyScopedFunction<void(score::Result<int>&)>{scope_, [this](score::Result<int>&) noexcept {
-                                                                         this->invoked_++;
-                                                                     }});
+                                                                           this->invoked_++;
+                                                                       }});
     }
 
   protected:

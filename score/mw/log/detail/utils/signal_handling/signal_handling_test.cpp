@@ -10,6 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
 #include "score/mw/log/detail/utils/signal_handling/signal_handling.h"
 #include "score/os/errno.h"
 #include "score/os/utils/mocklib/signalmock.h"

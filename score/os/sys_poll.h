@@ -42,8 +42,8 @@ class SysPoll : public ObjectSeam<SysPoll>
     // declarations. This is a wrapper function over system API inside local namespace
     // coverity[autosar_cpp14_m7_3_1_violation]
     virtual score::cpp::expected<std::int32_t, Error> poll(struct pollfd* fds,
-                                                    const nfds_t nfds,
-                                                    const std::int32_t timeout) const noexcept = 0;
+                                                           const nfds_t nfds,
+                                                           const std::int32_t timeout) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~SysPoll() = default;

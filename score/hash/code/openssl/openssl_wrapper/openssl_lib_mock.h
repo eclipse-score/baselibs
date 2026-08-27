@@ -29,7 +29,6 @@ namespace openssl
 class OpensslLibMock : public IOpensslLib
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.MEMB.NOT_PRIVATE: caused by MOCK_METHOD macros */
     MOCK_METHOD((const StructDigest*), DigestAlgoSha1, (), (const, noexcept, override));
     MOCK_METHOD((const StructDigest*), DigestAlgoSha256, (), (const, noexcept, override));
     MOCK_METHOD((const StructDigest*), DigestAlgoSha384, (), (const, noexcept, override));
@@ -48,7 +47,6 @@ class OpensslLibMock : public IOpensslLib
                 (StructDigestCtx * ctx, unsigned char* digest_value, unsigned int* digest_size),
                 (const, noexcept, override));
     MOCK_METHOD(void, ResetDigestCtx, (StructDigestCtx * ctx), (const, noexcept, override));
-    /* KW_SUPPRESS_END:MISRA.MEMB.NOT_PRIVATE: caused by MOCK_METHOD macros */
 };
 
 }  // namespace openssl

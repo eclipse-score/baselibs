@@ -35,7 +35,7 @@ cc_library(
     visibility = ["@score_baselibs//score/hash:__subpackages__"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/mw/log:log_stream",
+        "@score_baselibs//score/mw/log",
         "@score_baselibs//score/result",
     ],
 )
@@ -78,5 +78,5 @@ cc_test(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [":unit_test"],
-    visibility = ["//visibility:public"],  # platform_only
+    visibility = ["//visibility:public"],
 )

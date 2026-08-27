@@ -74,20 +74,21 @@ class Fcntl : public ObjectSeam<Fcntl>
     };
 
     virtual score::cpp::expected_blank<Error> fcntl(const std::int32_t fd,
-                                             const Fcntl::Command command,
-                                             const Fcntl::Open flags) const noexcept = 0;
+                                                    const Fcntl::Command command,
+                                                    const Fcntl::Open flags) const noexcept = 0;
 
     virtual score::cpp::expected<Fcntl::Open, Error> fcntl(const std::int32_t fd,
-                                                    const Fcntl::Command command) const noexcept = 0;
+                                                           const Fcntl::Command command) const noexcept = 0;
 
-    virtual score::cpp::expected<std::int32_t, Error> open(const char* const pathname, const Open flags) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, Error> open(const char* const pathname,
-                                                    const Open flags,
-                                                    const Stat::Mode mode) const noexcept = 0;
+                                                           const Open flags) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, Error> open(const char* const pathname,
+                                                           const Open flags,
+                                                           const Stat::Mode mode) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> posix_fallocate(const std::int32_t fd,
-                                                       const off_t offset,
-                                                       const off_t len) const noexcept = 0;
+                                                              const off_t offset,
+                                                              const off_t len) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> flock(const std::int32_t filedes, const Operation op) const noexcept = 0;
 

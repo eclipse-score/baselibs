@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <gtest/gtest.h>
 #include <limits.h>
+#include <time.h>
 
 namespace score
 {
@@ -46,7 +47,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpen)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto ret_open_create = unit_.sem_open(m_name_.c_str(),
                                                 Semaphore::OpenFlag::kCreate,
@@ -69,7 +70,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpen)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const char* invalid_path = "/invalid_path";
     const auto ret =
@@ -83,7 +84,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpenWithoutCreateFlag)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open Without Create Flag");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const char* invalid_path = "/invalid_path";
     const auto ret = unit_.sem_open(invalid_path, Semaphore::OpenFlag::kExclusive);
@@ -97,7 +98,7 @@ TEST_F(SemaphoreTestFixture, SuccessGetValue)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Get Value");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::int32_t sval;
     const std::int32_t pshared{0};
@@ -118,7 +119,7 @@ TEST_F(SemaphoreTestFixture, FailureSemPost)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Post");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto valid_sem =
         unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
@@ -139,7 +140,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWait)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timespec abs_time{};
     abs_time.tv_sec = 5;
@@ -158,17 +159,17 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpenAllModes)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open All Modes");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     std::vector<score::os::Semaphore::ModeFlag> mode_vector = {Semaphore::ModeFlag::kReadUser,
-                                                             Semaphore::ModeFlag::kWriteUser,
-                                                             Semaphore::ModeFlag::kExecUser,
-                                                             Semaphore::ModeFlag::kReadGroup,
-                                                             Semaphore::ModeFlag::kWriteGroup,
-                                                             Semaphore::ModeFlag::kExecGroup,
-                                                             Semaphore::ModeFlag::kReadOthers,
-                                                             Semaphore::ModeFlag::kWriteOthers,
-                                                             Semaphore::ModeFlag::kExecOthers};
+                                                               Semaphore::ModeFlag::kWriteUser,
+                                                               Semaphore::ModeFlag::kExecUser,
+                                                               Semaphore::ModeFlag::kReadGroup,
+                                                               Semaphore::ModeFlag::kWriteGroup,
+                                                               Semaphore::ModeFlag::kExecGroup,
+                                                               Semaphore::ModeFlag::kReadOthers,
+                                                               Semaphore::ModeFlag::kWriteOthers,
+                                                               Semaphore::ModeFlag::kExecOthers};
 
     for (const auto& mode : mode_vector)
     {
@@ -187,7 +188,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemWait)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Wait");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
@@ -212,7 +213,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemPost)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Post");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
@@ -237,7 +238,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timespec abs_time{0, -1};
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
@@ -247,13 +248,79 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
     unit_.sem_close(sem);
 }
 
+// Positive test for sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonic)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // The timeout is expressed against CLOCK_MONOTONIC. Since the semaphore is created with value 1 it can be
+    // decremented immediately, so the call returns success without ever blocking until the (future) deadline.
+    timespec abs_time{};
+    ASSERT_EQ(::clock_gettime(CLOCK_MONOTONIC, &abs_time), 0);
+    abs_time.tv_sec += 5;
+    const auto ret =
+        unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_TRUE(unit_.sem_timedwait_monotonic(ret.value(), &abs_time).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Negative test for sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonic)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // An invalid nanoseconds field is rejected with EINVAL before the semaphore can be decremented.
+    timespec abs_time{0, -1};
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+    ASSERT_TRUE(sem != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, &abs_time).has_value());
+    unit_.sem_close(sem);
+}
+
+// Timeout test for sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    timespec abs_time{};
+    ASSERT_EQ(::clock_gettime(CLOCK_MONOTONIC, &abs_time), 0);
+    abs_time.tv_nsec += 10'000'000L;  // +10 ms
+    if (abs_time.tv_nsec >= 1'000'000'000L)
+    {
+        abs_time.tv_nsec -= 1'000'000'000L;
+        abs_time.tv_sec += 1;
+    }
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), &abs_time).has_value());
+    unit_.sem_close(ret.value());
+}
+
 TEST(Semaphore, get_instance)
 {
     RecordProperty("Verifies", "SCR-46010294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Semaphore get_instance");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_NO_FATAL_FAILURE(Semaphore::instance());
 }

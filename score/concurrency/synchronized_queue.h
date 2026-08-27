@@ -32,8 +32,9 @@ template <typename T, typename Notification>
 class SharedState
 {
   public:
-    explicit SharedState(std::size_t max_length,
-                         score::cpp::pmr::memory_resource* const memory_resource = score::cpp::pmr::new_delete_resource()) noexcept
+    explicit SharedState(
+        std::size_t max_length,
+        score::cpp::pmr::memory_resource* const memory_resource = score::cpp::pmr::new_delete_resource()) noexcept
         : max_queue_length_{max_length}, mutex_{}, queue_{memory_resource}, notification_{}
     {
     }
@@ -111,7 +112,8 @@ class SynchronizedQueue final
         }
         queue_shared_state_->notification_.reset();
 
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(!queue_shared_state_->queue_.empty(), "Signal received with empty queue");
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(!queue_shared_state_->queue_.empty(),
+                                                    "Signal received with empty queue");
 
         result = std::move(queue_shared_state_->queue_.front());
         queue_shared_state_->queue_.pop_front();

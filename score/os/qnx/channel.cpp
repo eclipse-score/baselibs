@@ -24,7 +24,8 @@ score::os::Channel& score::os::Channel::instance() noexcept
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 // coverity[autosar_cpp14_m7_3_1_violation] false-positive: class member function (Ticket-234468)
-score::cpp::pmr::unique_ptr<score::os::Channel> score::os::Channel::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::Channel> score::os::Channel::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::ChannelImpl>(memory_resource);

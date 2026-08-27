@@ -26,7 +26,7 @@ namespace mw
 namespace log
 {
 
-using SlotIndex = std::uint8_t;
+using SlotIndex = std::uint16_t;
 
 /// \brief Represents an identifier that is owned by a `LogStream` to identify the correct memory slot where the
 /// streamed message shall be written.

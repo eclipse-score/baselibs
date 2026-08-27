@@ -25,6 +25,4 @@
 #include <score/private/memory/make_shared.hpp>              // IWYU pragma: export
 #include <score/private/memory/unique_ptr.hpp>               // IWYU pragma: export
 
-#include <score/utility.hpp> // to be removed but removing them may break downstream
-
 #endif // SCORE_LANGUAGE_FUTURECPP_MEMORY_HPP

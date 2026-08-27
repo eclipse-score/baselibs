@@ -12,10 +12,10 @@
  ********************************************************************************/
 #include "score/os/utils/mqueue.h"
 
-#include "score/utility.hpp"
 #include "score/datetime_converter/time_conversion.h"
 #include "score/os/mqueue.h"
 #include "score/os/stat.h"
+#include "score/utility.hpp"
 #include <cassert>
 #include <chrono>
 #include <cstring>
@@ -46,8 +46,8 @@ class MQueue::MQueuePrivate
     /* KW_SUPPRESS_END:AUTOSAR.CTOR.NSDMI_INIT_LIST:False positive - all values are set in constructor */
 
     score::cpp::expected_blank<score::os::Error> open_create(const size_t max_msg_size,
-                                                    const size_t max_msgs,
-                                                    const AccessMode mode) noexcept;
+                                                             const size_t max_msgs,
+                                                             const AccessMode mode) noexcept;
     score::cpp::expected_blank<score::os::Error>
     open() noexcept; /* KW_SUPPRESS:MISRA.VAR.HIDDEN:Class method doesn't hide a same-name function in fcntl.h */
     static std::string create_name(const std::string name);
@@ -322,8 +322,8 @@ MQueue::MQueuePrivate::open_create(/* KW_SUPPRESS:MISRA.LINKAGE.EXTERN:PIMPL mod
     }
 
     const score::os::Stat::Mode statPerm{score::os::Stat::Mode::kReadUser | score::os::Stat::Mode::kWriteUser |
-                                       score::os::Stat::Mode::kReadGroup | score::os::Stat::Mode::kWriteGroup |
-                                       score::os::Stat::Mode::kReadOthers};
+                                         score::os::Stat::Mode::kReadGroup | score::os::Stat::Mode::kWriteGroup |
+                                         score::os::Stat::Mode::kReadOthers};
     // Set permissions explicitly in case mq_open does not set +w for the group
     const auto fchmodRet = score::os::Stat::instance().fchmod(m_fd, statPerm);
     if (!fchmodRet.has_value())
@@ -392,7 +392,8 @@ MQueue::MQueuePrivate::receive(/* KW_SUPPRESS:MISRA.LINKAGE.EXTERN:PIMPL model o
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: */
     /* Methods MQueue::MQueuePrivate::receive and MQueue::receive belong to different classes and can easily be
      * differentiated */
-    const auto ret = score::os::Mqueue::instance().mq_receive(m_fd, msg, static_cast<size_t>(m_attr.mq_msgsize), nullptr);
+    const auto ret =
+        score::os::Mqueue::instance().mq_receive(m_fd, msg, static_cast<size_t>(m_attr.mq_msgsize), nullptr);
 
     if (!ret.has_value())
     {

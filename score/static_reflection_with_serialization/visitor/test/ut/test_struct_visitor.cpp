@@ -123,26 +123,26 @@ struct S20
     int f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20;
 };
 
-STRUCT_VISITABLE(S1, f1)
-STRUCT_VISITABLE(S2, f1, f2)
-STRUCT_VISITABLE(S3, f1, f2, f3)
-STRUCT_VISITABLE(S4, f1, f2, f3, f4)
-STRUCT_VISITABLE(S5, f1, f2, f3, f4, f5)
-STRUCT_VISITABLE(S6, f1, f2, f3, f4, f5, f6)
-STRUCT_VISITABLE(S7, f1, f2, f3, f4, f5, f6, f7)
-STRUCT_VISITABLE(S8, f1, f2, f3, f4, f5, f6, f7, f8)
-STRUCT_VISITABLE(S9, f1, f2, f3, f4, f5, f6, f7, f8, f9)
-STRUCT_VISITABLE(S10, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10)
-STRUCT_VISITABLE(S11, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11)
-STRUCT_VISITABLE(S12, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12)
-STRUCT_VISITABLE(S13, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13)
-STRUCT_VISITABLE(S14, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14)
-STRUCT_VISITABLE(S15, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15)
-STRUCT_VISITABLE(S16, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16)
-STRUCT_VISITABLE(S17, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17)
-STRUCT_VISITABLE(S18, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18)
-STRUCT_VISITABLE(S19, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19)
-STRUCT_VISITABLE(S20, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20)
+SCORE_STRUCT_VISITABLE(S1, f1)
+SCORE_STRUCT_VISITABLE(S2, f1, f2)
+SCORE_STRUCT_VISITABLE(S3, f1, f2, f3)
+SCORE_STRUCT_VISITABLE(S4, f1, f2, f3, f4)
+SCORE_STRUCT_VISITABLE(S5, f1, f2, f3, f4, f5)
+SCORE_STRUCT_VISITABLE(S6, f1, f2, f3, f4, f5, f6)
+SCORE_STRUCT_VISITABLE(S7, f1, f2, f3, f4, f5, f6, f7)
+SCORE_STRUCT_VISITABLE(S8, f1, f2, f3, f4, f5, f6, f7, f8)
+SCORE_STRUCT_VISITABLE(S9, f1, f2, f3, f4, f5, f6, f7, f8, f9)
+SCORE_STRUCT_VISITABLE(S10, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10)
+SCORE_STRUCT_VISITABLE(S11, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11)
+SCORE_STRUCT_VISITABLE(S12, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12)
+SCORE_STRUCT_VISITABLE(S13, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13)
+SCORE_STRUCT_VISITABLE(S14, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14)
+SCORE_STRUCT_VISITABLE(S15, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15)
+SCORE_STRUCT_VISITABLE(S16, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16)
+SCORE_STRUCT_VISITABLE(S17, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17)
+SCORE_STRUCT_VISITABLE(S18, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18)
+SCORE_STRUCT_VISITABLE(S19, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19)
+SCORE_STRUCT_VISITABLE(S20, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15, f16, f17, f18, f19, f20)
 
 }  // namespace test
 
@@ -180,7 +180,7 @@ TEST(struct_visitor, struct_visitable)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     EXPECT_TRUE(check_visitable<test::S1>("test::S1", 1));
     EXPECT_TRUE(check_visitable<test::S2>("test::S2", 2));
@@ -210,7 +210,7 @@ TEST(struct_visitor, visit_as)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability of different structures fields.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S1{}), 1);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S2{}), 2);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S3{}), 3);
@@ -260,7 +260,7 @@ struct S1
     int x1;
 };
 
-STRUCT_VISITABLE(S1, x1)
+SCORE_STRUCT_VISITABLE(S1, x1)
 
 struct test_visitor2_t
 {
@@ -279,7 +279,7 @@ TEST(struct_visitor, namespaces)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check visitability fields.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     using namespace ::score::common::visitor;
     EXPECT_EQ(struct_visitable<S1>::field_name(0), "x1");
     EXPECT_EQ(struct_visitable<test::S1>::field_name(0), "f1");
@@ -296,7 +296,7 @@ struct TemplatedStruct
 
 using TemplateStructDefaultSize = TemplatedStruct<297>;
 
-STRUCT_VISITABLE(TemplateStructDefaultSize, arr)
+SCORE_STRUCT_VISITABLE(TemplateStructDefaultSize, arr)
 
 TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
 {
@@ -306,7 +306,7 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
                    "Verifies that the templated structs shall not contain trailing whaitspace."
                    "serialization/deserialization.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     using namespace ::score::common::visitor;
 
     // GCC inserts a trailing whitespace for templated structs in __PRETTY__FUNCTION__.
@@ -317,8 +317,8 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
 TEST(struct_visitor_utils, TupleToArrayTest)
 {
     const std::array<std::string, 4> reference = {"1", "2", "3", "4"};
-    const auto result =
-        ::score::common::visitor::detail::tuple_to_array(::score::common::visitor::detail::pack_values("1", "2", "3", "4"));
+    const auto result = ::score::common::visitor::detail::tuple_to_array(
+        ::score::common::visitor::detail::pack_values("1", "2", "3", "4"));
     EXPECT_EQ(result.size(), reference.size());
     EXPECT_TRUE(std::equal(result.begin(), result.end(), reference.begin(), [](const char* s1, const std::string s2) {
         return std::strcmp(s1, s2.c_str()) == 0;

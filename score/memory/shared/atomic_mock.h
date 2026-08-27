@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 Contributors to the Eclipse Foundation
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -13,28 +13,15 @@
 #ifndef SCORE_LIB_MEMORY_SHARED_MOCK_ATOMICMOCK_H
 #define SCORE_LIB_MEMORY_SHARED_MOCK_ATOMICMOCK_H
 
-#include "score/memory/shared/i_atomic.h"
-
-#include "gmock/gmock.h"
-
-#include <atomic>
+// MIGRATION SHIM: AtomicMock moved to score/concurrency/atomic_mock.h. This header is kept so that existing bazel
+// targets, include paths ("score/memory/shared/atomic_mock.h") and the score::memory::shared namespace keep working
+// unchanged. New code should include "score/concurrency/atomic_mock.h" directly.
+#include "score/concurrency/atomic_mock.h"
 
 namespace score::memory::shared
 {
 
-template <typename T>
-class AtomicMock final : public IAtomic<T>
-{
-  public:
-    MOCK_METHOD(T, fetch_add, (T, std::memory_order), (noexcept, override));
-    MOCK_METHOD(T, fetch_sub, (T, std::memory_order), (noexcept, override));
-    MOCK_METHOD(bool, compare_exchange_strong, (T&, T, std::memory_order, std::memory_order), (noexcept, override));
-    MOCK_METHOD(bool, compare_exchange_strong, (T&, T, std::memory_order), (noexcept, override));
-    MOCK_METHOD(bool, compare_exchange_weak, (T&, T, std::memory_order, std::memory_order), (noexcept, override));
-    MOCK_METHOD(bool, compare_exchange_weak, (T&, T, std::memory_order), (noexcept, override));
-    MOCK_METHOD(void, store, (T, std::memory_order), (noexcept, override));
-    MOCK_METHOD(T, load, (std::memory_order), (noexcept, override));
-};
+using score::concurrency::AtomicMock;
 
 }  // namespace score::memory::shared
 

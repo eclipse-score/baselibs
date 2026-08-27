@@ -44,9 +44,15 @@ class MockDispatch : public Dispatch
                 (const char* name, std::int32_t flags),
                 (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>), name_close, (std::int32_t fd), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
+                name_close,
+                (std::int32_t fd),
+                (const, noexcept, override));
 
-    MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>), dispatch_create, (), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>),
+                dispatch_create,
+                (),
+                (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<dispatch_t*, score::os::Error>),
                 dispatch_create_channel,
@@ -154,6 +160,11 @@ class MockDispatch : public Dispatch
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 pulse_detach,
                 (dispatch_t * dpp, std::int32_t code, std::int32_t flags),
+                (const, noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
+                msg_deliver_event,
+                (rcvid_t rcvid, const sigevent* event),
                 (const, noexcept, override));
 };
 

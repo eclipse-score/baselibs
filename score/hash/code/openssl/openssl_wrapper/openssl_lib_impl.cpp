@@ -22,7 +22,6 @@ namespace hash
 namespace openssl
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
 const StructDigest* OpensslLibImpl::DigestAlgoSha1() const noexcept
 {
     return ::EVP_sha1();
@@ -48,7 +47,6 @@ StructDigestCtx* OpensslLibImpl::CreateDigestCtx() const noexcept
     return ::EVP_MD_CTX_new();
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.NEEDS.CONST: False positive */
 std::int32_t OpensslLibImpl::InitDigestCtx(StructDigestCtx* ctx, const StructDigest* type, Engine* impl) const noexcept
 {
     return ::EVP_DigestInit_ex(ctx, type, impl);
@@ -59,20 +57,17 @@ std::int32_t OpensslLibImpl::UpdateDigestCtx(StructDigestCtx* ctx, const void* d
     return ::EVP_DigestUpdate(ctx, data, count);
 }
 
-/* KW_SUPPRESS_START:UNUSED.BUILTIN_NUMERIC: The function requires the input param to be basic numeric type*/
 std::int32_t OpensslLibImpl::FinalizeDigestValue(StructDigestCtx* ctx,
                                                  unsigned char* digest_value,
                                                  unsigned int* digest_size) const noexcept
 {
     return ::EVP_DigestFinal_ex(ctx, digest_value, digest_size);
 }
-/* KW_SUPPRESS_END:UNUSED.BUILTIN_NUMERIC */
+
 void OpensslLibImpl::ResetDigestCtx(StructDigestCtx* ctx) const noexcept
 {
     ::EVP_MD_CTX_free(ctx);
 }
-/* KW_SUPPRESS_END:MISRA.VAR.NEEDS.CONST */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: */
 }  // namespace openssl
 }  // namespace hash
 }  // namespace score

@@ -35,6 +35,4 @@
 #include <score/private/stop_token/stop_source.hpp>   // IWYU pragma: export
 #include <score/private/stop_token/stop_token.hpp>    // IWYU pragma: export
 
-#include <functional> // to be removed but removing them may break downstream
-
 #endif // SCORE_LANGUAGE_FUTURECPP_STOP_TOKEN_HPP

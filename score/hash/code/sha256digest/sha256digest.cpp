@@ -110,7 +110,7 @@ constexpr std::uint32_t Ssig1(const std::uint32_t x)
 
 Sha256Digest::Sha256Digest() noexcept : IHashCalculator(), buffer_{}, hash_(kSha256StartingValues), message_len_{0U} {}
 
-ResultBlank Sha256Digest::Update(const score::cpp::span<const std::uint8_t> data) noexcept
+Result<void> Sha256Digest::Update(const score::cpp::span<const std::uint8_t> data) noexcept
 {
     if (data.empty() || (data.data() == nullptr))
     {

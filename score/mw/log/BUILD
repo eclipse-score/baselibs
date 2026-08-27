@@ -14,6 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
@@ -63,13 +64,13 @@ cc_library(
         "@score_baselibs//score/mw/log/detail:recorder_interface",
         "@score_baselibs//score/mw/log/detail:thread_local_guard",
         "@score_baselibs//score/result",
-        "@score_baselibs//score/utils/meyer_singleton",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
         ":log_stream",
         "@score_baselibs//score/mw/log/detail/wait_free_stack",  #Ticket-222244
+        "@score_baselibs//score/utils/meyer_singleton",
     ],
 )
 
@@ -97,6 +98,14 @@ cc_library(
         ":frontend",
         "@score_baselibs//score/mw/log/detail:backend_console",
     ],
+)
+
+cc_library(
+    name = "plugin_api",
+    hdrs = ["plugin_api.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],  # platform_only  # Allows visibility to plugin registrants in other repositories
 )
 
 # backend registration API for backend registrants
@@ -442,6 +451,19 @@ cc_test(
     ],
 )
 
+cc_test(
+    name = "plugin_api_test",
+    srcs = ["plugin_api_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":plugin_api",
+        "@googletest//:gtest_main",
+    ],
+)
+
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_tests",
     cc_unit_tests = [
@@ -454,6 +476,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":logger_container_test",
         ":logger_test",
         ":logging_test",
+        ":plugin_api_test",
         ":runtime_test",
         ":runtime_test_instance_fallback",
         ":runtime_test_without_pointer_initialization",
@@ -469,4 +492,10 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//platform/aas/mw:__pkg__",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

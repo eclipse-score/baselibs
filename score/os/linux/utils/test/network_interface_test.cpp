@@ -57,7 +57,8 @@ TEST_F(LinuxNetworkInterfaceTest, IsInterfaceBridge_InexistentIface_ShouldFail)
 {
     static const char* br_name = "madison";
 
-    EXPECT_CALL(statmock, stat(_, _, _)).WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EBADF))));
+    EXPECT_CALL(statmock, stat(_, _, _))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EBADF))));
     ASSERT_FALSE(score::os::bIsInterfaceBridge(br_name));
 }
 

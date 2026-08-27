@@ -108,10 +108,10 @@ class ProcessCapabilities : public ObjectSeam<ProcessCapabilities>
                                  const ProcessCapabilitySets& capability_set_b) noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, Error> prctl(const std::int32_t option,
-                                                     const std::uint64_t arg2,
-                                                     const std::uint64_t arg3,
-                                                     const std::uint64_t arg4,
-                                                     const std::uint64_t arg5) noexcept = 0;
+                                                            const std::uint64_t arg2,
+                                                            const std::uint64_t arg3,
+                                                            const std::uint64_t arg4,
+                                                            const std::uint64_t arg5) noexcept = 0;
 
     score::cpp::expected_blank<Error> ReduceProcessCapabilitiesTo(const std::vector<Capability>& capabilities) noexcept;
 
@@ -127,7 +127,8 @@ class ProcessCapabilities : public ObjectSeam<ProcessCapabilities>
   private:
     std::vector<Capability> DetermineCapabilitiesToDrop(const std::vector<Capability>& capabilities_to_keep);
     score::cpp::expected_blank<Error> DropUnwantedCapabilities(const std::vector<Capability>& capabilities_to_drop);
-    score::cpp::expected_blank<Error> ActivateRequiredCapabilities(const std::vector<Capability>& required_capabilities);
+    score::cpp::expected_blank<Error> ActivateRequiredCapabilities(
+        const std::vector<Capability>& required_capabilities);
 };
 
 }  // namespace os

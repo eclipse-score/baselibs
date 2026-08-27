@@ -42,8 +42,8 @@ class FsCrypto
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_remove(const char* path,
-                                                               int domain,
-                                                               int* preply) const noexcept = 0;
+                                                                      int domain,
+                                                                      int* preply) const noexcept = 0;
 
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -63,8 +63,8 @@ class FsCrypto
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_query(const char* path,
-                                                              int domain,
-                                                              int* preply) const noexcept = 0;
+                                                                     int domain,
+                                                                     int* preply) const noexcept = 0;
 
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
@@ -82,8 +82,8 @@ class FsCrypto
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_file_set_domain(const char* path,
-                                                                 int domain,
-                                                                 int* preply) const noexcept = 0;
+                                                                        int domain,
+                                                                        int* preply) const noexcept = 0;
 
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 

@@ -12,8 +12,35 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+
+cc_library(
+    name = "static_destruction_guard",
+    hdrs = ["static_destruction_guard.h"],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
+        "additional_warnings",
+    ],
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+)
+
+cc_gtest_unit_test(
+    name = "static_destruction_guard_test",
+    srcs = ["static_destruction_guard_test.cpp"],
+    features = [
+        "treat_warnings_as_errors",
+        "strict_warnings",
+        "additional_warnings",
+    ],
+    visibility = ["@score_baselibs//score/utils:__pkg__"],
+    deps = [
+        ":static_destruction_guard",
+    ],
+)
 
 cc_library(
     name = "base64",
@@ -51,6 +78,7 @@ cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
         ":base64_unit_test",
+        ":static_destruction_guard_test",
     ],
     test_suites_from_sub_packages = [
         "@score_baselibs//score/utils/meyer_singleton:unit_test_suite",
@@ -66,4 +94,10 @@ clang_tidy_extra_checks(
         "spp_code_style_check_header_guards",
     ],
     tidy_config_file = ".clang-tidy-extra",
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

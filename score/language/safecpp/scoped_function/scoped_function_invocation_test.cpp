@@ -154,35 +154,37 @@ TYPED_TEST(ScopedFunctionInvocationTest, CallOperatorIsNotConstIfTemplateNotCons
 {
     using ScopedFunction = typename TypeParam::template Type<void()>;
     static_assert(std::is_same_v<decltype(&ScopedFunction::operator()),
-                                 score::cpp::optional<score::cpp::blank> (details::Invoker<details::ScopedFunctionInvoker,
-                                                                             details::CallOperatorInterface,
-                                                                             ScopedFunction,
-                                                                             score::cpp::optional<score::cpp::blank>()>::*)()>,
+                                 score::cpp::optional<score::cpp::blank> (
+                                     details::Invoker<details::ScopedFunctionInvoker,
+                                                      details::CallOperatorInterface,
+                                                      ScopedFunction,
+                                                      score::cpp::optional<score::cpp::blank>()>::*)()>,
                   "Function must not be marked const");
 }
 
 TYPED_TEST(ScopedFunctionInvocationTest, CallOperatorIsConstIfFunctionIsConst)
 {
     using ScopedFunction = typename TypeParam::template Type<void() const>;
-    static_assert(
-        std::is_same_v<decltype(&ScopedFunction::operator()),
-                       score::cpp::optional<score::cpp::blank> (details::Invoker<details::ScopedFunctionInvoker,
-                                                                   details::CallOperatorInterface,
-                                                                   ScopedFunction,
-                                                                   score::cpp::optional<score::cpp::blank>() const>::*)() const>,
-        "Function must be marked const");
-}
-
-TYPED_TEST(ScopedFunctionInvocationTest, CallOperatorIsNoExceptIfFunctionIsNoExcept)
-{
-    using ScopedFunction = typename TypeParam::template Type<void() noexcept>;
     static_assert(std::is_same_v<decltype(&ScopedFunction::operator()),
                                  score::cpp::optional<score::cpp::blank> (
                                      details::Invoker<details::ScopedFunctionInvoker,
                                                       details::CallOperatorInterface,
                                                       ScopedFunction,
-                                                      score::cpp::optional<score::cpp::blank>() noexcept>::*)() noexcept>,
+                                                      score::cpp::optional<score::cpp::blank>() const>::*)() const>,
                   "Function must be marked const");
+}
+
+TYPED_TEST(ScopedFunctionInvocationTest, CallOperatorIsNoExceptIfFunctionIsNoExcept)
+{
+    using ScopedFunction = typename TypeParam::template Type<void() noexcept>;
+    static_assert(
+        std::is_same_v<decltype(&ScopedFunction::operator()),
+                       score::cpp::optional<score::cpp::blank> (
+                           details::Invoker<details::ScopedFunctionInvoker,
+                                            details::CallOperatorInterface,
+                                            ScopedFunction,
+                                            score::cpp::optional<score::cpp::blank>() noexcept>::*)() noexcept>,
+        "Function must be marked const");
 }
 
 }  // namespace

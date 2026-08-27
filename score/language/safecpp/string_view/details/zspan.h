@@ -233,9 +233,11 @@ class zspan
                   bool> = true>
     // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init) false positive, this constructor delegates to another one
     constexpr explicit zspan(RangeType&& range, ViolationPolicy violation_policy = {}) noexcept(
-        // NOLINTNEXTLINE(score-banned-function) using `std::data()` is valid here since used in conj. with `std::size()`
+        // NOLINTNEXTLINE(score-banned-function) using `std::data()` is valid here since used in conj. with
+        // `std::size()`
         noexcept(std::data(range)) && noexcept(std::size(range)) && noexcept(std::invoke(violation_policy, "reason")))
-        // NOLINTNEXTLINE(score-banned-function) using `std::data()` is valid here since used in conj. with `std::size()`
+        // NOLINTNEXTLINE(score-banned-function) using `std::data()` is valid here since used in conj. with
+        // `std::size()`
         : zspan(std::data(range), std::size(range), std::move(violation_policy))
     // NOLINTEND(cppcoreguidelines-pro-type-member-init)
     {

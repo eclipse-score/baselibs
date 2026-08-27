@@ -29,6 +29,10 @@ namespace score
 namespace os
 {
 
+#ifndef __RCVID_T_SIZE
+using rcvid_t = int;
+#endif
+
 class Dispatch : public ObjectSeam<Dispatch>
 {
   public:
@@ -39,19 +43,18 @@ class Dispatch : public ObjectSeam<Dispatch>
     static score::cpp::pmr::unique_ptr<Dispatch> Default(score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<name_attach_t*, score::os::Error> name_attach(dispatch_t* const dpp,
-                                                                      const char* const path,
-                                                                      const std::uint32_t flags) const noexcept = 0;
+    virtual score::cpp::expected<name_attach_t*, score::os::Error>
+    name_attach(dispatch_t* const dpp, const char* const path, const std::uint32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> name_detach(name_attach_t* const attach,
-                                                            const std::uint32_t flags) const noexcept = 0;
+                                                                     const std::uint32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> name_open(const char* const name,
-                                                                  const std::int32_t flags) const noexcept = 0;
+                                                                           const std::int32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -84,7 +87,8 @@ class Dispatch : public ObjectSeam<Dispatch>
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // the native interface returns the original ctp value in the happy flow scenario, but could return nullptr
     // in benign situations (EINTR in particular). To avoid confusion and mistakes, we won't return ctp.
-    virtual score::cpp::expected_blank<score::os::Error> dispatch_block(dispatch_context_t* const ctp) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> dispatch_block(
+        dispatch_context_t* const ctp) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -98,51 +102,56 @@ class Dispatch : public ObjectSeam<Dispatch>
     /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     /* KW_SUPPRESS_START:AUTOSAR.ENUM.EXPLICIT_BASE_TYPE: Enum _file_type is defined outside our code domain. */
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> resmgr_attach(dispatch_t* const dpp,
-                                                                      resmgr_attr_t* const attr,
-                                                                      const char* const path,
-                                                                      const enum _file_type file_type,
-                                                                      const std::uint32_t flags,
-                                                                      const resmgr_connect_funcs_t* const connect_funcs,
-                                                                      const resmgr_io_funcs_t* const io_funcs,
-                                                                      RESMGR_HANDLE_T* const handle) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> resmgr_attach(
+        dispatch_t* const dpp,
+        resmgr_attr_t* const attr,
+        const char* const path,
+        const enum _file_type file_type,
+        const std::uint32_t flags,
+        const resmgr_connect_funcs_t* const connect_funcs,
+        const resmgr_io_funcs_t* const io_funcs,
+        RESMGR_HANDLE_T* const handle) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /* KW_SUPPRESS_END:AUTOSAR.ENUM.EXPLICIT_BASE_TYPE: Enum _file_type is defined outside our code domain. */
     /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> resmgr_detach(dispatch_t* const dpp,
-                                                              const std::int32_t id,
-                                                              const std::uint32_t flags) const noexcept = 0;
+                                                                       const std::int32_t id,
+                                                                       const std::uint32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::size_t, score::os::Error> resmgr_msgget(resmgr_context_t* const ctp,
-                                                                     void* const msg,
-                                                                     const std::size_t size,
-                                                                     const std::size_t offset) const noexcept = 0;
+    virtual score::cpp::expected<std::size_t, score::os::Error> resmgr_msgget(
+        resmgr_context_t* const ctp,
+        void* const msg,
+        const std::size_t size,
+        const std::size_t offset) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<std::int32_t, score::os::Error> message_connect(dispatch_t* const dpp,
-                                                                        const std::int32_t flags) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> message_connect(
+        dispatch_t* const dpp,
+        const std::int32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected_blank<score::os::Error> message_attach(dispatch_t* const dpp,
-                                                               message_attr_t* const attr,
-                                                               const std::int32_t low,
-                                                               const std::int32_t high,
-                                                               std::int32_t (*const func)(message_context_t* ctp,
-                                                                                          std::int32_t code,
-                                                                                          std::uint32_t flags,
-                                                                                          void* handle) noexcept,
-                                                               void* const handle) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> message_attach(
+        dispatch_t* const dpp,
+        message_attr_t* const attr,
+        const std::int32_t low,
+        const std::int32_t high,
+        std::int32_t (*const func)(message_context_t* ctp,
+                                   std::int32_t code,
+                                   std::uint32_t flags,
+                                   void* handle) noexcept,
+        void* const handle) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    virtual score::cpp::expected<thread_pool_t*, score::os::Error> thread_pool_create(thread_pool_attr_t* pool_attr,
-                                                                             std::uint32_t flags) const noexcept = 0;
+    virtual score::cpp::expected<thread_pool_t*, score::os::Error> thread_pool_create(
+        thread_pool_attr_t* pool_attr,
+        std::uint32_t flags) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
@@ -158,20 +167,25 @@ class Dispatch : public ObjectSeam<Dispatch>
         void* const handle) const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> select_detach(dispatch_t* const dpp,
-                                                              const std::int32_t fd) const noexcept = 0;
+                                                                       const std::int32_t fd) const noexcept = 0;
 
-    virtual score::cpp::expected<std::int32_t, score::os::Error> pulse_attach(dispatch_t* const dpp,
-                                                                     const std::int32_t flags,
-                                                                     const std::int32_t code,
-                                                                     std::int32_t (*const func)(message_context_t* ctp,
-                                                                                                std::int32_t code,
-                                                                                                std::uint32_t flags,
-                                                                                                void* handle) noexcept,
-                                                                     void* const handle) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error> pulse_attach(
+        dispatch_t* const dpp,
+        const std::int32_t flags,
+        const std::int32_t code,
+        std::int32_t (*const func)(message_context_t* ctp,
+                                   std::int32_t code,
+                                   std::uint32_t flags,
+                                   void* handle) noexcept,
+        void* const handle) const noexcept = 0;
 
     virtual score::cpp::expected_blank<score::os::Error> pulse_detach(dispatch_t* const dpp,
-                                                             const std::int32_t code,
-                                                             const std::int32_t flags) const noexcept = 0;
+                                                                      const std::int32_t code,
+                                                                      const std::int32_t flags) const noexcept = 0;
+
+    virtual score::cpp::expected<std::int32_t, score::os::Error> msg_deliver_event(
+        rcvid_t recvid,
+        const sigevent* client_event) const noexcept = 0;
 
     Dispatch() = default;
     virtual ~Dispatch() = default;

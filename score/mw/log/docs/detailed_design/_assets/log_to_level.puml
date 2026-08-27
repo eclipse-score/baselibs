@@ -1,0 +1,15 @@
+@startuml log_to_level
+
+participant "User" as actor
+participant "Log to level macro\n(e.g., `error!`)" as log_to_level_macro
+participant "log!" as log_macro
+
+actor -> log_to_level_macro : Log message
+log_to_level_macro -> log_macro : Log message with given level
+log_macro --> actor
+
+note left
+    Case of 'dd_dyn<U+005F><U+005F>log<U+005F><U+005F>log_op'
+end note
+
+@enduml

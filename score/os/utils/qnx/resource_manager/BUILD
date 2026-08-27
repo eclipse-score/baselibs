@@ -12,8 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score_baselibs//third_party/itf:py_unittest_qnx_test.bzl", "py_unittest_qnx_test")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 package(
     default_visibility = [
@@ -27,20 +26,6 @@ test_suite(
         ":resource_manager_test",
         ":resource_test",
         ":static_c_wrappers_test",
-    ],
-    visibility = [
-        "//visibility:public",
-    ],
-)
-
-py_unittest_qnx_test(
-    name = "unit_tests_qnx",
-    test_cases = [
-        ":error_test",
-        ":resource_manager_test",
-        ":resource_test",
-        ":static_c_wrappers_test",
-        ":simple_read_function_test",
     ],
     visibility = [
         "//visibility:public",
@@ -258,9 +243,6 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
-    visibility = [
-        "//platform/aas/unit/qnx/resource_manager:__subpackages__",
-    ],
     deps = [
         "@score_baselibs//score/os/qnx:iofunc",
         "@score_baselibs//score/os/qnx:resmgr",

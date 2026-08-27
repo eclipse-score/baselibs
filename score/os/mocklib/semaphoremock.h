@@ -33,7 +33,10 @@ class SemaphoreMock : public Semaphore
                 sem_open,
                 (const char*, const OpenFlag, const ModeFlag, const std::uint32_t),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<sem_t*, Error>), sem_open, (const char*, const OpenFlag), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<sem_t*, Error>),
+                sem_open,
+                (const char*, const OpenFlag),
+                (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_wait, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_post, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_close, (sem_t*), (const, noexcept, override));
@@ -42,7 +45,14 @@ class SemaphoreMock : public Semaphore
                 sem_timedwait,
                 (sem_t*, const struct timespec*),
                 (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected_blank<Error>), sem_getvalue, (sem_t*, std::int32_t*), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
+                sem_timedwait_monotonic,
+                (sem_t*, const struct timespec*),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
+                sem_getvalue,
+                (sem_t*, std::int32_t*),
+                (const, noexcept, override));
 };
 
 }  // namespace os

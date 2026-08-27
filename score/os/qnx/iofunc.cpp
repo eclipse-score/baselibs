@@ -16,23 +16,23 @@
 /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 void score::os::IoFuncQnx::iofunc_func_init(const std::uint32_t nconnect,
-                                          resmgr_connect_funcs_t* const connect,
-                                          const std::uint32_t nio,
-                                          resmgr_io_funcs_t* const io) const noexcept
+                                            resmgr_connect_funcs_t* const connect,
+                                            const std::uint32_t nio,
+                                            resmgr_io_funcs_t* const io) const noexcept
 {
     ::iofunc_func_init(nconnect, connect, nio, io);
 }
 
 void score::os::IoFuncQnx::iofunc_attr_init(iofunc_attr_t* const attr,
-                                          const mode_t mode,
-                                          iofunc_attr_t* const dattr,
-                                          _client_info* const info) const noexcept
+                                            const mode_t mode,
+                                            iofunc_attr_t* const dattr,
+                                            _client_info* const info) const noexcept
 {
     ::iofunc_attr_init_sized(attr, mode, dattr, info, sizeof(iofunc_attr_t));
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::IoFuncQnx::iofunc_mount_init(iofunc_mount_t* const mountp,
-                                                                          const size_t size) const noexcept
+                                                                                     const size_t size) const noexcept
 {
     if (EOK != ::iofunc_mount_init(mountp, size))
     {
@@ -41,9 +41,10 @@ score::cpp::expected_blank<score::os::Error> score::os::IoFuncQnx::iofunc_mount_
     return {};
 }
 
-score::cpp::expected<int32_t, int32_t> score::os::IoFuncQnx::iofunc_close_ocb_default(resmgr_context_t* const ctp,
-                                                                             void* const reserved,
-                                                                             iofunc_ocb_t* const ocb) const noexcept
+score::cpp::expected<int32_t, int32_t> score::os::IoFuncQnx::iofunc_close_ocb_default(
+    resmgr_context_t* const ctp,
+    void* const reserved,
+    iofunc_ocb_t* const ocb) const noexcept
 {
     return ::iofunc_close_ocb_default(ctp, reserved, ocb);
 }
@@ -80,11 +81,12 @@ score::cpp::expected<std::int32_t, int32_t> score::os::IoFuncQnx::iofunc_devctl_
 // The rule states: "Unions shall not be used."
 // the io_write_t is a typedef union
 // this is defined in a qnx internal code so we cannot change it
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_write_verify(resmgr_context_t* const ctp,
-                                                                          // coverity[autosar_cpp14_a9_5_1_violation]
-                                                                          io_write_t* const msg,
-                                                                          iofunc_ocb_t* const ocb,
-                                                                          std::int32_t* const nonblock) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_write_verify(
+    resmgr_context_t* const ctp,
+    // coverity[autosar_cpp14_a9_5_1_violation]
+    io_write_t* const msg,
+    iofunc_ocb_t* const ocb,
+    std::int32_t* const nonblock) const noexcept
 {
     const std::int32_t result = ::iofunc_write_verify(ctp, msg, ocb, nonblock);
     if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
@@ -97,11 +99,12 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_write_veri
 // The rule states: "Unions shall not be used."
 // the io_read_t is a typedef union
 // this is defined in a qnx internal code so we cannot change it
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_read_verify(resmgr_context_t* const ctp,
-                                                                         // coverity[autosar_cpp14_a9_5_1_violation]
-                                                                         io_read_t* const msg,
-                                                                         iofunc_ocb_t* const ocb,
-                                                                         std::int32_t* const nonblock) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_read_verify(
+    resmgr_context_t* const ctp,
+    // coverity[autosar_cpp14_a9_5_1_violation]
+    io_read_t* const msg,
+    iofunc_ocb_t* const ocb,
+    std::int32_t* const nonblock) const noexcept
 {
     const std::int32_t result = ::iofunc_read_verify(ctp, msg, ocb, nonblock);
     if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
@@ -133,9 +136,10 @@ score::cpp::expected<std::int32_t, std::int32_t> score::os::IoFuncQnx::iofunc_ls
     return result;
 }
 
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_client_info_ext(resmgr_context_t* ctp,
-                                                                             const std::int32_t ioflag,
-                                                                             struct _client_info** info) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_client_info_ext(
+    resmgr_context_t* ctp,
+    const std::int32_t ioflag,
+    struct _client_info** info) const noexcept
 {
     const std::int32_t result = ::iofunc_client_info_ext(ctp, ioflag, info, IOFUNC_CLIENTINFO_GETGROUPS);
 
@@ -177,7 +181,8 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_check_acce
     return {};
 }
 
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_lock(iofunc_attr_t* const attr) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_lock(
+    iofunc_attr_t* const attr) const noexcept
 {
     const std::int32_t result = ::iofunc_attr_lock(attr);
     if (result != EOK)
@@ -187,7 +192,8 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_lock(
     return {};
 }
 
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_unlock(iofunc_attr_t* const attr) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_unlock(
+    iofunc_attr_t* const attr) const noexcept
 {
     const std::int32_t result = ::iofunc_attr_unlock(attr);
     if (result != EOK)
@@ -200,12 +206,13 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_attr_unloc
 // The rule states: "Unions shall not be used."
 // the io_open_t is a typedef union
 // this is defined in a qnx internal code so we cannot change it
-score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_open(resmgr_context_t* const ctp,
-                                                                  // coverity[autosar_cpp14_a9_5_1_violation]
-                                                                  io_open_t* const msg,
-                                                                  iofunc_attr_t* const attr,
-                                                                  iofunc_attr_t* const dattr,
-                                                                  struct _client_info* const info) const noexcept
+score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_open(
+    resmgr_context_t* const ctp,
+    // coverity[autosar_cpp14_a9_5_1_violation]
+    io_open_t* const msg,
+    iofunc_attr_t* const attr,
+    iofunc_attr_t* const dattr,
+    struct _client_info* const info) const noexcept
 {
     const std::int32_t result = ::iofunc_open(ctp, msg, attr, dattr, info);
     if (result != EOK)
@@ -234,7 +241,8 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_ocb_attach
     return {};
 }
 
-std::int32_t score::os::IoFuncQnx::iofunc_ocb_detach(resmgr_context_t* const ctp, iofunc_ocb_t* const ocb) const noexcept
+std::int32_t score::os::IoFuncQnx::iofunc_ocb_detach(resmgr_context_t* const ctp,
+                                                     iofunc_ocb_t* const ocb) const noexcept
 {
     return ::iofunc_ocb_detach(ctp, ocb);
 }
@@ -243,19 +251,19 @@ std::int32_t score::os::IoFuncQnx::iofunc_ocb_detach(resmgr_context_t* const ctp
 // the io_notify_t is a typedef union
 // this is defined in a qnx internal code so we cannot change it
 std::int32_t score::os::IoFuncQnx::iofunc_notify(resmgr_context_t* const ctp,
-                                               // coverity[autosar_cpp14_a9_5_1_violation]
-                                               io_notify_t* const msg,
-                                               iofunc_notify_t* const nop,
-                                               const std::int32_t trig,
-                                               const std::int32_t* const notifycounts,
-                                               std::int32_t* const armed) const noexcept
+                                                 // coverity[autosar_cpp14_a9_5_1_violation]
+                                                 io_notify_t* const msg,
+                                                 iofunc_notify_t* const nop,
+                                                 const std::int32_t trig,
+                                                 const std::int32_t* const notifycounts,
+                                                 std::int32_t* const armed) const noexcept
 {
     return ::iofunc_notify(ctp, msg, nop, trig, notifycounts, armed);
 }
 
 void score::os::IoFuncQnx::iofunc_notify_trigger(iofunc_notify_t* const nop,
-                                               const std::int32_t count,
-                                               const std::int32_t index) const noexcept
+                                                 const std::int32_t count,
+                                                 const std::int32_t index) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -263,9 +271,9 @@ void score::os::IoFuncQnx::iofunc_notify_trigger(iofunc_notify_t* const nop,
 }
 
 void score::os::IoFuncQnx::iofunc_notify_trigger_strict(resmgr_context_t* const ctp,
-                                                      iofunc_notify_t* const nop,
-                                                      const std::int32_t count,
-                                                      const std::int32_t index) const noexcept
+                                                        iofunc_notify_t* const nop,
+                                                        const std::int32_t count,
+                                                        const std::int32_t index) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -275,6 +283,27 @@ void score::os::IoFuncQnx::iofunc_notify_trigger_strict(resmgr_context_t* const 
 void score::os::IoFuncQnx::iofunc_notify_remove(resmgr_context_t* const ctp, iofunc_notify_t* const nop) const noexcept
 {
     ::iofunc_notify_remove(ctp, nop);
+}
+
+std::int32_t score::os::IoFuncQnx::iofunc_close_dup_default(resmgr_context_t* ctp,
+                                                            io_close_t* msg,
+                                                            iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_close_dup_default(ctp, msg, ocb);
+}
+
+std::int32_t score::os::IoFuncQnx::iofunc_lock_ocb_default(resmgr_context_t* ctp,
+                                                           void* reserved,
+                                                           iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_lock_ocb_default(ctp, reserved, ocb);
+}
+
+std::int32_t score::os::IoFuncQnx::iofunc_unlock_ocb_default(resmgr_context_t* ctp,
+                                                             void* reserved,
+                                                             iofunc_ocb_t* ocb) const noexcept
+{
+    return ::iofunc_unlock_ocb_default(ctp, reserved, ocb);
 }
 
 score::os::IoFunc& score::os::IoFunc::instance() noexcept
@@ -289,7 +318,8 @@ score::os::IoFunc& score::os::IoFunc::instance() noexcept
 
 /* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
-score::cpp::pmr::unique_ptr<score::os::IoFunc> score::os::IoFunc::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+score::cpp::pmr::unique_ptr<score::os::IoFunc> score::os::IoFunc::Default(
+    score::cpp::pmr::memory_resource* memory_resource) noexcept
 /* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::IoFuncQnx>(memory_resource);

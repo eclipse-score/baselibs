@@ -50,7 +50,7 @@ TEST(ObjectSeamTest, CopyConstructor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Constructor");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     MockObject mock("Testing Copy");
     TestableBase<MockObject> b1;
@@ -67,7 +67,7 @@ TEST(ObjectSeamTest, MoveConstructor)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Constructor");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     MockObject mock("Testing Move");
     TestableBase<MockObject> b1;
@@ -85,7 +85,7 @@ TEST(ObjectSeamTest, CopyAssignment)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Copy Assignment");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     MockObject mock("Testing Copy Assignment");
     TestableBase<MockObject> b1;
@@ -103,7 +103,7 @@ TEST(ObjectSeamTest, MoveAssignment)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "ObjectSeamTest Move Assignment");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     MockObject mock("Testing Move Assignment");
     TestableBase<MockObject> b1;

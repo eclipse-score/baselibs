@@ -24,19 +24,21 @@ class SysctlImpl final : public Sysctl
 {
   public:
     score::cpp::expected_blank<Error> sysctl(std::int32_t* const name,
-                                      const std::size_t namelen,
-                                      void* const oldp,
-                                      std::size_t* const oldlenp,
-                                      void* const newp,
-                                      const std::size_t newlen) const noexcept override;
+                                             const std::size_t namelen,
+                                             void* const oldp,
+                                             std::size_t* const oldlenp,
+                                             void* const newp,
+                                             const std::size_t newlen) const noexcept override;
 
     score::cpp::expected_blank<Error> sysctlbyname(const char* sname,
-                                            void* const oldp,
-                                            std::size_t* const oldlenp,
-                                            void* const newp,
-                                            const std::size_t newlen) const noexcept override;
+                                                   void* const oldp,
+                                                   std::size_t* const oldlenp,
+                                                   void* const newp,
+                                                   const std::size_t newlen) const noexcept override;
 
-    score::cpp::expected_blank<Error> sysctlnametomib(const char* sname, int* mibp, size_t* sizep) const noexcept override;
+    score::cpp::expected_blank<Error> sysctlnametomib(const char* sname,
+                                                      int* mibp,
+                                                      size_t* sizep) const noexcept override;
 };
 
 }  // namespace os

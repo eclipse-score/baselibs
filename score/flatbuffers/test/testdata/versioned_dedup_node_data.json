@@ -1,0 +1,23 @@
+{
+  "child": {
+    "version_info": {
+      "type_marker": "BV",
+      "major_version": 1,
+      "minor_version": 0
+    },
+    "child": {
+      "version_info": {
+        "type_marker": "BV",
+        "major_version": 1,
+        "minor_version": 0
+      },
+      "child": {
+        "version_info": {
+          "type_marker": "BV",
+          "major_version": 1,
+          "minor_version": 0
+        }
+      }
+    }
+  }
+}

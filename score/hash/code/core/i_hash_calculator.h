@@ -45,8 +45,8 @@ class IHashCalculator
     ///
     /// @param[in] data pointer to the block of data that should be added.
     ///
-    /// @return score::cpp::blank upon successful update, error otherwise
-    virtual ResultBlank Update(const score::cpp::span<const std::uint8_t> data) noexcept = 0;
+    /// @return void upon successful update, error otherwise
+    virtual Result<void> Update(const score::cpp::span<const std::uint8_t> data) noexcept = 0;
 
     /// @brief Update current hash calculation with input stream
     /// This method can be called multiple times for hash calculation
@@ -56,8 +56,8 @@ class IHashCalculator
     ///
     /// @param[in] input istream whose data should be used for update
     ///
-    /// @return score::cpp::blank upon successful update, error otherwise
-    virtual ResultBlank UpdateFromStream(std::istream& input);
+    /// @return void upon successful update, error otherwise
+    virtual Result<void> UpdateFromStream(std::istream& input);
 
     /// @brief Update current hash calculation with input stream
     /// This method can be called multiple times for hash calculation
@@ -68,8 +68,8 @@ class IHashCalculator
     /// @param[in] input istream whose data should be used for update
     /// @param[in] max_read the number of bytes that shall be read from the stream
     ///
-    /// @return score::cpp::blank upon successful update, error otherwise
-    virtual ResultBlank UpdateFromStream(std::istream& input, const std::int64_t max_read);
+    /// @return void upon successful update, error otherwise
+    virtual Result<void> UpdateFromStream(std::istream& input, const std::int64_t max_read);
 
     /// @brief Finalize hash calculation and retrieve computed hash value
     ///

@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 test_suite(
     name = "unit_tests_linux",
@@ -20,7 +20,7 @@ test_suite(
         ":pthread_test",
         ":unistd_test",
     ],
-    visibility = ["//platform/aas/lib:__pkg__"],
+    visibility = ["@score_baselibs//score/os/test:__subpackages__"],
 )
 
 cc_test(

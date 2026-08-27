@@ -33,18 +33,18 @@ class Pcap : public ObjectSeam<Pcap>
     static Pcap& instance() noexcept;
 
     virtual score::cpp::expected<pcap_t*, Error> pcap_open_live(const char* device,
-                                                         std::int32_t snaplen,
-                                                         std::int32_t promisc,
-                                                         std::int32_t to_ms,
-                                                         char* errbuf) const noexcept = 0;
+                                                                std::int32_t snaplen,
+                                                                std::int32_t promisc,
+                                                                std::int32_t to_ms,
+                                                                char* errbuf) const noexcept = 0;
 
     virtual score::cpp::expected<pcap_t*, Error> pcap_open_dead(std::int32_t linktype,
-                                                         std::int32_t snaplen) const noexcept = 0;
+                                                                std::int32_t snaplen) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> pcap_loop(pcap_t* p,
-                                                 std::int32_t cnt,
-                                                 pcap_handler callback,
-                                                 u_char* user) const noexcept = 0;
+                                                        std::int32_t cnt,
+                                                        pcap_handler callback,
+                                                        u_char* user) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> pcap_breakloop(pcap_t* p) const noexcept = 0;
 
@@ -55,20 +55,21 @@ class Pcap : public ObjectSeam<Pcap>
     /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC*/
 
     virtual score::cpp::expected<int, Error> pcap_compile(pcap_t* p,
-                                                   struct bpf_program* fp,
-                                                   const char* str,
-                                                   int optimize,
-                                                   bpf_u_int32 netmask) const noexcept = 0;
+                                                          struct bpf_program* fp,
+                                                          const char* str,
+                                                          int optimize,
+                                                          bpf_u_int32 netmask) const noexcept = 0;
 
     virtual score::cpp::expected<int, Error> pcap_setfilter(pcap_t* p, struct bpf_program* fp) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> pcap_freecode(struct bpf_program* fp) const noexcept = 0;
 
-    virtual score::cpp::expected<pcap_dumper_t*, Error> pcap_dump_open(pcap_t* p, const char* filename) const noexcept = 0;
+    virtual score::cpp::expected<pcap_dumper_t*, Error> pcap_dump_open(pcap_t* p,
+                                                                       const char* filename) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> pcap_dump(u_char* user,
-                                                 const struct pcap_pkthdr* h,
-                                                 const u_char* sp) const noexcept = 0;
+                                                        const struct pcap_pkthdr* h,
+                                                        const u_char* sp) const noexcept = 0;
 
     virtual score::cpp::expected_blank<Error> pcap_dump_close(pcap_dumper_t* p) const noexcept = 0;
 

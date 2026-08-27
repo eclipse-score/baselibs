@@ -14,6 +14,57 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+
+cc_library(
+    name = "atomic_interface",
+    hdrs = ["i_atomic.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/concurrency:__pkg__",
+        "@score_baselibs//score/memory/shared:__pkg__",
+    ],
+    deps = [],
+)
+
+cc_library(
+    name = "atomic_indirector",
+    srcs = ["atomic_indirector.cpp"],
+    hdrs = ["atomic_indirector.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",  # platform_only
+    ],
+    deps = [":atomic_interface"],
+)
+
+cc_library(
+    name = "atomic_indirector_mock_binding",
+    testonly = True,
+    srcs = ["atomic_mock.cpp"],
+    hdrs = ["atomic_mock.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":atomic_indirector",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "atomic_indirector_test",
+    srcs = ["atomic_indirector_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = [
+        "@score_baselibs//score/memory:__pkg__",
+    ],
+    deps = [
+        ":atomic_indirector",
+        ":atomic_indirector_mock_binding",
+    ],
+)
 
 cc_library(
     name = "clock",
@@ -559,6 +610,7 @@ cc_library(
 cc_unit_test_suites_for_host_and_qnx(
     name = "unit_test_suite",
     cc_unit_tests = [
+        ":atomic_indirector_test",
         ":clock_tests",
         ":condition_variable_tests",
         ":delayed_task_tests",
@@ -580,4 +632,10 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//visibility:public",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

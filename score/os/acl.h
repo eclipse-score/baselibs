@@ -83,24 +83,29 @@ class Acl : public ObjectSeam<Acl>
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<AclCollection, score::os::Error> acl_get_fd(const FileDescriptor) const noexcept = 0;
     virtual score::cpp::expected<AclCollection, score::os::Error> acl_get_file(const std::string) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> acl_create_entry(AclCollection* const, Entry* const) const noexcept = 0;
-    virtual score::cpp::expected<score::cpp::optional<Entry>, score::os::Error> acl_get_entry(const AclCollection,
-                                                                              const EntryIndex) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> acl_create_entry(AclCollection* const,
+                                                                          Entry* const) const noexcept = 0;
+    virtual score::cpp::expected<score::cpp::optional<Entry>, score::os::Error> acl_get_entry(
+        const AclCollection,
+        const EntryIndex) const noexcept = 0;
     virtual score::cpp::expected<Tag, score::os::Error> acl_get_tag_type(const Entry) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> acl_set_tag_type(const Entry, const Tag) const noexcept = 0;
     virtual score::cpp::expected<void*, score::os::Error> acl_get_qualifier(const Entry) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> acl_set_qualifier(const Entry, const void* const) const noexcept = 0;
-    virtual score::cpp::expected<bool, score::os::Error> acl_get_perm(const Permissions, const Permission) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> acl_set_qualifier(const Entry,
+                                                                           const void* const) const noexcept = 0;
+    virtual score::cpp::expected<bool, score::os::Error> acl_get_perm(const Permissions,
+                                                                      const Permission) const noexcept = 0;
     virtual void acl_get_permset(const Entry, Permissions* const) const noexcept = 0;
     virtual void acl_clear_perms(const Permissions) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> acl_add_perm(const Permissions, const Permission) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> acl_add_perm(const Permissions,
+                                                                      const Permission) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> acl_calc_mask(AclCollection* const) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> acl_valid(const AclCollection) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> acl_set_fd(const FileDescriptor,
-                                                           const AclCollection) const noexcept = 0;
+                                                                    const AclCollection) const noexcept = 0;
     virtual void acl_free(void* const) const noexcept = 0;
     virtual score::cpp::expected<char*, score::os::Error> acl_to_text(const AclCollection& acl,
-                                                             ssize_t* const len_p) const noexcept = 0;
+                                                                      ssize_t* const len_p) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Acl() = default;

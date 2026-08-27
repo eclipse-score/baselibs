@@ -194,7 +194,7 @@ class BaseInterruptiblePromise
 
     template <typename StrategyCallback, typename... OptValue>
     score::cpp::expected_blank<Error> SetValueInternalWithStrategy(const StrategyCallback& strategy,
-                                                            OptValue&&... value) noexcept
+                                                                   OptValue&&... value) noexcept
     {
         if (!this->HasState())
         {

@@ -51,8 +51,8 @@ constexpr bool IsValidErrorCodeEnum() noexcept
 }  // namespace details
 
 /// \brief Goal of this class is to provide a common error class that provides a customization endpoint via a mixin to
-/// provide easy user and domain specific usage. The main idea is that this is returned as score::cpp::expected unexpected
-/// type.
+/// provide easy user and domain specific usage. The main idea is that this is returned as score::cpp::expected
+/// unexpected type.
 class Error final
 {
   public:
@@ -101,6 +101,13 @@ class Error final
     std::string_view UserMessage() const noexcept
     {
         return user_messages_;
+    }
+
+    /// \brief Returns a copy of this error with an updated user message.
+    /// \return Copy preserving code and domain with the provided user message
+    [[nodiscard]] constexpr Error WithUserMessage(const std::string_view user_message) const noexcept
+    {
+        return Error{code_, *domain_, user_message};
     }
 
   private:

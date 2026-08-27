@@ -188,14 +188,14 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
 /* operator in local namespace will lead to build error due to name lookup algorithm */
 // coverity[autosar_cpp14_m7_3_1_violation] see above
 inline score::filesystem::PermOptions operator|(const score::filesystem::PermOptions l,
-                                              const score::filesystem::PermOptions r) noexcept
+                                                const score::filesystem::PermOptions r) noexcept
 {
     using EnumUnderlyingType = std::underlying_type_t<score::filesystem::PermOptions>;
     static_assert(std::is_unsigned_v<EnumUnderlyingType>);
     // check ensures the return value is of underlying type
     // coverity[autosar_cpp14_a7_2_1_violation]
     return static_cast<score::filesystem::PermOptions>(static_cast<EnumUnderlyingType>(l) |
-                                                     static_cast<EnumUnderlyingType>(r));
+                                                       static_cast<EnumUnderlyingType>(r));
 }
 /* KW_SUPPRESS_END:MISRA.NS.GLOBAL: */
 

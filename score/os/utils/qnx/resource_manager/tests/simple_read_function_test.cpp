@@ -37,7 +37,8 @@ constexpr auto test_path = "/test/resmgr_unit_test_path";
 
 struct SimpleReadFunctionTest : ::testing::Test
 {
-    SimpleReadFunctionTest() : simple_read_function_mock(score::os::MockSimpleReadFunction(resmgr_mock, iofunc_mock)) {};
+    SimpleReadFunctionTest()
+        : simple_read_function_mock(score::os::MockSimpleReadFunction(resmgr_mock, iofunc_mock)) {};
 
     score::os::MockResMgr resmgr_mock;
     score::os::MockIoFunc iofunc_mock;

@@ -21,10 +21,13 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["//visibility:public"],
+    visibility = [
+        "//score/analysis/tracing/generic_trace_library:__pkg__",
+        "//score/analysis/tracing/generic_trace_library/test:__subpackages__",
+    ],
     deps = [
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api_header",
-        "@score_baselibs//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
-        "@score_baselibs//score/language/futurecpp",
+        "//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api",
+        "//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
+        "//score/language/futurecpp",
     ],
 )

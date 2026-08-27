@@ -30,9 +30,9 @@ abstraction and use-cases that are not yet covered are extended.
 
 ### Bazel target
 
-This library offers the Bazel target `//platform/aas/lib/json`, which is uniquely ASIL B certified. However, this certification is valid only when the target utilizes the vaJson parser from Vector, [selectable via a feature flag](#selecting-base-library).
+This library offers the Bazel target `//score/json`, which is uniquely ASIL B certified. However, this certification is valid only when the target utilizes the vaJson parser from Vector, [selectable via a feature flag](#selecting-base-library).
 
-Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//platform/aas/lib/json:json_serializer`, which is **not** ASIL B certified.
+Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//score/json:json_serializer`, which is **not** ASIL B certified.
 
 ### Loading a JSON document from a file
 
@@ -267,7 +267,7 @@ struct Size
     std::string unit{};
 };
 
-STRUCT_VISITABLE(Size, width, height, unit)
+SCORE_STRUCT_VISITABLE(Size, width, height, unit)
 
 void SerializeToJsonAny()
 {
@@ -375,6 +375,6 @@ This library supports usage of vector json library and nhlomann json library. By
 
 In order to make use of nlohmann json library, feature flag needs to be set. Please see an example below.
 
-bazel test --config=spp_host_clang //score/json/... --//platform/aas/lib/json:base_library="nlohmann"
+bazel test --config=spp_host_clang //score/json/... --//score/json:base_library="nlohmann"
 
 nlohmann json library do not supports hexadecimal. As it is not part of json standard.

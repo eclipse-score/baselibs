@@ -24,10 +24,10 @@ namespace qnx
 {
 
 score::cpp::expected<std::int32_t, score::os::Error> MockSlog2::slog2f(slog2_buffer_t buffer,
-                                                              std::uint16_t code,
-                                                              std::uint8_t severity,
-                                                              const char* format,
-                                                              ...) const noexcept
+                                                                       std::uint16_t code,
+                                                                       std::uint8_t severity,
+                                                                       const char* format,
+                                                                       ...) const noexcept
 {
     // Create a va_list to hold the variable arguments
     va_list args;

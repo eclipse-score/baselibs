@@ -360,16 +360,26 @@ auto make_zip_range(Containers&&... containers) -> range_pair<ZipIteratorType>
 
 } // namespace score::cpp
 
+// cert-dcl58-cpp Given the clang-tidy-check objective, the following findings are false positive since documented
+// standard variation points are used for `std::tuple_element` and `std::tuple_size` customizations. See
+// https://en.cppreference.com/cpp/utility/tuple_size and https://en.cppreference.com/cpp/utility/tuple_element . Using
+// `struct ::std::tuple_*` as suggested by the check triggers a syntax error in GCC which is a known GCC defect:
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66892 NOLINTBEGIN(cert-dcl58-cpp)
+namespace std
+{
 template <std::size_t I, typename... Ts>
-struct std::tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
+struct tuple_element<I, score::cpp::detail::zipped_tuple_like<Ts...>>
 {
     using type = std::tuple_element_t<I, std::tuple<Ts...>>;
 };
 
 template <typename... Ts>
-struct std::tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
+struct tuple_size<score::cpp::detail::zipped_tuple_like<Ts...>>
     : public std::integral_constant<std::size_t, std::tuple_size<std::tuple<Ts...>>::value>
 {
 };
+
+} // namespace std
+// NOLINTEND(cert-dcl58-cpp)
 
 #endif // SCORE_LANGUAGE_FUTURECPP_ZIP_ITERATOR_HPP

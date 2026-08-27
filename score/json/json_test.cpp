@@ -20,8 +20,8 @@ TEST(JsonTest, ReadWrite)
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Create Json object with different attributes, write it to a buffer, then read it successfully.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     score::json::Object json{};
     json["string"] = std::string{"foo"};
@@ -51,7 +51,8 @@ TEST(JsonTest, ReadWrite)
     EXPECT_EQ(read_object["list"].As<score::json::List>().value().get()[0].As<score::json::Null>().value().get(),
               score::json::Null{});
     EXPECT_NE(
-        read_object["list"].As<score::json::List>().value().get()[1].As<score::json::Object>().value().get().find("num2"),
+        read_object["list"].As<score::json::List>().value().get()[1].As<score::json::Object>().value().get().find(
+            "num2"),
         read_object["list"].As<score::json::List>().value().get()[1].As<score::json::Object>().value().get().end());
     EXPECT_EQ(read_object["list"]
                   .As<score::json::List>()

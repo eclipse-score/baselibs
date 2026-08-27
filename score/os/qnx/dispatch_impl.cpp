@@ -19,9 +19,8 @@ namespace score
 {
 namespace os
 {
-score::cpp::expected<name_attach_t*, score::os::Error> DispatchImpl::name_attach(dispatch_t* const dpp,
-                                                                        const char* const path,
-                                                                        const std::uint32_t flags) const noexcept
+score::cpp::expected<name_attach_t*, score::os::Error>
+DispatchImpl::name_attach(dispatch_t* const dpp, const char* const path, const std::uint32_t flags) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -34,7 +33,7 @@ score::cpp::expected<name_attach_t*, score::os::Error> DispatchImpl::name_attach
 }
 
 score::cpp::expected_blank<score::os::Error> DispatchImpl::name_detach(name_attach_t* const attach,
-                                                              const std::uint32_t flags) const noexcept
+                                                                       const std::uint32_t flags) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -46,7 +45,7 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::name_detach(name_atta
 }
 
 score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::name_open(const char* const name,
-                                                                    const std::int32_t flags) const noexcept
+                                                                             const std::int32_t flags) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -229,8 +228,8 @@ score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::resmgr_attach
 }
 
 score::cpp::expected_blank<score::os::Error> DispatchImpl::resmgr_detach(dispatch_t* const dpp,
-                                                                const std::int32_t id,
-                                                                const std::uint32_t flags) const noexcept
+                                                                         const std::int32_t id,
+                                                                         const std::uint32_t flags) const noexcept
 {
     if (::resmgr_detach(dpp, id, flags) == -1)
     {
@@ -240,9 +239,9 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::resmgr_detach(dispatc
 }
 
 score::cpp::expected<std::size_t, score::os::Error> DispatchImpl::resmgr_msgget(resmgr_context_t* const ctp,
-                                                                       void* const msg,
-                                                                       const std::size_t size,
-                                                                       const std::size_t offset) const noexcept
+                                                                                void* const msg,
+                                                                                const std::size_t size,
+                                                                                const std::size_t offset) const noexcept
 {
     // Error can not be reproduced in scope of unit tests. Empty buffer and zero size still return non-error
     const ssize_t result = ::resmgr_msgget(ctp, msg, size, offset);
@@ -253,8 +252,9 @@ score::cpp::expected<std::size_t, score::os::Error> DispatchImpl::resmgr_msgget(
     return static_cast<std::size_t>(result);
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::message_connect(dispatch_t* const dpp,
-                                                                          const std::int32_t flags) const noexcept
+score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::message_connect(
+    dispatch_t* const dpp,
+    const std::int32_t flags) const noexcept
 {
     // Error can not be reproduced in scope of unit tests. Crashes if pass NULL parameter
     const std::int32_t coid = ::message_connect(dpp, flags);
@@ -285,8 +285,9 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::message_attach(
     return {};
 }
 
-score::cpp::expected<thread_pool_t*, score::os::Error> DispatchImpl::thread_pool_create(thread_pool_attr_t* pool_attr,
-                                                                               std::uint32_t flags) const noexcept
+score::cpp::expected<thread_pool_t*, score::os::Error> DispatchImpl::thread_pool_create(
+    thread_pool_attr_t* pool_attr,
+    std::uint32_t flags) const noexcept
 {
     // Error can not be reproduced in scope of unit tests. Crashes if pass NULL pool_attr parameter
     const auto tpp = ::thread_pool_create(pool_attr, flags);
@@ -329,7 +330,7 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::select_attach(
 }
 
 score::cpp::expected_blank<score::os::Error> DispatchImpl::select_detach(dispatch_t* const dpp,
-                                                                const std::int32_t fd) const noexcept
+                                                                         const std::int32_t fd) const noexcept
 {
     if (::select_detach(dpp, fd) == -1)
     {
@@ -359,8 +360,8 @@ score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::pulse_attach(
 }
 
 score::cpp::expected_blank<score::os::Error> DispatchImpl::pulse_detach(dispatch_t* const dpp,
-                                                               const std::int32_t code,
-                                                               const std::int32_t flags) const noexcept
+                                                                        const std::int32_t code,
+                                                                        const std::int32_t flags) const noexcept
 {
     if (::pulse_detach(dpp, code, flags) == -1)
     {
@@ -368,6 +369,18 @@ score::cpp::expected_blank<score::os::Error> DispatchImpl::pulse_detach(dispatch
         return score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL));
     }
     return {};
+}
+
+score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::msg_deliver_event(
+    rcvid_t rcvid,
+    const sigevent* event) const noexcept
+{
+    const std::int32_t res = ::MsgDeliverEvent(rcvid, event);
+    if (res == -1)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return res;
 }
 
 }  // namespace os

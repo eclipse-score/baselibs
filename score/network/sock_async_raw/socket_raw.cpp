@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/network/sock_async_raw/socket_raw.h"
+#include "score/mw/log/logging.h"
 #include "score/os/socket.h"
 #include "score/os/unistd.h"
-#include "score/mw/log/logging.h"
 namespace score
 {
 namespace os
@@ -77,7 +77,8 @@ std::int32_t SocketRaw::ReadAsync(std::shared_ptr<std::vector<score::cpp::span<s
 
 /* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 /* KW_SUPPRESS_START:MISRA.MEMB.NON_CONST: read_pool is used */
-std::int32_t SocketRaw::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data, AsyncCallback u_cb) noexcept
+std::int32_t SocketRaw::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data,
+                                   AsyncCallback u_cb) noexcept
 /* KW_SUPPRESS_END:MISRA.MEMB.NON_CONST: read_pool is used */
 /* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {

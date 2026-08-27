@@ -40,3 +40,14 @@ cc_library(
         "@score_baselibs//score/network:netutils",
     ],
 )
+
+cc_library(
+    name = "vlan_mock",
+    testonly = True,
+    hdrs = ["vlan_mock.h"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/network:vlan",
+    ],
+)

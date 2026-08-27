@@ -32,9 +32,9 @@ class ThreadCtl
   public:
     /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> ThreadCtlExt(const pid_t pid,
-                                                             const std::int32_t tid,
-                                                             const std::int32_t cmd,
-                                                             void* const data) const noexcept = 0;
+                                                                      const std::int32_t tid,
+                                                                      const std::int32_t cmd,
+                                                                      void* const data) const noexcept = 0;
     /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~ThreadCtl() = default;

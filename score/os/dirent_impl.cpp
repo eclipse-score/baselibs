@@ -38,13 +38,24 @@ score::cpp::expected<struct dirent*, score::os::Error> DirentImpl::readdir(DIR* 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 {
+    /// @brief As per POSIX specification, readdir() returns a nullptr and sets the error according to errno. If the end
+    /// of the directory has been reached errno is not set. In order for us to be sure, we have to set a specific errno
+    /// first, before doing this OS operation. We set it to 0 and if not updated by OS, we can be sure that it is end of
+    /// the directory.
+    constexpr auto END_OF_DIRECTORY = 0;
+    // Rationale: seterrno(0) is intentionally clearing errno before readdir() as required by POSIX specification.
+    // errno is tested after readdir() on line 51. This is not a missing error check.
+    // coverity[autosar_cpp14_m0_3_2_violation] see above
+    score::os::seterrno(END_OF_DIRECTORY);
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
     struct dirent* const dirent_ptr = ::readdir(dirp);
-    if (dirent_ptr == nullptr)
+    // LCOV_EXCL_START: readdir error path and its internal handling cannot be safely triggered in a unit test on QNX.
+    if ((dirent_ptr == nullptr) && (score::os::geterrno() != END_OF_DIRECTORY))
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
+    // LCOV_EXCL_STOP
     return dirent_ptr;
 }
 /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */

@@ -31,7 +31,7 @@ TEST(TimeImplTest, ClockSettimeFailure)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Failure");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_MONOTONIC, &new_time);
@@ -55,7 +55,7 @@ TEST(TimeImplTest, ClockGetTimeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Time Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec get_time{};
 
@@ -74,7 +74,7 @@ TEST(TimeImplTest, GettimeFailsWithInvalidClockId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Gettime Fails With Invalid Clock Id");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec get_time{};
     constexpr auto kInvalidClockId{-1};
@@ -89,7 +89,7 @@ TEST(TimeImplTest, ClockSettimeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Settime Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec new_time;
     ::clock_gettime(CLOCK_REALTIME, &new_time);
@@ -115,7 +115,7 @@ TEST(TimeImplTest, ClockGetResSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec get_res{};
 
@@ -134,7 +134,7 @@ TEST(TimeImplTest, ClockGetResFailsWithInvalidClockId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Clock Get Res Fails With Invalid Clock Id");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     struct timespec get_res{};
     constexpr auto kInvalidClockId{-1};
@@ -149,7 +149,7 @@ TEST(TimeImplTest, LocaltimeRSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Localtime RSuccess");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const auto current_time = std::chrono::system_clock::now();
     const std::time_t current_time_t{std::chrono::system_clock::to_time_t(current_time)};
@@ -181,7 +181,7 @@ TEST(TimeImplTest, TimerCreateAndDeleteSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies TimeImplTest Timer Create And Delete Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -202,7 +202,7 @@ TEST(TimeImplTest, TimerCreateFailsWithInvalidClockId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Create Fails With Invalid Clock Id");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -219,7 +219,7 @@ TEST(TimeImplTest, TimerDeleteFailsWithInvalidTimerId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Delete Fails With Invalid Timer Id");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     // create an invalid timer_t by using a value that's unlikely to be valid
     timer_t invalid_timerid{};
@@ -235,7 +235,7 @@ TEST(TimeImplTest, TimerSettimeSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -264,7 +264,7 @@ TEST(TimeImplTest, TimerSettimeFailsWithInvalidTimerId)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Fails With Invalid Timer Id");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t invalid_timerid{};
     std::memset(&invalid_timerid, 0xFF, sizeof(timer_t));
@@ -285,7 +285,7 @@ TEST(TimeImplTest, ClockGetCpuClockIdSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     clockid_t clock_id{};
     const pid_t current_pid = 1;
@@ -306,7 +306,7 @@ TEST(TimeImplTest, ClockGetCpuClockIdFailsWithInvalidPid)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Failure with Invalid Pid");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     clockid_t clock_id{};
     const pid_t current_pid = -1;
@@ -321,7 +321,7 @@ TEST(TimeImplTest, TimerCreateWithNullEvent)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With Null Event success");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
 
@@ -337,7 +337,7 @@ TEST(TimeImplTest, RelativeZeroTimerCreationSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the relative timer creation with zero it_value disarms the timer");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -373,7 +373,7 @@ TEST(TimeImplTest, PeriodicTimerCreationSuccess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the periodic timer creation is successful");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -421,7 +421,7 @@ TEST(TimeImplTest, TimerExpiresAtCorrectTime)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TimeImplTest Timer Expires At Correct Time");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -468,7 +468,7 @@ TEST(TimeImplTest, TimerWithSigEvThreadNotificationIsSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With SIGEV_THREAD notification is successful");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -499,7 +499,7 @@ TEST(TimeImplTest, TimerWithSigEvSignalNotificationIsSuccessful)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the timer Creation With SIGEV_SIGNAL notification is successful");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -538,7 +538,7 @@ TEST(TimeImplTest, ClockGetCpuClockIdWithCurrentProcess)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Clock Get Cpu Clock Id Success With Current Process Pid Zero");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     // POSIX specifies that pid 0 refers to the calling process.
     // This is more portable than using pid 1 (init), which may not be accessible
@@ -562,7 +562,7 @@ TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Success With Absolute Time Flag");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};
@@ -608,7 +608,7 @@ TEST(TimeImplTest, TimerSettimeOldValueReflectsPreviousArming)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies Timer Settime Old Value Reflects Previous Arming");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     timer_t timerid{};
     sigevent event{};

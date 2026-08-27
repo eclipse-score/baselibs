@@ -267,7 +267,7 @@ class PeriodicTaskFactory
                    const score::cpp::stop_token& token,
                    const typename Clock::time_point intended_execution) mutable {
             return score::cpp::apply(std::forward<CallableType>(callable),
-                              std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
+                                     std::tuple_cat(std::tie(token), std::tie(intended_execution), tuple));
         };
     }
 
@@ -278,9 +278,10 @@ class PeriodicTaskFactory
     {
         // coverity[autosar_cpp14_a18_9_2_violation] false-positive: already forwarded
         return [callable = std::forward<decltype(callable)>(callable)](
-                   const score::cpp::stop_token& token, const typename Clock::time_point intended_execution) mutable noexcept {
+                   const score::cpp::stop_token& token,
+                   const typename Clock::time_point intended_execution) mutable noexcept {
             return score::cpp::apply(std::forward<CallableType>(callable),
-                              std::tuple_cat(std::tie(token), std::tie(intended_execution)));
+                                     std::tuple_cat(std::tie(token), std::tie(intended_execution)));
         };
     }
 
@@ -296,7 +297,7 @@ class PeriodicTaskFactory
                    const score::cpp::stop_token& token, const typename Clock::time_point intended_execution) mutable {
             // coverity[autosar_cpp14_a0_1_2_violation] false-positive
             score::cpp::apply(std::forward<CallableType>(callable),
-                       std::tuple_cat(std::tie(token), std::tie(intended_execution)));
+                              std::tuple_cat(std::tie(token), std::tie(intended_execution)));
             return true;
         };
     }

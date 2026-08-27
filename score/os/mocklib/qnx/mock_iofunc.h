@@ -138,6 +138,21 @@ class MockIoFunc : public IoFunc
                 iofunc_notify_remove,
                 (resmgr_context_t * ctp, iofunc_notify_t* nop),
                 (const, noexcept, override));
+
+    MOCK_METHOD((std::int32_t),
+                iofunc_close_dup_default,
+                (resmgr_context_t * ctp, io_close_t* msg, iofunc_ocb_t* ocb),
+                (const, noexcept, override));
+
+    MOCK_METHOD((std::int32_t),
+                iofunc_lock_ocb_default,
+                (resmgr_context_t * ctp, void* reserved, iofunc_ocb_t* ocb),
+                (const, noexcept, override));
+
+    MOCK_METHOD((std::int32_t),
+                iofunc_unlock_ocb_default,
+                (resmgr_context_t * ctp, void* reserved, iofunc_ocb_t* ocb),
+                (const, noexcept, override));
 };
 
 /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */

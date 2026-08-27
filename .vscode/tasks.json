@@ -1,0 +1,69 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate compile_commands.json",
+            "type": "shell",
+            "isBackground": true,
+            "command": "bazel run //:generate_compile_commands",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Refresh IntelliSense",
+            "dependsOn": [
+                "Generate compile_commands.json"
+            ],
+            "command": "${command:clangd.restart}",
+            "isBackground": true,
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Generate rust-project.json",
+            "type": "shell",
+            "isBackground": true,
+            "command": "bazel run //:generate_rust_project",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Refresh rust-analyzer",
+            "dependsOn": [
+                "Generate rust-project.json"
+            ],
+            "command": "${command:rust-analyzer.reloadWorkspace}",
+            "isBackground": true,
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared"
+            }
+        }
+    ]
+}

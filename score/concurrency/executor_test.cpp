@@ -26,7 +26,8 @@ namespace
 class DummyExecutor final : public Executor
 {
   public:
-    explicit DummyExecutor(score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept
+    explicit DummyExecutor(
+        score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept
         : Executor(memory_resource)
     {
     }
