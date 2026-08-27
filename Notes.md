@@ -2,7 +2,7 @@
 
 ## Findings
 
-### `dependable_element_bitmanipulation` angelegt — baut, aber Lobster-Test schlägt (erwartbar) fehl
+### `dependable_element_bitmanipulation` angelegt — baut, Lobster-Test war erwartbar rot, jetzt behoben (siehe Finding weiter unten)
 
 **Kontext:** `dependable_element(name="dependable_element_bitmanipulation", assumptions_of_use=[":aous_bitmanipulation"],
 requirements=["@score_platform//docs/features/baselibs/requirements:feat_req_baselibs"],
@@ -33,16 +33,16 @@ tests=[], integrity_level="B")` in `score/bitmanipulation/BUILD` angelegt.
 **`bazel build //score/bitmanipulation:dependable_element_bitmanipulation`: SUCCESS** (HTML-Doku +
 Lobster-Report werden erzeugt).
 
-**`bazel test //score/bitmanipulation:dependable_element_bitmanipulation`: FAIL** — 13 von 14
-`feat_req_baselibs`-Einträgen bekommen "lobster error: missing reference to Component Requirements".
-Das ist die direkte, bisher nicht bis zum Test durchdachte Konsequenz der bereits dokumentierten
-pragmatischen Entscheidung weiter unten (`feat_req_baselibs` komplett statt eines schlanken
-`feat_req_bitmanipulation_only`): nur `feat_req__baselibs__bitmanipulation` hat ein
-zurückverweisendes `comp_req`; die anderen 13 (unrelated) Feature Requirements des `baselibs`-Moduls
-haben keins und lassen den Lobster-Traceability-Test am `dependable_element`-Level (Feature Req ↔
-Component Req) fehlschlagen. **Noch nicht behoben** — erfordert die zuvor verworfene Alternative
-(schlankes, bitmanipulation-only Feature-Requirements-Target) oder eine andere Lösung; siehe
-offene Frage an den User im Chat.
+**`bazel test //score/bitmanipulation:dependable_element_bitmanipulation`: war zunächst FAIL** — 13
+von 14 `feat_req_baselibs`-Einträgen bekamen "lobster error: missing reference to Component
+Requirements". Das war die direkte Konsequenz der ursprünglich pragmatischen Entscheidung weiter
+unten (`feat_req_baselibs` komplett statt eines schlanken `feat_req_bitmanipulation_only`): nur
+`feat_req__baselibs__bitmanipulation` hatte ein zurückverweisendes `comp_req`; die anderen 13
+(unrelated) Feature Requirements des `baselibs`-Moduls hatten keins und ließen den
+Lobster-Traceability-Test am `dependable_element`-Level (Feature Req ↔ Component Req)
+fehlschlagen. **GELÖST** — siehe Finding "dependable_element.requirements zieht immer die komplette
+RST-Quelldatei mit" weiter unten: die zuvor verworfene Alternative (schlankes,
+bitmanipulation-only Feature-Requirements-Target) wurde doch noch umgesetzt.
 
 ### `assumptions_of_use()` für `bitmanipulation`: gleiche `index.rst` wie `comp_req`, dank `only_types`-Patch
 
@@ -127,7 +127,7 @@ Stakeholder-Datei enthält 97 `stkh_req`-Einträge insgesamt, aber nur 4 eindeut
 `//docs/features/baselibs/requirements:feat_req_baselibs`, `//:docs` und `LC_ALL=C.UTF-8 bazel run
 //:docs_check` laufen alle fehlerfrei durch (`build succeeded`, 0 Schema-Warnungen).
 
-### dependable_element.requirements zieht immer die komplette RST-Quelldatei mit
+### dependable_element.requirements zieht immer die komplette RST-Quelldatei mit — GELÖST
 
 **Kontext:** Aufbau eines `dependable_element` für `bitmanipulation` als eigenständiges SEooC
 (`components = [":component_bitmanipulation"]`, `integrity_level = "B"`).
@@ -139,21 +139,50 @@ Stakeholder-Datei enthält 97 `stkh_req`-Einträge insgesamt, aber nur 4 eindeut
 nicht rein – Component Requirements kommen indirekt über `components` mit rein (das
 `component()`-Target kennt sie bereits über sein eigenes `requirements`-Attribut).
 
-→ Für `bitmanipulation` ist daher `@score_platform//docs/features/baselibs/requirements:feat_req_baselibs`
-das einzig passende Target für `dependable_element.requirements`.
-
 **Problem:** `_process_artifact_files()` (in `dependable_element.bzl`) symlinkt die komplette
 RST-Quelldatei eines `requirements`-Targets 1:1 in die generierte Doku (kein Filtern einzelner
 Requirements innerhalb einer Datei möglich). `feat_req_baselibs` enthält aber **alle 14
 Feature Requirements** von `baselibs` (u. a. `json_library`, `flatbuffers_library`,
-`static_reflection_library`, …), nicht nur `feat_req__baselibs__bitmanipulation`.
+`static_reflection_library`, …), nicht nur `feat_req__baselibs__bitmanipulation`. Das führte auch
+zum Lobster-Testfehler oben: die 13 fachfremden Requirements haben kein zurückverweisendes
+`comp_req` und lassen den Traceability-Test fehlschlagen.
 
-**Entscheidung (2026-08-26):** Für jetzt **pragmatisch Option 1** gewählt – `feat_req_baselibs`
-unverändert als `requirements`-Target für den `bitmanipulation`-`dependable_element` verwenden,
-auch wenn dadurch 13 fachfremde Feature Requirements mit in dessen generierter Dokumentation
-auftauchen. Verworfene Alternative: ein separates, schlankes
-`feat_req_bitmanipulation_only`-Target mit nur der einen relevanten Direktive anlegen — aktuell
-nicht umgesetzt, könnte bei Bedarf später nachgeholt werden.
+**Ursprüngliche Entscheidung (2026-08-26, inzwischen überholt):** Zunächst pragmatisch
+`feat_req_baselibs` unverändert als `requirements`-Target verwendet, Test-Fail als bekannter Mangel
+akzeptiert. Verworfene Alternative war ein separates, schlankes `feat_req_bitmanipulation_only`-Target.
+
+**Tatsächlich umgesetzte Lösung:** Die verworfene Alternative doch umgesetzt, indem die
+`feat_req__baselibs__bitmanipulation`-Direktive aus `score/docs/features/baselibs/requirements/index.rst`
+in eine eigene Datei `bitmanipulation.rst` (gleiches Verzeichnis) extrahiert und in `index.rst` per
+`.. include:: bitmanipulation.rst` wieder eingebunden wurde (Doku/Toctree bleibt unverändert
+gerendert). `rst_to_trlc.py` ist ein reiner Regex/Zeilen-Parser ohne Sphinx-Include-Auflösung — ein
+`.. include::` in der Rohtextdatei ist für ihn unsichtbar, d. h. es gibt **kein** Duplizierungsrisiko
+zwischen den beiden `.rst`-Dateien auf TRLC-Ebene, solange jede Datei nur dort explizit als `srcs`
+gelistet wird, wo ihr Inhalt tatsächlich konvertiert werden soll.
+
+Zwei neue Bazel-Targets in `score/docs/features/baselibs/requirements/BUILD`:
+- `feat_req_baselibs`: `srcs = ["index.rst", "bitmanipulation.rst"]` (weiterhin alle 14 Requirements,
+  jetzt aus zwei Quelldateien statt einer — `rst_srcs_to_trlc()` konvertiert jede `.rst`-Datei in
+  `srcs` unabhängig und mergt die Ergebnisse, das war schon vorher so und brauchte keine
+  Code-Änderung im `tooling`-Repo).
+- `feat_req_bitmanipulation` (neu): `srcs = ["bitmanipulation.rst"]`, liefert nur das eine relevante
+  Feature Requirement, TRLC-Package-Name default-abgeleitet vom Dateinamen-Stem: `Bitmanipulation`.
+
+In `baselibs/score/bitmanipulation/BUILD` verweisen jetzt `comp_req_bitmanipulation` (`deps` +
+`ref_package="Bitmanipulation"`), `component_bitmanipulation` (`requirements`-Liste) und
+`dependable_element_bitmanipulation` (`requirements`) auf `feat_req_bitmanipulation` statt
+`feat_req_baselibs` — vollständige Entkopplung von den 13 fachfremden Requirements.
+
+**Zusätzlich nötiger Fix in `score/docs/conf.py`:** Ohne weitere Maßnahme behandelte Sphinx
+`bitmanipulation.rst` zusätzlich als eigenständiges Dokument (weil es im gemounteten `docs`-Baum
+liegt), was zu `needs.duplicate_id` (Need doppelt registriert: einmal via `include`, einmal als
+eigenes Dokument) und `toc.not_included` (Orphan-Warnung) führte. Behoben durch
+`exclude_patterns = ["features/baselibs/requirements/bitmanipulation.rst"]` in `conf.py` — die Datei
+wird dadurch nur noch über das `include` gerendert, nie als eigenständiges Sphinx-Dokument.
+
+**Verifiziert:** `bazel build` + `bazel test //score/bitmanipulation:dependable_element_bitmanipulation`
+(1/1 PASSED, keine Lobster-Fehler mehr) und `LC_ALL=C.UTF-8 bazel run //:docs_check` (baselibs) laufen
+beide fehlerfrei durch.
 
 ### Lobster-Traceability: Unit Tests sind aktuell nicht mit Requirements verknüpft
 
