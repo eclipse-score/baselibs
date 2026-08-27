@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
@@ -604,33 +604,6 @@ cc_library(
         ":thread_pool",
         "@score_baselibs//score/concurrency/timed_executor",
         "@score_baselibs//score/concurrency/timed_executor:concurrent_timed_executor",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        ":atomic_indirector_test",
-        ":clock_tests",
-        ":condition_variable_tests",
-        ":delayed_task_tests",
-        ":executor_tests",
-        ":interruptible_wait_tests",
-        ":notification_tests",
-        ":periodic_task_tests",
-        ":synchronized_tests",
-        ":thread_pool_tests",
-        ":type_traits_tests",
-        ":long_running_threads_container_tests",
-        ":synchronized_queue_test",
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/concurrency/future:unit_test_suite",
-        "@score_baselibs//score/concurrency/timed_executor:unit_test_suite",
-        "@score_baselibs//score/concurrency/thread_load_tracking:unit_test_suite",
-    ],
-    visibility = [
-        "//visibility:public",
     ],
 )
 

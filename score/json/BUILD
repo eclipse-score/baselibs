@@ -13,7 +13,6 @@
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
@@ -227,23 +226,6 @@ cc_test(
     deps = [
         ":json_serializer",
         "@googletest//:gtest_main",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":json_test",
-        ":json_serializer_test",
-        ":json_writer_unit_test",  # workaround to include coverage for json_writer
-        "@score_baselibs//score/json/internal/model:unit_test",
-        "@score_baselibs//score/json/internal/writer/json_serialize:json_serialize_unit_test",  # workaround to include coverage for json_serialize
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/json/internal/parser:unit_tests",
-    ],
-    visibility = [
-        "//visibility:public",
     ],
 )
 

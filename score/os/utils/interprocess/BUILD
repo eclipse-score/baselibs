@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -59,17 +59,6 @@ cc_library(
         ":interprocess_mutex",
         "@score_baselibs//score/concurrency",
         "@score_baselibs//score/language/futurecpp",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":interprocess_conditional_variable_test",
-        ":interprocess_notification_test",
-    ],
-    visibility = [
-        "@score_baselibs//score/os/utils/test:__subpackages__",
     ],
 )
 
