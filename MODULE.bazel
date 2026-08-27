@@ -105,6 +105,17 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 bazel_dep(name = "score_docs_as_code", version = "8.0.0")
 bazel_dep(name = "score_process_description", version = "2.1.1")
 
+# Playground experiment: point score_docs_as_code at a local checkout (with a
+# new score_lobster_report Sphinx extension that renders a pre-built Lobster
+# traceability JSON report, e.g. from dependable_element()/component(), as a
+# table directly on a docs page). This mirrors how score_source_code_linker
+# reads bazel-testlogs off disk at Sphinx build time instead of depending on
+# the (testonly) test targets through the Bazel graph.
+local_path_override(
+    module_name = "score_docs_as_code",
+    path = "../docs-as-code",
+)
+
 bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 
 # Playground experiment: point score_tooling at a local checkout (with a

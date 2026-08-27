@@ -34,6 +34,7 @@ bitmanipulation
    safety_analysis/fmea.rst
    safety_analysis/dfa.rst
    detailed_design/chklst_impl_inspection.rst
+   traceability/index.rst
 
 
 Abstract
