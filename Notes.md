@@ -200,9 +200,38 @@ Die Kette wird aber nur teilweise geprüft:
   deklariert eine Verknüpfung zu einem Requirement. Das zugehörige `.lobster`-Item
   (`component_bitmanipulation.lobster`) hat für jeden Test kein `refs`-Feld.
 
-**Konsequenz:** Aktuell ist **keine einzige Component- oder Feature-Requirement-Anforderung
-tatsächlich durch einen Unit-Test nachweisbar abgedeckt** – der Build/Test ist trotzdem grün,
-weil diese Verknüpfung von der aktuellen Lobster-Policy nicht verlangt wird.
+**Konsequenz (Stand vor der Behebung):** Es war **keine einzige Component- oder
+Feature-Requirement-Anforderung tatsächlich durch einen Unit-Test nachweisbar abgedeckt** – der
+Build/Test war trotzdem grün, weil diese Verknüpfung von der aktuellen Lobster-Policy nicht
+verlangt wird.
+
+**✅ Behoben:** Alle 43 Testfälle in `bit_manipulation_test.cpp` (32) und
+`bitmask_operators_test.cpp` (11) sind jetzt instrumentiert (best-guess Mapping auf Basis der
+`comp_req`-Beschreibungstexte in `score/bitmanipulation/docs/requirements/index.rst`). Dabei
+wurden **zwei unabhängige Traceability-Mechanismen** identifiziert und beide bedient:
+
+1. **Lobster (`lobster-gtest`)** – erkennt ausschließlich die Property `lobster-tracing`
+   (Format `"<TRLC-Package>.<comp_req_id>"`, hier `"CompReqBitmanipulation.comp_req__bitmanipulation__<id>"`).
+   Verifiziert über direkte Inspektion von `component_bitmanipulation.lobster`: alle 43 Items
+   haben jetzt ein korrektes `refs`-Feld. `dependable_element_bitmanipulation`-Test bleibt grün.
+2. **`score_docs_as_code`'s `score_source_code_linker`-Extension** (Sphinx-needs-basierte
+   Testfall↔Requirement-Verlinkung für die Docs/Traceability-Metrics-Ansicht, unabhängig von
+   Lobster) – verlangt eigene Properties: `TestType`, `DerivationTechnique`, sowie
+   `PartiallyVerifies`/`FullyVerifies` (Wert = **roher** `comp_req__...`-Id ohne Namespace-Prefix,
+   im Gegensatz zum `lobster-tracing`-Tag). Genau das entspricht der im Skill
+   `.agents/skills/requirements-management-skill/test-to-requirement-linking.md` dokumentierten
+   Konvention. Optional `Description` (wird von diesem Parser zwar ignoriert, aber laut Skill
+   trotzdem empfohlen und wurde ergänzt).
+
+   `bazel run //:docs_check` zeigte nach dem reinen `lobster-tracing`-Zusatz neue Warnungen
+   ("Tests missing some properties: ...") für genau diese 43 Tests, weil sie zwar Properties
+   hatten, aber nicht das von diesem zweiten Mechanismus erwartete Schema erfüllten. Nach
+   Ergänzung von `TestType`/`DerivationTechnique`/`PartiallyVerifies`/`Description` sind diese
+   Warnungen verschwunden (`docs_check` meldet "Saving 43 parsed testcases..." ohne
+   "missing some properties" für bitmanipulation-Tests; die zwei übrig bleibenden
+   "missing all properties"-Meldungen betreffen nur die (unveränderten, unabhängigen)
+   `..._lobster_ci_test_executable` / `..._lobster_test`-Wrapper-Targets, nicht die eigentlichen
+   Unit-Tests).
 
 **Wie es (laut Tooling) eigentlich vorgesehen ist:** `lobster-gtest` unterstützt
 `::testing::Test::RecordProperty("lobster-tracing", "<tag>")` innerhalb eines Testfalls, um
@@ -227,12 +256,14 @@ TEST(SetBit, WithUInt8) {
 ```
 
 **Offene Punkte / mögliche nächste Schritte:**
-1. Testfälle in `bitmanipulation` mit `RecordProperty("lobster-tracing", ...)` versehen,
-   um eine echte Abdeckung zu deklarieren.
+1. ~~Testfälle in `bitmanipulation` mit `RecordProperty("lobster-tracing", ...)` versehen,
+   um eine echte Abdeckung zu deklarieren.~~ ✅ Erledigt (siehe oben, inkl. zweitem Mechanismus).
 2. Klären, ob/wie die Lobster-Policy (`needs_tracing_up`/`needs_tracing_down` für "Unit Test")
    angepasst werden kann/soll, damit fehlende Testabdeckung tatsächlich einen Build-Fehler auslöst
-   (aktuell rein informativ).
+   (aktuell rein informativ). — weiterhin offen.
 
 *(Quelle: Analyse von `component_bitmanipulation_report.json`, `comp_req_bitmanipulation.lobster`,
 `component_bitmanipulation_architecture.lobster`, `component_bitmanipulation.lobster` und
-`arch_to_reqs_from_lobster.py` im lokalen `score_tooling`-Checkout, Stand 2026-08-26.)*
+`arch_to_reqs_from_lobster.py` im lokalen `score_tooling`-Checkout, Stand 2026-08-26. Zweiter
+Mechanismus (`score_source_code_linker`) analysiert direkt im vendored
+`external/score_docs_as_code+/src/extensions/score_source_code_linker/{xml_parser.py,testlink.py}`.)*
