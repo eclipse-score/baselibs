@@ -101,6 +101,17 @@ bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
+# Playground experiment: point score_tooling at the poc/rst-package-param
+# branch (pushed), which has newer rules_score features (package=
+# overrides, req_kind directive filtering, [version==N] qualifier
+# stripping in derived_from/satisfies) not yet present in the registry's
+# score_tooling 2.2.1 release.
+git_override(
+    module_name = "score_tooling",
+    commit = "a429b1cbfdefe8a2b6d54284640eaeefab0b27b5",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
+
 # Playground experiment: point score_docs_as_code at the
 # playground/bitmanipulation-seooc-lobster-report branch (with a new
 # score_lobster_report Sphinx extension that renders a pre-built Lobster

@@ -34,11 +34,11 @@ filegroup(
 # index.rst for docs rendering), instead of all 14 baselibs feature
 # requirements. ref_package must match the TRLC package name that target's
 # RST conversion produces (default-derived from its "bitmanipulation.rst"
-# filename stem: "Bitmanipulation"). Our own RST is named "index.rst", so
-# without an explicit `package` override our own package would default to
-# "Index" - no collision with "Bitmanipulation", but kept explicit for
-# clarity and stability. See //../tooling (local score_tooling checkout) for
-# the `package` param added to component_requirements for this purpose.
+# filename stem: "Bitmanipulation"). package is set explicitly to
+# "CompReqBitmanipulation" (requires the local ../tooling checkout's
+# package= override, not present in registry score_tooling 2.2.1) since the
+# lobster-tracing RecordProperty tags in the unit tests below are written
+# as "CompReqBitmanipulation.<comp_req_id>" and must match this package name.
 component_requirements(
     name = "comp_req_bitmanipulation",
     srcs = ["docs/requirements/index.rst"],
@@ -48,16 +48,16 @@ component_requirements(
     visibility = ["//visibility:public"],
 )
 
-# The same index.rst also already contains the aou_req directives for this
-# component (Assumptions of Use section) - no separate file needed. None of
-# them use :derived_from:/:satisfies:, so no ref_package is required here.
-# requirements points at comp_req_bitmanipulation (component level, not
-# feat_req_baselibs), matching the S-CORE convention that AoUs trace to/count
-# towards Component Requirements, not Feature Requirements.
+# The aou_req directives (Assumptions of Use section) live in their own
+# aou.rst file, `.. include::`-d back into index.rst for docs rendering.
+# This is required because rst_to_trlc converts one .rst file into one
+# .trlc output (declared as a sibling of the source file) - sharing
+# index.rst between comp_req_bitmanipulation and aous_bitmanipulation would
+# make both targets produce the exact same generated .trlc path. None of the
+# AoUs use :derived_from:/:satisfies:, so no ref_package is required here.
 assumptions_of_use(
     name = "aous_bitmanipulation",
-    srcs = ["docs/requirements/index.rst"],
-    requirements = [":comp_req_bitmanipulation"],
+    srcs = ["docs/requirements/assumptions_of_use.rst"],
     visibility = ["//visibility:public"],
 )
 
@@ -247,6 +247,14 @@ dependable_element(
     components = [":component_bitmanipulation"],
     tests = [],
     integrity_level = "B",
+    # This SEooC is still in development: component_bitmanipulation has no
+    # test_case_coverage_lock yet, so the "Test Case Coverage" lobster level
+    # has no data. maturity="release" (the default) force-emits that level
+    # empty and fails the build on every Component Requirement missing a
+    # coverage-lock-backed reference. maturity="development" omits empty
+    # checking levels instead, downgrading such gaps to warnings until the
+    # lock file is introduced.
+    maturity = "development",
     visibility = ["//visibility:public"],
 )
 

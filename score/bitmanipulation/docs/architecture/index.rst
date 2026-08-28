@@ -88,7 +88,7 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==1],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==2],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
    :belongs_to: comp__baselibs_bit_manipulation[version==1]
 
    Component-level view, authored as PlantUML (``static_design.puml``) rather
