@@ -34,7 +34,7 @@ gcc.toolchain(
     target_os = "linux",
     use_default_package = True,
     version = "12.2.0",
-    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY
+    extra_known_features = SCORE_GCC_WARNING_FEATURES_POLICY,
 )
 gcc.toolchain(
     name = "score_gcc_aarch64_toolchain",
