@@ -27,7 +27,27 @@ Overview/Description
 --------------------
 
 see :need:`doc__bitmanipulation`
+The ``bitmanipulation`` component provides low-level, header-only utilities for
+manipulating individual bits, half-bytes and bytes, as well as type-safe
+bitmask operators for scoped enumerations (``enum class``).
 
+It is split into two independent units:
+
+- **Bit Manipulation** (``bit_manipulation.h`` / ``.cpp``): offers the
+  ``HalfByte`` and ``Byte`` value types together with free functions to set,
+  clear, toggle and test individual bits, and to compose/extract (half-)bytes.
+  These operations are bounds-safe: callers cannot address a bit outside the
+  underlying type's width.
+- **Bitmask Operators** (``bitmask_operators.h`` / ``.cpp``): implements the
+  C++ *BitmaskType* named requirement (``operator|``, ``operator&``,
+  ``operator^``, ``operator~`` and the corresponding assignment operators) for
+  ``enum class`` types that opt in via ``score::enable_bitmask_operators<T>``.
+  This keeps flag combinations type-safe while still allowing POSIX-style flag
+  composition, which is used in particular by ``lib/os`` to restrict flag
+  values to a certified subset.
+
+Both units are aggregated into a single component, ``component_bitmanipulation``,
+with no coupling between them.
 Static Architecture
 -------------------
 
@@ -61,6 +81,29 @@ Static Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+.. comp_arc_sta:: Bitmanipulation Component Static View (PlantUML)
+   :id: comp_arc_sta__baselibs__bitmanip_static
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==2],comp_req__bitmanipulation__bitmask_operators[version==1],comp_req__bitmanipulation__bounds_safety[version==1],comp_req__bitmanipulation__header_only[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   Component-level view, authored as PlantUML (``static_design.puml``) rather
+   than derived from need metadata. This is the same source that feeds the
+   ``architectural_design`` Bazel target (``arch_design_bitmanipulation``), so
+   it is validated at build time against the actual ``component()``/``unit()``
+   structure declared in the ``BUILD`` file and cannot drift from the real
+   Bazel target graph: the SEooC ``Bitmanipulation`` contains
+   ``component_bitmanipulation``, which in turn contains the two units
+   ``bit_manipulation`` and ``bitmask``.
+
+   .. uml:: static_design.puml
+      :align: center
+      :alt: Bitmanipulation static architecture (SEooC -> component -> units)
+      :width: 100%
 
 Interfaces
 ----------

@@ -1,0 +1,52 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+
+// Control measures already referenced (as prose, ":mitigated_by:") in
+// ../fmea.rst, re-expressed for the TRLC-based fmea() Bazel rule.  Each
+// measure names, in "mitigates", the FailureMode record it addresses (no FTA
+// diagram is wired here, so this is informational only; without a
+// ``root_causes`` fault tree the fmea() rule renders failure modes and
+// control measures as independent "Unlinked ..." sections rather than paired
+// per-chain sections).
+
+package BitmanipulationSafetyAnalysis
+
+import ScoreReq
+
+ScoreReq.ControlMeasure PlatformErrorReactionAoU {
+    description = "Platform-level AoU requiring users to check and react to Bitmanipulation's return value (aou_req__platform__error_reaction)."
+    mitigates   = "BitmanipulationSafetyAnalysis.BitmanipulationNoReturn"
+    safety      = ScoreReq.Asil.B
+    version     = 1
+}
+
+ScoreReq.ControlMeasure PlatformFlowMonitoringAoU {
+    description = "Platform-level AoU requiring users to apply program flow monitoring (aou_req__platform__flow_monitoring)."
+    mitigates   = "BitmanipulationSafetyAnalysis.BitmanipulationLateReturn"
+    safety      = ScoreReq.Asil.B
+    version     = 1
+}
+
+ScoreReq.ControlMeasure BitmanipulationBoundsSafetyCheck {
+    description = "Bitmanipulation checks bit-position/field bounds before applying an operation (comp_req__bitmanipulation__bounds_safety)."
+    mitigates   = "BitmanipulationSafetyAnalysis.BitmanipulationConstraintViolation"
+    safety      = ScoreReq.Asil.B
+    version     = 1
+}
+
+ScoreReq.ControlMeasure BitmanipulationEnumConstraintsAoU {
+    description = "Component-level AoU requiring enum values describing bit positions to be correctly defined by the caller (aou_req__bitmanipulation__enum_constraints)."
+    mitigates   = "BitmanipulationSafetyAnalysis.BitmanipulationWrongInput"
+    safety      = ScoreReq.Asil.B
+    version     = 1
+}

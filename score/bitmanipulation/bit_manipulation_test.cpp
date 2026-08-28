@@ -29,6 +29,7 @@ using ::testing::Eq;
 TEST(HalfByte, CanBeConstructedFromUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a HalfByte can be constructed from a uint8_t value within its 4-bit range.");
     RecordProperty("TestType", "requirements-based");
@@ -42,6 +43,7 @@ TEST(HalfByte, CanBeConstructedFromUInt8)
 TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a HalfByte can be constructed from a uint16_t value that fits within its 4-bit range.");
     RecordProperty("TestType", "requirements-based");
@@ -55,6 +57,7 @@ TEST(HalfByte, CanBeConstructedFromUInt16IfInRange)
 TEST(HalfByte, CanBeConstructedFromBigUInt8ButUpperHalfIsDropped)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that constructing a HalfByte from a uint8_t value larger than 4 bits drops the upper bits "
                    "and keeps only the lower nibble.");
@@ -69,6 +72,7 @@ TEST(HalfByte, CanBeConstructedFromBigUInt8ButUpperHalfIsDropped)
 TEST(Byte, CanBeConstructedFromUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description", "Check that a Byte can be constructed directly from a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -81,6 +85,7 @@ TEST(Byte, CanBeConstructedFromUInt8)
 TEST(Byte, CanBeConstructedFromUInt16IfInRange)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a Byte can be constructed from a uint16_t value that fits within a single byte.");
     RecordProperty("TestType", "requirements-based");
@@ -94,6 +99,7 @@ TEST(Byte, CanBeConstructedFromUInt16IfInRange)
 TEST(Byte, CanBeConstructedFromTwoHalfBytes)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a Byte constructed from an upper and lower HalfByte concatenates them into the expected "
                    "combined value.");
@@ -111,6 +117,7 @@ TEST(Byte, CanBeConstructedFromTwoHalfBytes)
 TEST(Byte, CanBeConstructedFromTwoBigHalfBytes)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that constructing a Byte from HalfBytes built from oversized values still yields the correct "
                    "combined byte, since only the lower nibble of each half is kept.");
@@ -128,6 +135,7 @@ TEST(Byte, CanBeConstructedFromTwoBigHalfBytes)
 TEST(Byte, CanBeConstructedFromTwoZeroHalfBytes)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description", "Check that a Byte constructed from two zero HalfBytes results in the value zero.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -143,6 +151,7 @@ TEST(Byte, CanBeConstructedFromTwoZeroHalfBytes)
 TEST(Byte, CanBeConstructedFromTwoHalfBytesWithMaxValue)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a Byte constructed from two max-value HalfBytes results in the value 255.");
     RecordProperty("TestType", "requirements-based");
@@ -158,6 +167,7 @@ TEST(Byte, CanBeConstructedFromTwoHalfBytesWithMaxValue)
 TEST(Extract, UpperHalfByteFromAByte)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description", "Check that UpperHalfByte extracts the upper nibble of a Byte.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -172,6 +182,7 @@ TEST(Extract, UpperHalfByteFromAByte)
 TEST(Extract, LowerHalfByteFromAByte)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description", "Check that LowerHalfByte extracts the lower nibble of a Byte.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -186,6 +197,7 @@ TEST(Extract, LowerHalfByteFromAByte)
 TEST(Extract, LowerHalfByteFromAByteCanBeConvertedToUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_operations");
     RecordProperty("Description",
                    "Check that a HalfByte extracted from a Byte converts implicitly to its underlying uint8_t value.");
     RecordProperty("TestType", "interface-test");
@@ -201,6 +213,7 @@ TEST(Extract, LowerHalfByteFromAByteCanBeConvertedToUInt8)
 TEST(SetBit, WithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description", "Check that SetBit sets the requested bit of a uint8_t value and returns true.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -216,6 +229,7 @@ TEST(SetBit, WithUInt8)
 TEST(SetBit, WithUInt64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty(
         "Description",
         "Check that SetBit sets the requested bit of a uint64_t value, supporting integral types up to 64 bits.");
@@ -235,6 +249,7 @@ TEST(SetBit, WithUInt64)
 TEST(SetBit, WithNegativeInt32)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description",
                    "Check that SetBit sets the requested bit of a negative (sign-bit-set) int32_t value, i.e. "
                    "the internal unsigned promotion and narrowing back to a signed type do not corrupt the result.");
@@ -252,6 +267,7 @@ TEST(SetBit, WithNegativeInt32)
 TEST(SetBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
                    "Check that SetBit returns false and leaves the value unmodified when the bit position exceeds "
                    "the width of a uint8_t value.");
@@ -271,6 +287,7 @@ TEST(SetBit, OverflowWithUInt8)
 TEST(ClearBit, WithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description", "Check that ClearBit clears the requested bit of a uint8_t value and returns true.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -286,6 +303,7 @@ TEST(ClearBit, WithUInt8)
 TEST(ClearBit, WithUInt64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty(
         "Description",
         "Check that ClearBit clears the requested bit of a uint64_t value, supporting integral types up to 64 bits.");
@@ -305,6 +323,7 @@ TEST(ClearBit, WithUInt64)
 TEST(ClearBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
                    "Check that ClearBit returns false and leaves the value unmodified when the bit position exceeds "
                    "the width of a uint8_t value.");
@@ -324,6 +343,7 @@ TEST(ClearBit, OverflowWithUInt8)
 TEST(ToggleBit, WithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description", "Check that ToggleBit flips the requested bits of a uint8_t value and returns true.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -340,6 +360,7 @@ TEST(ToggleBit, WithUInt8)
 TEST(ToggleBit, WithUInt64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty(
         "Description",
         "Check that ToggleBit flips the requested bits of a uint64_t value, supporting integral types up to 64 bits.");
@@ -360,6 +381,7 @@ TEST(ToggleBit, WithUInt64)
 TEST(ToggleBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
                    "Check that ToggleBit returns false and leaves the value unmodified when the bit position exceeds "
                    "the width of a uint8_t value.");
@@ -379,6 +401,7 @@ TEST(ToggleBit, OverflowWithUInt8)
 TEST(CheckBit, WithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description",
                    "Check that CheckBit reports the correct set/unset state of bits in a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -393,6 +416,7 @@ TEST(CheckBit, WithUInt8)
 TEST(CheckBit, WithUInt64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bit_operations");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bit_operations");
     RecordProperty("Description",
                    "Check that CheckBit reports the correct set/unset state of bits in a uint64_t value, supporting "
                    "integral types up to 64 bits.");
@@ -409,6 +433,7 @@ TEST(CheckBit, WithUInt64)
 TEST(CheckBit, OverflowWithUInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bounds_safety");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bounds_safety");
     RecordProperty("Description",
                    "Check that CheckBit returns false when the bit position exceeds the width of a uint8_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -423,6 +448,7 @@ TEST(CheckBit, OverflowWithUInt8)
 TEST(GetByte, FromUint8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the single byte of a uint8_t value unchanged.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -435,6 +461,7 @@ TEST(GetByte, FromUint8)
 TEST(GetByte, FromInt8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the single byte of a signed int8_t value unchanged.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -447,6 +474,7 @@ TEST(GetByte, FromInt8)
 TEST(GetByte, FromUint16)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the correct byte at each position of a uint16_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -460,6 +488,7 @@ TEST(GetByte, FromUint16)
 TEST(GetByte, FromInt16)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int16_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -474,6 +503,7 @@ TEST(GetByte, FromInt16)
 TEST(GetByte, FromUint32)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description", "Check that GetByte extracts the correct byte at each position of a uint32_t value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -489,6 +519,7 @@ TEST(GetByte, FromUint32)
 TEST(GetByte, FromInt32)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int32_t value.");
     RecordProperty("TestType", "requirements-based");
@@ -505,6 +536,7 @@ TEST(GetByte, FromInt32)
 TEST(GetByte, FromUint64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a uint64_t value, the widest "
                    "supported integral type.");
@@ -526,6 +558,7 @@ TEST(GetByte, FromUint64)
 TEST(GetByte, FromInt64)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__byte_extraction");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__byte_extraction");
     RecordProperty("Description",
                    "Check that GetByte extracts the correct byte at each position of a signed int64_t value, the "
                    "widest supported integral type.");

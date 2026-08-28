@@ -45,6 +45,7 @@ using UnderlyingType = std::underlying_type_t<MyBitmask>;
 TEST(MyBitmask, SupportsOperatorOr)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description", "Check that operator| combines two bitmask enumerators into their bitwise union.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -58,6 +59,7 @@ TEST(MyBitmask, SupportsOperatorOr)
 TEST(MyBitmask, SupportsOperatorAnd)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description",
                    "Check that operator& reports whether each queried bit is present in a combined bitmask.");
     RecordProperty("TestType", "requirements-based");
@@ -75,6 +77,7 @@ TEST(MyBitmask, SupportsOperatorAnd)
 TEST(MyBitmask, SupportsOperatorXor)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description",
                    "Check that operator^ combines two bitmask enumerators into their bitwise exclusive-or.");
     RecordProperty("TestType", "requirements-based");
@@ -89,6 +92,7 @@ TEST(MyBitmask, SupportsOperatorXor)
 TEST(MyBitmask, SupportsOperatorNot)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description", "Check that operator~ inverts all bits of a bitmask enumerator.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -104,6 +108,7 @@ TEST(MyBitmask, SupportsOperatorNot)
 TEST(MyBitmask, SupportsAssignOperatorAnd)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description",
                    "Check that operator&= clears bits of a bitmask that are not present in the right-hand operand.");
     RecordProperty("TestType", "requirements-based");
@@ -119,6 +124,7 @@ TEST(MyBitmask, SupportsAssignOperatorAnd)
 TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty(
         "Description",
         "Check that operator&= leaves a bitmask unchanged when the right-hand operand matches the same bit.");
@@ -135,6 +141,7 @@ TEST(MyBitmask, SupportsAssignOperatorAndMatching)
 TEST(MyBitmask, SupportsAssignOperatorOr)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description",
                    "Check that operator|= sets additional bits of a bitmask from the right-hand operand.");
     RecordProperty("TestType", "requirements-based");
@@ -150,6 +157,7 @@ TEST(MyBitmask, SupportsAssignOperatorOr)
 TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty(
         "Description",
         "Check that operator|= leaves a bitmask unchanged when the right-hand operand matches an already-set bit.");
@@ -166,6 +174,7 @@ TEST(MyBitmask, SupportsAssignOperatorOrMatching)
 TEST(MyBitmask, SupportsAssignOperatorXOr)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description", "Check that operator^= toggles bits of a bitmask from the right-hand operand.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
@@ -180,6 +189,7 @@ TEST(MyBitmask, SupportsAssignOperatorXOr)
 TEST(MyBitmask, SupportsAssignOperatorXOrMatching)
 {
     RecordProperty("PartiallyVerifies", "comp_req__bitmanipulation__bitmask_operators");
+    RecordProperty("lobster-tracing", "CompReqBitmanipulation.comp_req__bitmanipulation__bitmask_operators");
     RecordProperty("Description", "Check that operator^= clears a bitmask to zero when XOR-ed with itself.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");

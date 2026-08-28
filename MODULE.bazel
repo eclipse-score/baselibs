@@ -101,7 +101,41 @@ bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
+# Playground experiment: point score_tooling at the poc/rst-package-param
+# branch (pushed), which has newer rules_score features (package=
+# overrides, req_kind directive filtering, [version==N] qualifier
+# stripping in derived_from/satisfies) not yet present in the registry's
+# score_tooling 2.2.1 release.
+git_override(
+    module_name = "score_tooling",
+    commit = "a429b1cbfdefe8a2b6d54284640eaeefab0b27b5",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
+
+# Playground experiment: point score_docs_as_code at the
+# playground/bitmanipulation-seooc-lobster-report branch (with a new
+# score_lobster_report Sphinx extension that renders a pre-built Lobster
+# traceability JSON report, e.g. from dependable_element()/component(), as a
+# table directly on a docs page). This mirrors how score_source_code_linker
+# reads bazel-testlogs off disk at Sphinx build time instead of depending on
+# the (testonly) test targets through the Bazel graph.
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "be3c0a812d38f350784ff89e0dc15bd635e9631a",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
 bazel_dep(name = "score_platform", version = "0.7.1")
+
+# Playground experiment: point score_platform at the
+# playground/bitmanipulation-seooc branch of the score checkout instead of
+# the registry version, so we can reference its docs/features RST sources
+# (e.g. the baselibs feature requirements) directly.
+git_override(
+    module_name = "score_platform",
+    commit = "875df24ba6983546c0e2ed619436eb25fc216ccf",
+    remote = "https://github.com/eclipse-score/score.git",
+)
 
 ## Configure the python toolchain
 
@@ -136,7 +170,11 @@ llvm.toolchain(
     llvm_version = "22.1.7",
     stdlib = {"linux-x86_64": "stdc++"},
 )
-use_repo(llvm, "llvm_toolchain")
+
+# "llvm_toolchain_llvm" exposes the raw LLVM distribution (libclang.so, C++
+# include dirs), needed to register our own libclang_toolchain for
+# score_tooling's unit()/component() cpp_parser (see //bazel/toolchains).
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 
