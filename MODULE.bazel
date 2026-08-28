@@ -110,7 +110,7 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 # the (testonly) test targets through the Bazel graph.
 git_override(
     module_name = "score_docs_as_code",
-    commit = "ec3576f23a1b66a98c0cd2b68af938f2d638a8b7",
+    commit = "be3c0a812d38f350784ff89e0dc15bd635e9631a",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
