@@ -114,7 +114,7 @@ bazel_dep(name = "score_process_description", version = "2.1.1")
 # the (testonly) test targets through the Bazel graph.
 git_override(
     module_name = "score_docs_as_code",
-    commit = "ec3576f23a1b66a98c0cd2b68af938f2d638a8b7",
+    commit = "be3c0a812d38f350784ff89e0dc15bd635e9631a",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
@@ -125,10 +125,12 @@ bazel_dep(name = "score_tooling", version = "1.3.1", dev_dependency = True)
 # component_requirements/feature_requirements/assumed_system_requirements,
 # see the branch's git log) instead of the registry version, to fix a TRLC
 # package name collision between two requirement targets both converted
-# from same-named "index.rst" sources.
+# from same-named "index.rst" sources. Bumped to 94a5290 (pushed) to also
+# pick up the fmea_assembler.py TRLCRST workaround, needed for
+# fmea_bitmanipulation to actually build.
 git_override(
     module_name = "score_tooling",
-    commit = "b820127d056194f6d358a8f44ccb6f070f3937d3",
+    commit = "94a5290",
     remote = "https://github.com/eclipse-score/tooling.git",
 )
 
