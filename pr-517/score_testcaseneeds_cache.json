@@ -28198,7 +28198,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28212,7 +28212,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28226,7 +28226,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28240,7 +28240,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28254,7 +28254,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28268,7 +28268,7 @@
   {
     "name": "InterruptibleStateSetterTest/0__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28282,7 +28282,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28296,7 +28296,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28310,7 +28310,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28324,7 +28324,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28338,7 +28338,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28352,7 +28352,7 @@
   {
     "name": "InterruptibleStateSetterTest/1__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28366,7 +28366,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28380,7 +28380,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28394,7 +28394,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28408,7 +28408,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28422,7 +28422,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28436,7 +28436,7 @@
   {
     "name": "InterruptibleStateSetterTest/2__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28450,7 +28450,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28464,7 +28464,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28478,7 +28478,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28492,7 +28492,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28506,7 +28506,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28520,7 +28520,7 @@
   {
     "name": "InterruptibleStateSetterTest/3__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28534,7 +28534,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28548,7 +28548,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28562,7 +28562,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28576,7 +28576,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28590,7 +28590,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28604,7 +28604,7 @@
   {
     "name": "InterruptibleStateSetterTest/4__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28618,7 +28618,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28632,7 +28632,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28646,7 +28646,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28660,7 +28660,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28674,7 +28674,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28688,7 +28688,7 @@
   {
     "name": "InterruptibleStateSetterTest/5__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28702,7 +28702,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28716,7 +28716,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28730,7 +28730,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28744,7 +28744,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28758,7 +28758,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28772,7 +28772,7 @@
   {
     "name": "InterruptibleStateSetterTest/6__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28786,7 +28786,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28800,7 +28800,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28814,7 +28814,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28828,7 +28828,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28842,7 +28842,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28856,7 +28856,7 @@
   {
     "name": "InterruptibleStateSetterTest/7__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28870,7 +28870,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28884,7 +28884,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28898,7 +28898,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28912,7 +28912,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28926,7 +28926,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28940,7 +28940,7 @@
   {
     "name": "InterruptibleStateSetterTest/8__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28954,7 +28954,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetValueStoresTheValueAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "230",
+    "line": "258",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28968,7 +28968,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "236",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28982,7 +28982,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetErrorStoresTheErrorAndReturnsTrue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "244",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -28996,7 +28996,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetErrorASecondTimeReturnsFalseAndKeepsTheFirstError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "250",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -29010,7 +29010,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetErrorAfterSetValueReturnsFalseAndKeepsTheValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "258",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -29024,7 +29024,7 @@
   {
     "name": "InterruptibleStateSetterTest/9__SetValueAfterSetErrorReturnsFalseAndKeepsTheError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "266",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -29038,7 +29038,7 @@
   {
     "name": "InterruptibleStateInitialResultTest__ValuedStateStartsWithTheUnsetError",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "277",
+    "line": "305",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -29052,7 +29052,7 @@
   {
     "name": "InterruptibleStateInitialResultTest__VoidStateStartsWithAValue",
     "file": "score/concurrency/future/interruptible_state_test.cpp",
-    "line": "286",
+    "line": "314",
     "result": "passed",
     "repo_name": null,
     "hash": null,
