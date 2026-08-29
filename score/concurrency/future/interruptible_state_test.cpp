@@ -109,6 +109,12 @@ static_assert(
     std::is_constructible<score::Result<testing::ThrowingMoveOnlyType>, testing::ThrowingMoveOnlyType&&>::value,
     "the stored result must remain constructible from a value whose move constructor may throw");
 
+// The two values the setter tests hand to SetValue(). They differ so that a rejected second call can
+// be shown to have left the first value in place, rather than to have overwritten it with an equal
+// one.
+constexpr int kFirstValue{1};
+constexpr int kOtherValue{2};
+
 template <typename T>
 class InterruptibleStateSetterTestBase : public ::testing::Test
 {
@@ -129,19 +135,24 @@ class InterruptibleStateSetterTest : public InterruptibleStateSetterTestBase<T>
   protected:
     bool SetValueOnState()
     {
-        return this->state_->SetValue(value_);
+        return this->state_->SetValue(first_value_);
     }
 
-    void ExpectHoldsExpectedValue()
+    bool SetOtherValueOnState()
+    {
+        return this->state_->SetValue(other_value_);
+    }
+
+    void ExpectHoldsFirstValue()
     {
         auto& result = this->state_->GetValue();
         ASSERT_TRUE(result.has_value());
-        EXPECT_EQ(result.value().GetValue(), expected_value_);
+        EXPECT_EQ(result.value().GetValue(), kFirstValue);
     }
 
   private:
-    int expected_value_{1};
-    T value_{expected_value_};
+    T first_value_{kFirstValue};
+    T other_value_{kOtherValue};
 };
 
 template <typename T>
@@ -150,19 +161,24 @@ class InterruptibleStateSetterTest<T&> : public InterruptibleStateSetterTestBase
   protected:
     bool SetValueOnState()
     {
-        return this->state_->SetValue(value_);
+        return this->state_->SetValue(first_value_);
     }
 
-    void ExpectHoldsExpectedValue()
+    bool SetOtherValueOnState()
+    {
+        return this->state_->SetValue(other_value_);
+    }
+
+    void ExpectHoldsFirstValue()
     {
         auto& result = this->state_->GetValue();
         ASSERT_TRUE(result.has_value());
-        EXPECT_EQ(result.value().get().GetValue(), expected_value_);
+        EXPECT_EQ(result.value().get().GetValue(), kFirstValue);
     }
 
   private:
-    int expected_value_{1};
-    T value_{expected_value_};
+    T first_value_{kFirstValue};
+    T other_value_{kOtherValue};
 };
 
 // MoveOnlyType and ThrowingMoveOnlyType both have a deleted copy constructor, so the const-reference overload of
@@ -173,19 +189,24 @@ class MoveOnlyInterruptibleStateSetterTest : public InterruptibleStateSetterTest
   protected:
     bool SetValueOnState()
     {
-        return this->state_->SetValue(std::move(value_));
+        return this->state_->SetValue(std::move(first_value_));
     }
 
-    void ExpectHoldsExpectedValue()
+    bool SetOtherValueOnState()
+    {
+        return this->state_->SetValue(std::move(other_value_));
+    }
+
+    void ExpectHoldsFirstValue()
     {
         auto& result = this->state_->GetValue();
         ASSERT_TRUE(result.has_value());
-        EXPECT_EQ(result.value().GetValue(), expected_value_);
+        EXPECT_EQ(result.value().GetValue(), kFirstValue);
     }
 
   private:
-    int expected_value_{1};
-    T value_{expected_value_};
+    T first_value_{kFirstValue};
+    T other_value_{kOtherValue};
 };
 
 template <>
@@ -209,7 +230,14 @@ class InterruptibleStateSetterTest<void> : public InterruptibleStateSetterTestBa
         return this->state_->SetValue();
     }
 
-    void ExpectHoldsExpectedValue()
+    // SetValue() carries no value for a void state, so there is no second value to tell apart here;
+    // what the second call has to show is only that it is rejected.
+    bool SetOtherValueOnState()
+    {
+        return this->state_->SetValue();
+    }
+
+    void ExpectHoldsFirstValue()
     {
         EXPECT_TRUE(this->state_->GetValue().has_value());
     }
@@ -230,15 +258,15 @@ TYPED_TEST_SUITE(InterruptibleStateSetterTest, SetterTypesUnderTest, /*unused*/)
 TYPED_TEST(InterruptibleStateSetterTest, SetValueStoresTheValueAndReturnsTrue)
 {
     EXPECT_TRUE(this->SetValueOnState());
-    this->ExpectHoldsExpectedValue();
+    this->ExpectHoldsFirstValue();
 }
 
 TYPED_TEST(InterruptibleStateSetterTest, SetValueASecondTimeReturnsFalseAndKeepsTheFirstValue)
 {
     ASSERT_TRUE(this->SetValueOnState());
 
-    EXPECT_FALSE(this->SetValueOnState());
-    this->ExpectHoldsExpectedValue();
+    EXPECT_FALSE(this->SetOtherValueOnState());
+    this->ExpectHoldsFirstValue();
 }
 
 TYPED_TEST(InterruptibleStateSetterTest, SetErrorStoresTheErrorAndReturnsTrue)
@@ -260,7 +288,7 @@ TYPED_TEST(InterruptibleStateSetterTest, SetErrorAfterSetValueReturnsFalseAndKee
     ASSERT_TRUE(this->SetValueOnState());
 
     EXPECT_FALSE(this->state_->SetError(Error::kPromiseBroken));
-    this->ExpectHoldsExpectedValue();
+    this->ExpectHoldsFirstValue();
 }
 
 TYPED_TEST(InterruptibleStateSetterTest, SetValueAfterSetErrorReturnsFalseAndKeepsTheError)

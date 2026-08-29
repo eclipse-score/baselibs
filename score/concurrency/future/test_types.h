@@ -55,7 +55,7 @@ class MoveOnlyType : public CopyAndMovableType
     ~MoveOnlyType() noexcept = default;
 };
 
-/// \brief Constructible by copy and by move, but assignable by neither.
+/// @brief Constructible by copy and by move, but assignable by neither.
 ///
 /// This is the shape that forces InterruptibleState to construct its result in place rather than
 /// assign it: score::Result<NonAssignableType> inherits the missing assignment operators, so the
@@ -72,7 +72,7 @@ class NonAssignableType : public CopyAndMovableType
     ~NonAssignableType() noexcept = default;
 };
 
-/// \brief Move constructible only, and its move constructor may throw.
+/// @brief Move constructible only, and its move constructor may throw.
 ///
 /// score::Result<T>::emplace() is constrained on std::is_nothrow_constructible, whereas constructing
 /// the Result accepts any constructible T. This type therefore sits exactly on the boundary: the
