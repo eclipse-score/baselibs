@@ -95,6 +95,12 @@ docs(
         "@score_process_description//:needs_json_file",
     ],
     source_dir = "docs",
+    # Take test links from the *.lobster activity pools emitted by lobster-gtest
+    # instead of scanning bazel-testlogs/**/test.xml. The pools are produced by
+    # every build of the dependable_element()/component() targets, so the
+    # testcase needs no longer depend on the cc_tests having been named
+    # explicitly in a `bazel test` invocation.
+    testlink_source = "lobster",
 )
 
 # Generate `compile_commands.json`.
