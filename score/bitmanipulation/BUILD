@@ -27,24 +27,23 @@ filegroup(
 
 # Converts the comp_req directives to TRLC. derived_from references in the
 # RST point to feat_req__baselibs__bitmanipulation, which lives in the
-# feat_req_bitmanipulation target of the local score checkout (see
-# local_path_override for score_platform in //MODULE.bazel) - a narrow
-# target that converts only bitmanipulation's own feat_req (extracted into
-# its own bitmanipulation.rst, included back into feat_req_baselibs's
-# index.rst for docs rendering), instead of all 14 baselibs feature
-# requirements. ref_package must match the TRLC package name that target's
-# RST conversion produces (default-derived from its "bitmanipulation.rst"
-# filename stem: "Bitmanipulation"). package is set explicitly to
-# "CompReqBitmanipulation" (requires the local ../tooling checkout's
-# package= override, not present in registry score_tooling 2.2.1) since the
-# lobster-tracing RecordProperty tags in the unit tests below are written
-# as "CompReqBitmanipulation.<comp_req_id>" and must match this package name.
+# feat_req_baselibs target of the score checkout (see git_override for
+# score_platform in //MODULE.bazel) - this converts all 14 baselibs feature
+# requirements (bitmanipulation.rst was merged back into index.rst, so there
+# is no narrower per-feature target anymore).
+# ref_package must match the TRLC package name that target's RST conversion
+# produces (default-derived from its "index.rst" filename stem: "Index").
+# package is set explicitly to "CompReqBitmanipulation" (requires the local
+# ../tooling checkout's package= override, not present in registry
+# score_tooling 2.2.1) since the lobster-tracing RecordProperty tags in the
+# unit tests below are written as "CompReqBitmanipulation.<comp_req_id>" and
+# must match this package name.
 component_requirements(
     name = "comp_req_bitmanipulation",
     srcs = ["docs/requirements/component_requirements.rst"],
-    deps = ["@score_platform//docs/features/baselibs/requirements:feat_req_bitmanipulation"],
+    deps = ["@score_platform//docs/features/baselibs/requirements:feat_req_baselibs"],
     package = "CompReqBitmanipulation",
-    ref_package = "Bitmanipulation",
+    ref_package = "Index",
     visibility = ["//visibility:public"],
 )
 
@@ -159,7 +158,7 @@ component(
         ":bit_manipulation",
         ":bitmask",
     ],
-    # feat_req_bitmanipulation is listed alongside comp_req_bitmanipulation
+    # feat_req_baselibs is listed alongside comp_req_bitmanipulation
     # (not just in comp_req_bitmanipulation's own `deps`) so its .lobster file
     # is available to the component rule's lobster report generation, which
     # otherwise can't resolve comp_req_bitmanipulation's derived_from
@@ -167,7 +166,7 @@ component(
     # docstring in //../tooling (local score_tooling checkout).
     requirements = [
         ":comp_req_bitmanipulation",
-        "@score_platform//docs/features/baselibs/requirements:feat_req_bitmanipulation",
+        "@score_platform//docs/features/baselibs/requirements:feat_req_baselibs",
     ],
     visibility = ["//visibility:public"],
 )
@@ -227,17 +226,20 @@ dependability_analysis(
 # architecture and the implementing component into a single certifiable
 # dependable element.
 #
-# requirements points at feat_req_bitmanipulation, not comp_req_bitmanipulation:
+# requirements points at feat_req_baselibs, not comp_req_bitmanipulation:
 # dependable_element.requirements only accepts targets providing
 # FeatureRequirementsInfo/AssumedSystemRequirementsInfo. comp_req_bitmanipulation
 # (ComponentRequirementsInfo) is already pulled in transitively via
 # `components` -> component_bitmanipulation's own `requirements` attribute.
-# feat_req_bitmanipulation converts only feat_req__baselibs__bitmanipulation
-# (extracted from feat_req_baselibs's index.rst into its own
-# bitmanipulation.rst, still included back for docs rendering - see
-# //docs/features/baselibs/requirements/BUILD in the score checkout), so the
-# lobster traceability chain here no longer sees baselibs' other 13,
-# unrelated feature requirements.
+# feat_req_baselibs converts all 14 baselibs feature requirements (the former
+# narrower feat_req_bitmanipulation target and its separate bitmanipulation.rst
+# file were retired - see //docs/features/baselibs/requirements/BUILD in the
+# score checkout), so the lobster traceability chain here now also sees
+# baselibs' other 13, unrelated feature requirements. Accepted trade-off: the
+# "Feature Requirements" level of this report's coverage is well below 100%
+# (only bitmanipulation's own feat_req is ever referenced by a Component
+# Requirement); this is a reporting-precision concern only, not a build/test
+# failure under maturity=development.
 #
 # dependability_analysis wraps fmea_bitmanipulation (see above), a TRLC
 # re-expression of the failure modes/control measures already analysed as
@@ -247,7 +249,7 @@ dependability_analysis(
 dependable_element(
     name = "dependable_element_bitmanipulation",
     assumptions_of_use = [":aous_bitmanipulation"],
-    requirements = ["@score_platform//docs/features/baselibs/requirements:feat_req_bitmanipulation"],
+    requirements = ["@score_platform//docs/features/baselibs/requirements:feat_req_baselibs"],
     architectural_design = [":arch_design_bitmanipulation"],
     dependability_analysis = [":dependability_analysis_bitmanipulation"],
     components = [":component_bitmanipulation"],

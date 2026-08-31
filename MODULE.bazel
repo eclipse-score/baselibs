@@ -131,10 +131,12 @@ bazel_dep(name = "score_platform", version = "0.7.1")
 # Playground experiment: point score_platform at the
 # playground/bitmanipulation-seooc branch of the score checkout instead of
 # the registry version, so we can reference its docs/features RST sources
-# (e.g. the baselibs feature requirements) directly.
+# (e.g. the baselibs feature requirements) directly. This commit reverts
+# the earlier bitmanipulation.rst extraction (merged back into index.rst;
+# feat_req_bitmanipulation removed, only feat_req_baselibs remains).
 git_override(
     module_name = "score_platform",
-    commit = "af96b69cfe1b7f06fe467530a6c1fa9a11994c14",
+    commit = "10d492b0fb7747734220ea213d67e2e1b9a31dc5",
     remote = "https://github.com/eclipse-score/score.git",
 )
 
