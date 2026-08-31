@@ -18,16 +18,23 @@ module(name = "score_baselibs")
 # S-CORE Toolchains (DO NOT MODIFY)
 #
 ###############################################################################
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4")
-bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.2")
+bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 
 # GCC Toolchains
-gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
+gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc")
 
 ## Linux Toolchains
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
     target_cpu = "x86_64",
+    target_os = "linux",
+    use_default_package = True,
+    version = "12.2.0",
+)
+gcc.toolchain(
+    name = "score_gcc_aarch64_toolchain",
+    target_cpu = "aarch64",
     target_os = "linux",
     use_default_package = True,
     version = "12.2.0",
@@ -63,6 +70,7 @@ use_repo(
     "score_autosd10_aarch64_toolchain",
     "score_autosd10_x86_64_toolchain",
     "score_ebclfsa_toolchain",
+    "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
 )
 
@@ -72,7 +80,6 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 ferrocene = use_extension(
     "@score_toolchains_rust//extensions:ferrocene_toolchain_ext.bzl",
     "ferrocene_toolchain_ext",
-    dev_dependency = True,
 )
 ferrocene.toolchain(
     name = "ferrocene_aarch64_ebclfsa",
@@ -102,6 +109,27 @@ use_repo(
 )
 
 # QNX Toolchains
+bazel_dep(name = "score_rules_imagefs", version = "0.0.4", dev_dependency = True)
+
+imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
+imagefs.toolchain(
+    name = "score_qnx_x86_64_ifs_toolchain",
+    sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
+    sdp_version = "8.0.4",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    type = "ifs",
+)
+imagefs.toolchain(
+    name = "score_qnx_aarch64_ifs_toolchain",
+    sdp_to_import = "@score_qcc_aarch64_toolchain_pkg",
+    sdp_version = "8.0.4",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    type = "ifs",
+)
+use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
+
 qcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 qcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
@@ -122,55 +150,10 @@ qcc.toolchain(
 use_repo(
     qcc,
     "score_qcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
     "score_qcc_x86_64_toolchain_pkg",
 )
-
-###############################################################################
-#
-# Repository-specific toolchain additions
-#
-###############################################################################
-
-# aarch64 Linux GCC toolchain (needed for bl-aarch64-linux configuration, not in central S-CORE config)
-gcc.toolchain(
-    name = "score_gcc_aarch64_toolchain",
-    target_cpu = "aarch64",
-    target_os = "linux",
-    use_default_package = True,
-    version = "12.2.0",
-)
-use_repo(
-    gcc,
-    "score_gcc_aarch64_toolchain",
-)
-
-# Import QNX aarch64 toolchain package (missing from central S-CORE use_repo block)
-use_repo(
-    qcc,
-    "score_qcc_aarch64_toolchain_pkg",
-)
-
-bazel_dep(name = "score_rules_imagefs", version = "0.0.4", dev_dependency = True)
-
-imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
-imagefs.toolchain(
-    name = "score_qnx_x86_64_ifs_toolchain",
-    sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
-    sdp_version = "8.0.0",
-    target_cpu = "x86_64",
-    target_os = "qnx",
-    type = "ifs",
-)
-imagefs.toolchain(
-    name = "score_qnx_aarch64_ifs_toolchain",
-    sdp_to_import = "@score_qcc_aarch64_toolchain_pkg",
-    sdp_version = "8.0.0",
-    target_cpu = "aarch64",
-    target_os = "qnx",
-    type = "ifs",
-)
-use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
@@ -180,7 +163,7 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
 ## Configure the Rust toolchain
 
-bazel_dep(name = "rules_rust", version = "0.68.1-score")
+bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.11")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
@@ -312,4 +295,4 @@ git_override(
 # Constraint values for specifying platforms and toolchains
 #
 #############################################################
-bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "platforms", version = "1.1.0")

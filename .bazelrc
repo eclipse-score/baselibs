@@ -53,9 +53,8 @@ test --test_output=errors
 build:bl-x86_64-linux --config=score-linux-x86_64
 test:bl-x86_64-linux --config=_bl_common
 
-# Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
-build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
-build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
+# Target configuration for CPU:AArch64|OS:Linux build (repository-specific addition leveraging central configuration)
+build:bl-aarch64-linux --config=score-linux-aarch64
 build:bl-aarch64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_linux_gnu
 test:bl-aarch64-linux --config=_bl_common
 test:bl-aarch64-linux --test_timeout=300
