@@ -1,9 +1,0 @@
-# sphinx_mounts (used by score_docs_as_code's live_preview/docs_check) honours
-# .ignore files inside a mounted directory tree during document discovery.
-# assumptions_of_use.rst is meant to be `.. include::`-d into index.rst only
-# (see that file), not mounted as its own standalone Sphinx document -
-# otherwise every aou_req it defines is created twice ("already exists").
-# This file is NOT a .gitignore: it must not stop git from tracking
-# assumptions_of_use.rst, only stop sphinx_mounts' own directory walk from
-# picking it up as a second, independent source document.
-assumptions_of_use.rst

@@ -21,7 +21,7 @@ load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "architectural_d
 # other consumers that don't need TrlcProviderInfo.
 filegroup(
     name = "comp_req_bitmanipulation_rst",
-    srcs = ["docs/requirements/index.rst"],
+    srcs = ["docs/requirements/component_requirements.rst"],
     visibility = ["//visibility:public"],
 )
 
@@ -41,20 +41,26 @@ filegroup(
 # as "CompReqBitmanipulation.<comp_req_id>" and must match this package name.
 component_requirements(
     name = "comp_req_bitmanipulation",
-    srcs = ["docs/requirements/index.rst"],
+    srcs = ["docs/requirements/component_requirements.rst"],
     deps = ["@score_platform//docs/features/baselibs/requirements:feat_req_bitmanipulation"],
     package = "CompReqBitmanipulation",
     ref_package = "Bitmanipulation",
     visibility = ["//visibility:public"],
 )
 
-# The aou_req directives (Assumptions of Use section) live in their own
-# aou.rst file, `.. include::`-d back into index.rst for docs rendering.
-# This is required because rst_to_trlc converts one .rst file into one
-# .trlc output (declared as a sibling of the source file) - sharing
-# index.rst between comp_req_bitmanipulation and aous_bitmanipulation would
-# make both targets produce the exact same generated .trlc path. None of the
-# AoUs use :derived_from:/:satisfies:, so no ref_package is required here.
+# The aou_req directives (Assumptions of Use) live in their own
+# assumptions_of_use.rst file, referenced (not included) from
+# docs/requirements/index.rst via a hidden toctree, so it renders as its own
+# page instead of inline prose - this also means it no longer needs a
+# colocated .ignore file to keep sphinx_mounts from discovering it a second
+# time (there is nothing left to "discover twice": toctree, unlike include,
+# doesn't create a second registration of the same content). Keeping this as
+# its own file also remains required regardless of Sphinx rendering: rst_to_trlc
+# converts one .rst file into one .trlc output (declared as a sibling of the
+# source file), so sharing one file between comp_req_bitmanipulation and
+# aous_bitmanipulation would make both targets produce the exact same
+# generated .trlc path. None of the AoUs use :derived_from:/:satisfies:, so no
+# ref_package is required here.
 assumptions_of_use(
     name = "aous_bitmanipulation",
     srcs = ["docs/requirements/assumptions_of_use.rst"],
