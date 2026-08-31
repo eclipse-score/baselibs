@@ -1,0 +1,19 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+# Coverage justifications for lines/branches that cannot be exercised by
+# tests. Each entry pairs with a COV_JUSTIFIED <id> marker in the source.
+# Fields: id (kebab-case), category (defensive_programming |
+# tool_false_positive | platform_specific | other), platforms ([linux]),
+# reason. See @score_tooling//coverage:COVERAGE_GUIDE.md.
+version: 1
+justifications: []

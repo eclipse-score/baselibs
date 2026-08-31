@@ -32,6 +32,8 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
         "@score_baselibs//score/memory/shared:__pkg__",
     ],
     deps = [

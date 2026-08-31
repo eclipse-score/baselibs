@@ -18,6 +18,8 @@ load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_e
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 package(default_visibility = [
+    # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+    "//tools/coverage:__pkg__",
     "@score_baselibs//score/memory:__subpackages__",
 ])
 
