@@ -186,5 +186,9 @@
   {
     "version": "pr-531",
     "url": "https://eclipse-score.github.io/baselibs/pr-531/"
+  },
+  {
+    "version": "pr-533",
+    "url": "https://eclipse-score.github.io/baselibs/pr-533/"
   }
 ]
