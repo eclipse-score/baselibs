@@ -13,7 +13,6 @@
 #ifndef LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H_
 #define LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H_
 
-#include "score/os/file_stream.h"
 #include "score/os/linux/ifaddrs.h"
 #include "score/os/linux/pthread.h"
 #include "score/os/linux/shm.h"
