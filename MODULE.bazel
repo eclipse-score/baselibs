@@ -133,7 +133,7 @@ bazel_dep(name = "score_platform", version = "0.7.1")
 # (e.g. the baselibs feature requirements) directly.
 git_override(
     module_name = "score_platform",
-    commit = "875df24ba6983546c0e2ed619436eb25fc216ccf",
+    commit = "af96b69cfe1b7f06fe467530a6c1fa9a11994c14",
     remote = "https://github.com/eclipse-score/score.git",
 )
 
