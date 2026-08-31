@@ -25,7 +25,9 @@ Post-processing steps:
     out of each ``description`` into proper JSON-schema attributes;
   * strip flatc's type-based ``minimum`` / ``maximum``, re-adding only from ``@min`` / ``@max``;
   * inline every ``$ref`` except tables marked ``@shared: <name>`` in the .fbs, which
-    are lifted into ``$defs/<name>`` and referenced (used for tables shared by 2+ parents).
+    are lifted into ``$defs/<name>`` and referenced (used for tables shared by 2+ parents);
+  * additionally lift any table on a reference cycle into ``$defs`` under its flatc name,
+    since inlining a cycle would never terminate.
 
 The result is deterministic (fixed key ordering, ``json.dumps(indent=4)``), so the checked-in
 schema is simply this tool's committed output and a drift test can compare byte-for-byte.
@@ -124,7 +126,7 @@ class _Enricher:
                 if meta["default"] is not None:
                     out["default"] = meta["default"]
                 return out, meta["required"]
-            # Non-shared table reference -> inline it. Such fields are authored bare
+            # Non-lifted table reference -> inline it. Such fields are authored bare
             # (metadata lives on the referenced table), so they are never required here.
             return self.build_object(self._defs[ref]), False
 
@@ -137,6 +139,22 @@ class _Enricher:
             if desc:
                 out["description"] = desc
             out["items"] = self._build_items(node["items"])
+            # Fixed-length FlatBuffer arrays: flatc pins the length via minItems/maxItems.
+            if "minItems" in node:
+                out["minItems"] = node["minItems"]
+            if "maxItems" in node:
+                out["maxItems"] = node["maxItems"]
+            return out, meta["required"]
+        # union type (anyOf) is used for union fields, which are authored bare
+        # metadata lives on the referenced table, so they are never required here.
+        if "anyOf" in node:
+            meta, desc = _parse_description(node.get("description", ""))
+            out = {}
+            if meta["title"] is not None:
+                out["title"] = meta["title"]
+            if desc:
+                out["description"] = desc
+            out["anyOf"] = [self._build_items(alt) for alt in node["anyOf"]]
             return out, meta["required"]
 
         # Scalar / string / bool leaf.
@@ -173,10 +191,11 @@ class _Enricher:
         meta, desc = _parse_description(def_node.get("description", ""))
         properties = {}
         required = []
+        flatc_required = set(def_node.get("required", []))
         for field_name, field_node in def_node.get("properties", {}).items():
             built, is_required = self.build_field(field_node)
             properties[field_name] = built
-            if is_required:
+            if is_required or field_name in flatc_required:
                 required.append(field_name)
         out = {"type": "object"}
         if meta["title"] is not None:
@@ -207,6 +226,66 @@ def _collect_shared_defs(definitions):
     return shared
 
 
+def _iter_ref_names(node):
+    """Yield the name of every definition referenced by a property node."""
+    if "$ref" in node:
+        yield node["$ref"].split("/")[-1]
+    items = node.get("items")
+    if isinstance(items, dict):
+        yield from _iter_ref_names(items)
+    for alt in node.get("anyOf", []):
+        yield from _iter_ref_names(alt)
+
+
+def _collect_cycle_defs(definitions, shared):
+    """Map full def name -> ``$defs`` key for every table that must be lifted to break a cycle.
+
+    Inlining a table reference recurses into the referenced table, so a reference cycle --
+    which FlatBuffers permits, since it stores tables by offset -- would never terminate.
+    Lifting one table per cycle into ``$defs`` breaks it: a lifted table is emitted as a
+    ``$ref`` instead of being inlined. Tables already marked ``@shared`` break cycles for
+    the same reason, so they are skipped here and treated as cuts.
+
+    Iteration follows ``definitions`` order (i.e. .fbs order), so the chosen cut -- and
+    therefore the output -- is deterministic. The full flatc name is used as the ``$defs``
+    key: unlike ``@shared`` names it is not author-chosen, and it is unique by construction.
+    """
+    edges = {
+        name: list(
+            dict.fromkeys(
+                ref
+                for field in node.get("properties", {}).values()
+                for ref in _iter_ref_names(field)
+            )
+        )
+        for name, node in definitions.items()
+    }
+
+    def reaches_itself(start, cuts):
+        """Whether ``start`` is reachable from itself without passing through a cut."""
+        stack, seen = [start], set()
+        while stack:
+            for nxt in edges.get(stack.pop(), ()):
+                if nxt == start:
+                    return True
+                if nxt not in cuts and nxt not in seen:
+                    seen.add(nxt)
+                    stack.append(nxt)
+        return False
+
+    cycle = {}
+    for full_name in definitions:
+        if full_name in shared:
+            continue
+        # Every table lifted so far is emitted as a ``$ref``, cutting paths through it.
+        if reaches_itself(full_name, set(shared) | set(cycle)):
+            cycle[full_name] = full_name
+    for name in cycle.values():
+        if name in shared.values():
+            raise GenerationError("@shared name collides with cycle def: %s" % name)
+    return cycle
+
+
 def generate(raw_schema_json):
     """Post-process raw flatc JSON schema into rich draft-2020-12 format.
 
@@ -219,6 +298,9 @@ def generate(raw_schema_json):
     raw = raw_schema_json
     definitions = raw["definitions"]
     shared_defs = _collect_shared_defs(definitions)
+    # Tables on a reference cycle are lifted alongside the ``@shared`` ones: both are
+    # emitted as ``$ref``, which is what stops the inlining from recursing forever.
+    shared_defs.update(_collect_cycle_defs(definitions, shared_defs))
     enricher = _Enricher(definitions, shared_defs)
 
     root_name = raw["$ref"].split("/")[-1]
