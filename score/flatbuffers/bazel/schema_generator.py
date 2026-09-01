@@ -108,62 +108,69 @@ class _Enricher:
     def _enum_values(self, def_name):
         return self._defs[def_name]["enum"]
 
+    @staticmethod
+    def _annotate(out, meta, desc, node):
+        """Merge the field's annotations (title / description / deprecated) into ``out``.
+
+        Draft 2020-12 allows these siblings next to a ``$ref``, so they survive even when
+        the field is emitted as a reference to a lifted table. Where ``out`` already carries
+        a title / description -- an inlined table brings its own -- the field-level value
+        wins. Keys are re-emitted in a fixed order so the output stays deterministic.
+        """
+        annotated = {key: out[key] for key in ("$ref", "type") if key in out}
+        title = meta["title"] if meta["title"] is not None else out.get("title")
+        if title is not None:
+            annotated["title"] = title
+        description = desc or out.get("description")
+        if description:
+            annotated["description"] = description
+        annotated.update(
+            (key, value) for key, value in out.items() if key not in annotated
+        )
+        if node.get("deprecated"):
+            annotated["deprecated"] = True
+        return annotated
+
     def build_field(self, node):
         """Build an enriched schema node for a property. Returns (schema_node, required)."""
+        meta, desc = _parse_description(node.get("description", ""))
         if "$ref" in node:
             ref = self._ref_name(node)
             if ref in self._shared_defs:
-                meta, _ = _parse_description(node.get("description", ""))
-                return {"$ref": "#/$defs/%s" % self._shared_defs[ref]}, meta["required"]
-            if self._is_enum(ref):
-                meta, desc = _parse_description(node.get("description", ""))
-                out = {"type": "string"}
-                if meta["title"] is not None:
-                    out["title"] = meta["title"]
-                if desc:
-                    out["description"] = desc
-                out["enum"] = self._enum_values(ref)
+                out = {"$ref": "#/$defs/%s" % self._shared_defs[ref]}
+            elif self._is_enum(ref):
+                out = {"type": "string", "enum": self._enum_values(ref)}
                 if meta["default"] is not None:
                     out["default"] = meta["default"]
-                return out, meta["required"]
-            # Non-lifted table reference -> inline it. Such fields are authored bare
-            # (metadata lives on the referenced table), so they are never required here.
-            return self.build_object(self._defs[ref]), False
+            else:
+                # Non-lifted table reference -> inline it. Such fields are authored bare
+                # (metadata lives on the referenced table), so they are never required here;
+                # anything that is set on the field still wins over what the table carries.
+                return (
+                    self._annotate(
+                        self.build_object(self._defs[ref]), meta, desc, node
+                    ),
+                    False,
+                )
+            return self._annotate(out, meta, desc, node), meta["required"]
 
         node_type = node.get("type")
         if node_type == "array":
-            meta, desc = _parse_description(node.get("description", ""))
-            out = {"type": "array"}
-            if meta["title"] is not None:
-                out["title"] = meta["title"]
-            if desc:
-                out["description"] = desc
-            out["items"] = self._build_items(node["items"])
+            out = {"type": "array", "items": self._build_items(node["items"])}
             # Fixed-length FlatBuffer arrays: flatc pins the length via minItems/maxItems.
             if "minItems" in node:
                 out["minItems"] = node["minItems"]
             if "maxItems" in node:
                 out["maxItems"] = node["maxItems"]
-            return out, meta["required"]
-        # union type (anyOf) is used for union fields, which are authored bare
-        # metadata lives on the referenced table, so they are never required here.
+            return self._annotate(out, meta, desc, node), meta["required"]
+        # union type (anyOf) is used for union fields, which are normally authored bare
+        # (metadata lives on the referenced table).
         if "anyOf" in node:
-            meta, desc = _parse_description(node.get("description", ""))
-            out = {}
-            if meta["title"] is not None:
-                out["title"] = meta["title"]
-            if desc:
-                out["description"] = desc
-            out["anyOf"] = [self._build_items(alt) for alt in node["anyOf"]]
-            return out, meta["required"]
+            out = {"anyOf": [self._build_items(alt) for alt in node["anyOf"]]}
+            return self._annotate(out, meta, desc, node), meta["required"]
 
         # Scalar / string / bool leaf.
-        meta, desc = _parse_description(node.get("description", ""))
         out = {"type": node_type}
-        if meta["title"] is not None:
-            out["title"] = meta["title"]
-        if desc:
-            out["description"] = desc
         if "enum" in node:  # inline enum defined directly on the node (not via $ref)
             out["enum"] = node["enum"]
         if meta["default"] is not None:
@@ -172,9 +179,7 @@ class _Enricher:
             out["minimum"] = meta["min"]
         if meta["max"] is not None:
             out["maximum"] = meta["max"]
-        if node.get("deprecated"):
-            out["deprecated"] = True
-        return out, meta["required"]
+        return self._annotate(out, meta, desc, node), meta["required"]
 
     def _build_items(self, items):
         if "$ref" in items:

@@ -158,7 +158,10 @@ class BuildFieldTest(unittest.TestCase):
 
     def test_scalar_key_order_is_deterministic(self):
         out, _ = self._enricher().build_field(
-            {"type": "integer", "description": "@title: T\n@max: 9\n@min: 1\n@default: 2\nd"}
+            {
+                "type": "integer",
+                "description": "@title: T\n@max: 9\n@min: 1\n@default: 2\nd",
+            }
         )
         self.assertEqual(
             list(out), ["type", "title", "description", "default", "minimum", "maximum"]
@@ -215,12 +218,26 @@ class BuildFieldTest(unittest.TestCase):
         )
 
     def test_ref_to_shared_def(self):
-        enricher = self._enricher(
-            {"NS.Thing": _table()}, shared={"NS.Thing": "Thing"}
-        )
+        enricher = self._enricher({"NS.Thing": _table()}, shared={"NS.Thing": "Thing"})
         out, required = enricher.build_field(_ref("NS.Thing", "@required"))
         self.assertEqual(out, {"$ref": "#/$defs/Thing"})
         self.assertTrue(required)
+
+    def test_ref_to_shared_def_keeps_field_annotations(self):
+        # Draft 2020-12 allows annotation siblings next to a ``$ref``.
+        enricher = self._enricher({"NS.Thing": _table()}, shared={"NS.Thing": "Thing"})
+        node = _ref("NS.Thing", "@title: The Thing\nwhat it does")
+        node["deprecated"] = True
+        out, _ = enricher.build_field(node)
+        self.assertEqual(
+            out,
+            {
+                "$ref": "#/$defs/Thing",
+                "title": "The Thing",
+                "description": "what it does",
+                "deprecated": True,
+            },
+        )
 
     def test_ref_to_plain_table_is_inlined_and_never_required(self):
         enricher = self._enricher(
@@ -237,6 +254,61 @@ class BuildFieldTest(unittest.TestCase):
                 "properties": {"a": {"type": "integer"}},
             },
         )
+
+    def test_inlined_table_field_annotations_win_over_the_table(self):
+        enricher = self._enricher(
+            {"NS.Thing": _table("@title: Thing\ntable doc", {"a": {"type": "integer"}})}
+        )
+        node = _ref("NS.Thing", "@title: Field\nfield doc")
+        node["deprecated"] = True
+        out, _ = enricher.build_field(node)
+        self.assertEqual(
+            out,
+            {
+                "type": "object",
+                "title": "Field",
+                "description": "field doc",
+                "additionalProperties": False,
+                "properties": {"a": {"type": "integer"}},
+                "deprecated": True,
+            },
+        )
+
+    def test_inlined_table_keeps_its_own_annotations_when_field_is_bare(self):
+        enricher = self._enricher({"NS.Thing": _table("@title: Thing\ntable doc")})
+        out, _ = enricher.build_field(_ref("NS.Thing"))
+        self.assertEqual(out["title"], "Thing")
+        self.assertEqual(out["description"], "table doc")
+
+    def test_deprecated_ref_to_enum(self):
+        enricher = self._enricher({"NS.Color": {"enum": ["RED"]}})
+        node = _ref("NS.Color", "@title: Color")
+        node["deprecated"] = True
+        out, _ = enricher.build_field(node)
+        self.assertEqual(
+            out,
+            {
+                "type": "string",
+                "title": "Color",
+                "enum": ["RED"],
+                "deprecated": True,
+            },
+        )
+
+    def test_deprecated_array(self):
+        out, _ = self._enricher().build_field(
+            {"type": "array", "items": {"type": "integer"}, "deprecated": True}
+        )
+        self.assertEqual(
+            out, {"type": "array", "items": {"type": "integer"}, "deprecated": True}
+        )
+
+    def test_deprecated_union(self):
+        enricher = self._enricher({"NS.A": _table()})
+        out, _ = enricher.build_field(
+            {"anyOf": [_ref("NS.A")], "description": "@title: U", "deprecated": True}
+        )
+        self.assertEqual(list(out), ["title", "anyOf", "deprecated"])
 
     def test_array_of_scalars_drops_item_bounds(self):
         out, required = self._enricher().build_field(
@@ -271,9 +343,7 @@ class BuildFieldTest(unittest.TestCase):
 
     def test_array_of_enum_refs(self):
         enricher = self._enricher({"NS.Color": {"enum": ["RED"]}})
-        out, _ = enricher.build_field(
-            {"type": "array", "items": _ref("NS.Color")}
-        )
+        out, _ = enricher.build_field({"type": "array", "items": _ref("NS.Color")})
         self.assertEqual(out["items"], {"type": "string", "enum": ["RED"]})
 
     def test_array_of_shared_refs(self):
@@ -395,7 +465,8 @@ class IterRefNamesTest(unittest.TestCase):
 
     def test_scalar_items_yield_nothing(self):
         self.assertEqual(
-            list(sg._iter_ref_names({"type": "array", "items": {"type": "integer"}})), []
+            list(sg._iter_ref_names({"type": "array", "items": {"type": "integer"}})),
+            [],
         )
 
     def test_plain_scalar(self):
@@ -512,7 +583,8 @@ class GenerateTest(unittest.TestCase):
             "$ref": "#/definitions/NS.Root",
             "definitions": {
                 "NS.Root": _table(
-                    "@title: Root\ndoc", {"a": {"type": "string", "description": "@required"}}
+                    "@title: Root\ndoc",
+                    {"a": {"type": "string", "description": "@required"}},
                 )
             },
         }
