@@ -82,7 +82,6 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "@googletest//:gtest",
-        "@score_baselibs//score/os:file_stream",
         "@score_baselibs//score/os/linux:linux_header",
     ],
 )
@@ -100,18 +99,6 @@ cc_library(
 )
 
 cc_library(
-    name = "cpuid_mock",
-    testonly = True,
-    srcs = ["cpuidmock.cpp"],
-    hdrs = ["cpuidmock.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/os:cpuid",
-    ],
-)
-
-cc_library(
     name = "machine_mock",
     testonly = True,
     hdrs = ["machine_mock.h"],
@@ -120,18 +107,6 @@ cc_library(
     deps = [
         "@googletest//:gtest",
         "@score_baselibs//score/os/utils:machine",
-    ],
-)
-
-cc_library(
-    name = "file_stream_mock",
-    testonly = True,
-    srcs = ["file_stream_mock.cpp"],
-    hdrs = ["file_stream_mock.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/os:file_stream",
     ],
 )
 
@@ -155,7 +130,6 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "@googletest//:gtest",
-        "@score_baselibs//score/os:file_stream",
         "@score_baselibs//score/os:libgen",
     ],
 )
