@@ -57,7 +57,7 @@ TEST(StdlibImpl, getenv)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 0), 0);
+    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1), 0);
     const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
     EXPECT_STREQ(env, "TEST_VALUE");
     EXPECT_EQ(unsetenv("TEST_ENV"), 0);
@@ -71,7 +71,7 @@ TEST(StdlibImpl, setenv)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 0), 0);
+    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1), 0);
     const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
     EXPECT_STREQ(env, "TEST_VALUE");
     EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE_OVERWRITE", 0), 0);
@@ -91,7 +91,7 @@ TEST(StdlibImpl, unsetenv)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 0), 0);
+    EXPECT_EQ(score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1), 0);
     const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
     EXPECT_STREQ(env, "TEST_VALUE");
     EXPECT_EQ(score::os::Stdlib::instance().unsetenv("TEST_ENV"), 0);
