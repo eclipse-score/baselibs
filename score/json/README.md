@@ -15,10 +15,12 @@
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
   - [Selecting base library](#selecting-base-library)
+  - [Selecting writer library](#selecting-writer-library)
 
 This JSON library is designed as an abstraction layer which can switch to using
 other parsers/serializers under the hood. At the moment it uses vaJson from Vector for parsing,
-which is ASIL D certified. For serialization this library uses a custom implementation.
+which is ASIL D certified. For serialization a custom implementation is used by default, with vaJson
+available as an alternative, [selectable via a feature flag](#selecting-writer-library).
 
 This library requires to be ASIL B certified, so it can be used in other ASIL B
 certified components.
@@ -338,7 +340,7 @@ since they would require high amount of work. Please be aware and note:
 For the most up to date information on Requirements please follow the provided links to CodeBeamer.
 
 Adaptive Platform SW Safety Requirements
-- [The users of the vaJson ibrary SHALL guarantee the integrity of the data used to initialize the `amsr::json::JsonData` buffer.](broken_link_c/issue/6576406)
+- [The users of the vaJson Library SHALL guarantee the integrity of the data used to initialize the `score::json::vajson::JsonData` buffer.](broken_link_c/issue/6576406)
 
 [SW Component Requirements](broken_link_c/tracker/566325?workingSetId=-1&layout_name=document&subtreeRoot=5310849)
 - The JSON-Library shall support at least the functional set of RFC-8259.
@@ -378,3 +380,15 @@ In order to make use of nlohmann json library, feature flag needs to be set. Ple
 bazel test --config=spp_host_clang //score/json/... --//score/json:base_library="nlohmann"
 
 nlohmann json library do not supports hexadecimal. As it is not part of json standard.
+
+## Selecting writer library
+
+Independently of the parser, the serialization backend is selected by the `writer_library` flag. It accepts
+`json_serialize` (the default, a custom implementation) and `vajson` (the vector json library). The parser flag
+`base_library` has no influence on serialization.
+
+bazel test --config=spp_host_clang //score/json/... --//platform/aas/lib/json:writer_library="vajson"
+
+Mind that the two backends differ in the representation they emit: `json_serialize` pretty-prints with a four
+space indentation, whereas `vajson` emits compact JSON without any insignificant whitespace between tokens. Both
+produce valid, equivalent JSON, but consumers comparing serialized output byte-wise are affected by the choice.

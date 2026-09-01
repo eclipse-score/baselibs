@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -15,48 +15,41 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "json_serialize",
-    srcs = [
-        "json_serialize.cpp",
-    ],
-    hdrs = [
-        "json_serialize.h",
-    ],
+    name = "vajson_serialize",
+    srcs = ["vajson_serialize.cpp"],
+    hdrs = ["vajson_serialize.h"] + glob([
+        "writer/**/*.h",
+    ]),
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
+        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
     ],
 )
 
 cc_library(
-    name = "json_serialize_backend",
-    srcs = ["json_serialize_backend.cpp"],
+    name = "vajson_backend",
+    srcs = ["vajson_backend.cpp"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
     deps = [
-        ":json_serialize",
+        ":vajson_serialize",
         "@score_baselibs//score/json/internal/writer:writer_backend",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/language/safecpp/safe_math",
     ],
 )
 
 cc_test(
-    name = "json_serialize_unit_test",
-    srcs = [
-        "json_serialize_test.cpp",
-    ],
+    name = "vajson_serialize_test",
+    srcs = ["vajson_serialize_test.cpp"],
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
     tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__pkg__",
-    ],
     deps = [
-        ":json_serialize",
+        ":vajson_serialize",
         "@googletest//:gtest_main",
     ],
 )

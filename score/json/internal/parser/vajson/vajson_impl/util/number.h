@@ -58,11 +58,11 @@ using IsInt = std::conjunction<std::negation<std::is_same<T, bool>>, std::is_int
 
 /// \brief            Typedef for longlong
 /// \details         Return type of std::strtoll and transformed to fixed-size type later.
-using SignedLL = long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
+using SignedLL = long long int;
 
 /// \brief            Typedef for unsigned longlong
 /// \details         Return type of std::strtoull and transformed to fixed-size type later.
-using UnsignedLL = unsigned long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
+using UnsignedLL = unsigned long long int;
 
 namespace util
 {

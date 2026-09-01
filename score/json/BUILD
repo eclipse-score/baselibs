@@ -40,6 +40,27 @@ config_setting(
     visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
 )
 
+string_flag(
+    name = "writer_library",
+    build_setting_default = "json_serialize",
+    values = [
+        "json_serialize",
+        "vajson",
+    ],
+)
+
+config_setting(
+    name = "writer_library_json_serialize",
+    flag_values = {":writer_library": "json_serialize"},
+    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
+)
+
+config_setting(
+    name = "writer_library_vajson",
+    flag_values = {":writer_library": "vajson"},
+    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
+)
+
 cc_library(
     name = "parser_interface",
     srcs = ["i_json_parser.cpp"],
@@ -115,8 +136,8 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer/json_serialize",
-        "@score_baselibs//score/language/safecpp/safe_math",
+        "@score_baselibs//score/json/internal/writer",
+        "@score_baselibs//score/json/internal/writer:writer_backend",
     ],
 )
 
@@ -206,6 +227,10 @@ cc_test(
         "test_warnings",
         "aborts_upon_exception",
     ],
+    local_defines = select({
+        ":writer_library_json_serialize": ["WRITER_JSON_SERIALIZE"],
+        ":writer_library_vajson": ["WRITER_VAJSON"],
+    }),
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__pkg__",
@@ -238,6 +263,7 @@ cc_unit_test_suites_for_host_and_qnx(
         ":json_writer_unit_test",  # workaround to include coverage for json_writer
         "@score_baselibs//score/json/internal/model:unit_test",
         "@score_baselibs//score/json/internal/writer/json_serialize:json_serialize_unit_test",  # workaround to include coverage for json_serialize
+        "@score_baselibs//score/json/internal/writer/vajson:vajson_serialize_test",  # workaround to include coverage for vajson_serialize
     ],
     test_suites_from_sub_packages = [
         "@score_baselibs//score/json/internal/parser:unit_tests",

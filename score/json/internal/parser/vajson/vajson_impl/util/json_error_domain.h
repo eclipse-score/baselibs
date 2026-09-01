@@ -281,7 +281,6 @@ inline auto MakeResult(bool value, score::result::Error error) noexcept -> score
 template <typename T>
 inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -> Result<T>
 {
-    // VCA_VAJSON_EXTERNAL_CALL
     return value.has_value() ? Result<T>{value.value()} : score::MakeUnexpected<T>(error);
 }
 
