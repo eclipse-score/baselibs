@@ -11,30 +11,38 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@cxx.rs//tools/bazel:rust_cxx_bridge.bzl", "rust_cxx_bridge")
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "time_conversion",
-    srcs = ["time_conversion.cpp"],
-    hdrs = ["time_conversion.h"],
+    name = "stop_token_adapter",
+    srcs = ["cpp/stop_token_adapter.cpp"],
+    hdrs = ["cpp/stop_token_adapter.h"],
     features = COMPILER_WARNING_FEATURES,
+    deps = ["@score_baselibs//score/language/futurecpp"],
+)
+
+rust_cxx_bridge(
+    name = "stop_token_bridge",
+    src = "src/lib.rs",
+    deps = [":stop_token_adapter"],
+)
+
+rust_library(
+    name = "stop_token",
+    srcs = ["src/lib.rs"],
     visibility = ["//visibility:public"],
-)
-
-cc_gtest_unit_test(
-    name = "time_conversion_test",
-    srcs = ["time_conversion_test.cpp"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = ["@score_baselibs//score/datetime_converter:__pkg__"],
-    deps = [":time_conversion"],
-)
-
-test_suite(
-    name = "unit_tests",
-    tests = [
-        ":time_conversion_test",
+    deps = [
+        ":stop_token_bridge",
+        "@cxx.rs//:cxx",
     ],
-    visibility = ["//visibility:public"],
+)
+
+rust_test(
+    name = "stop_token_test",
+    crate = ":stop_token",
+    features = ["link_std_cpp_lib"],
+    tags = ["unit"],
 )

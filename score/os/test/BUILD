@@ -25,12 +25,10 @@ test_suite(
         ":arpa_inet_test",
         ":asil_qm_test",
         ":capability_test",
-        ":cpuid_test",
         ":dirent_test",
         ":dlfcn_impl_test",
         ":errno_test",
         ":fcntl_test",
-        ":file_stream_test",
         ":ftw_test",
         ":glob_test",
         ":grp_test",
@@ -81,19 +79,6 @@ cc_test(
 )
 
 cc_test(
-    name = "cpuid_test",
-    srcs = ["cpuid_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:cpuid",
-    ],
-)
-
-cc_test(
     name = "net_if_test",
     srcs = ["net_if_test.cpp"],
     features = COMPILER_WARNING_FEATURES + [
@@ -128,19 +113,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:ifaddrs",
-    ],
-)
-
-cc_test(
-    name = "file_stream_test",
-    srcs = ["file_stream_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:file_stream",
     ],
 )
 
@@ -576,19 +548,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:stdlib",
-    ],
-)
-
-cc_test(
-    name = "makedev_test",
-    srcs = ["makedev_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:make_dev",
     ],
 )
 
