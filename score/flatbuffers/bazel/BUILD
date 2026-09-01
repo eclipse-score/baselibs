@@ -47,5 +47,9 @@ py_test(
     name = "schema_generator_test",
     size = "small",
     srcs = ["schema_generator_test.py"],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
     deps = [":schema_generator_lib"],
 )
