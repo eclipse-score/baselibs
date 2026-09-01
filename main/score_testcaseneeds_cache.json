@@ -40726,34 +40726,6 @@
     "FullyVerifies": null
   },
   {
-    "name": "SelectTest__selectPass",
-    "file": "score/os/test/select_test.cpp",
-    "line": "29",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "SelectTest__selectPassInstance",
-    "file": "score/os/test/select_test.cpp",
-    "line": "48",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
     "name": "StdlibImpl__system_call",
     "file": "score/os/test/stdlib_impl_test.cpp",
     "line": "28",
