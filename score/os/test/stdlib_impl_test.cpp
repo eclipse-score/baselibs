@@ -96,7 +96,7 @@ TEST(StdlibImpl, unsetenv)
     EXPECT_STREQ(env, "TEST_VALUE");
     EXPECT_EQ(score::os::Stdlib::instance().unsetenv("TEST_ENV"), 0);
     const auto env_unset = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_STREQ(env_unset, NULL);
+    EXPECT_EQ(env_unset, nullptr);
     EXPECT_EQ(unsetenv("TEST_ENV"), 0);
 }
 
