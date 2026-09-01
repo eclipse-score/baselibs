@@ -18,8 +18,6 @@ load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_e
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 package(default_visibility = [
-    # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
-    "//tools/coverage:__pkg__",
     "@score_baselibs//score/memory:__subpackages__",
 ])
 
@@ -94,6 +92,13 @@ cc_library(
     hdrs = ["endianness.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512):
+        # endianness is a dependency-forest root; everything else in this
+        # package is reached transitively or keeps the package default.
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/memory:__subpackages__",
+    ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
