@@ -43,6 +43,7 @@ The Module documentation covers the module-level view, including architecture, s
 
    module/index
    verification_report/module_verification_report
+   verification_report/lobster_traceability_report
 
 
 Component Documentation

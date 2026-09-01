@@ -23,31 +23,6 @@ Bitmanipulation Component Architecture
    :security: YES
    :realizes: wp__component_arch[version==1]
 
-Overview/Description
---------------------
-
-see :need:`doc__bitmanipulation`
-The ``bitmanipulation`` component provides low-level, header-only utilities for
-manipulating individual bits, half-bytes and bytes, as well as type-safe
-bitmask operators for scoped enumerations (``enum class``).
-
-It is split into two independent units:
-
-- **Bit Manipulation** (``bit_manipulation.h`` / ``.cpp``): offers the
-  ``HalfByte`` and ``Byte`` value types together with free functions to set,
-  clear, toggle and test individual bits, and to compose/extract (half-)bytes.
-  These operations are bounds-safe: callers cannot address a bit outside the
-  underlying type's width.
-- **Bitmask Operators** (``bitmask_operators.h`` / ``.cpp``): implements the
-  C++ *BitmaskType* named requirement (``operator|``, ``operator&``,
-  ``operator^``, ``operator~`` and the corresponding assignment operators) for
-  ``enum class`` types that opt in via ``score::enable_bitmask_operators<T>``.
-  This keeps flag combinations type-safe while still allowing POSIX-style flag
-  composition, which is used in particular by ``lib/os`` to restrict flag
-  values to a certified subset.
-
-Both units are aggregated into a single component, ``component_bitmanipulation``,
-with no coupling between them.
 Static Architecture
 -------------------
 

@@ -13,7 +13,7 @@
 
 @startuml static_design
 
-package "Bitmanipulation" as dependable_element_bitmanipulation <<SEooC>> {
+package "Baselibs" as dependable_element_baselibs <<SEooC>> {
     component "component_bitmanipulation" as component_bitmanipulation <<component>> {
         component "bit_manipulation" as bit_manipulation <<unit>>
         component "bitmask" as bitmask <<unit>>

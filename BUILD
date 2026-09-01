@@ -15,6 +15,7 @@ load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile
 load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker", "setup_starpls")
+load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "dependable_element")
 load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
@@ -235,5 +236,52 @@ quality_clang_tidy_config(
         "cc_library",
     ],
     unsupported_flags = [],
+    visibility = ["//visibility:public"],
+)
+
+# Complete SEooC for baselibs, assembling requirements, AoUs, architecture
+# and the implementing component(s) into a single certifiable dependable
+# element. This is baselibs' single, repo-wide dependable element (not
+# scoped per component), so it lives here in the root BUILD rather than in
+# an individual component's own BUILD file; its own artifact targets
+# (requirements, AoUs, architecture diagram, FMEA) still live in
+# //score/bitmanipulation, hence the fully-qualified labels below instead of
+# same-package ":name" references.
+#
+# requirements points at feat_req_baselibs, not comp_req_bitmanipulation:
+# dependable_element.requirements only accepts targets providing
+# FeatureRequirementsInfo/AssumedSystemRequirementsInfo. comp_req_bitmanipulation
+# (ComponentRequirementsInfo) is already pulled in transitively via
+# `components` -> component_bitmanipulation's own `requirements` attribute.
+# feat_req_baselibs converts all 14 baselibs feature requirements; as long as
+# component_bitmanipulation is the only component wired in below, this
+# report's "Feature Requirements" coverage stays well below 100% (only
+# bitmanipulation's own feat_req is ever referenced by a Component
+# Requirement) - a reporting-precision concern only, not a build/test
+# failure under maturity=development. Adding more baselibs components here
+# over time is expected to raise that coverage.
+#
+# dependability_analysis wraps fmea_bitmanipulation, a TRLC re-expression of
+# the failure modes/control measures already analysed as prose in
+# score/bitmanipulation/docs/safety_analysis/fmea.rst. tests is empty for
+# now: there are no system-level integration tests beyond the unit tests
+# already wired via unit().
+dependable_element(
+    name = "dependable_element_baselibs",
+    assumptions_of_use = ["//score/bitmanipulation:aous_bitmanipulation"],
+    requirements = ["@score_platform//docs/features/baselibs/requirements:feat_req_baselibs"],
+    architectural_design = ["//score/bitmanipulation:arch_design_bitmanipulation"],
+    dependability_analysis = ["//score/bitmanipulation:dependability_analysis_bitmanipulation"],
+    components = ["//score/bitmanipulation:component_bitmanipulation"],
+    tests = [],
+    integrity_level = "B",
+    # This SEooC is still in development: component_bitmanipulation has no
+    # test_case_coverage_lock yet, so the "Test Case Coverage" lobster level
+    # has no data. maturity="release" (the default) force-emits that level
+    # empty and fails the build on every Component Requirement missing a
+    # coverage-lock-backed reference. maturity="development" omits empty
+    # checking levels instead, downgrading such gaps to warnings until the
+    # lock file is introduced.
+    maturity = "development",
     visibility = ["//visibility:public"],
 )
