@@ -30,12 +30,17 @@ score_coverage_scope(
     testonly = True,
     visibility = ["//visibility:private"],
     deps = [
+        # Public API alias of the generic trace library: reaches the
+        # interface_types production libraries (the mock and the stub default
+        # implementation are excluded - see scope_exclusions.txt).
+        "//score/analysis/tracing/generic_trace_library:api",
+        "//score/analysis/tracing/common/canary_wrapper",
         "//score/bitmanipulation",
         "//score/concurrency/thread_load_tracking",
         "//score/containers:dynamic_array",
         "//score/containers:intrusivelist",
         "//score/containers_rust:containers",
-        "//score/datetime_converter",
+        "//score/datetime_converter:time_conversion",
         "//score/flatbuffers:flatbufferutils",
         "//score/hash",
         "//score/hash:safe_hash",
@@ -43,6 +48,9 @@ score_coverage_scope(
         "//score/hash/code/core/factory:factory_mock",
         "//score/hash/code/core/factory/impl:factory_headers",
         "//score/hash/code/crc:mocks",
+        # Parser/writer-facing interface: not reachable from the impl libs
+        # under the default base_library select; has a coverage grant.
+        "//score/json:interface",
         "//score/json:json_serializer",
         "//score/json/internal/parser/vajson:vajson_parser",
         "//score/language/rust/memres",
@@ -84,6 +92,10 @@ score_coverage_scope(
         "//score/os:pthread",
         "//score/os:rt",
         "//score/os:sched",
+        # Wrappers whose only in-repo consumers are mocks/tests; still shipped
+        # production code (coverage visibility grants).
+        "//score/os/linux",
+        "//score/os/linux/utils:network_interface",
         "//score/os:semaphore",
         "//score/os:sigevent",
         "//score/os:spawn",
@@ -94,6 +106,7 @@ score_coverage_scope(
         "//score/os:time",
         "//score/os/posix:ftw_posix",
         "//score/os/utils:detect_os",
+        "//score/os/utils:signal",
         "//score/os/utils:machine",
         "//score/os/utils:mqueue",
         "//score/os/utils:spinlock",
@@ -102,6 +115,8 @@ score_coverage_scope(
         "//score/os/utils/fake:machine_fake",
         "//score/os/utils/inotify:inotify_instance_impl",
         "//score/os/utils/interprocess:interprocess_notification",
+        "//score/result:result_for_rust",
+        "//score/result/rust:result_cxx",
         "//score/result/rust:result_rs",
         "//score/scope_exit",
         "//score/static_reflection_with_serialization/serialization",

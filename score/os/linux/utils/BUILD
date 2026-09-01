@@ -22,6 +22,8 @@ cc_library(
     linkopts = ["-lrt"],
     target_compatible_with = ["@platforms//os:linux"],
     visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
         "@score_baselibs//score/os/linux/utils/mocklib:__subpackages__",
         "@score_baselibs//score/os/linux/utils/test:__subpackages__",
     ],

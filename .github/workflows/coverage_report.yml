@@ -36,6 +36,8 @@ jobs:
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
+      - name: Check coverage scope completeness
+        run: ./.github/tools/check_coverage_scope.sh
       - name: Run Bazel Coverage (LLVM, C++ + Rust)
         run: |
           # Excluded tests (all keep running in the GCC-based test jobs):
