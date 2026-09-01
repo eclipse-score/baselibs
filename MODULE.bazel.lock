@@ -11702,7 +11702,7 @@
     "@@score_rules_imagefs+//extensions:imagefs.bzl%imagefs": {
       "general": {
         "bzlTransitiveDigest": "6ZLANe53LXwcnne1ZrZm9GkJ9H5VdsCLSgSNHyUrqA4=",
-        "usagesDigest": "rFlFXCppyqrEJY5aPspQ8743rDfga4rr/NYzpQ4V+aw=",
+        "usagesDigest": "dHHXwHfUIeeD3osxBEgpw0lB1uzNyxdZH3g7yr0ie6w=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -11713,7 +11713,7 @@
               "tc_cpu": "x86_64",
               "tc_os": "qnx",
               "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+score_qcc_x86_64_toolchain_pkg'",
-              "sdp_version": "8.0.4",
+              "sdp_version": "8.0.0",
               "tc_type": "ifs"
             }
           },
@@ -11723,7 +11723,7 @@
               "tc_cpu": "aarch64",
               "tc_os": "qnx",
               "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+score_qcc_aarch64_toolchain_pkg'",
-              "sdp_version": "8.0.4",
+              "sdp_version": "8.0.0",
               "tc_type": "ifs"
             }
           }

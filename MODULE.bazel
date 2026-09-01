@@ -116,7 +116,7 @@ imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs
 imagefs.toolchain(
     name = "score_qnx_x86_64_ifs_toolchain",
     sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
-    sdp_version = "8.0.4",
+    sdp_version = "8.0.0",
     target_cpu = "x86_64",
     target_os = "qnx",
     type = "ifs",
@@ -124,7 +124,7 @@ imagefs.toolchain(
 imagefs.toolchain(
     name = "score_qnx_aarch64_ifs_toolchain",
     sdp_to_import = "@score_qcc_aarch64_toolchain_pkg",
-    sdp_version = "8.0.4",
+    sdp_version = "8.0.0",
     target_cpu = "aarch64",
     target_os = "qnx",
     type = "ifs",
