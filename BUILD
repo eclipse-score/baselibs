@@ -12,12 +12,13 @@
 # *******************************************************************************
 
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
-load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker")
 load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
+
+exports_files([".clang-tidy"])
 
 docs(
     bundles = [
@@ -196,31 +197,3 @@ use_format_targets(languages = [
     "yaml",
     "cpp",
 ])
-
-filegroup(
-    name = "clang_tidy_config_files",
-    srcs = [
-        ".clang-tidy-minimal",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-quality_clang_tidy_config(
-    name = "clang_tidy_config",
-    additional_flags = [],
-    clang_tidy_binary = "@llvm_toolchain//:clang-tidy",
-    default_feature = "strict",
-    dependency_attributes = [
-        "deps",
-        "srcs",
-    ],
-    excludes = [],
-    feature_mapping = {
-        "//:.clang-tidy-minimal": "strict",
-    },
-    target_types = [
-        "cc_library",
-    ],
-    unsupported_flags = [],
-    visibility = ["//visibility:public"],
-)

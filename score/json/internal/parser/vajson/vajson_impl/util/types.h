@@ -15,8 +15,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H_
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -65,4 +65,4 @@ enum class EncodingType : std::uint8_t
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_TYPES_H

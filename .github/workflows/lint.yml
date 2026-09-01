@@ -38,7 +38,7 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel Build with clang-tidy
         run: |
-          bazel build --config clang_tidy -- //...
+          bazel build --config=bl-x86_64-linux --config=clang-tidy -- //...
   lint-clippy:
     uses: eclipse-score/cicd-workflows/.github/workflows/static-analysis.yml@af347722c7ae3ed85518895c11268d96ac728f62
     with:
