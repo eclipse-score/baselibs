@@ -122,7 +122,7 @@ git_override(
 # the Bazel graph.
 git_override(
     module_name = "score_docs_as_code",
-    commit = "1ecd38c2fe6fd028fdfae6b5b87272a196fc1607",
+    commit = "6f0ba691f27bcede9105a92b058ca18b153c1d81",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 

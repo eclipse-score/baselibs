@@ -23,6 +23,11 @@ Bitmanipulation Component Architecture
    :security: YES
    :realizes: wp__component_arch[version==1]
 
+Overview/Description
+--------------------
+
+see :need:`doc__bitmanipulation`
+
 Static Architecture
 -------------------
 
