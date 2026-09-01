@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
@@ -46,10 +46,10 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -64,7 +64,7 @@
     <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/index';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.17.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
@@ -73,8 +73,8 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="language" href="language/index.html" />
-    <link rel="prev" title="Verification Report" href="../../verification_report/module_verification_report.html" />
+    <link rel="next" title="ABI Compatible Data Types" href="abi_compatible_data_types/docs/index.html" />
+    <link rel="prev" title="Component Requirements Statistics" href="../../verification_report/requirements_statistics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -95,7 +95,9 @@
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -205,11 +207,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -222,8 +231,7 @@
           
           
           
-          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -332,11 +340,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -349,8 +364,7 @@
           
           
           
-          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -379,7 +393,8 @@
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
     <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
   </svg>
   <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
@@ -391,43 +406,22 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitmanipulation/docs/index.html">bitmanipulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concurrency/docs/index.html">concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="containers/docs/index.html">containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="containers_rust/docs/index.html">containers_rust</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filesystem/docs/index.html">filesystem</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="hash/docs/index.html">hash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html">JSON-Library</a></li>
-
-
-
-
-
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="memory_shared/docs/index.html">memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mw_log/docs/index.html">log_frontend</a></li>
-<li class="toctree-l1"><a class="reference internal" href="os/docs/index.html">os</a></li>
-<li class="toctree-l1"><a class="reference internal" href="result/docs/index.html">result</a></li>
-<li class="toctree-l1"><a class="reference internal" href="static_reflection_with_serialization/docs/index.html">static_reflection_with_serialization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils/docs/index.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitmanipulation/index.html">bitmanipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrency/index.html">concurrency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers_rust/index.html">containers_rust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem/index.html">filesystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flatbuffers/index.html">FlatBuffers-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json/index.html">JSON-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mw_log/index.html">log_frontend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils/index.html">utils</a></li>
 </ul>
 </div>
 </nav></div>
@@ -489,43 +483,22 @@
 <h1>Components<a class="headerlink" href="#components" title="Link to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bitmanipulation/docs/index.html">bitmanipulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concurrency/docs/index.html">concurrency</a></li>
-<li class="toctree-l1"><a class="reference internal" href="containers/docs/index.html">containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="containers_rust/docs/index.html">containers_rust</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filesystem/docs/index.html">filesystem</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html">FlatBuffers-Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#abstract">Abstract</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#motivation">Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#rationale">Rationale</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#specification">Specification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#backwards-compatibility">Backwards Compatibility</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#security-impact">Security Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#safety-impact">Safety Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#license-impact">License Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#how-to-teach-this">How to Teach This</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#rejected-ideas">Rejected Ideas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#open-issues">Open Issues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flatbuffers/docs/index.html#footnotes">Footnotes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hash/docs/index.html">hash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html">JSON-Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#abstract">Abstract</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#motivation">Motivation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#rationale">Rationale</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#specification">Specification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#backwards-compatibility">Backwards Compatibility</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#security-impact">Security Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#safety-impact">Safety Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#license-impact">License Impact</a></li>
-<li class="toctree-l1"><a class="reference internal" href="json/docs/index.html#how-to-teach-this">How to Teach This</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memory_shared/docs/index.html">memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mw_log/docs/index.html">log_frontend</a></li>
-<li class="toctree-l1"><a class="reference internal" href="os/docs/index.html">os</a></li>
-<li class="toctree-l1"><a class="reference internal" href="result/docs/index.html">result</a></li>
-<li class="toctree-l1"><a class="reference internal" href="static_reflection_with_serialization/docs/index.html">static_reflection_with_serialization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils/docs/index.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitmanipulation/index.html">bitmanipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concurrency/index.html">concurrency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="containers_rust/index.html">containers_rust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filesystem/index.html">filesystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flatbuffers/index.html">FlatBuffers-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json/index.html">JSON-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mw_log/index.html">log_frontend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils/index.html">utils</a></li>
 </ul>
 </div>
 </section>
@@ -533,35 +506,35 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="abi_compatible_data_types/docs/index.html#doc__abi_compatible_data_types" title="doc__abi_compatible_data_types"><em class="xref need">ABI Compatible Data Types (doc__abi_compatible_data_types)</em></a>: ABI-compatible data types for zero-copy inter-process communication between C++ and Rust.</p></li>
-<li><p><a class="reference internal" href="bitmanipulation/docs/index.html#doc__bitmanipulation" title="doc__bitmanipulation"><em class="xref need">Bit Manipulation Library (doc__bitmanipulation)</em></a>: Utilities for bit manipulation.</p></li>
-<li><p><a class="reference internal" href="concurrency/docs/index.html#doc__concurrency" title="doc__concurrency"><em class="xref need">Concurrency Library (doc__concurrency)</em></a>: Provides a generic interface to execute any C++ callable in a parallel context,
+<li><p><a class="reference internal" href="bitmanipulation/index.html#doc__bitmanipulation" title="doc__bitmanipulation"><em class="xref need">Bit Manipulation Library (doc__bitmanipulation)</em></a>: Utilities for bit manipulation.</p></li>
+<li><p><a class="reference internal" href="concurrency/index.html#doc__concurrency" title="doc__concurrency"><em class="xref need">Concurrency Library (doc__concurrency)</em></a>: Provides a generic interface to execute any C++ callable in a parallel context,
 supporting various execution strategies (e.g., thread pool, timed execution), thread safety,
 interruption handling, and periodic/delayed task execution.</p></li>
-<li><p><a class="reference internal" href="containers/docs/index.html#doc__containers" title="doc__containers"><em class="xref need">Containers Library (doc__containers)</em></a>: Offers a <code class="docutils literal notranslate"><span class="pre">DynamicArray</span></code> (fixed-size array with dynamic construction-time size)
+<li><p><a class="reference internal" href="containers/index.html#doc__containers" title="doc__containers"><em class="xref need">Containers Library (doc__containers)</em></a>: Offers a <code class="docutils literal notranslate"><span class="pre">DynamicArray</span></code> (fixed-size array with dynamic construction-time size)
 and an intrusive linked list implementation conforming to the
 <a class="reference external" href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0406r1.html">P0406R1 proposal</a>.</p></li>
-<li><p><a class="reference internal" href="json/docs/index.html#doc__json" title="doc__json"><em class="xref need">JSON-Library (doc__json)</em></a>: JSON abstraction layer that can switch between different parsers/serializers under the hood.</p></li>
-<li><p><a class="reference internal" href="flatbuffers/docs/index.html#doc__flatbuffers" title="doc__flatbuffers"><em class="xref need">FlatBuffers-Library (doc__flatbuffers)</em></a>: FlatBuffers-Library with serialization, read access, and structural
+<li><p><a class="reference internal" href="json/index.html#doc__json" title="doc__json"><em class="xref need">JSON-Library (doc__json)</em></a>: JSON abstraction layer that can switch between different parsers/serializers under the hood.</p></li>
+<li><p><a class="reference internal" href="flatbuffers/index.html#doc__flatbuffers" title="doc__flatbuffers"><em class="xref need">FlatBuffers-Library (doc__flatbuffers)</em></a>: FlatBuffers-Library with serialization, read access, and structural
 verification of FlatBuffers data, plus code generation via <code class="docutils literal notranslate"><span class="pre">flatc</span></code> for C++, Rust, and Python.</p></li>
-<li><p><a class="reference internal" href="filesystem/docs/index.html#doc__filesystem" title="doc__filesystem"><em class="xref need">Filesystem Library (doc__filesystem)</em></a>: Filesystem manipulation library similar to <code class="docutils literal notranslate"><span class="pre">std::filesystem</span></code>.</p></li>
-<li><p><a class="reference internal" href="hash/docs/index.html#doc__hash" title="doc__hash"><em class="xref need">Hash Library (doc__hash)</em></a>: Hash calculation library supporting cryptographic (SHA-256, SHA-512) and
+<li><p><a class="reference internal" href="filesystem/index.html#doc__filesystem" title="doc__filesystem"><em class="xref need">Filesystem Library (doc__filesystem)</em></a>: Filesystem manipulation library similar to <code class="docutils literal notranslate"><span class="pre">std::filesystem</span></code>.</p></li>
+<li><p><a class="reference internal" href="hash/index.html#doc__hash" title="doc__hash"><em class="xref need">Hash Library (doc__hash)</em></a>: Hash calculation library supporting cryptographic (SHA-256, SHA-512) and
 checksum (CRC-32) algorithms via a pluggable interface.</p></li>
-<li><p><a class="reference internal" href="language/futurecpp/docs/index.html#doc__futurecpp" title="doc__futurecpp"><em class="xref need">FutureCPP Library (doc__futurecpp)</em></a>: Extends the C++17 Standard Library with features from newer C++ standards up to C++26,
+<li><p><a class="reference internal" href="language/futurecpp/index.html#doc__futurecpp" title="doc__futurecpp"><em class="xref need">FutureCPP Library (doc__futurecpp)</em></a>: Extends the C++17 Standard Library with features from newer C++ standards up to C++26,
 as well as selected proposals for the C++ Standard Library.</p></li>
-<li><p><a class="reference internal" href="language/safecpp/docs/index.html#doc__safecpp" title="doc__safecpp"><em class="xref need">Safecpp Library (doc__safecpp)</em></a>: A collection of utilities that helps developers write safer C++ code, including
+<li><p><a class="reference internal" href="language/safecpp/index.html#doc__safecpp" title="doc__safecpp"><em class="xref need">Safecpp Library (doc__safecpp)</em></a>: A collection of utilities that helps developers write safer C++ code, including
 overflow-safe arithmetic, scoped callable execution, abort-on-exception enforcement, atomic overflow
 prevention, null-terminated string view utilities, and coverage data preservation in GTest death tests.</p></li>
-<li><p><a class="reference internal" href="memory_shared/docs/index.html#doc__memory" title="doc__memory"><em class="xref need">Memory Library (doc__memory)</em></a>: Utility library for memory handling, including an abstraction layer for shared memory.</p></li>
-<li><p><a class="reference internal" href="os/docs/index.html#doc__os" title="doc__os"><em class="xref need">OS Library (doc__os)</em></a>: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
+<li><p><a class="reference internal" href="memory/index.html#doc__memory" title="doc__memory"><em class="xref need">Memory Library (doc__memory)</em></a>: Utility library for memory handling, including an abstraction layer for shared memory.</p></li>
+<li><p><a class="reference internal" href="os/index.html#doc__os" title="doc__os"><em class="xref need">OS Library (doc__os)</em></a>: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
 as Linux and QNX.</p></li>
-<li><p><a class="reference internal" href="result/docs/index.html#doc__result" title="doc__result"><em class="xref need">Result Library (doc__result)</em></a>: Provides a unified approach to error handling without exceptions, conforming to C++23
+<li><p><a class="reference internal" href="result/index.html#doc__result" title="doc__result"><em class="xref need">Result Library (doc__result)</em></a>: Provides a unified approach to error handling without exceptions, conforming to C++23
 <code class="docutils literal notranslate"><span class="pre">std::expected</span></code>.</p></li>
-<li><p><a class="reference internal" href="static_reflection_with_serialization/docs/index.html#doc__static_reflection_with_serialization" title="doc__static_reflection_with_serialization"><em class="xref need">Static Reflection With Seri... (doc__static_reflection_with_serialization)</em></a>: A header-only library for binary serialization,
+<li><p><a class="reference internal" href="static_reflection_with_serialization/index.html#doc__static_reflection_with_serialization" title="doc__static_reflection_with_serialization"><em class="xref need">Static Reflection With Seri... (doc__static_reflection_with_serialization)</em></a>: A header-only library for binary serialization,
 deserialization, and compile-time type reflection of heterogenuous C++ data structures with focus
 on compile-time safety and efficiency of serialization, as well as efficiency of filtering by
 content during deserialization.</p></li>
 <li><p><em>mw::log</em>: Logging frontend.</p></li>
-<li><p><a class="reference internal" href="utils/docs/index.html#doc__utils" title="doc__utils"><em class="xref need">Utils Library (doc__utils)</em></a>: Provides a collection of small, reusable utilities that do not fit into the other
+<li><p><a class="reference internal" href="utils/index.html#doc__utils" title="doc__utils"><em class="xref need">Utils Library (doc__utils)</em></a>: Provides a collection of small, reusable utilities that do not fit into the other
 base libraries.</p></li>
 </ul>
 </section>
@@ -577,20 +550,20 @@ base libraries.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../verification_report/module_verification_report.html"
+       href="../../verification_report/requirements_statistics.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Verification Report</p>
+        <p class="prev-next-title">Component Requirements Statistics</p>
       </div>
     </a>
     <a class="right-next"
-       href="language/index.html"
+       href="abi_compatible_data_types/docs/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">language</p>
+        <p class="prev-next-title">ABI Compatible Data Types</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -623,7 +596,7 @@ base libraries.</p></li>
 
   
   <div class="tocsection editthispage">
-    <a href="https://github.com/eclipse-score/baselibs/edit/main//home/runner/work/baselibs/baselibs/docs/baselibs/components/index.rst">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/docs/baselibs/components/index.rst">
       <i class="fa-solid fa-pencil"></i>
       
       
@@ -648,8 +621,8 @@ base libraries.</p></li>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -673,7 +646,7 @@ base libraries.</p></li>
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>
