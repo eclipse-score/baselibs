@@ -12,10 +12,10 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-..
-    Safety Analysis of vajson
-    =========================
+Safety Analysis of vajson
+=========================
 
+..
     The following TSRs are allocated to this component:
 
     - TSR-112401 **The embedded software shall provide a mechanism to initialize itself and its controlled hardware.**
