@@ -209,27 +209,6 @@ cc_library(
 )
 
 cc_library(
-    name = "select",
-    srcs = [
-        "select.cpp",
-        "select_impl.cpp",
-    ],
-    hdrs = [
-        "select.h",
-        "select_impl.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        ":errno",
-        ":object_seam",
-    ],
-)
-
-cc_library(
     name = "mqueue",
     srcs = ["mqueue.cpp"],
     hdrs = ["mqueue.h"],
