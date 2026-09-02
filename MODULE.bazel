@@ -101,7 +101,7 @@ bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
-bazel_dep(name = "score_platform", version = "0.7.1")
+bazel_dep(name = "score_platform", version = "0.7.2")
 
 ## Configure the python toolchain
 
