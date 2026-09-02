@@ -12,12 +12,13 @@
 # *******************************************************************************
 
 load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
-load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker")
 load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
+
+exports_files([".clang-tidy"])
 
 docs(
     bundles = [
@@ -182,10 +183,9 @@ dash_license_checker(
     visibility = ["//visibility:public"],
 )
 
-# TODO: rust_coverage_report was removed by score_tooling >= 2.1.0
-# //:rust_coverage and //:rust_coverage_report are gone until the repo migrates
-# to the new score_coverage_scope/score_coverage_reporter LLVM pipeline
-# https://github.com/eclipse-score/baselibs/issues/512
+# The LLVM coverage pipeline (//tools/coverage, eclipse-score/baselibs#512)
+# resolves the workspace root through MODULE.bazel at report time.
+exports_files(["MODULE.bazel"])
 
 qemu_aarch64()
 
@@ -196,31 +196,3 @@ use_format_targets(languages = [
     "yaml",
     "cpp",
 ])
-
-filegroup(
-    name = "clang_tidy_config_files",
-    srcs = [
-        ".clang-tidy-minimal",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-quality_clang_tidy_config(
-    name = "clang_tidy_config",
-    additional_flags = [],
-    clang_tidy_binary = "@llvm_toolchain//:clang-tidy",
-    default_feature = "strict",
-    dependency_attributes = [
-        "deps",
-        "srcs",
-    ],
-    excludes = [],
-    feature_mapping = {
-        "//:.clang-tidy-minimal": "strict",
-    },
-    target_types = [
-        "cc_library",
-    ],
-    unsupported_flags = [],
-    visibility = ["//visibility:public"],
-)

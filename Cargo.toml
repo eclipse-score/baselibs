@@ -26,6 +26,7 @@ default-members = [
     "score/testing_macros",
     "score/language/rust/libcpp",
     "score/language/rust/libcpp_derive",
+    "score/language/rust/stop_token",
     "score/result/rust",
     "score/language/rust/memres",
 ]
@@ -44,6 +45,7 @@ members = [
     "score/testing_macros",
     "score/language/rust/libcpp",
     "score/language/rust/libcpp_derive",
+    "score/language/rust/stop_token",
     "score/result/rust",
     "examples/log_builtin",
     "examples/log_custom",

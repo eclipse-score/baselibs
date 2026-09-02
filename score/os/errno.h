@@ -39,6 +39,10 @@ class Error final
     ///         On some errors we will not define an error reaction, in that case it might not be in this list
     ///         and the error will just be logged using our `ToString()` method.
     // coverity[autosar_cpp14_a7_2_4_violation] no harm to our code
+    // kReadOnlyFileSystem and kNoSuchFileOrDirectory intentionally reuse the real errno values
+    // (see below) during the ongoing OS-agnostic error code transition. Remove this suppression
+    // once that transition is completed.
+    // NOLINTNEXTLINE(readability-enum-initial-value)
     enum class Code : std::int32_t
     {
         kOperationNotPermitted,

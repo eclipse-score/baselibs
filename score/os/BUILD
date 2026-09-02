@@ -209,27 +209,6 @@ cc_library(
 )
 
 cc_library(
-    name = "select",
-    srcs = [
-        "select.cpp",
-        "select_impl.cpp",
-    ],
-    hdrs = [
-        "select.h",
-        "select_impl.h",
-    ],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        ":errno",
-        ":object_seam",
-    ],
-)
-
-cc_library(
     name = "mqueue",
     srcs = ["mqueue.cpp"],
     hdrs = ["mqueue.h"],
@@ -364,11 +343,7 @@ cc_library(
     srcs = ["netdb.cpp"],
     hdrs = ["netdb.h"],
     features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        ":__subpackages__",
-        "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
-        "@score_baselibs//score/os:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         ":errno",
         ":object_seam",
@@ -386,20 +361,6 @@ cc_library(
         ":errno",
         ":object_seam",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
-    ],
-)
-
-cc_library(
-    name = "cpuid",
-    srcs = ["cpuid.cpp"],
-    hdrs = ["cpuid.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        ":errno",
-        ":object_seam",
     ],
 )
 
@@ -425,34 +386,6 @@ cc_library(
         ],
         "//conditions:default": [],
     }),
-)
-
-cc_library(
-    name = "make_dev",
-    srcs = ["makedev.cpp"],
-    hdrs = ["makedev.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        ":errno",
-        ":object_seam",
-    ],
-)
-
-cc_library(
-    name = "file_stream",
-    srcs = ["file_stream.cpp"],
-    hdrs = ["file_stream.h"],
-    features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "@score_baselibs//score/os:__subpackages__",
-    ],
-    deps = [
-        ":errno",
-        ":object_seam",
-    ],
 )
 
 cc_library(

@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
@@ -92,6 +92,13 @@ cc_library(
     hdrs = ["endianness.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512):
+        # endianness is a dependency-forest root; everything else in this
+        # package is reached transitively or keeps the package default.
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/memory:__subpackages__",
+    ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
@@ -168,18 +175,6 @@ cc_unit_test(
         "@googletest//:gtest",
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        ":endianness_unit_test",
-        ":pmr_ring_buffer_unit_test",
-        ":data_type_size_info_test",
-    ],
-    visibility = [
-        "//visibility:public",
     ],
 )
 

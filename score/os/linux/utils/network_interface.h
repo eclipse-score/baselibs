@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H_
-#define LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H_
+#ifndef LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H
+#define LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H
 
 #include <array>
 #include <cstdint>
@@ -80,7 +80,7 @@ enum class DeviceClass : size_t
     Sit = 2uL,
     Vlan = 3uL,
     Ethernet = 4uL,
-    Unknown
+    Unknown = 5uL
 };
 
 struct network_interface
@@ -143,4 +143,4 @@ bool bFilterInterfaces(network_settings& net_set,
 
 }  // namespace os
 }  // namespace score
-#endif  // LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H_
+#endif  // LIB_OS_LINUX_UTILS_NETWORK_INTERFACE_H

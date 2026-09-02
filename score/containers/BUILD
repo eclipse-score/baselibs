@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
@@ -146,23 +146,6 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = ["@score_baselibs//score/language/futurecpp"],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        ":dynamic_array_test",
-        ":non_relocatable_vector_test",
-        ":non_relocatable_vector_emplace_back_test",
-        ":non_relocatable_vector_special_member_funcs_test",
-        ":intrusive_list_test",
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/containers/test:unit_test_suite",
-    ],
-    visibility = [
-        "//visibility:public",
-    ],
 )
 
 docs_bundle(

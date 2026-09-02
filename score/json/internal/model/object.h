@@ -35,7 +35,7 @@ using IsJsonObject = std::enable_if_t<std::is_same<T, std::reference_wrapper<con
                                       bool>;
 
 template <typename V, typename RV = V>
-inline const Result<RV> GetAttribute(const json::Object& object, const std::string_view& key) noexcept
+inline Result<RV> GetAttribute(const json::Object& object, const std::string_view& key) noexcept
 {
     auto iterator = object.find(key);
     if (iterator == object.end())
@@ -46,15 +46,15 @@ inline const Result<RV> GetAttribute(const json::Object& object, const std::stri
 }
 
 template <typename V, typename RV = V>
-inline const Result<RV> GetAttribute(const std::reference_wrapper<const json::Object>& object_result,
-                                     const std::string_view& key) noexcept
+inline Result<RV> GetAttribute(const std::reference_wrapper<const json::Object>& object_result,
+                               const std::string_view& key) noexcept
 {
     return GetAttribute<V, RV>(object_result.get(), key);
 }
 
 template <typename V, typename RV = V>
-inline const Result<RV> GetAttribute(const Result<std::reference_wrapper<const json::Object>>& object_result,
-                                     const std::string_view& key) noexcept
+inline Result<RV> GetAttribute(const Result<std::reference_wrapper<const json::Object>>& object_result,
+                               const std::string_view& key) noexcept
 {
     if (!object_result.has_value())
     {

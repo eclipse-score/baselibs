@@ -32,32 +32,41 @@ jobs:
           level: 4
       - name: Checkout Repository
         uses: actions/checkout@v6
-      - name: Install lcov
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y lcov
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
-      - name: Run Bazel Coverage
+      - name: Check coverage scope completeness
+        run: ./.github/tools/check_coverage_scope.sh
+      - name: Run Bazel Coverage (LLVM, C++ + Rust)
         run: |
-          bazel coverage --config=bl-x86_64-linux -- //score/... \
-          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+          # Excluded tests (all keep running in the GCC-based test jobs):
+          # - aborts_upon_exception/...: the library interposes
+          #   __cxa_allocate_exception, which GNU ld tolerates but ld.lld
+          #   rejects as a duplicate symbol; the toolchain_test is expected
+          #   to fail by design (eclipse-score/baselibs#7).
+          # - floating_point_environment_test: relies on GCC FP-exception
+          #   semantics; fails under any Clang build (verified w/o coverage).
+          # - network_interface_test: file-scope static StatMock trips the
+          #   gmock leak check only under --dynamic_mode=off static linking.
+          bazel coverage --lockfile_mode=error --config=llvm_cov --build_tests_only -- //score/... \
+          -//score/language/safecpp/aborts_upon_exception/... \
+          -//score/language/safecpp/safe_math/details:floating_point_environment_test \
+          -//score/os/linux/utils/test:network_interface_test
       - name: Generate HTML Coverage Report
+        env:
+          # Report-only at introduction; ratchet once a baseline is agreed.
+          COVERAGE_THRESHOLD: "0"
         run: |
-          genhtml "$(bazel info output_path)/_coverage/_coverage_report.dat" \
-            -o=cpp_coverage \
-            --show-details \
-            --source-directory="$(bazel info execution_root)" \
-            --legend \
-            --function-coverage \
-            --branch-coverage
-        shell: bash
+          bazel run --lockfile_mode=error @score_tooling//coverage:generate_coverage_html -- \
+            --yaml tools/coverage/coverage_justifications.yaml \
+            --testlogs-subdir score \
+            --archive-dir coverage_artifact
       - name: Upload Coverage Artifacts
         uses: actions/upload-artifact@v6
         with:
+          # Name kept from the gcov flow: release.yml downloads it by name.
           name: ${{ github.event.repository.name }}_cpp_coverage_report
-          path: cpp_coverage/
+          path: coverage_artifact/
           include-hidden-files: true
           retention-days: 10

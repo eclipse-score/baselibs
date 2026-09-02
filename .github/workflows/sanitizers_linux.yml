@@ -38,5 +38,4 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel Test with Sanitizers
         run: |
-          bazel test --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/... \
-          -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
+          bazel test --config bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...

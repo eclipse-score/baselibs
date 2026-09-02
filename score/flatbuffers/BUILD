@@ -38,6 +38,10 @@ cc_library(
         "@flatbuffers//:include/flatbuffers/verifier.h",
     ],
     strip_include_prefix = "/include",
+    # This target's headers are all vendored from the upstream @flatbuffers repo, so linting
+    # them here would flag issues we cannot fix locally. This also skips linting the single
+    # first-party source `details/idl_parser.cpp`; there is no more surgical exclusion available.
+    tags = ["no-lint"],
     visibility = ["//visibility:public"],
 )
 
@@ -58,6 +62,12 @@ cc_library(
         "load_buffer.hpp",
         "version_reader.hpp",
     ],
+    # version_reader.cpp transitively includes vendored @flatbuffers headers and flatc-generated
+    # headers (see the buffer_version_envelope/buffer_version_generated_bare deps below). Since the
+    # clang-tidy aspect's header filter is derived from this target's own header directory, it also
+    # matches those vendored/generated files even though their owning targets are tagged "no-lint".
+    # There is no more surgical exclusion available, so this whole target is excluded from lint.
+    tags = ["no-lint"],
     visibility = ["//visibility:public"],
     deps = [
         "//score/flatbuffers:flatbufferscpp",
