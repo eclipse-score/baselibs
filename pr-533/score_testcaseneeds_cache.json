@@ -14716,7 +14716,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14730,7 +14730,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14744,7 +14744,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14758,7 +14758,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14772,7 +14772,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14786,7 +14786,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14800,7 +14800,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14814,7 +14814,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14828,7 +14828,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14842,7 +14842,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14856,7 +14856,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14870,7 +14870,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14884,7 +14884,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14898,7 +14898,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14912,7 +14912,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14926,7 +14926,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14940,7 +14940,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14954,7 +14954,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14968,7 +14968,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14982,7 +14982,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -14996,7 +14996,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15010,7 +15010,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15024,7 +15024,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15038,7 +15038,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15052,7 +15052,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15066,7 +15066,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15080,7 +15080,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15094,7 +15094,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15108,7 +15108,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15122,7 +15122,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15136,7 +15136,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15150,7 +15150,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15164,7 +15164,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15178,7 +15178,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15192,7 +15192,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15206,7 +15206,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15220,7 +15220,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15234,7 +15234,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15248,7 +15248,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15262,7 +15262,7 @@
   {
     "name": "BaseInterruptibleFutureTest/0__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15276,7 +15276,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15290,7 +15290,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15304,7 +15304,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15318,7 +15318,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15332,7 +15332,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15346,7 +15346,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15360,7 +15360,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15374,7 +15374,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15388,7 +15388,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15402,7 +15402,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15416,7 +15416,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15430,7 +15430,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15444,7 +15444,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15458,7 +15458,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15472,7 +15472,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15486,7 +15486,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15500,7 +15500,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15514,7 +15514,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15528,7 +15528,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15542,7 +15542,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15556,7 +15556,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15570,7 +15570,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15584,7 +15584,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15598,7 +15598,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15612,7 +15612,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15626,7 +15626,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15640,7 +15640,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15654,7 +15654,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15668,7 +15668,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15682,7 +15682,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15696,7 +15696,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15710,7 +15710,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15724,7 +15724,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15738,7 +15738,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15752,7 +15752,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15766,7 +15766,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15780,7 +15780,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15794,7 +15794,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15808,7 +15808,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15822,7 +15822,7 @@
   {
     "name": "BaseInterruptibleFutureTest/1__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15836,7 +15836,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15850,7 +15850,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15864,7 +15864,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15878,7 +15878,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15892,7 +15892,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15906,7 +15906,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15920,7 +15920,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15934,7 +15934,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15948,7 +15948,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15962,7 +15962,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15976,7 +15976,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -15990,7 +15990,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16004,7 +16004,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16018,7 +16018,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16032,7 +16032,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16046,7 +16046,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16060,7 +16060,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16074,7 +16074,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16088,7 +16088,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16102,7 +16102,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16116,7 +16116,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16130,7 +16130,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16144,7 +16144,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16158,7 +16158,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16172,7 +16172,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16186,7 +16186,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16200,7 +16200,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16214,7 +16214,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16228,7 +16228,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16242,7 +16242,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16256,7 +16256,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16270,7 +16270,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16284,7 +16284,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16298,7 +16298,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16312,7 +16312,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16326,7 +16326,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16340,7 +16340,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16354,7 +16354,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16368,7 +16368,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16382,7 +16382,7 @@
   {
     "name": "BaseInterruptibleFutureTest/2__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16396,7 +16396,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16410,7 +16410,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16424,7 +16424,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16438,7 +16438,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16452,7 +16452,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16466,7 +16466,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16480,7 +16480,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16494,7 +16494,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16508,7 +16508,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16522,7 +16522,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16536,7 +16536,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16550,7 +16550,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16564,7 +16564,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16578,7 +16578,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16592,7 +16592,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16606,7 +16606,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16620,7 +16620,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16634,7 +16634,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16648,7 +16648,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16662,7 +16662,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16676,7 +16676,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16690,7 +16690,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16704,7 +16704,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16718,7 +16718,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16732,7 +16732,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16746,7 +16746,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16760,7 +16760,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16774,7 +16774,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16788,7 +16788,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16802,7 +16802,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16816,7 +16816,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16830,7 +16830,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16844,7 +16844,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16858,7 +16858,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16872,7 +16872,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16886,7 +16886,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16900,7 +16900,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16914,7 +16914,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16928,7 +16928,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16942,7 +16942,7 @@
   {
     "name": "BaseInterruptibleFutureTest/3__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16956,7 +16956,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16970,7 +16970,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16984,7 +16984,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -16998,7 +16998,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17012,7 +17012,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17026,7 +17026,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17040,7 +17040,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17054,7 +17054,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17068,7 +17068,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17082,7 +17082,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17096,7 +17096,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17110,7 +17110,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17124,7 +17124,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17138,7 +17138,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17152,7 +17152,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17166,7 +17166,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17180,7 +17180,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17194,7 +17194,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17208,7 +17208,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17222,7 +17222,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17236,7 +17236,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17250,7 +17250,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17264,7 +17264,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17278,7 +17278,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17292,7 +17292,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17306,7 +17306,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17320,7 +17320,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17334,7 +17334,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17348,7 +17348,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17362,7 +17362,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17376,7 +17376,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17390,7 +17390,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17404,7 +17404,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17418,7 +17418,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17432,7 +17432,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17446,7 +17446,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17460,7 +17460,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17474,7 +17474,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17488,7 +17488,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17502,7 +17502,7 @@
   {
     "name": "BaseInterruptibleFutureTest/4__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17516,7 +17516,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17530,7 +17530,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17544,7 +17544,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17558,7 +17558,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17572,7 +17572,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17586,7 +17586,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17600,7 +17600,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17614,7 +17614,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17628,7 +17628,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17642,7 +17642,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17656,7 +17656,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17670,7 +17670,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17684,7 +17684,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17698,7 +17698,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17712,7 +17712,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17726,7 +17726,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17740,7 +17740,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17754,7 +17754,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17768,7 +17768,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17782,7 +17782,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17796,7 +17796,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17810,7 +17810,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17824,7 +17824,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17838,7 +17838,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17852,7 +17852,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17866,7 +17866,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17880,7 +17880,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17894,7 +17894,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17908,7 +17908,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17922,7 +17922,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17936,7 +17936,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17950,7 +17950,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17964,7 +17964,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17978,7 +17978,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -17992,7 +17992,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18006,7 +18006,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18020,7 +18020,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18034,7 +18034,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18048,7 +18048,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18062,7 +18062,7 @@
   {
     "name": "BaseInterruptibleFutureTest/5__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18076,7 +18076,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CanDefaultConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "197",
+    "line": "198",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18090,7 +18090,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CanCopyConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "202",
+    "line": "203",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18104,7 +18104,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CanCopyAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18118,7 +18118,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CanMoveConstructInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18132,7 +18132,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CanMoveAssignInterruptibleFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "217",
+    "line": "218",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18146,7 +18146,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__Destruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "222",
+    "line": "223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18160,7 +18160,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__DefaultConstructedInterruptibleFutureIsInvalid",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "242",
+    "line": "243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18174,7 +18174,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CopyConstructionFromInvalidSource",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "249",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18188,7 +18188,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__ConstructWithNullPointer",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "269",
+    "line": "273",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18202,7 +18202,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MovedFromFutureHasNoStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "277",
+    "line": "281",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18216,7 +18216,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MovedFromFutureHasNoStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "283",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18230,7 +18230,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MovedToFutureHasStateAfterMoveConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "290",
+    "line": "294",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18244,7 +18244,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MovedToFutureHasStateAfterMoveAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "296",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18258,7 +18258,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__FutureIsValidWhenSharedStateExistsButPromiseIsBorken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "303",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18272,7 +18272,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitReturnsOnlyAfterValueWasSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "309",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18286,7 +18286,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "323",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18300,7 +18300,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "333",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18314,7 +18314,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitForReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "346",
+    "line": "350",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18328,7 +18328,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitForReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "359",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18342,7 +18342,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitForReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "369",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18356,7 +18356,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitForReturnsWhenValueIsSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "382",
+    "line": "386",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18370,7 +18370,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitUntilReturnsTimeoutErrorWhenValueWasNotSet",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "395",
+    "line": "399",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18384,7 +18384,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitUntilReturnsImmediatelyWhenNoState",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "408",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18398,7 +18398,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__WaitUntilReturnsImmediatelyWhenPromiseAlreadyBroken",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "418",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18412,7 +18412,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__NotAbortedOnCopyAssignment",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "431",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18426,7 +18426,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__NotAbortedOnCopyConstruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "440",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18440,7 +18440,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__NotAbortedOnCopyBothDirections",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "449",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18454,7 +18454,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__AbortedOnCopyAssignmentWithDifferentFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "458",
+    "line": "462",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18468,7 +18468,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__AbortedOnMoveConstructionAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "467",
+    "line": "471",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18482,7 +18482,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__AbortedOnMoveAssignmentAfterDestruction",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "478",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18496,7 +18496,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__AbortedAfterAllCopiesHaveBeenDestructed",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "489",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18510,7 +18510,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__NotAbortedIfOneCopyIsStillAlive",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "502",
+    "line": "506",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18524,7 +18524,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__ScopedContinuationExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "515",
+    "line": "519",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18538,7 +18538,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__ScopedContinuationExecutedStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "524",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18552,7 +18552,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MultipleScopedContinuationsExecutedOnceStateBecomesReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "533",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18566,7 +18566,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MultipleScopedContinuationsExecutedWhenStateAlreadyReady",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "543",
+    "line": "547",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18580,7 +18580,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__ScopedContinuationWithoutStateExecutesWithError",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "553",
+    "line": "557",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18594,7 +18594,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CallAndIgnoreResultExecutesFunctionWithoutUsingReturnValue",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "572",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18608,7 +18608,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__CopyAssignmentSharesStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "586",
+    "line": "590",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -18622,7 +18622,7 @@
   {
     "name": "BaseInterruptibleFutureTest/6__MoveAssignmentTransfersStateAndUnregistersOldFuture",
     "file": "score/concurrency/future/base_interruptible_future_test.cpp",
-    "line": "614",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -40721,34 +40721,6 @@
     "url": null,
     "TestType": null,
     "DerivationTechnique": null,
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "SelectTest__selectPass",
-    "file": "score/os/test/select_test.cpp",
-    "line": "29",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "SelectTest__selectPassInstance",
-    "file": "score/os/test/select_test.cpp",
-    "line": "48",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
     "PartiallyVerifies": null,
     "FullyVerifies": null
