@@ -66,6 +66,8 @@ cc_library(
     ],
     target_compatible_with = ["@platforms//os:linux"],
     visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [

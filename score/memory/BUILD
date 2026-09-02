@@ -92,6 +92,13 @@ cc_library(
     hdrs = ["endianness.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512):
+        # endianness is a dependency-forest root; everything else in this
+        # package is reached transitively or keeps the package default.
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/memory:__subpackages__",
+    ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
