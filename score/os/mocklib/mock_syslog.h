@@ -39,7 +39,8 @@ class MockSyslog : public Syslog
     // use it with MOCK_METHOD.
     MOCK_METHOD(void, MockedSyslog, (std::int32_t priority, const std::string& message), (const, noexcept));
 
-    void syslog(std::int32_t priority, const char* format, ...) const noexcept override;
+    void syslog(std::int32_t priority, const char* format, ...) const noexcept override
+        __attribute__((format(printf, 3, 4)));
 };
 
 }  // namespace os
