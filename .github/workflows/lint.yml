@@ -14,6 +14,7 @@ name: Linter checks
 permissions:
   contents: read
   actions: write
+  security-events: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -38,7 +39,7 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel Build with clang-tidy
         run: |
-          bazel build --config=bl-x86_64-linux --config=clang-tidy --keep_going -- //...
+          bazel build --config=bl-x86_64-linux --config=clang-tidy --keep_going --output_groups=+rules_lint_machine -- //...
       - name: Collect clang-tidy reports
         if: always()
         run: |
@@ -53,6 +54,36 @@ jobs:
           path: /tmp/clang-tidy-reports
           retention-days: 5
           if-no-files-found: ignore
+      - name: Set up sarif-multitool
+        if: always()
+        run: |
+          npm install --no-save --prefix /tmp/sarif-multitool @microsoft/sarif-multitool@5.7.0
+          chmod +x /tmp/sarif-multitool/node_modules/@microsoft/sarif-multitool-linux/Sarif.Multitool
+          echo "/tmp/sarif-multitool/node_modules/.bin" >> "$GITHUB_PATH"
+      - name: Clean clang-tidy SARIF reports
+        if: always()
+        run: |
+          python3 .github/tools/clean_clang_tidy_sarif.py --output-dir /tmp/clang-tidy-sarif-clean \
+            $(find -L bazel-bin -name '*.AspectRulesLintClangTidy.report')
+      - name: Merge and normalize clang-tidy SARIF reports
+        if: always()
+        run: |
+          shopt -s nullglob
+          reports=(/tmp/clang-tidy-sarif-clean/*.sarif)
+          if [ ${#reports[@]} -eq 0 ]; then
+            echo "::warning::no clang-tidy SARIF results to report"
+            echo '{"version":"2.1.0","runs":[{"tool":{"driver":{"name":"ClangTidy"}},"results":[]}]}' > /tmp/clang-tidy.sarif
+            exit 0
+          fi
+          sarif-multitool merge "${reports[@]}" --output-file /tmp/clang-tidy-merged.sarif --log ForceOverwrite
+          sarif-multitool rewrite /tmp/clang-tidy-merged.sarif --normalize-for-ghas \
+            --output /tmp/clang-tidy.sarif --log ForceOverwrite
+      - name: Upload clang-tidy SARIF to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: /tmp/clang-tidy.sarif
+          category: clang-tidy
   lint-clippy:
     uses: eclipse-score/cicd-workflows/.github/workflows/static-analysis.yml@af347722c7ae3ed85518895c11268d96ac728f62
     with:
