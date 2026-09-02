@@ -38,7 +38,21 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel Build with clang-tidy
         run: |
-          bazel build --config=bl-x86_64-linux --config=clang-tidy -- //...
+          bazel build --config=bl-x86_64-linux --config=clang-tidy --keep_going -- //...
+      - name: Collect clang-tidy reports
+        if: always()
+        run: |
+          mkdir -p /tmp/clang-tidy-reports
+          find -L bazel-bin -name '*.AspectRulesLintClangTidy.out' -size +0c \
+            -exec cp --parents {} /tmp/clang-tidy-reports \;
+      - name: Upload clang-tidy reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: clang-tidy-reports
+          path: /tmp/clang-tidy-reports
+          retention-days: 5
+          if-no-files-found: ignore
   lint-clippy:
     uses: eclipse-score/cicd-workflows/.github/workflows/static-analysis.yml@af347722c7ae3ed85518895c11268d96ac728f62
     with:
