@@ -86,7 +86,7 @@ char* StdlibImpl::getenv(const char* const name) const noexcept
     /* KW_SUPPRESS_END:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::getenv() */
 }
 
-Result<int> StdlibImpl::setenv(const char* const name, const char* const value, int overwrite) const noexcept
+auto StdlibImpl::setenv(const char* const name, const char* const value, int overwrite) const noexcept -> Result<int>
 {
     int res = ::setenv(name, value, overwrite);
     if (res == -1)
@@ -96,7 +96,7 @@ Result<int> StdlibImpl::setenv(const char* const name, const char* const value, 
     return 0;
 }
 
-Result<int> StdlibImpl::unsetenv(const char* const name) const noexcept
+auto StdlibImpl::unsetenv(const char* const name) const noexcept -> Result<int>
 {
     int res = ::unsetenv(name);
     if (res == -1)
