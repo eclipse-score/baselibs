@@ -79,11 +79,32 @@ jobs:
           sarif-multitool rewrite /tmp/clang-tidy-merged.sarif --normalize-for-ghas \
             --output /tmp/clang-tidy.sarif --log ForceOverwrite
       - name: Upload clang-tidy SARIF to code scanning
-        if: always()
+        # Fork PRs get a read-only GITHUB_TOKEN, so this would fail for
+        # pull_request; lint_sarif_upload.yml uploads those instead.
+        # merge_group runs a transient synthetic merge commit, not a ref we
+        # want recorded in code scanning history.
+        if: always() && !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name)
         uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
         with:
           sarif_file: /tmp/clang-tidy.sarif
           category: clang-tidy
+      - name: Prepare clang-tidy SARIF artifact
+        # Bundle the SARIF for lint_sarif_upload.yml to upload from a
+        # privileged workflow_run (see comment above) or for debugging purposes.
+        if: always()
+        run: |
+          mkdir -p /tmp/clang-tidy-sarif-artifact
+          cp /tmp/clang-tidy.sarif /tmp/clang-tidy-sarif-artifact/
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "${{ github.event.pull_request.number }}" > /tmp/clang-tidy-sarif-artifact/pr-number.txt
+          fi
+      - name: Upload clang-tidy SARIF artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: clang-tidy-sarif
+          path: /tmp/clang-tidy-sarif-artifact
+          retention-days: 5
   lint-clippy:
     uses: eclipse-score/cicd-workflows/.github/workflows/static-analysis.yml@af347722c7ae3ed85518895c11268d96ac728f62
     with:
