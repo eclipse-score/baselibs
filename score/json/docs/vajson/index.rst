@@ -165,3 +165,6 @@ Footnotes
    architecture/index.rst
    requirements/index.rst
    detailed_design/CADS.rst
+   safety/SafetyAnalysis.rst
+   safety/SafetyManual_VaJson.rst
+
