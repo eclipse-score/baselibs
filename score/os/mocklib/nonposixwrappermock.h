@@ -10,10 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H_
-#define LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H_
+#ifndef LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H
+#define LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H
 
-#include "score/os/file_stream.h"
 #include "score/os/linux/ifaddrs.h"
 #include "score/os/linux/pthread.h"
 #include "score/os/linux/shm.h"
@@ -56,4 +55,4 @@ class NonPosixWrapperMock
 }  // namespace os
 }  // namespace score
 
-#endif  // LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H_
+#endif  // LIB_OS_LINUX_MOCKLIB_NONPOSIXWRAPPERMOCK_H
