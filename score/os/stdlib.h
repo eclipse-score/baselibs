@@ -46,7 +46,24 @@ class Stdlib : public ObjectSeam<Stdlib>
     virtual void exit(const int status) const noexcept = 0;
     virtual void quick_exit(const int status) const noexcept = 0;
     virtual char* getenv(const char* const name) const noexcept = 0;
+
+    /// @brief Create or change an environment variable
+    ///
+    /// @param[in] name The name of the environment variable that you want to set.
+    /// @param[in] value NULL to unset, or the value for the environment variable.
+    /// @param[in] overwrite A nonzero value if you want the function to overwrite the variable if it exists, or 0 if
+    /// you don't want to overwrite the variable.
+    ///
+    /// @returns `score::Result<int>` (0) on success, or a `score::result::Error`
+    ///          if out of memory or name is NULL, empty string or contains an equals character
     virtual auto setenv(const char* name, const char* value, int overwrite) const noexcept -> Result<int> = 0;
+
+    /// @brief Remove an environment variable
+    ///
+    /// @param[in] name The name of the environment variable that you want to set.
+    ///
+    /// @returns `score::Result<int>` (0) on success, or a `score::result::Error`
+    ///          if name is NULL, empty string or contains an equals character
     virtual auto unsetenv(const char* name) const noexcept -> Result<int> = 0;
     virtual Result<char*> realpath(const char* const path, char* const resolved_path) const noexcept = 0;
     virtual Result<int> mkstemp(char* const path) const noexcept = 0;
