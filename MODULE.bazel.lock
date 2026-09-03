@@ -10986,7 +10986,7 @@
     "@@score_bazel_cpp_toolchains+//extensions:gcc.bzl%gcc": {
       "general": {
         "bzlTransitiveDigest": "ChWcEQkrq5eKmA7VMNVat/1tK5LWqKU2ZcboiQdoN8U=",
-        "usagesDigest": "Ro1d4ZhT/sn8iidU4OUytYMt3cBBcUPot+SHy+9rbgM=",
+        "usagesDigest": "4ir/yXUlpanAqYBTGMCwO4N7TG7YfThInHxUR4dUqI0=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -11044,9 +11044,13 @@
               "extra_known_features": [
                 "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
                 "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
-                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings"
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
               ],
-              "extra_enabled_features": [],
+              "extra_enabled_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
+              ],
               "extra_link_flags": [],
               "license_info_variable": "",
               "license_info_value": "",
@@ -11075,9 +11079,13 @@
               "extra_known_features": [
                 "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
                 "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
-                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings"
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
               ],
-              "extra_enabled_features": [],
+              "extra_enabled_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
+              ],
               "extra_link_flags": [],
               "license_info_variable": "",
               "license_info_value": "",
@@ -11106,9 +11114,13 @@
               "extra_known_features": [
                 "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
                 "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
-                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings"
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
               ],
-              "extra_enabled_features": [],
+              "extra_enabled_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
+              ],
               "extra_link_flags": [],
               "license_info_variable": "",
               "license_info_value": "",
@@ -11137,9 +11149,13 @@
               "extra_known_features": [
                 "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
                 "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
-                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings"
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
               ],
-              "extra_enabled_features": [],
+              "extra_enabled_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors"
+              ],
               "extra_link_flags": [],
               "license_info_variable": "",
               "license_info_value": "",
