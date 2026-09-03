@@ -187,7 +187,7 @@ using struct_visitable = decltype(get_struct_visitable<T>());
 
 }  // namespace score
 
-// NOLINTNEXTLINE(cppcoreguidelines-macro-usage) Macros are used to access field names
+// NOLINTBEGIN(cppcoreguidelines-macro-usage) Macros are used to access field names
 // Macros are used to access field names
 // Macros are used to concatenate names and can't use parenthesis
 // coverity[autosar_cpp14_a16_0_1_violation]
@@ -6707,5 +6707,6 @@ using struct_visitable = decltype(get_struct_visitable<T>());
     SCORE_DEPRECATE_MACRO_USE("STRUCT_TRACEABLE is deprecated, use SCORE_STRUCT_TRACEABLE instead."); \
     SCORE_STRUCT_TRACEABLE(__VA_ARGS__)
 #endif
+// NOLINTEND(cppcoreguidelines-macro-usage) Variadic macro dispatch on field count has no non-macro alternative.
 
 #endif  // SCORE_COMMON_VISITOR_INCLUDE_VISITOR_VISIT_AS_STRUCT_H
