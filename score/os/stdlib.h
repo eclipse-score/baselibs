@@ -46,8 +46,8 @@ class Stdlib : public ObjectSeam<Stdlib>
     virtual void exit(const int status) const noexcept = 0;
     virtual void quick_exit(const int status) const noexcept = 0;
     virtual char* getenv(const char* const name) const noexcept = 0;
-    virtual Result<int> setenv(const char* const name, const char* const value, int overwrite) const noexcept = 0;
-    virtual Result<int> unsetenv(const char* const name) const noexcept = 0;
+    virtual auto setenv(const char* name, const char* value, int overwrite) const noexcept -> Result<int> = 0;
+    virtual auto unsetenv(const char* name) const noexcept -> Result<int> = 0;
     virtual Result<char*> realpath(const char* const path, char* const resolved_path) const noexcept = 0;
     virtual Result<int> mkstemp(char* const path) const noexcept = 0;
     virtual Result<int> mkstemps(char* const path, const int len) const noexcept = 0;
