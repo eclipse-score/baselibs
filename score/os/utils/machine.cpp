@@ -21,6 +21,7 @@ namespace os
 bool is_sctf() noexcept
 {
     const auto value = score::os::Stdlib::instance().getenv("SCTF");
+
     if (value == nullptr)
     {
         return false;
