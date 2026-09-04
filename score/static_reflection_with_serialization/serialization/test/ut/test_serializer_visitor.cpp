@@ -971,4 +971,66 @@ TEST(clear_functionality_test, test_that_clear_function_can_clear_vector_of_int3
     score::common::visitor::detail::clear(vector_wrapper_instance);
 }
 
+// Enum used to verify that registering ::score::common::visitor::EnumTraits<T> only adds
+// compile-time enumerator name metadata and leaves the serialized wire representation unchanged.
+enum class EnumWithNames : std::int32_t
+{
+    kFirst = 0,
+    kSecond = 1,
+};
+
 }  // namespace test
+
+template <>
+struct score::common::visitor::EnumTraits<test::EnumWithNames>
+{
+    static constexpr bool kHasNames = true;
+    // Enumerator name<->value table, as a real code generator would emit it, so the test can
+    // verify that names are actually retrievable through the specialized trait (not just that
+    // kHasNames is set).
+    static constexpr std::array<score::common::visitor::Enumerator, 2> kEnumerators = {{
+        {static_cast<std::int64_t>(test::EnumWithNames::kFirst), "kFirst"},
+        {static_cast<std::int64_t>(test::EnumWithNames::kSecond), "kSecond"},
+    }};
+};
+
+TEST(serializer_visitor, named_enum_wire_format_unchanged)
+{
+    RecordProperty("ParentRequirement", "SCR-1633893");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "Check that registering EnumTraits<T> for an enum type only adds compile-time "
+                   "enumerator name metadata and does not alter its serialized wire representation.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
+    static_assert(::score::common::visitor::EnumTraits<test::EnumWithNames>::kHasNames,
+                  "EnumTraits<test::EnumWithNames>::kHasNames must be true once specialized");
+    static_assert(!::score::common::visitor::EnumTraits<test::E>::kHasNames,
+                  "EnumTraits<T>::kHasNames must default to false for enums without a registered trait");
+
+    // Wire format (serialized size) must stay identical to the plain integral representation.
+    EXPECT_EQ(check_serialized<test::EnumWithNames>(), sizeof(test::EnumWithNames));
+
+    using Descriptor = decltype(::score::common::visitor::visit_as(
+        std::declval<::score::common::visitor::serialized_visitor<alloc_t>&>(), std::declval<test::EnumWithNames&>()));
+    static_assert(
+        std::is_same<typename Descriptor::payload_tag, ::score::common::visitor::payload_tags::enum_le>::value,
+        "an enum with a registered EnumTraits<T> specialization must dispatch to the enum_le payload tag");
+    static_assert(std::is_same<typename Descriptor::enum_type, test::EnumWithNames>::value,
+                  "enum_serialized_descriptor must expose the original enum type");
+    // test::EnumWithNames has a signed underlying type (std::int32_t): the wire tag must be
+    // signed_le, not unsigned_le (regression check for is_signed being applied to the enum type
+    // itself rather than its underlying type).
+    static_assert(std::is_same<typename Descriptor::wire_tag, ::score::common::visitor::payload_tags::signed_le>::value,
+                  "a named enum with a signed underlying type must use the signed_le wire tag");
+
+    // The whole point of EnumTraits<T> is to make the enumerator name<->value table retrievable
+    // through the trait, so verify the actual entries, not just that kHasNames is set.
+    const auto& enumerators = ::score::common::visitor::EnumTraits<test::EnumWithNames>::kEnumerators;
+    ASSERT_EQ(enumerators.size(), 2U);
+    EXPECT_EQ(enumerators[0].value, static_cast<std::int64_t>(test::EnumWithNames::kFirst));
+    EXPECT_STREQ(enumerators[0].name, "kFirst");
+    EXPECT_EQ(enumerators[1].value, static_cast<std::int64_t>(test::EnumWithNames::kSecond));
+    EXPECT_STREQ(enumerators[1].name, "kSecond");
+}
