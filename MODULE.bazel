@@ -13,11 +13,18 @@
 
 module(name = "score_baselibs")
 
-## Configure the C++ toolchain
+###############################################################################
+#
+# S-CORE Toolchains (DO NOT MODIFY)
+#
+###############################################################################
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.2")
+bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
-
+# GCC Toolchains
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
+
+## Linux Toolchains
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
     target_cpu = "x86_64",
@@ -32,32 +39,77 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+
+## Elektobit Toolchains
 gcc.toolchain(
-    name = "score_qcc_x86_64_toolchain",
-    sdp_version = "8.0.4",
-    target_cpu = "x86_64",
-    target_os = "qnx",
+    name = "score_ebclfsa_toolchain",
+    runtime_ecosystem = "ebclfsa",
+    sdk_version = "0.1.0",
+    target_cpu = "aarch64",
+    target_os = "linux",
     use_default_package = True,
-    version = "12.2.0",
+)
+
+## AutoSD10 Toolchains
+gcc.toolchain(
+    name = "score_autosd10_x86_64_toolchain",
+    runtime_ecosystem = "autosd10",
+    target_cpu = "x86_64",
+    target_os = "linux",
+    use_default_package = True,
 )
 gcc.toolchain(
-    name = "score_qcc_aarch64_toolchain",
-    sdp_version = "8.0.4",
+    name = "score_autosd10_aarch64_toolchain",
+    runtime_ecosystem = "autosd10",
     target_cpu = "aarch64",
-    target_os = "qnx",
+    target_os = "linux",
     use_default_package = True,
-    version = "12.2.0",
 )
 use_repo(
     gcc,
+    "score_autosd10_aarch64_toolchain",
+    "score_autosd10_x86_64_toolchain",
+    "score_ebclfsa_toolchain",
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
-    "score_qcc_aarch64_toolchain",
-    "score_qcc_aarch64_toolchain_pkg",
-    "score_qcc_x86_64_toolchain",
-    "score_qcc_x86_64_toolchain_pkg",
 )
 
+# Rust Toolchains
+bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
+
+ferrocene = use_extension(
+    "@score_toolchains_rust//extensions:ferrocene_toolchain_ext.bzl",
+    "ferrocene_toolchain_ext",
+    dev_dependency = True,
+)
+ferrocene.toolchain(
+    name = "ferrocene_aarch64_ebclfsa",
+    coverage_tools_sha256 = "497958e925bc94833ea226d68f6d5ba38bd890f571c73e230141d2923e30dd94",
+    coverage_tools_strip_prefix = "779fbed05ae9e9fe2a04137929d99cc9b3d516fd/x86_64-unknown-linux-gnu",
+    coverage_tools_url = "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.0.1/coverage-tools-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+    exec_triple = "x86_64-unknown-linux-gnu",
+    extra_rustc_flags = [
+        "-Clink-arg=-Wl,--no-as-needed",
+        "-Clink-arg=-lstdc++",
+        "-Clink-arg=-static-libstdc++",
+        "-Clink-arg=-static",
+        "-Clink-arg=-lm",
+        "-Clink-arg=-lc",
+    ],
+    sha256 = "b1f1eb1146bf595fe1f4a65d5793b7039b37d2cb6d395d1c3100fa7d0377b6c9",
+    target_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+    ],
+    target_triple = "aarch64-unknown-linux-gnu",
+    url = "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.0.1/ferrocene-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-aarch64-unknown-linux-gnu.tar.gz",
+)
+use_repo(
+    ferrocene,
+    "ferrocene_aarch64_ebclfsa",
+)
+
+# QNX Toolchains
 bazel_dep(name = "score_rules_imagefs", version = "0.0.4", dev_dependency = True)
 
 imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
@@ -79,6 +131,31 @@ imagefs.toolchain(
 )
 use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
 
+qcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
+qcc.toolchain(
+    name = "score_qcc_aarch64_toolchain",
+    sdp_version = "8.0.4",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    use_default_package = True,
+    version = "12.2.0",
+)
+qcc.toolchain(
+    name = "score_qcc_x86_64_toolchain",
+    sdp_version = "8.0.4",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    use_default_package = True,
+    version = "12.2.0",
+)
+use_repo(
+    qcc,
+    "score_qcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain_pkg",
+    "score_qcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain_pkg",
+)
+
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
 bazel_dep(name = "download_utils", version = "1.2.2")
@@ -87,12 +164,10 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
 ## Configure the Rust toolchain
 
-bazel_dep(name = "rules_rust", version = "0.68.1-score")
+bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.11")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
-
-bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
 
 ## Custom Module Loading
 
@@ -223,5 +298,4 @@ git_override(
 # Constraint values for specifying platforms and toolchains
 #
 #############################################################
-bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
+bazel_dep(name = "platforms", version = "1.1.0")

@@ -28,10 +28,13 @@ common --http_timeout_scaling=2.0
 # directory is often deleted while the ANDROID_HOME environment variable remains set.
 common --action_env=ANDROID_HOME=""
 
-common --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
-common --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
-common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
 common --//score/json:base_library=nlohmann
+
+# Import central S-CORE toolchain configuration
+try-import %workspace%/score.bazelrc/score_toolchain.bazelrc
+
+# Register S-CORE default host toolchains globally as the default build configuration
+build --config=_score_common
 
 build --java_language_version=17
 build --tool_java_language_version=17
@@ -46,26 +49,20 @@ build --per_file_copt=external/.*google_benchmark.*@-Wno-error
 test:_bl_common --build_tests_only
 test --test_output=errors
 
-# Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
-build:bl-x86_64-linux --platforms=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
-build:bl-x86_64-linux --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
-build:bl-x86_64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+# Target configuration for CPU:x86-64|OS:Linux build (leveraging central configuration)
+build:bl-x86_64-linux --config=score-linux-x86_64
 test:bl-x86_64-linux --config=_bl_common
 
-# Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
-build:bl-aarch64-linux --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
-build:bl-aarch64-linux --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
+# Target configuration for CPU:AArch64|OS:Linux build (repository-specific addition leveraging central configuration)
+build:bl-aarch64-linux --config=score-linux-aarch64
 build:bl-aarch64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_linux_gnu
 test:bl-aarch64-linux --config=_bl_common
 test:bl-aarch64-linux --test_timeout=300
 test:bl-aarch64-linux --run_under=//:qemu_aarch64
 test:bl-aarch64-linux --test_tag_filters=-no_rust_doc_test
 
-# Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
-build:bl-x86_64-qnx --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
-build:bl-x86_64-qnx --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
-build:bl-x86_64-qnx --extra_toolchains=@score_qnx_x86_64_ifs_toolchain//:ifs-x86_64-qnx-sdp_8.0.0
-build:bl-x86_64-qnx --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_pc_nto_qnx800
+# Target configuration for CPU:x86-64|OS:QNX build (leveraging central configuration)
+build:bl-x86_64-qnx --config=score-qnx-x86_64
 test:bl-x86_64-qnx --config=_bl_common
 test:bl-x86_64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:bl-x86_64-qnx --test_lang_filters=cc,rust
