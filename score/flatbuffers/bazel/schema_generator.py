@@ -158,15 +158,10 @@ class _Enricher:
                 if meta["default"] is not None:
                     out["default"] = meta["default"]
             else:
-                # Non-lifted table reference -> inline it. Such fields are authored bare
-                # (metadata lives on the referenced table), so they are never required here;
-                # anything that is set on the field still wins over what the table carries.
-                return (
-                    self._annotate(
-                        self.build_object(self._defs[ref]), meta, desc, node
-                    ),
-                    False,
-                )
+                # Non-lifted table reference -> inline it. Metadata normally lives on the
+                # referenced table, but anything set on the field still wins over what the
+                # table carries -- including a field-level ``@required``.
+                out = self.build_object(self._defs[ref])
             return self._annotate(out, meta, desc, node), meta["required"]
 
         node_type = node.get("type")

@@ -257,12 +257,12 @@ class BuildFieldTest(unittest.TestCase):
             },
         )
 
-    def test_ref_to_plain_table_is_inlined_and_never_required(self):
+    def test_ref_to_plain_table_is_inlined_and_honours_required(self):
         enricher = self._enricher(
             {"NS.Thing": _table("@title: Thing", {"a": {"type": "integer"}})}
         )
         out, required = enricher.build_field(_ref("NS.Thing", "@required"))
-        self.assertFalse(required)
+        self.assertTrue(required)
         self.assertEqual(
             out,
             {
