@@ -17,16 +17,32 @@ local_path_override(
     path = "../..",
 )
 
+# for compiler feature flags for toolchains
+bazel_dep(name = "score_cpp_policies", version = "0.1.1", dev_dependency = True)
 bazel_dep(name = "rules_cc", version = "0.2.17")
 
 # C++ Toolchain configuration
 bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.2", dev_dependency = True)
+
+SCORE_GCC_WARNING_KNOWN_FEATURES_POLICY = [
+    "@score_cpp_policies//warnings/gcc/features:minimal_warnings",
+    "@score_cpp_policies//warnings/gcc/features:strict_warnings",
+    "@score_cpp_policies//warnings/gcc/features:all_wall_warnings",
+    "@score_cpp_policies//warnings/gcc/features:warnings_as_errors",
+]
+
+SCORE_GCC_WARNING_ENABLED_FEATURES_POLICY = [
+    "@score_cpp_policies//warnings/gcc/features:minimal_warnings",
+    "@score_cpp_policies//warnings/gcc/features:warnings_as_errors",
+]
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
+    extra_enabled_features = SCORE_GCC_WARNING_ENABLED_FEATURES_POLICY,
+    extra_known_features = SCORE_GCC_WARNING_KNOWN_FEATURES_POLICY,
     target_cpu = "x86_64",
     target_os = "linux",
     use_default_package = True,
@@ -34,6 +50,8 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_gcc_aarch64_toolchain",
+    extra_enabled_features = SCORE_GCC_WARNING_ENABLED_FEATURES_POLICY,
+    extra_known_features = SCORE_GCC_WARNING_KNOWN_FEATURES_POLICY,
     target_cpu = "aarch64",
     target_os = "linux",
     use_default_package = True,
@@ -41,6 +59,8 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
+    extra_enabled_features = SCORE_GCC_WARNING_ENABLED_FEATURES_POLICY,
+    extra_known_features = SCORE_GCC_WARNING_KNOWN_FEATURES_POLICY,
     sdp_version = "8.0.4",
     target_cpu = "x86_64",
     target_os = "qnx",
@@ -49,6 +69,8 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
+    extra_enabled_features = SCORE_GCC_WARNING_ENABLED_FEATURES_POLICY,
+    extra_known_features = SCORE_GCC_WARNING_KNOWN_FEATURES_POLICY,
     sdp_version = "8.0.4",
     target_cpu = "aarch64",
     target_os = "qnx",

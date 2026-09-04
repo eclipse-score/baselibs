@@ -38,7 +38,6 @@ build --tool_java_language_version=17
 build --java_runtime_version=remotejdk_17
 build --tool_java_runtime_version=remotejdk_17
 build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_helper.py"
-build --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
 build --incompatible_strict_action_env
 build --per_file_copt=external/.*google_benchmark.*@-Wno-error
 
