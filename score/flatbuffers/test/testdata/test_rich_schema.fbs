@@ -1,0 +1,121 @@
+/// Fixture exercising every comment token understood by schema_generator.py.
+///
+/// Kept separate from test.fbs so the end-to-end generate_json_schema test can pin the
+/// exact shape flatc emits for descriptions, $refs, required lists and fixed-size arrays.
+/// The generated schema is checked in as test_rich_schema.golden.schema.json and compared
+/// byte-for-byte by //score/flatbuffers/test/generate_json_schema:gen_rich_json_schema_diff_test.
+namespace demo.rich;
+
+/// Operational mode of the component.
+enum OperationMode:uint8 {
+    EVENT_DRIVEN = 0,
+    POLLING = 1,
+    PERIODIC = 2,
+}
+
+/// Union of the supported payload shapes.
+union DataPayloadUnion {
+    StringData,
+    BinaryData
+}
+
+/// A struct, so it can hold a fixed-size array (flatc pins minItems/maxItems).
+struct Rgb {
+    channels:[uint8:3];
+}
+
+/// Root configuration of the rich schema fixture.
+/// @title: Rich Demo Configuration
+table RichConfig {
+    /// Human readable component name.
+    /// @title: Component Name
+    /// @required
+    component_name:string;
+
+    /// Marked required in the .fbs instead of via @required.
+    schema_version:string (required);
+
+    /// @title: Thread Pool Size
+    /// @default: 4
+    /// @min: 1
+    /// @max: 32
+    thread_pool_size:uint8 = 4;
+
+    /// @default: true
+    tracing_enabled:bool = true;
+
+    /// @default: /tmp/demo
+    log_path:string;
+
+    /// @default: POLLING
+    mode:OperationMode;
+
+    /// Superseded by component_name.
+    legacy_id:uint32 (deprecated);
+
+    /// Inlined (not @shared, not on a cycle) table reference.
+    retry_policy:RetryPolicy;
+
+    /// Reference to a @shared table, so it is emitted as a $ref into $defs.
+    limits:Limits;
+
+    /// Vector of tables.
+    endpoints:[Endpoint];
+
+    /// Vector of scalars.
+    priorities:[uint8];
+
+    /// Union field.
+    data:DataPayloadUnion;
+
+    /// Self-recursive table: lifted into $defs to break the reference cycle.
+    root_node:Node;
+
+    /// Struct with a fixed-size array.
+    accent_color:Rgb;
+}
+
+/// Resource limits, referenced from two parents.
+/// @title: Resource Limits
+/// @shared: limits
+table Limits {
+    /// @title: Maximum Memory
+    /// @default: 64
+    /// @min: 0
+    /// @max: 4096
+    max_memory_mb:uint16 = 64;
+}
+
+/// Only referenced once, so it stays inlined.
+table RetryPolicy {
+    /// @default: 3
+    /// @max: 10
+    attempts:uint8 = 3;
+}
+
+table Endpoint {
+    /// @required
+    name:string;
+
+    /// Field-level annotations win over the ones the @shared table carries.
+    /// @title: Endpoint Limits
+    limits:Limits;
+}
+
+/// Recursive tree node: reaches itself through children.
+table Node {
+    name:string;
+    children:[Node];
+}
+
+table StringData {
+    value:string;
+}
+
+table BinaryData {
+    value:[uint8];
+}
+
+root_type RichConfig;
+
+file_identifier "RICH";
