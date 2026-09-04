@@ -1,3 +1,4 @@
+.github/workflows/issue-triage.lock.yml
 score/language/futurecpp/tests/jthread_test.cpp
 score/language/futurecpp/include/score/jthread.hpp
 score/language/futurecpp/include/score/private/thread/thread_id.hpp
