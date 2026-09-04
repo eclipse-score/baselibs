@@ -757,6 +757,357 @@
           "CodeLinks": [],
           "TestLinks": [
             {
+              "name": "ArrayCastTest__CastToArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 47,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCastTest__CastToArrayConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayIndexTest__ReturnsSameAsGet",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 84,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutateTest__ScalarInPlaceMutation",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 104,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayIteratorTest__ForwardIteration",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 129,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayReverseIteratorTest__ReverseIteration",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySizeTest__ReturnsTemplateSize",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 180,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySizeTest__SizeType",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 200,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMakeSpanTest__SpanFromArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 215,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMakeSpanTest__BytesSpanFromArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 231,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayDataTest__DataPointers",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 249,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEqualityTest__ScalarEquality",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 267,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEqualityTest__StructArrayEquality",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 287,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEnumTest__CastToArrayOfEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 312,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEnumTest__GetEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 333,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__CBeginCEnd",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 375,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__IteratorTypesMatch",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 398,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__CRBeginCREnd",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 430,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutableDataTest__MutableData",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 456,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutableDataTest__MutableDataTyped",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 473,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__GetMutablePointerStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 495,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__MutateStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 514,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__IterationYieldsPointers",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 531,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCopyFromSpanTest__Scalar",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 567,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCopyFromSpanTest__Struct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 586,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__MakeSpanConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 611,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__MakeBytesSpanConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 635,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__ConstCastToArrayOfEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 649,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySpanObservableTest__StaticAssertions",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 687,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__Observable",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 728,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__NonObservableScalar",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 747,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__NonObservableStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 766,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OffsetSpecializationTest__Data",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 791,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__OffsetSpecializationOperatorIndexDeathTest",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 818,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultGetOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 830,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultGetMutablePointerOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 842,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultMutateScalarOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 854,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultMutateStructOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 866,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultCopyFromSpanOverlap",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 879,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "AllocatorTest__AllocateReturnsNonNull",
               "file": "score/flatbuffers/details/flatfbuffer_allocator_test.cpp",
               "line": 75,
