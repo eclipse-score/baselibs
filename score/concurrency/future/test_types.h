@@ -55,6 +55,42 @@ class MoveOnlyType : public CopyAndMovableType
     ~MoveOnlyType() noexcept = default;
 };
 
+/// @brief Constructible by copy and by move, but assignable by neither.
+///
+/// This is the shape that forces InterruptibleState to construct its result in place rather than
+/// assign it: score::Result<NonAssignableType> inherits the missing assignment operators, so the
+/// natural `value_ = ...` does not compile for it.
+class NonAssignableType : public CopyAndMovableType
+{
+  public:
+    using CopyAndMovableType::CopyAndMovableType;
+    NonAssignableType(const NonAssignableType&) noexcept = default;
+    NonAssignableType& operator=(const NonAssignableType&) noexcept = delete;
+    NonAssignableType(NonAssignableType&&) noexcept = default;
+    NonAssignableType& operator=(NonAssignableType&&) noexcept = delete;
+
+    ~NonAssignableType() noexcept = default;
+};
+
+/// @brief Move constructible only, and its move constructor may throw.
+///
+/// score::Result<T>::emplace() is constrained on std::is_nothrow_constructible, whereas constructing
+/// the Result accepts any constructible T. This type therefore sits exactly on the boundary: the
+/// setters accept it today, and an implementation that emplaced instead of constructing would stop
+/// accepting it.
+class ThrowingMoveOnlyType : public CopyAndMovableType
+{
+  public:
+    using CopyAndMovableType::CopyAndMovableType;
+    ThrowingMoveOnlyType(const ThrowingMoveOnlyType&) = delete;
+    ThrowingMoveOnlyType& operator=(const ThrowingMoveOnlyType&) = delete;
+    // Deliberately not noexcept.
+    ThrowingMoveOnlyType(ThrowingMoveOnlyType&& other) : CopyAndMovableType(other) {}
+    ThrowingMoveOnlyType& operator=(ThrowingMoveOnlyType&&) = delete;
+
+    ~ThrowingMoveOnlyType() = default;
+};
+
 }  // namespace testing
 }  // namespace concurrency
 }  // namespace score
