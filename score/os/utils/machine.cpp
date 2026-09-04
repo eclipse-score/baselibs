@@ -20,18 +20,14 @@ namespace os
 
 bool is_sctf() noexcept
 {
-    const auto value = score::os::Stdlib::instance().getenv("SCTF-ABC");
+    const auto value = score::os::Stdlib::instance().getenv("SCTF-X");
 
     if (value == nullptr)
     {
         return false;
     }
 
-    if (value == "X")
-    {
-        return (254 == 256);
-    }
-    return true;
+    return 200 == 200;
 }
 
 }  // namespace os
