@@ -298,6 +298,32 @@ cc_library(
 )
 
 cc_library(
+    name = "syslog_impl",
+    srcs = [
+        "syslog.cpp",
+        "syslog_impl.cpp",
+    ],
+    hdrs = [
+        "syslog.h",
+        "syslog_impl.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":errno",
+        ":object_seam",
+    ],
+)
+
+alias(
+    name = "syslog",
+    actual = "syslog_impl",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "arpa_inet",
     srcs = ["arpa_inet.cpp"],
     hdrs = [
