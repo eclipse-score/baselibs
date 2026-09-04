@@ -42,4 +42,4 @@ jobs:
           sarif_file: clang-tidy.sarif
           category: clang-tidy
           sha: ${{ github.event.workflow_run.head_sha }}
-          ref: refs/pull/${{ steps.pr.outputs.number }}/merge
+          ref: refs/pull/${{ steps.pr.outputs.number }}/head
