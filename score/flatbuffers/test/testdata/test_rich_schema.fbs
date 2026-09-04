@@ -2,7 +2,7 @@
 ///
 /// Kept separate from test.fbs so the end-to-end generate_json_schema test can pin the
 /// exact shape flatc emits for descriptions, $refs, required lists and fixed-size arrays.
-/// The generated schema is checked in as test_rich_schema.schema.json and compared
+/// The generated schema is checked in as test_rich_schema.golden.schema.json and compared
 /// byte-for-byte by //score/flatbuffers/test/generate_json_schema:gen_rich_json_schema_diff_test.
 namespace demo.rich;
 

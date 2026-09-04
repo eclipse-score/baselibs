@@ -40,6 +40,9 @@ import sys
 
 _TOKEN_RE = re.compile(r"^@(title|default|min|max|required|shared)\b\s*:?\s*(.*)$")
 
+# A JSON number literal: integer, decimal or scientific notation (``0.5``, ``-1e-3``, ...).
+_NUMBER_RE = re.compile(r"-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][-+]?[0-9]+)?\Z")
+
 _DRAFT_2020_12 = "https://json-schema.org/draft/2020-12/schema"
 
 
@@ -47,16 +50,25 @@ class GenerationError(RuntimeError):
     """Raised when schema generation fails."""
 
 
+def _parse_number(raw):
+    """Parse a JSON number literal, returning ``None`` if ``raw`` is not one.
+
+    ``json.loads`` yields an ``int`` for integer literals and a ``float`` otherwise, which is
+    exactly the number type flatc emits for the corresponding scalar field.
+    """
+    if _NUMBER_RE.match(raw) is None:
+        return None
+    return json.loads(raw)
+
+
 def _parse_default(raw):
-    """Parse an ``@default:`` token value into its JSON type (bool / int / string)."""
+    """Parse an ``@default:`` token value into its JSON type (bool / number / string)."""
     if raw == "true":
         return True
     if raw == "false":
         return False
-    try:
-        return int(raw)
-    except ValueError:
-        return raw
+    number = _parse_number(raw)
+    return raw if number is None else number
 
 
 def _parse_description(text):
@@ -83,7 +95,10 @@ def _parse_description(text):
         if key == "required":
             meta["required"] = True
         elif key in ("min", "max"):
-            meta[key] = int(value)
+            number = _parse_number(value)
+            if number is None:
+                raise GenerationError("@%s is not a number: %s" % (key, value))
+            meta[key] = number
         elif key == "default":
             meta["default"] = _parse_default(value)
         elif key == "shared":

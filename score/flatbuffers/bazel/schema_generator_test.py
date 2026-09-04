@@ -49,11 +49,19 @@ class ParseDefaultTest(unittest.TestCase):
         self.assertEqual(sg._parse_default("42"), 42)
         self.assertEqual(sg._parse_default("-7"), -7)
 
-    def test_non_integer_stays_string(self):
-        # Floats are not special-cased; they fall through to the string branch.
-        self.assertEqual(sg._parse_default("1.5"), "1.5")
+    def test_floats(self):
+        self.assertEqual(sg._parse_default("1.5"), 1.5)
+        self.assertEqual(sg._parse_default("-0.25"), -0.25)
+        self.assertEqual(sg._parse_default("1e-3"), 0.001)
+        self.assertIsInstance(sg._parse_default("1.5"), float)
+
+    def test_non_number_stays_string(self):
         self.assertEqual(sg._parse_default("hello world"), "hello world")
         self.assertEqual(sg._parse_default(""), "")
+        # Not JSON number literals, so they stay verbatim.
+        self.assertEqual(sg._parse_default("1.5f"), "1.5f")
+        self.assertEqual(sg._parse_default("nan"), "nan")
+        self.assertEqual(sg._parse_default("0x10"), "0x10")
 
     def test_capitalized_booleans_are_strings(self):
         self.assertEqual(sg._parse_default("True"), "True")
@@ -107,6 +115,16 @@ class ParseDescriptionTest(unittest.TestCase):
         meta, _ = sg._parse_description("@min: -3\n@max: -1")
         self.assertEqual(meta["min"], -3)
         self.assertEqual(meta["max"], -1)
+
+    def test_fractional_min_max(self):
+        meta, _ = sg._parse_description("@min: 0.5\n@max: 1e3")
+        self.assertEqual(meta["min"], 0.5)
+        self.assertEqual(meta["max"], 1000.0)
+
+    def test_non_numeric_min_is_an_error(self):
+        with self.assertRaises(sg.GenerationError) as ctx:
+            sg._parse_description("@min: lots")
+        self.assertIn("@min", str(ctx.exception))
 
     def test_unknown_token_is_plain_description(self):
         meta, desc = sg._parse_description("@unknown: x")

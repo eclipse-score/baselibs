@@ -59,7 +59,8 @@ generate_json_schema(
 )
 
 # Regenerate the golden after an intentional change with:
-#   bazel build //score/flatbuffers/test/generate_json_schema:gen_rich_json_schema && \
+#   bazel build --config=bl-x86_64-linux \
+#     //score/flatbuffers/test/generate_json_schema:gen_rich_json_schema && \
 #     cp -f bazel-bin/score/flatbuffers/test/generate_json_schema/test_rich_schema.schema.json \
 #       score/flatbuffers/test/generate_json_schema/test_rich_schema.golden.schema.json
 diff_test(
