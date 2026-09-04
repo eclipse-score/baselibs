@@ -15,7 +15,6 @@ config_setting(
     name = "require_typed_memory",  #This is a stub and should always be false
     constraint_values = [
         "@platforms//os:qnx",
-        "@platforms//os:linux",  # Contradicts qnx — ensures this config_setting never matches (stub)
     ],
     visibility = ["//visibility:public"],
 )
