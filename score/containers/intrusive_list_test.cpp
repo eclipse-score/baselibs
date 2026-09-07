@@ -108,6 +108,14 @@ void CheckNonEmpty(ListType& list,
 
 TEST(IntrusiveList, NotLinkedListElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that copy- and move-constructing an intrusive_list_element never links the new instance "
+        "into a list.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+
     ListElement element;
     ListElement copied_element{element};
     ListElement moved_element{std::move(element)};
@@ -116,6 +124,14 @@ TEST(IntrusiveList, NotLinkedListElement)
 
 TEST(IntrusiveList, EmptyIterator)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty("Description",
+                         "Check that default-constructed iterators, const_iterators, reverse_iterators, and "
+                         "const_reverse_iterators compare equal to themselves and to each other's const/non-const "
+                         "counterpart.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     const List::iterator iterator;
     const List::const_iterator const_iterator;
     EXPECT_TRUE(iterator == iterator);
@@ -137,6 +153,14 @@ TEST(IntrusiveList, EmptyIterator)
 
 TEST(IntrusiveList, EmptyList)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that a default-constructed list, its const view, and a list move-constructed from it are "
+        "all empty.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     List list;
     const List& const_list = list;
 
@@ -151,6 +175,14 @@ TEST(IntrusiveList, EmptyList)
 
 TEST(IntrusiveList, SingleElementMinimalChecks)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that a list constructed from a single-element range is non-empty and becomes empty after "
+        "clear().");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     std::array<ListElement, 1> elements;
     List list{elements.begin(), elements.end()};
     EXPECT_FALSE(list.empty());
@@ -173,6 +205,15 @@ static_assert(refers_to_const_v<decltype(std::declval<List::const_reverse_iterat
 
 TEST(IntrusiveList, SingleElementBasedIteratorChecks)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that on a single-element list, every iterator/const_iterator/reverse_iterator variant "
+        "returned by begin/end/rbegin/rend/iterator_to (mutable and const) refers to that element, has "
+        "the expected const-correct type, and increments/decrements correctly between begin and end.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     constexpr std::size_t kMagic = 42;
     std::array<ListElement, 1> elements{kMagic};
     List list{elements.begin(), elements.end()};
@@ -360,6 +401,14 @@ TEST(IntrusiveList, SingleElementBasedIteratorChecks)
 
 TEST(IntrusiveList, SingleElementInsertRemoveChecks)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty("Description",
+                         "Check that on a single element, push_back/pop_back, push_front/pop_front, move-construction, "
+                         "insert/remove, insert/remove_if, and insert/remove of a copied then moved-from element each "
+                         "correctly transition the list between empty and non-empty.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     List list;
     const List& const_list = list;
     ListElement front_back;
@@ -407,6 +456,14 @@ TEST(IntrusiveList, SingleElementInsertRemoveChecks)
 
 TEST(IntrusiveList, TwoElementsInsertRemoveChecks)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty("Description",
+                         "Check that with two elements, every ordering of push_back/push_front/pop_back/pop_front, "
+                         "move-construction, insert/remove, and insert/remove_if preserves the expected front/back "
+                         "element and count.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     List list;
     const List& const_list = list;
     ListElement front;
@@ -474,6 +531,15 @@ TEST(IntrusiveList, TwoElementsInsertRemoveChecks)
 
 TEST(IntrusiveList, SixElementsInsertRemoveChecks)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that with six elements, clear, assign, and range-insert at various split points preserve "
+        "element order and identity, and that remove followed by move-construction and remove_if "
+        "correctly reduce the list to empty.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+
     constexpr std::size_t num_elements = 6;
     std::array<ListElement, num_elements> elements;
     List list{elements.begin(), elements.end()};
@@ -549,6 +615,14 @@ DISABLE_WARNING_SELF_MOVE  // testing correctness of implementation
 
 TEST(IntrusiveList, MoveAssignmentTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that move-assigning a list of zero, one, two, or six elements empties the source and "
+        "transfers its elements to the target, and that self-move-assignment leaves the list unchanged.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+
     // NOLINTBEGIN(bugprone-use-after-move): testing correctness of implementation
 
     List list;
@@ -594,6 +668,14 @@ DISABLE_WARNING_POP  // "-Wself-move"
 
 TEST(IntrusiveList, EraseTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty("Description",
+                         "Check that erase() removes a single element, a trailing range, and the full range, that an "
+                         "empty range leaves the list unchanged, and that erase returns an iterator to the element "
+                         "following the erased range.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+
     constexpr std::size_t num_elements = 6;
     std::array<ListElement, num_elements> elements;
     List list{elements.begin(), elements.end()};
@@ -622,6 +704,14 @@ TEST(IntrusiveList, EraseTest)
 
 TEST(IntrusiveList, SwapTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that both the member swap() and the free swap() function correctly exchange the "
+        "contents of two lists in every combination of empty/non-empty operands, including self-swap.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+
     List list1;
 
     list1.swap(list1);
@@ -675,6 +765,16 @@ TEST(IntrusiveList, SwapTest)
 
 TEST(IntrusiveList, DisposeTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty(
+        "Description",
+        "Check that pop_back_and_dispose, pop_front_and_dispose, erase_and_dispose (single and range), "
+        "dispose_and_assign, remove_and_dispose, remove_and_dispose_if, and clear_and_dispose each "
+        "invoke the disposer exactly once per removed element, in the expected order, before the "
+        "element is unlinked.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+
     // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers): "Magic numbers" here are the test labels by themselves
 
     constexpr std::size_t num_elements = 6;
@@ -734,6 +834,14 @@ class multi_element : public score::containers::intrusive_list_element<>,
 
 TEST(IntrusiveList, MultiTagTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__intrusive_list");
+    this->RecordProperty("Description",
+                         "Check that an element deriving from intrusive_list_element for multiple tags can be a member "
+                         "of one list per tag simultaneously, with insertions and clears on one tag's list leaving the "
+                         "others unaffected.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "design-analysis");
+
     constexpr std::size_t num_elements = 6;
     std::array<multi_element, num_elements> elements;
     score::containers::intrusive_list<multi_element> no_tag_list{elements.begin(), elements.end()};

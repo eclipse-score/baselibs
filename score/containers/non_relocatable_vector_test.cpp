@@ -88,6 +88,11 @@ TYPED_TEST_SUITE(NonRelocatableVectorPolymorphicAllocatorFixture, PolymorphicAll
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, SwapSwapsAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("Description", "Check that swapping two vectors exchanges their trivial elements.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -122,6 +127,11 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, SwapSwapsAllElements)
 
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, SwapSwapsAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("Description", "Check that swapping two vectors exchanges their non-trivial elements.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -160,6 +170,13 @@ TYPED_TEST(NonRelocatableVectorNonTrivialFixture, SwapSwapsAllElements)
 
 TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, SwapSwapsAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("Description",
+                         "Check that swapping two vectors exchanges their trivially-constructible/destructible "
+                         "elements.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -203,6 +220,12 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Sw
 
 TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, SwapSwapsAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("Description",
+                         "Check that swapping two vectors exchanges their non-moveable, non-copyable elements.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -295,6 +318,14 @@ using testing::_;
 
 TEST_F(NonRelocatableVectorPointerInteractionFixture, DataDereferencesBeginAndEnd)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty(
+        "Description",
+        "Check that data() dereferences the underlying element pointer exactly twice, at the first and "
+        "last element, regardless of the pointer type used by the allocator.");
+    this->RecordProperty("TestType", "interface-test");
+    this->RecordProperty("DerivationTechnique", "design-analysis");
+
     // Given a NonRelocatableVector which has been filled with elements
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
@@ -313,6 +344,14 @@ TEST_F(NonRelocatableVectorPointerInteractionFixture, DataDereferencesBeginAndEn
 
 TEST_F(NonRelocatableVectorPointerInteractionFixture, BeginDereferencesBeginAndEnd)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty(
+        "Description",
+        "Check that begin() dereferences the underlying element pointer exactly twice, at the first and "
+        "last element, regardless of the pointer type used by the allocator.");
+    this->RecordProperty("TestType", "interface-test");
+    this->RecordProperty("DerivationTechnique", "design-analysis");
+
     // Given a NonRelocatableVector which has been filled with elements
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
@@ -331,6 +370,13 @@ TEST_F(NonRelocatableVectorPointerInteractionFixture, BeginDereferencesBeginAndE
 
 TEST_F(NonRelocatableVectorPointerInteractionFixture, EndDereferencesBeginAndEnd)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("Description",
+                         "Check that end() dereferences the underlying element pointer exactly twice, at the first and "
+                         "last element, regardless of the pointer type used by the allocator.");
+    this->RecordProperty("TestType", "interface-test");
+    this->RecordProperty("DerivationTechnique", "design-analysis");
+
     // Given a NonRelocatableVector which has been filled with elements
     GivenANonRelocatableVectorContainingNumberOfElements(kNonZeroNumberElements);
 
