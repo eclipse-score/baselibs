@@ -37,7 +37,7 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_os
-   :implements: logic_arc_int__baselibs__os_env[version==1]
+   :implements: 
    :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
@@ -64,29 +64,29 @@ Static Architecture
 Interfaces
 ----------
 
-.. logic_arc_int_op:: Get environment variable
-   :id: logic_arc_int_op__os__env_get
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__os_env[version==1]
+.. .. logic_arc_int_op:: Get environment variable
+..    :id: logic_arc_int_op__os__env_get
+..    :security: YES
+..    :safety: ASIL_B
+..    :status: valid
+..    :version: 1
+..    :included_by: logic_arc_int__baselibs__os_env[version==1]
 
-.. logic_arc_int_op:: Set environment variable
-   :id: logic_arc_int_op__os__env_set
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__os_env[version==1]
+.. .. logic_arc_int_op:: Set environment variable
+..    :id: logic_arc_int_op__os__env_set
+..    :security: YES
+..    :safety: ASIL_B
+..    :status: valid
+..    :version: 1
+..    :included_by: logic_arc_int__baselibs__os_env[version==1]
 
-.. logic_arc_int_op:: Unset environment variable
-   :id: logic_arc_int_op__os__env_unset
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__os_env[version==1]
+.. .. logic_arc_int_op:: Unset environment variable
+..    :id: logic_arc_int_op__os__env_unset
+..    :security: YES
+..    :safety: ASIL_B
+..    :status: valid
+..    :version: 1
+..    :included_by: logic_arc_int__baselibs__os_env[version==1]
 
 .. needextend:: c.this_doc() and type == "logic_arc_int_op"
    :+tags: baselibs, os

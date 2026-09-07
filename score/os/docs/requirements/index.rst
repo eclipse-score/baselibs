@@ -32,7 +32,6 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__os_library[version==2]
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
@@ -45,7 +44,6 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__os_library[version==2]
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
@@ -58,7 +56,6 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__os_library[version==2]
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
