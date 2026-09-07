@@ -49,66 +49,141 @@ TEST(StdlibImpl, system_callFail)
     ASSERT_FALSE(result1.has_value());
 }
 
-TEST(StdlibImpl, getenv)
+TEST(StdlibImpl, getenv_exist)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "StdlibImpl getenv");
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
+    RecordProperty("Description", "Check return on existing value");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-    auto res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1);
-    ASSERT_TRUE(res.has_value());
-    EXPECT_EQ(res.value(), 0);
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classesquivalence classes
+
+    EXPECT_EQ(setenv("TEST_ENV", "TEST_VALUE", 1), 0);
     const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
     EXPECT_STREQ(env, "TEST_VALUE");
     EXPECT_EQ(unsetenv("TEST_ENV"), 0);
+}
+
+TEST(StdlibImpl, getenv_nonexist)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
+    RecordProperty("Description", "Check return on non-existing value");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classesequivalence classes
+
+    EXPECT_EQ(unsetenv("TEST_ENV"), 0);
+    const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
+    EXPECT_EQ(env, nullptr);
+}
+
+TEST(StdlibImpl, getenv_error)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
+    RecordProperty("Description", "Check return on invalid parameter");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classesequivalence classes
+
+    const auto env = score::os::Stdlib::instance().getenv("TEST_ENV=VALUE");
+    EXPECT_EQ(env, nullptr);
 }
 
 TEST(StdlibImpl, setenv)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "StdlibImpl setenv");
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_set");
+    RecordProperty("Description", "Check setting and overwriting of values");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     auto res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1);
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(res.value(), 0);
-    const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_STREQ(env, "TEST_VALUE");
-    res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 0);
+    EXPECT_STREQ(getenv("TEST_ENV"), "TEST_VALUE");
+
+    res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE_OVERWRITE", 0);
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(res.value(), 0);
-    const auto env_overwrite_off = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_STREQ(env_overwrite_off, "TEST_VALUE");
+    EXPECT_STREQ(getenv("TEST_ENV"), "TEST_VALUE");
+
     res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE_OVERWRITE", 1);
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(res.value(), 0);
-    const auto env_overwrite_on = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_STREQ(env_overwrite_on, "TEST_VALUE_OVERWRITE");
+    EXPECT_STREQ(getenv("TEST_ENV"), "TEST_VALUE_OVERWRITE");
     EXPECT_EQ(unsetenv("TEST_ENV"), 0);
+}
+
+TEST(StdlibImpl, setenv_error)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_set");
+    RecordProperty("Description", "Check invalid paramters");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    auto res = score::os::Stdlib::instance().setenv("", "TEST_VALUE", 0);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().setenv("", "TEST_VALUE", 1);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().setenv(nullptr, "TEST_VALUE", 0);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().setenv(nullptr, "TEST_VALUE", 1);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().setenv("INVALID=VALUE", "TEST_VALUE", 1);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().setenv("INVALID=VALUE", "TEST_VALUE", 0);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
 }
 
 TEST(StdlibImpl, unsetenv)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "StdlibImpl unsetenv");
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_unset");
+    RecordProperty("Description", "Check unsetting existing and non-existing value");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    auto res = score::os::Stdlib::instance().setenv("TEST_ENV", "TEST_VALUE", 1);
+    EXPECT_EQ(setenv("TEST_ENV", "TEST_VALUE", 1), 0);
+    EXPECT_STREQ(getenv("TEST_ENV"), "TEST_VALUE");
+
+    auto res = score::os::Stdlib::instance().unsetenv("TEST_ENV");
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(res.value(), 0);
-    const auto env = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_STREQ(env, "TEST_VALUE");
+    EXPECT_EQ(getenv("TEST_ENV"), nullptr);
+
+    auto* const env_unset = score::os::Stdlib::instance().getenv("TEST_ENV");
+    EXPECT_EQ(env_unset, nullptr);
     res = score::os::Stdlib::instance().unsetenv("TEST_ENV");
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(res.value(), 0);
-    const auto env_unset = score::os::Stdlib::instance().getenv("TEST_ENV");
-    EXPECT_EQ(env_unset, nullptr);
-    EXPECT_EQ(unsetenv("TEST_ENV"), 0);
+}
+
+TEST(StdlibImpl, unsetenv_error)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__env_unset");
+    RecordProperty("Description", "Check invalid parameters");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    EXPECT_EQ(setenv("TEST_ENV", "TEST_VALUE", 1), 0);
+    EXPECT_STREQ(getenv("TEST_ENV"), "TEST_VALUE");
+
+    auto res = score::os::Stdlib::instance().unsetenv("");
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().unsetenv(nullptr);
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
+
+    res = score::os::Stdlib::instance().unsetenv("INVALID=VALUE");
+    ASSERT_FALSE(res.has_value());
+    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
 }
 
 TEST(StdlibImpl, realpath)
