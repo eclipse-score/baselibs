@@ -88,22 +88,22 @@ char* StdlibImpl::getenv(const char* const name) const noexcept
 
 auto StdlibImpl::setenv(const char* const name, const char* const value, int overwrite) const noexcept -> Result<int>
 {
-    int res = ::setenv(name, value, overwrite);
+    const int res = ::setenv(name, value, overwrite);
     if (res == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
-    return 0;
+    return res;
 }
 
 auto StdlibImpl::unsetenv(const char* const name) const noexcept -> Result<int>
 {
-    int res = ::unsetenv(name);
+    const int res = ::unsetenv(name);
     if (res == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
-    return 0;
+    return res;
 }
 
 Result<char*> StdlibImpl::realpath(const char* const path, char* const resolved_path) const noexcept
