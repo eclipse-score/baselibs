@@ -246,7 +246,7 @@ Result<bool> FileUtils::ValidateGroup(const Path& path, const std::string& group
     {
         return MakeUnexpected(ErrorCode::kCouldNotValidateGroup, "Unable to get file status");
     }
-    return groupResult.value().gid == status.st_gid;
+    return static_cast<std::uint64_t>(groupResult.value().gid) == status.st_gid;
 }
 
 Result<std::pair<std::unique_ptr<std::iostream>, Path>> FileUtils::OpenUniqueFile(const Path& path,
