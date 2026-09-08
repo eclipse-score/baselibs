@@ -11,10 +11,20 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+
+# config_setting(
+#     name = "require_typed_memory",  #This is a stub and should always be false
+#     constraint_values = [
+#         "@platforms//os:qnx",
+#     ],
+#     visibility = ["//visibility:public"],
+# )
+
 config_setting(
-    name = "require_typed_memory",  #This is a stub and should always be false
+    name = "require_typed_memory",
     constraint_values = [
         "@platforms//os:qnx",
     ],
+    values = {"define": "permanently_disabled_config_setting=true"},
     visibility = ["//visibility:public"],
 )
