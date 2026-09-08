@@ -58,7 +58,7 @@ use_repo(
     "score_qcc_x86_64_toolchain_pkg",
 )
 
-bazel_dep(name = "score_rules_imagefs", version = "0.0.4", dev_dependency = True)
+bazel_dep(name = "score_rules_imagefs", version = "0.1.0", dev_dependency = True)
 
 imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
 imagefs.toolchain(
@@ -96,12 +96,12 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "8.1.0")
+bazel_dep(name = "score_docs_as_code", version = "8.1.1")
 bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
-bazel_dep(name = "score_platform", version = "0.7.1")
+bazel_dep(name = "score_platform", version = "0.7.2")
 
 ## Configure the python toolchain
 
@@ -125,10 +125,20 @@ bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
 llvm.toolchain(
+    extra_known_features = [
+        # Runtime counter relocation for continuous-mode profiles; required by
+        # the LLVM coverage pipeline so death tests / abnormal exits still
+        # flush coverage counters (only active under --config=llvm_cov).
+        "@score_tooling//coverage:enable_llvm_coverage_for_death_tests",
+    ],
+    link_libs = {"linux-x86_64": [
+        "-lrt",
+        "-latomic",
+    ]},
     llvm_version = "22.1.7",
     stdlib = {"linux-x86_64": "stdc++"},
 )
-use_repo(llvm, "llvm_toolchain")
+use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
 

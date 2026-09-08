@@ -1,0 +1,50 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+# LLVM source-based coverage (C++ + Rust) via @score_tooling//coverage.
+# Use with: bazel coverage --config=llvm_cov //score/... --build_tests_only
+#
+# Do NOT combine with --config=bl-x86_64-linux: it registers the GCC
+# toolchain after this file's flags, the last --extra_toolchains wins
+# resolution, and GCC produces no LLVM covmap.
+
+coverage:llvm_cov --nocache_test_results
+coverage:llvm_cov --cxxopt=-O0
+coverage:llvm_cov --combined_report=lcov
+coverage:llvm_cov --experimental_fetch_all_coverage_outputs
+coverage:llvm_cov --dynamic_mode=off
+coverage:llvm_cov --experimental_generate_llvm_lcov
+coverage:llvm_cov --experimental_use_llvm_covmap
+
+# Toolchains: Clang 22 with covmap for C++ (must win over the GCC toolchain
+# registered globally in the root .bazelrc), Ferrocene (>= 0.10.0 standard
+# toolchain, ships llvm-cov/llvm-profdata) for Rust.
+coverage:llvm_cov --platforms=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
+coverage:llvm_cov --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
+coverage:llvm_cov --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+
+coverage:llvm_cov --coverage_output_generator=@score_tooling//coverage:merger
+coverage:llvm_cov --coverage_report_generator=//tools/coverage:reporter_wrapper
+coverage:llvm_cov --test_env=GENERATE_LLVM_LCOV=0
+coverage:llvm_cov --test_env=COVERAGE_GCOV_PATH=/usr/bin/true
+coverage:llvm_cov --test_env=LLVM_PROFILE_CONTINUOUS_MODE=1
+coverage:llvm_cov --features=enable_llvm_coverage_for_death_tests
+coverage:llvm_cov --features=coverage
+coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Cllvm-args=-runtime-counter-relocation
+coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Clink-dead-code
+coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Zcoverage-options=branch
+
+# Clang 22 warns where GCC 12 does not (e.g. -Wunused-variable in tests that
+# deliberately keep a copy alive); do not turn those into errors in the
+# coverage-only build. --host_features covers exec-config builds of scope deps.
+coverage:llvm_cov --features=-treat_warnings_as_errors
+coverage:llvm_cov --host_features=-treat_warnings_as_errors

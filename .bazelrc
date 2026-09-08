@@ -20,7 +20,7 @@ common --registry=https://bcr.bazel.build
 common --experimental_repository_downloader_retries=10
 common --experimental_scale_timeouts=2.0
 common --http_connector_attempts=10
-common --http_connector_retry_max_timeout=1s
+common --http_connector_retry_max_timeout=30s
 common --http_timeout_scaling=2.0
 
 # Unset ANDROID_HOME to prevent rules_android from searching for the Android SDK.
@@ -85,12 +85,8 @@ build:lint --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
 build:lint --output_groups=+rules_lint_human
 build:lint --@aspect_rules_lint//lint:fail_on_violation=true
 
-# Coverage configuration for C++
-coverage --features=coverage
-coverage --combined_report=lcov
-coverage --cache_test_results=no
-coverage --copt=-fprofile-update=atomic
-coverage --linkopt=-fprofile-update=atomic
+# LLVM source-based coverage (C++ + Rust): --config=llvm_cov
+import %workspace%/tools/coverage/coverage.bazelrc
 
 # Sanitizer configuration for C++ and Rust
 test:asan_ubsan_lsan --features=asan

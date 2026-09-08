@@ -20,7 +20,11 @@ cc_library(
     hdrs = ["vajson_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/json:__subpackages__",
+    ],
     deps = [
         "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",

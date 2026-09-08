@@ -10,18 +10,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-
-load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
-cc_library(
-    name = "canary_wrapper",
-    hdrs = ["canary_wrapper.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
-        "//tools/coverage:__pkg__",
-        "//score/analysis/tracing:__subpackages__",
-    ],
-)
+# Coverage justifications for lines/branches that cannot be exercised by
+# tests. Each entry pairs with a COV_JUSTIFIED <id> marker in the source.
+# Fields: id (kebab-case), category (defensive_programming |
+# tool_false_positive | platform_specific | other), platforms ([linux]),
+# reason. See @score_tooling//coverage:COVERAGE_GUIDE.md.
+version: 1
+justifications: []

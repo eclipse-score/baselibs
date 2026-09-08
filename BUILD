@@ -183,10 +183,9 @@ dash_license_checker(
     visibility = ["//visibility:public"],
 )
 
-# TODO: rust_coverage_report was removed by score_tooling >= 2.1.0
-# //:rust_coverage and //:rust_coverage_report are gone until the repo migrates
-# to the new score_coverage_scope/score_coverage_reporter LLVM pipeline
-# https://github.com/eclipse-score/baselibs/issues/512
+# The LLVM coverage pipeline (//tools/coverage, eclipse-score/baselibs#512)
+# resolves the workspace root through MODULE.bazel at report time.
+exports_files(["MODULE.bazel"])
 
 qemu_aarch64()
 

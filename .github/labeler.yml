@@ -88,10 +88,18 @@ comp-tracing:
 comp-utils:
   - changed-files:
       - any-glob-to-any-file: 'score/utils/**'
-# Documentation label: applied when a PR changes files under docs/.
+# Documentation label: applied when a PR changes repository or component documentation.
 documentation:
   - changed-files:
-      - any-glob-to-any-file: 'docs/**'
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - 'score/**/docs/**'
+# CI label: applied when a PR changes GitHub Actions or workflows.
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/actions/**'
+          - '.github/workflows/**'
 # Language labels: applied based on the type of code files changed.
 c++:
   - changed-files:

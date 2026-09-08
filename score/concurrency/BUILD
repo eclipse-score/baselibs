@@ -162,6 +162,7 @@ cc_library(
     ],
     deps = [
         ":unlock_guard",
+        "@score_baselibs//score/language/futurecpp",
     ],
 )
 

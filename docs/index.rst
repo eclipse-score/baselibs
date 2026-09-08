@@ -57,6 +57,6 @@ The Components documentation provides detailed documentation for each individual
 
 
 Quick Start - Building and Testing
-==================================
+----------------------------------
 
 For build instructions, usage examples, and configuration options, refer to the `README <https://github.com/eclipse-score/baselibs/blob/main/README.md>`_ in the `eclipse-score/baselibs <https://github.com/eclipse-score/baselibs>`_ repository.
