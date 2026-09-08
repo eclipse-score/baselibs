@@ -4734,7 +4734,7 @@
   {
     "name": "VectorFaultDeathTest__GetOutOfBounds",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1251",
+    "line": "1239",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -4742,13 +4742,13 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorFaultDeathTest__MutateOutOfBounds",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1271",
+    "line": "1259",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -4756,13 +4756,13 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorFaultDeathTest__MutateOffsetOutOfBounds",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1288",
+    "line": "1276",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -4770,13 +4770,13 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorFaultDeathTest__GetMutableObjectOutOfBounds",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1312",
+    "line": "1300",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -4784,7 +4784,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4896,7 +4896,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4908,9 +4908,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4924,7 +4924,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4938,7 +4938,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4950,9 +4950,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4964,9 +4964,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4978,9 +4978,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -4992,9 +4992,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5008,7 +5008,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5022,7 +5022,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5036,7 +5036,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5050,7 +5050,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5064,7 +5064,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5078,7 +5078,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5092,7 +5092,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5104,9 +5104,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5118,9 +5118,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5132,9 +5132,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5148,7 +5148,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5162,7 +5162,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5176,7 +5176,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5190,7 +5190,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5204,7 +5204,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5218,7 +5218,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5232,7 +5232,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5246,7 +5246,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5260,7 +5260,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5274,7 +5274,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5286,9 +5286,9 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5302,7 +5302,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5316,7 +5316,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5330,7 +5330,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5344,7 +5344,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5358,7 +5358,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5372,7 +5372,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5386,7 +5386,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5400,7 +5400,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5414,7 +5414,7 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
@@ -5428,13 +5428,13 @@
     "TestType": "fault-injection",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorGetTest__Scalars",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "126",
+    "line": "115",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5442,13 +5442,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorEmptyTest__ZeroElements",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "156",
+    "line": "145",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5456,13 +5456,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorLengthTest__NullAndNotNull",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "180",
+    "line": "169",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5470,13 +5470,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorDeprecatedLengthTest__MatchesSize",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "208",
+    "line": "196",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5484,13 +5484,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMutateTest__InPlace",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "242",
+    "line": "234",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5498,13 +5498,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorScalarTypesTest__MinZeroMaxAcrossTypes",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "271",
+    "line": "263",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5512,13 +5512,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorEnumTest__GetEnum",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "296",
+    "line": "286",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5526,13 +5526,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorDataTest__RawAndTypedPointers",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "317",
+    "line": "307",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5540,13 +5540,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorDataTest__MutableRawAndTypedPointers",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "340",
+    "line": "329",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5554,137 +5554,151 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorForwardIteratorTest__RangeBased",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "367",
+    "line": "356",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorReverseIteratorTest__RangeBased",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "395",
+    "line": "384",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorReverseIteratorTest__ArrowOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "418",
+    "line": "407",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMutableIteratorTest__BeginEndRBeginREnd",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "455",
+    "line": "444",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorConstIteratorTest__CbeginCendCrbeginCrend",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "492",
+    "line": "481",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__DefaultConstructor",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "546",
+    "line": "535",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__CopyConstructor",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "560",
+    "line": "549",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__CopyAssignment",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "573",
+    "line": "562",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__MoveAssignment",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "590",
+    "line": "579",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__EqualityOperator",
+    "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+    "line": "593",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
+    "FullyVerifies": null
+  },
+  {
+    "name": "VectorIteratorTest__InequalityOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
     "line": "604",
     "result": "passed",
@@ -5692,13 +5706,13 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
-    "name": "VectorIteratorTest__InequalityOperator",
+    "name": "VectorIteratorTest__LessThanOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
     "line": "615",
     "result": "passed",
@@ -5706,13 +5720,13 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
-    "name": "VectorIteratorTest__LessThanOperator",
+    "name": "VectorIteratorTest__GreaterThanOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
     "line": "626",
     "result": "passed",
@@ -5720,13 +5734,13 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
-    "name": "VectorIteratorTest__GreaterThanOperator",
+    "name": "VectorIteratorTest__LessOrEqualOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
     "line": "637",
     "result": "passed",
@@ -5734,55 +5748,55 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
-    "FullyVerifies": null
-  },
-  {
-    "name": "VectorIteratorTest__LessOrEqualOperator",
-    "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "648",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__GreaterOrEqualOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "660",
+    "line": "649",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__DifferenceOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "672",
+    "line": "661",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__DereferenceOperator",
+    "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+    "line": "671",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
+    "FullyVerifies": null
+  },
+  {
+    "name": "VectorIteratorTest__PreIncrementOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
     "line": "682",
     "result": "passed",
@@ -5790,127 +5804,113 @@
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
-    "FullyVerifies": null
-  },
-  {
-    "name": "VectorIteratorTest__PreIncrementOperator",
-    "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "693",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__PostIncrementOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "706",
+    "line": "695",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__PreDecrementOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "719",
+    "line": "708",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__PostDecrementOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "732",
+    "line": "721",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__PlusOffsetOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "745",
+    "line": "734",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__PlusEqualsOffsetOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "758",
+    "line": "747",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__MinusOffsetOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "770",
+    "line": "759",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorIteratorTest__MinusEqualsOffsetOperator",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "783",
+    "line": "772",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeSpanTest__SpanOverData",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "799",
+    "line": "788",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5918,13 +5918,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeSpanTest__PointerOverloadNullAndNonNull",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "818",
+    "line": "807",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5932,13 +5932,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeSpanTest__MutableSpanOverData",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "841",
+    "line": "830",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5946,13 +5946,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeSpanTest__MutablePointerOverloadNullAndNonNull",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "864",
+    "line": "853",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5960,13 +5960,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeBytesSpanTest__ByteView",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "892",
+    "line": "881",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5974,13 +5974,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorMakeBytesSpanTest__MutableByteView",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "919",
+    "line": "907",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -5988,13 +5988,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorOfStringsTest__Offsets",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "953",
+    "line": "941",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6002,27 +6002,27 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorOfStringsTest__IteratorArrow",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "985",
+    "line": "973",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorMutableObjectTest__GetMutableObjectAndMutateOffset",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1019",
+    "line": "1007",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6030,13 +6030,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "Vector64Test__SizeGetAndIterate",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1056",
+    "line": "1044",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6044,13 +6044,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "Vector64Test__Empty",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1084",
+    "line": "1072",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6058,13 +6058,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorOfAnyTest__SizeAndDataAliasTypedVector",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1101",
+    "line": "1089",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6072,13 +6072,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorOfAnyTest__MutableDataAliasesTypedVector",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1121",
+    "line": "1109",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6086,13 +6086,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorSingleElementTest__OneElement",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1143",
+    "line": "1131",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6100,13 +6100,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorLookupByKeyTest__FindsAndMissesKeys",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1164",
+    "line": "1152",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6114,13 +6114,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access, comp_req__flatbuffers__serialization",
     "FullyVerifies": null
   },
   {
     "name": "VectorLookupByKeyTest__MutableLookup",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1195",
+    "line": "1183",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6128,13 +6128,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
     "name": "VectorCastTest__UpcastToBaseTable",
     "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
-    "line": "1222",
+    "line": "1210",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -6142,7 +6142,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__flatbuffers__serialization",
+    "PartiallyVerifies": "comp_req__flatbuffers__access",
     "FullyVerifies": null
   },
   {
