@@ -33,8 +33,8 @@ common --//score/json:base_library=nlohmann
 # Import central S-CORE toolchain configuration
 try-import %workspace%/score.bazelrc/score_toolchain.bazelrc
 
-# Register S-CORE default host toolchains globally as the default build configuration
-build --config=_score_common
+# Register S-CORE default host toolchains globally as the default build configuration (disabled globally to avoid duplicate expansion warnings across targets)
+# build --config=_score_common
 
 build --java_language_version=17
 build --tool_java_language_version=17
@@ -53,7 +53,7 @@ test --test_output=errors
 build:bl-x86_64-linux --config=score-linux-x86_64
 test:bl-x86_64-linux --config=_bl_common
 
-# Target configuration for CPU:AArch64|OS:Linux build (repository-specific addition leveraging central configuration)
+# Target configuration for CPU:AArch64|OS:Linux build (leveraging central configuration)
 build:bl-aarch64-linux --config=score-linux-aarch64
 build:bl-aarch64-linux --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_linux_gnu
 test:bl-aarch64-linux --config=_bl_common
@@ -69,6 +69,7 @@ test:bl-x86_64-qnx --test_tag_filters=
 test:bl-x86_64-qnx --test_lang_filters=cc,rust
 
 # Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
+build:bl-aarch64-qnx --config=_score_common
 build:bl-aarch64-qnx --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
 build:bl-aarch64-qnx --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0
 build:bl-aarch64-qnx --extra_toolchains=@score_qnx_aarch64_ifs_toolchain//:ifs-aarch64-qnx-sdp_8.0.0
