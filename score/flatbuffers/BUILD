@@ -155,8 +155,8 @@ cc_test(
     name = "flatbuffers_cpp_library_test",
     testonly = True,
     srcs = [
+        "details/flatbuffers_allocator_test.cpp",
         "details/flatbuffers_array_test.cpp",
-        "details/flatfbuffer_allocator_test.cpp",
     ],
     deps = [
         ":flatbufferscpp",

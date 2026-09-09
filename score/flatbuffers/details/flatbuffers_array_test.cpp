@@ -46,30 +46,30 @@ struct Point
 
 TEST(ArrayCastTest, CastToArray)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "casting a raw C array to flatbuffers::Array preserves elements");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
     int32_t raw[3] = {10, 20, 30};
     auto& arr = CastToArray(raw);
-    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(arr.size(), 3U);
     EXPECT_EQ(arr.Get(0), 10);
     EXPECT_EQ(arr.Get(1), 20);
     EXPECT_EQ(arr.Get(2), 30);
 
     int32_t raw1[1] = {42};
     auto& arr1 = CastToArray(raw1);
-    EXPECT_EQ(arr1.size(), 1u);
+    EXPECT_EQ(arr1.size(), 1U);
     EXPECT_EQ(arr1.Get(0), 42);
 }
 
 TEST(ArrayCastTest, CastToArrayConst)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "const array cast produces a const-referenced Array");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     const int32_t raw[2] = {77, 88};
     static_assert(std::is_const_v<std::remove_reference_t<decltype(CastToArray(raw))>>);
@@ -83,7 +83,7 @@ TEST(ArrayCastTest, CastToArrayConst)
 
 TEST(ArrayIndexTest, ReturnsSameAsGet)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "operator[] returns same value as Get for every index");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -103,7 +103,7 @@ TEST(ArrayIndexTest, ReturnsSameAsGet)
 
 TEST(ArrayMutateTest, ScalarInPlaceMutation)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "in-place mutation of scalar array elements");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -128,10 +128,10 @@ TEST(ArrayMutateTest, ScalarInPlaceMutation)
 
 TEST(ArrayIteratorTest, ForwardIteration)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "forward iteration yields expected elements in order");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     int32_t raw[4] = {5, 10, 15, 20};
     const auto& arr = CastToArray(raw);
@@ -153,10 +153,10 @@ TEST(ArrayIteratorTest, ForwardIteration)
 
 TEST(ArrayReverseIteratorTest, ReverseIteration)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "reverse iteration yields elements in reverse order");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     int32_t raw[3] = {1, 2, 3};
     const auto& arr = CastToArray(raw);
@@ -166,7 +166,7 @@ TEST(ArrayReverseIteratorTest, ReverseIteration)
     {
         rev.push_back(*it);
     }
-    ASSERT_EQ(rev.size(), 3u);
+    ASSERT_EQ(rev.size(), 3U);
     EXPECT_EQ(rev[0], 3);
     EXPECT_EQ(rev[1], 2);
     EXPECT_EQ(rev[2], 1);
@@ -179,14 +179,14 @@ TEST(ArrayReverseIteratorTest, ReverseIteration)
 
 TEST(ArraySizeTest, ReturnsTemplateSize)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "size() returns the template parameter N");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     int32_t raw[5] = {};
     auto& arr = CastToArray(raw);
-    EXPECT_EQ(arr.size(), 5u);
+    EXPECT_EQ(arr.size(), 5U);
 
     // size() returns the template parameter N, which is part of the Array type.
     // CastToArray is not constexpr (it reinterpret_casts, which is banned in
@@ -199,10 +199,10 @@ TEST(ArraySizeTest, ReturnsTemplateSize)
 
 TEST(ArraySizeTest, SizeType)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "size_type is uint16_t");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     static_assert(std::is_same<Array<int32_t, 3>::size_type, uint16_t>::value, "size_type must be uint16_t");
 }
@@ -214,7 +214,7 @@ TEST(ArraySizeTest, SizeType)
 
 TEST(ArrayMakeSpanTest, SpanFromArray)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "make_span creates a fixed-size span over array data");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -222,7 +222,7 @@ TEST(ArrayMakeSpanTest, SpanFromArray)
     int32_t raw[3] = {100, 200, 300};
     auto& arr = CastToArray(raw);
     auto s = make_span(arr);
-    EXPECT_EQ(s.size(), 3u);
+    EXPECT_EQ(s.size(), 3U);
     EXPECT_EQ(s[0], 100);
     EXPECT_EQ(s[1], 200);
     EXPECT_EQ(s[2], 300);
@@ -230,7 +230,7 @@ TEST(ArrayMakeSpanTest, SpanFromArray)
 
 TEST(ArrayMakeSpanTest, BytesSpanFromArray)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "make_bytes_span returns span over raw bytes");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -248,7 +248,7 @@ TEST(ArrayMakeSpanTest, BytesSpanFromArray)
 
 TEST(ArrayDataTest, DataPointers)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Data() and data() return pointers to underlying storage");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -266,7 +266,7 @@ TEST(ArrayDataTest, DataPointers)
 
 TEST(ArrayEqualityTest, ScalarEquality)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "operator== compares all elements for equality");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -286,7 +286,7 @@ TEST(ArrayEqualityTest, ScalarEquality)
 
 TEST(ArrayEqualityTest, StructArrayEquality)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "operator== on struct arrays");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -311,7 +311,7 @@ TEST(ArrayEqualityTest, StructArrayEquality)
 
 TEST(ArrayEnumTest, CastToArrayOfEnum)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CastToArrayOfEnum casts raw array to Array of enum type");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -324,7 +324,7 @@ TEST(ArrayEnumTest, CastToArrayOfEnum)
     };
     int32_t raw[3] = {0, 1, 2};
     auto& arr = CastToArrayOfEnum<Color>(raw);
-    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(arr.size(), 3U);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(0)), 0);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(1)), 1);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(2)), 2);
@@ -332,7 +332,7 @@ TEST(ArrayEnumTest, CastToArrayOfEnum)
 
 TEST(ArrayEnumTest, GetEnum)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "GetEnum retrieves element cast to enum type");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -374,10 +374,10 @@ TEST(ArrayEnumTest, GetEnum)
 
 TEST(ArrayConstIteratorsTest, CBeginCEnd)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "cbegin/cend produce read-only forward iterators");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     int32_t raw[3] = {10, 20, 30};
     const auto& arr = CastToArray(raw);
@@ -397,12 +397,12 @@ TEST(ArrayConstIteratorsTest, CBeginCEnd)
 
 TEST(ArrayConstIteratorsTest, IteratorTypesMatch)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description",
                    "begin/end/cbegin/cend share one const_iterator type; the reverse variants share "
                    "one const_reverse_iterator type -- there is no separate mutable iterator");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     // Deliberately a non-const Array: even so, begin()/end() return const_iterator.
     int32_t raw[3] = {1, 2, 3};
@@ -429,10 +429,10 @@ TEST(ArrayConstIteratorsTest, IteratorTypesMatch)
 
 TEST(ArrayConstIteratorsTest, CRBeginCREnd)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "crbegin/crend produce const reverse iterators");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     int32_t raw[3] = {1, 2, 3};
     const auto& arr = CastToArray(raw);
@@ -442,7 +442,7 @@ TEST(ArrayConstIteratorsTest, CRBeginCREnd)
     {
         result.push_back(*it);
     }
-    ASSERT_EQ(result.size(), 3u);
+    ASSERT_EQ(result.size(), 3U);
     EXPECT_EQ(result[0], 3);
     EXPECT_EQ(result[1], 2);
     EXPECT_EQ(result[2], 1);
@@ -455,7 +455,7 @@ TEST(ArrayConstIteratorsTest, CRBeginCREnd)
 
 TEST(ArrayMutableDataTest, MutableData)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "mutable Data() returns writable uint8_t pointer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -472,7 +472,7 @@ TEST(ArrayMutableDataTest, MutableData)
 
 TEST(ArrayMutableDataTest, MutableDataTyped)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "mutable data() returns writable T* pointer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -494,7 +494,7 @@ TEST(ArrayMutableDataTest, MutableDataTyped)
 
 TEST(ArrayStructTest, GetMutablePointerStruct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "GetMutablePointer on struct array returns writable pointer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -513,7 +513,7 @@ TEST(ArrayStructTest, GetMutablePointerStruct)
 
 TEST(ArrayStructTest, MutateStruct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Mutate replaces a struct element in place, leaving others unchanged");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -530,7 +530,7 @@ TEST(ArrayStructTest, MutateStruct)
 
 TEST(ArrayStructTest, IterationYieldsPointers)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "for non-scalar element types operator* yields a const T* into the buffer");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -566,7 +566,7 @@ TEST(ArrayStructTest, IterationYieldsPointers)
 
 TEST(ArrayCopyFromSpanTest, Scalar)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpan with scalar (span-observable) path");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -585,7 +585,7 @@ TEST(ArrayCopyFromSpanTest, Scalar)
 
 TEST(ArrayCopyFromSpanTest, Struct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpan with struct type");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -610,7 +610,7 @@ TEST(ArrayCopyFromSpanTest, Struct)
 
 TEST(ArrayConstSpanTest, MakeSpanConst)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "make_span with const Array");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -626,7 +626,7 @@ TEST(ArrayConstSpanTest, MakeSpanConst)
     static_assert(std::is_const_v<std::remove_reference_t<decltype(s[0])>>,
                   "operator[] on a const span yields a const reference");
 
-    EXPECT_EQ(s.size(), 3u);
+    EXPECT_EQ(s.size(), 3U);
     EXPECT_EQ(s[0], 5);
     EXPECT_EQ(s[1], 10);
     EXPECT_EQ(s[2], 15);
@@ -634,7 +634,7 @@ TEST(ArrayConstSpanTest, MakeSpanConst)
 
 TEST(ArrayConstSpanTest, MakeBytesSpanConst)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "make_bytes_span with const Array");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -648,7 +648,7 @@ TEST(ArrayConstSpanTest, MakeBytesSpanConst)
 
 TEST(ArrayConstSpanTest, ConstCastToArrayOfEnum)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "const CastToArrayOfEnum");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -661,7 +661,7 @@ TEST(ArrayConstSpanTest, ConstCastToArrayOfEnum)
     };
     const int32_t raw[3] = {0, 1, 2};
     const auto& arr = CastToArrayOfEnum<Color>(raw);
-    EXPECT_EQ(arr.size(), 3u);
+    EXPECT_EQ(arr.size(), 3U);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(0)), 0);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(1)), 1);
     EXPECT_EQ(static_cast<int32_t>(arr.Get(2)), 2);
@@ -686,10 +686,10 @@ TEST(ArrayConstSpanTest, ConstCastToArrayOfEnum)
 
 TEST(ArraySpanObservableTest, StaticAssertions)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "is_span_observable static member for scalar and struct types");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     static_assert(Array<int32_t, 3>::is_span_observable, "int32_t should be span-observable on LE");
     static_assert(Array<uint16_t, 2>::is_span_observable, "uint16_t should be span-observable on LE");
@@ -727,7 +727,7 @@ struct ArrayTestAccess : public Array<T, N>
 
 TEST(CopyFromSpanImplTest, Observable)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpanImpl(true_type) — memcpy path");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -746,7 +746,7 @@ TEST(CopyFromSpanImplTest, Observable)
 
 TEST(CopyFromSpanImplTest, NonObservableScalar)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpanImpl(false_type) — element-wise Mutate path for scalars");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -765,7 +765,7 @@ TEST(CopyFromSpanImplTest, NonObservableScalar)
 
 TEST(CopyFromSpanImplTest, NonObservableStruct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpanImpl(false_type) with struct type");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -790,7 +790,7 @@ TEST(CopyFromSpanImplTest, NonObservableStruct)
 
 TEST(OffsetSpecializationTest, Data)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty(
         "Description",
         "Data() on the Array<Offset<void>,N> specialization exposes the underlying offset bytes for reading");
@@ -817,7 +817,7 @@ TEST(OffsetSpecializationTest, Data)
 
 TEST(ArrayFaultInjectionTest, OffsetSpecializationOperatorIndexDeathTest)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Array<Offset<void>, N>::operator[] triggers assert(false) at runtime");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -829,31 +829,31 @@ TEST(ArrayFaultInjectionTest, OffsetSpecializationOperatorIndexDeathTest)
 
 TEST(ArrayFaultInjectionTest, FaultGetOutOfBounds)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Get() with index == size triggers assert(false)");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     int32_t raw[3] = {1, 2, 3};
     const auto& arr = CastToArray(raw);
-    EXPECT_DEATH({ arr.Get(3u); }, "");
+    EXPECT_DEATH({ arr.Get(3U); }, "");
 }
 
 TEST(ArrayFaultInjectionTest, FaultGetMutablePointerOutOfBounds)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "GetMutablePointer() with index == size triggers assert(false)");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     Point raw[2] = {{1, 2}, {3, 4}};
     auto& arr = CastToArray(raw);
-    EXPECT_DEATH({ arr.GetMutablePointer(2u); }, "");
+    EXPECT_DEATH({ arr.GetMutablePointer(2U); }, "");
 }
 
 TEST(ArrayFaultInjectionTest, FaultMutateScalarOutOfBounds)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Mutate() with index == size triggers assert(false)");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -865,7 +865,7 @@ TEST(ArrayFaultInjectionTest, FaultMutateScalarOutOfBounds)
 
 TEST(ArrayFaultInjectionTest, FaultMutateStructOutOfBounds)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "Mutate() with index == size on struct triggers assert(false) via false_type path");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -878,7 +878,7 @@ TEST(ArrayFaultInjectionTest, FaultMutateStructOutOfBounds)
 
 TEST(ArrayFaultInjectionTest, FaultCopyFromSpanOverlap)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__access");
     RecordProperty("Description", "CopyFromSpan with a source span overlapping the array triggers assert(false)");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
