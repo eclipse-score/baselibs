@@ -21,8 +21,9 @@ namespace score::utils::test
 
 TEST(Base64Test, EncodeEmptyString)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {};
     std::string expected_output = "";
@@ -31,8 +32,9 @@ TEST(Base64Test, EncodeEmptyString)
 
 TEST(Base64Test, EncodeSingleByte)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'A'};
     std::string expected_output = "QQ==";
@@ -41,8 +43,9 @@ TEST(Base64Test, EncodeSingleByte)
 
 TEST(Base64Test, EncodeTwoBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'A', 'B'};
     std::string expected_output = "QUI=";
@@ -51,8 +54,9 @@ TEST(Base64Test, EncodeTwoBytes)
 
 TEST(Base64Test, EncodeMultipleBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::EncodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
     std::vector<std::uint8_t> input = {'S', 'y', 's', 'f', 'c', 'n', 'U', 't', 'i', 'l', 's'};
     std::string expected_output = "U3lzZmNuVXRpbHM=";
@@ -61,8 +65,9 @@ TEST(Base64Test, EncodeMultipleBytes)
 
 TEST(Base64Test, DecodeEmptyString)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "";
     std::vector<std::uint8_t> expected_output = {};
@@ -71,8 +76,9 @@ TEST(Base64Test, DecodeEmptyString)
 
 TEST(Base64Test, DecodeSingleByte)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "QQ==";
     std::vector<std::uint8_t> expected_output = {'A'};
@@ -81,8 +87,9 @@ TEST(Base64Test, DecodeSingleByte)
 
 TEST(Base64Test, DecodeTwoBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::string input = "QUI=";
     std::vector<std::uint8_t> expected_output = {'A', 'B'};
@@ -91,8 +98,9 @@ TEST(Base64Test, DecodeTwoBytes)
 
 TEST(Base64Test, DecodeMultipleBytes)
 {
-    ::testing::Test::RecordProperty("TestType", "control-flow-analysis");  // control flow
-    ::testing::Test::RecordProperty("Verifies", "::score::utils::DecodeBase64()");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
     ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
     std::vector<std::uint8_t> input(1000, 'A');
     std::string encoded_input = EncodeBase64(input);
