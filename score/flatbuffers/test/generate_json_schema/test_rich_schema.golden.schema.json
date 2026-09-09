@@ -1,0 +1,181 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Rich Demo Configuration",
+    "description": "Root configuration of the rich schema fixture.",
+    "type": "object",
+    "required": [
+        "component_name",
+        "schema_version"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "component_name": {
+            "type": "string",
+            "title": "Component Name",
+            "description": "Human readable component name."
+        },
+        "schema_version": {
+            "type": "string",
+            "description": "Marked required in the .fbs instead of via @required."
+        },
+        "thread_pool_size": {
+            "type": "integer",
+            "title": "Thread Pool Size",
+            "default": 4,
+            "minimum": 1,
+            "maximum": 32
+        },
+        "tracing_enabled": {
+            "type": "boolean",
+            "default": true
+        },
+        "log_path": {
+            "type": "string",
+            "default": "/tmp/demo"
+        },
+        "mode": {
+            "type": "string",
+            "enum": [
+                "EVENT_DRIVEN",
+                "POLLING",
+                "PERIODIC"
+            ],
+            "default": "POLLING"
+        },
+        "legacy_id": {
+            "type": "integer",
+            "description": "Superseded by component_name.",
+            "deprecated": true
+        },
+        "retry_policy": {
+            "type": "object",
+            "description": "Inlined (not @shared, not on a cycle) table reference.",
+            "additionalProperties": false,
+            "properties": {
+                "attempts": {
+                    "type": "integer",
+                    "default": 3,
+                    "maximum": 10
+                }
+            }
+        },
+        "limits": {
+            "$ref": "#/$defs/limits",
+            "description": "Reference to a @shared table, so it is emitted as a $ref into $defs."
+        },
+        "endpoints": {
+            "type": "array",
+            "description": "Vector of tables.",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "limits": {
+                        "$ref": "#/$defs/limits",
+                        "title": "Endpoint Limits",
+                        "description": "Field-level annotations win over the ones the @shared table carries."
+                    }
+                }
+            }
+        },
+        "priorities": {
+            "type": "array",
+            "description": "Vector of scalars.",
+            "items": {
+                "type": "integer"
+            }
+        },
+        "data_type": {
+            "type": "string",
+            "enum": [
+                "NONE",
+                "StringData",
+                "BinaryData"
+            ]
+        },
+        "data": {
+            "description": "Union field.",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "string"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "root_node": {
+            "$ref": "#/$defs/demo_rich_Node",
+            "description": "Self-recursive table: lifted into $defs to break the reference cycle."
+        },
+        "accent_color": {
+            "type": "object",
+            "description": "Struct with a fixed-size array.",
+            "additionalProperties": false,
+            "properties": {
+                "channels": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                }
+            }
+        }
+    },
+    "$defs": {
+        "limits": {
+            "type": "object",
+            "title": "Resource Limits",
+            "description": "Resource limits, referenced from two parents.",
+            "additionalProperties": false,
+            "properties": {
+                "max_memory_mb": {
+                    "type": "integer",
+                    "title": "Maximum Memory",
+                    "default": 64,
+                    "minimum": 0,
+                    "maximum": 4096
+                }
+            }
+        },
+        "demo_rich_Node": {
+            "type": "object",
+            "description": "Recursive tree node: reaches itself through children.",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "children": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/demo_rich_Node"
+                    }
+                }
+            }
+        }
+    }
+}
