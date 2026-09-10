@@ -18,7 +18,10 @@ load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
 load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
 
-exports_files([".clang-tidy"])
+exports_files([
+    ".clang-tidy",
+    "ruff.toml",
+])
 
 docs(
     bundles = [

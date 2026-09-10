@@ -50,3 +50,10 @@ jobs:
           category: clippy
           sha: ${{ github.event.workflow_run.head_sha }}
           ref: refs/pull/${{ steps.pr.outputs.number }}/head
+      - name: Upload Ruff SARIF to code scanning
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: ruff.sarif
+          category: ruff
+          sha: ${{ github.event.workflow_run.head_sha }}
+          ref: refs/pull/${{ steps.pr.outputs.number }}/head

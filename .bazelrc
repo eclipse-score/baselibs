@@ -112,5 +112,10 @@ build:clang-tidy --copt=-Wno-error=deprecated-declarations
 build:clang-tidy --copt=-ffp-exception-behavior=strict
 build:clang-tidy --copt=-frounding-math
 
+# Ruff linting for Python
+build:ruff --aspects=//tools/lint:linters.bzl%ruff_aspect
+build:ruff --output_groups=rules_lint_human
+build:ruff --@aspect_rules_lint//lint:fail_on_violation=true
+
 # Import user-specific configurations
 try-import %workspace%/user.bazelrc

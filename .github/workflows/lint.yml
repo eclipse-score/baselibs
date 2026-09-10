@@ -11,9 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 #
-# Runs clang-tidy and Clippy through rules_lint in one job. Each build uses
-# fail_on_violation=false so violating targets still produce SARIF; the job
-# fails at the end, once everything has been collected and uploaded.
+# Runs clang-tidy, Clippy, and Ruff through rules_lint in one job. Each build
+# uses fail_on_violation=false so violating targets still produce SARIF; the
+# job fails at the end, once everything has been collected and uploaded.
 name: Linter checks
 permissions:
   contents: read
@@ -52,12 +52,19 @@ jobs:
           bazel build --config=bl-x86_64-linux --config=lint --keep_going \
             --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
             -- $(bazel query 'kind("rust_.*", //score/...)')
+      - name: Bazel build with Ruff
+        if: always()
+        run: |
+          bazel build --config=bl-x86_64-linux --config=ruff --keep_going \
+            --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
+            -- //...
       - name: Collect human-readable lint reports
         if: always()
         run: |
           declare -A mnemonics=(
             [clang-tidy]=AspectRulesLintClangTidy
             [clippy]=AspectRulesLintClippy
+            [ruff]=AspectRulesLintRuff
           )
           for tool in "${!mnemonics[@]}"; do
             mkdir -p "/tmp/lint-reports/${tool}"
@@ -85,6 +92,7 @@ jobs:
           declare -A mnemonics=(
             [clang-tidy]=AspectRulesLintClangTidy
             [clippy]=AspectRulesLintClippy
+            [ruff]=AspectRulesLintRuff
           )
           any_violations=0
           for tool in "${!mnemonics[@]}"; do
@@ -107,6 +115,12 @@ jobs:
         with:
           sarif_file: /tmp/lint-sarif/clippy.sarif
           category: clippy
+      - name: Upload Ruff SARIF to code scanning
+        if: always() && !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name)
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: /tmp/lint-sarif/ruff.sarif
+          category: ruff
       - name: Prepare SARIF artifact
         # For lint_sarif_upload.yml to re-upload on fork PRs, and for debugging.
         if: always()

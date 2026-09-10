@@ -15,12 +15,12 @@
 
 """Cleans up rules_lint's per-target SARIF reports for GitHub code scanning.
 
-clang-tidy's SARIF comes from a generic errorformat-based converter with no
-`ruleId` set, and paths reported as `%SRCROOT%`-relative URIs. Clippy's SARIF
-comes from a dedicated converter that already sets `ruleId` from rustc's own
-diagnostics.
+clang-tidy's and Ruff's SARIF come from a generic errorformat-based converter
+with no `ruleId` set, and paths reported as repo-root-relative URIs.
+Clippy's SARIF comes from a dedicated converter that already sets `ruleId`
+from rustc's own diagnostics.
 
-Neither is directly usable for a code scanning upload as-is:
+None of this is directly usable for a code scanning upload as-is:
 
 * GitHub rejects a SARIF upload if any result is missing a `ruleId` that
   resolves against that run's `tool.driver.rules`.
@@ -46,11 +46,20 @@ import sys
 # A SARIF result can only carry one ruleId, so use the first name.
 CLANG_TIDY_RULE_ID_RE = re.compile(r"\[([\w.,-]+)\]$")
 
+# Ruff's message starts with its rule code, e.g. "E402 Module level import
+# not at top of file".
+RUFF_RULE_ID_RE = re.compile(r"^([A-Z]+\d+)\b")
+
 RULE_ID_EXTRACTORS = {
     "clang-tidy": lambda message: (
         CLANG_TIDY_RULE_ID_RE.search(message).group(1).split(",")[0]
         if CLANG_TIDY_RULE_ID_RE.search(message)
         else "clang-tidy"
+    ),
+    "ruff": lambda message: (
+        RUFF_RULE_ID_RE.match(message).group(1)
+        if RUFF_RULE_ID_RE.match(message)
+        else "ruff"
     ),
     # Clippy's ruleId (e.g. "clippy::needless_return") is already set.
     "clippy": None,
