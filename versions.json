@@ -182,5 +182,9 @@
   {
     "version": "pr-566",
     "url": "https://eclipse-score.github.io/baselibs/pr-566/"
+  },
+  {
+    "version": "pr-568",
+    "url": "https://eclipse-score.github.io/baselibs/pr-568/"
   }
 ]
