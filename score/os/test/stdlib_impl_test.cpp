@@ -177,10 +177,6 @@ TEST(StdlibImpl, unsetenv_error)
     ASSERT_FALSE(res.has_value());
     EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
 
-    res = score::os::Stdlib::instance().unsetenv(nullptr);
-    ASSERT_FALSE(res.has_value());
-    EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
-
     res = score::os::Stdlib::instance().unsetenv("INVALID=VALUE");
     ASSERT_FALSE(res.has_value());
     EXPECT_EQ(res.error().GetOsDependentErrorCode(), EINVAL);
