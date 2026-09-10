@@ -104,10 +104,6 @@
     "url": "https://eclipse-score.github.io/baselibs/pr-458/"
   },
   {
-    "version": "pr-474",
-    "url": "https://eclipse-score.github.io/baselibs/pr-474/"
-  },
-  {
     "version": "pr-488",
     "url": "https://eclipse-score.github.io/baselibs/pr-488/"
   },
@@ -182,9 +178,5 @@
   {
     "version": "v0.2.12",
     "url": "https://eclipse-score.github.io/baselibs/v0.2.12/"
-  },
-  {
-    "version": "pr-565",
-    "url": "https://eclipse-score.github.io/baselibs/pr-565/"
   }
 ]
