@@ -37,6 +37,14 @@ TYPED_TEST_SUITE_P(HashCalculatorFactoryCreationTest);
 
 TYPED_TEST_P(HashCalculatorFactoryCreationTest, HashCalculatorFactorySuccessTest)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that the factory creates a hash calculator instance for a hash algorithm (SHA-256) "
+                         "and a checksum algorithm (CRC-32) without the caller depending on the concrete "
+                         "implementation type.");
+
     for (auto algo : {HashAlgorithm::kSha256, HashAlgorithm::kCrc32})
     {
         TypeParam unit{};
@@ -82,6 +90,13 @@ const std::vector<DataAndDigest> data_and_digest{
 
 TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateSha256)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface, comp_req__hash__sha_algorithms");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that a calculator created for SHA-256 computes the correct digest for inputs of "
+                         "varying length, including multi-block inputs.");
+
     TypeParam unit{};
 
     for (const auto& dataset : data_and_digest)
@@ -93,6 +108,11 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateSha256)
 
 TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateCrc32)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface, comp_req__hash__crc32_algorithm");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that a calculator created for CRC-32 computes the correct checksum.");
+
     TypeParam unit{};
 
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
@@ -106,6 +126,13 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateCrc32)
 
 TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32AutosarNotSupportedInIeeeVariant)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__hash__crc32_algorithm");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that the IEEE-variant factory rejects the CRC-32-Autosar algorithm identifier, "
+                         "since that variant is not supported by this factory.");
+
     TypeParam unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
@@ -126,6 +153,13 @@ INSTANTIATE_TYPED_TEST_SUITE_P(WorkingDigests, HashCalculatorFactoryCreationTest
 
 TEST(HashCalculatorFactory, hashCalculatorFactoryFailTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that the factory returns an error, instead of a calculator, when asked to create a "
+                   "calculator for HashAlgorithm::kNone.");
+
     HashCalculatorFactory unit{};
     auto hash_factory = unit.CreateHashCalculator(HashAlgorithm::kNone);
     ASSERT_FALSE(hash_factory.has_value());
@@ -133,6 +167,13 @@ TEST(HashCalculatorFactory, hashCalculatorFactoryFailTest)
 
 TEST(HashCalculatorFactory, HashCalculatorSpanInput)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that HashCalculatorFactory::CalculateHash() computes the correct digest for a span of "
+                   "bytes in a single call.");
+
     HashCalculatorFactory unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
@@ -147,6 +188,13 @@ TEST(HashCalculatorFactory, HashCalculatorSpanInput)
 
 TEST(HashCalculatorFactory, HashCalculatorStreamInput)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that HashCalculatorFactory::CalculateHash() computes the correct digest for input "
+                   "supplied via a std::istream.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abc");
     const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> expected_sha256{
@@ -160,6 +208,13 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailedHashObjCreation)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, for HashAlgorithm::kNone with "
+                   "span input.");
+
     HashCalculatorFactory unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
@@ -171,6 +226,13 @@ TEST(HashCalculatorFactory, FailedHashObjCreation)
 
 TEST(HashCalculatorFactory, FailedHashObjCreationStream)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, for HashAlgorithm::kNone with "
+                   "stream input.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abc");
 
@@ -181,6 +243,13 @@ TEST(HashCalculatorFactory, FailedHashObjCreationStream)
 
 TEST(HashCalculatorFactory, InvalidHashCalculatorSpanInput)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, for an empty (default "
+                   "constructed) span.");
+
     HashCalculatorFactory unit{};
     score::cpp::span<const std::uint8_t> data;
 
@@ -191,6 +260,13 @@ TEST(HashCalculatorFactory, InvalidHashCalculatorSpanInput)
 
 TEST(HashCalculatorFactory, InvalidhashCalculatorStreamInput)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, when the input stream is "
+                   "already in a failed state.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input{};
     test_input.setstate(std::ios::failbit);
@@ -202,6 +278,13 @@ TEST(HashCalculatorFactory, InvalidhashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailHashObjCreationWithMaxRead)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() with a max-read limit still returns an error for "
+                   "HashAlgorithm::kNone.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abcefg");
 
@@ -212,6 +295,13 @@ TEST(HashCalculatorFactory, FailHashObjCreationWithMaxRead)
 
 TEST(HashCalculatorFactory, HashCalculatorStreamInputWithMaxRead)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() computes the digest only over the first max-read bytes of a "
+                   "stream, ignoring the remainder.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abcefg");
     const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> expected_sha256{
@@ -225,6 +315,13 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInputWithMaxRead)
 
 TEST(HashCalculatorFactory, InstantiateWithFailingOpenSslLib)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that the factory propagates an instantiation error, instead of throwing, when the "
+                   "underlying OpenSSL library fails to resolve the digest algorithm.");
+
     openssl::OpensslLibMock open_ssl_lib_mock{};
     EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha1()).WillOnce(::testing::Return(nullptr));
     HashCalculatorFactory unit{std::cref(open_ssl_lib_mock)};
@@ -235,6 +332,13 @@ TEST(HashCalculatorFactory, InstantiateWithFailingOpenSslLib)
 
 TEST(HashCalculatorFactory, InstantiateWithSuccess)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check that the factory successfully creates a calculator by driving the underlying OpenSSL "
+                   "digest lookup, context creation and initialization calls in the expected order.");
+
     openssl::OpensslLibMock open_ssl_lib_mock{};
     {
         openssl::StructDigestCtx* digest_context{reinterpret_cast<openssl::StructDigestCtx*>(0xC0DEBEEF)};
@@ -253,6 +357,13 @@ TEST(HashCalculatorFactory, InstantiateWithSuccess)
 
 TEST(SafeHashCalculatorFactory, TryToInstantiateNonexistentHash)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that SafeHashCalculatorFactory returns an error, instead of a calculator, for an "
+                   "algorithm it does not support (SHA-1).");
+
     SafeHashCalculatorFactory unit{};
     EXPECT_FALSE(unit.CreateHashCalculator(HashAlgorithm::kSha1).has_value());
 }
