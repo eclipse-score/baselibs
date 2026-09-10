@@ -126,6 +126,15 @@ score_coverage_scope(
         "//score/thread",
         "//score/utils:base64",
     ],
+    # flatbufferutils (above) depends on flatbufferscpp, whose hdrs are
+    # vendored @flatbuffers headers behind strip_include_prefix. The aspect
+    # that walks `deps` can only see the original external label for those
+    # headers, never the generated virtual-includes file the compiler and
+    # coverage mapping actually use (eclipse-score/baselibs#558) - extra_deps
+    # reads CcInfo directly to get that post-processing file identity.
+    extra_deps = [
+        "//score/flatbuffers:flatbufferscpp",
+    ],
 )
 
 score_coverage_reporter(

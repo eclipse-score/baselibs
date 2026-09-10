@@ -1,0 +1,49 @@
+--- a/coverage/coverage_scope.bzl	2026-09-10 15:45:34.249680697 +0200
++++ b/coverage/coverage_scope.bzl	2026-09-10 15:45:59.109704426 +0200
+@@ -119,6 +119,29 @@
+                     all_files[path] = True
+             all_objects.append(dep[_CoverageScopeInfo].object_files)
+ 
++    # extra_deps: post-processing public headers of the named targets,
++    # collected directly from CcInfo instead of via the aspect. The aspect
++    # (and its is_source / external/ filters above) can only ever see a
++    # target's *declared* hdrs labels. For a target that sets
++    # strip_include_prefix, Bazel compiles against a generated
++    # virtual-includes symlink forest instead, so the coverage mapping
++    # embedded in the compiled object names that generated file - never the
++    # original (possibly external, vendored) label. Reading CcInfo instead of
++    # walking hdrs labels gives us that same post-processing file identity.
++    # Uses short_path (root-relative), not path: extra_deps has no cfg
++    # override, but the enclosing coverage_scope target is itself commonly
++    # analyzed in an exec configuration (it feeds a
++    # --coverage_report_generator tool), which differs from - and is
++    # differently suffixed than - the configuration real test binaries build
++    # under. short_path strips that whole configuration-specific root
++    # segment; reporter.py applies the matching normalization to the raw
++    # coverage-mapping paths it parses, so the two sides line up regardless
++    # of which configuration either one was actually produced under.
++    for target in ctx.attr.extra_deps:
++        if CcInfo in target:
++            for f in target[CcInfo].compilation_context.direct_public_headers:
++                all_files[f.short_path] = True
++
+     sorted_files = sorted(all_files.keys())
+     object_depset = depset(transitive = all_objects)
+ 
+@@ -198,5 +221,16 @@
+             cfg = coverage_transition,
+             doc = "Implementation targets whose transitive deps define the coverage scope.",
+         ),
++        "extra_deps": attr.label_list(
++            default = [],
++            providers = [CcInfo],
++            doc = "Targets whose post-processing public headers (CcInfo." +
++                  "compilation_context.direct_public_headers) are added to the " +
++                  "allowlist by short_path, bypassing the aspect. For targets " +
++                  "whose hdrs are vendored from an external repo behind " +
++                  "strip_include_prefix, where the aspect can only see the " +
++                  "original external label, never the generated virtual-includes " +
++                  "file the compiler and coverage mapping actually use.",
++        ),
+     },
+ )

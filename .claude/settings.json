@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(diff -q /home/qup6si/.cache/bazel/_bazel_qup6si/4178068e40a24fe77aaf90c8d95b6974/external/score_tooling+/coverage/reporter.py /tmp/reporter.py.bak)",
+      "Bash(echo \"reporter.py currently pristine \\(matches backup\\)\")",
+      "Bash(grep -n 'direct_public_headers\\\\|all_files\\\\[f.path\\\\]' /home/qup6si/.cache/bazel/_bazel_qup6si/4178068e40a24fe77aaf90c8d95b6974/external/score_tooling+/coverage/coverage_scope.bzl)",
+      "Bash(cp __TRACKED_VAR__/coverage/coverage_scope.bzl /tmp/st_patch2/a/coverage/coverage_scope.bzl)",
+      "Bash(cp __TRACKED_VAR__/coverage/coverage_scope.bzl /tmp/st_patch2/b/coverage/coverage_scope.bzl)",
+      "Bash(cp __TRACKED_VAR__/coverage/reporter.py /tmp/st_patch2/a/coverage/reporter.py)",
+      "Bash(cp __TRACKED_VAR__/coverage/reporter.py /tmp/st_patch2/b/coverage/reporter.py)"
+    ]
+  }
+}

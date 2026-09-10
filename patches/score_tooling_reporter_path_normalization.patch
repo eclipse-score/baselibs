@@ -1,0 +1,126 @@
+--- a/coverage/reporter.py	2026-09-10 15:44:44.549635860 +0200
++++ b/coverage/reporter.py	2026-09-10 16:17:18.731635283 +0200
+@@ -33,6 +33,13 @@
+ from typing import List, Optional, Set, Tuple
+ from python.runfiles import Runfiles
+ 
++# Matches the configuration-specific root of a generated file's exec path,
++# e.g. "bazel-out/k8-fastbuild/bin/" or "bazel-out/k8-opt-exec-ST-<hash>/bin/".
++# Stripped from raw llvm-cov filenames so they compare equal to the
++# File.short_path form coverage_scope.bzl writes for such files. See
++# get_covered_files().
++_BAZEL_OUT_CONFIG_RE = re.compile(r"^bazel-out/[^/]+/bin/")
++
+ 
+ def main() -> None:
+     """Main entry point."""
+@@ -105,7 +112,8 @@
+             allowlist_set = set(allowlist_files)
+ 
+             # Get files covered by test binaries.
+-            test_covered_files = get_covered_files(llvm_bin_path, sorted_objects, str(merged_profdata), workspace_root)
++            test_covered = get_covered_files(llvm_bin_path, sorted_objects, str(merged_profdata), workspace_root)
++            test_covered_files = set(test_covered.values())
+             print(f"INFO: Test binaries cover {len(test_covered_files)} files.", file=sys.stderr)
+ 
+             # Get files from baseline archives via a SEPARATE llvm-cov run.
+@@ -113,9 +121,11 @@
+             # causes some files to vanish (suspected llvm-cov deduplication issue).
+             # Some archives may have oversized coverage mappings ("malformed coverage
+             # data"), so we iteratively remove bad ones.
++            baseline_covered = {}
+             baseline_files = set()
+             if baseline_objects:
+-                baseline_files = get_covered_files(llvm_bin_path, baseline_objects, None, workspace_root)
++                baseline_covered = get_covered_files(llvm_bin_path, baseline_objects, None, workspace_root)
++                baseline_files = set(baseline_covered.values())
+                 print(f"INFO: Baseline archives contain {len(baseline_files)} files.", file=sys.stderr)
+ 
+             # Files only in baseline archives (not in any test binary).
+@@ -131,9 +141,32 @@
+                 # The _filter_lcov function will filter to only baseline-only files.
+                 baseline_only_archives = list(baseline_objects)
+ 
++            # A generated file (e.g. a virtual-includes header) normalizes to
++            # the same name whether it was compiled into a real test binary
++            # or into a baseline archive, but each is a distinct raw covmap
++            # entry (different configuration-specific bazel-out prefix) - a
++            # plain source file, by contrast, has no such prefix and so gets
++            # the exact same raw name in both. Below, baseline_only_archives
++            # are combined with the test objects for HTML/LCOV generation so
++            # untested-but-in-scope files still get a baseline (zero-coverage)
++            # entry - but for a file that DOES have real test coverage, that
++            # combination would otherwise also surface the baseline archive's
++            # own raw variant as a second, spuriously-0% row for the same
++            # file. Exclude that raw variant specifically (not the normalized
++            # name, which would also suppress the wanted, real-coverage
++            # variant) - and only when it actually differs from the raw name
++            # the real test coverage was recorded under, since for a plain
++            # source file excluding its (identical) raw name would suppress
++            # the real coverage too.
++            redundant_baseline_variants = {
++                raw
++                for raw, normalized in baseline_covered.items()
++                if normalized in test_covered_files and raw not in test_covered
++            }
++
+             # Union of test + baseline for exclude-set calculation.
+             all_covered_files = test_covered_files | baseline_files
+-            files_to_exclude = all_covered_files - allowlist_set
++            files_to_exclude = (all_covered_files - allowlist_set) | redundant_baseline_variants
+             filter_regexes = [re.escape(f) + "$" for f in sorted(files_to_exclude)]
+             print(f"INFO: Excluding {len(filter_regexes)} files not in allowlist.", file=sys.stderr)
+         else:
+@@ -312,10 +345,15 @@
+     objects: List[str],
+     instr_profile: Optional[str],
+     workspace_root: str,
+-) -> set:
++) -> dict:
+     """Run a quick llvm-cov report to discover all files with coverage data.
+ 
+-    Returns a set of workspace-relative file paths.
++    Returns a dict mapping each raw (llvm-cov-displayed) file path to its
++    normalized, configuration-agnostic form. The raw form is what
++    --ignore-filename-regex must match to suppress one specific compiled
++    variant of a generated file (see the redundant-baseline-variant
++    exclusion in main()); the normalized form is what the allowlist and the
++    test/baseline set arithmetic compare against.
+     """
+     cmd = [
+         str(llvm_bin_path),
+@@ -332,9 +370,9 @@
+ 
+     result = run_command(cmd)
+     if result.returncode != 0:
+-        return set()
++        return {}
+ 
+-    files = set()
++    files = {}
+     in_files = False
+     for line in result.stdout.splitlines():
+         if line.startswith("---"):
+@@ -356,7 +394,21 @@
+                 if filename.startswith(prefix):
+                     filename = filename[len(prefix) :]
+                     break
+-            files.add(filename)
++            raw_name = filename
++            # Generated files (e.g. a virtual-includes header behind
++            # strip_include_prefix) record their exec path, which embeds a
++            # configuration-specific bazel-out/<config>/bin/ segment. The
++            # same logical output can be produced under different
++            # configurations depending on which target pulled it in (a real
++            # test binary vs. coverage_scope's own, possibly exec-config,
++            # build of the same dependency), each with a different <config>
++            # segment. Stripping it here matches coverage_scope.bzl writing
++            # File.short_path (also config-agnostic) for such files, so the
++            # two sides compare equal regardless of which configuration
++            # either one happened to be built under. No-op for plain source
++            # files, which never have this prefix.
++            normalized_name = _BAZEL_OUT_CONFIG_RE.sub("", raw_name, count=1)
++            files[raw_name] = normalized_name
+ 
+     return files
+ 
