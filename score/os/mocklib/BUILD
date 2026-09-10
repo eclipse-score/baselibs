@@ -27,6 +27,19 @@ cc_library(
 )
 
 cc_library(
+    name = "syslog_mock",
+    testonly = True,
+    srcs = ["mock_syslog.cpp"],
+    hdrs = ["mock_syslog.h"],
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@googletest//:gtest",
+        "@score_baselibs//score/os:syslog",
+    ],
+)
+
+cc_library(
     name = "pthread_mock",
     testonly = True,
     srcs = ["mock_pthread.cpp"],
