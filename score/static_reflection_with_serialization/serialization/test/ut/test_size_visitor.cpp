@@ -295,13 +295,17 @@ TYPED_TEST_SUITE_P(SizeVisitorFixture);
 
 TYPED_TEST_P(SizeVisitorFixture, whenDataSerializedAndThenDeserializedDataShouldBeTheSame)
 {
-    ::testing::Test::RecordProperty("ParentRequirement", "SCR-1633893");
-    ::testing::Test::RecordProperty("ASIL", "B");
-    ::testing::Test::RecordProperty("Description",
-                                    "logging library shall provide an annotation mechanism for data structures to "
-                                    "support automatic serialization/deserialization.");
-    ::testing::Test::RecordProperty("TestingTechnique", "Requirements-based test");
-    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    ::testing::Test::RecordProperty(
+        "PartiallyVerifies",
+        "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container, "
+        "comp_req__static_reflect_serial__nested");
+    ::testing::Test::RecordProperty(
+        "Description",
+        "Check that serializing then deserializing a value round-trips to an equal value, and that the "
+        "deserialized data's computed size matches the serialized byte size, across scalars, containers "
+        "(vector, clearable/resizeable/assignable_container), tuples, pairs, and nested structs.");
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
 
     using s = serializer_t<real_alloc_t>;
     using ssize = serialized_size_t<real_alloc_t>;

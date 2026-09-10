@@ -176,11 +176,13 @@ bool check_visitable(const char* name, std::size_t fields)
 
 TEST(struct_visitor, struct_visitable)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check visitability of different structures.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__visitor");
+    RecordProperty("Description",
+                   "Check that SCORE_STRUCT_VISITABLE registers the correct name, field count, and field names, and "
+                   "that visit() dispatches once per field, for structs with 1 to 20 fields.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     EXPECT_TRUE(check_visitable<test::S1>("test::S1", 1));
     EXPECT_TRUE(check_visitable<test::S2>("test::S2", 2));
@@ -206,11 +208,12 @@ TEST(struct_visitor, struct_visitable)
 
 TEST(struct_visitor, visit_as)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check visitability of different structures fields.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__visitor");
+    RecordProperty("Description",
+                   "Check that visit_as() and visit() both traverse every field of SCORE_STRUCT_VISITABLE-registered "
+                   "structs with 1 to 20 fields.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S1{}), 1);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S2{}), 2);
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S3{}), 3);
@@ -275,11 +278,12 @@ auto visit_as_struct(test_visitor2_t, S&&, Args&&...)
 
 TEST(struct_visitor, namespaces)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check visitability fields.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__visitor");
+    RecordProperty("Description",
+                   "Check that struct_visitable field names and the visited type name are correctly resolved for "
+                   "structs declared in the global namespace versus a named namespace.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     using namespace ::score::common::visitor;
     EXPECT_EQ(struct_visitable<S1>::field_name(0), "x1");
     EXPECT_EQ(struct_visitable<test::S1>::field_name(0), "f1");
@@ -300,13 +304,12 @@ SCORE_STRUCT_VISITABLE(TemplateStructDefaultSize, arr)
 
 TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Verifies that the templated structs shall not contain trailing whaitspace."
-                   "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that the compiler-generated trailing whitespace in a templated struct's pretty-function "
+                   "name is stripped from the name reported by visit().");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
     using namespace ::score::common::visitor;
 
     // GCC inserts a trailing whitespace for templated structs in __PRETTY__FUNCTION__.
@@ -316,6 +319,11 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
 
 TEST(struct_visitor_utils, TupleToArrayTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that tuple_to_array converts a tuple into a std::array of matching size and element order.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const std::array<std::string, 4> reference = {"1", "2", "3", "4"};
     const auto result = ::score::common::visitor::detail::tuple_to_array(
         ::score::common::visitor::detail::pack_values("1", "2", "3", "4"));

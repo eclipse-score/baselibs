@@ -27,14 +27,12 @@ namespace visitor
 
 TEST(vistor_type_traits, is_vector_serializable)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty(
-        "Description",
-        "Logging library shall provide an annotation mechanism for data structures to support automatic "
-        "serialization/deserialization, So, we are checking some data types to be treated for vector serialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__container");
+    RecordProperty("Description",
+                   "Check that is_vector_serializable identifies std::vector, nested vectors, std::string, and "
+                   "clearable_container as automatically container-iterable types.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     using test::clearable_container;
     using std_basic_string = std::basic_string<char, std::char_traits<char>, std::allocator<char>>;
@@ -52,14 +50,12 @@ TEST(vistor_type_traits, is_vector_serializable)
 
 TEST(vistor_type_traits, is_not_vector_serializable)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__container");
     RecordProperty("Description",
-                   "Logging library shall provide an annotation mechanism for data structures to support automatic "
-                   "serialization/deserialization. So, we are checking those some data types shouldn't be treated as "
-                   "vector serialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that is_vector_serializable rejects std::array and a container type not opted into "
+                   "automatic iteration (unserializable_container).");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     using test::unserializable_container;
     static_assert(!is_vector_serializable<std::array<int, 3>>::value,
