@@ -18,7 +18,8 @@ Components
 .. toctree::
    :maxdepth: 1
 
-  abi_compatible_data_types/docs/index
+   abi_compatible_data_types/docs/index
+   analysis/index
 
    
 Overview
@@ -55,7 +56,3 @@ Overview
 - *mw::log*: Logging frontend.
 - :need:`doc__utils`: Provides a collection of small, reusable utilities that do not fit into the other
   base libraries.
-- :need:`doc__analysis_tracing`: Provides tracing utilities that detect corruption of wrapped data.
-- :need:`doc__string_manipulation`: Provides allocation-conscious helpers for command-line arguments,
-  lazy string-view splitting, and string-like comparison and hashing.
-- :need:`doc__scope_exit`: Provides move-only ownership utilities for scope-based cleanup and flag transfer.
