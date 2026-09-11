@@ -86,6 +86,13 @@ TEST_F(SignalHandlingTest, PThreadBlockSigTerm_PthreadSigMaskFails_ReturnsError)
 
 TEST_F(SignalHandlingTest, PThreadBlockSigTerm_AllSucceed_ReturnsSuccess)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__avoid_signal_processing");
+    RecordProperty("Description",
+                   "Check that the logging implementation blocks SIGTERM via the signal mask instead of registering a "
+                   "signal handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     EXPECT_CALL(*signal_mock_, SigEmptySet(_)).WillOnce(Return(score::cpp::expected<std::int32_t, score::os::Error>{0}));
 
     EXPECT_CALL(*signal_mock_, SigAddSet(_, SIGTERM)).WillOnce(Return(score::cpp::expected<std::int32_t, score::os::Error>{0}));
