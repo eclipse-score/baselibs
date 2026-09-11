@@ -19,6 +19,7 @@ Components
    :maxdepth: 1
 
    abi_compatible_data_types/docs/index
+   analysis/tracing/docs/index
 
    
 Overview
@@ -55,3 +56,4 @@ Overview
 - *mw::log*: Logging frontend.
 - :need:`doc__utils`: Provides a collection of small, reusable utilities that do not fit into the other
   base libraries.
+- :need:`doc__analysis_tracing`: Provides tracing utilities that detect corruption of wrapped data.

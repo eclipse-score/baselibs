@@ -83,6 +83,10 @@ docs(
             "mount_at": "baselibs/components/result",
         },
         {
+            "bundle": "//score/analysis/tracing:docs",
+            "mount_at": "baselibs/components/analysis/tracing",
+        },
+        {
             "bundle": "//score/static_reflection_with_serialization:docs",
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },
