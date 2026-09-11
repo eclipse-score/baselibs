@@ -40,8 +40,8 @@ struct StatBuffer
     std::uint64_t st_ino;
     std::uint64_t st_dev;
     std::uint64_t st_nlink;
-    std::int64_t st_uid;
-    std::int64_t st_gid;
+    std::uint64_t st_uid;
+    std::uint64_t st_gid;
     std::uint64_t st_rdev;
     std::int64_t st_size;
     std::int64_t atime;

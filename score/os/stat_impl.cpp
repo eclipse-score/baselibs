@@ -103,8 +103,8 @@ void StatImpl::stat_to_statbuffer(const struct stat& native_stat, StatBuffer& st
     stat_buffer.st_ino = native_stat.st_ino;
     stat_buffer.st_dev = native_stat.st_dev;
     stat_buffer.st_nlink = native_stat.st_nlink;
-    stat_buffer.st_uid = static_cast<std::int64_t>(native_stat.st_uid);
-    stat_buffer.st_gid = static_cast<std::int64_t>(native_stat.st_gid);
+    stat_buffer.st_uid = static_cast<std::uint64_t>(native_stat.st_uid);
+    stat_buffer.st_gid = static_cast<std::uint64_t>(native_stat.st_gid);
     stat_buffer.st_rdev = native_stat.st_rdev;
     stat_buffer.st_size = native_stat.st_size;
     static_assert(std::is_same<time_t, std::int64_t>::value, "Types don't match");
