@@ -63,18 +63,30 @@ void ExpectEqualSequences(const StringSequence& lhs, const StringSequence& rhs)
 
 TEST(StringSplitterTests, EmptyStringShallReturnEmptyRange)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that splitting an empty string produces an empty range.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     LazySplitStringView splitter{"", kSeperator};
     EXPECT_TRUE(splitter.begin() == splitter.end());
 }
 
 TEST(StringSplitterTests, NoSeperatorShallReturnOneItem)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that a string without delimiters is returned as one substring view.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     StringSequence seq{"Hello World"sv};
     ExpectEqualSequences(GetSplitSequence(Join(seq)), seq);
 }
 
 TEST(StringSplitterTests, OneSeperatorShallReturnTwoItems)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that one delimiter separates the input into two substring views.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     StringSequence seq{"Hello World"sv, "Foobar"sv};
 
     ExpectEqualSequences(GetSplitSequence(Join(seq)), seq);
@@ -82,6 +94,10 @@ TEST(StringSplitterTests, OneSeperatorShallReturnTwoItems)
 
 TEST(StringSplitterTests, SeperatorAtBeginShallReturnEmptyString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that a leading delimiter produces an empty first substring.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     StringSequence seq{""sv, "Hello World"sv, "Foobar"sv};
 
     ExpectEqualSequences(GetSplitSequence(Join(seq)), seq);
@@ -89,6 +105,10 @@ TEST(StringSplitterTests, SeperatorAtBeginShallReturnEmptyString)
 
 TEST(StringSplitterTests, SeperatorAtEndShallBeDiscarded)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that a trailing delimiter does not create an additional substring.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     StringSequence seq{"Hello World"sv, "Foobar"sv};
 
     ExpectEqualSequences(GetSplitSequence(Join(seq) + kSeperator), seq);
@@ -96,16 +116,28 @@ TEST(StringSplitterTests, SeperatorAtEndShallBeDiscarded)
 
 TEST(StringSplitterTests, SeperatorOnlyStringShallReturnEmptySubstring)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that an input consisting only of the delimiter yields one empty view.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     ExpectEqualSequences(GetSplitSequence(std::string{"|"}), StringSequence{""sv});
 }
 
 TEST(StringSplitterTests, TwoSeperatorsShallReturnTwoEmptySubstring)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that two consecutive delimiters yield two empty substring views.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     ExpectEqualSequences(GetSplitSequence(std::string{"||"}), StringSequence{""sv, ""sv});
 }
 
 TEST(StringSplitterTests, MultipleSeperatorsInRowShallReturnEmptySubstring)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__lazy_string_splitting");
+    RecordProperty("Description", "Check that repeated delimiters preserve the empty substring between them.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     ExpectEqualSequences(GetSplitSequence(std::string{"Foo||Bar"}), StringSequence{"Foo"sv, ""sv, "Bar"sv});
 }
 
