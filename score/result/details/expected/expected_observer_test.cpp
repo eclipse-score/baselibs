@@ -26,6 +26,12 @@ namespace
 
 TEST(ExpectedTest, ArrowOperatorConstReturnsPointerToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator-> on a const expected holding a value returns a const pointer to that "
+                   "value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     const expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -42,6 +48,12 @@ TEST(ExpectedTest, ArrowOperatorConstReturnsPointerToValue)
 
 TEST(ExpectedTest, ArrowOperatorConstWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator-> on a const expected holding an error aborts instead of returning a "
+                   "dangling pointer.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<ValueType, ErrorType> unit{unexpect};
 
@@ -51,6 +63,12 @@ TEST(ExpectedTest, ArrowOperatorConstWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, ArrowOperatorReturnsPointerToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator-> on a mutable expected holding a value returns a mutable pointer to "
+                   "that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -67,6 +85,12 @@ TEST(ExpectedTest, ArrowOperatorReturnsPointerToValue)
 
 TEST(ExpectedTest, ArrowOperatorWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator-> on a mutable expected holding an error aborts instead of returning a "
+                   "dangling pointer.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -76,6 +100,12 @@ TEST(ExpectedTest, ArrowOperatorWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, StarOperatorLValueConstReturnsReferenceToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a const-lvalue expected holding a value returns a const reference to "
+                   "that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     const expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -92,6 +122,12 @@ TEST(ExpectedTest, StarOperatorLValueConstReturnsReferenceToValue)
 
 TEST(ExpectedTest, StarOperatorLValueConstWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a const-lvalue expected holding an error aborts instead of "
+                   "returning a dangling reference.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<ValueType, ErrorType> unit{unexpect};
 
@@ -101,6 +137,12 @@ TEST(ExpectedTest, StarOperatorLValueConstWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, StarOperatorLValueReturnsReferenceToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a mutable lvalue expected holding a value returns a mutable "
+                   "reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -117,6 +159,12 @@ TEST(ExpectedTest, StarOperatorLValueReturnsReferenceToValue)
 
 TEST(ExpectedTest, StarOperatorLValueWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a mutable lvalue expected holding an error aborts instead of "
+                   "returning a dangling reference.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -126,6 +174,12 @@ TEST(ExpectedTest, StarOperatorLValueWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, StarOperatorRValueConstReturnsReferenceToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a const-rvalue expected holding a value returns a const rvalue "
+                   "reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     const expected<NothrowMoveOnlyType, ErrorType> unit{value};
@@ -142,6 +196,12 @@ TEST(ExpectedTest, StarOperatorRValueConstReturnsReferenceToValue)
 
 TEST(ExpectedTest, StarOperatorRValueConstWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a const-rvalue expected holding an error aborts instead of "
+                   "returning a dangling reference.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<ValueType, ErrorType> unit{unexpect};
 
@@ -151,6 +211,12 @@ TEST(ExpectedTest, StarOperatorRValueConstWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, StarOperatorRValueReturnsReferenceToValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a mutable rvalue expected holding a value returns a mutable rvalue "
+                   "reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     expected<NothrowMoveOnlyType, ErrorType> unit{value};
@@ -167,6 +233,12 @@ TEST(ExpectedTest, StarOperatorRValueReturnsReferenceToValue)
 
 TEST(ExpectedTest, StarOperatorRValueWillExitIfNoValueIsStored)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a mutable rvalue expected holding an error aborts instead of "
+                   "returning a dangling reference.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -176,6 +248,11 @@ TEST(ExpectedTest, StarOperatorRValueWillExitIfNoValueIsStored)
 
 TEST(ExpectedTest, ExplicitConversionToBoolIsTrueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that explicit conversion to bool yields true for an expected holding a value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     expected<ValueType, ErrorType> unit{};
 
@@ -188,6 +265,11 @@ TEST(ExpectedTest, ExplicitConversionToBoolIsTrueIfHasValue)
 
 TEST(ExpectedTest, ExplicitConversionToBoolIsFalseIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that explicit conversion to bool yields false for an expected holding an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -200,6 +282,10 @@ TEST(ExpectedTest, ExplicitConversionToBoolIsFalseIfHasNoValue)
 
 TEST(ExpectedTest, HasValueReturnsTrueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that has_value() returns true for an expected holding a value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     expected<ValueType, ErrorType> unit{};
 
@@ -209,6 +295,10 @@ TEST(ExpectedTest, HasValueReturnsTrueIfHasValue)
 
 TEST(ExpectedTest, HasValueReturnsFalseIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that has_value() returns false for an expected holding an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -218,6 +308,12 @@ TEST(ExpectedTest, HasValueReturnsFalseIfHasNoValue)
 
 TEST(ExpectedTest, CanRetrieveValueFromLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on an lvalue expected holding a value returns a mutable reference to that "
+                   "value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -231,6 +327,12 @@ TEST(ExpectedTest, CanRetrieveValueFromLValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveValueFromLValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on an lvalue expected holding an error throws instead of returning a "
+                   "dangling value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -240,6 +342,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromLValueReferenceWithoutValue)
 
 TEST(ExpectedTest, CanRetrieveValueFromConstLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on a const-lvalue expected holding a value returns a const reference to "
+                   "that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     const expected<CopyableType, ErrorType> unit{CopyableType{value}};
@@ -253,6 +361,12 @@ TEST(ExpectedTest, CanRetrieveValueFromConstLValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveValueFromConstLValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on a const-lvalue expected holding an error throws instead of returning a "
+                   "dangling value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<ValueType, ErrorType> unit{unexpect};
 
@@ -262,6 +376,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromConstLValueReferenceWithoutValue)
 
 TEST(ExpectedTest, CanRetrieveValueFromRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on an rvalue expected holding a value returns a moved-out rvalue "
+                   "reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     expected<NothrowMoveOnlyType, ErrorType> unit{NothrowMoveOnlyType{value}};
@@ -277,6 +397,12 @@ TEST(ExpectedTest, CanRetrieveValueFromRValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveValueFromRValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on an rvalue expected holding an error throws instead of returning a "
+                   "dangling value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<ValueType, ErrorType> unit{unexpect};
 
@@ -286,6 +412,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromRValueReferenceWithoutValue)
 
 TEST(ExpectedTest, CanRetrieveValueFromConstRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on a const-rvalue expected holding a value returns a const moved-out "
+                   "rvalue reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     std::int32_t value{13};
     const expected<NothrowMoveOnlyType, ErrorType> unit{NothrowMoveOnlyType{value}};
@@ -301,6 +433,12 @@ TEST(ExpectedTest, CanRetrieveValueFromConstRValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveValueFromConstRValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on a const-rvalue expected holding an error throws instead of returning "
+                   "a dangling value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<ValueType, ErrorType> unit{unexpect};
 
@@ -310,6 +448,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromConstRValueReferenceWithoutValue)
 
 TEST(ExpectedTest, CanRetrieveErrorFromLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an lvalue expected holding an error returns a mutable reference to "
+                   "that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t value{13};
     expected<ValueType, CopyableType> unit{unexpect, CopyableType{value}};
@@ -323,6 +467,12 @@ TEST(ExpectedTest, CanRetrieveErrorFromLValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveErrorFromLValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an lvalue expected holding a value aborts instead of returning a "
+                   "dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     expected<ValueType, ErrorType> unit{};
 
@@ -332,6 +482,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveErrorFromLValueReferenceWithValue)
 
 TEST(ExpectedTest, CanRetrieveErrorFromConstLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-lvalue expected holding an error returns a const reference to "
+                   "that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t value{13};
     const expected<ValueType, CopyableType> unit{unexpect, CopyableType{value}};
@@ -345,6 +501,12 @@ TEST(ExpectedTest, CanRetrieveErrorFromConstLValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-lvalue expected holding a value aborts instead of returning a "
+                   "dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     const expected<ValueType, ErrorType> unit{};
 
@@ -354,6 +516,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
 
 TEST(ExpectedTest, CanRetrieveErrorFromRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an rvalue expected holding an error returns a moved-out rvalue "
+                   "reference to that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t value{13};
     expected<ValueType, NothrowMoveOnlyType> unit{unexpect, NothrowMoveOnlyType{value}};
@@ -369,6 +537,12 @@ TEST(ExpectedTest, CanRetrieveErrorFromRValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an rvalue expected holding a value aborts instead of returning a "
+                   "dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     expected<ValueType, ErrorType> unit{};
 
@@ -378,6 +552,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
 
 TEST(ExpectedTest, CanRetrieveErrorFromConstRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-rvalue expected holding an error returns a const moved-out "
+                   "rvalue reference to that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t value{13};
     const expected<ValueType, NothrowMoveOnlyType> unit{unexpect, NothrowMoveOnlyType{value}};
@@ -393,6 +573,12 @@ TEST(ExpectedTest, CanRetrieveErrorFromConstRValueReference)
 
 TEST(ExpectedTest, AbortsWhenRetrieveErrorFromConstRValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-rvalue expected holding a value aborts instead of returning a "
+                   "dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     const expected<ValueType, ErrorType> unit{};
 
@@ -402,6 +588,12 @@ TEST(ExpectedTest, AbortsWhenRetrieveErrorFromConstRValueReferenceWithValue)
 
 TEST(ExpectedTest, ValueOrConstLValueReturnsValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value_or() on a const-lvalue expected holding a value returns that value instead "
+                   "of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{19};
     const std::int32_t default_value{11};
@@ -416,6 +608,12 @@ TEST(ExpectedTest, ValueOrConstLValueReturnsValueIfHasValue)
 
 TEST(ExpectedTest, ValueOrConstLValueReturnsDefaultIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value_or() on a const-lvalue expected holding an error returns the supplied "
+                   "default value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t default_value{11};
     const expected<CopyableType, ErrorType> unit{unexpect};
@@ -429,6 +627,12 @@ TEST(ExpectedTest, ValueOrConstLValueReturnsDefaultIfHasNoValue)
 
 TEST(ExpectedTest, ValueOrRValueReturnsValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value_or() on an rvalue expected holding a value returns the moved-out value "
+                   "instead of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{19};
     const std::int32_t default_value{11};
@@ -443,6 +647,12 @@ TEST(ExpectedTest, ValueOrRValueReturnsValueIfHasValue)
 
 TEST(ExpectedTest, ValueOrRValueReturnsDefaultIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value_or() on an rvalue expected holding an error returns the supplied default "
+                   "value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t default_value{11};
     expected<NothrowMoveOnlyType, ErrorType> unit{unexpect};
@@ -456,6 +666,12 @@ TEST(ExpectedTest, ValueOrRValueReturnsDefaultIfHasNoValue)
 
 TEST(ExpectedTest, ErrorOrConstLValueReturnsErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on a const-lvalue expected holding an error returns that error "
+                   "instead of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t value{19};
     const std::int32_t default_error{11};
@@ -470,6 +686,12 @@ TEST(ExpectedTest, ErrorOrConstLValueReturnsErrorIfHasNoValue)
 
 TEST(ExpectedTest, ErrorOrConstLValueReturnsDefaultIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on a const-lvalue expected holding a value returns the supplied "
+                   "default error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t default_error{11};
     const expected<ValueType, CopyableType> unit{};
@@ -483,6 +705,12 @@ TEST(ExpectedTest, ErrorOrConstLValueReturnsDefaultIfHasValue)
 
 TEST(ExpectedTest, ErrorOrRValueReturnsErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on an rvalue expected holding an error returns the moved-out error "
+                   "instead of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{19};
     const std::int32_t default_error{11};
@@ -497,6 +725,12 @@ TEST(ExpectedTest, ErrorOrRValueReturnsErrorIfHasNoValue)
 
 TEST(ExpectedTest, ErrorOrRValueReturnsDefaultIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on an rvalue expected holding a value returns the supplied default "
+                   "error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t default_error{11};
     expected<ValueType, NothrowMoveOnlyType> unit{};
@@ -510,6 +744,11 @@ TEST(ExpectedTest, ErrorOrRValueReturnsDefaultIfHasValue)
 
 TEST(ExpectedVoidTest, StarOperatorWillNotExitIfValid)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that operator* on a void-valued expected that is valid does not abort or throw.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const expected<void, ErrorType> unit{};
 
@@ -519,6 +758,10 @@ TEST(ExpectedVoidTest, StarOperatorWillNotExitIfValid)
 
 TEST(ExpectedVoidTest, StarOperatorWillExitIfInErrorState)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that operator* on a void-valued expected holding an error aborts.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<void, ErrorType> unit{unexpect};
 
@@ -528,6 +771,12 @@ TEST(ExpectedVoidTest, StarOperatorWillExitIfInErrorState)
 
 TEST(ExpectedVoidTest, ExplicitConversionToBoolIsTrueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that explicit conversion to bool yields true for a void-valued expected that is "
+                   "valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     expected<void, ErrorType> unit{};
 
@@ -540,6 +789,12 @@ TEST(ExpectedVoidTest, ExplicitConversionToBoolIsTrueIfHasValue)
 
 TEST(ExpectedVoidTest, ExplicitConversionToBoolIsFalseIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that explicit conversion to bool yields false for a void-valued expected holding an "
+                   "error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     expected<void, ErrorType> unit{unexpect};
 
@@ -552,6 +807,10 @@ TEST(ExpectedVoidTest, ExplicitConversionToBoolIsFalseIfHasNoValue)
 
 TEST(ExpectedVoidTest, HasValueReturnsTrueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that has_value() returns true for a void-valued expected that is valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -561,6 +820,10 @@ TEST(ExpectedVoidTest, HasValueReturnsTrueIfHasValue)
 
 TEST(ExpectedVoidTest, HasValueReturnsFalseIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that has_value() returns false for a void-valued expected holding an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     expected<void, ErrorType> unit{unexpect};
 
@@ -570,6 +833,11 @@ TEST(ExpectedVoidTest, HasValueReturnsFalseIfHasNoValue)
 
 TEST(ExpectedVoidTest, NoAbortWhenCallValueFromConstLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that value() on a const-lvalue void-valued expected that is valid does not throw.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const expected<void, ErrorType> unit{};
 
@@ -579,6 +847,10 @@ TEST(ExpectedVoidTest, NoAbortWhenCallValueFromConstLValueReference)
 
 TEST(ExpectedVoidTest, AbortWhenCallValueFromConstLValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that value() on a const-lvalue void-valued expected holding an error throws.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     const expected<void, ErrorType> unit{unexpect};
 
@@ -588,6 +860,10 @@ TEST(ExpectedVoidTest, AbortWhenCallValueFromConstLValueReferenceWithoutValue)
 
 TEST(ExpectedVoidTest, NoAbortWhenCallValueFromRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that value() on an rvalue void-valued expected that is valid does not throw.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     expected<void, ErrorType> unit{};
 
@@ -597,6 +873,10 @@ TEST(ExpectedVoidTest, NoAbortWhenCallValueFromRValueReference)
 
 TEST(ExpectedVoidTest, AbortWhenCallValueFromRValueReferenceWithoutValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that value() on an rvalue void-valued expected holding an error throws.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with an error
     expected<void, ErrorType> unit{unexpect};
 
@@ -606,6 +886,12 @@ TEST(ExpectedVoidTest, AbortWhenCallValueFromRValueReferenceWithoutValue)
 
 TEST(ExpectedVoidTest, CanRetrieveErrorFromConstLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-lvalue void-valued expected holding an error returns a const "
+                   "reference to that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t error{13};
     const expected<void, CopyableType> unit{unexpect, CopyableType{error}};
@@ -619,6 +905,12 @@ TEST(ExpectedVoidTest, CanRetrieveErrorFromConstLValueReference)
 
 TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-lvalue void-valued expected that is valid aborts instead of "
+                   "returning a dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     const expected<void, ErrorType> unit{};
 
@@ -628,6 +920,12 @@ TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
 
 TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an rvalue void-valued expected that is valid aborts instead of "
+                   "returning a dangling error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an expected with a value
     expected<void, ErrorType> unit{};
 
@@ -637,6 +935,12 @@ TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
 
 TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on a const-lvalue void-valued expected holding an error returns that "
+                   "error instead of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{19};
     const std::int32_t default_error{11};
@@ -651,6 +955,12 @@ TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsDefaultIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on a const-lvalue void-valued expected that is valid returns the "
+                   "supplied default error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const std::int32_t default_error{11};
     const expected<void, CopyableType> unit{};
@@ -664,6 +974,12 @@ TEST(ExpectedVoidTest, ErrorOrConstLValueReturnsDefaultIfHasValue)
 
 TEST(ExpectedVoidTest, ErrorOrRValueReturnsErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on an rvalue void-valued expected holding an error returns the "
+                   "moved-out error instead of the default.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{19};
     const std::int32_t default_error{11};
@@ -678,6 +994,12 @@ TEST(ExpectedVoidTest, ErrorOrRValueReturnsErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, ErrorOrRValueReturnsDefaultIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error_or() on an rvalue void-valued expected that is valid returns the supplied "
+                   "default error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const std::int32_t default_error{11};
     expected<void, NothrowMoveOnlyType> unit{};
@@ -691,6 +1013,12 @@ TEST(ExpectedVoidTest, ErrorOrRValueReturnsDefaultIfHasValue)
 
 TEST(ExpectedVoidTest, CanRetrieveErrorFromRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an rvalue void-valued expected holding an error returns a moved-out "
+                   "rvalue reference to that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     std::int32_t error{13};
     expected<void, NothrowMoveOnlyType> unit{unexpect, NothrowMoveOnlyType{error}};

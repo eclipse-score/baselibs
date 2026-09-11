@@ -25,6 +25,12 @@ namespace
 
 TEST(ExpectedTest, IsCopyAssignableWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that copy-assigning one value-holding expected to another replaces the target's value "
+                   "with the source's.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     std::int32_t value{14};
     expected<CopyableType, ErrorType> e1{value};
@@ -42,6 +48,12 @@ TEST(ExpectedTest, IsCopyAssignableWithValue)
 
 TEST(ExpectedTest, IsCopyAssignableWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that copy-assigning one error-holding expected to another replaces the target's error "
+                   "with the source's.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different errors
     std::int32_t error{14};
     expected<ValueType, CopyableType> e1{unexpected{error}};
@@ -59,6 +71,11 @@ TEST(ExpectedTest, IsCopyAssignableWithError)
 
 TEST(ExpectedTest, IsMoveAssignableWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that move-assigning a value-holding expected transfers its value into the target.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     std::int32_t value{14};
     expected<NothrowMoveOnlyType, ErrorType> e1{value};
@@ -74,6 +91,11 @@ TEST(ExpectedTest, IsMoveAssignableWithValue)
 
 TEST(ExpectedTest, IsMoveAssignableWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that move-assigning an error-holding expected transfers its error into the target.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different errors
     std::int32_t error{14};
     expected<ValueType, NothrowMoveOnlyType> e1{unexpected{error}};
@@ -89,6 +111,12 @@ TEST(ExpectedTest, IsMoveAssignableWithError)
 
 TEST(ExpectedTest, MoveAssignmentHasCorrectNoexcept)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected's move assignment is noexcept only when both the value and error types "
+                   "are themselves nothrow move-assignable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_move_assignable_v<expected<NothrowMoveOnlyType, NothrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_move_assignable_v<expected<NothrowMoveOnlyType, ThrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_move_assignable_v<expected<ThrowMoveOnlyType, NothrowMoveOnlyType>>);
@@ -96,6 +124,12 @@ TEST(ExpectedTest, MoveAssignmentHasCorrectNoexcept)
 
 TEST(ExpectedTest, CanCopyAssignFromCompatibleType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that assigning a value of a compatible type sets the expected to hold that value and "
+                   "returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable type and an expected
     std::int32_t value{14};
     CopyableType wrapped{14};
@@ -114,6 +148,12 @@ TEST(ExpectedTest, CanCopyAssignFromCompatibleType)
 
 TEST(ExpectedTest, CanMoveAssignFromCompatibleType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that move-assigning a value of a compatible type sets the expected to hold that value "
+                   "and returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable type and an expected
     std::int32_t value{14};
     NothrowMoveOnlyType wrapped{14};
@@ -132,6 +172,12 @@ TEST(ExpectedTest, CanMoveAssignFromCompatibleType)
 
 TEST(ExpectedTest, CanCopyAssignFromUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that assigning an unexpected of a compatible type sets the expected to hold that error "
+                   "and returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable unexpected and an expected
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -150,6 +196,12 @@ TEST(ExpectedTest, CanCopyAssignFromUnexpected)
 
 TEST(ExpectedTest, CanMoveAssignFromUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that move-assigning an unexpected of a compatible type sets the expected to hold that "
+                   "error and returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable unexpected and an expected
     std::int32_t error{14};
     unexpected<NothrowMoveOnlyType> wrapped{error};
@@ -168,6 +220,12 @@ TEST(ExpectedTest, CanMoveAssignFromUnexpected)
 
 TEST(ExpectedTest, CanEmplaceWithArgs)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that emplace() constructs the held value in place from forwarded constructor arguments "
+                   "and returns a reference to that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with error
     expected<ArgumentType, ErrorType> unit{unexpect};
     std::int32_t copyable{29};
@@ -188,6 +246,12 @@ TEST(ExpectedTest, CanEmplaceWithArgs)
 
 TEST(ExpectedTest, CanEmplaceWithInitializerListAndArgs)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that emplace() constructs the held value in place from an initializer list plus "
+                   "forwarded constructor arguments.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with error
     expected<ArgumentInitializerListType, ErrorType> unit{unexpect};
     std::int32_t copyable{29};
@@ -208,6 +272,10 @@ TEST(ExpectedTest, CanEmplaceWithInitializerListAndArgs)
 
 TEST(ExpectedTest, CanSwapWithMemberSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that the member swap() function exchanges the value/error states of two expected instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     std::int32_t v1{82};
     expected<CopyableType, NothrowMoveOnlyType> e1{v1};
@@ -226,6 +294,12 @@ TEST(ExpectedTest, CanSwapWithMemberSwap)
 
 TEST(ExpectedTest, SwapHasCorrectNoexceptSpecification)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected's swap is noexcept only when both the value and error types are "
+                   "themselves nothrow swappable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_swappable_v<expected<NothrowMoveOnlyType, NothrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_swappable_v<expected<ThrowMoveOnlyType, NothrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_swappable_v<expected<NothrowMoveOnlyType, ThrowMoveOnlyType>>);
@@ -233,6 +307,10 @@ TEST(ExpectedTest, SwapHasCorrectNoexceptSpecification)
 
 TEST(ExpectedTest, CanSwapWithStdSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that std::swap exchanges the value/error states of two expected instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     std::int32_t v1{82};
     expected<CopyableType, NothrowMoveOnlyType> e1{v1};
@@ -251,6 +329,12 @@ TEST(ExpectedTest, CanSwapWithStdSwap)
 
 TEST(ExpectedVoidTest, IsCopyAssignableWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that copy-assigning an error-holding expected<void, E> replaces the target's error with "
+                   "the source's.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different errors
     std::int32_t error{14};
     expected<void, CopyableType> e1{unexpected{error}};
@@ -268,6 +352,12 @@ TEST(ExpectedVoidTest, IsCopyAssignableWithError)
 
 TEST(ExpectedVoidTest, IsMoveAssignableWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that move-assigning an error-holding expected<void, E> transfers its error into the "
+                   "target.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different errors
     std::int32_t error{14};
     expected<void, NothrowMoveOnlyType> e1{unexpected{error}};
@@ -283,12 +373,24 @@ TEST(ExpectedVoidTest, IsMoveAssignableWithError)
 
 TEST(ExpectedVoidTest, MoveAssignmentHasCorrectNoexcept)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected<void, E>'s move assignment is noexcept only when E is itself nothrow "
+                   "move-assignable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_move_assignable_v<expected<void, NothrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_move_assignable_v<expected<void, ThrowMoveOnlyType>>);
 }
 
 TEST(ExpectedVoidTest, CanCopyAssignFromUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that assigning an unexpected of a compatible type sets a value-less expected<void, E> "
+                   "to hold that error and returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable unexpected and an expected
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -307,6 +409,12 @@ TEST(ExpectedVoidTest, CanCopyAssignFromUnexpected)
 
 TEST(ExpectedVoidTest, CanMoveAssignFromUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that move-assigning an unexpected of a compatible type sets a value-less "
+                   "expected<void, E> to hold that error and returns a reference to the expected itself.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable unexpected and an expected
     std::int32_t error{14};
     unexpected<NothrowMoveOnlyType> wrapped{error};
@@ -325,6 +433,10 @@ TEST(ExpectedVoidTest, CanMoveAssignFromUnexpected)
 
 TEST(ExpectedVoidTest, CanEmplace)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description", "Check that emplace() on a value-less expected<void, E> puts it into the valid state.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with error
     expected<void, ErrorType> unit{unexpect};
 
@@ -337,6 +449,10 @@ TEST(ExpectedVoidTest, CanEmplace)
 
 TEST(ExpectedVoidTest, CanSwapWithMemberSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that the member swap() function exchanges the states of two expected<void, E> instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     expected<void, NothrowMoveOnlyType> e1{};
     std::int32_t error{30};
@@ -353,12 +469,21 @@ TEST(ExpectedVoidTest, CanSwapWithMemberSwap)
 
 TEST(ExpectedVoidTest, SwapHasCorrectNoexceptSpecification)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected<void, E>'s swap is noexcept only when E is itself nothrow swappable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_swappable_v<expected<void, NothrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_swappable_v<expected<void, ThrowMoveOnlyType>>);
 }
 
 TEST(ExpectedVoidTest, CanSwapWithStdSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that std::swap exchanges the states of two expected<void, E> instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
     expected<void, NothrowMoveOnlyType> e1{};
     std::int32_t error{30};

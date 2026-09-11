@@ -25,6 +25,10 @@ namespace
 
 TEST(ExpectedTest, HasValueTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that expected<T, E>::value_type resolves to T at compile time.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When wrapping the type as value_type with an expected
     using unit = expected<ValueType, ErrorType>;
 
@@ -34,6 +38,10 @@ TEST(ExpectedTest, HasValueTypeTypeTrait)
 
 TEST(ExpectedTest, HasErrorTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that expected<T, E>::error_type resolves to E at compile time.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When wrapping the type as error_type with an expected
     using unit = expected<ValueType, ErrorType>;
 
@@ -43,6 +51,11 @@ TEST(ExpectedTest, HasErrorTypeTypeTrait)
 
 TEST(ExpectedTest, HasUnexpectedTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E>::unexpected_type resolves to unexpected<E> at compile time.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When wrapping the type as error_type with an expected
     using unit = expected<ValueType, ErrorType>;
 
@@ -52,6 +65,12 @@ TEST(ExpectedTest, HasUnexpectedTypeTypeTrait)
 
 TEST(ExpectedTest, HasRebindTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E>::rebind<U> yields expected<U, E>, preserving the error type while "
+                   "exchanging the value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     struct OtherValueType
     {
     };
@@ -66,6 +85,10 @@ TEST(ExpectedTest, HasRebindTypeTrait)
 
 TEST(ExpectedVoidTest, HasValueTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that the value-less expected<void, E>::value_type resolves to void.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // When wrapping the void type with an expected
     using unit = expected<void, ErrorType>;
 
@@ -75,6 +98,10 @@ TEST(ExpectedVoidTest, HasValueTypeTypeTrait)
 
 TEST(ExpectedVoidTest, HasErrorTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that expected<void, E>::error_type resolves to E at compile time.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // When wrapping the type as error_type with an expected
     using unit = expected<void, ErrorType>;
 
@@ -84,6 +111,11 @@ TEST(ExpectedVoidTest, HasErrorTypeTypeTrait)
 
 TEST(ExpectedVoidTest, HasUnexpectedTypeTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<void, E>::unexpected_type resolves to unexpected<E> at compile time.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // When wrapping the type as error_type with an expected
     using unit = expected<void, ErrorType>;
 
@@ -93,6 +125,12 @@ TEST(ExpectedVoidTest, HasUnexpectedTypeTypeTrait)
 
 TEST(ExpectedVoidTest, HasRebindTypeTrait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<void, E>::rebind<U> yields expected<U, E>, preserving the error type while "
+                   "introducing a value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // When wrapping the type as error_type with an expected
     using unit = expected<void, ErrorType>;
     using rebound = unit::rebind<ValueType>;
