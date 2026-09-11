@@ -27,6 +27,7 @@ Tracing
    :hidden:
 
    requirements/index.rst
+   architecture/index.rst
 
 The Analysis Tracing component provides tracing support utilities that protect
 wrapped data from undetected memory corruption.
