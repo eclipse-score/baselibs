@@ -28,7 +28,7 @@ Functional Requirements
 =======================
 
 .. comp_req:: Argument Conversion
-   :id: comp_req__string_manipulation__argument_conversion
+   :id: comp_req__string_manipulation__args_conv
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -36,11 +36,12 @@ Functional Requirements
    :status: valid
    :version: 1
    :tags: inspected
+   :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide an operation that converts a command-line argument array into an ordered collection of null-terminated string views.
 
 .. comp_req:: Lazy String Splitting
-   :id: comp_req__string_manipulation__lazy_string_splitting
+   :id: comp_req__string_manipulation__lazy_split
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -48,11 +49,12 @@ Functional Requirements
    :status: valid
    :version: 1
    :tags: inspected
+   :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide a forward-iterable operation that lazily splits a string view on a delimiter, preserves empty substrings required by delimiter placement, and performs no dynamic memory allocation.
 
 .. comp_req:: String-Like Comparison and Hashing
-   :id: comp_req__string_manipulation__string_like_comparison_hashing
+   :id: comp_req__string_manipulation__cmp_hash
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -60,5 +62,6 @@ Functional Requirements
    :status: valid
    :version: 1
    :tags: inspected
+   :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide a string-like adaptor that accepts supported string representations, exposes their content as a string view, compares by content, and produces equal hashes for equal content.

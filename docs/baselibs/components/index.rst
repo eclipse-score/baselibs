@@ -19,7 +19,6 @@ Components
    :maxdepth: 1
 
    abi_compatible_data_types/docs/index
-  string_manipulation/docs/index
 
    
 Overview
