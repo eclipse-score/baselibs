@@ -182,8 +182,7 @@ TEST(ExpectedVoidTest, EqualityBetweenExpectedBothWithErrors)
 TEST(ExpectedVoidTest, EqualityBetweenExpectedWithValueAndError)
 {
     RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
-    RecordProperty("Description",
-                   "Check that a valid expected<void, E> never compares equal to one holding an error.");
+    RecordProperty("Description", "Check that a valid expected<void, E> never compares equal to one holding an error.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected with different but comparable types where one has a value and the other an error
