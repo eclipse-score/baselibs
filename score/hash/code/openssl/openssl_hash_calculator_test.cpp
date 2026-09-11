@@ -78,6 +78,12 @@ void HashCalculatorTest::ExpectSha256Call()
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha1Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-1 calculator.");
+
     const StructDigest* digest_type_sha1 = openssl_lib_.DigestAlgoSha1();
     StructDigestCtx* digest_context_sha1 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha1 = openssl_lib_.InitDigestCtx(digest_context_sha1, digest_type_sha1, nullptr);
@@ -95,6 +101,12 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha1Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha256Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-256 calculator.");
+
     ExpectSha256Call();
 
     auto digest = OpensslHashCalculator::Create(HashAlgorithm::kSha256, openssl_lib_mock_);
@@ -104,6 +116,12 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha256Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-384 calculator.");
+
     const StructDigest* digest_type_sha384 = openssl_lib_.DigestAlgoSha384();
     StructDigestCtx* digest_context_sha384 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha384 = openssl_lib_.InitDigestCtx(digest_context_sha384, digest_type_sha384, nullptr);
@@ -121,6 +139,13 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha512Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms, comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-512 calculator, and "
+                   "that Update() still functions correctly on a move-assigned-into calculator instance.");
+
     const StructDigest* digest_type_sha512 = openssl_lib_.DigestAlgoSha512();
     StructDigestCtx* digest_context_sha512 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha512 = openssl_lib_.InitDigestCtx(digest_context_sha512, digest_type_sha512, nullptr);
@@ -147,6 +172,13 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha512Test)
 
 TEST_F(HashCalculatorTest, NullDigestTypeCreateAlgoTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that Create() returns an instantiation error, instead of throwing, when the OpenSSL "
+                   "library fails to resolve the digest type.");
+
     EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha256()).WillOnce(Return(nullptr));
     auto digest = OpensslHashCalculator::Create(HashAlgorithm::kSha256, openssl_lib_mock_);
 
@@ -155,6 +187,13 @@ TEST_F(HashCalculatorTest, NullDigestTypeCreateAlgoTest)
 
 TEST_F(HashCalculatorTest, InvalidDigestCtxCreateAlgoTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that Create() returns an instantiation error, instead of throwing, when the OpenSSL "
+                   "library fails to create a digest context.");
+
     ON_CALL(openssl_lib_mock_, DigestAlgoSha256()).WillByDefault(Return(digest_type_sha256));
     ON_CALL(openssl_lib_mock_, CreateDigestCtx()).WillByDefault(Return(nullptr));
 
@@ -165,6 +204,13 @@ TEST_F(HashCalculatorTest, InvalidDigestCtxCreateAlgoTest)
 
 TEST_F(HashCalculatorTest, InvalidDigestInitCreateAlgoTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that Create() returns an instantiation error, instead of throwing, when the OpenSSL "
+                   "library fails to initialize the digest context.");
+
     EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha256()).WillOnce(Return(digest_type_sha256));
     EXPECT_CALL(openssl_lib_mock_, CreateDigestCtx()).WillOnce(Return(digest_context_sha256));
     EXPECT_CALL(openssl_lib_mock_, InitDigestCtx(_, _, _)).WillOnce(Return(0));
@@ -176,6 +222,13 @@ TEST_F(HashCalculatorTest, InvalidDigestInitCreateAlgoTest)
 
 TEST_F(HashCalculatorTest, InvalidCreateAlgorthimTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that Create() returns an instantiation error, instead of throwing, for the unsupported "
+                   "kNone and kLast algorithm identifiers.");
+
     auto hash_calculator = OpensslHashCalculator::Create(HashAlgorithm::kNone, openssl_lib_mock_);
     ASSERT_FALSE(hash_calculator.has_value());
     EXPECT_EQ(hash_calculator.error(), ErrorCode::kCouldNotCreateDigest);
@@ -187,6 +240,11 @@ TEST_F(HashCalculatorTest, InvalidCreateAlgorthimTest)
 
 TEST_F(HashCalculatorTest, UpdateStreamTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that Update() accepts a span of bytes and accumulates digest state.");
+
     ExpectSha256Call();
     EXPECT_CALL(openssl_lib_mock_, UpdateDigestCtx(_, _, _)).WillOnce(Return(1));
 
@@ -201,6 +259,11 @@ TEST_F(HashCalculatorTest, UpdateStreamTest)
 
 TEST_F(HashCalculatorTest, EmptyUpdateTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description", "Check that Update() returns an error, instead of a value, for an empty span.");
+
     ExpectSha256Call();
     score::cpp::span<const std::uint8_t> data;
 
@@ -213,6 +276,13 @@ TEST_F(HashCalculatorTest, EmptyUpdateTest)
 
 TEST_F(HashCalculatorTest, InvalidDigestUpdateTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that Update() returns an error, instead of a value, when the OpenSSL library fails to "
+                   "update the digest context.");
+
     ExpectSha256Call();
     EXPECT_CALL(openssl_lib_mock_, UpdateDigestCtx(_, _, _)).WillOnce(Return(0));
 
@@ -228,6 +298,11 @@ TEST_F(HashCalculatorTest, InvalidDigestUpdateTest)
 
 TEST_F(HashCalculatorTest, UpdateFromStreamTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that UpdateFromStream() accepts a std::istream and accumulates digest state.");
+
     ExpectSha256Call();
     EXPECT_CALL(openssl_lib_mock_, UpdateDigestCtx(_, _, _)).WillOnce(Return(1));
 
@@ -242,6 +317,13 @@ TEST_F(HashCalculatorTest, UpdateFromStreamTest)
 
 TEST_F(HashCalculatorTest, InvalidUpdateFromStreamTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that UpdateFromStream() returns an error, instead of a value, when the OpenSSL library "
+                   "fails to update the digest context.");
+
     ExpectSha256Call();
 
     EXPECT_CALL(openssl_lib_mock_, UpdateDigestCtx(_, _, _)).WillOnce(Return(0));
@@ -258,6 +340,13 @@ TEST_F(HashCalculatorTest, InvalidUpdateFromStreamTest)
 
 TEST_F(HashCalculatorTest, UpdateFromStreamGoesBadTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that UpdateFromStream() returns an error, instead of a value, when the stream enters a "
+                   "bad state while it is being read.");
+
     ExpectSha256Call();
 
     std::vector<char> test_input{1, 2, 3, 4};
@@ -279,6 +368,13 @@ TEST_F(HashCalculatorTest, UpdateFromStreamGoesBadTest)
 
 TEST_F(HashCalculatorTest, BadInputUpdateFromStreamTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that UpdateFromStream() returns an error, instead of a value, when the input stream is "
+                   "already in a failed state before reading.");
+
     ExpectSha256Call();
 
     std::stringstream input_stream;
@@ -293,6 +389,13 @@ TEST_F(HashCalculatorTest, BadInputUpdateFromStreamTest)
 
 TEST_F(HashCalculatorTest, EmptyInputUpdateFromStreamTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that UpdateFromStream() with an empty input stream still finalizes to the correct "
+                   "well-known SHA-256 digest of the empty string.");
+
     std::vector<char> test_input{};
     std::istringstream input_stream(std::string(test_input.begin(), test_input.end()));
     const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> expected_sha256{
@@ -310,6 +413,13 @@ TEST_F(HashCalculatorTest, EmptyInputUpdateFromStreamTest)
 
 TEST_F(HashCalculatorTest, InvalidFinalizeTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Description",
+                   "Check that Finalize() yields an empty (kNone) Hash when the OpenSSL library fails to "
+                   "finalize the digest value.");
+
     ExpectSha256Call();
 
     EXPECT_CALL(openssl_lib_mock_, FinalizeDigestValue(_, _, _)).WillOnce(Return(0));
@@ -322,6 +432,13 @@ TEST_F(HashCalculatorTest, InvalidFinalizeTest)
 
 TEST(HashCalculatorSHATest, HashAlgorithmsSimpleTestSha256)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface, comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check an end-to-end SHA-256 computation through the public API: Create(), Update() and "
+                   "Finalize() together produce the correct digest for a known input.");
+
     constexpr std::uint8_t test_input[]{'1', '2', '3', 'a', 'b', 'c'};
     const score::cpp::static_vector<std::uint8_t, kMaxDigestSize> expected_sha256{
         221, 19, 10, 132, 157, 123, 41,  229, 84,  27,  5,   210, 247, 248, 106, 74,
