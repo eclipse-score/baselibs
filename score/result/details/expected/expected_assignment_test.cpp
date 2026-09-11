@@ -273,7 +273,8 @@ TEST(ExpectedTest, CanEmplaceWithInitializerListAndArgs)
 TEST(ExpectedTest, CanSwapWithMemberSwap)
 {
     RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
-    RecordProperty("Description", "Check that the member swap() function exchanges the value/error states of two expected instances.");
+    RecordProperty("Description",
+                   "Check that the member swap() function exchanges the value/error states of two expected instances.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values
@@ -434,7 +435,8 @@ TEST(ExpectedVoidTest, CanMoveAssignFromUnexpected)
 TEST(ExpectedVoidTest, CanEmplace)
 {
     RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
-    RecordProperty("Description", "Check that emplace() on a value-less expected<void, E> puts it into the valid state.");
+    RecordProperty("Description",
+                   "Check that emplace() on a value-less expected<void, E> puts it into the valid state.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with error
@@ -450,7 +452,8 @@ TEST(ExpectedVoidTest, CanEmplace)
 TEST(ExpectedVoidTest, CanSwapWithMemberSwap)
 {
     RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
-    RecordProperty("Description", "Check that the member swap() function exchanges the states of two expected<void, E> instances.");
+    RecordProperty("Description",
+                   "Check that the member swap() function exchanges the states of two expected<void, E> instances.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two expected with different values

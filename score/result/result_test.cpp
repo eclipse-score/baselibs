@@ -177,7 +177,8 @@ class TypeTraitsTests : public ::testing::Test
 TEST_F(TypeTraitsTests, IsResultVIsTrueIfIsTemplatedResult)
 {
     RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
-    RecordProperty("Description", "Check that IsResultV is true for a Result<T> instantiation with a concrete value type.");
+    RecordProperty("Description",
+                   "Check that IsResultV is true for a Result<T> instantiation with a concrete value type.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     EXPECT_TRUE(IsResultV<Result<bool>>);
