@@ -162,6 +162,7 @@ generate_cpp(
 
 cc_test(
     name = "flatbuffers_cpp_library_test",
+    size = "small",
     testonly = True,
     srcs = [
         "details/flatbuffers_allocator_test.cpp",
