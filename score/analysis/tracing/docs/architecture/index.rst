@@ -12,30 +12,23 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-Requirements
-############
+Analysis Tracing Architecture
+##############################
 
-.. document:: Analysis Tracing Requirements
-   :id: doc__analysis_tracing_requirements
+.. document:: Analysis Tracing Architecture
+   :id: doc__analysis_tracing_architecture
    :status: draft
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__requirements_comp[version==1]
-   :tags: requirements, analysis_tracing
+   :realizes: wp__component_arch[version==1]
 
-Functional Requirements
-=======================
-
-.. comp_req:: Canary-Protected Data Integrity
-   :id: comp_req__analysis_tracing__canary_integrity
-   :reqtype: Functional
+.. comp:: Analysis Tracing
+   :id: comp__baselibs_analysis_tracing
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__com__data_corruption[version==1]
    :status: valid
    :version: 1
-   :tags: inspected
-   :satisfied_by: comp__baselibs_analysis_tracing[version==1]
+   :belongs_to: feat__baselibs[version==1]
 
-   The Analysis Tracing component shall wrap arbitrary data with configurable start and end canary values, detect corruption of either canary during data access, and report corrupted data as unavailable.
+   The Analysis Tracing component contains tracing utilities for detecting corruption of wrapped data.

@@ -25,7 +25,7 @@ namespace tracing
 // Test with uint64_t canaries (default)
 TEST(CanaryWrapperTest, DefaultConstructorInitializesCanariesUint64)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that the default wrapper initializes 64-bit canaries and exposes a default value.");
     RecordProperty("TestType", "requirements-based");
@@ -40,7 +40,7 @@ TEST(CanaryWrapperTest, DefaultConstructorInitializesCanariesUint64)
 // Test with uint32_t canaries
 TEST(CanaryWrapperTest, DefaultConstructorInitializesCanariesUint32)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that the wrapper supports 32-bit canaries while preserving access to a default value.");
     RecordProperty("TestType", "requirements-based");
@@ -54,7 +54,7 @@ TEST(CanaryWrapperTest, DefaultConstructorInitializesCanariesUint32)
 
 TEST(CanaryWrapperTest, ConstructorForwardsSingleArgument)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that single-argument construction stores the supplied value behind valid canaries.");
     RecordProperty("TestType", "requirements-based");
@@ -68,7 +68,7 @@ TEST(CanaryWrapperTest, ConstructorForwardsSingleArgument)
 
 TEST(CanaryWrapperTest, ConstructorForwardsMultipleArguments)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty(
         "Description",
         "Check that multiple constructor arguments are forwarded to the wrapped type without losing integrity checks.");
@@ -91,7 +91,7 @@ TEST(CanaryWrapperTest, ConstructorForwardsMultipleArguments)
 
 TEST(CanaryWrapperTest, ConstructorForwardsStringArgument)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that a string value can be constructed and retrieved through a 32-bit canary wrapper.");
     RecordProperty("TestType", "requirements-based");
@@ -106,7 +106,7 @@ TEST(CanaryWrapperTest, ConstructorForwardsStringArgument)
 
 TEST(CanaryWrapperTest, GetDataReturnsEmptyOptionalWhenCorrupted)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty(
         "Description",
         "Check that corrupting a canary changes data access from an engaged reference to an empty optional.");
@@ -132,7 +132,7 @@ TEST(CanaryWrapperTest, GetDataReturnsEmptyOptionalWhenCorrupted)
 
 TEST(CanaryWrapperTest, DetectsStartCanaryCorruption)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that corruption of the start canary is detected before wrapped data is returned.");
     RecordProperty("TestType", "fault-injection");
@@ -148,7 +148,7 @@ TEST(CanaryWrapperTest, DetectsStartCanaryCorruption)
 
 TEST(CanaryWrapperTest, DetectsEndCanaryCorruption)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that corruption of the end canary is detected before wrapped data is returned.");
     RecordProperty("TestType", "fault-injection");
@@ -165,7 +165,7 @@ TEST(CanaryWrapperTest, DetectsEndCanaryCorruption)
 
 TEST(CanaryWrapperTest, IsCorruptedAllConditions)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty(
         "Description",
         "Check that each valid and corrupted combination of the two canaries produces the expected access decision.");
@@ -223,7 +223,7 @@ TEST(CanaryWrapperTest, IsCorruptedAllConditions)
 
 TEST(CanaryWrapperTest, DetectsBothCanariesCorrupted)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that simultaneous corruption of both 32-bit canaries is rejected.");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "error-guessing");
@@ -241,7 +241,7 @@ TEST(CanaryWrapperTest, DetectsBothCanariesCorrupted)
 
 TEST(CanaryWrapperTest, DataAccessible)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that valid wrapped data can be read and modified while canary checks remain valid.");
     RecordProperty("TestType", "requirements-based");
@@ -265,7 +265,7 @@ TEST(CanaryWrapperTest, DataAccessible)
 
 TEST(CanaryWrapperTest, MemoryLayoutCorrect)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty(
         "Description",
         "Check that the 32-bit wrapper stores start canary, aligned data, and end canary in the required layout.");
@@ -286,7 +286,7 @@ TEST(CanaryWrapperTest, MemoryLayoutCorrect)
 
 TEST(CanaryWrapperTest, ComplexTypeWrapper)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that a complex aggregate can be wrapped, initialized, and retrieved with intact canaries.");
     RecordProperty("TestType", "requirements-based");
@@ -313,7 +313,7 @@ TEST(CanaryWrapperTest, ComplexTypeWrapper)
 
 TEST(CanaryWrapperTest, CopyConstructorPreservesDataAndRefreshesCanaries)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that copying a valid wrapper preserves its data and yields valid canary checks.");
     RecordProperty("TestType", "requirements-based");
@@ -330,7 +330,7 @@ TEST(CanaryWrapperTest, CopyConstructorPreservesDataAndRefreshesCanaries)
 
 TEST(CanaryWrapperTest, CopyConstructorCopiesCorruptionState)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that copying a corrupted wrapper does not hide its invalid canary state.");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -350,7 +350,7 @@ TEST(CanaryWrapperTest, CopyConstructorCopiesCorruptionState)
 
 TEST(CanaryWrapperTest, CopyAssignmentPreservesDataAndRefreshesCanaries)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that copy assignment transfers valid data while preserving canary protection.");
     RecordProperty("TestType", "requirements-based");
@@ -367,7 +367,7 @@ TEST(CanaryWrapperTest, CopyAssignmentPreservesDataAndRefreshesCanaries)
 
 TEST(CanaryWrapperTest, CopyAssignmentCopiesCorruptionState)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that copy assignment preserves detection of a corrupted source wrapper.");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -388,7 +388,7 @@ TEST(CanaryWrapperTest, CopyAssignmentCopiesCorruptionState)
 
 TEST(CanaryWrapperTest, MoveConstructorPreservesDataAndCanaries)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that moving a valid string wrapper preserves its data and valid canaries.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -405,7 +405,7 @@ TEST(CanaryWrapperTest, MoveConstructorPreservesDataAndCanaries)
 
 TEST(CanaryWrapperTest, MoveAssignmentPreservesDataAndCanaries)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that move assignment transfers valid wrapped data without invalidating canary checks.");
     RecordProperty("TestType", "requirements-based");
@@ -424,7 +424,7 @@ TEST(CanaryWrapperTest, MoveAssignmentPreservesDataAndCanaries)
 
 TEST(CanaryWrapperTest, MoveConstructorCopiesCorruptionState)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that moving a corrupted wrapper preserves the corruption indication.");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -443,7 +443,7 @@ TEST(CanaryWrapperTest, MoveConstructorCopiesCorruptionState)
 
 TEST(CanaryWrapperTest, MoveAssignmentCopiesCorruptionState)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that move assignment preserves detection of a corrupted source wrapper.");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -464,7 +464,7 @@ TEST(CanaryWrapperTest, MoveAssignmentCopiesCorruptionState)
 
 TEST(CanaryWrapperTest, DetectsOnlyStartCanaryCorruptionWithValidEnd)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that corrupting only the start canary is rejected while the end canary remains valid.");
     RecordProperty("TestType", "fault-injection");
@@ -485,7 +485,7 @@ TEST(CanaryWrapperTest, DetectsOnlyStartCanaryCorruptionWithValidEnd)
 
 TEST(CanaryWrapperTest, DetectsOnlyEndCanaryCorruptionWithValidStart)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description",
                    "Check that corrupting only the end canary is rejected while the start canary remains valid.");
     RecordProperty("TestType", "fault-injection");
@@ -507,7 +507,7 @@ TEST(CanaryWrapperTest, DetectsOnlyEndCanaryCorruptionWithValidStart)
 
 TEST(CanaryWrapperTest, BothCanariesValidReturnsData)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_protected_data_integrity");
+    RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that data remains available when both canaries retain their valid values.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
