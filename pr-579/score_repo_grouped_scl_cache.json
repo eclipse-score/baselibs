@@ -752,198 +752,46 @@
         }
       },
       {
-        "need": "comp_req__flatbuffers__serialization",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "AllocatorTest__AllocateReturnsNonNull",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 75,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorTest__AllocateSingleByte",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 91,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorTest__AllocateLargeRegion",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 106,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorTest__UsableThroughBasePointer",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 123,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorReallocateDownwardTest__PreserveFrontAndBackIfAllocatingNewSizeFails",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 329,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeEqualsOldSize",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 377,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeSmallerThanOldSize",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 394,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/0",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 154,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/1",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 154,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/2",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 154,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/3",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 154,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/0",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 192,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/1",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 192,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/2",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 192,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/0",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 238,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/1",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 238,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/2",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 238,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/0",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 285,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/1",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 285,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/2",
-              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
-              "line": 285,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
         "need": "comp_req__flatbuffers__access",
         "links": {
           "CodeLinks": [],
           "TestLinks": [
+            {
+              "name": "VectorFaultDeathTest__GetOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1239,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFaultDeathTest__MutateOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1259,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFaultDeathTest__MutateOffsetOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1276,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFaultDeathTest__GetMutableObjectOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1300,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
             {
               "name": "ArrayCastTest__CastToArray",
               "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
@@ -1294,6 +1142,716 @@
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
+            },
+            {
+              "name": "VectorGetTest__Scalars",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 115,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorEmptyTest__ZeroElements",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 145,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorLengthTest__NullAndNotNull",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 169,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorDeprecatedLengthTest__MatchesSize",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 196,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMutateTest__InPlace",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 234,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorScalarTypesTest__MinZeroMaxAcrossTypes",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 263,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorEnumTest__GetEnum",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 286,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorDataTest__RawAndTypedPointers",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 307,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorDataTest__MutableRawAndTypedPointers",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 329,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorForwardIteratorTest__RangeBased",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 356,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorReverseIteratorTest__RangeBased",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 384,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorReverseIteratorTest__ArrowOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 407,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMutableIteratorTest__BeginEndRBeginREnd",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 444,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorConstIteratorTest__CbeginCendCrbeginCrend",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 481,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__DefaultConstructor",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 535,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__CopyConstructor",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 549,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__CopyAssignment",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 562,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__MoveAssignment",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 579,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__EqualityOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 593,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__InequalityOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 604,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__LessThanOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 615,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__GreaterThanOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 626,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__LessOrEqualOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 637,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__GreaterOrEqualOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 649,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__DifferenceOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 661,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__DereferenceOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 671,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PreIncrementOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 682,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PostIncrementOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 695,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PreDecrementOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 708,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PostDecrementOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 721,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PlusOffsetOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 734,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__PlusEqualsOffsetOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 747,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__MinusOffsetOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 759,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorIteratorTest__MinusEqualsOffsetOperator",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 772,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeSpanTest__SpanOverData",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 788,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeSpanTest__PointerOverloadNullAndNonNull",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 807,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeSpanTest__MutableSpanOverData",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 830,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeSpanTest__MutablePointerOverloadNullAndNonNull",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 853,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeBytesSpanTest__ByteView",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 881,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeBytesSpanTest__MutableByteView",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 907,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorOfStringsTest__Offsets",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 941,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorOfStringsTest__IteratorArrow",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 973,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMutableObjectTest__GetMutableObjectAndMutateOffset",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1007,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Vector64Test__SizeGetAndIterate",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1044,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Vector64Test__Empty",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1072,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorOfAnyTest__SizeAndDataAliasTypedVector",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1089,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorOfAnyTest__MutableDataAliasesTypedVector",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1109,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorSingleElementTest__OneElement",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1131,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorLookupByKeyTest__FindsAndMissesKeys",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1152,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorLookupByKeyTest__MutableLookup",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1183,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorCastTest__UpcastToBaseTable",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1210,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__serialization",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "AllocatorTest__AllocateReturnsNonNull",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 75,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateSingleByte",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 91,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateLargeRegion",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 106,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__UsableThroughBasePointer",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 123,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__PreserveFrontAndBackIfAllocatingNewSizeFails",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 329,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeEqualsOldSize",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 377,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeSmallerThanOldSize",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 394,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorGetTest__Scalars",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 115,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorEmptyTest__ZeroElements",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 145,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorScalarTypesTest__MinZeroMaxAcrossTypes",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 263,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorMakeBytesSpanTest__ByteView",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 881,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorOfStringsTest__Offsets",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 941,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorSingleElementTest__OneElement",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1131,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorLookupByKeyTest__FindsAndMissesKeys",
+              "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
+              "line": 1152,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/3",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
             }
           ]
         }
@@ -1333,7 +1891,7 @@
             {
               "name": "TypeTraitsTests__IsResultVIsTrueIfIsResultBlank",
               "file": "score/result/result_test.cpp",
-              "line": 186,
+              "line": 187,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1342,7 +1900,7 @@
             {
               "name": "TypeTraitsTests__IsResultVIsFalseIfIsNoResult",
               "file": "score/result/result_test.cpp",
-              "line": 195,
+              "line": 196,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1396,7 +1954,7 @@
             {
               "name": "ExpectedTest__CanSwapWithStdSwap",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 308,
+              "line": 309,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1522,7 +2080,7 @@
             {
               "name": "ExpectedVoidTest__IsCopyAssignableWithError",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 330,
+              "line": 331,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1531,7 +2089,7 @@
             {
               "name": "ExpectedVoidTest__IsMoveAssignableWithError",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 353,
+              "line": 354,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1540,7 +2098,7 @@
             {
               "name": "ExpectedVoidTest__CanSwapWithMemberSwap",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 450,
+              "line": 452,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -1549,7 +2107,7 @@
             {
               "name": "ExpectedVoidTest__CanSwapWithStdSwap",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 481,
+              "line": 484,
               "need": "comp_req__result__type_safety",
               "verify_type": "partially",
               "result": "passed",
@@ -2564,7 +3122,7 @@
             {
               "name": "ExpectedVoidTest__EqualityBetweenExpectedAndUnexpected",
               "file": "score/result/details/expected/expected_equality_test.cpp",
-              "line": 199,
+              "line": 198,
               "need": "comp_req__result__error_handling",
               "verify_type": "partially",
               "result": "passed",
@@ -3265,7 +3823,7 @@
             {
               "name": "ExpectedVoidTest__CanCopyAssignFromUnexpected",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 386,
+              "line": 387,
               "need": "comp_req__result__set_result",
               "verify_type": "partially",
               "result": "passed",
@@ -3274,7 +3832,7 @@
             {
               "name": "ExpectedVoidTest__CanMoveAssignFromUnexpected",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 410,
+              "line": 411,
               "need": "comp_req__result__set_result",
               "verify_type": "partially",
               "result": "passed",
@@ -3283,7 +3841,7 @@
             {
               "name": "ExpectedVoidTest__CanEmplace",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 434,
+              "line": 435,
               "need": "comp_req__result__set_result",
               "verify_type": "partially",
               "result": "passed",
@@ -3587,7 +4145,7 @@
             {
               "name": "ExpectedTest__SwapHasCorrectNoexceptSpecification",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 295,
+              "line": 296,
               "need": "comp_req__result__exception_free_operation",
               "verify_type": "partially",
               "result": "passed",
@@ -3605,7 +4163,7 @@
             {
               "name": "ExpectedVoidTest__MoveAssignmentHasCorrectNoexcept",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 374,
+              "line": 375,
               "need": "comp_req__result__exception_free_operation",
               "verify_type": "partially",
               "result": "passed",
@@ -3614,7 +4172,7 @@
             {
               "name": "ExpectedVoidTest__SwapHasCorrectNoexceptSpecification",
               "file": "score/result/details/expected/expected_assignment_test.cpp",
-              "line": 470,
+              "line": 473,
               "need": "comp_req__result__exception_free_operation",
               "verify_type": "partially",
               "result": "passed",
