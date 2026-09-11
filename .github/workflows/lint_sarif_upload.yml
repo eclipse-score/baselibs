@@ -14,7 +14,7 @@
 # Fork PRs get a read-only GITHUB_TOKEN, so lint.yml can't upload SARIF for
 # them directly. workflow_run always runs this repo's own copy of this file
 # with its own permissions, regardless of which fork triggered the run.
-name: Upload clang-tidy SARIF
+name: Upload lint SARIF
 on:
   workflow_run:
     workflows: ["Linter checks"]
@@ -27,10 +27,10 @@ jobs:
     if: github.event.workflow_run.event == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - name: Download clang-tidy SARIF artifact
+      - name: Download lint SARIF artifact
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
-          name: clang-tidy-sarif
+          name: lint-sarif
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ github.token }}
       - name: Read pull request number
@@ -41,5 +41,19 @@ jobs:
         with:
           sarif_file: clang-tidy.sarif
           category: clang-tidy
+          sha: ${{ github.event.workflow_run.head_sha }}
+          ref: refs/pull/${{ steps.pr.outputs.number }}/head
+      - name: Upload Clippy SARIF to code scanning
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: clippy.sarif
+          category: clippy
+          sha: ${{ github.event.workflow_run.head_sha }}
+          ref: refs/pull/${{ steps.pr.outputs.number }}/head
+      - name: Upload Ruff SARIF to code scanning
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: ruff.sarif
+          category: ruff
           sha: ${{ github.event.workflow_run.head_sha }}
           ref: refs/pull/${{ steps.pr.outputs.number }}/head

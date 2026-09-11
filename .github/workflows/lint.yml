@@ -10,6 +10,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+#
+# Runs clang-tidy, Clippy, and Ruff through rules_lint in one job. Each build
+# uses fail_on_violation=false so violating targets still produce SARIF; the
+# job fails at the end, once everything has been collected and uploaded.
 name: Linter checks
 permissions:
   contents: read
@@ -25,7 +29,7 @@ on:
     types: [checks_requested]
   workflow_call:
 jobs:
-  clang-tidy:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
@@ -37,21 +41,42 @@ jobs:
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
-      - name: Bazel Build with clang-tidy
+      - name: Bazel build with clang-tidy
         run: |
-          bazel build --config=bl-x86_64-linux --config=clang-tidy --keep_going --output_groups=+rules_lint_machine -- //...
-      - name: Collect clang-tidy reports
+          bazel build --config=bl-x86_64-linux --config=clang-tidy --keep_going \
+            --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
+            -- //...
+      - name: Bazel build with Clippy
         if: always()
         run: |
-          mkdir -p /tmp/clang-tidy-reports
-          find -L bazel-bin -name '*.AspectRulesLintClangTidy.out' -size +0c \
-            -exec cp --parents {} /tmp/clang-tidy-reports \;
-      - name: Upload clang-tidy reports
+          bazel build --config=bl-x86_64-linux --config=lint --keep_going \
+            --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
+            -- $(bazel query 'kind("rust_.*", //score/...)')
+      - name: Bazel build with Ruff
+        if: always()
+        run: |
+          bazel build --config=bl-x86_64-linux --config=ruff --keep_going \
+            --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
+            -- //...
+      - name: Collect human-readable lint reports
+        if: always()
+        run: |
+          declare -A mnemonics=(
+            [clang-tidy]=AspectRulesLintClangTidy
+            [clippy]=AspectRulesLintClippy
+            [ruff]=AspectRulesLintRuff
+          )
+          for tool in "${!mnemonics[@]}"; do
+            mkdir -p "/tmp/lint-reports/${tool}"
+            find -L bazel-bin -name "*.${mnemonics[$tool]}.out" -size +0c \
+              -exec cp --parents {} "/tmp/lint-reports/${tool}" \;
+          done
+      - name: Upload human-readable lint reports
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: clang-tidy-reports
-          path: /tmp/clang-tidy-reports
+          name: lint-reports
+          path: /tmp/lint-reports
           retention-days: 5
           if-no-files-found: ignore
       - name: Set up sarif-multitool
@@ -60,54 +85,61 @@ jobs:
           npm install --no-save --prefix /tmp/sarif-multitool @microsoft/sarif-multitool@5.7.0
           chmod +x /tmp/sarif-multitool/node_modules/@microsoft/sarif-multitool-linux/Sarif.Multitool
           echo "/tmp/sarif-multitool/node_modules/.bin" >> "$GITHUB_PATH"
-      - name: Clean clang-tidy SARIF reports
+      - name: Build merged SARIF per linter
         if: always()
+        id: sarif
         run: |
-          python3 .github/tools/clean_clang_tidy_sarif.py --output-dir /tmp/clang-tidy-sarif-clean \
-            $(find -L bazel-bin -name '*.AspectRulesLintClangTidy.report')
-      - name: Merge and normalize clang-tidy SARIF reports
-        if: always()
-        run: |
-          shopt -s nullglob
-          reports=(/tmp/clang-tidy-sarif-clean/*.sarif)
-          if [ ${#reports[@]} -eq 0 ]; then
-            echo "::warning::no clang-tidy SARIF results to report"
-            echo '{"version":"2.1.0","runs":[{"tool":{"driver":{"name":"ClangTidy"}},"results":[]}]}' > /tmp/clang-tidy.sarif
-            exit 0
-          fi
-          sarif-multitool merge "${reports[@]}" --output-file /tmp/clang-tidy-merged.sarif --log ForceOverwrite
-          sarif-multitool rewrite /tmp/clang-tidy-merged.sarif --normalize-for-ghas \
-            --output /tmp/clang-tidy.sarif --log ForceOverwrite
+          declare -A mnemonics=(
+            [clang-tidy]=AspectRulesLintClangTidy
+            [clippy]=AspectRulesLintClippy
+            [ruff]=AspectRulesLintRuff
+          )
+          any_violations=0
+          for tool in "${!mnemonics[@]}"; do
+            if ! .github/tools/build_lint_sarif.sh "${tool}" "${mnemonics[$tool]}"; then
+              any_violations=1
+            fi
+          done
+          echo "any_violations=${any_violations}" >> "$GITHUB_OUTPUT"
       - name: Upload clang-tidy SARIF to code scanning
-        # Fork PRs get a read-only GITHUB_TOKEN, so this would fail for
-        # pull_request; lint_sarif_upload.yml uploads those instead.
-        # merge_group runs a transient synthetic merge commit, not a ref we
-        # want recorded in code scanning history.
+        # Fork PRs have a read-only token (lint_sarif_upload.yml handles those);
+        # merge_group has no ref worth recording in code scanning.
         if: always() && !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name)
         uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
         with:
-          sarif_file: /tmp/clang-tidy.sarif
+          sarif_file: /tmp/lint-sarif/clang-tidy.sarif
           category: clang-tidy
-      - name: Prepare clang-tidy SARIF artifact
-        # Bundle the SARIF for lint_sarif_upload.yml to upload from a
-        # privileged workflow_run (see comment above) or for debugging purposes.
+      - name: Upload Clippy SARIF to code scanning
+        if: always() && !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name)
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: /tmp/lint-sarif/clippy.sarif
+          category: clippy
+      - name: Upload Ruff SARIF to code scanning
+        if: always() && !contains(fromJSON('["pull_request", "merge_group"]'), github.event_name)
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: /tmp/lint-sarif/ruff.sarif
+          category: ruff
+      - name: Prepare SARIF artifact
+        # For lint_sarif_upload.yml to re-upload on fork PRs, and for debugging.
         if: always()
         run: |
-          mkdir -p /tmp/clang-tidy-sarif-artifact
-          cp /tmp/clang-tidy.sarif /tmp/clang-tidy-sarif-artifact/
+          mkdir -p /tmp/lint-sarif-artifact
+          cp /tmp/lint-sarif/*.sarif /tmp/lint-sarif-artifact/
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "${{ github.event.pull_request.number }}" > /tmp/clang-tidy-sarif-artifact/pr-number.txt
+            echo "${{ github.event.pull_request.number }}" > /tmp/lint-sarif-artifact/pr-number.txt
           fi
-      - name: Upload clang-tidy SARIF artifact
+      - name: Upload SARIF artifact
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: clang-tidy-sarif
-          path: /tmp/clang-tidy-sarif-artifact
+          name: lint-sarif
+          path: /tmp/lint-sarif-artifact
           retention-days: 5
-  lint-clippy:
-    uses: eclipse-score/cicd-workflows/.github/workflows/static-analysis.yml@af347722c7ae3ed85518895c11268d96ac728f62
-    with:
-      # Use only Rust targets for build.
-      bazel-targets: "$(bazel query 'kind(\"rust_.*\", //score/...)' | xargs)"
-      bazel-config: "lint"
+      - name: Fail if any linter reported violations
+        if: always()
+        run: |
+          if [ "${{ steps.sarif.outputs.any_violations }}" = "1" ]; then
+            exit 1
+          fi
