@@ -10,12 +10,24 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
+bool_flag(
+    name = "enable_typed_memory",
+    build_setting_default = False,
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+# This config_setting is not used in this repository and should be always False
 config_setting(
-    name = "require_typed_memory",  #This is a stub and should always be false
+    name = "require_typed_memory",
     constraint_values = [
         "@platforms//os:qnx",
-        "@platforms//os:linux",  # Contradicts qnx — ensures this config_setting never matches (stub)
     ],
+    flag_values = {
+        ":enable_typed_memory": "True",
+    },
     visibility = ["//visibility:public"],
 )
