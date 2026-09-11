@@ -19,6 +19,7 @@ Components
    :maxdepth: 1
 
    abi_compatible_data_types/docs/index
+  string_manipulation/docs/index
 
    
 Overview
@@ -55,3 +56,5 @@ Overview
 - *mw::log*: Logging frontend.
 - :need:`doc__utils`: Provides a collection of small, reusable utilities that do not fit into the other
   base libraries.
+- :need:`doc__string_manipulation`: Provides allocation-conscious helpers for command-line arguments,
+  lazy string-view splitting, and string-like comparison and hashing.

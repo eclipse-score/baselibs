@@ -17,6 +17,10 @@
 
 TEST(GetArguments, ReturnsEmptyVectorWhenNoArguments)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__argument_conversion");
+    RecordProperty("Description", "Check that an empty argument list produces an empty vector of string views.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr int kArgc = 0;
     const char* argv[] = {nullptr};
     auto arguments = score::string_manipulation::GetArguments(kArgc, argv);
@@ -25,6 +29,10 @@ TEST(GetArguments, ReturnsEmptyVectorWhenNoArguments)
 
 TEST(GetArguments, ReturnsVectorWithProvidedArguments)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__argument_conversion");
+    RecordProperty("Description", "Check that supplied command-line arguments are preserved in order as string views.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     constexpr int kArgc = 2;
     const char* argv[] = {"first", "second", nullptr};
     auto arguments = score::string_manipulation::GetArguments(kArgc, argv);
