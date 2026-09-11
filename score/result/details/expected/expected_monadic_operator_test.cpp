@@ -24,6 +24,12 @@ namespace
 
 TEST(ExpectedTest, AndThenLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an lvalue expected holding a value invokes the given function with "
+                   "that value and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -44,6 +50,12 @@ TEST(ExpectedTest, AndThenLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, AndThenLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an lvalue expected holding an error skips the given function and "
+                   "propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -63,6 +75,12 @@ TEST(ExpectedTest, AndThenLValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, AndThenLValueConstRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-lvalue expected holding a value invokes the given function "
+                   "with that value and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -83,6 +101,12 @@ TEST(ExpectedTest, AndThenLValueConstRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-lvalue expected holding an error skips the given function "
+                   "and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -102,6 +126,12 @@ TEST(ExpectedTest, AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, AndThenRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an rvalue expected holding a value invokes the given function with "
+                   "the moved-out value and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -123,6 +153,12 @@ TEST(ExpectedTest, AndThenRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, AndThenRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an rvalue expected holding an error skips the given function and "
+                   "propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -142,6 +178,12 @@ TEST(ExpectedTest, AndThenRValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, AndThenRValueConstRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-rvalue expected holding a value invokes the given function "
+                   "with that value and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -163,6 +205,12 @@ TEST(ExpectedTest, AndThenRValueConstRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-rvalue expected holding an error skips the given function "
+                   "and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -182,6 +230,12 @@ TEST(ExpectedTest, AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, OrElseLValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an lvalue expected holding an error invokes the given function with "
+                   "that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -203,6 +257,12 @@ TEST(ExpectedTest, OrElseLValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedTest, OrElseLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an lvalue expected holding a value skips the given function and "
+                   "propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -222,6 +282,12 @@ TEST(ExpectedTest, OrElseLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, OrElseConstLValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-lvalue expected holding an error invokes the given function "
+                   "with that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -243,6 +309,12 @@ TEST(ExpectedTest, OrElseConstLValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedTest, OrElseConstLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-lvalue expected holding a value skips the given function and "
+                   "propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -262,6 +334,12 @@ TEST(ExpectedTest, OrElseConstLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, OrElseRValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an rvalue expected holding an error invokes the given function with "
+                   "the moved-out error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -283,6 +361,12 @@ TEST(ExpectedTest, OrElseRValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedTest, OrElseRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an rvalue expected holding a value skips the given function and "
+                   "propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -302,6 +386,12 @@ TEST(ExpectedTest, OrElseRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, OrElseConstRValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-rvalue expected holding an error invokes the given function "
+                   "with that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -323,6 +413,12 @@ TEST(ExpectedTest, OrElseConstRValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedTest, OrElseConstRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-rvalue expected holding a value skips the given function and "
+                   "propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -342,6 +438,12 @@ TEST(ExpectedTest, OrElseConstRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, TransformLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an lvalue expected holding a value invokes the given function with "
+                   "that value and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -362,6 +464,12 @@ TEST(ExpectedTest, TransformLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an lvalue expected holding an error skips the given function and "
+                   "propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -381,6 +489,12 @@ TEST(ExpectedTest, TransformLValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, TransformConstLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-lvalue expected holding a value invokes the given function "
+                   "with that value and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -401,6 +515,12 @@ TEST(ExpectedTest, TransformConstLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformConstLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-lvalue expected holding an error skips the given function "
+                   "and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -420,6 +540,12 @@ TEST(ExpectedTest, TransformConstLValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, TransformRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an rvalue expected holding a value invokes the given function with "
+                   "the moved-out value and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -441,6 +567,12 @@ TEST(ExpectedTest, TransformRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an rvalue expected holding an error skips the given function and "
+                   "propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -460,6 +592,12 @@ TEST(ExpectedTest, TransformRValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, TransformConstRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-rvalue expected holding a value invokes the given function "
+                   "with that value and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -481,6 +619,12 @@ TEST(ExpectedTest, TransformConstRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformConstRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-rvalue expected holding an error skips the given function "
+                   "and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -500,6 +644,12 @@ TEST(ExpectedTest, TransformConstRValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedTest, TransformErrorLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an lvalue expected holding an error invokes the given "
+                   "function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -520,6 +670,12 @@ TEST(ExpectedTest, TransformErrorLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformErrorLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an lvalue expected holding a value skips the given function "
+                   "and propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -539,6 +695,12 @@ TEST(ExpectedTest, TransformErrorLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, TransformErrorConstLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-lvalue expected holding an error invokes the given "
+                   "function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -559,6 +721,12 @@ TEST(ExpectedTest, TransformErrorConstLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformErrorConstLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-lvalue expected holding a value skips the given "
+                   "function and propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -578,6 +746,12 @@ TEST(ExpectedTest, TransformErrorConstLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, TransformErrorRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an rvalue expected holding an error invokes the given "
+                   "function with the moved-out error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -599,6 +773,12 @@ TEST(ExpectedTest, TransformErrorRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformErrorRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an rvalue expected holding a value skips the given function "
+                   "and propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -618,6 +798,12 @@ TEST(ExpectedTest, TransformErrorRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedTest, TransformErrorConstRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-rvalue expected holding an error invokes the given "
+                   "function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -639,6 +825,12 @@ TEST(ExpectedTest, TransformErrorConstRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedTest, TransformErrorConstRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-rvalue expected holding a value skips the given "
+                   "function and propagates the rebound value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const std::int32_t value{83};
     CopyableType wrapped{value};
@@ -658,6 +850,12 @@ TEST(ExpectedTest, TransformErrorConstRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, AndThenLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an lvalue void-valued expected that is valid invokes the given "
+                   "function and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -676,6 +874,12 @@ TEST(ExpectedVoidTest, AndThenLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, AndThenLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an lvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -695,6 +899,12 @@ TEST(ExpectedVoidTest, AndThenLValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, AndThenLValueConstRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-lvalue void-valued expected that is valid invokes the given "
+                   "function and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, ErrorType> unit{};
 
@@ -713,6 +923,12 @@ TEST(ExpectedVoidTest, AndThenLValueConstRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-lvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -732,6 +948,12 @@ TEST(ExpectedVoidTest, AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, AndThenRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an rvalue void-valued expected that is valid invokes the given "
+                   "function and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -750,6 +972,12 @@ TEST(ExpectedVoidTest, AndThenRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, AndThenRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on an rvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -769,6 +997,12 @@ TEST(ExpectedVoidTest, AndThenRValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, AndThenRValueConstRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-rvalue void-valued expected that is valid invokes the given "
+                   "function and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, ErrorType> unit{};
 
@@ -787,6 +1021,12 @@ TEST(ExpectedVoidTest, AndThenRValueConstRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that and_then() on a const-rvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -806,6 +1046,12 @@ TEST(ExpectedVoidTest, AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, OrElseLValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an lvalue void-valued expected holding an error invokes the given "
+                   "function with that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -826,6 +1072,12 @@ TEST(ExpectedVoidTest, OrElseLValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedVoidTest, OrElseLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an lvalue void-valued expected that is valid skips the given "
+                   "function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -842,6 +1094,12 @@ TEST(ExpectedVoidTest, OrElseLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, OrElseConstLValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-lvalue void-valued expected holding an error invokes the "
+                   "given function with that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -862,6 +1120,12 @@ TEST(ExpectedVoidTest, OrElseConstLValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedVoidTest, OrElseConstLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-lvalue void-valued expected that is valid skips the given "
+                   "function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     const expected<void, ErrorType> unit{};
 
@@ -878,6 +1142,12 @@ TEST(ExpectedVoidTest, OrElseConstLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, OrElseRValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an rvalue void-valued expected holding an error invokes the given "
+                   "function with the moved-out error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -899,6 +1169,12 @@ TEST(ExpectedVoidTest, OrElseRValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedVoidTest, OrElseRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on an rvalue void-valued expected that is valid skips the given function "
+                   "and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -915,6 +1191,12 @@ TEST(ExpectedVoidTest, OrElseRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, OrElseConstRValueRefWillCallFunctionIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-rvalue void-valued expected holding an error invokes the "
+                   "given function with that error and returns its result.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -936,6 +1218,12 @@ TEST(ExpectedVoidTest, OrElseConstRValueRefWillCallFunctionIfHasNoValue)
 
 TEST(ExpectedVoidTest, OrElseConstRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that or_else() on a const-rvalue void-valued expected that is valid skips the given "
+                   "function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, ErrorType> unit{};
 
@@ -952,6 +1240,12 @@ TEST(ExpectedVoidTest, OrElseConstRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, TransformLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an lvalue void-valued expected that is valid invokes the given "
+                   "function and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -970,6 +1264,12 @@ TEST(ExpectedVoidTest, TransformLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, TransformLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an lvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -989,6 +1289,12 @@ TEST(ExpectedVoidTest, TransformLValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, TransformConstLValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-lvalue void-valued expected that is valid invokes the "
+                   "given function and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, ErrorType> unit{};
 
@@ -1007,6 +1313,12 @@ TEST(ExpectedVoidTest, TransformConstLValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, TransformConstLValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-lvalue void-valued expected holding an error skips the "
+                   "given function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1026,6 +1338,12 @@ TEST(ExpectedVoidTest, TransformConstLValueRefWillReturnReboundErrorIfHasNoValue
 
 TEST(ExpectedVoidTest, TransformRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an rvalue void-valued expected that is valid invokes the given "
+                   "function and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, ErrorType> unit{};
 
@@ -1044,6 +1362,12 @@ TEST(ExpectedVoidTest, TransformRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, TransformRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on an rvalue void-valued expected holding an error skips the given "
+                   "function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1063,6 +1387,12 @@ TEST(ExpectedVoidTest, TransformRValueRefWillReturnReboundErrorIfHasNoValue)
 
 TEST(ExpectedVoidTest, TransformConstRValueRefWillCallFunctionIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-rvalue void-valued expected that is valid invokes the "
+                   "given function and wraps the result in a rebound expected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, ErrorType> unit{};
 
@@ -1081,6 +1411,12 @@ TEST(ExpectedVoidTest, TransformConstRValueRefWillCallFunctionIfHasValue)
 
 TEST(ExpectedVoidTest, TransformConstRValueRefWillReturnReboundErrorIfHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform() on a const-rvalue void-valued expected holding an error skips the "
+                   "given function and propagates the rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1100,6 +1436,12 @@ TEST(ExpectedVoidTest, TransformConstRValueRefWillReturnReboundErrorIfHasNoValue
 
 TEST(ExpectedVoidTest, TransformErrorLValueRefWillCallFunctionIfHasError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an lvalue void-valued expected holding an error invokes the "
+                   "given function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1120,6 +1462,12 @@ TEST(ExpectedVoidTest, TransformErrorLValueRefWillCallFunctionIfHasError)
 
 TEST(ExpectedVoidTest, TransformErrorLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an lvalue void-valued expected that is valid skips the "
+                   "given function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     expected<void, CopyableType> unit{};
 
@@ -1136,6 +1484,12 @@ TEST(ExpectedVoidTest, TransformErrorLValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, TransformErrorConstLValueRefWillCallFunctionIfHasError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-lvalue void-valued expected holding an error invokes "
+                   "the given function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1156,6 +1510,12 @@ TEST(ExpectedVoidTest, TransformErrorConstLValueRefWillCallFunctionIfHasError)
 
 TEST(ExpectedVoidTest, TransformErrorConstLValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-lvalue void-valued expected that is valid skips the "
+                   "given function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, CopyableType> unit{};
 
@@ -1172,6 +1532,12 @@ TEST(ExpectedVoidTest, TransformErrorConstLValueRefWillReturnReboundValueIfHasVa
 
 TEST(ExpectedVoidTest, TransformErrorRValueRefWillCallFunctionIfHasError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an rvalue void-valued expected holding an error invokes the "
+                   "given function with the moved-out error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1193,6 +1559,12 @@ TEST(ExpectedVoidTest, TransformErrorRValueRefWillCallFunctionIfHasError)
 
 TEST(ExpectedVoidTest, TransformErrorRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on an rvalue void-valued expected that is valid skips the given "
+                   "function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with a value
     expected<void, CopyableType> unit{};
 
@@ -1209,6 +1581,12 @@ TEST(ExpectedVoidTest, TransformErrorRValueRefWillReturnReboundValueIfHasValue)
 
 TEST(ExpectedVoidTest, TransformErrorConstRValueRefWillCallFunctionIfHasError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-rvalue void-valued expected holding an error invokes "
+                   "the given function with that error and wraps the result in a rebound error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an expected with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -1230,6 +1608,12 @@ TEST(ExpectedVoidTest, TransformErrorConstRValueRefWillCallFunctionIfHasError)
 
 TEST(ExpectedVoidTest, TransformErrorConstRValueRefWillReturnReboundValueIfHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that transform_error() on a const-rvalue void-valued expected that is valid skips the "
+                   "given function and leaves the expected valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a valid expected
     const expected<void, CopyableType> unit{};
 

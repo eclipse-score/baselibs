@@ -49,6 +49,12 @@ bool operator==(const B1& b1, const B2& b2)
 
 TEST(ExpectedTest, EqualityBetweenExpectedBothWithValues)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that two expected holding values of different but comparable types compare equal iff "
+                   "the values compare equal.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given three expected with different but comparable types where the first two shall compare equal and the third
     // not
     std::int32_t same{46};
@@ -65,6 +71,12 @@ TEST(ExpectedTest, EqualityBetweenExpectedBothWithValues)
 
 TEST(ExpectedTest, EqualityBetweenExpectedBothWithErrors)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that two expected holding errors of different but comparable types compare equal iff "
+                   "the errors compare equal.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given three expected with different but comparable types where the first two shall compare equal and the third
     // not
     std::int32_t same{46};
@@ -81,6 +93,12 @@ TEST(ExpectedTest, EqualityBetweenExpectedBothWithErrors)
 
 TEST(ExpectedTest, EqualityBetweenExpectedWithValueAndError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an expected holding a value never compares equal to one holding an error, "
+                   "regardless of the contained types.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected with different but comparable types where one has a value and the other an error
     std::int32_t same{46};
     expected<A1, B1> lhs{A1{same}};
@@ -93,6 +111,12 @@ TEST(ExpectedTest, EqualityBetweenExpectedWithValueAndError)
 
 TEST(ExpectedTest, EqualityBetweenExpectedAndValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an expected compares equal to a bare value of a comparable type iff it holds a "
+                   "matching value, and never compares equal while holding an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected and two values where only lhs_value and rhs_same shall be equal
     std::int32_t same{46};
     expected<A1, B1> lhs_value{A1{same}};
@@ -111,6 +135,12 @@ TEST(ExpectedTest, EqualityBetweenExpectedAndValue)
 
 TEST(ExpectedTest, EqualityBetweenExpectedAndUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an expected compares equal to an unexpected wrapping a comparable error type iff it "
+                   "holds a matching error, and never compares equal while holding a value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected and two values where only lhs_value and rhs_same shall be equal
     std::int32_t same{46};
     expected<A1, B1> lhs_value{A1{same}};
@@ -129,6 +159,12 @@ TEST(ExpectedTest, EqualityBetweenExpectedAndUnexpected)
 
 TEST(ExpectedVoidTest, EqualityBetweenExpectedBothWithErrors)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that two value-less expected<void, E> holding errors of different but comparable types "
+                   "compare equal iff the errors compare equal.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given three expected with different but comparable types where the first two shall compare equal and the third
     // not
     std::int32_t same{46};
@@ -145,6 +181,11 @@ TEST(ExpectedVoidTest, EqualityBetweenExpectedBothWithErrors)
 
 TEST(ExpectedVoidTest, EqualityBetweenExpectedWithValueAndError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that a valid expected<void, E> never compares equal to one holding an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected with different but comparable types where one has a value and the other an error
     std::int32_t error{46};
     expected<void, B1> lhs{};
@@ -157,6 +198,12 @@ TEST(ExpectedVoidTest, EqualityBetweenExpectedWithValueAndError)
 
 TEST(ExpectedVoidTest, EqualityBetweenExpectedAndUnexpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an expected<void, E> compares equal to an unexpected wrapping a comparable error "
+                   "type iff it holds a matching error, and never compares equal while valid.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given two expected and two values where only lhs_value and rhs_same shall be equal
     std::int32_t same{46};
     expected<void, B1> lhs_value{};
