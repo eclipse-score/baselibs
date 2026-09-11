@@ -19,6 +19,7 @@ Components
    :maxdepth: 1
 
    abi_compatible_data_types/docs/index
+   analysis/index
 
    
 Overview

@@ -47,6 +47,13 @@ constexpr std::uint8_t Crc32IeeeTest::kExpectedBytes[];
 
 TEST_F(Crc32IeeeTest, Hash)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__crc32_algorithm, comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check that Crc32IeeeHashCalculator computes the correct IEEE CRC-32 checksum for a known "
+                   "input string, both as a raw checksum value and as a finalized Hash.");
+
     // Given an input text
     const score::cpp::span<const std::uint8_t> input{kTest, sizeof(kTest) - 1};
 
@@ -60,6 +67,13 @@ TEST_F(Crc32IeeeTest, Hash)
 
 TEST_F(Crc32IeeeTest, TwoUpdates)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__crc32_algorithm, comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that splitting the input across two Update() calls accumulates state and yields the "
+                   "same checksum as a single Update() call over the whole input.");
+
     // Given an input text split in the middle at kPivot
     constexpr auto kPivot{sizeof(kTest) / 2U};
     const score::cpp::span<const std::uint8_t> input1{kTest, kPivot};
