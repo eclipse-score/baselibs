@@ -71,7 +71,8 @@ pub struct Placeholder<'a> {
 impl<'a> Placeholder<'a> {
     /// Create the placeholder to be represented using `ScoreDebug`.
     pub const fn new<T: ScoreDebug>(value: &'a T, spec: FormatSpec) -> Self {
-        let value = NonNull::from_ref(value).cast();
+        let value =
+    unsafe { NonNull::new_unchecked(value as *const T as *mut T) }.cast();
         let formatter = |v: NonNull<()>, f: Writer, spec: &FormatSpec| {
             // SAFETY: borrow checker will ensure that value won't be mutated for as long as the returned `Self` instance is alive.
             let typed = unsafe { v.cast::<T>().as_ref() };
