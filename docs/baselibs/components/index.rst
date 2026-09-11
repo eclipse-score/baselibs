@@ -19,6 +19,7 @@ Components
    :maxdepth: 1
 
    abi_compatible_data_types/docs/index
+    scope_exit/docs/index
 
    
 Overview
@@ -55,3 +56,4 @@ Overview
 - *mw::log*: Logging frontend.
 - :need:`doc__utils`: Provides a collection of small, reusable utilities that do not fit into the other
   base libraries.
+- :need:`doc__scope_exit`: Provides move-only ownership utilities for scope-based cleanup and flag transfer.
