@@ -87,7 +87,7 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
 ## Configure the Rust toolchain
 
-bazel_dep(name = "rules_rust", version = "0.68.1-score")
+bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.11")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
@@ -100,6 +100,10 @@ bazel_dep(name = "score_docs_as_code", version = "8.1.1")
 bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
+
+# LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
+# see tools/coverage/. Includes the fix for eclipse-score/baselibs#558.
+bazel_dep(name = "score_coverage", version = "0.1.0", dev_dependency = True)
 
 bazel_dep(name = "score_platform", version = "0.7.2")
 
@@ -129,7 +133,7 @@ llvm.toolchain(
         # Runtime counter relocation for continuous-mode profiles; required by
         # the LLVM coverage pipeline so death tests / abnormal exits still
         # flush coverage counters (only active under --config=llvm_cov).
-        "@score_tooling//coverage:enable_llvm_coverage_for_death_tests",
+        "@score_coverage//:enable_llvm_coverage_for_death_tests",
     ],
     link_libs = {"linux-x86_64": [
         "-lrt",
