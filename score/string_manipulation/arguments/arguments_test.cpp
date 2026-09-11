@@ -17,7 +17,7 @@
 
 TEST(GetArguments, ReturnsEmptyVectorWhenNoArguments)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__argument_conversion");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__args_conv");
     RecordProperty("Description", "Check that an empty argument list produces an empty vector of string views.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -29,7 +29,7 @@ TEST(GetArguments, ReturnsEmptyVectorWhenNoArguments)
 
 TEST(GetArguments, ReturnsVectorWithProvidedArguments)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__argument_conversion");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__args_conv");
     RecordProperty("Description", "Check that supplied command-line arguments are preserved in order as string views.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
