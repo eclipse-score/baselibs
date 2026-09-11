@@ -16,3 +16,5 @@
 mod arc_in;
 
 pub use arc_in::ArcIn;
+#[doc(hidden)]
+pub use arc_in::ArcInner;
