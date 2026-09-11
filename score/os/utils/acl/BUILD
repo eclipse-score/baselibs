@@ -56,6 +56,7 @@ cc_library(
 cc_test(
     name = "unit_test",
     srcs = ["access_control_list_test.cpp"],
+    dynamic_deps = ["@score_baselibs//third_party/acl:acl_shared"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     visibility = [

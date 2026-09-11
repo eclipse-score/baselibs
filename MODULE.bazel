@@ -141,18 +141,20 @@ llvm.toolchain(
 use_repo(llvm, "llvm_toolchain", "llvm_toolchain_llvm")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
+archive = use_repo_rule("@download_utils//download/archive:defs.bzl", "download_archive")
 
-deb(
-    name = "acl-deb",
+# acl is vendored from upstream source instead of a prebuilt, arch-pinned Ubuntu .deb
+# (see third_party/acl/acl.BUILD and score/os/BUILD's `:acl` target) to avoid the
+# recurring -fPIC/arch breakage tracked by SWP-278650 (eclipse-score/baselibs#172, #496, #78).
+archive(
+    name = "acl-src",
     build = "//third_party/acl:acl.BUILD",
-    urls = ["https://archive.ubuntu.com/ubuntu/pool/main/a/acl/libacl1-dev_2.3.1-1_amd64.deb"],
-    visibility = ["//visibility:public"],
-)
-
-deb(
-    name = "acl-deb-aarch64",
-    build = "//third_party/acl:acl.BUILD",
-    urls = ["https://ports.ubuntu.com/ubuntu-ports/pool/main/a/acl/libacl1-dev_2.3.1-1_arm64.deb"],
+    integrity = "sha256-5mETFFbScIoBxhSg9ADhHX0b+utvPnS3W7mAty8BYaM=",
+    strip_prefix = "acl-2.4.0",
+    urls = [
+        "https://download.savannah.nongnu.org/releases/acl/acl-2.4.0.tar.xz",
+        "http://download-mirror.savannah.nongnu.org/releases/acl/acl-2.4.0.tar.xz",
+    ],
     visibility = ["//visibility:public"],
 )
 

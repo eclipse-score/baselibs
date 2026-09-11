@@ -325,6 +325,7 @@ cc_test(
     srcs = [
         "acl_test.cpp",
     ],
+    dynamic_deps = ["@score_baselibs//third_party/acl:acl_shared"],
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
