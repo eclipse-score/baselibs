@@ -87,6 +87,10 @@ docs(
             "mount_at": "baselibs/components/analysis/tracing",
         },
         {
+            "bundle": "//score/string_manipulation:docs",
+            "mount_at": "baselibs/components/string_manipulation",
+        },
+        {
             "bundle": "//score/static_reflection_with_serialization:docs",
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },
