@@ -1,0 +1,4090 @@
+[
+  {
+    "repo": {
+      "name": "local_repo",
+      "hash": "",
+      "url": ""
+    },
+    "needs": [
+      {
+        "need": "comp_req__flatbuffers__buffer_identification",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "VersionReaderTest__GetVersionRejectsNullPointer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 111,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsEmptyBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 127,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsTooSmallBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 143,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsInvalidBuffer",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 160,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__GetVersionRejectsBufferWithMissingIdentifier",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 177,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__MissingIdentifierNotDetectedWideSchema",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 221,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VersionReaderTest__MissingIdentifierNotDetectedDeduplicatedRootVtable",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 293,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WrongFieldBuffers/VersionReaderWrongFieldTest__GetVersionRejectsBufferWithVersionInfoInWrongField/WrongField",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 385,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WrongFieldBuffers/VersionReaderWrongFieldTest__GetVersionRejectsBufferWithVersionInfoInWrongField/WrongFieldSimilarType",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 385,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__ReadBufferVersionFromBinary/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__flatbuffers__buffer_identification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__version_check",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionSucceedsOnMatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 507,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnIdentifierMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 523,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMajorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 545,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnMinorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 564,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionFailsOnVersionInfoMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 585,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenActualMinorIsHigher/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 605,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumSucceedsWhenAllEqual/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 628,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnIdentifierMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 650,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsOnMajorMismatch/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 674,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenActualMinorIsLower/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 699,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/Normal",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/NormalExplicitIds",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MinVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MinRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MaxRangeVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllVersionBuffers/VersionReaderBufferParamTest__VerifyVersionMinorMinimumFailsWhenAllWrong/MaxVersion",
+              "file": "score/flatbuffers/test/version_reader_test.cpp",
+              "line": 740,
+              "need": "comp_req__flatbuffers__version_check",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__serialization",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "AllocatorTest__AllocateReturnsNonNull",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 75,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateSingleByte",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 91,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__AllocateLargeRegion",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 106,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorTest__UsableThroughBasePointer",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 123,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__PreserveFrontAndBackIfAllocatingNewSizeFails",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 329,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeEqualsOldSize",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 377,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AllocatorReallocateDownwardTest__AssertsWhenNewSizeSmallerThanOldSize",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 394,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorGrowsBufferTest__GrowsBuffer/3",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBackDataTest__PreservesBackData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 192,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesFrontDataTest__PreservesFrontData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 238,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/0",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/1",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SizeRanges/AllocatorPreservesBothDataTest__PreservesBothFrontAndBackData/2",
+              "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
+              "line": 285,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__access",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ArrayCastTest__CastToArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 47,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCastTest__CastToArrayConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 67,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayIndexTest__ReturnsSameAsGet",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 84,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutateTest__ScalarInPlaceMutation",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 104,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayIteratorTest__ForwardIteration",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 129,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayReverseIteratorTest__ReverseIteration",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 154,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySizeTest__ReturnsTemplateSize",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 180,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySizeTest__SizeType",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 200,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMakeSpanTest__SpanFromArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 215,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMakeSpanTest__BytesSpanFromArray",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 231,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayDataTest__DataPointers",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 249,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEqualityTest__ScalarEquality",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 267,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEqualityTest__StructArrayEquality",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 287,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEnumTest__CastToArrayOfEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 312,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayEnumTest__GetEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 333,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__CBeginCEnd",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 375,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__IteratorTypesMatch",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 398,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstIteratorsTest__CRBeginCREnd",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 430,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutableDataTest__MutableData",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 456,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayMutableDataTest__MutableDataTyped",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 473,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__GetMutablePointerStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 495,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__MutateStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 514,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayStructTest__IterationYieldsPointers",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 531,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCopyFromSpanTest__Scalar",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 567,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayCopyFromSpanTest__Struct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 586,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__MakeSpanConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 611,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__MakeBytesSpanConst",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 635,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayConstSpanTest__ConstCastToArrayOfEnum",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 649,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArraySpanObservableTest__StaticAssertions",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 687,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__Observable",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 728,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__NonObservableScalar",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 747,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CopyFromSpanImplTest__NonObservableStruct",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 766,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OffsetSpecializationTest__Data",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 791,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__OffsetSpecializationOperatorIndexDeathTest",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 818,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultGetOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 830,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultGetMutablePointerOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 842,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultMutateScalarOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 854,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultMutateStructOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 866,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ArrayFaultInjectionTest__FaultCopyFromSpanOverlap",
+              "file": "score/flatbuffers/details/flatbuffers_array_test.cpp",
+              "line": 879,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__type_safety",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Error__CorrectConstructionAndAssignmentGuarantees",
+              "file": "score/result/error_test.cpp",
+              "line": 81,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__CanDereferenceToUnderlyingType",
+              "file": "score/result/error_test.cpp",
+              "line": 195,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypeTraitsTests__IsResultVIsTrueIfIsTemplatedResult",
+              "file": "score/result/result_test.cpp",
+              "line": 177,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypeTraitsTests__IsResultVIsTrueIfIsResultBlank",
+              "file": "score/result/result_test.cpp",
+              "line": 186,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypeTraitsTests__IsResultVIsFalseIfIsNoResult",
+              "file": "score/result/result_test.cpp",
+              "line": 195,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsCopyAssignableWithValue",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 26,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsCopyAssignableWithError",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 49,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsMoveAssignableWithValue",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 72,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsMoveAssignableWithError",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 92,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanSwapWithMemberSwap",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 273,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanSwapWithStdSwap",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 308,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsDefaultConstructibleWhenValueTypeIsDefaultConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 26,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsNotDefaultConstructibleWhenValueTypeIsNotDefaultConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 49,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 67,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 90,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsNotCopyConstructibleWhenInnerTypesAreNotCopyConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 114,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 125,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 147,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsNotMoveConstructibleWhenInnerTypesAreNotMoveConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 169,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanWrapExpected",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 449,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasValueTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 26,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasErrorTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 39,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasUnexpectedTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 52,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasRebindTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 66,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsCopyAssignableWithError",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 330,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsMoveAssignableWithError",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 353,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanSwapWithMemberSwap",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 450,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanSwapWithStdSwap",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 481,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsDefaultConstructibleWhenValueTypeIsVoid",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 464,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsCopyConstructibleWhenErrorIsCopyConstructuble",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 479,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsNotCopyConstructibleWhenErrorIsNotCopyConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 503,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsMoveConstructibleWhenErrorisMoveConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 512,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsNotMoveConstructibleWhenErrorIsNotMoveConstructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 534,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanWrapExpected",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 701,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasValueTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 86,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasErrorTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 99,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasUnexpectedTypeTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasRebindTypeTrait",
+              "file": "score/result/details/expected/expected_type_trait_test.cpp",
+              "line": 126,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectTest__UnexpectT_InitializesExplicit",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 27,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectTest__ProvidesHelperUnexpect",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 38,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__IsCopyConstructible",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 77,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__IsMoveConstructible",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 97,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__IsCopyAssignable",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 196,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__IsMoveAssignable",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 217,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanSwapWithStdSwap",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 341,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanSwapWithTypeSwap",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 361,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__DeductionGuideIsSpecified",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 383,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExplicitImplicitConstructibleTest__ChecksWorkCorrectly",
+              "file": "score/result/details/expected/test_type_traits_test.cpp",
+              "line": 22,
+              "need": "comp_req__result__type_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__domain_error_information",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Error__RetrieveMessage",
+              "file": "score/result/error_test.cpp",
+              "line": 97,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__RetrieveUserMessage",
+              "file": "score/result/error_test.cpp",
+              "line": 115,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__RetrieveUserMessageWhenNotProvided",
+              "file": "score/result/error_test.cpp",
+              "line": 132,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__ConstructViaMakeFunction",
+              "file": "score/result/error_test.cpp",
+              "line": 210,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__CanLogCustomMessageToOstream",
+              "file": "score/result/error_test.cpp",
+              "line": 225,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__WithUserMessagePreservesCodeAndDomain",
+              "file": "score/result/error_test.cpp",
+              "line": 243,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__WithUserMessageCanClearUserMessage",
+              "file": "score/result/error_test.cpp",
+              "line": 264,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RustBridgeTests__GetMessageForErrorCodeFFI",
+              "file": "score/result/error_msg_mapping_test.cpp",
+              "line": 21,
+              "need": "comp_req__result__domain_error_information",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__error_handling",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Error__CanCompareForEqual",
+              "file": "score/result/error_test.cpp",
+              "line": 150,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__CanCompareForNotEqualOnDifferentDomains",
+              "file": "score/result/error_test.cpp",
+              "line": 164,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Error__CanCompareForNotEqualOnDifferentValues",
+              "file": "score/result/error_test.cpp",
+              "line": 180,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__EqualityBetweenExpectedBothWithValues",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 50,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__EqualityBetweenExpectedBothWithErrors",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 72,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__EqualityBetweenExpectedWithValueAndError",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 94,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__EqualityBetweenExpectedAndValue",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__EqualityBetweenExpectedAndUnexpected",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 136,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 25,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 51,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenLValueConstRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 76,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 102,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 127,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 154,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenRValueConstRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 179,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 206,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseLValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 231,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 258,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseConstLValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 283,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseConstLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 310,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseRValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 335,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 362,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseConstRValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 387,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__OrElseConstRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 414,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 439,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 465,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformConstLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 490,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformConstLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 516,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 541,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 568,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformConstRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 593,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformConstRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 620,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 645,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 671,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorConstLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 696,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorConstLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 722,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 747,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 774,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorConstRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 799,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__TransformErrorConstRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 826,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ArrowOperatorConstReturnsPointerToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 27,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ArrowOperatorConstWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 49,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ArrowOperatorReturnsPointerToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 64,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ArrowOperatorWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 86,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorLValueConstReturnsReferenceToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 101,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorLValueConstWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 123,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorLValueReturnsReferenceToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 138,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorLValueWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 160,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorRValueConstReturnsReferenceToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 175,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorRValueConstWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 197,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorRValueReturnsReferenceToValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 212,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__StarOperatorRValueWillExitIfNoValueIsStored",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 234,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ExplicitConversionToBoolIsTrueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 249,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ExplicitConversionToBoolIsFalseIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 266,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasValueReturnsTrueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 283,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__HasValueReturnsFalseIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 296,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveValueFromLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 309,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveValueFromLValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 328,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveValueFromConstLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 343,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveValueFromConstLValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 362,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveValueFromRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 377,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveValueFromRValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 398,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveValueFromConstRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 413,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveValueFromConstRValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 434,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveErrorFromLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 449,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveErrorFromLValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 468,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveErrorFromConstLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 483,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 502,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveErrorFromRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 517,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveErrorFromRValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 538,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanRetrieveErrorFromConstRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 553,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__AbortsWhenRetrieveErrorFromConstRValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 574,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ValueOrConstLValueReturnsValueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 589,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ValueOrConstLValueReturnsDefaultIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 609,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ValueOrRValueReturnsValueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 628,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ValueOrRValueReturnsDefaultIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 648,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ErrorOrConstLValueReturnsErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 667,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ErrorOrConstLValueReturnsDefaultIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 687,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ErrorOrRValueReturnsErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 706,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__ErrorOrRValueReturnsDefaultIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 726,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__EqualityBetweenExpectedBothWithErrors",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 160,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__EqualityBetweenExpectedWithValueAndError",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 182,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__EqualityBetweenExpectedAndUnexpected",
+              "file": "score/result/details/expected/expected_equality_test.cpp",
+              "line": 199,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 851,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 875,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenLValueConstRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 900,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenLValueConstRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 924,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 949,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 973,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenRValueConstRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 998,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AndThenRValueConstRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1022,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseLValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1047,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1073,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseConstLValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1095,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseConstLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1121,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseRValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1143,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1170,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseConstRValueRefWillCallFunctionIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1192,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__OrElseConstRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1219,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1241,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1265,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformConstLValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1290,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformConstLValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1314,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1339,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1363,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformConstRValueRefWillCallFunctionIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1388,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformConstRValueRefWillReturnReboundErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1412,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorLValueRefWillCallFunctionIfHasError",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1437,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1463,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorConstLValueRefWillCallFunctionIfHasError",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1485,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorConstLValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1511,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorRValueRefWillCallFunctionIfHasError",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1533,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1560,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorConstRValueRefWillCallFunctionIfHasError",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1582,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__TransformErrorConstRValueRefWillReturnReboundValueIfHasValue",
+              "file": "score/result/details/expected/expected_monadic_operator_test.cpp",
+              "line": 1609,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__StarOperatorWillNotExitIfValid",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 745,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__StarOperatorWillExitIfInErrorState",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 759,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ExplicitConversionToBoolIsTrueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 772,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ExplicitConversionToBoolIsFalseIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 790,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasValueReturnsTrueIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 808,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__HasValueReturnsFalseIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 821,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__NoAbortWhenCallValueFromConstLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 834,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AbortWhenCallValueFromConstLValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 848,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__NoAbortWhenCallValueFromRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 861,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AbortWhenCallValueFromRValueReferenceWithoutValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 874,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanRetrieveErrorFromConstLValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 887,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 906,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__AbortsWhenRetrieveErrorFromRValueReferenceWithValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 921,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ErrorOrConstLValueReturnsErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 936,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ErrorOrConstLValueReturnsDefaultIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 956,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ErrorOrRValueReturnsErrorIfHasNoValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 975,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__ErrorOrRValueReturnsDefaultIfHasValue",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 995,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanRetrieveErrorFromRValueReference",
+              "file": "score/result/details/expected/expected_observer_test.cpp",
+              "line": 1014,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanRetrieveErrorFromConstLValueReference",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 237,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanRetrieveErrorFromLValueReference",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 255,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanRetrieveErrorFromConstRValueReference",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 276,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanRetrieveErrorFromRValueReference",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 297,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanCompareEquality",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 318,
+              "need": "comp_req__result__error_handling",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__set_result",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UnexpectedTests__CanMakeErroneousResultUsingUnexpectedTypeAlias",
+              "file": "score/result/result_test.cpp",
+              "line": 39,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTests__CanMakeErroneousResultUsingMakeUnexpectedWithCodeAndUserMessage",
+              "file": "score/result/result_test.cpp",
+              "line": 50,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTests__LegacyCanMakeErroneousResultUsingMakeUnexpectedWithError",
+              "file": "score/result/result_test.cpp",
+              "line": 62,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyAssignFromCompatibleType",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 125,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveAssignFromCompatibleType",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 149,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyAssignFromUnexpected",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 173,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveAssignFromUnexpected",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 197,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanEmplaceWithArgs",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 221,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanEmplaceWithInitializerListAndArgs",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 247,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyConstructFromCompatibleExpectedWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 194,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyConstructFromCompatibleExpectedWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 215,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveConstructFromCompatibleExpectedWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 237,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveConstructFromCompatibleExpectedWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 257,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyConstructFromCompatibleTypeWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 277,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveConstructFromCompatibleTypeWithValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 296,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanCopyConstructFromCompatibleTypeWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 316,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanMoveConstructFromCompatibleTypeWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 336,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanInPlaceConstructValue",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 356,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanInPlaceConstructValueWithInitializerList",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 376,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanInPlaceConstructError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 397,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__CanInPlaceConstructErrorWithInitializerList",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 417,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanCopyAssignFromUnexpected",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 386,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanMoveAssignFromUnexpected",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 410,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanEmplace",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 434,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanCopyConstructFromCompatibleExpectedWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 555,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanMoveConstructFromCompatibleExpectedWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 577,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanCopyConstructFromCompatibleTypeWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 597,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanMoveConstructFromCompatibleTypeWithError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 617,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanInPlaceConstruct",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 637,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanInPlaceConstructError",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 650,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__CanInPlaceConstructErrorWithInitializerList",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 670,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanBeConstructedFromCompatibleType",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 116,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanBeInPlaceConstructedFromCompatibleArguments",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 134,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UnexpectedTest__CanBeInPlaceConstructedFromInitializerList",
+              "file": "score/result/details/expected/unexpected_test.cpp",
+              "line": 165,
+              "need": "comp_req__result__set_result",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__std_integration",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConversionTests__CanConvertLValueResultWithValueToStdOptional",
+              "file": "score/result/result_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConversionTests__CanConvertLValueResultWithErrorToStdOptional",
+              "file": "score/result/result_test.cpp",
+              "line": 128,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConversionTests__CanConvertRValueResultWithValueToStdOptional",
+              "file": "score/result/result_test.cpp",
+              "line": 142,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConversionTests__CanConvertRValueResultWithErrorToStdOptional",
+              "file": "score/result/result_test.cpp",
+              "line": 159,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 28,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedConstLValueRefToAmpExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 49,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedRValueRefToAmpExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 70,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedRValueRefToAmpExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 91,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedConstLValueRefToExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 132,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedRValueRefToExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 153,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedRValueRefToExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 174,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 196,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToAmpOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 222,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToAmpOptionalWhenExpectedRValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 247,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToAmpOptionalCallInvocableWhenExpectedLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 273,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToStdOptionalWhenExpectedConstLValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 300,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToStdOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 324,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToStdOptionalWhenExpectedRValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 347,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToStdOptionalCallInvocableWhenExpectedLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 372,
+              "need": "comp_req__result__std_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__exception_free_operation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ExpectedTest__MoveAssignmentHasCorrectNoexcept",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__SwapHasCorrectNoexceptSpecification",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 295,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedTest__IsOnlyNothrowMoveConstructibleIfInnerTypesAre",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 180,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__MoveAssignmentHasCorrectNoexcept",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 374,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__SwapHasCorrectNoexceptSpecification",
+              "file": "score/result/details/expected/expected_assignment_test.cpp",
+              "line": 470,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsOnlyNothrowMoveConstructibleIfErrorIs",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 543,
+              "need": "comp_req__result__exception_free_operation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__deterministic_behavior",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ExpectedTest__IsTriviallyDestructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 438,
+              "need": "comp_req__result__deterministic_behavior",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExpectedVoidTest__IsTriviallyDestructible",
+              "file": "score/result/details/expected/expected_constructor_test.cpp",
+              "line": 690,
+              "need": "comp_req__result__deterministic_behavior",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__bitmanipulation__byte_operations",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "HalfByte__CanBeConstructedFromUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 29,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HalfByte__CanBeConstructedFromUInt16IfInRange",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 42,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HalfByte__CanBeConstructedFromBigUInt8ButUpperHalfIsDropped",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 55,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 69,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromUInt16IfInRange",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 81,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromTwoHalfBytes",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 94,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromTwoBigHalfBytes",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 111,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromTwoZeroHalfBytes",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 128,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Byte__CanBeConstructedFromTwoHalfBytesWithMaxValue",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 143,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Extract__UpperHalfByteFromAByte",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 158,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Extract__LowerHalfByteFromAByte",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 172,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Extract__LowerHalfByteFromAByteCanBeConvertedToUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 186,
+              "need": "comp_req__bitmanipulation__byte_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__bitmanipulation__bit_operations",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "SetBit__WithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 201,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SetBit__WithUInt64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 216,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SetBit__WithNegativeInt32",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 235,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ClearBit__WithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 271,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ClearBit__WithUInt64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 286,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ToggleBit__WithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 324,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ToggleBit__WithUInt64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 340,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CheckBit__WithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 379,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CheckBit__WithUInt64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 393,
+              "need": "comp_req__bitmanipulation__bit_operations",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__bitmanipulation__bounds_safety",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "SetBit__OverflowWithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 252,
+              "need": "comp_req__bitmanipulation__bounds_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ClearBit__OverflowWithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 305,
+              "need": "comp_req__bitmanipulation__bounds_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ToggleBit__OverflowWithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 360,
+              "need": "comp_req__bitmanipulation__bounds_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CheckBit__OverflowWithUInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 409,
+              "need": "comp_req__bitmanipulation__bounds_safety",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__bitmanipulation__byte_extraction",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "GetByte__FromUint8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 423,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromInt8",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 435,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromUint16",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 447,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromInt16",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 460,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromUint32",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 474,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromInt32",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 489,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromUint64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 505,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "GetByte__FromInt64",
+              "file": "score/bitmanipulation/bit_manipulation_test.cpp",
+              "line": 526,
+              "need": "comp_req__bitmanipulation__byte_extraction",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__bitmanipulation__bitmask_operators",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "MyBitmask__SupportsOperatorOr",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 45,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsOperatorAnd",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 58,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsOperatorXor",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 75,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsOperatorNot",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 89,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorAnd",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 104,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorAndMatching",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 119,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorOr",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 135,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorOrMatching",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 150,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorXOr",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 166,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MyBitmask__SupportsAssignOperatorXOrMatching",
+              "file": "score/bitmanipulation/bitmask_operators_test.cpp",
+              "line": 180,
+              "need": "comp_req__bitmanipulation__bitmask_operators",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      }
+    ]
+  }
+]
