@@ -80,6 +80,12 @@ score::result::Error MakeError(MyErrorCode2 code, std::string_view user_message 
 
 TEST(Error, CorrectConstructionAndAssignmentGuarantees)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that Error is trivially and nothrow copyable/movable, so it can be passed by value "
+                   "without incurring allocation or throwing.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_trivially_copy_assignable_v<Error>);
     static_assert(std::is_trivially_copy_constructible_v<Error>);
     static_assert(std::is_trivially_move_assignable_v<Error>);
@@ -90,6 +96,12 @@ TEST(Error, CorrectConstructionAndAssignmentGuarantees)
 
 TEST(Error, RetrieveMessage)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that Error::Message() returns the message produced by the user-defined error domain's "
+                   "MessageFor() for the stored error code.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an constructed error with user message
     const score::result::Error unit{MyErrorCode::kFirstError, "We had a parsing failure"};
 
@@ -102,6 +114,11 @@ TEST(Error, RetrieveMessage)
 
 TEST(Error, RetrieveUserMessage)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that Error::UserMessage() returns the caller-supplied user message passed at construction.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an constructed error with user message
     const score::result::Error unit{MyErrorCode::kFirstError, "We had a parsing failure"};
 
@@ -114,6 +131,12 @@ TEST(Error, RetrieveUserMessage)
 
 TEST(Error, RetrieveUserMessageWhenNotProvided)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that Error::UserMessage() returns an empty string when no user message was provided at "
+                   "construction.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an constructed error with user message
     const score::result::Error unit{MyErrorCode::kFirstError};
 
@@ -126,6 +149,10 @@ TEST(Error, RetrieveUserMessageWhenNotProvided)
 
 TEST(Error, CanCompareForEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that an Error compares equal to the error code it was constructed from.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an constructed error
     score::result::Error unit{MyErrorCode::kFirstError};
 
@@ -136,6 +163,12 @@ TEST(Error, CanCompareForEqual)
 
 TEST(Error, CanCompareForNotEqualOnDifferentDomains)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an Error compares not-equal to a code from a different error domain, even if the "
+                   "underlying numeric code value matches.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an constructed error
     score::result::Error unit{MyErrorCode::kFirstError};
 
@@ -146,6 +179,11 @@ TEST(Error, CanCompareForNotEqualOnDifferentDomains)
 
 TEST(Error, CanCompareForNotEqualOnDifferentValues)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that an Error compares not-equal to a different error code from the same domain.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an constructed error
     score::result::Error unit{MyErrorCode::kFirstError};
 
@@ -156,7 +194,12 @@ TEST(Error, CanCompareForNotEqualOnDifferentValues)
 
 TEST(Error, CanDereferenceToUnderlyingType)
 {
-    // Given an constructed error
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that operator*() exposes the Error's underlying numeric error-code value, usable e.g. in a "
+                   "switch-case statement.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     score::result::Error unit{MyErrorCode::kFirstError};
 
     // When comparing it equal
@@ -166,6 +209,12 @@ TEST(Error, CanDereferenceToUnderlyingType)
 
 TEST(Error, ConstructViaMakeFunction)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that constructing an Error via a user-defined domain's make helper produces an Error "
+                   "comparable against that domain's error codes.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When constructing the error via make function
     auto unit = MakeError(MyErrorCode::kSecondError);
 
@@ -175,6 +224,11 @@ TEST(Error, ConstructViaMakeFunction)
 
 TEST(Error, CanLogCustomMessageToOstream)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that streaming an Error to an ostream formats the domain message and the user message.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an error with a custom message
     auto unit = MakeError(MyErrorCode::kSecondError, "Foo");
 
@@ -188,6 +242,12 @@ TEST(Error, CanLogCustomMessageToOstream)
 
 TEST(Error, WithUserMessagePreservesCodeAndDomain)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that WithUserMessage() returns a copy with the same error code and domain message but a "
+                   "replaced user message.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an error with a known code/domain
     const score::result::Error original{MyErrorCode::kSecondError, "original message"};
 
@@ -203,6 +263,11 @@ TEST(Error, WithUserMessagePreservesCodeAndDomain)
 
 TEST(Error, WithUserMessageCanClearUserMessage)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that WithUserMessage(\"\") clears a previously set user message on the returned copy.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given an error with an existing user message
     const score::result::Error original{MyErrorCode::kFirstError, "has message"};
 
