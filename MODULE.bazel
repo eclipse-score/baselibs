@@ -100,6 +100,15 @@ bazel_dep(name = "score_docs_as_code", version = "8.1.1")
 bazel_dep(name = "score_process_description", version = "2.1.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
+single_version_override(
+    module_name = "score_tooling",
+    version = "2.2.1",
+    patch_strip = 1,
+    patches = [
+        "//patches:score_tooling_coverage_scope_extra_deps.patch",
+        "//patches:score_tooling_reporter_path_normalization.patch",
+    ],
+)
 
 bazel_dep(name = "score_platform", version = "0.7.2")
 
