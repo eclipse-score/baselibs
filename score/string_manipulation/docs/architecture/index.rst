@@ -12,23 +12,23 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-String Manipulation
-###################
+String Manipulation Architecture
+#################################
 
-.. document:: String Manipulation
-   :id: doc__string_manipulation
+.. document:: String Manipulation Architecture
+   :id: doc__string_manipulation_architecture
    :status: draft
    :version: 1
    :safety: ASIL_B
    :security: YES
-   :realizes: wp__cmpt_request[version==1]
+   :realizes: wp__component_arch[version==1]
 
-.. toctree::
-   :hidden:
+.. comp:: String Manipulation
+   :id: comp__baselibs_string_manipulation
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :belongs_to: feat__baselibs[version==1]
 
-   requirements/index.rst
-   architecture/index.rst
-
-The String Manipulation component provides allocation-conscious helpers for
-handling command-line arguments, splitting string views, and comparing
-string-like values.
+   The String Manipulation component contains helpers for command-line arguments, string-view splitting, and string-like comparisons.

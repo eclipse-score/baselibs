@@ -66,7 +66,7 @@ TYPED_TEST_SUITE(StringComparisonAdaptorFixture, MyTypes, );
 
 TEST(StringComparisonAdaptorHelpersFixture, CreateUnderlyingStringReturnCorrectValues)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that the test helper creates equivalent string and string-view content.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -76,7 +76,7 @@ TEST(StringComparisonAdaptorHelpersFixture, CreateUnderlyingStringReturnCorrectV
 
 TYPED_TEST(StringComparisonAdaptorFixture, CanBeConvertedImplicitly)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty("Description",
                          "Check that each supported string representation converts implicitly to the adaptor.");
     this->RecordProperty("TestType", "interface-test");
@@ -86,7 +86,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, CanBeConvertedImplicitly)
 
 TYPED_TEST(StringComparisonAdaptorFixture, CanBeCopyConstructed)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty(
         "Description",
         "Check that constructing an adaptor from a supported string representation preserves its content.");
@@ -99,7 +99,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, CanBeCopyConstructed)
 
 TYPED_TEST(StringComparisonAdaptorFixture, CanBeCopyAssigned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty("Description",
                          "Check that assigning a supported string representation updates the adaptor content.");
     this->RecordProperty("TestType", "requirements-based");
@@ -112,7 +112,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, CanBeCopyAssigned)
 
 TYPED_TEST(StringComparisonAdaptorFixture, GetStringViewReturnsValidStringView)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty("Description",
                          "Check that the adaptor exposes its stored content as the expected string view.");
     this->RecordProperty("TestType", "interface-test");
@@ -125,7 +125,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, GetStringViewReturnsValidStringView)
 
 TYPED_TEST(StringComparisonAdaptorFixture, ComparisonReturnsTrueForSameContent)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty("Description", "Check that an adaptor compares equal to a string with identical content.");
     this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -136,7 +136,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, ComparisonReturnsTrueForSameContent)
 
 TYPED_TEST(StringComparisonAdaptorFixture, ComparisonReturnsFalseForDifferentContent)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty("Description", "Check that adaptors with different content compare unequal.");
     this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -149,7 +149,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, ComparisonReturnsFalseForDifferentCon
 
 TYPED_TEST(StringComparisonAdaptorFixture, HashIsSameForTwoEqualAdaptors)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     this->RecordProperty(
         "Description",
         "Check that equal adaptor content produces equal hash values for both supported representations.");
@@ -165,7 +165,7 @@ TYPED_TEST(StringComparisonAdaptorFixture, HashIsSameForTwoEqualAdaptors)
 
 TEST(StringComparisonAdaptor, CanBeCopyConstructedWithAdaptor)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description",
                    "Check that copying an adaptor preserves its content and keeps the instances independent.");
     RecordProperty("TestType", "requirements-based");
@@ -183,7 +183,7 @@ TEST(StringComparisonAdaptor, CanBeCopyConstructedWithAdaptor)
 
 TEST(StringComparisonAdaptor, CanBeMoveConstructedWithAdaptor)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that moving an adaptor transfers its string-like content to the destination.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -195,7 +195,7 @@ TEST(StringComparisonAdaptor, CanBeMoveConstructedWithAdaptor)
 
 TEST(StringComparisonAdaptorWithString, CanBeMoveConstructed)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that moving a string into the adaptor preserves the original content.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -206,7 +206,7 @@ TEST(StringComparisonAdaptorWithString, CanBeMoveConstructed)
 
 TEST(StringComparisonAdaptorWithString, CanBeMoveAssigned)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that move assignment from a string replaces the adaptor content.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -218,7 +218,7 @@ TEST(StringComparisonAdaptorWithString, CanBeMoveAssigned)
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringAndStringView)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description",
                    "Check that equal string and string-view content compares equal through the adaptor.");
     RecordProperty("TestType", "requirements-based");
@@ -232,7 +232,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringAndCString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that adaptor content compares equal with an equivalent C string.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -244,7 +244,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringViewAndString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description",
                    "Check that equal string-view and string content compares equal through the adaptor.");
     RecordProperty("TestType", "requirements-based");
@@ -258,7 +258,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStringViewAndCString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that string-view adaptor content compares equal with an equivalent C string.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -271,7 +271,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenStr
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenCStringAndString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that C-string adaptor content compares equal with an equivalent string.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -283,7 +283,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenCSt
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenCStringAndStringView)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that C-string adaptor content compares equal with an equivalent string view.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -296,7 +296,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, ComparisonWorksBetweenCSt
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringAndStringView)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal string and string-view content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -311,7 +311,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringA
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringAndCString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal string and C-string content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -324,7 +324,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringA
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringViewAndString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal string-view and string content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -339,7 +339,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringV
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringViewAndCString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal string-view and C-string content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -353,7 +353,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualStringV
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForCStringViewAndString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal C-string and string content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -366,7 +366,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForCStringViewA
 
 TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualCStringAndStringView)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that equal C-string and string-view content produces the same adaptor hash.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -381,7 +381,7 @@ TEST(StringComparisonAdaptorWithDifferentContentTypes, HashIsSameForEqualCString
 
 TEST(StringComparisonAdaptorLessComparison, LessThan)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__string_like_comparison_hashing");
+    RecordProperty("PartiallyVerifies", "comp_req__string_manipulation__cmp_hash");
     RecordProperty("Description", "Check that the adaptor orders string content lexicographically.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
