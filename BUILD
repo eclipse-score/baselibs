@@ -31,6 +31,10 @@ docs(
             "mount_at": "baselibs/components/concurrency",
         },
         {
+            "bundle": "//score/scope_exit:docs",
+            "mount_at": "baselibs/components/scope_exit",
+        },
+        {
             "bundle": "//score/containers:docs",
             "mount_at": "baselibs/components/containers",
         },
