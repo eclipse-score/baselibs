@@ -9,6 +9,9 @@
     - [Accessing numbers from a JSON document](#accessing-numbers-from-a-json-document)
     - [Accessing strings from a JSON document](#accessing-strings-from-a-json-document)
     - [Simplified usage](#simplified-usage)
+      - [Calling convention: pass the object by `std::cref`](#calling-convention-pass-the-object-by-stdcref)
+      - [Accessing a nested attribute](#accessing-a-nested-attribute)
+      - [Optional attributes: default on missing key, fail on wrong type](#optional-attributes-default-on-missing-key-fail-on-wrong-type)
     - [Declarative parsing of JSON data](#declarative-parsing-of-json-data)
   - [Design](#design)
   - [Constraints](#constraints)
@@ -196,10 +199,39 @@ Finding attributes of an object requires a sequence of repetitive steps.
 Specially when dealing with nested objects, the boilerplate code resulting from
 the successive searches and conversions can get in the way of readability.
 
-Thus an optional layer of syntax-sugar is provided by sub-package "getters",
-that aims to avoid the repetitive code. For example, suppose one wants to
-retrieve the property `widget.geometry.size.width` from a JSON with a structure
-similar to:
+Thus an optional layer of syntax-sugar is provided by `score::json::GetAttribute`
+(declared in `score/json/internal/model/object.h`, which is pulled in by
+`score/json/json_parser.h`), that aims to avoid the repetitive code.
+
+#### Calling convention: pass the object by `std::cref`
+
+`GetAttribute<T>` accepts only `std::reference_wrapper<const json::Object>` or
+`Result<std::reference_wrapper<const json::Object>>`. There is deliberately no
+overload taking a raw `const json::Object&`: the reference wrapper prevents
+binding a temporary object to the accessor and thus prevents dangling references,
+because the returned `Result` may itself hold a reference into the object.
+
+Therefore, wrapping an object with `std::cref` is the intended calling
+convention:
+
+```c++
+const auto width = GetAttribute<std::uint64_t>(std::cref(size_object), "width");
+```
+
+The `Result` overload exists so that a call can be chained directly on the result
+of a previous call without unwrapping it. `As<json::Object>()` already returns
+`Result<std::reference_wrapper<const json::Object>>`, so its result can also be
+passed as-is:
+
+```c++
+const auto root_object = root.value().As<json::Object>();
+const auto widget = GetAttribute<json::Object>(root_object, "widget");
+```
+
+#### Accessing a nested attribute
+
+Suppose one wants to retrieve the property `widget.geometry.size.width` from a
+JSON with a structure similar to:
 
 ```json
 {
@@ -224,16 +256,44 @@ similar to:
 Using the syntax-sugar layer, one could accomplish it as:
 
 ```c++
-Result<std::uint64_t> GetWidgetWidth(json::Object& main_object)
+Result<std::uint64_t> GetWidgetWidth(const json::Object& main_object)
 {
-    const auto& widget = GetAttribute<json::Object>(main_object, "widget");
-    const auto& geometry = GetAttribute<json::Object>(widget.value(), "geometry");
-    const auto& size = GetAttribute<json::Object>(geometry.value(), "size");
-    return GetAttribute<std::uint64_t>(size.value(), "width");
+    const auto widget = GetAttribute<json::Object>(std::cref(main_object), "widget");
+    const auto geometry = GetAttribute<json::Object>(widget, "geometry");
+    const auto size = GetAttribute<json::Object>(geometry, "size");
+    return GetAttribute<std::uint64_t>(size, "width");
 }
 ```
 
-See the [unit tests](./getters_test.cpp) for details.
+Only the first call needs `std::cref`. Every intermediate `Result` is forwarded
+directly, and an error of any step is propagated to the final result, so the
+error only needs to be checked once at the end.
+
+#### Optional attributes: default on missing key, fail on wrong type
+
+A common pattern when parsing configuration is: use a default value if the key
+is absent, but report an error if the key is present with an unexpected type.
+
+One would need to check for `json::Error::kKeyNotFound` explicitly and let all
+other errors propagate:
+
+```c++
+/// Returns `default_value` if "timeout_ms" is absent, an error if it is present but not an integer.
+Result<std::uint64_t> GetTimeoutMs(const json::Object& config, const std::uint64_t default_value)
+{
+    const auto timeout = GetAttribute<std::uint64_t>(std::cref(config), "timeout_ms");
+    if ((!timeout.has_value()) && (timeout.error() == json::Error::kKeyNotFound))
+    {
+        return default_value;
+    }
+    return timeout;
+}
+```
+
+The same pattern works for optional nested objects, where `kKeyNotFound` means
+"section not configured" and `kWrongType` means "section is malformed".
+
+See the [unit tests](./internal/model/object_test.cpp) for details.
 
 ### Declarative parsing of JSON data
 
