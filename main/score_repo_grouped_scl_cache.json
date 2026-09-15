@@ -2282,6 +2282,93 @@
             }
           ]
         }
+      },
+      {
+        "need": "comp_req__os__env_get",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StdlibImpl__getenv_exist",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 52,
+              "need": "comp_req__os__env_get",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StdlibImpl__getenv_nonexist",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 65,
+              "need": "comp_req__os__env_get",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StdlibImpl__getenv_error",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 77,
+              "need": "comp_req__os__env_get",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__os__env_set",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StdlibImpl__setenv",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 88,
+              "need": "comp_req__os__env_set",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StdlibImpl__setenv_error",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 112,
+              "need": "comp_req__os__env_set",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__os__env_unset",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StdlibImpl__unsetenv",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 144,
+              "need": "comp_req__os__env_unset",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StdlibImpl__unsetenv_error",
+              "file": "score/os/test/stdlib_impl_test.cpp",
+              "line": 166,
+              "need": "comp_req__os__env_unset",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
       }
     ]
   }
