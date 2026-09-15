@@ -21,15 +21,11 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.USE.EXPANSION:This is the way gcc/qcc recommend to figure out endianness */
-/* KW_SUPPRESS_START:MISRA.LINKAGE.EXTERN,MISRA.NS.GLOBAL: false positive */
 #if defined(__BYTE_ORDER__)
 constexpr bool kIsLittleEndian{__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__};
 #else  // defined(__BYTE_ORDER__)
 #error __BYTE_ORDER__ is not defined
 #endif  // defined(__BYTE_ORDER__)
-/* KW_SUPPRESS_END:MISRA.LINKAGE.EXTERN,MISRA.NS.GLOBAL */
-/* KW_SUPPRESS_END:MISRA.USE.EXPANSION */
 
 NetEndpoint::NetEndpoint() noexcept : ip_addr_(AnyAddress()), port_(AnyPort()) {}
 

@@ -13,7 +13,7 @@
 #include "linuxsched.h"
 
 std::int32_t score::os::sched_getcpu_os()
-{ /* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function */
+{
     const std::int32_t result = ::sched_getcpu();
     return result;
 }

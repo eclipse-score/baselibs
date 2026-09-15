@@ -17,11 +17,9 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_getparam(
     const pid_t pid,
     struct sched_param* const parms) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_getparam(pid, parms);
     if (result == -1)
@@ -31,9 +29,7 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_getparam(
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_getscheduler(const pid_t pid) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_getscheduler(pid);
     if (result == -1)
@@ -43,11 +39,9 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_getschedul
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_setparam(
     const pid_t pid,
     const struct sched_param* const parms) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_setparam(pid, parms);
     if (result == -1)
@@ -57,12 +51,10 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_setparam(
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_setscheduler(
     const pid_t pid,
     const std::int32_t policy,
     const struct sched_param* const parms) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_setscheduler(pid, policy, parms);
     if (result == -1)
@@ -72,9 +64,7 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_setschedul
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_yield(void) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_yield();
     if (result != 0)  // LCOV_EXCL_BR_LINE
@@ -88,11 +78,9 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_yield(void
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_rr_get_interval(
     const pid_t pid,
     struct timespec* const t) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_rr_get_interval(pid, t);
     if (result == -1)
@@ -102,10 +90,8 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_rr_get_int
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_get_priority_min(
     const std::int32_t alg) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_get_priority_min(alg);
     if (result == -1)
@@ -115,10 +101,8 @@ score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_get_priori
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SchedImpl::sched_get_priority_max(
     const std::int32_t alg) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sched_get_priority_max(alg);
     if (result == -1)

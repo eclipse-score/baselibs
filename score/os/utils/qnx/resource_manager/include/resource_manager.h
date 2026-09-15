@@ -113,11 +113,7 @@ class ResourceManager final
     /// @brief logger to used monitor the status of the process.
     ///
     /// QNX slog2 should eventually be used as mandated by the safety specs.
-    /* KW_SUPPRESS_START:AUTOSAR.CTOR.NSDMI_INIT_LIST: Deviation for overloaded ctor ok */
-    /* KW_SUPPRESS_START:MISRA.INIT.BRACES: False positive, constructor used correctly */
     score::mw::log::Logger logger_{"ResourceManager"};
-    /* KW_SUPPRESS_END:MISRA.INIT.BRACES: False positive, constructor used correctly */
-    /* KW_SUPPRESS_END:AUTOSAR.CTOR.NSDMI_INIT_LIST: Deviation for overloaded ctor ok */
 };
 
 }  // namespace os

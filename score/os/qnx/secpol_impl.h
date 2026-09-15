@@ -29,30 +29,22 @@ class SecpolImpl final : public Secpol
 {
   public:
     constexpr SecpolImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<secpol_file_t*, score::os::Error> secpol_open(
         const char* const path,
         const std::uint32_t flags) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<score::os::Error> secpol_close(secpol_file_t* const handle) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, score::os::Error> secpol_posix_spawnattr_settypeid(
         secpol_file_t* const handle,
         posix_spawnattr_t* const attrp,
         const char* const name,
         const std::uint32_t flags) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, score::os::Error> secpol_transition_type(
         secpol_file_t* const handle,
         const char* const name,
         const std::uint32_t flags) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 };
 }  // namespace details
 

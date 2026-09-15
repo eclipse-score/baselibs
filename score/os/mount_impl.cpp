@@ -35,28 +35,22 @@ std::uint64_t Convert(const score::os::Mount::Flag flags)
 // coverity[autosar_cpp14_a16_0_1_violation]
 #ifdef __linux__
         // LCOV_EXCL_START: Linux specific code, scope of codecoverage is only for qnx code
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
         // NOLINTNEXTLINE(hicpp-signed-bitwise) Using library-defined macro to ensure correct operation.
         converted_flags |= MS_RDONLY;
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
         // LCOV_EXCL_STOP
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #else
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
         // NOLINTBEGIN(hicpp-signed-bitwise) Using library-defined macro to ensure correct operation.
         // coverity[autosar_cpp14_m5_0_21_violation]  macro does not affect the sign of the result.
         converted_flags |= static_cast<std::uint8_t>(_MOUNT_READONLY);
         // NOLINTEND(hicpp-signed-bitwise)
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif
     }
     return converted_flags;
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-std::int32_t mountimp(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-                      const char* const special_file,
+std::int32_t mountimp(const char* const special_file,
                       const char* const dir,
                       const char* const fstype,
                       const score::os::Mount::Flag flags,
@@ -74,7 +68,6 @@ std::int32_t mountimp(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identi
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif
 }
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 std::int32_t umountimp(const char* const target)
 {
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
@@ -90,8 +83,6 @@ std::int32_t umountimp(const char* const target)
 }
 }  // namespace
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 // Wrapper must be backward compatible for the applications that use linux specific mount() (without datalen arg)
 // NOLINTNEXTLINE(google-default-arguments) see comment above
 score::cpp::expected_blank<Error> MountImpl::mount(const char* const special_file,
@@ -100,7 +91,6 @@ score::cpp::expected_blank<Error> MountImpl::mount(const char* const special_fil
                                                    const Mount::Flag flags,
                                                    const void* const data,
                                                    const std::int32_t datalen) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     // Manual code analysis:
     // Executing actual 'mount' and 'umount' commands can introduce unpredictable behavior and dependencies
@@ -111,9 +101,7 @@ score::cpp::expected_blank<Error> MountImpl::mount(const char* const special_fil
     }
     return {};  // LCOV_EXCL_LINE
 }
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<Error> MountImpl::umount(const char* const target) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 {
     // Manual code analysis:
     // Executing actual 'mount' and 'umount' commands can introduce unpredictable behavior and dependencies
@@ -124,6 +112,5 @@ score::cpp::expected_blank<Error> MountImpl::umount(const char* const target) co
     }
     return {};  // LCOV_EXCL_LINE
 }
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 }  // namespace os
 }  // namespace score

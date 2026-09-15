@@ -30,7 +30,6 @@ static constexpr std::size_t max_groupname_length{20U};
 /// @brief Buffer struct
 struct GroupBuffer
 {
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
     // Wrapped function's signature requires C-style array
     // NOLINTBEGIN(modernize-avoid-c-arrays) see comment above
     // Suppress "AUTOSAR C++14 A9-6-1" rule findings. This rule declares: "Data types used for interfacing with hardware
@@ -41,7 +40,6 @@ struct GroupBuffer
     // coverity[autosar_cpp14_a9_6_1_violation]
     char name[max_groupname_length + static_cast<std::size_t>(1)];
     // NOLINTEND(modernize-avoid-c-arrays)
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
     // Rationale: Violation due to gid_t which is typedef as unsigned int, which is of non standard type,
     // No harm for implementation.
     // coverity[autosar_cpp14_a9_6_1_violation]
@@ -53,14 +51,12 @@ class Grp : public ObjectSeam<Grp>
   public:
     static Grp& instance() noexcept;
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     /// Get information about the group with a given name.
     /// Contrary to the original system call, this call may block.
     /// Contrary to the original system call, this call will return k
     /// \param group The name of the group
     /// \return A structure holding the name and id of the group or an error
     virtual score::cpp::expected<GroupBuffer, Error> getgrnam(const std::string& group) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Grp() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

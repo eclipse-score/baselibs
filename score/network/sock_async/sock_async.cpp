@@ -30,14 +30,10 @@ SocketAsync::SocketAsync(const Endpoint endpoint) noexcept
 {
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 std::int32_t SocketAsync::ReadAsync(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> data,
                                     AsyncCallback u_cb) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
-    /* KW_SUPPRESS_START:MISRA.LOGIC.POSTFIX: False Positive */
     if (data->empty() || !data->at(0).size())
-    /* KW_SUPPRESS_END:MISRA.LOGIC.POSTFIX: False Positive */
     {
         score::mw::log::LogError(kLogContext) << "Incorrect buffer provided";
         return kExitNumOfSocketsExceeded;
@@ -48,14 +44,10 @@ std::int32_t SocketAsync::ReadAsync(std::shared_ptr<std::vector<score::cpp::span
     return kExitSuccess;
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 std::int32_t SocketAsync::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> data,
                                      AsyncCallback u_cb) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
-    /* KW_SUPPRESS_START:MISRA.LOGIC.POSTFIX: False Positive */
     if (data->empty() || !data->at(0).size())
-    /* KW_SUPPRESS_END:MISRA.LOGIC.POSTFIX: False Positive */
     {
         score::mw::log::LogError(kLogContext) << "Incorrect buffer provided";
         return kExitNumOfSocketsExceeded;
@@ -204,9 +196,7 @@ void SocketAsync::Connect(AsyncConnectCallback u_cb)
     const AsyncConnectCallback cb = std::move(u_cb);
 
     sockaddr_in sock_addr = this->GetEndpoint().ToSockaddr();
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Needed for cast to sockaddr */
     const auto recipient_sockaddr = reinterpret_cast<const struct sockaddr*>(&sock_addr);
-    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:*/
 
     const auto ret = score::os::Socket::instance().connect(socket_fd_, recipient_sockaddr, sizeof(recipient_sockaddr));
 

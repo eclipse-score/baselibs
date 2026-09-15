@@ -18,7 +18,7 @@
 #include <score/callback.hpp>
 #include <score/span.hpp>
 #include <score/variant.hpp>
-#include <sys/time.h> /* KW_SUPPRESS:MISRA.INCL.UNSAFE:time.h libarary needed for TimeoutOption */
+#include <sys/time.h>
 #include <cstdint>
 
 namespace score
@@ -26,13 +26,7 @@ namespace score
 
 namespace os
 {
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: False Positive */
-/* KW_SUPPRESS_START:MISRA.VAR.NEEDS.CONST: False Positive */
 constexpr const std::int32_t ENABLE_OPTION = 1;
-/* KW_SUPPRESS_END:MISRA.VAR.NEEDS.CONST: False Positive */
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR: False Positive */
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 class SockOption
 {
   public:
@@ -43,9 +37,7 @@ class SockOption
 class ReuseAddrOption : public SockOption
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.CTOR.BASE: Pure virtual base, no ctor */
     ReuseAddrOption() : optval_(ENABLE_OPTION) {}
-    /* KW_SUPPRESS_END:MISRA.CTOR.BASE */
 
     score::cpp::expected_blank<score::os::Error> apply(const std::int32_t sockfd) const override
     {

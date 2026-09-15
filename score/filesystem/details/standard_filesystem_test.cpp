@@ -229,7 +229,7 @@ class FilesystemFixtureWithoutMocks : public ::testing::Test
     {
         ASSERT_TRUE(previous_current_path_.Empty());
         constexpr std::size_t kBufSize = static_cast<std::size_t>(PATH_MAX);
-        char buf[kBufSize]{}; /* KW_SUPPRESS:AUTOSAR.BUILTIN_NUMERIC:char array for getcwd*/
+        char buf[kBufSize]{};
         const char* getcwd_res = ::getcwd(&buf[0], kBufSize);
         ASSERT_TRUE(getcwd_res != NULL);
         previous_current_path_ = Path{getcwd_res};
