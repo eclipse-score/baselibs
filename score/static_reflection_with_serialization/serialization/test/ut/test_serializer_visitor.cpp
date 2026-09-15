@@ -202,11 +202,12 @@ enum E
 
 TEST(serializer_visitor, serialized)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check the serialization for different data type.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that serialized_t computes the expected on-wire size for primitives, pairs, tuples, "
+                   "optional, bitset, strings, vectors, arrays, containers, C arrays, references, and enums.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     EXPECT_EQ(check_serialized<char>(), sizeof(char));
     EXPECT_EQ(check_serialized<uint8_t>(), sizeof(uint8_t));
     EXPECT_EQ(check_serialized<uint16_t>(), sizeof(uint16_t));
@@ -259,11 +260,15 @@ struct subsize_too_small_alloc_t
 
 TEST(serializer_visitor, serializer)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check the serialization and deserialization for different data type.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container, "
+                   "comp_req__static_reflect_serial__nested");
+    RecordProperty("Description",
+                   "Check that serialize/deserialize round-trips tuples, pairs, nested structs, optional, bitset, "
+                   "chrono durations, vectors, strings, arrays, and containers to an equal value, and that a "
+                   "corrupted subsize is reported as out-of-bounds or invalid-format.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     using namespace ::score::common::visitor;
     using s = serializer_t<real_alloc_t>;
     std::uint8_t buffer[1024];
@@ -515,11 +520,12 @@ SCORE_MEMCPY_SERIALIZABLE(score::common::visitor::payload_tags::unsigned_le, tim
 
 TEST(serializer_visitor, custom)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check the serialization and deserialization for steady clock time_point.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that a type opted into SCORE_MEMCPY_SERIALIZABLE (steady_clock::time_point) round-trips "
+                   "through serialize/deserialize to an equal value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     using s = ::score::common::visitor::serializer_t<real_alloc_t>;
     char buffer[1024];
 
@@ -549,11 +555,12 @@ SCORE_MEMCPY_SERIALIZABLE_IF(score::common::visitor::payload_tags::ieee754_float
 
 TEST(serializer_visitor, serialize_unit)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Check the serialization and deserialization for a struct type.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that a type opted into SCORE_MEMCPY_SERIALIZABLE_IF via a type predicate round-trips "
+                   "through serialize/deserialize to an equal value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     using s = ::score::common::visitor::serializer_t<real_alloc_t>;
     char buffer[1024];
 
@@ -648,13 +655,12 @@ class serializer_visitor_overflows : public ::testing::Test
 
 TEST_F(serializer_visitor_overflows, basic__no_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a normal struct shall success when providing the "
-                   "serialized and the deserialized buffers with the same sizes.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that a struct round-trips without error when the serialize and deserialize buffers are "
+                   "exactly large enough to hold it.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 2048, 2048);
     EXPECT_EQ(result.first.operator bool(), true);
     EXPECT_EQ(result.second, true);
@@ -662,13 +668,12 @@ TEST_F(serializer_visitor_overflows, basic__no_overflow)
 
 TEST_F(serializer_visitor_overflows, basic__serializer_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a normal struct shall overflow and reach zero offset "
-                   "when deserialize more data than the serialized one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that deserializing a struct into an undersized serialize buffer is detected as a "
+                   "zero-offset error rather than producing an equal value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 100, 2048);
     EXPECT_EQ(result.first.getZeroOffset(), true);
     EXPECT_EQ(result.second, false);
@@ -676,13 +681,12 @@ TEST_F(serializer_visitor_overflows, basic__serializer_overflow)
 
 TEST_F(serializer_visitor_overflows, basic__derserializer_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a normal struct shall overflow for reaching out of "
-                   "bounds when deserialize less data than the serialized one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that deserializing a struct from an undersized deserialize buffer is detected as an "
+                   "out-of-bounds error rather than producing an equal value.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 2048, 100);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -690,13 +694,12 @@ TEST_F(serializer_visitor_overflows, basic__derserializer_overflow)
 
 TEST_F(serializer_visitor_overflows, basic_deserializer_overflow_const)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a normal struct shall overflow for reaching out of "
-                   "bounds when deserialize less data than the serialized one - const type.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that the const-pointer overload of deserialize also detects an undersized deserialize "
+                   "buffer as an out-of-bounds error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in = 2048UL;
     constexpr auto size_out = 100UL;
     result_type result =
@@ -707,14 +710,13 @@ TEST_F(serializer_visitor_overflows, basic_deserializer_overflow_const)
 
 TEST_F(serializer_visitor_overflows, dynamic_part__no_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty(
-        "Description",
-        "The serialization and deserialization for a struct with a huge dynamic part shall success when providing the "
-        "serialized and the deserialized buffers with the same sizes when allocate a dynamic part.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
+    RecordProperty("Description",
+                   "Check that a struct with a large dynamically-sized vector member round-trips without error "
+                   "when the serialize and deserialize buffers are exactly large enough to hold it.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     structureWithHugeDynamicPart.dynamicPart.resize(100);
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, 4096, 4096);
     EXPECT_EQ(result.first.operator bool(), true);
@@ -723,14 +725,13 @@ TEST_F(serializer_visitor_overflows, dynamic_part__no_overflow)
 
 TEST_F(serializer_visitor_overflows, dynamic_part__serializer_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty(
-        "Description",
-        "The serialization and deserialization for a struct with a huge dynamic part shall overflow when providing the "
-        "serialized and the deserialized buffers with the same sizes but without allocating a dynamic part.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
+    RecordProperty("Description",
+                   "Check that deserializing a struct with a large dynamically-sized vector member into a buffer that "
+                   "was never allocated for that dynamic part is detected as a zero-offset error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in_out = 4096UL;
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, size_in_out, size_in_out);
     EXPECT_EQ(result.first.getZeroOffset(), true);
@@ -739,13 +740,13 @@ TEST_F(serializer_visitor_overflows, dynamic_part__serializer_overflow)
 
 TEST_F(serializer_visitor_overflows, dynamic_part_serializer_overflow_too_small_subsize)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
-                   "Logging library shall provide an annotation mechanism for data structures to support automatic "
-                   "serialization/deserialization and handle subsize overflows returning the ZeroOffset status.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that a subsize_t too small to represent a large dynamic part's element count is detected "
+                   "as a zero-offset error rather than silently truncating.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in_out = 4096UL;
     result_type result =
         ThereAndBackWithErrorCheck<subsize_too_small_alloc_t>(structureWithHugeDynamicPart, size_in_out, size_in_out);
@@ -755,13 +756,13 @@ TEST_F(serializer_visitor_overflows, dynamic_part_serializer_overflow_too_small_
 
 TEST_F(serializer_visitor_overflows, dynamic_part__deserilizer_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
-                   "The serialization and deserialization for a struct with a huge dynamic part shall overflow for "
-                   "reaching out of bounds when deserialize less data than the serialized one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that deserializing a struct with a large dynamically-sized vector member from an "
+                   "undersized deserialize buffer is detected as an out-of-bounds error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, 8192, 4096);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -769,13 +770,12 @@ TEST_F(serializer_visitor_overflows, dynamic_part__deserilizer_overflow)
 
 TEST_F(serializer_visitor_overflows, string__no_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a string data shall success when providing the "
-                   "serialized and the deserialized buffers with the same sizes.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that a struct with a maximal-length string member round-trips without error when the "
+                   "serialize and deserialize buffers are exactly large enough to hold it.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 4096, 4096);
     EXPECT_EQ(result.first.operator bool(), true);
     EXPECT_EQ(result.second, true);
@@ -783,13 +783,12 @@ TEST_F(serializer_visitor_overflows, string__no_overflow)
 
 TEST_F(serializer_visitor_overflows, string__serialization_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a string data shall overflow and reach zero offset when "
-                   "deserialize more data than the serialized one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that deserializing a struct with a maximal-length string member into an undersized "
+                   "serialize buffer is detected as a zero-offset error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 2048, 4096);
     EXPECT_EQ(result.first.getZeroOffset(), true);
     EXPECT_EQ(result.second, false);
@@ -797,13 +796,12 @@ TEST_F(serializer_visitor_overflows, string__serialization_overflow)
 
 TEST_F(serializer_visitor_overflows, string_deserialization_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861827, SCR-861550");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "The serialization and deserialization for a string data shall overflow for reaching out of bounds "
-                   "when deserialize less data than the serialized one.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that deserializing a struct with a maximal-length string member from an undersized "
+                   "deserialize buffer is detected as an out-of-bounds error.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 4096, 2048);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -811,11 +809,12 @@ TEST_F(serializer_visitor_overflows, string_deserialization_overflow)
 
 TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test the inability of logger_type_info API to copy data bigger than the size.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that logger_type_info::copy leaves the number-of-characters field at its all-bits-set "
+                   "sentinel when the destination buffer is smaller than the encoded value's own size.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto cmpr = std::numeric_limits<char>::is_signed ? 0x7f : 0xff;
     constexpr auto array_size = 64UL;
     std::array<char, array_size> buffer;
@@ -836,11 +835,12 @@ TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_overflow)
 
 TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_not_fit)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test the inability of logger_type_info API to copy data that does not fit size.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that logger_type_info::copy zero-fills the number-of-characters field when the destination "
+                   "buffer is too small to fit the type's name.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     constexpr auto array_size = 64UL;
     std::array<char, array_size> buffer;
@@ -860,11 +860,12 @@ TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_not_fit)
 
 TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_fits)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test the ability of logger_type_info to copy data.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that logger_type_info::copy writes the type's fully-qualified name into a destination "
+                   "buffer large enough to hold it.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     constexpr auto array_size = 64UL;
     std::array<char, array_size> buffer{0};
@@ -878,8 +879,12 @@ TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_fits)
 
 TEST(visit_optional_pack_desc_test, optional_pack_desc_should_return_correct_field_name)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Test optional_pack_desc's field_name function for providing name to optional variable");
+                   "Check that an optional's serialized pack_desc reports field names 'has_value' and 'data' for its "
+                   "two defined fields, and an empty name for indices beyond them.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     using namespace ::score::common::visitor;
     serialized_visitor<double> visitor_local{};
     EXPECT_EQ(decltype(visit(visitor_local, score::cpp::optional<double>(1.0)))::pack_desc::field_name(0U),
@@ -891,12 +896,12 @@ TEST(visit_optional_pack_desc_test, optional_pack_desc_should_return_correct_fie
 
 TEST(logging_serializer_test, serialize_int_data_with_big_miss_match_size)
 {
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
                    "Verify the inability of serialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance{1, 2};
     std::uint8_t buffer[1024];
@@ -908,12 +913,12 @@ TEST(logging_serializer_test, serialize_int_data_with_big_miss_match_size)
 
 TEST(logging_serializer_test, deserialize_int_data_with_big_miss_match_size)
 {
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
                    "Verify the inability of deserialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance_in{1, 2};
     std::tuple<int, int> tuple_instance_out;
@@ -931,12 +936,12 @@ TEST(logging_serializer_test, deserialize_int_data_with_big_miss_match_size)
 
 TEST(logging_serializer_test, deserialize_byte_data_with_miss_match_size)
 {
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
                    "Verify the inability of deserialize byte data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     test::StructOneSigned struct_one_signed_out;
     char serialized_buffer[1024];
@@ -962,10 +967,11 @@ class VectorWrapper
 
 TEST(clear_functionality_test, test_that_clear_function_can_clear_vector_of_int32)
 {
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Verify the inability of clearing vector of int32.");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__container");
+    RecordProperty("Description",
+                   "Check that detail::clear() clears a non-empty vector member via its clear() method.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     VectorWrapper vector_wrapper_instance{};
     score::common::visitor::detail::clear(vector_wrapper_instance);
