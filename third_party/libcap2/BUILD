@@ -11,9 +11,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "libcap2_system",
+    linkopts = ["-lcap"],
+    visibility = ["//:__subpackages__"],
+)
+
 alias(
     name = "libcap2",
     actual = select({
+        "//third_party:use_system_libs": ":libcap2_system",
         "@platforms//cpu:aarch64": "@libcap2-dev-deb-aarch64//:libcap2",
         "//conditions:default": "@libcap2-dev-deb//:libcap2",
     }),
