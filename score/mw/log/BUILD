@@ -499,3 +499,11 @@ docs_bundle(
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
+
+# Exposed (without a nested BUILD file, to avoid excluding it from the docs
+# bundle's own glob(source_dir="docs") above) for cross-repo consumption by
+# score_logging.
+exports_files(
+    ["docs/safety_analysis/aou_requirements.rst"],
+    visibility = ["//visibility:public"],
+)
