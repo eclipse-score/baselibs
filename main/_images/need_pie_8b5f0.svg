@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-15T09:32:03.599627</dc:date>
+    <dc:date>2026-09-15T13:16:25.514077</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -547,15 +547,15 @@ z
    </g>
    <g id="legend_1">
     <g id="patch_5">
-     <path d="M 371.32 164.699688 
-L 516.455938 164.699688 
-Q 518.455938 164.699688 518.455938 162.699688 
-L 518.455938 103.696563 
-Q 518.455938 101.696563 516.455938 101.696563 
-L 371.32 101.696563 
-Q 369.32 101.696563 369.32 103.696563 
-L 369.32 162.699688 
-Q 369.32 164.699688 371.32 164.699688 
+     <path d="M 371.32 164.699687 
+L 516.455938 164.699687 
+Q 518.455938 164.699687 518.455938 162.699687 
+L 518.455938 103.696562 
+Q 518.455938 101.696562 516.455938 101.696562 
+L 371.32 101.696562 
+Q 369.32 101.696562 369.32 103.696562 
+L 369.32 162.699687 
+Q 369.32 164.699687 371.32 164.699687 
 z
 " style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
     </g>
@@ -853,16 +853,16 @@ z
      </g>
     </g>
     <g id="patch_7">
-     <path d="M 373.32 143.296563 
-L 393.32 143.296563 
-L 393.32 136.296563 
-L 373.32 136.296563 
+     <path d="M 373.32 143.296562 
+L 393.32 143.296562 
+L 393.32 136.296562 
+L 373.32 136.296562 
 z
 " style="fill: #ff0000"/>
     </g>
     <g id="text_6">
      <!-- failed 0.0% (0) -->
-     <g transform="translate(401.32 143.296563) scale(0.1 -0.1)">
+     <g transform="translate(401.32 143.296562) scale(0.1 -0.1)">
       <defs>
        <path id="DejaVuSans-49" d="M 2375 4863 
 L 2375 4384 
