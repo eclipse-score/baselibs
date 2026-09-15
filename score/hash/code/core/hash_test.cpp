@@ -30,21 +30,46 @@ class HashFixture : public ::testing::Test
 
 TEST_F(HashFixture, CanCompareEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that two Hash instances with the same algorithm and byte content compare equal.");
+
     EXPECT_EQ(unit_, (Hash{HashAlgorithm::kSha256, {0x01}}));
 }
 
 TEST_F(HashFixture, DoesNotCoompareEqualOnDifferentAlgorithm)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that two Hash instances with different algorithms but the same bytes do not compare "
+                   "equal.");
+
     EXPECT_FALSE(unit_ == (Hash{HashAlgorithm::kSha1, {0x01}}));
 }
 
 TEST_F(HashFixture, DoesNotCoompareEqualOnDifferentContent)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that two Hash instances with the same algorithm but different byte content do not "
+                   "compare equal.");
+
     EXPECT_TRUE(unit_ != (Hash{HashAlgorithm::kSha256, {0x02}}));
 }
 
 TEST_F(HashFixture, GetBytesAsSpan)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that GetBytes() returns a span over the hash's raw byte content.");
+
     Hash::ByteVector i1 = {0x01};
     score::cpp::span<const std::uint8_t> expected_result(i1);
     auto result = unit_.GetBytes();
@@ -53,6 +78,13 @@ TEST_F(HashFixture, GetBytesAsSpan)
 
 TEST(HashTest, CanCreateFromValidString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that Hash::FromString() parses a valid hex digest string into a Hash with the correct "
+                   "bytes, and ToString() round-trips back to the same string.");
+
     const score::cpp::pmr::string sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
     Hash::ByteVector expected_bytes = {0x89, 0xFD, 0xDE, 0x0B, 0x28, 0x37, 0x3D, 0xC4, 0xF3, 0x61,
                                        0xCF, 0xB8, 0x10, 0xB3, 0x53, 0x42, 0xCC, 0x2C, 0x32, 0x32};
@@ -70,6 +102,11 @@ TEST(HashTest, CanCreateFromValidString)
 
 TEST(HashTest, ToStringEmptyValueTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description", "Check that ToString() on a Hash with algorithm kNone yields an empty string.");
+
     Hash unit{HashAlgorithm::kNone, {0x01}};
     score::cpp::pmr::string result_str = unit.ToString();
     ASSERT_TRUE(result_str.empty());
@@ -77,6 +114,16 @@ TEST(HashTest, ToStringEmptyValueTest)
 
 TEST(HashTest, CanCreateFromValidStringCompleteSetOfAlgorithms)
 {
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__hash__value_retrieval_hex, comp_req__hash__value_retrieval_bytes, "
+                   "comp_req__hash__sha_algorithms, comp_req__hash__crc32_algorithm");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that Hash::FromString()/GetBytes()/GetAlgorithm()/ToString() round-trip correctly for "
+                   "a representative digest of every supported algorithm (CRC-32, SHA-1, SHA-256, SHA-384, "
+                   "SHA-512).");
+
     using StringPtr = const char* const;
     using TestData = const std::tuple<HashAlgorithm, StringPtr, Hash::ByteVector>;
 
@@ -132,6 +179,13 @@ TEST(HashTest, CanCreateFromValidStringCompleteSetOfAlgorithms)
 
 TEST(HashTest, ValidateAlgorithm)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that Hash::FromString() rejects an unsupported algorithm (kLast) by returning an "
+                   "error instead of a value.");
+
     const score::cpp::pmr::string sha1 = "89fdde0b28373dc4f361cfb810b35342cc2c3232";
 
     Result<Hash> sha1_hash_result = Hash::FromString(HashAlgorithm::kLast, sha1);
@@ -140,6 +194,13 @@ TEST(HashTest, ValidateAlgorithm)
 
 TEST(HashTest, ValidateSize)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that Hash::FromString() rejects hex strings that are one character shorter or longer "
+                   "than the expected digest size for the given algorithm.");
+
     const score::cpp::pmr::string short_sha1 = "89fdde0b28373dc4f361cfb810b35342cc2c323";
     const score::cpp::pmr::string long_sha1 = "89fdde0b28373dc4f361cfb810b35342cc2c3232A";
 
@@ -152,6 +213,12 @@ TEST(HashTest, ValidateSize)
 
 TEST(HashTest, ValidateContents)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that Hash::FromString() rejects a hex string containing non-hexadecimal characters.");
+
     const score::cpp::pmr::string invalid_sha1 = "89fdde0b28373dc4f361cfb810b35342cc2BOGUS";
 
     Result<Hash> sha1_hash_result = Hash::FromString(HashAlgorithm::kSha1, invalid_sha1);
