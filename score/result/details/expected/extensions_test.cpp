@@ -27,6 +27,12 @@ namespace
 
 TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_future_cpp_expected() converts a const-lvalue expected holding a value "
+                   "into a score::cpp::expected holding the same value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with a value
     const std::int32_t value{57};
     const score::details::expected<CopyableType, ErrorType> expected{value};
@@ -42,6 +48,12 @@ TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_future_cpp_expected() converts a const-lvalue expected holding an error "
+                   "into a score::cpp::expected holding the same error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     const score::details::expected<ValueType, CopyableType> expected{unexpect, value};
@@ -57,6 +69,12 @@ TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_future_cpp_expected() converts an rvalue expected holding a move-only "
+                   "value into a score::cpp::expected holding that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with a value
     const std::int32_t value{57};
     score::details::expected<NothrowMoveOnlyType, ErrorType> expected{value};
@@ -72,6 +90,12 @@ TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_future_cpp_expected() converts an rvalue expected holding a move-only "
+                   "error into a score::cpp::expected holding that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     score::details::expected<ValueType, NothrowMoveOnlyType> expected{unexpect, value};
@@ -87,6 +111,12 @@ TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_expected() converts a const-lvalue score::cpp::expected holding a value "
+                   "into a score::details::expected holding the same value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an score::cpp::expected with a value
     const std::int32_t value{57};
     const score::cpp::expected<CopyableType, ErrorType> score_future_cpp_expected{value};
@@ -101,6 +131,12 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_expected() converts a const-lvalue score::cpp::expected holding an error "
+                   "into a score::details::expected holding the same error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an score::cpp::expected with an error
     const std::int32_t value{57};
     const score::cpp::expected<ValueType, CopyableType> score_future_cpp_expected{
@@ -116,6 +152,12 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_expected() converts an rvalue score::cpp::expected holding a move-only "
+                   "value into a score::details::expected holding that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an score::cpp::expected with a value
     const std::int32_t value{57};
     score::cpp::expected<NothrowMoveOnlyType, ErrorType> score_future_cpp_expected{value};
@@ -131,6 +173,12 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that to_score_expected() converts an rvalue score::cpp::expected holding a move-only "
+                   "error into a score::details::expected holding that error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an score::cpp::expected with an error
     const std::int32_t value{57};
     score::cpp::expected<ValueType, NothrowMoveOnlyType> score_future_cpp_expected{
@@ -147,6 +195,13 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithError)
 
 TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_score_future_cpp_optional_or_else() converts a const-lvalue "
+                   "expected holding a value into a score::cpp::optional holding that value, without invoking the "
+                   "error handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     const score::details::expected<CopyableType, ErrorType> expected{value};
@@ -166,6 +221,13 @@ TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_score_future_cpp_optional_or_else() invokes the error handler "
+                   "exactly once and yields an empty score::cpp::optional when the const-lvalue expected holds an "
+                   "error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     const score::details::expected<ValueType, CopyableType> expected{unexpect, value};
@@ -184,6 +246,13 @@ TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedConstLVal
 
 TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedRValueRefHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_score_future_cpp_optional_or_else() converts an rvalue expected "
+                   "holding a move-only value into a score::cpp::optional holding that value, without invoking the "
+                   "error handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     score::details::expected<NothrowMoveOnlyType, ErrorType> expected{value};
@@ -203,6 +272,13 @@ TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedRValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedLValueRefHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_score_future_cpp_optional_or_else() passes the moved-out error to "
+                   "the error handler and yields an empty score::cpp::optional when the rvalue expected holds an "
+                   "error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     score::details::expected<ValueType, NothrowMoveOnlyType> expected{unexpect, value};
@@ -223,6 +299,12 @@ TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedLValueRef
 
 TEST(ExtensionsTest, ConvertToStdOptionalWhenExpectedConstLValueRefHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_optional_or_else() converts a const-lvalue expected holding a "
+                   "value into an std::optional holding that value, without invoking the error handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     const score::details::expected<CopyableType, ErrorType> expected{value};
@@ -241,6 +323,12 @@ TEST(ExtensionsTest, ConvertToStdOptionalWhenExpectedConstLValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToStdOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_optional_or_else() invokes the error handler exactly once and "
+                   "yields an empty std::optional when the const-lvalue expected holds an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     const score::details::expected<ValueType, CopyableType> expected{unexpect, value};
@@ -258,6 +346,12 @@ TEST(ExtensionsTest, OnConversionToStdOptionalCallInvocableWhenExpectedConstLVal
 
 TEST(ExtensionsTest, ConvertToStdOptionalWhenExpectedRValueRefHasValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_optional_or_else() converts an rvalue expected holding a "
+                   "move-only value into an std::optional holding that value, without invoking the error handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     score::details::expected<NothrowMoveOnlyType, ErrorType> expected{value};
@@ -277,6 +371,12 @@ TEST(ExtensionsTest, ConvertToStdOptionalWhenExpectedRValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToStdOptionalCallInvocableWhenExpectedLValueRefHasNoValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that expected_value_to_optional_or_else() passes the moved-out error to the error "
+                   "handler and yields an empty std::optional when the rvalue expected holds an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a score::details::expected with an error
     const std::int32_t value{57};
     score::details::expected<ValueType, NothrowMoveOnlyType> expected{unexpect, value};
