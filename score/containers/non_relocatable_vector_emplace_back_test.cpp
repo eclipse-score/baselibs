@@ -86,6 +86,11 @@ TYPED_TEST_SUITE(NonRelocatableVectorPolymorphicAllocatorFixture, PolymorphicAll
 
 TYPED_TEST(NonRelocatableVectorFixture, EmplaceBackUpdatesSize)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that each call to emplace_back() increments size() by one.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -100,6 +105,13 @@ TYPED_TEST(NonRelocatableVectorFixture, EmplaceBackUpdatesSize)
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, EmplaceBackAllocatesAndReturnsElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that emplace_back() on trivial elements constructs the element in place at the "
+                         "correct index and returns a reference to it.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -118,6 +130,13 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, EmplaceBackAllocatesAndReturnsEle
 
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, EmplaceBackAllocatesAndReturnsElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that emplace_back() on non-trivial elements constructs the element in place at "
+                         "the correct index and returns a reference to it.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -137,6 +156,13 @@ TYPED_TEST(NonRelocatableVectorNonTrivialFixture, EmplaceBackAllocatesAndReturns
 
 TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, EmplaceBackAllocatesAndReturnsElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that emplace_back() on trivially-constructible/destructible elements constructs "
+                         "the element in place at the correct index and returns a reference to it.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -156,6 +182,13 @@ TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, Em
 
 TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, EmplaceBackAllocatesAndReturnsElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that emplace_back() on non-moveable, non-copyable elements constructs the "
+                         "element in place at the correct index and returns a reference to it.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -174,6 +207,13 @@ TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, Emplace
 
 TYPED_TEST(NonRelocatableVectorFixture, CallingEmplaceBackMoreTimesThanWereReservedTerminates)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that calling emplace_back() more times than the vector's reserved capacity "
+                         "terminates via contract violation instead of silently overflowing.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     // and given that emplace_back was called size() - 1 times
@@ -189,6 +229,13 @@ TYPED_TEST(NonRelocatableVectorFixture, CallingEmplaceBackMoreTimesThanWereReser
 
 TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, EmplaceBackDoesNotAllocate)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("Description",
+                         "Check that repeated emplace_back() calls up to the reserved capacity do not trigger "
+                         "any additional memory allocation beyond what was allocated at construction.");
+
     // Given a NonRelocatableVector which has allocated n bytes on construction
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     const auto allocated_bytes_after_construction = this->memory_resource_.GetUserAllocatedBytes();

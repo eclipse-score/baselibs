@@ -31,6 +31,10 @@ docs(
             "mount_at": "baselibs/components/concurrency",
         },
         {
+            "bundle": "//score/scope_exit:docs",
+            "mount_at": "baselibs/components/scope_exit",
+        },
+        {
             "bundle": "//score/containers:docs",
             "mount_at": "baselibs/components/containers",
         },
@@ -81,6 +85,14 @@ docs(
         {
             "bundle": "//score/result:docs",
             "mount_at": "baselibs/components/result",
+        },
+        {
+            "bundle": "//score/analysis/tracing:docs",
+            "mount_at": "baselibs/components/analysis/tracing",
+        },
+        {
+            "bundle": "//score/string_manipulation:docs",
+            "mount_at": "baselibs/components/string_manipulation",
         },
         {
             "bundle": "//score/static_reflection_with_serialization:docs",

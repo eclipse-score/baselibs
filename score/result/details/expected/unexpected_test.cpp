@@ -26,11 +26,21 @@ namespace
 
 TEST(UnexpectTest, UnexpectT_InitializesExplicit)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that unexpect_t, the disambiguation tag for in-place error construction, is only "
+                   "explicitly constructible and cannot be created implicitly.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(is_only_explicitly_constructible_v<unexpect_t>, "unexpect_t must be only explicit constructible");
 }
 
 TEST(UnexpectTest, ProvidesHelperUnexpect)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that the unexpect helper variable has type const unexpect_t.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_same_v<decltype(unexpect), const unexpect_t>, "unexpect must be of type const unexpect_t");
 }
 
@@ -66,6 +76,12 @@ class MoveOnlyType
 
 TEST(UnexpectedTest, IsCopyConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that unexpected<E> is copy constructible when E is copyable, and that the copy holds the "
+                   "same error as the original.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an unexpected that is copyable
     std::int32_t value{15};
     unexpected unit{CopyableType{value}};
@@ -80,6 +96,12 @@ TEST(UnexpectedTest, IsCopyConstructible)
 
 TEST(UnexpectedTest, IsMoveConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that unexpected<E> is move constructible when E is move-only, and that the error is "
+                   "transferred to the moved-to instance.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an unexpected that is move-only
     std::int32_t value{13};
     unexpected unit{MoveOnlyType{value}};
@@ -93,6 +115,12 @@ TEST(UnexpectedTest, IsMoveConstructible)
 
 TEST(UnexpectedTest, CanBeConstructedFromCompatibleType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that unexpected<E> can be constructed directly from a value convertible to E, for use in "
+                   "setting a Result to an error state.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given some value
     std::int32_t value{16};
 
@@ -105,6 +133,12 @@ TEST(UnexpectedTest, CanBeConstructedFromCompatibleType)
 
 TEST(UnexpectedTest, CanBeInPlaceConstructedFromCompatibleArguments)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that unexpected<E> can be constructed in place, forwarding constructor arguments directly "
+                   "to E, without requiring a temporary E to be built first.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a target type that is constructible with arguments based on two other types
     struct TargetType
     {
@@ -130,6 +164,12 @@ TEST(UnexpectedTest, CanBeInPlaceConstructedFromCompatibleArguments)
 
 TEST(UnexpectedTest, CanBeInPlaceConstructedFromInitializerList)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that unexpected<E> can be constructed in place from an initializer list plus additional "
+                   "constructor arguments forwarded to E.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a target type that is constructible with an initializer list and other arguments based on two other types
     struct TargetType
     {
@@ -155,6 +195,10 @@ TEST(UnexpectedTest, CanBeInPlaceConstructedFromInitializerList)
 
 TEST(UnexpectedTest, IsCopyAssignable)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that copy-assigning one unexpected<E> to another replaces its held error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two unexpected with different values
     std::int32_t value{15};
     unexpected unit{CopyableType{value}};
@@ -172,6 +216,10 @@ TEST(UnexpectedTest, IsCopyAssignable)
 
 TEST(UnexpectedTest, IsMoveAssignable)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that move-assigning one unexpected<E> to another transfers its held error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two unexpected with different values
     std::int32_t value{13};
     unexpected unit{MoveOnlyType{value}};
@@ -188,6 +236,11 @@ TEST(UnexpectedTest, IsMoveAssignable)
 
 TEST(UnexpectedTest, CanRetrieveErrorFromConstLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-lvalue unexpected<E> returns the held error by const reference.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an unexpected with a value
     std::int32_t value{13};
     const unexpected unit{CopyableType{value}};
@@ -201,6 +254,11 @@ TEST(UnexpectedTest, CanRetrieveErrorFromConstLValueReference)
 
 TEST(UnexpectedTest, CanRetrieveErrorFromLValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an lvalue unexpected<E> returns the held error by mutable reference.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an unexpected with a value
     std::int32_t value{13};
     unexpected unit{CopyableType{value}};
@@ -217,6 +275,12 @@ TEST(UnexpectedTest, CanRetrieveErrorFromLValueReference)
 
 TEST(UnexpectedTest, CanRetrieveErrorFromConstRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on a const-rvalue unexpected<E> returns the held error by const rvalue "
+                   "reference.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an unexpected with a value
     std::int32_t value{13};
     const unexpected unit{MoveOnlyType{value}};
@@ -232,6 +296,12 @@ TEST(UnexpectedTest, CanRetrieveErrorFromConstRValueReference)
 
 TEST(UnexpectedTest, CanRetrieveErrorFromRValueReference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description",
+                   "Check that error() on an rvalue unexpected<E> returns the held error by rvalue reference, "
+                   "enabling the error to be moved out.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an unexpected with a value
     std::int32_t value{13};
     unexpected unit{MoveOnlyType{value}};
@@ -247,6 +317,10 @@ TEST(UnexpectedTest, CanRetrieveErrorFromRValueReference)
 
 TEST(UnexpectedTest, CanCompareEquality)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__error_handling");
+    RecordProperty("Description", "Check that two unexpected<E> compare equal iff their held errors compare equal.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an unexpected
     std::int32_t value{13};
     unexpected lhs{CopyableType{value}};
@@ -266,6 +340,10 @@ TEST(UnexpectedTest, CanCompareEquality)
 
 TEST(UnexpectedTest, CanSwapWithStdSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that std::swap exchanges the held errors of two unexpected<E> instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two unexpected with different values
     std::int32_t value{13};
     unexpected unit{CopyableType{value}};
@@ -282,6 +360,12 @@ TEST(UnexpectedTest, CanSwapWithStdSwap)
 
 TEST(UnexpectedTest, CanSwapWithTypeSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that the member swap() function exchanges the held errors of two unexpected<E> "
+                   "instances.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two unexpected with different values
     std::int32_t value{13};
     unexpected unit{CopyableType{value}};
@@ -298,6 +382,12 @@ TEST(UnexpectedTest, CanSwapWithTypeSwap)
 
 TEST(UnexpectedTest, DeductionGuideIsSpecified)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that class template argument deduction constructs unexpected<E> with E deduced from the "
+                   "constructor argument.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an unexpected that was constructed using the type deduction guide
     std::int32_t value{13};
     unexpected unit{CopyableType{value}};

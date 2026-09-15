@@ -95,6 +95,13 @@ using NonRelocatableVectorSpecialMemberFunctionRecorderFixture =
 
 TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithZeroElementsSetsSizeAndCapacityToZero)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that constructing a NonRelocatableVector with zero elements yields size() == 0 "
+                         "and capacity() == 0.");
+
     // When constructing a NonRelocatableVector with zero elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(0U);
 
@@ -105,6 +112,13 @@ TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithZeroElementsSetsSizeAndC
 
 TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, ConstructingWithZeroElementsDoesNotAllocate)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that constructing a NonRelocatableVector with zero elements does not allocate "
+                         "any memory.");
+
     // When constructing a NonRelocatableVector with zero elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(0U);
 
@@ -114,6 +128,13 @@ TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, ConstructingWithZero
 
 TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithNonZeroElementsSetsCapacity)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that constructing a NonRelocatableVector with a non-zero element count sets "
+                         "capacity() to that count while size() remains 0.");
+
     // When constructing a NonRelocatableVector with kNonZeroNumberElements elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -124,6 +145,13 @@ TYPED_TEST(NonRelocatableVectorFixture, ConstructingWithNonZeroElementsSetsCapac
 
 TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, ConstructingWithNonZeroElementsAllocatesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that constructing a NonRelocatableVector with a non-zero element count allocates "
+                         "exactly capacity() * sizeof(element) bytes up front.");
+
     // When constructing a NonRelocatableVector with kNonZeroNumberElements elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -137,6 +165,13 @@ TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, ConstructingWithNonZ
 TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
        ConstructingWithNonZeroElementsDoesNotCallElementConstructors)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that constructing a NonRelocatableVector reserves storage without invoking any "
+                   "element constructors.");
+
     // When constructing a NonRelocatableVector with kNonZeroNumberElements elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -146,6 +181,13 @@ TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
 
 TYPED_TEST(NonRelocatableVectorFixture, DestructingWithZeroElementsDoesNotDeallocate)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that destroying a zero-capacity NonRelocatableVector does not deallocate any "
+                         "memory.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(0U);
 
     // When destructing the NonRelocatableVector with zero elements
@@ -157,6 +199,13 @@ TYPED_TEST(NonRelocatableVectorFixture, DestructingWithZeroElementsDoesNotDeallo
 
 TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, DestructingWithNonZeroElementsDeallocatesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that destroying a NonRelocatableVector deallocates exactly the memory that was "
+                         "allocated for its capacity.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     // When destructing the NonRelocatableVector with non-zero elements
@@ -172,6 +221,13 @@ TYPED_TEST(NonRelocatableVectorPolymorphicAllocatorFixture, DestructingWithNonZe
 TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
        DestructingWithNonZeroElementsDoesNotCallAnyDestructors)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that destroying a NonRelocatableVector with reserved but un-emplaced capacity does "
+                   "not invoke any element destructors.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     // When destructing the NonRelocatableVector with non-zero elements (although no emplaced elements)
@@ -184,6 +240,13 @@ TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
 TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
        DestructingWithNonZeroEmplacedElementsCallsDestructorAllElements)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that destroying a NonRelocatableVector invokes the destructor of every emplaced "
+                   "element exactly once.");
+
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
     // and given that kNonZeroNumberElements have been emplaced
@@ -201,6 +264,13 @@ TEST_F(NonRelocatableVectorSpecialMemberFunctionRecorderFixture,
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, CopyConstructingCopiesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a NonRelocatableVector of trivial elements duplicates "
+                         "every element's value.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -223,6 +293,13 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, CopyConstructingCopiesAllElements
 
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, CopyConstructingCopiesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a NonRelocatableVector of non-trivial elements "
+                         "duplicates every element's value.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -247,6 +324,13 @@ TYPED_TEST(NonRelocatableVectorNonTrivialFixture, CopyConstructingCopiesAllEleme
 
 TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, CopyConstructingCopiesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a NonRelocatableVector of trivially-constructible/"
+                         "destructible elements duplicates every element's value.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -286,6 +370,13 @@ TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, CannotC
 
 TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, CopyConstructingAllocatesBasedOnCapacity)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a NonRelocatableVector allocates memory based on the "
+                         "source's capacity, not its current size.");
+
     // Given a NonRelocatableVector which has been filled with less elements than its capacity
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     const auto memory_allocated_for_first_vector = this->memory_resource_.GetUserAllocatedBytes();
@@ -313,6 +404,12 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, C
 
 TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, CopyConstructingDoesNotDeallocateMemory)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a NonRelocatableVector does not deallocate any memory.");
+
     // Given a NonRelocatableVector which has been filled
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -328,6 +425,13 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, C
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveConstructingMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing a NonRelocatableVector of trivial elements transfers "
+                         "every element's value to the new vector.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -350,6 +454,13 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveConstructingMovesAllElements)
 
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, MoveConstructingMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing a NonRelocatableVector of non-trivial elements transfers "
+                         "every element's value to the new vector.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -374,6 +485,13 @@ TYPED_TEST(NonRelocatableVectorNonTrivialFixture, MoveConstructingMovesAllElemen
 
 TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, MoveConstructingMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing a NonRelocatableVector of trivially-constructible/"
+                         "destructible elements transfers every element's value to the new vector.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -413,6 +531,13 @@ TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, MoveCon
 
 TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, MoveConstructingDoesNotAllocateNewMemory)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing a NonRelocatableVector does not allocate any additional "
+                         "memory.");
+
     // Given a NonRelocatableVector which has been filled with less elements than its capacity
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     const auto memory_allocated_for_first_vector = this->memory_resource_.GetUserAllocatedBytes();
@@ -437,6 +562,12 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, M
 
 TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, MoveConstructingDoesNotDeallocateMemory)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing a NonRelocatableVector does not deallocate any memory.");
+
     // Given a NonRelocatableVector which has been filled
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 
@@ -452,6 +583,13 @@ TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, M
 
 TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveAssigningMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assigning a NonRelocatableVector of trivial elements replaces the "
+                         "target's elements with the source's.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -481,6 +619,13 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveAssigningMovesAllElements)
 
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, MoveAssigningMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assigning a NonRelocatableVector of non-trivial elements replaces the "
+                         "target's elements with the source's.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -512,6 +657,13 @@ TYPED_TEST(NonRelocatableVectorNonTrivialFixture, MoveAssigningMovesAllElements)
 
 TYPED_TEST(NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture, MoveAssigningMovesAllElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__non_relocatable_vector");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assigning a NonRelocatableVector of trivially-constructible/"
+                         "destructible elements replaces the target's elements with the source's.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
     for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
@@ -560,6 +712,13 @@ TYPED_TEST(NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture, MoveAss
 
 TYPED_TEST(NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture, MoveAssigningAllocatesBasedOnCapacity)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assigning a NonRelocatableVector whose target already has sufficient "
+                         "capacity does not allocate additional memory.");
+
     // Given a NonRelocatableVector which has been filled with elements
     this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
 

@@ -32,13 +32,12 @@ constexpr inline bool check_type_span(const char (&pretty_name)[N], std::size_t 
 
 TEST(detail, extract_type)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Logging library shall provide an annotation mechanism for data structures to support automatic "
-                   "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that visitor_extract_type/visitor_extract_type_span derive a struct's fully-qualified name "
+                   "from a compiler pretty-function string, including malformed bracket and whitespace edge cases.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     const auto& likely_format = "static constexpr auto& test::struct_visitable_impl<test::S1>::namedata()";
     const auto type_string = ::score::common::visitor::detail::visitor_extract_type<std::string>(likely_format);
     EXPECT_STREQ(type_string.c_str(), "test::S1");
@@ -54,13 +53,12 @@ TEST(detail, extract_type)
 
 TEST(detail, skip_trailing_space)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Verifies that 'strip_trailing_spaces' API shall return the value of the last parameter provided if "
-                   "it gets a value out of range or a value zero for parameter 'end'.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that strip_trailing_spaces clamps an out-of-range or zero end value to the value passed in, "
+                   "and correctly strips a run of trailing spaces at the bound.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     constexpr std::size_t expected_out_of_bounds_end_value = 16;
     constexpr std::size_t expected_zero_output_when_zero_input_end_value = 0;
     auto& simple_text = "simple text";

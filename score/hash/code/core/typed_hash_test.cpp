@@ -33,16 +33,32 @@ class TypedHashFixture : public ::testing::Test
 
 TEST_F(TypedHashFixture, CanCompareEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that two TypedHash instances with the same byte content compare equal.");
+
     EXPECT_EQ(unit_, (TypedHash<HashAlgorithm::kSha256>{{0x01}}));
 }
 
 TEST_F(TypedHashFixture, DoesNotCompareEqualOnDifferentContent)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that two TypedHash instances with different byte content do not compare equal.");
+
     EXPECT_NE(unit_, (TypedHash<HashAlgorithm::kSha256>{{0x02}}));
 }
 
 TEST_F(TypedHashFixture, GetBytesAsSpan)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that GetBytes() returns a span over the TypedHash's raw byte content.");
+
     Hash::ByteVector i1 = {0x01};
     score::cpp::span<const std::uint8_t> expected_result(i1);
     auto result = unit_.GetBytes();
@@ -51,6 +67,13 @@ TEST_F(TypedHashFixture, GetBytesAsSpan)
 
 TEST(TypedHashTest, CanCreateFromValidString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that TypedHash::FromString() parses a valid hex digest string into a TypedHash with "
+                   "the correct bytes, and ToString() round-trips back to the same string.");
+
     const score::cpp::pmr::string sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
     Hash::ByteVector expected_bytes = {0x89, 0xFD, 0xDE, 0x0B, 0x28, 0x37, 0x3D, 0xC4, 0xF3, 0x61,
                                        0xCF, 0xB8, 0x10, 0xB3, 0x53, 0x42, 0xCC, 0x2C, 0x32, 0x32};
@@ -71,6 +94,11 @@ TEST(TypedHashTest, CanCreateFromValidString)
 
 TEST(TypedHashTest, ToStringEmptyValueTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description", "Check that ToString() on a TypedHash<kNone> yields an empty string.");
+
     TypedHash<HashAlgorithm::kNone> unit{{0x01}};
     score::cpp::pmr::string result_str = unit.ToString();
     ASSERT_TRUE(result_str.empty());
@@ -78,6 +106,13 @@ TEST(TypedHashTest, ToStringEmptyValueTest)
 
 TEST(TypedHashTest, CanSerializeToJsonAny)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that TypedHash::ToAny() serializes the hash as its hexadecimal string representation, "
+                   "including the empty-string case for kNone.");
+
     const TypedHash<HashAlgorithm::kSha256> hash{{0xFF, 0x18, 0x25, 0x62, 0x92, 0xF5, 0xF2, 0xBA, 0x52, 0x61, 0xB5,
                                                   0x59, 0x40, 0xCD, 0xF1, 0x12, 0x5C, 0xE3, 0x0E, 0x97, 0xC2, 0x2A,
                                                   0xCE, 0x6A, 0xFA, 0x54, 0xB7, 0xAF, 0x38, 0x72, 0xC3, 0x51}};
@@ -95,6 +130,13 @@ TEST(TypedHashTest, CanSerializeToJsonAny)
 
 TEST(TypedHashTest, CanDeserializeFromJsonAny)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that TypedHash::FromAny() deserializes a hex string JSON value back into a TypedHash, "
+                   "and rejects an unsupported algorithm or a non-string JSON value with the expected error.");
+
     const TypedHash<HashAlgorithm::kSha256> expected_hash{
         {0xFF, 0x18, 0x25, 0x62, 0x92, 0xF5, 0xF2, 0xBA, 0x52, 0x61, 0xB5, 0x59, 0x40, 0xCD, 0xF1, 0x12,
          0x5C, 0xE3, 0x0E, 0x97, 0xC2, 0x2A, 0xCE, 0x6A, 0xFA, 0x54, 0xB7, 0xAF, 0x38, 0x72, 0xC3, 0x51}};
