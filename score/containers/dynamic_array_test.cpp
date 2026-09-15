@@ -59,6 +59,14 @@ TYPED_TEST_SUITE(DynamicArrayTestFixture, AllocatorTypes, );
 
 TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTrivialType)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty(
+        "Description",
+        "Check that constructing a DynamicArray of trivial-type elements yields the requested size with "
+        "value-initialized elements.");
+
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     EXPECT_EQ(unit.size(), 10);
@@ -71,12 +79,24 @@ TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTrivialType)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstructTrivialEmpty)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that constructing a DynamicArray with size zero yields size() == 0.");
+
     DynamicArray<TrivialType, TypeParam> unit{kEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
     EXPECT_EQ(unit.size(), kEmptyArraySize);
 }
 TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that constructing a DynamicArray of non-trivial-type elements value-initializes each "
+                         "element.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
 
     DynamicArray<NonTrivialType, decltype(non_trivial_type_alloc)> unit{kNonEmptyArraySize, non_trivial_type_alloc};
@@ -91,6 +111,13 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, CopyConstructTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing a DynamicArray of trivial elements duplicates size and element "
+                         "values.");
+
     DynamicArray<TrivialType, TypeParam> source_unit{kNonEmptyArraySize,
                                                      GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
@@ -111,6 +138,11 @@ TYPED_TEST(DynamicArrayTestFixture, CopyConstructTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, CopyConstructNonTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that copy construction duplicates non-trivial element values.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
     DynamicArray<NonTrivialType, decltype(non_trivial_type_alloc)> source_unit{kNonEmptyArraySize,
                                                                                non_trivial_type_alloc};
@@ -134,6 +166,13 @@ TYPED_TEST(DynamicArrayTestFixture, CopyConstructNonTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivialWithDefaultValue)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that constructing with an explicit default value initializes every element to that "
+                         "value.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
     NonTrivialType default_value{99U, 2.0f};
 
@@ -150,6 +189,12 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructNonTrivialWithDefaultValue)
 
 TYPED_TEST(DynamicArrayTestFixture, MoveConstructTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-constructing transfers size and element values from the source.");
+
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
@@ -170,6 +215,13 @@ TYPED_TEST(DynamicArrayTestFixture, MoveConstructTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, MoveConstructNonTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-construction transfers non-trivial element values without invoking element "
+                         "destructors.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonMoveableAndCopyableElementType>();
 
     // given a unit with non-trivial element type
@@ -198,6 +250,13 @@ TYPED_TEST(DynamicArrayTestFixture, MoveConstructNonTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, MoveAssignTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assignment replaces size and element values with those of the moved-from "
+                         "array.");
+
     const std::size_t array_size1{10U};
     const std::size_t array_size2{20U};
     DynamicArray<TrivialType, TypeParam> unit{array_size1,
@@ -223,6 +282,13 @@ TYPED_TEST(DynamicArrayTestFixture, MoveAssignTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, MoveAssignNonTrivial)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that move-assignment of non-trivial elements transfers values and destroys only the "
+                         "previously held elements exactly once.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonMoveableAndCopyableElementType>();
     const std::size_t array_size1{10U};
     const std::size_t array_size2{20U};
@@ -257,6 +323,12 @@ TYPED_TEST(DynamicArrayTestFixture, MoveAssignNonTrivial)
 
 TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("Description",
+                         "Check that self-move-assignment leaves the array's size and element values unchanged.");
+
     // given a DynamicArray of trivial type
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
@@ -276,6 +348,11 @@ TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
 
 TYPED_TEST(DynamicArrayTestFixture, CanSetValueOfArrayElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that elements can be written via at() and read back correctly.");
+
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
@@ -293,6 +370,12 @@ TYPED_TEST(DynamicArrayTestFixture, CanSetValueOfArrayElements)
 
 TYPED_TEST(DynamicArrayTestFixture, CanConstructWithNonMoveableOrCopyableElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that a DynamicArray can hold an element type that is neither movable nor copyable.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonMoveableAndCopyableElementType>();
 
     DynamicArray<NonMoveableAndCopyableElementType, decltype(non_trivial_type_alloc)> unit{kNonEmptyArraySize,
@@ -303,6 +386,13 @@ TYPED_TEST(DynamicArrayTestFixture, CanConstructWithNonMoveableOrCopyableElement
 
 TYPED_TEST(DynamicArrayTestFixture, DestructorOfNonTrivialTypesCalled)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that destroying a DynamicArray invokes the destructor of every non-trivial element "
+                         "exactly once.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonMoveableAndCopyableElementType>();
 
     {
@@ -315,6 +405,14 @@ TYPED_TEST(DynamicArrayTestFixture, DestructorOfNonTrivialTypesCalled)
 
 TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTriviallyConstructableDestructibleElements)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty(
+        "Description",
+        "Check construction with a trivially-constructible/destructible element type value-initializes "
+        "elements.");
+
     auto trivially_constructible_destructible_alloc =
         this->template getTypeSpecificAllocator<TriviallyConstructibleDestructibleType>();
 
@@ -331,6 +429,13 @@ TYPED_TEST(DynamicArrayTestFixture, CanConstructWithTriviallyConstructableDestru
 
 TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithTooManyElementsTerminates)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that constructing a DynamicArray whose requested size overflows allocation capacity "
+                         "throws or terminates instead of succeeding silently.");
+
     constexpr std::size_t array_size_exceeding_limit{std::numeric_limits<std::size_t>::max()};
 
     const auto initialise_dynamic_array = [this] {
@@ -356,6 +461,13 @@ TYPED_TEST(DynamicArrayTestFixture, ConstructingDynamicArrayWithTrivialTypeWithT
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingConstRefArrayOutOfBoundsTerminates)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that accessing a const element one past the last valid index terminates via contract "
+                         "violation.");
+
     DynamicArray<TrivialType> unit(kNonEmptyArraySize);
 
     const auto access_const_ref_out_of_bounds = [&unit]() {
@@ -368,6 +480,11 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingConstRefArrayOutOfBoundsTerminates)
 
 TYPED_TEST(DynamicArrayTestFixture, IteratingTrivialType)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that begin()/end() iteration visits every trivial element in order.");
+
     DynamicArray<TrivialType, TypeParam> unit{kNonEmptyArraySize,
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
@@ -387,6 +504,14 @@ TYPED_TEST(DynamicArrayTestFixture, IteratingTrivialType)
 
 TYPED_TEST(DynamicArrayTestFixture, IteratingNonTrivialType)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty(
+        "Description",
+        "Check that begin()/end() iteration visits and allows mutation of every non-trivial element in "
+        "order.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
 
     DynamicArray<NonTrivialType, decltype(non_trivial_type_alloc)> unit{kNonEmptyArraySize, non_trivial_type_alloc};
@@ -409,6 +534,12 @@ TYPED_TEST(DynamicArrayTestFixture, IteratingNonTrivialType)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstIteratingNonTrivialType)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that const begin()/end() iteration exposes read-only access to non-trivial elements.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
 
     const DynamicArray<NonTrivialType, decltype(non_trivial_type_alloc)> unit{kNonEmptyArraySize,
@@ -423,6 +554,12 @@ TYPED_TEST(DynamicArrayTestFixture, ConstIteratingNonTrivialType)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstIteratingNonTrivialTypeVariation)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description",
+                         "Check that cbegin()/cend() iteration visits every non-trivial element exactly once.");
+
     auto non_trivial_type_alloc = this->template getTypeSpecificAllocator<NonTrivialType>();
 
     DynamicArray<NonTrivialType, decltype(non_trivial_type_alloc)> unit{kNonEmptyArraySize, non_trivial_type_alloc};
@@ -439,6 +576,11 @@ TYPED_TEST(DynamicArrayTestFixture, ConstIteratingNonTrivialTypeVariation)
 
 TYPED_TEST(DynamicArrayTestFixture, BracketOperatorAllowsSettingDataAtIndex)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that operator[] allows writing element values at a given index.");
+
     DynamicArray<TrivialType> unit{kNonEmptyArraySize};
     for (TrivialType i = 0; i < unit.size(); ++i)
     {
@@ -453,6 +595,11 @@ TYPED_TEST(DynamicArrayTestFixture, BracketOperatorAllowsSettingDataAtIndex)
 
 TYPED_TEST(DynamicArrayTestFixture, BracketOperatorAllowsGettingDataAtIndex)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that operator[] allows reading back previously written element values.");
+
     DynamicArray<TrivialType> unit{kNonEmptyArraySize};
     for (TrivialType i = 0; i < unit.size(); ++i)
     {
@@ -467,6 +614,11 @@ TYPED_TEST(DynamicArrayTestFixture, BracketOperatorAllowsGettingDataAtIndex)
 
 TYPED_TEST(DynamicArrayTestFixture, ConstBracketOperatorAllowsGettingDataAtIndex)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that the const operator[] returns previously written element values.");
+
     DynamicArray<TrivialType> unit{kNonEmptyArraySize};
     for (TrivialType i = 0; i < unit.size(); ++i)
     {
@@ -484,18 +636,33 @@ TYPED_TEST(DynamicArrayTestFixture, ConstBracketOperatorAllowsGettingDataAtIndex
 
 TYPED_TEST(DynamicArrayTestFixture, DataShouldReturnPointerToFirstElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that data() returns a pointer to the first element.");
+
     DynamicArray<TrivialType> unit{kNonEmptyArraySize};
     EXPECT_EQ(unit.data(), &unit.at(0));
 }
 
 TYPED_TEST(DynamicArrayTestFixture, ConstDataShouldReturnPointerToFirstElement)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Description", "Check that the const data() returns a pointer to the first element.");
+
     const DynamicArray<TrivialType> unit{kNonEmptyArraySize};
     EXPECT_EQ(unit.data(), &unit.at(0));
 }
 
 TYPED_TEST(DynamicArrayTestFixture, BeginIsEqualToEndWhenArrayIsEmpty)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that begin() equals end() for an empty DynamicArray.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -508,6 +675,11 @@ TYPED_TEST(DynamicArrayTestFixture, BeginIsEqualToEndWhenArrayIsEmpty)
 
 TYPED_TEST(DynamicArrayTestFixture, CBeginIsEqualToCEndWhenArrayIsEmpty)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that cbegin() equals cend() for an empty DynamicArray.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -520,6 +692,11 @@ TYPED_TEST(DynamicArrayTestFixture, CBeginIsEqualToCEndWhenArrayIsEmpty)
 
 TYPED_TEST(DynamicArrayTestFixture, DataReturnsNullptrWhenArrayIsEmpty)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that data() returns nullptr for an empty DynamicArray.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -532,6 +709,11 @@ TYPED_TEST(DynamicArrayTestFixture, DataReturnsNullptrWhenArrayIsEmpty)
 
 TYPED_TEST(DynamicArrayTestFixture, SizeReturnsZeroWhenArrayIsEmpty)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that size() is 0 for a DynamicArray constructed with zero elements.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -544,6 +726,13 @@ TYPED_TEST(DynamicArrayTestFixture, SizeReturnsZeroWhenArrayIsEmpty)
 
 TYPED_TEST(DynamicArrayTestFixture, SizeReturnsZeroWhenArrayIsEmptyWithValue)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that size() is 0 for a zero-size DynamicArray constructed with an explicit initial "
+                         "value.");
+
     // Given an empty DynamicArray which takes an initial value
     constexpr std::size_t kNumberOfElements{0U};
     constexpr TrivialType kInitialValue{1};
@@ -558,6 +747,13 @@ TYPED_TEST(DynamicArrayTestFixture, SizeReturnsZeroWhenArrayIsEmptyWithValue)
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithAtWhenArrayIsEmptyTerminates)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that at() on an empty DynamicArray terminates via contract violation instead of "
+                         "returning.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -568,6 +764,13 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithAtWhenArrayIsEmptyTermin
 
 TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that operator[] on an empty DynamicArray terminates via contract violation instead of "
+                         "returning.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -578,6 +781,11 @@ TYPED_TEST(DynamicArrayTestFixture, AccessingElementWithIndexOperatorWhenArrayIs
 
 TYPED_TEST(DynamicArrayTestFixture, IteratingOverEmptyArrayIteratesZeroTimes)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description", "Check that iterating an empty DynamicArray performs zero loop iterations.");
+
     // Given an empty DynamicArray
     const DynamicArray<TrivialType> unit{0U};
 
@@ -595,6 +803,14 @@ TYPED_TEST(DynamicArrayTestFixture, IteratingOverEmptyArrayIteratesZeroTimes)
 TEST(EmptyDynamicArrayOfNonTrivialElementTypeMemoryTest,
      TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check under external memory-checking tooling that constructing and destroying an empty "
+                         "DynamicArray of a non-trivial element type does not leak memory; this test has no gtest "
+                         "assertion and relies on valgrind/ASan.");
+
     std::size_t array_size{0};
     DynamicArray<NonTrivialType> da(array_size);
     EXPECT_TRUE(true);
@@ -602,6 +818,15 @@ TEST(EmptyDynamicArrayOfNonTrivialElementTypeMemoryTest,
 
 TEST(EmptyDynamicArrayOfTrivialElementTypeMemoryTest, TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__deterministic_behavior");
+    this->RecordProperty("TestType", "resource-usage");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty(
+        "Description",
+        "Check under external memory-checking tooling that constructing and destroying an empty "
+        "DynamicArray of a trivial element type does not leak memory; this test has no gtest assertion "
+        "and relies on valgrind/ASan.");
+
     std::size_t array_size{0};
     DynamicArray<TrivialType> da(array_size);
     EXPECT_TRUE(true);
@@ -611,6 +836,14 @@ TEST(EmptyDynamicArrayOfTrivialElementTypeMemoryTest, TestNeverFailsButMemcheckD
 // but leave dynamic_array_ as nullptr
 TEST(DynamicArrayCopyConstructorMemoryTest, CopyConstructorWithZeroSizeArrayDoesNotLeakMemory)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty(
+        "Description",
+        "Check that copy-constructing from a zero-size DynamicArray yields a valid empty array (nullptr "
+        "data, equal begin/end) instead of leaking memory.");
+
     // Given an empty source array
     DynamicArray<TrivialType> source_array{0U};
     EXPECT_EQ(source_array.size(), 0U);
@@ -629,6 +862,13 @@ TEST(DynamicArrayCopyConstructorMemoryTest, CopyConstructorWithZeroSizeArrayDoes
 // Test the same scenario with non-trivial types to ensure the fix works for both code paths
 TEST(DynamicArrayCopyConstructorMemoryTest, CopyConstructorWithNonTrivialZeroSizeArrayDoesNotLeakMemory)
 {
+    this->RecordProperty("PartiallyVerifies", "comp_req__containers__dynamic_array");
+    this->RecordProperty("TestType", "fault-injection");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("Description",
+                         "Check that copy-constructing from a zero-size DynamicArray of a non-trivial element type "
+                         "yields a valid empty array instead of leaking memory.");
+
     // Given an empty source array of non-trivial type
     DynamicArray<NonTrivialType> source_array{0U};
     EXPECT_EQ(source_array.size(), 0U);
