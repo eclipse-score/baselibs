@@ -19770,7 +19770,7 @@
   {
     "name": "HashTest__ValidateContents",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "133",
+    "line": "132",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -19840,7 +19840,7 @@
   {
     "name": "TypedHashTest__ToStringEmptyValueTest",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "72",
+    "line": "71",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -19854,7 +19854,7 @@
   {
     "name": "TypedHashTest__CanSerializeToJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "79",
+    "line": "78",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -19868,7 +19868,7 @@
   {
     "name": "TypedHashTest__CanDeserializeFromJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "96",
+    "line": "95",
     "result": "passed",
     "repo_name": null,
     "hash": null,
