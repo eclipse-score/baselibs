@@ -22304,7 +22304,7 @@
   {
     "name": "LockedPtrTest__AndThenLvalueRefCallableReturnsNullopt",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "584",
+    "line": "597",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22318,7 +22318,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "596",
+    "line": "609",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22332,7 +22332,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "609",
+    "line": "622",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22346,7 +22346,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefCallableReturnsNullopt",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "618",
+    "line": "637",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22360,7 +22360,7 @@
   {
     "name": "LockedPtrTest__AndThenRvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "630",
+    "line": "649",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22374,7 +22374,7 @@
   {
     "name": "LockedPtrTest__AndThenRvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "645",
+    "line": "664",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22388,7 +22388,7 @@
   {
     "name": "LockedPtrTest__AndThenConstRvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "655",
+    "line": "674",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22402,7 +22402,7 @@
   {
     "name": "LockedPtrTest__AndThenConstRvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "668",
+    "line": "687",
     "result": "passed",
     "repo_name": null,
     "hash": null,
