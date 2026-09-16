@@ -45,7 +45,6 @@ cc_library(
     deps = [
         "@score_baselibs//score/hash/code/core/factory",
         "@score_baselibs//score/hash/code/crc:crc_ieee",
-        "@score_baselibs//score/hash/code/openssl:openssl_cal",
         "@score_baselibs//score/hash/code/sha256digest",
     ],
 )
@@ -103,7 +102,6 @@ cc_test(
         ":hash_impl_ieee",
         ":safe_hash_impl_ieee",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/hash/code/openssl/openssl_wrapper:openssl_lib_mock",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
 )

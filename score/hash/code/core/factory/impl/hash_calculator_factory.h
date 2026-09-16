@@ -15,7 +15,6 @@
 #define SCORE_LIB_HASH_CODE_CORE_FACTORY_IMPL_HASHCALCULATOR_FATCORY_H
 
 #include "score/hash/code/core/factory/i_hash_calculator_factory.h"
-#include "score/hash/code/openssl/openssl_hash_calculator.h"
 
 namespace score
 {
@@ -26,14 +25,8 @@ namespace hash
 class HashCalculatorFactory final : public IHashCalculatorFactory
 {
   public:
-    explicit HashCalculatorFactory(
-        score::cpp::optional<std::reference_wrapper<const openssl::IOpensslLib>> openssl_lib = {}) noexcept;
-
     Result<std::unique_ptr<IHashCalculator>> CreateHashCalculator(
         const HashAlgorithm algorithm) const noexcept override;
-
-  private:
-    score::cpp::optional<std::reference_wrapper<const openssl::IOpensslLib>> openssl_lib_;
 };
 
 }  // namespace hash

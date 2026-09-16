@@ -72,32 +72,6 @@ class "MessageBuffer<T, N>" as MessageBuffer {
   -size_: SizeType
 }
 
-interface IOpensslLib {
-  using StructDigest = ::EVP_MD
-  using StructDigestCtx = ::EVP_MD_CTX
-  using Engine = ::ENGINE
-  --
-  +DigestAlgoSha1() const: const StructDigest*
-  +DigestAlgoSha256() const: const StructDigest*
-  +DigestAlgoSha384() const: const StructDigest*
-  +DigestAlgoSha512() const: const StructDigest*
-  +CreateDigestCtx() const: StructDigestCtx*
-  +InitDigestCtx(ctx: StructDigestCtx* , type: const StructDigest*,impl:  Engine* ) const: std::int32_t
-  +UpdateDigestCtx(ctx: StructDigestCtx* , data: const void*,count:  std::size_t ) const: std::int32_t
-  +FinalizeDigestValue(ctx: StructDigestCtx* , digest_value: unsigned char* ,digest_size: unsigned int* ) const: std::int32_t
-  +ResetDigestCtx(ctx: StructDigestCtx* ) const: void
-}
-
-class OpensslLibImpl {
-}
-
-class OpensslHashCalculator {
-  -message_digest_context_: StructDigestCtx
-  -message_digest_value_: std::array<std::uint8_t, kMaxDigestSize>
-  --
-  +Create( algorithm: types::HashAlgorithm, openssl: const IOpensslLib&): Result<HashCalculator>
-}
-
 ' Relationships
 IHashCalculatorFactory <|.. HashCalculatorFactory : implements
 IHashCalculatorFactory <|.. SafeHashCalculatorFactory : implements
@@ -108,7 +82,6 @@ SafeHashCalculatorFactory ..> IHashCalculator : create
 IHashCalculatorFactory ..> Hash : create
 
 IHashCalculator <|-- ICrc32HashCalculator : extends
-IHashCalculator <|-- OpensslHashCalculator : implements
 IHashCalculator <|-- Sha256Digest : implements
 
 ICrc32HashCalculator <|-- Crc32HashCalculator : implements
@@ -116,8 +89,5 @@ ICrc32HashCalculator <|-- Crc32HashCalculator : implements
 Crc32HashCalculator --> LookupTable : «uses»
 
 Sha256Digest o-- MessageBuffer : composition
-
-OpensslHashCalculator --> IOpensslLib : uses
-IOpensslLib <|.. OpensslLibImpl : implements
 
 @enduml

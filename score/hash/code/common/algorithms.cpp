@@ -30,17 +30,8 @@ score::cpp::optional<std::uint8_t> HashSizeInBytes(const HashAlgorithm algorithm
         case HashAlgorithm::kCrc32Autosar:
             hashSizeInBytes = kCrc32AutosarSize;
             break;
-        case HashAlgorithm::kSha1:
-            hashSizeInBytes = kSha1Size;
-            break;
         case HashAlgorithm::kSha256:
             hashSizeInBytes = kSha256Size;
-            break;
-        case HashAlgorithm::kSha384:
-            hashSizeInBytes = kSha384Size;
-            break;
-        case HashAlgorithm::kSha512:
-            hashSizeInBytes = kSha512Size;
             break;
         case HashAlgorithm::kNone:
         case HashAlgorithm::kLast:
@@ -74,17 +65,8 @@ HashAlgorithm IdentifyHash(std::string_view hash_string) noexcept
             // there's no way to distinguish between kCrc32 and kCrc32Autosar based on the bytes alone
             identifiedHash = HashAlgorithm::kCrc32;
             break;
-        case kSha1Size * 2U:
-            identifiedHash = HashAlgorithm::kSha1;
-            break;
         case kSha256Size * 2U:
             identifiedHash = HashAlgorithm::kSha256;
-            break;
-        case kSha384Size * 2U:
-            identifiedHash = HashAlgorithm::kSha384;
-            break;
-        case kSha512Size * 2U:
-            identifiedHash = HashAlgorithm::kSha512;
             break;
         default:
             break;
@@ -103,17 +85,8 @@ HashAlgorithm IdentifyHash(std::size_t hash_size_in_bytes) noexcept
             // there's no way to distinguish between kCrc32 and kCrc32Autosar based on the bytes alone
             identifiedHash = HashAlgorithm::kCrc32;
             break;
-        case kSha1Size:
-            identifiedHash = HashAlgorithm::kSha1;
-            break;
         case kSha256Size:
             identifiedHash = HashAlgorithm::kSha256;
-            break;
-        case kSha384Size:
-            identifiedHash = HashAlgorithm::kSha384;
-            break;
-        case kSha512Size:
-            identifiedHash = HashAlgorithm::kSha512;
             break;
         default:
             break;

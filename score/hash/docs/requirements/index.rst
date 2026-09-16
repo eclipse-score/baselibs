@@ -90,18 +90,19 @@ Functional Requirements
    the computation, so that the calling code is not coupled to any specific
    algorithm implementation.
 
-.. comp_req:: Cryptographic Hash Algorithms
+.. comp_req:: Transitional Safety-Integrity SHA-256
    :id: comp_req__hash__sha_algorithms
    :reqtype: Functional
-   :security: YES
+   :security: NO
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
-   :version: 1
+   :version: 2
    :satisfied_by: comp__baselibs_hash[version==1]
 
-   The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
-   cryptographic hash algorithms.
+   The hash library shall provide the native SHA-256 implementation required by
+   existing safety-integrity consumers until a qualified replacement is
+   available. Security use cases shall use the Security Crypto feature.
 
 .. comp_req:: CRC-32 Checksum Algorithm
    :id: comp_req__hash__crc32_algorithm

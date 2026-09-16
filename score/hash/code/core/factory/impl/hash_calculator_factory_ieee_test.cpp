@@ -11,10 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/hash/code/common/algorithms.h"
-#include "score/hash/code/common/error.h"
 #include "score/hash/code/core/factory/impl/hash_calculator_factory.h"
 #include "score/hash/code/core/factory/impl/safe_hash_calculator_factory.h"
-#include "score/hash/code/openssl/openssl_wrapper/openssl_lib_mock.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -115,11 +113,23 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32AutosarNotSupportedInIeeeVa
     EXPECT_FALSE(result.has_value());
 }
 
+TYPED_TEST_P(HashCalculatorFactoryCreationTest, RemovedCryptographicAlgorithmsAreNotSupported)
+{
+    TypeParam unit{};
+
+    for (const auto removed_algorithm_value : {1U, 3U, 4U})
+    {
+        const auto removed_algorithm = static_cast<HashAlgorithm>(removed_algorithm_value);
+        EXPECT_FALSE(unit.CreateHashCalculator(removed_algorithm).has_value());
+    }
+}
+
 REGISTER_TYPED_TEST_SUITE_P(HashCalculatorFactoryCreationTest,
                             HashCalculatorFactorySuccessTest,
                             CalculateSha256,
                             CalculateCrc32,
-                            Crc32AutosarNotSupportedInIeeeVariant);
+                            Crc32AutosarNotSupportedInIeeeVariant,
+                            RemovedCryptographicAlgorithmsAreNotSupported);
 using Factories = ::testing::Types<HashCalculatorFactory, SafeHashCalculatorFactory>;
 
 INSTANTIATE_TYPED_TEST_SUITE_P(WorkingDigests, HashCalculatorFactoryCreationTest, Factories, );
@@ -223,38 +233,10 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInputWithMaxRead)
     EXPECT_EQ(hash_result_sha256.value(), (Hash{HashAlgorithm::kSha256, expected_sha256}));
 }
 
-TEST(HashCalculatorFactory, InstantiateWithFailingOpenSslLib)
-{
-    openssl::OpensslLibMock open_ssl_lib_mock{};
-    EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha1()).WillOnce(::testing::Return(nullptr));
-    HashCalculatorFactory unit{std::cref(open_ssl_lib_mock)};
-    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha1)};
-    ASSERT_FALSE(create_result.has_value());
-    EXPECT_EQ(create_result.error(), ErrorCode::kCouldNotCreateDigest);
-}
-
-TEST(HashCalculatorFactory, InstantiateWithSuccess)
-{
-    openssl::OpensslLibMock open_ssl_lib_mock{};
-    {
-        openssl::StructDigestCtx* digest_context{reinterpret_cast<openssl::StructDigestCtx*>(0xC0DEBEEF)};
-        const openssl::StructDigest* digest{reinterpret_cast<const openssl::StructDigest*>(0xDEADBEEF)};
-
-        ::testing::InSequence seq{};
-        EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha1()).WillOnce(::testing::Return(digest));
-        EXPECT_CALL(open_ssl_lib_mock, CreateDigestCtx()).WillOnce(::testing::Return(digest_context));
-        EXPECT_CALL(open_ssl_lib_mock, InitDigestCtx(digest_context, digest, nullptr)).WillOnce(::testing::Return(37));
-    }
-
-    HashCalculatorFactory unit{std::cref(open_ssl_lib_mock)};
-    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha1)};
-    EXPECT_TRUE(create_result.has_value());
-}
-
 TEST(SafeHashCalculatorFactory, TryToInstantiateNonexistentHash)
 {
     SafeHashCalculatorFactory unit{};
-    EXPECT_FALSE(unit.CreateHashCalculator(HashAlgorithm::kSha1).has_value());
+    EXPECT_FALSE(unit.CreateHashCalculator(HashAlgorithm::kNone).has_value());
 }
 
 }  // namespace

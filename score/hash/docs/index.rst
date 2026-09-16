@@ -24,6 +24,13 @@ hash
    :realizes: wp__cmpt_request[version==1]
    :security: NO
 
+This component provides IEEE CRC-32 and temporarily retains the native SHA-256
+implementation for existing safety-integrity consumers. Cryptographic SHA-256,
+SHA-384, and SHA-512 operations are owned by the Security Crypto feature. See
+`inc_security_crypto issue #125
+<https://github.com/eclipse-score/inc_security_crypto/issues/125>`_ for the
+migration context.
+
 .. toctree::
    :hidden:
 
