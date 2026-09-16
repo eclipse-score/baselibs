@@ -10,17 +10,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-name: Formatting checks
-permissions:
-  contents: read
-  actions: write
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-  merge_group:
-    types: [checks_requested]
-jobs:
-  formatting-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@f57b605a284ca117bcfd9f83ea427096faaac7d1
-    with:
-      bazel-target: "test --test_output=errors //tools:format.check"
+# Maps each linter's short name to the rules_lint aspect mnemonic used in its
+# output filenames. Sourced by lint.yml so both steps that need this mapping
+# stay in sync.
+declare -A LINT_MNEMONICS=(
+  [clang-tidy]=AspectRulesLintClangTidy
+  [clippy]=AspectRulesLintClippy
+  [ruff]=AspectRulesLintRuff
+)
