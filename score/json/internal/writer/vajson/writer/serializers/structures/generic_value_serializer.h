@@ -28,10 +28,8 @@
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
-#include "score/json/internal/writer/vajson/writer/serializers/util/length_serializer.h"
 #include "score/json/internal/writer/vajson/writer/types/array_type.h"
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
-#include "score/json/internal/writer/vajson/writer/types/bin_types.h"
 #include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace score
@@ -156,24 +154,6 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes a binary string value
-    /// \details
-    /// - Add a 's' to denote the following value as a string.
-    /// - Serialize the length of the string value as four bytes big endian.
-    /// - Write the string value.
-    /// \param[in] string value to serialize.
-    /// \return The succeeding serializer.
-    // coverity[autosar_cpp14_m9_3_3_violation]
-    auto operator<<(JBinStringType string) && noexcept -> Next
-    {
-        return this->Serialize([this, string]() noexcept {
-            this->os_.get().put('s');
-            internal::SerializeLength(this->os_.get(), string.GetLength());
-            const auto& value = string.GetValue();
-            this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
-        });
-    }
-
     /// \brief Serializes a series of serializable values
     /// \details
     /// - Add an opening square bracket.
@@ -191,24 +171,6 @@ class GenericValueSerializer final
             this->os_.get().put('[');
             static_cast<void>(tuple.fn(ArrayStart(this->os_.get())));
             this->os_.get().put(']');
-        });
-    }
-
-    /// \brief Serializes a binary value
-    /// \details
-    /// - Add a 'b' to denote the following value as binary.
-    /// - Serialize the length of the binary value as four bytes big endian.
-    /// - Write the binary value.
-    /// \param[in] bin Value to serialize.
-    /// \return The succeeding serializer.
-    // coverity[autosar_cpp14_m9_3_3_violation]
-    auto operator<<(JBinType bin) && noexcept -> Next
-    {
-        return this->Serialize([this, bin]() noexcept {
-            this->os_.get().put('b');
-            internal::SerializeLength(this->os_.get(), bin.GetLength());
-            const auto& value = bin.GetValue();
-            this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
         });
     }
 

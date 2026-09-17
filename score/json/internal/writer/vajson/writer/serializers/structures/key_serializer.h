@@ -19,10 +19,7 @@
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
-#include "score/json/internal/writer/vajson/writer/serializers/util/length_serializer.h"
-#include "score/json/internal/writer/vajson/writer/types/array_type.h"
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
-#include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
 namespace score
 {
@@ -77,25 +74,6 @@ class KeySerializer final
         this->os_.get() << internal::EscapedJsonString(key);
         constexpr auto colon_str = R"(":)"sv;
         this->os_.get().write(colon_str.data(), colon_str.size());
-
-        return Next(this->os_.get());
-    }
-
-    /// \brief Serializes a binary key
-    /// \details
-    /// - Add a comma, if necessary.
-    /// - Serialize the length of the key as four bytes big endian.
-    /// - Write the key.
-    /// \param[in] key to serialize.
-    /// \return The succeeding serializer.
-    auto operator<<(JBinKeyType key) const&& noexcept -> Next
-    {
-        this->WriteComma();
-
-        this->os_.get().put('k');
-        internal::SerializeLength(this->os_.get(), key.GetLength());
-        const auto value = key.GetValue();
-        this->os_.get().write(value.data(), value.size());
 
         return Next(this->os_.get());
     }
