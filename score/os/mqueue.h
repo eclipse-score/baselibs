@@ -25,8 +25,6 @@
 #include <unistd.h>
 #include <ctime>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -63,8 +61,6 @@ class Mqueue : public ObjectSeam<Mqueue>
         kExecOthers = 0x100,
     };
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:system functions are not hidden as far these counterparts are part of class */
-
     virtual score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
                                                               const OpenFlag flags,
                                                               const ModeFlag perm,
@@ -94,8 +90,6 @@ class Mqueue : public ObjectSeam<Mqueue>
     virtual score::cpp::expected_blank<Error> mq_close(const mqd_t mqdes) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_getattr(const mqd_t mqdes, mq_attr& mqstat) const noexcept = 0;
 
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: system functions are not hidden as far these counterparts are part of class */
-
     virtual ~Mqueue() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Mqueue(const Mqueue&) = delete;
@@ -113,7 +107,6 @@ namespace impl
 class MqueueImpl final : public Mqueue
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:system functions are not hidden as far these counterparts are part of class */
     score::cpp::expected<std::int32_t, Error> mq_open(const char* const name,
                                                       const OpenFlag flags,
                                                       const ModeFlag perm,
@@ -149,7 +142,6 @@ class MqueueImpl final : public Mqueue
     score::cpp::expected_blank<Error> mq_close(const mqd_t mqdes) const noexcept override;
 
     score::cpp::expected_blank<Error> mq_getattr(const mqd_t mqdes, mq_attr& mqstat) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: system functions are not hidden as far these counterparts are part of class */
 
   private:
     std::int32_t openflag_to_nativeflag(const OpenFlag flags) const noexcept;

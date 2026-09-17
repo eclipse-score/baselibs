@@ -22,13 +22,11 @@
 #include <set>
 #include <tuple>
 
-/* KW_SUPPRESS_START:MISRA.INCL.INSIDE:Extern block for language linkage */
 extern "C" {
 #include <linux/if_arp.h>
 #include <net/ethernet.h>
 #include <sys/socket.h>
 }
-/* KW_SUPPRESS_END:MISRA.INCL.INSIDE:Extern block for language linkage */
 
 namespace score
 {
@@ -86,9 +84,7 @@ void vCopyInterfaceStatistics(LinkStats& stats, const ifaddrs* const ifa)
     {
         return;
     }
-    /* KW_SUPPRESS_START:MISRA.CAST.INT_TO_PTR:Data member is used to keep address specific data */
     const rtnl_link_stats* const pStats = static_cast<rtnl_link_stats*>(ifa->ifa_data);
-    /* KW_SUPPRESS_END:MISRA.CAST.INT_TO_PTR:Data member is used to keep address specific data */
     stats.rx_packets = pStats->rx_packets; /* total packets received */
     stats.tx_packets = pStats->tx_packets; /* total packets transmitted */
     stats.rx_bytes = pStats->rx_bytes;     /* total bytes received */
@@ -125,14 +121,13 @@ DeviceClass bFindIfaceClass(const sockaddr_ll* const sock_ll, const std::string&
         return DeviceClass::Unknown;
     }
 
-    /* KW_SUPPRESS_START:MISRA.SWITCH.NO_BREAK:Every case is finished with a return command, making break obsolete. */
     switch (sock_ll->sll_hatype)
     {
-        case static_cast<uint16_t>(ARPHRD_LOOPBACK): /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+        case static_cast<uint16_t>(ARPHRD_LOOPBACK):
             return DeviceClass::Loopback;
-        case static_cast<uint16_t>(ARPHRD_SIT): /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+        case static_cast<uint16_t>(ARPHRD_SIT):
             return DeviceClass::Sit;
-        case static_cast<uint16_t>(ARPHRD_ETHER): /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+        case static_cast<uint16_t>(ARPHRD_ETHER):
             // vlans and bridges still report as ethernet
             if (bIsInterfaceBridge(ifname.c_str()))
             {
@@ -149,7 +144,6 @@ DeviceClass bFindIfaceClass(const sockaddr_ll* const sock_ll, const std::string&
         default:
             return DeviceClass::Unknown;
     }
-    /* KW_SUPPRESS_END:MISRA.SWITCH.NO_BREAK:Every case is finished with a return command, making break obsolete. */
 }
 
 bool bFillInterfaceInformation(network_settings& interfaces) noexcept
@@ -172,26 +166,22 @@ bool bFillInterfaceInformation(network_settings& interfaces) noexcept
             auto& current_iface = interfaces[ifa->ifa_name];
             const auto family = ifa->ifa_addr->sa_family;
             // fetch information from the FLAGS
-            current_iface.admin_state =
-                static_cast<bool>(ifa->ifa_flags & IFF_UP); /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
-            current_iface.plugged = static_cast<bool>(
-                ifa->ifa_flags & IFF_RUNNING); /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+            current_iface.admin_state = static_cast<bool>(ifa->ifa_flags & IFF_UP);
+            current_iface.plugged = static_cast<bool>(ifa->ifa_flags & IFF_RUNNING);
 
             switch (family)
             {
-                case static_cast<uint16_t>(AF_INET): /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+                case static_cast<uint16_t>(AF_INET):
                     // copy IPv4 address
                     score::cpp::ignore = std::copy(
                         ifa->ifa_addr->sa_data, ifa->ifa_addr->sa_data + Ipv4Size, current_iface.ipv4.begin());
                     break;
                 case static_cast<uint16_t>(AF_PACKET):
-                { /* KW_SUPPRESS:MISRA.USE.EXPANSION:Library defined macro */
+                {
                     // fill statistics
                     vCopyInterfaceStatistics(current_iface.stats, ifa);
                     // get mac address
-                    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Safe use for a pointer to const value */
                     const struct sockaddr_ll* const link_layer = reinterpret_cast<struct sockaddr_ll*>(ifa->ifa_addr);
-                    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:Safe use for a pointer to const value */
                     score::cpp::ignore =
                         std::copy(link_layer->sll_addr, link_layer->sll_addr + MacSize, current_iface.mac.begin());
                     // get interface index
@@ -236,12 +226,10 @@ bool filter_bridges_interfaces(const network_interface& netif)
 }
 
 /* Return a list of references to interfaces which are of interest */
-/* KW_SUPPRESS_START:BMW.CPP.STD_FUNCTION:Asil level too low to fix */
 bool bFilterInterfaces(network_settings& net_set,
                        std::set<std::string>& filtered,
                        const std::vector<std::function<bool(const network_interface&)>>& filters)
 {
-    /* KW_SUPPRESS_END:BMW.CPP.STD_FUNCTION:Asil level too low to fix */
     if (filtered.empty())
     {
         /* Start with all the interfaces as part of the set */

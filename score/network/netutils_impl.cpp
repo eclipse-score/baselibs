@@ -29,9 +29,6 @@
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_START:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
-
 namespace score
 {
 namespace os
@@ -170,11 +167,7 @@ InterfaceAddressResult find_interface(const std::string& name, const sa_family_t
         return score::cpp::make_unexpected(ret.error());
     }
     const auto ifa_list = ret.value();
-    /* KW_SUPPRESS_START:MISRA.FOR.COND.EQ:ifaddrs list iteration */
-    /* KW_SUPPRESS_START:MISRA.FOR.INCR:ifaddrs list iteration */
     for (auto ifa = ifa_list; ifa != nullptr; ifa = ifa->ifa_next)
-    /* KW_SUPPRESS_END:MISRA.FOR.COND.EQ:ifaddrs list iteration */
-    /* KW_SUPPRESS_END:MISRA.FOR.INCR:ifaddrs list iteration */
     {
         if ((ifa->ifa_addr != nullptr) && (ifa->ifa_addr->sa_family == family) && (std::string(ifa->ifa_name) == name))
         {
@@ -193,6 +186,3 @@ InterfaceAddressResult find_interface(const std::string& name, const sa_family_t
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_END:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */

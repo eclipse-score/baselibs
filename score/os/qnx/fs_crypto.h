@@ -36,19 +36,12 @@ namespace qnx
 class FsCrypto
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     static std::unique_ptr<score::os::qnx::FsCrypto> createFsCryptoInstance() noexcept;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_remove(const char* path,
                                                                       int domain,
                                                                       int* preply) const noexcept = 0;
 
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_add(
         const char* path,
         int domain,
@@ -58,18 +51,10 @@ class FsCrypto
         const uint8_t bytes[],  // NOLINT(modernize-avoid-c-arrays) see comment above
         int* preply) const noexcept = 0;
 
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_query(const char* path,
                                                                      int domain,
                                                                      int* preply) const noexcept = 0;
 
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
     virtual score::cpp::expected_blank<Error> fs_crypto_domain_unlock(
         const char* path,
         int domain,
@@ -77,15 +62,9 @@ class FsCrypto
         const uint8_t bytes[],  // NOLINT(modernize-avoid-c-arrays) see comment above
         int* preply) const noexcept = 0;
 
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fs_crypto_file_set_domain(const char* path,
                                                                         int domain,
                                                                         int* preply) const noexcept = 0;
-
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~FsCrypto() = default;
 };

@@ -14,6 +14,6 @@
 # tests. Each entry pairs with a COV_JUSTIFIED <id> marker in the source.
 # Fields: id (kebab-case), category (defensive_programming |
 # tool_false_positive | platform_specific | other), platforms ([linux]),
-# reason. See @score_tooling//coverage:COVERAGE_GUIDE.md.
+# reason. See https://eclipse-score.github.io/coverage_tool/main/manual/user_manual.html.
 version: 1
 justifications: []

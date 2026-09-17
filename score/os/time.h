@@ -32,22 +32,15 @@ class Time : public ObjectSeam<Time>
     /// \brief thread-safe singleton accessor
     /// \return Either concrete OS-dependent instance or respective set mock instance
     static Time& instance() noexcept;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_settime(const clockid_t clkid,
                                                                     const struct timespec* const tp) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_gettime(const clockid_t clkid,
                                                                     struct timespec* const tp) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, Error> clock_getres(const clockid_t clkid,
                                                                    struct timespec* const res) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual struct tm* localtime_r(const time_t* timer, struct tm* tm_local_time) const noexcept = 0;
 
     /// @brief Creates a timer

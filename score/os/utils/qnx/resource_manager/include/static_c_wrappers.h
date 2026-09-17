@@ -31,11 +31,7 @@ extern "C" {
 /// created when the client opened the resource.
 ///
 /// @return the status of the read request.
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
 int io_read_handler(resmgr_context_t* ctp, io_read_t* msg, iofunc_ocb_t* ocb);
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
 
 /// @brief the C static handler of write() request that
 /// should be registered to the QNX system during setup the resource manager.
@@ -48,11 +44,7 @@ int io_read_handler(resmgr_context_t* ctp, io_read_t* msg, iofunc_ocb_t* ocb);
 /// created when the client opened the resource.
 ///
 /// @return the status of the write request.
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
 int io_write_handler(resmgr_context_t* ctp, io_write_t* msg, iofunc_ocb_t* ocb);
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
 
 /// @brief the C static handler of lseek() request that
 /// should be registered to the QNX system during setup the resource manager.
@@ -65,11 +57,7 @@ int io_write_handler(resmgr_context_t* ctp, io_write_t* msg, iofunc_ocb_t* ocb);
 /// created when the client opened the resource.
 ///
 /// @return the status of the lseek request.
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
 int io_lseek_handler(resmgr_context_t* ctp, io_lseek_t* msg, iofunc_ocb_t* ocb);
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
 
 /// @brief the C static handler of open() request that
 /// should be registered to the QNX system during setup the resource manager.
@@ -84,11 +72,7 @@ int io_lseek_handler(resmgr_context_t* ctp, io_lseek_t* msg, iofunc_ocb_t* ocb);
 /// from a resource manager's open() function, simply pass the extra argument that's passed to open().
 ///
 /// @return the status of the open request.
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
-/* KW_SUPPRESS_START:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
 int connect_open_handler(resmgr_context_t* ctp, io_open_t* msg, extended_dev_attr_t* attr, void* extra);
-/* KW_SUPPRESS_END:MISRA.ONEDEFRULE.VAR: False positive not relevant. */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC: Should fit QNX library signature */
 
 #ifdef __cplusplus
 }

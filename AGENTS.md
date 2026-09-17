@@ -57,7 +57,7 @@ To test a single target, replace `//score/...` with the specific Bazel label, e.
 ### Auto-fix all formatting (C++, Python, Rust, Starlark/BUILD, YAML)
 
 ```bash
-bazel run //:format.fix
+bazel run //tools:format.fix
 ```
 
 This formats C++ (clang-format), Python (ruff), Rust (rustfmt), Starlark/BUILD (buildifier), and YAML (yamlfmt).
@@ -65,13 +65,13 @@ This formats C++ (clang-format), Python (ruff), Rust (rustfmt), Starlark/BUILD (
 To format only specific files instead of the whole project, list them after `--`:
 
 ```bash
-bazel run //:format.fix -- score/result/error.cpp score/result/error.h
+bazel run //tools:format.fix -- score/result/error.cpp score/result/error.h
 ```
 
 ### Check formatting (without modifying files)
 
 ```bash
-bazel test //:format.check
+bazel test //tools:format.check
 ```
 
 This runs all format checks (C++, Python, Rust, Starlark, YAML) as test targets.
@@ -82,8 +82,8 @@ Copyright headers are enforced for specific file extensions (`bazel`, `BUILD`, `
 If unsure how the header should look for a given file type, don't guess: run `copyright.fix` and let it generate the header for you.
 
 ```bash
-bazel run //:copyright.check    # Verify
-bazel run //:copyright.fix      # Auto-fix missing headers
+bazel run //tools:copyright.check    # Verify
+bazel run //tools:copyright.fix      # Auto-fix missing headers
 ```
 
 **Every new file with a covered extension must have a copyright header.** The year must be the year in which the file is being created. If the current year is unknown, use `<YEAR>` as a placeholder.
@@ -126,7 +126,7 @@ instead of this repo's stricter baseline.
 ### Rust clippy
 
 ```bash
-bazel build --config=lint -- //score/...
+bazel build --config=clippy -- //score/...
 ```
 
 ### C++ Sanitizers
