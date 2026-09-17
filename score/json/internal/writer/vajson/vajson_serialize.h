@@ -138,10 +138,16 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
     {
         serialized.emplace(SerializeNumber(std::move(serializer), number->get()));
     }
+    else if (const auto boolean = value.As<bool>(); boolean.has_value())
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JBool(*boolean));
+    }
     else
     {
-        const auto boolean = value.As<bool>();
-        serialized.emplace(std::move(serializer) << score::json::vajson::JBool(*boolean));
+        // Any holds a bool, a Number, a std::string, a Null, an Object or a List, so every alternative has been
+        // probed by now and this branch cannot be reached. Writing null keeps the output valid JSON in case an
+        // alternative is added to Any without being handled here.
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNull()); /* LCOV_EXCL_LINE */
     }
 
     return *std::move(serialized);

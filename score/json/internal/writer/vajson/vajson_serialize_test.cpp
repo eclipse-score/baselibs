@@ -153,6 +153,15 @@ TEST(VajsonSerializeTest, RejectsNotANumberOnStream)
     // The non-representable number itself must not have been written.
     EXPECT_EQ(out_stream.str().find("nan"), std::string::npos);
 }
+TEST(VajsonSerializeTest, SerializesBothBooleanValues)
+{
+    List list{};
+    list.emplace_back(Any{true});
+    list.emplace_back(Any{false});
+    const auto result = VajsonToBuffer(list);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{"[true,false]"});
+}
 TEST(VajsonSerializeTest, SerializesTopLevelList)
 {
     List list{};
