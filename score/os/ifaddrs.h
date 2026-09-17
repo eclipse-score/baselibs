@@ -31,22 +31,16 @@ class Ifaddrs : public ObjectSeam<Ifaddrs>
   public:
     static Ifaddrs& instance() noexcept;
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<ifaddrs*, Error> getifaddrs() const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual void freeifaddrs(ifaddrs* ifa) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Ifaddrs() = default;
     Ifaddrs() = default;
     Ifaddrs(const Ifaddrs& other) = delete;
     Ifaddrs(Ifaddrs&& other) = delete;
-    /* KW_SUPPRESS_START:AUTOSAR.ASSIGN.REF_QUAL: Operators are already using ref operator */
     Ifaddrs& operator=(const Ifaddrs& other) = delete;
     Ifaddrs& operator=(Ifaddrs&& other) = delete;
-    /*KW_SUPPRESS_END:AUTOSAR.ASSIGN.REF_QUAL*/
 };
 
 }  // namespace os

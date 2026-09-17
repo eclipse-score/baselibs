@@ -15,20 +15,13 @@
 
 #include <unistd.h>
 #include <cstdint>
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 namespace score
 {
 namespace os
 {
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: not hides unistd.h, function wrapper within namespace */
 std::int32_t daemon(const std::int32_t nochdir, const std::int32_t noclose);
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
 
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function requires C-style array param */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: not hides unistd.h, function wrapper within namespace */
 std::int32_t pipe2(std::int32_t pipedes[2], const std::int32_t flags);
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 }  // namespace os
 }  // namespace score
 
