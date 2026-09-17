@@ -447,7 +447,7 @@ Independently of the parser, the serialization backend is selected by the `write
 `json_serialize` (the default, a custom implementation) and `vajson` (the vector json library). The parser flag
 `base_library` has no influence on serialization.
 
-bazel test --config=spp_host_clang //score/json/... --//platform/aas/lib/json:writer_library="vajson"
+bazel test --config=spp_host_clang //score/json/... --//score/json:writer_library="vajson"
 
 Mind that the two backends differ in the representation they emit: `json_serialize` pretty-prints with a four
 space indentation, whereas `vajson` emits compact JSON without any insignificant whitespace between tokens. Both
