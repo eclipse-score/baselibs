@@ -50394,7 +50394,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__intrusive_list",
     "FullyVerifies": null
@@ -50408,9 +50408,9 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__intrusive_list, comp_req__containers__type_safety",
+    "PartiallyVerifies": "comp_req__containers__intrusive_list",
     "FullyVerifies": null
   },
   {
@@ -50422,7 +50422,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__intrusive_list",
     "FullyVerifies": null
@@ -50436,7 +50436,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__intrusive_list",
     "FullyVerifies": null
@@ -50478,7 +50478,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__intrusive_list",
     "FullyVerifies": null
@@ -50540,6 +50540,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "NonRelocatableVectorTrivialFixture/0__EmplaceBackPreservesExistingElementAddress",
+    "file": "score/containers/non_relocatable_vector_test.cpp",
+    "line": "399",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__containers__non_relocatable_vector",
+    "FullyVerifies": null
+  },
+  {
     "name": "NonRelocatableVectorTrivialFixture/1__SwapSwapsAllElements",
     "file": "score/containers/non_relocatable_vector_test.cpp",
     "line": "89",
@@ -50549,6 +50563,20 @@
     "url": "",
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__containers__non_relocatable_vector",
+    "FullyVerifies": null
+  },
+  {
+    "name": "NonRelocatableVectorTrivialFixture/1__EmplaceBackPreservesExistingElementAddress",
+    "file": "score/containers/non_relocatable_vector_test.cpp",
+    "line": "399",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__non_relocatable_vector",
     "FullyVerifies": null
@@ -50710,7 +50738,7 @@
   {
     "name": "NonRelocatableVectorFixture/0__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50752,7 +50780,7 @@
   {
     "name": "NonRelocatableVectorFixture/1__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50794,7 +50822,7 @@
   {
     "name": "NonRelocatableVectorFixture/2__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50836,7 +50864,7 @@
   {
     "name": "NonRelocatableVectorFixture/3__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50878,7 +50906,7 @@
   {
     "name": "NonRelocatableVectorFixture/4__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50920,7 +50948,7 @@
   {
     "name": "NonRelocatableVectorFixture/5__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -50962,7 +50990,7 @@
   {
     "name": "NonRelocatableVectorFixture/6__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51004,7 +51032,7 @@
   {
     "name": "NonRelocatableVectorFixture/7__DestructingWithZeroElementsDoesNotDeallocate",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "182",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51040,13 +51068,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorPolymorphicAllocatorFixture/0__DestructingWithNonZeroElementsDeallocatesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "200",
+    "line": "199",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51082,13 +51110,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorPolymorphicAllocatorFixture/1__DestructingWithNonZeroElementsDeallocatesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "200",
+    "line": "199",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51124,13 +51152,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorPolymorphicAllocatorFixture/2__DestructingWithNonZeroElementsDeallocatesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "200",
+    "line": "199",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51166,13 +51194,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorPolymorphicAllocatorFixture/3__DestructingWithNonZeroElementsDeallocatesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "200",
+    "line": "199",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51186,7 +51214,7 @@
   {
     "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__ConstructingWithNonZeroElementsDoesNotCallElementConstructors",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "165",
+    "line": "164",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51200,7 +51228,7 @@
   {
     "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__DestructingWithNonZeroElementsDoesNotCallAnyDestructors",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "221",
+    "line": "220",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51214,7 +51242,7 @@
   {
     "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__DestructingWithNonZeroEmplacedElementsCallsDestructorAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "240",
+    "line": "239",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51228,7 +51256,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/0__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "265",
+    "line": "264",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51242,7 +51270,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/0__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "426",
+    "line": "424",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51256,7 +51284,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/0__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "584",
+    "line": "582",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51270,7 +51298,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/1__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "265",
+    "line": "264",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51284,7 +51312,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/1__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "426",
+    "line": "424",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51298,7 +51326,7 @@
   {
     "name": "NonRelocatableVectorTrivialFixture/1__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "584",
+    "line": "582",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51312,7 +51340,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/0__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "294",
+    "line": "293",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51326,7 +51354,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/0__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "455",
+    "line": "453",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51340,7 +51368,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/0__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "620",
+    "line": "618",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51354,7 +51382,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/1__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "294",
+    "line": "293",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51368,7 +51396,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/1__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "455",
+    "line": "453",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51382,7 +51410,7 @@
   {
     "name": "NonRelocatableVectorNonTrivialFixture/1__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "620",
+    "line": "618",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51396,7 +51424,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "325",
+    "line": "324",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51410,7 +51438,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "486",
+    "line": "484",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51424,7 +51452,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "658",
+    "line": "656",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51438,7 +51466,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__CopyConstructingCopiesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "325",
+    "line": "324",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51452,7 +51480,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "486",
+    "line": "484",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51466,7 +51494,7 @@
   {
     "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "658",
+    "line": "656",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51480,7 +51508,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/0__CannotCopyVectorContainingNonCopyableType",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "359",
+    "line": "358",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51494,7 +51522,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/0__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "520",
+    "line": "518",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51508,7 +51536,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/0__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "701",
+    "line": "699",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51522,7 +51550,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/1__CannotCopyVectorContainingNonCopyableType",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "359",
+    "line": "358",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51536,7 +51564,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/1__MoveConstructingMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "520",
+    "line": "518",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51550,7 +51578,7 @@
   {
     "name": "NonRelocatableVectorNonMoveableAndCopyableElementTypeFixture/1__MoveAssigningMovesAllElements",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "701",
+    "line": "699",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -51564,7 +51592,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__CopyConstructingAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "371",
+    "line": "370",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51572,13 +51600,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__CopyConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "405",
+    "line": "403",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51592,7 +51620,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotAllocateNewMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "532",
+    "line": "530",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51606,7 +51634,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "563",
+    "line": "561",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51620,7 +51648,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveAssigningAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "713",
+    "line": "711",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51634,7 +51662,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__CopyConstructingAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "371",
+    "line": "370",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51642,13 +51670,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__CopyConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "405",
+    "line": "403",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51662,7 +51690,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotAllocateNewMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "532",
+    "line": "530",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51676,7 +51704,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "563",
+    "line": "561",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51690,7 +51718,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveAssigningAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "713",
+    "line": "711",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51704,7 +51732,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__CopyConstructingAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "371",
+    "line": "370",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51712,13 +51740,13 @@
     "TestType": "resource-usage",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__containers__deterministic_behavior",
+    "PartiallyVerifies": null,
     "FullyVerifies": null
   },
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__CopyConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "405",
+    "line": "403",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51732,7 +51760,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotAllocateNewMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "532",
+    "line": "530",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51746,7 +51774,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotDeallocateMemory",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "563",
+    "line": "561",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51760,7 +51788,7 @@
   {
     "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveAssigningAllocatesBasedOnCapacity",
     "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-    "line": "713",
+    "line": "711",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -51989,7 +52017,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52003,7 +52031,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52213,7 +52241,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52227,7 +52255,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52465,7 +52493,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52479,7 +52507,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52689,7 +52717,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52703,7 +52731,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52759,7 +52787,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
@@ -52773,7 +52801,7 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "fault-injection",
+    "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__containers__dynamic_array",
