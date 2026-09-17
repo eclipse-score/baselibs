@@ -14,9 +14,7 @@
 
 /* It is not possible to test because the ::sysmgr_reboot() function reboots the system. */
 /* LCOV_EXCL_START */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> score::os::qnx::SysMgrImpl::sysmgr_reboot() const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::sysmgr_reboot();
     if (result != 0)

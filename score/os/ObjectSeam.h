@@ -66,7 +66,7 @@ class ObjectSeam  // LCOV_EXCL_LINE: tooling issue
     ObjectSeam(ObjectSeam&&) noexcept = default;
     ObjectSeam& operator=(ObjectSeam&&) noexcept = default;
 
-  private: /* KW_SUPPRESS:MISRA.USE.EXPANSION:False postive as private is an access specifier, not macro */
+  private:
     static Object*& get_local_instance() noexcept
     {
         static Object* instance_;
@@ -98,11 +98,9 @@ class MockGuard
     MockGuard& operator=(MockGuard&& other) = delete;
 
     /// \brief Construct and register the mock instance.
-    /* KW_SUPPRESS_START:AUTOSAR.CTOR.MOVE.COPY_SEMANTICS: */
     /* std::forward is required here in forwarding references as we have variadic arguments */
     template <typename... Args>
     explicit MockGuard(Args&&... args) : mock_(std::forward<Args>(args)...)
-    /* KW_SUPPRESS_END:AUTOSAR.CTOR.MOVE.COPY_SEMANTICS: */
     {
         IF::set_testing_instance(mock_);
     }

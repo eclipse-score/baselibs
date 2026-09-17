@@ -23,7 +23,6 @@ class MountImpl final : public Mount
 {
   public:
     constexpr MountImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     // Wrapper must be backward compatible for the applications that use linux specific mount() (without datalen arg)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     score::cpp::expected_blank<Error> mount(const char* const special_file,
@@ -32,11 +31,8 @@ class MountImpl final : public Mount
                                             const Mount::Flag flags,
                                             const void* const data,
                                             const std::int32_t datalen = -1) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> umount(const char* const target) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 };
 }  // namespace os
 }  // namespace score

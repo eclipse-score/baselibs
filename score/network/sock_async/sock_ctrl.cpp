@@ -78,18 +78,14 @@ std::int32_t SocketCtrl::RequestOperation(std::shared_ptr<SocketAsync> sock, con
             StopPoll(ctrl_msg);
             break;
         case SockReq::WRITE:
-            /* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
             write_pool_.Post([&, sock = std::move(sock)](const score::cpp::stop_token&) mutable {
                 sock->Write(sock->GetWriteBuffer(), sock->GetWriteCb());
             });
-            /* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
             break;
         case SockReq::CONNECT:
-            /* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
             write_pool_.Post([&, sock = std::move(sock)](const score::cpp::stop_token&) mutable {
                 sock->Connect(sock->GetConnectCb());
             });
-            /* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
             break;
         case SockReq::DELETE:
             if (monitored_sockets_num_)

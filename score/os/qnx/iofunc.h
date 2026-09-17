@@ -20,8 +20,6 @@
 #include "score/expected.hpp"
 #include "score/memory.hpp"
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
 // The rule states: "The pre-processor shall only be used for unconditional and conditional file inclusion
 // and include guards, and using the following directives: (1) #ifndef, (2) #ifdef, (3) #if, (4) #if defined,
 // (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include."
@@ -265,7 +263,5 @@ class IoFuncQnx final : public IoFunc
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
 #endif  // SCORE_LIB_OS_QNX_IOFUNC_H
