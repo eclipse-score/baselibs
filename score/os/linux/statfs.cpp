@@ -12,11 +12,7 @@
  ********************************************************************************/
 #include "score/os/linux/statfs.h"
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-std::int32_t score::os::statfs(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage
-                                */
-                               const char* file,
-                               struct statfs* buf)
+std::int32_t score::os::statfs(const char* file, struct statfs* buf)
 {
     return ::statfs(file, buf);
-} /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
+}

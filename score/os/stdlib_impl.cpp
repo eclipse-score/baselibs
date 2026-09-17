@@ -14,9 +14,6 @@
 
 #include <cstdlib>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
 namespace score
 {
 namespace os
@@ -24,14 +21,9 @@ namespace os
 
 score::cpp::expected_blank<Error> StdlibImpl::system_call(const std::string& cmd) const noexcept
 {
-    /* KW_SUPPRESS_START:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::system() */
     // Suppressed here because usage of this OSAL method is on banned list
     // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
     const auto key_ret = ::system(cmd.c_str());  // NOLINT(score-banned-function) see comment above
-    /* KW_SUPPRESS_END:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::system() */
-    /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: Required for capturing error number from ::system call */
-    /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the signedness of the resultant */
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: OS library macros */
     // coverity[autosar_cpp14_m5_0_21_violation]  macro does not affect the sign of the result.
     if (WIFEXITED(key_ret) && (0 != WEXITSTATUS(key_ret))) /* LCOV_EXCL_BR_LINE
         It cannot be signalled to child process that is spawned to execute the cmd since we don't know the pid
@@ -40,9 +32,6 @@ score::cpp::expected_blank<Error> StdlibImpl::system_call(const std::string& cmd
         The command status WEXITSTATUS(key_ret) is valid only when the spawned process exits normally, so
         the check WIFEXITED(key_ret) && WEXITSTATUS(key_ret) is valid as intended */
 
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: OS library macros */
-    /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the signedness of the resultant */
-    /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: Required for capturing error number from ::system call */
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
@@ -50,17 +39,13 @@ score::cpp::expected_blank<Error> StdlibImpl::system_call(const std::string& cmd
 }
 
 // LCOV_EXCL_START Coverage not correctly shown because coverage is not flushed before exit.
-/* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: Function is wrapped */
 // Suppressed here because usage of this OSAL method is on banned list
 // NOLINTNEXTLINE(score-banned-function) see comment above
 void StdlibImpl::exit(const int status) const noexcept
-/* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME: Function is wrapped */
 {
-    /* KW_SUPPRESS_START:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::exit() */
     // Suppressed here because usage of this OSAL method is on banned list
     // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
     ::exit(status);  // NOLINT(score-banned-function) see comment above
-    /* KW_SUPPRESS_END:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::exit() */
 }
 // LCOV_EXCL_STOP
 
@@ -73,17 +58,33 @@ void StdlibImpl::quick_exit(const int status) const noexcept
 }
 // LCOV_EXCL_STOP
 
-/* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: Function is wrapped */
 // Suppressed here because usage of this OSAL method is on banned list
 // NOLINTNEXTLINE(score-banned-function) see comment above
 char* StdlibImpl::getenv(const char* const name) const noexcept
-/* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME: Function is wrapped */
 {
-    /* KW_SUPPRESS_START:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::getenv() */
     // Suppressed here because usage of this OSAL method is on banned list
     // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
     return ::getenv(name);  // NOLINT(score-banned-function) see comment above
-    /* KW_SUPPRESS_END:MISRA.STDLIB.ABORT,MISRA.STDLIB.ABORT.2012_AMD1: This is wrapper function for ::getenv() */
+}
+
+auto StdlibImpl::setenv(const char* const name, const char* const value, int overwrite) const noexcept -> Result<int>
+{
+    const int res = ::setenv(name, value, overwrite);
+    if (res == -1)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return res;
+}
+
+auto StdlibImpl::unsetenv(const char* const name) const noexcept -> Result<int>
+{
+    const int res = ::unsetenv(name);
+    if (res == -1)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return res;
 }
 
 Result<char*> StdlibImpl::realpath(const char* const path, char* const resolved_path) const noexcept
@@ -135,6 +136,3 @@ Result<int> StdlibImpl::mkstemps(char* const path, const int len) const noexcept
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

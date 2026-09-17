@@ -13,7 +13,6 @@
 #include "spinlock.h"
 #include <atomic>
 
-/* KW_SUPPRESS_START:MISRA.IF.UNDEF:#if checks if macros are defined, it doesn't assume anything */
 #if (defined(__x86_64__) || defined(__i386__)) && __has_include("emmintrin.h")
 #include <emmintrin.h>
 #define SPINLOCK_PAUSE_INSTR _mm_pause()
@@ -24,12 +23,11 @@
 #define SPINLOCK_PAUSE_INSTR __yield()
 #pragma message("Spinlock info: ARM platform detected -> using __yield() instruction while spinning.")
 #else
-#define SPINLOCK_PAUSE_INSTR (static_cast<void>(0)) /* KW_SUPPRESS:MISRA.USE.DEFINE:Local macro */
+#define SPINLOCK_PAUSE_INSTR (static_cast<void>(0))
 // NOLINTNEXTLINE(score-banned-preprocessor-directives)  uppressed here because usage of `#pragma` is forbidden
 #pragma message( \
     "Spinlock info: Unknown architecture -> no special pause instruction used while spinning. Maybe provide one?")
 #endif
-/* KW_SUPPRESS_END:MISRA.IF.UNDEF:#if checks if macros are defined, it doesn't assume anything */
 
 namespace score
 {

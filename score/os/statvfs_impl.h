@@ -15,8 +15,6 @@
 
 #include "score/os/statvfs.h"
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -26,13 +24,9 @@ class StatvfsImpl final : public Statvfs
 {
   public:
     constexpr StatvfsImpl() = default;
-    /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> statvfs(const char* const path,
                                               struct statvfs* const buf) const noexcept override;
-    /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 };
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score

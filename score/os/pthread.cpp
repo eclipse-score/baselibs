@@ -169,9 +169,7 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::mutex_destroy(
     }
     return {};
 }
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: it's a method definition, doesn't hide identifier in an outer scope */
 score::cpp::expected_blank<score::os::Error> score::os::Pthread::pthread_setschedparam(
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
     const pthread_t thread,
     const std::int32_t policy,
     const struct sched_param* const param) const noexcept
@@ -184,9 +182,7 @@ score::cpp::expected_blank<score::os::Error> score::os::Pthread::pthread_setsche
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: it's a method definition, doesn't hide identifier in an outer scope */
 score::cpp::expected_blank<score::os::Error> score::os::Pthread::pthread_getschedparam(
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
     const pthread_t thread,
     std::int32_t* const policy,
     struct sched_param* const param) const noexcept
