@@ -36,11 +36,7 @@ constexpr std::int32_t value{0};
 constexpr std::int32_t code_ptr{1};
 static_assert(sizeof(void*) == sizeof(std::uint64_t), "64-bit 'pointer' pulses");
 constexpr std::uint64_t value_uintptr{0x123456789ABCDEF0UL};
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106]
- */
 void* const value_ptr{reinterpret_cast<void*>(value_uintptr)};
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: "Pointer" argument is just a 64-bit integral value, see [TicketOld-81106]
- */
 
 constexpr std::int32_t error{EACCES};
 constexpr std::int64_t status{42L};
@@ -332,9 +328,7 @@ score::cpp::expected<bool, score::os::Error> NextServiceRequest(const name_attac
                 }
                 else if (msg.pulse.code == code_ptr)
                 {
-                    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET: ...[TicketOld-81106] */
                     const auto uintptr = reinterpret_cast<uint64_t>(msg.pulse.value.sival_ptr);
-                    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET: ...[TicketOld-81106] */
 
                     if (got_pulse_ptr || uintptr != value_uintptr)
                     {

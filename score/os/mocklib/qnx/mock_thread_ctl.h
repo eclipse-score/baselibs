@@ -26,8 +26,6 @@ namespace os
 namespace qnx
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockThreadCtl : public ThreadCtl
 {
   public:
@@ -36,8 +34,6 @@ class MockThreadCtl : public ThreadCtl
                 (const pid_t pid, const std::int32_t tid, const std::int32_t cmd, void* const data),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace qnx
 }  // namespace os

@@ -303,9 +303,7 @@ auto ::score::os::AccessControlList::FindFirstEntry(F&& predicate) const noexcep
         // False positive: This is a function call.
         // coverity[autosar_cpp14_a18_9_2_violation]
         auto check_entry_result = predicate(entry.value());
-        /* KW_SUPPRESS_START:MISRA.STMT.COND.NOT_BOOLEAN:False positive- has_value() will return a boolean */
         if (check_entry_result.has_value())
-        /* KW_SUPPRESS_END:MISRA.STMT.COND.NOT_BOOLEAN:False positive- has_value() will return a boolean */
         {
             if (static_cast<bool>(check_entry_result.value()))
             {

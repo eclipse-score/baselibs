@@ -24,23 +24,11 @@ class StringImpl : public String
 {
   public:
     constexpr StringImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: memcpy is a wrapper method to call OS method strerror */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     void* memcpy(void* const dest, const void* const src, const std::size_t n) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME:*/
 
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: strerror is a wrapper method to call OS method strerror */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     char* strerror(const std::int32_t errnum) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME:*/
 
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: memset is a wrapper method to call OS method strerror */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     void* memset(void* const dest, const std::int32_t c, const std::size_t n) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME:*/
 };
 
 }  // namespace os
