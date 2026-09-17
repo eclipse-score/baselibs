@@ -572,8 +572,7 @@ Result<Path> StandardFilesystem::WeaklyCanonical(const Path& path) const noexcep
 
 Result<Path> StandardFilesystem::CurrentPath() const noexcept
 {
-    constexpr auto kBufSize =
-        static_cast<std::size_t>(PATH_MAX); /* KW_SUPPRESS:MISRA.USE.EXPANSION: caused by PATH_MAX */
+    constexpr auto kBufSize = static_cast<std::size_t>(PATH_MAX);
     std::array<Path::value_type, kBufSize> buf = {
         0,
     };
@@ -658,7 +657,6 @@ Result<bool> StandardFilesystem::IsEmpty(const Path& path) const noexcept
     {
         return MakeUnexpected(filesystem::ErrorCode::kCouldNotRetrieveStatus);
     }
-    /* KW_SUPPRESS_START:MISRA.TOKEN.OCTAL.INT,MISRA.CONV.INT.SIGN,MISRA.BITS.NOT_UNSIGNED,MISRA.USE.EXPANSION: */
     /* caused by S_IS*- *macroses */
     // coverity[autosar_cpp14_m5_0_4_violation] caused by macros
     // coverity[autosar_cpp14_m5_0_21_violation] caused by macros
@@ -683,7 +681,6 @@ Result<bool> StandardFilesystem::IsEmpty(const Path& path) const noexcept
     {
         // No action required
     }
-    /* KW_SUPPRESS_END:MISRA.TOKEN.OCTAL.INT,MISRA.CONV.INT.SIGN,MISRA.BITS.NOT_UNSIGNED,MISRA.USE.EXPANSION: */
     return false;
 }
 
@@ -744,8 +741,7 @@ Result<void> StandardFilesystem::CreateSymlink(const Path& target, const Path& l
 // coverity[autosar_cpp14_a15_5_3_violation]: `len < kBufSize` ensures `at(len)` won't throw.
 Result<Path> StandardFilesystem::ReadSymlink(const Path& path) const noexcept
 {
-    constexpr auto kBufSize =
-        static_cast<std::size_t>(PATH_MAX); /* KW_SUPPRESS:MISRA.USE.EXPANSION: caused by PATH_MAX */
+    constexpr auto kBufSize = static_cast<std::size_t>(PATH_MAX);
     std::array<Path::value_type, kBufSize> buf = {
         0,
     };

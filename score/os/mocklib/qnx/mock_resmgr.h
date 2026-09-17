@@ -23,7 +23,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 class MockResMgr final : public ResMgr
 {
   public:
@@ -32,7 +31,6 @@ class MockResMgr final : public ResMgr
                 (resmgr_context_t * ctp, const void* msg, size_t size, size_t offset),
                 (const, noexcept, override));
 };
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

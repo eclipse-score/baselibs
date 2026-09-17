@@ -26,9 +26,6 @@
 
 #include <sys/mman.h>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
 namespace score
 {
 namespace os
@@ -150,7 +147,7 @@ class MmanImpl final : public Mman
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif
 
-  private: /* KW_SUPPRESS:MISRA.USE.EXPANSION:False postive as private is an access specifier, not macro*/
+  private:
     std::int32_t ProtectionToInteger(const Protection protection) const noexcept;
 
     std::int32_t MapFlagsToInteger(const Map flags) const noexcept;
@@ -177,9 +174,6 @@ class MmanImpl final : public Mman
 static utils::StaticDestructionGuard<MmanImpl> nifty_counter;
 
 }  // namespace internal
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score

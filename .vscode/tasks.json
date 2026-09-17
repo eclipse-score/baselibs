@@ -5,7 +5,7 @@
             "label": "Generate compile_commands.json",
             "type": "shell",
             "isBackground": true,
-            "command": "bazel run //:generate_compile_commands",
+            "command": "bazel run //tools:generate_compile_commands",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
