@@ -63,18 +63,6 @@ cc_library(
 )
 
 cc_library(
-    name = "select_mock",
-    testonly = True,
-    srcs = ["mock_select.cpp"],
-    hdrs = ["mock_select.h"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/os:select",
-    ],
-)
-
-cc_library(
     name = "nonposixwrapper_mock",
     testonly = True,
     srcs = ["nonposixwrappermock.cpp"],

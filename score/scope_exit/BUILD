@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 
@@ -54,14 +54,6 @@ cc_gtest_unit_test(
         ":scope_exit",
         "@score_baselibs//score/language/safecpp/scoped_function:move_only_scoped_function",
         "@score_baselibs//score/language/safecpp/scoped_function:scope",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        ":flag_owner_test",
-        ":scope_exit_test",
     ],
 )
 

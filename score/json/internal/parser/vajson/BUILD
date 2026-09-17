@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -21,7 +20,11 @@ cc_library(
     hdrs = ["vajson_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/json:__subpackages__",
+    ],
     deps = [
         "@score_baselibs//score/json:parser_interface",
         "@score_baselibs//score/json/internal/model",
@@ -61,16 +64,5 @@ cc_test(
         "@score_baselibs//score/json",
         "@score_baselibs//score/json/internal/parser:number_parser_test_suite",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        ":vajson_parser_test",
-        ":number_parser_test",
-    ],
-    visibility = [
-        "@score_baselibs//score/json/internal/parser:__pkg__",
     ],
 )

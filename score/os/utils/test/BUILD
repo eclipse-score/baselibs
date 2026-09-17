@@ -12,31 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":abortable_blocking_reader_test",
-        ":detect_os_test",
-        ":high_resolution_steady_clock_test",
-        ":machine_test",
-        ":mqueue_integration_test",
-        ":mqueue_unit_test",
-        ":path_test",
-        ":pmutex_test",
-        ":signal_test",
-        ":spinlock_test",
-        ":tcp_keep_alive_test",
-        ":thread_test",
-        "@score_baselibs//score/os/utils/acl:unit_test",
-        "@score_baselibs//score/os/utils/inotify:unit_test",
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/os/utils/interprocess:unit_tests",
-    ],
-)
 
 cc_test(
     name = "abortable_blocking_reader_test",

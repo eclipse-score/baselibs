@@ -14,12 +14,12 @@
  *        \brief  A single include to provide all JSON deserialization utilities.
  *
  *********************************************************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H_
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H
 
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/vajson_impl/reader/v2.h"
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_H

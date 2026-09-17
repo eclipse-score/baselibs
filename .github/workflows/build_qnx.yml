@@ -37,7 +37,6 @@ jobs:
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
-              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
           - name: bl-aarch64-qnx
@@ -48,7 +47,6 @@ jobs:
             bazel-test-target: >-
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
-              -//score/language/safecpp/aborts_upon_exception:abortsuponexception_toolchain_test
               -//score/os/utils/inotify:unit_test
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
           - name: x86_64-qnx (examples/integration)

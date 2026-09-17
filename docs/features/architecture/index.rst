@@ -11,7 +11,7 @@
    #
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
-.. _baselibs_architecture:
+.. _baselibs_module_architecture:
 
 Architecture
 =====================

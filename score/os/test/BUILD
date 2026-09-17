@@ -42,7 +42,6 @@ test_suite(
         ":objectseam_test",
         ":pthread_test",
         ":sched_mock_test",
-        ":select_test",
         ":semaphore_test",
         ":sigevent_test",
         ":socket_test",
@@ -578,21 +577,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:sys_wait",
-    ],
-)
-
-cc_test(
-    name = "select_test",
-    srcs = [
-        "select_test.cpp",
-    ],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:select",
     ],
 )
 

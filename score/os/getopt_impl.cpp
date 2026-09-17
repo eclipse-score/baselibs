@@ -16,8 +16,6 @@ namespace score
 {
 namespace os
 {
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 // Wrapped function's signature requires C-style array
 // NOLINTBEGIN(modernize-avoid-c-arrays) see comment above
 // Suppress "AUTOSAR C++14 M0-1-3", The rule states: "Every function defined in an anonymous namespace,
@@ -26,8 +24,6 @@ namespace os
 // coverity[autosar_cpp14_a0_1_3_violation]
 std::int32_t GetoptImpl::getopt(const std::int32_t argc, char* const argv[], const char* const optstring) const noexcept
 // NOLINTEND(modernize-avoid-c-arrays)
-/* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -51,8 +47,6 @@ std::int32_t GetoptImpl::getopterr() const noexcept
 {
     return opterr;
 }
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 // Wrapped function's signature requires C-style array
 // coverity[autosar_cpp14_a0_1_3_violation] see justification above
 std::int32_t GetoptImpl::getopt_long(const std::int32_t argc,
@@ -60,8 +54,6 @@ std::int32_t GetoptImpl::getopt_long(const std::int32_t argc,
                                      const char* const optstring,
                                      const option* const option,
                                      std::int32_t* const index) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
-/* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 {
     // This is a wrapper over C banned function, thus the suppression is justified.
     // NOLINTNEXTLINE(score-banned-function) see comment above

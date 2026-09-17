@@ -14,8 +14,8 @@
  *        \brief  Composition parser impl
  *
  *********************************************************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H_
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -99,4 +99,4 @@ auto CompositionParser<Mixin>::Object(Fn fn, bool object_already_open) noexcept
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_COMPOSITION_PARSER_IMPL_H

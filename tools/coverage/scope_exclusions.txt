@@ -1,0 +1,42 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+# Deliberate coverage-scope exclusions, one label per line, each with a
+# justification. Checked by .github/tools/check_coverage_scope.sh: a
+# production target must either be reachable from
+# //tools/coverage:coverage_scope or be listed here.
+
+# --- mocks / stubs shipped for consumers' tests (not measured) ---
+//score/analysis/tracing/generic_trace_library/mock:trace_library_mock  # gmock impl for consumer tests
+//score/analysis/tracing/generic_trace_library/stub_implementation:stub_implementation  # label_flag default stub, no logic
+//score/mw/log/flags:unfilled  # empty stub cc_library used as label_flag default
+
+# --- test scaffolding (non-testonly, but test infrastructure only) ---
+//score/concurrency/future:test_types  # helper types for concurrency tests
+//score/concurrency:valgrind_on_host  # valgrind wrapper for tests
+//score/hash/code/common:common_test  # shared test helper lib
+//score/language/rust/libcpp:ffi_test_helpers  # FFI test helpers
+//score/language/rust/libcpp_derive:unit_test_helpers  # proc-macro test helpers
+
+# --- examples (not production) ---
+//score/language/rust/memres/example:example_helpers  # example crate helpers
+//score/result/rust:result_example_bridge  # cxx example bridge
+//score/result/rust:result_example_bridge/include  # generated include lib of the example bridge
+//score/result/rust:result_example_cpp  # C++ side of the example
+
+# --- deprecated shims (replacements are in scope) ---
+//score/memory:string_literal  # deprecated; use //score/string_manipulation:string_literal (in scope)
+//score/memory/shared:atomic_interface  # deprecated; use //score/concurrency:atomic_interface (in scope)
+
+# --- restricted / platform-limited ---
+//score/mw/log/detail/utils/signal_handling:signal_handling  # BUILD under restricted path score/mw/** (eclipse-score/baselibs#512); likely dead code, see PR #533 discussion
+//score/os/utils/qnx/resource_manager:error  # QNX resource-manager component; on-target coverage tracked in eclipse-score/tooling#427

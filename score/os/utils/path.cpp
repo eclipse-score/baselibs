@@ -50,11 +50,9 @@ std::unique_ptr<score::os::Path> score::os::Path::Default() noexcept
 {
     return std::make_unique<PathImpl>();
 }
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::Path> score::os::Path::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<PathImpl>(memory_resource);
 }

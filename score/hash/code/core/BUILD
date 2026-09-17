@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 
 COMPILER_WARNING_FEATURES = [
     "treat_warnings_as_errors",
@@ -71,15 +70,4 @@ cc_test(
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":unit_test",
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/hash/code/core/factory/impl:unit_tests",
-    ],
-    visibility = ["//visibility:public"],
 )

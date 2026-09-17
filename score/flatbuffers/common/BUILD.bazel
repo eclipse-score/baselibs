@@ -44,6 +44,8 @@ cc_library(
         ":gen_buffer_version_h",
     ],
     include_prefix = "score/flatbuffers/common",
+    # Headers are flatc-generated, not checked into git; lint findings here aren't actionable.
+    tags = ["no-lint"],
     visibility = ["//score/flatbuffers:__pkg__"],
     deps = [
         "//score/flatbuffers:flatbufferscpp",
@@ -57,6 +59,8 @@ cc_library(
     name = "buffer_version_generated_bare",
     hdrs = [":gen_buffer_version_h"],
     strip_include_prefix = "/score/flatbuffers/common",
+    # Header is flatc-generated, not checked into git; lint findings here aren't actionable.
+    tags = ["no-lint"],
     visibility = ["//visibility:public"],
     deps = ["//score/flatbuffers:flatbufferscpp"],
 )

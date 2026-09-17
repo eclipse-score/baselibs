@@ -13,6 +13,7 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("//score/flatbuffers/bazel:codegen.bzl", "generate_cpp")
 
 cc_library(
     name = "flatbufferscpp",
@@ -38,6 +39,10 @@ cc_library(
         "@flatbuffers//:include/flatbuffers/verifier.h",
     ],
     strip_include_prefix = "/include",
+    # This target's headers are all vendored from the upstream @flatbuffers repo, so linting
+    # them here would flag issues we cannot fix locally. This also skips linting the single
+    # first-party source `details/idl_parser.cpp`; there is no more surgical exclusion available.
+    tags = ["no-lint"],
     visibility = ["//visibility:public"],
 )
 
@@ -58,6 +63,12 @@ cc_library(
         "load_buffer.hpp",
         "version_reader.hpp",
     ],
+    # version_reader.cpp transitively includes vendored @flatbuffers headers and flatc-generated
+    # headers (see the buffer_version_envelope/buffer_version_generated_bare deps below). Since the
+    # clang-tidy aspect's header filter is derived from this target's own header directory, it also
+    # matches those vendored/generated files even though their owning targets are tagged "no-lint".
+    # There is no more surgical exclusion available, so this whole target is excluded from lint.
+    tags = ["no-lint"],
     visibility = ["//visibility:public"],
     deps = [
         "//score/flatbuffers:flatbufferscpp",
@@ -141,16 +152,29 @@ cc_test(
     ],
 )
 
+# Generated C++ header for the keyed-table fixture used by the vector test to
+# cover LookupByKey / MutableLookupByKey / VectorCast.
+generate_cpp(
+    name = "gen_vector_lookup_fixture_h",
+    output = "details/vector_lookup_fixture_generated.h",
+    schema = "details/vector_lookup_fixture.fbs",
+)
+
 cc_test(
     name = "flatbuffers_cpp_library_test",
+    size = "small",
     testonly = True,
     srcs = [
-        "details/flatfbuffer_allocator_test.cpp",
+        "details/flatbuffers_allocator_test.cpp",
+        "details/flatbuffers_array_test.cpp",
+        "details/flatbuffers_vector_test.cpp",
+        ":gen_vector_lookup_fixture_h",
     ],
     deps = [
         ":flatbufferscpp",
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 
