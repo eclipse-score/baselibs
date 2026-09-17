@@ -11,13 +11,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
-load("@score_bazel_tools_cc//quality:defs.bzl", "quality_clang_tidy_config")
 load("@score_docs_as_code//:docs.bzl", "docs")
-load("@score_tooling//:defs.bzl", "copyright_checker", "dash_license_checker")
-load("@score_tooling//third_party/format:macros.bzl", "use_format_targets")
-load("//:project_config.bzl", "PROJECT_CONFIG")
 load(":qemu.bzl", "qemu_aarch64")
+
+exports_files([
+    ".clang-tidy",
+    "ruff.toml",
+])
+
+# Exported for //tools, which hosts the score_tooling-backed copyright checker.
+exports_files(
+    ["cr_checker_exclusion"],
+    visibility = ["//tools:__pkg__"],
+)
 
 docs(
     bundles = [
@@ -97,17 +103,6 @@ docs(
     source_dir = "docs",
 )
 
-# Generate `compile_commands.json`.
-# Required for `clangd` support.
-refresh_compile_commands(
-    name = "generate_compile_commands",
-    exclude_external_sources = True,
-    target_compatible_with = ["@platforms//os:linux"],
-    targets = {
-        "//...": "",
-    },
-)
-
 # Generate `rust_project.json`.
 # Required for `rust-analyzer` support.
 alias(
@@ -116,44 +111,10 @@ alias(
     target_compatible_with = ["@platforms//os:linux"],
 )
 
-copyright_checker(
-    name = "copyright",
-    srcs = [
-        ".github",
-        "BUILD",
-        "MODULE.bazel",
-        "bazel",
-        "docs",
-        "examples",
-        "qemu.bzl",
-        "score",
-        "third_party",
-    ],
-    config = "@score_tooling//cr_checker/resources:config",
-    exclusion = "//:cr_checker_exclusion",
-    extensions = [
-        "bazel",
-        "BUILD",
-        "bzl",
-        "c",
-        "cpp",
-        "h",
-        "hpp",
-        "ini",
-        "py",
-        "rs",
-        "rst",
-        "sh",
-        "yaml",
-        "yml",
-    ],
-    template = "@score_tooling//cr_checker/resources:templates",
-    visibility = ["//visibility:public"],
-)
-
 # Needed for Dash tool to check python dependency licenses.
 # This is a workaround to filter out local packages from the Cargo.lock file.
 # The tool is intended for third-party content.
+# Consumed by //tools's dash_license_checker.
 genrule(
     name = "filtered_cargo_lock",
     srcs = ["Cargo.lock"],
@@ -173,54 +134,11 @@ genrule(
     END { if (data != "" && !skip) print data }
     ' $(location Cargo.lock) > $@
     """,
+    visibility = ["//tools:__pkg__"],
 )
 
-dash_license_checker(
-    src = ":filtered_cargo_lock",
-    file_type = "",  # let it auto-detect based on project_config
-    project_config = PROJECT_CONFIG,
-    visibility = ["//visibility:public"],
-)
-
-# TODO: rust_coverage_report was removed by score_tooling >= 2.1.0
-# //:rust_coverage and //:rust_coverage_report are gone until the repo migrates
-# to the new score_coverage_scope/score_coverage_reporter LLVM pipeline
-# https://github.com/eclipse-score/baselibs/issues/512
+# The LLVM coverage pipeline (//tools/coverage, eclipse-score/baselibs#512)
+# resolves the workspace root through MODULE.bazel at report time.
+exports_files(["MODULE.bazel"])
 
 qemu_aarch64()
-
-use_format_targets(languages = [
-    "python",
-    "rust",
-    "starlark",
-    "yaml",
-    "cpp",
-])
-
-filegroup(
-    name = "clang_tidy_config_files",
-    srcs = [
-        ".clang-tidy-minimal",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-quality_clang_tidy_config(
-    name = "clang_tidy_config",
-    additional_flags = [],
-    clang_tidy_binary = "@llvm_toolchain//:clang-tidy",
-    default_feature = "strict",
-    dependency_attributes = [
-        "deps",
-        "srcs",
-    ],
-    excludes = [],
-    feature_mapping = {
-        "//:.clang-tidy-minimal": "strict",
-    },
-    target_types = [
-        "cc_library",
-    ],
-    unsupported_flags = [],
-    visibility = ["//visibility:public"],
-)

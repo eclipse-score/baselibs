@@ -27,8 +27,6 @@ constexpr std::uint32_t map_mode_size = 12U;
 
 const std::array<std::pair<Stat::Mode, std::int32_t>, map_mode_size>& GetStatModesMap() noexcept
 {
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: macros unveil bit value */
-    /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: false positive, no bitwise operations */
     // suppress "AUTOSAR C++14 A3-3-2" rule finding. This rule states:
     // "Static and thread-local objects shall be constant-initialized"
     // Justification: std::map objects generally cannot be constexpr, as any dynamically allocated
@@ -48,8 +46,6 @@ const std::array<std::pair<Stat::Mode, std::int32_t>, map_mode_size>& GetStatMod
          {Stat::Mode::kSetGroupId, S_ISGID},
          {Stat::Mode::kSetUserId, S_ISUID}}}; /* LCOV_EXCL_BR_LINE: Not all enumerators are mapped */
 
-    /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED */
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION */
     return mapped_modes;
 }
 
@@ -100,11 +96,9 @@ score::os::Stat& score::os::Stat::instance() noexcept
     return select_instance(instance);
 }
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::Stat> score::os::Stat::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::StatImpl>(memory_resource);
 }

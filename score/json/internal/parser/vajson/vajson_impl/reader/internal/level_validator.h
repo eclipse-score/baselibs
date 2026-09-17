@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H_
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -132,4 +132,4 @@ class LevelValidator
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_LEVEL_VALIDATOR_H

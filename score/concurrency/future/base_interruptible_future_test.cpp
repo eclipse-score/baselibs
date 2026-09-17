@@ -14,6 +14,7 @@
 #include "score/concurrency/future/interruptible_promise.h"
 #include "score/concurrency/future/test_types.h"
 
+#include "score/quality/compiler_warnings/warnings.h"
 #include "score/stop_token.hpp"
 
 #include "gtest/gtest.h"
@@ -251,8 +252,11 @@ TYPED_TEST(BaseInterruptibleFutureTest, CopyConstructionFromInvalidSource)
     BaseInterruptibleFuture<TypeParam> future{};
     EXPECT_FALSE(future.Valid());
     BaseInterruptibleFuture<TypeParam> future_copy{future};
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_SELF_ASSIGN_OVERLOADED
     future_copy = future_copy;  // Force case where this == other.
-    future_copy = future;       // Force case where this != other, but state is invalid.
+    DISABLE_WARNING_POP
+    future_copy = future;  // Force case where this != other, but state is invalid.
 }
 
 // Force decision coverage on protected constructor, in case it would receive a nullptr

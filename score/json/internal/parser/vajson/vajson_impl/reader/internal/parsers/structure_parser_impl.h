@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H_
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H_
+#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H
+#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -132,4 +132,4 @@ auto StructureParser<Implementer>::SubParse() const noexcept -> ParserResult
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H_
+#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_INTERNAL_PARSERS_STRUCTURE_PARSER_IMPL_H

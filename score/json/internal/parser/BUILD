@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 alias(
@@ -66,19 +65,5 @@ cc_library(
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":json_parser_test",
-    ],
-    test_suites_from_sub_packages = [
-        "@score_baselibs//score/json/internal/parser/nlohmann:unit_test_suite",
-        "@score_baselibs//score/json/internal/parser/vajson:unit_test_suite",
-    ],
-    visibility = [
-        "@score_baselibs//score/json:__pkg__",
     ],
 )

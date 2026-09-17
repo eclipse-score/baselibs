@@ -12,20 +12,13 @@
  ********************************************************************************/
 #include "score/os/linux/unistd.h"
 
-std::int32_t
-score::os::daemon(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-                  const std::int32_t nochdir,
-                  const std::int32_t noclose)
+std::int32_t score::os::daemon(const std::int32_t nochdir, const std::int32_t noclose)
 {
     return ::daemon(nochdir, noclose);
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-std::int32_t
-score::os::pipe2(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-                 std::int32_t pipedes[2],
-                 const std::int32_t flags)
+std::int32_t score::os::pipe2(std::int32_t pipedes[2], const std::int32_t flags)
 {
-    return ::pipe2(pipedes, flags); /* KW_SUPPRESS:MISRA.FUNC.ARRAY.PARAMS: can't be changed to &pipedes[0], */
+    return ::pipe2(pipedes, flags);
     /* underlying function may receive NULL and return particular error */
-} /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
+}

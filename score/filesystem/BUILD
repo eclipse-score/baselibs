@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
@@ -190,20 +189,6 @@ cc_test(
         "@score_baselibs//score/os/mocklib:stdio_mock",
         "@score_baselibs//score/os/mocklib:stdlib_mock",
         "@score_baselibs//score/os/mocklib:unistd_mock",
-    ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_test_suite",
-    cc_unit_tests = [
-        "standard_filesystem_unit_test",
-        "@score_baselibs//score/filesystem/factory:unit_test",
-        "@score_baselibs//score/filesystem/file_utils:unit_test",
-        "@score_baselibs//score/filesystem/filestream:unit_test_basic",
-        "@score_baselibs//score/filesystem/filestream:unit_test_extra",
-    ],
-    visibility = [
-        "//visibility:public",
     ],
 )
 

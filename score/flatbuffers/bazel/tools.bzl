@@ -457,7 +457,11 @@ def serialize_multiple_versioned_buffers(
     )
 
 def _generate_json_schema_impl(ctx):
-    """Implementation of the generate_json_schema rule."""
+    """Implementation of the generate_json_schema rule.
+
+    Runs flatc --jsonschema to generate a raw JSON schema, then post-processes it
+    with schema_generator.py to convert to draft-2020-12 format and extract metadata.
+    """
 
     # Input files
     schema_file = ctx.file.schema
@@ -465,15 +469,17 @@ def _generate_json_schema_impl(ctx):
     # Get the flatc compiler using absolute path from flatbuffers repository
     flatc = ctx.executable._flatc
 
+    # Get the schema generator script
+    schema_generator = ctx.executable._schema_generator
+
     # Collect include directories from included .fbs files
     include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
     include_dirs = {f.dirname: True for f in include_files}
 
-    # When generating JSON schema, flatc generates a file named after the schema file
+    # Step 1: Run flatc --jsonschema to generate raw schema
     default_name = schema_file.basename.replace(".fbs", ".schema.json")
     temp_subdir = "tmp_{}".format(ctx.label.name)
-    generated_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
-    out_schema = ctx.actions.declare_file(ctx.attr.output)
+    raw_schema_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
 
     # Options for flatc --jsonschema: Generate a JSON Schema from a FlatBuffer schema.
     # Options that apply only to other modes are not listed.
@@ -495,20 +501,34 @@ def _generate_json_schema_impl(ctx):
     args.add("--jsonschema")
     for inc_dir in include_dirs:
         args.add("-I", inc_dir)
-    args.add("-o", generated_file.dirname)
+    args.add("-o", raw_schema_file.dirname)
     args.add(schema_file.path)
 
     ctx.actions.run(
         inputs = [schema_file] + include_files,
-        outputs = [generated_file],
+        outputs = [raw_schema_file],
         executable = flatc,
         arguments = [args],
         mnemonic = "FlatbuffersJsonSchema",
-        progress_message = "Generating JSON schema from %s" % schema_file.short_path,
+        progress_message = "Generating raw JSON schema from %s" % schema_file.short_path,
     )
 
-    # Symlink to the requested output name
-    ctx.actions.symlink(output = out_schema, target_file = generated_file)
+    # Step 2: Post-process the raw schema with schema_generator.py
+    # Converts to draft-2020-12 format and extracts metadata
+    out_schema = ctx.actions.declare_file(ctx.attr.output)
+
+    generator_args = ctx.actions.args()
+    generator_args.add("--raw-schema", raw_schema_file.path)
+    generator_args.add("--output", out_schema.path)
+
+    ctx.actions.run(
+        inputs = [raw_schema_file],
+        outputs = [out_schema],
+        executable = schema_generator,
+        arguments = [generator_args],
+        mnemonic = "FlatbuffersRichJsonSchema",
+        progress_message = "Post-processing JSON schema from %s" % schema_file.short_path,
+    )
 
     return [DefaultInfo(files = depset([out_schema]))]
 
@@ -535,13 +555,22 @@ generate_json_schema = rule(
             cfg = "exec",
             doc = "The flatc compiler (absolute path from flatbuffers repository)",
         ),
+        "_schema_generator": attr.label(
+            default = "//score/flatbuffers/bazel:schema_generator",
+            executable = True,
+            cfg = "exec",
+            doc = "The schema_generator script for post-processing JSON schema output",
+        ),
         "_buffer_version_fbs": attr.label(
             default = "@score_baselibs//score/flatbuffers/common:buffer_version.fbs",
             allow_single_file = [".fbs"],
             doc = "Automatically included buffer_version.fbs for common buffer version support.",
         ),
     },
-    doc = """Generates a JSON schema from a FlatBuffer schema.
+    doc = """Generates a rich JSON schema from a FlatBuffer schema.
+
+    This rule runs flatc --jsonschema and post-processes the output to convert it to
+    draft-2020-12 format with extracted metadata (@title, @default, @min, @max, etc.).
 
     @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
     automatically. The schema must include buffer_version.fbs manually if it uses

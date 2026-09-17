@@ -23,8 +23,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockProcMgr : public ProcMgr
 {
   public:
@@ -67,8 +65,6 @@ class MockProcMgr : public ProcMgr
                 (const std::int32_t id),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

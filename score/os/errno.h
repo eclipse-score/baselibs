@@ -39,6 +39,10 @@ class Error final
     ///         On some errors we will not define an error reaction, in that case it might not be in this list
     ///         and the error will just be logged using our `ToString()` method.
     // coverity[autosar_cpp14_a7_2_4_violation] no harm to our code
+    // kReadOnlyFileSystem and kNoSuchFileOrDirectory intentionally reuse the real errno values
+    // (see below) during the ongoing OS-agnostic error code transition. Remove this suppression
+    // once that transition is completed.
+    // NOLINTNEXTLINE(readability-enum-initial-value)
     enum class Code : std::int32_t
     {
         kOperationNotPermitted,
@@ -96,22 +100,18 @@ class Error final
     /// \brief Helper function to easily identify what error this object is representing
     /// \param rhs the error code to compare this object with
     /// \return true if the error that is represented by this object equals expected one, false otherwise
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
     // Suppress "AUTOSAR C++14 A13-5-5", The rule states: "Comparison operators shall be non-member functions with
     // identical parameter types and noexcept.
     // Justification: These functions are needed to compare with Code, identical parameter comparators are also defined.
     // These are defined friend as an exception to A11-3-1 as it uses internal member for comparison
     // coverity[autosar_cpp14_a13_5_5_violation]
     friend bool operator==(const Error& lhs, const Code rhs) noexcept;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 
     /// \brief Helper function to easily identify what error this object is representing
     /// \param rhs the error code to compare this object with
     /// \return true if the error that is represented by this object equals expected one, false otherwise
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
     // coverity[autosar_cpp14_a13_5_5_violation] See justification above
     friend bool operator!=(const Error& lhs, const Code rhs) noexcept;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 
     /// \brief Turn this error into a string
     std::string ToString() const noexcept;
@@ -140,14 +140,10 @@ class Error final
 };
 
 /// \brief Equality comparison operator
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 bool operator==(const Error& lhs, const Error& rhs) noexcept;
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 
 /// \brief Inqueality comparison operator
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 bool operator!=(const Error& lhs, const Error& rhs) noexcept;
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Method is identifiable through namespace usage */
 
 static_assert(std::is_move_constructible_v<Error>);
 static_assert(std::is_move_assignable_v<Error>);

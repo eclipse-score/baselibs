@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 
 py_binary(
     name = "inject_buffer_version",
@@ -21,4 +21,35 @@ py_binary(
     # exec (host) platform when referenced as a tool via cfg = "exec" in the starlark rules.
     tags = ["manual"],
     visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "schema_generator_lib",
+    srcs = ["schema_generator.py"],
+    # Put this package on sys.path so the test can "import schema_generator" directly,
+    # matching how the script is imported when run as a standalone tool.
+    imports = ["."],
+    # "manual" excludes this target from wildcard builds so it is only built for the exec
+    # (host) platform when referenced as a tool via cfg = "exec" in the starlark rules.
+    tags = ["manual"],
+)
+
+py_binary(
+    name = "schema_generator",
+    srcs = ["schema_generator.py"],
+    # "manual" excludes this target from wildcard builds so it is only built for the exec
+    # (host) platform when referenced as a tool via cfg = "exec" in the starlark rules.
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+py_test(
+    name = "schema_generator_test",
+    size = "small",
+    srcs = ["schema_generator_test.py"],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    deps = [":schema_generator_lib"],
 )

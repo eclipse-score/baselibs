@@ -9,10 +9,11 @@
 ```
 score/          # C++ AND Rust libraries side by side (concurrency, containers, containers_rust, filesystem,
                 # json, memory, network, os, result, allocator, pal, sync, thread, testing_macros, log_rust, etc.)
+                # Most components have a docs/ subfolder with requirements, architecture, detailed design, and safety analysis.
 src/            # Deprecated Bazel alias stubs. No real sources here.
 examples/       # Integration and usage examples (C++ and Rust)
 third_party/    # External dependency BUILD files (acl, openssl, libcap2, etc.)
-docs/           # Sphinx documentation sources
+docs/           # Feature-level and module-level Sphinx docs.
 .github/        # CI workflows, CODEOWNERS, tools
 ```
 
@@ -56,7 +57,7 @@ To test a single target, replace `//score/...` with the specific Bazel label, e.
 ### Auto-fix all formatting (C++, Python, Rust, Starlark/BUILD, YAML)
 
 ```bash
-bazel run //:format.fix
+bazel run //tools:format.fix
 ```
 
 This formats C++ (clang-format), Python (ruff), Rust (rustfmt), Starlark/BUILD (buildifier), and YAML (yamlfmt).
@@ -64,27 +65,28 @@ This formats C++ (clang-format), Python (ruff), Rust (rustfmt), Starlark/BUILD (
 To format only specific files instead of the whole project, list them after `--`:
 
 ```bash
-bazel run //:format.fix -- score/result/error.cpp score/result/error.h
+bazel run //tools:format.fix -- score/result/error.cpp score/result/error.h
 ```
 
 ### Check formatting (without modifying files)
 
 ```bash
-bazel test //:format.check
+bazel test //tools:format.check
 ```
 
 This runs all format checks (C++, Python, Rust, Starlark, YAML) as test targets.
 
 ### Copyright headers
 
-Copyright headers are enforced in this repository; CI will fail if they are missing or incorrect. If unsure how the header should look for a given file type, don't guess: run `copyright.fix` and let it generate the header for you.
+Copyright headers are enforced for specific file extensions (`bazel`, `BUILD`, `bzl`, `c`, `cpp`, `h`, `hpp`, `ini`, `py`, `rs`, `rst`, `sh`, `yaml`, `yml`); CI will fail if a covered file's header is missing or incorrect.
+If unsure how the header should look for a given file type, don't guess: run `copyright.fix` and let it generate the header for you.
 
 ```bash
-bazel run //:copyright.check    # Verify
-bazel run //:copyright.fix      # Auto-fix missing headers
+bazel run //tools:copyright.check    # Verify
+bazel run //tools:copyright.fix      # Auto-fix missing headers
 ```
 
-**Every new file must have a copyright header.** The year must be the year in which the file is being created. If the current year is unknown, use `<YEAR>` as a placeholder.
+**Every new file with a covered extension must have a copyright header.** The year must be the year in which the file is being created. If the current year is unknown, use `<YEAR>` as a placeholder.
 
 C++ files (`.h`, `.cpp`):
 ```cpp
@@ -109,15 +111,22 @@ Rust (`.rs`), Python (`.py`), Starlark (`.bzl`), BUILD files — use `#` comment
 ### clang-tidy (C++)
 
 ```bash
-bazel build --config=clang_tidy -- //score/...
+bazel build --config=bl-x86_64-linux --config=clang-tidy -- //...
 ```
 
-Config: `.clang-tidy-minimal` at repo root.
+Config: `.clang-tidy` at repo root.
+
+Packages can also opt into a package-local `.clang-tidy` override, discovered by clang-tidy's
+own per-directory config search (nearest directory wins). See the docstring in
+`tools/lint/linters.bzl` for the exact steps and pitfalls (Bazel sandboxing requires the file
+to be exported and registered; `Checks: '-*'` alone errors instead of disabling everything).
+`score/language/futurecpp` uses this to keep linting under its own, Copybara-synced config
+instead of this repo's stricter baseline.
 
 ### Rust clippy
 
 ```bash
-bazel build --config=lint -- //score/...
+bazel build --config=clippy -- //score/...
 ```
 
 ### C++ Sanitizers
@@ -171,7 +180,9 @@ cd examples/integration && bazel build //...
 
 ## Documentation
 
-Documentation lives in `docs/` and uses Sphinx with the sphinx-needs extension, integrated with Bazel. The project follows the S-CORE process defined at https://github.com/eclipse-score/process_description. The metamodels for Sphinx-needs directives and Bazel integration are maintained at https://github.com/eclipse-score/docs-as-code.
+Documentation uses Sphinx with the sphinx-needs extension, integrated with Bazel. The project follows the S-CORE process defined at https://github.com/eclipse-score/process_description. The metamodels for Sphinx-needs directives and Bazel integration are maintained at https://github.com/eclipse-score/docs-as-code.
+
+`score/<component>/docs/` holds most components' documentation (requirements, architecture, detailed design, safety analysis), colocated with the component's source. `docs/` at the repo root hosts feature-level docs (`docs/features/`), module-level docs (`docs/module/`), and the docs of components not yet migrated to `score/<component>/docs/` (`docs/baselibs/components/<component>/docs/`).
 
 ```bash
 bazel run //:docs    # Build docs, output at _build/index.html

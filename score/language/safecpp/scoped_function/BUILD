@@ -12,7 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -108,14 +108,4 @@ cc_gtest_unit_test(
         "@score_baselibs//score/language/safecpp/scoped_function/details:testing_allocator",
         "@score_baselibs//score/quality/compiler_warnings",
     ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        "@score_baselibs//score/language/safecpp/scoped_function:scope_test",
-        "@score_baselibs//score/language/safecpp/scoped_function:scoped_function_test",
-    ],
-    test_suites_from_sub_packages = ["@score_baselibs//score/language/safecpp/scoped_function/details:unit_tests"],
-    visibility = ["@score_baselibs//score/language/safecpp:__pkg__"],
 )

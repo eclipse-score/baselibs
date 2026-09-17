@@ -30,15 +30,11 @@ class SysWait : public ObjectSeam<SysWait>
   public:
     static SysWait& instance() noexcept;
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<pid_t, Error> wait(std::int32_t* const stat_loc) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<pid_t, Error> waitpid(const pid_t pid,
                                                        std::int32_t* const stat_loc,
                                                        const std::int32_t options) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~SysWait() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

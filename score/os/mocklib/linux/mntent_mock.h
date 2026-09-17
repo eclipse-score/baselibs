@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef LIB_OS_MOCKLIB_MNTENT_MOCK_H_
-#define LIB_OS_MOCKLIB_MNTENT_MOCK_H_
+#ifndef LIB_OS_MOCKLIB_MNTENT_MOCK_H
+#define LIB_OS_MOCKLIB_MNTENT_MOCK_H
 
 #include "score/os/linux/endmntent.h"
 #include "score/os/linux/getmntent.h"
@@ -35,4 +35,4 @@ struct MntentMock
 } /* namespace os */
 } /* namespace score */
 
-#endif  // LIB_OS_MOCKLIB_MNTENT_MOCK_H_
+#endif  // LIB_OS_MOCKLIB_MNTENT_MOCK_H

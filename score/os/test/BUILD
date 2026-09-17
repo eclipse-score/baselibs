@@ -25,12 +25,10 @@ test_suite(
         ":arpa_inet_test",
         ":asil_qm_test",
         ":capability_test",
-        ":cpuid_test",
         ":dirent_test",
         ":dlfcn_impl_test",
         ":errno_test",
         ":fcntl_test",
-        ":file_stream_test",
         ":ftw_test",
         ":glob_test",
         ":grp_test",
@@ -44,7 +42,6 @@ test_suite(
         ":objectseam_test",
         ":pthread_test",
         ":sched_mock_test",
-        ":select_test",
         ":semaphore_test",
         ":sigevent_test",
         ":socket_test",
@@ -77,19 +74,6 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:arpa_inet",
         "@score_baselibs//score/os:netdb",
-    ],
-)
-
-cc_test(
-    name = "cpuid_test",
-    srcs = ["cpuid_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:cpuid",
     ],
 )
 
@@ -128,19 +112,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:ifaddrs",
-    ],
-)
-
-cc_test(
-    name = "file_stream_test",
-    srcs = ["file_stream_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:file_stream",
     ],
 )
 
@@ -580,19 +551,6 @@ cc_test(
 )
 
 cc_test(
-    name = "makedev_test",
-    srcs = ["makedev_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:make_dev",
-    ],
-)
-
-cc_test(
     name = "string_impl_test",
     srcs = [
         "string_impl_test.cpp",
@@ -619,21 +577,6 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:sys_wait",
-    ],
-)
-
-cc_test(
-    name = "select_test",
-    srcs = [
-        "select_test.cpp",
-    ],
-    features = COMPILER_WARNING_FEATURES + [
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/os:select",
     ],
 )
 

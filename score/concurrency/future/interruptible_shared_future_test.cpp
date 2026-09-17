@@ -147,7 +147,7 @@ TEST(AMP, CanCopyExpectedWithCopyOnlyType)
     testing::CopyOnlyType value{1};
     score::cpp::expected<testing::CopyOnlyType, int> test_expected{value};
     test_expected = value;
-    score::cpp::expected<testing::CopyOnlyType, int> copy{test_expected};
+    [[maybe_unused]] score::cpp::expected<testing::CopyOnlyType, int> copy{test_expected};
 }
 
 TEST(AMP, CanMoveExpectedWithCopyOnlyType)
@@ -155,7 +155,7 @@ TEST(AMP, CanMoveExpectedWithCopyOnlyType)
     testing::CopyOnlyType value{1};
     score::cpp::expected<testing::CopyOnlyType, int> test_expected{value};
     test_expected = value;
-    score::cpp::expected<testing::CopyOnlyType, int> copy{std::move(test_expected)};
+    [[maybe_unused]] score::cpp::expected<testing::CopyOnlyType, int> copy{std::move(test_expected)};
 }
 
 TYPED_TEST(InterruptibleSharedFutureTest, CanDefaultConstructInterruptibleSharedFuture)

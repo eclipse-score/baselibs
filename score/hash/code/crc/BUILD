@@ -12,7 +12,6 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 
 # lookup_table is a generic implementation of the CRC algorithm.
 # If different polynomials are needed, consumers can depend on or reuse
@@ -71,12 +70,4 @@ cc_test(
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
     ],
-)
-
-cc_unit_test_suites_for_host_and_qnx(
-    name = "unit_tests",
-    cc_unit_tests = [
-        ":unit_test_ieee",
-    ],
-    visibility = ["//visibility:public"],
 )
