@@ -19,7 +19,10 @@
 
 #include <charconv>
 #include <array>
+#include <cmath>
+#include <ios>
 #include <system_error>
+#include <type_traits>
 
 #include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
@@ -104,6 +107,9 @@ class GenericValueSerializer final
     }
 
     /// \brief Serializes a number value
+    /// \details The JSON grammar of RFC 8259, section 6 only covers finite numbers, so infinity and NaN have no
+    ///     representation. Such a value is not written at all, instead the output stream is put into the failed
+    ///     state, which the enclosing serializer reports as an error to its caller.
     /// \tparam T Type of number.
     /// \param[in] number value to serialize.
     /// \return The succeeding serializer.
@@ -112,16 +118,25 @@ class GenericValueSerializer final
     auto operator<<(JNumberType<T> number) && noexcept -> Next
     {
         return this->Serialize([this, number]() noexcept {
-            // Buffer size: max 24 chars for double, ~20 for int64, extra space for safety
-            std::array<char, 64> buffer{};
-            T value = static_cast<T>(number.GetValue());
+            const T value = static_cast<T>(number.GetValue());
 
-            const auto conversion_result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value);
+            if (!IsFinite(value))
+            {
+                this->os_.get().setstate(std::ios_base::failbit);
+            }
+            else
+            {
+                // Buffer size: max 24 chars for double, ~20 for int64, extra space for safety
+                std::array<char, 64> buffer{};
 
-            AssertCondition(conversion_result.ec == std::errc{},
-                            "GenericValueSerializer: Could not convert number to textual representation.");
+                const auto conversion_result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value);
 
-            this->os_.get().write(buffer.data(), static_cast<std::streamsize>(conversion_result.ptr - buffer.data()));
+                AssertCondition(conversion_result.ec == std::errc{},
+                                "GenericValueSerializer: Could not convert number to textual representation.");
+
+                this->os_.get().write(buffer.data(),
+                                      static_cast<std::streamsize>(conversion_result.ptr - buffer.data()));
+            }
         });
     }
 
@@ -206,6 +221,29 @@ class GenericValueSerializer final
     auto operator<<(JObjectType<Fn> object) && noexcept -> Next;
 
   private:
+    /// \brief Checks whether a number is representable as a JSON number
+    /// \details RFC 8259, section 6 only allows finite numbers. Only floating point values can be non-finite,
+    ///     integral values are always representable.
+    /// \tparam T Type of number.
+    /// \param[in] value Number to check.
+    /// \return True if the value is finite, false otherwise.
+    template <typename T>
+    static auto IsFinite(const T value) noexcept -> bool
+    {
+        bool is_finite{true};
+        // Coverity doesn't know constexpr if statements
+        // coverity[autosar_cpp14_a7_1_8_violation]
+        if constexpr (std::is_floating_point<T>::value)
+        {
+            is_finite = std::isfinite(value);
+        }
+        else
+        {
+            static_cast<void>(value);
+        }
+        return is_finite;
+    }
+
     /// \brief Serializes a value
     /// \details
     /// - If another element was serialized before:

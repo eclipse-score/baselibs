@@ -16,6 +16,8 @@
 #ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
 #define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
 
+#include <array>
+#include <cstddef>
 #include <ostream>
 #include <string>
 #include <string_view>
@@ -61,12 +63,40 @@ class EscapedJsonString
     std::string_view value_;
 };
 
+/// \brief First character that RFC 8259, section 7 allows to appear unescaped in a JSON string
+constexpr std::char_traits<char>::int_type kFirstUnescapedCharacter{0x20};
+
+/// \brief Writes a control character as a six character \uXXXX escape sequence
+/// \details RFC 8259, section 7 requires characters in the range U+0000 to U+001F to be escaped. Those without a
+///     two character escape sequence must be written in the \uXXXX notation.
+/// \param[in] os Output stream to write into.
+/// \param[in] value Value of the control character to escape, must be below kFirstUnescapedCharacter.
+inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::int_type value) noexcept
+{
+    constexpr std::string_view kHexDigits{"0123456789abcdef"};
+    constexpr std::char_traits<char>::int_type kNibbleMask{0x0F};
+    constexpr std::char_traits<char>::int_type kNibbleWidth{4};
+    constexpr std::size_t kUnicodeEscapeLength{6U};
+
+    // Only characters below U+0020 reach this function, hence the two upper hexadecimal digits are always zero.
+    const std::array<char, kUnicodeEscapeLength> escape{'\\',
+                                      'u',
+                                      '0',
+                                      '0',
+                                      kHexDigits[static_cast<std::size_t>((value >> kNibbleWidth) & kNibbleMask)],
+                                      kHexDigits[static_cast<std::size_t>(value & kNibbleMask)]};
+    os.write(escape.data(), static_cast<std::streamsize>(escape.size()));
+}
+
 // NOLINTNEXTLINE(whitespace/line_length)
 // coverity[autosar_cpp14_m5_0_16_violation]
 /// \brief Serializes an escaped string literal type
 /// \details
-/// - If the string contains a character that needs to be escaped in JSON:
+/// - If the string contains a character that has a two character escape sequence in JSON:
 /// - Serialize the escaped character.
+/// - Otherwise, if the character is a control character (U+0000 to U+001F), which RFC 8259, section 7 does not
+///   allow to appear unescaped:
+/// - Serialize the character as a \uXXXX escape sequence.
 /// - Otherwise:
 /// - Serialize the character directly.
 /// \param[in] os Output stream to write into.
@@ -76,7 +106,8 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
 {
     for (const char ch : string.GetValue())
     {
-        switch (std::char_traits<char>::to_int_type(ch))
+        const auto value = std::char_traits<char>::to_int_type(ch);
+        switch (value)
         {
             case std::char_traits<char>::to_int_type('"'):
             {
@@ -114,7 +145,14 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
                 break;
             }
             default:
-                os.put(ch);
+                if (value < kFirstUnescapedCharacter)
+                {
+                    WriteUnicodeEscape(os, value);
+                }
+                else
+                {
+                    os.put(ch);
+                }
                 break;
         }
     }
