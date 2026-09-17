@@ -52,22 +52,15 @@ class MQueue
                     const size_t max_msgs = 10UL);
     explicit MQueue(const std::string& name);
     explicit MQueue(const size_t id);
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     void send(const std::string& msg) const;
-    /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
     score::cpp::expected_blank<score::os::Error> send(const char* const msg, const size_t length) const;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     ssize_t timed_send(const char* const msg, const size_t length, const std::chrono::milliseconds timeout) const;
     void receive(char* const msg) const;
-    /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
     std::int32_t get_msg_size() const;
     std::string receive() const;
-    /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
     std::pair<ssize_t, bool> timed_receive(char* const msg, const std::chrono::milliseconds timeout) const;
-    /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
     std::pair<std::string, bool> timed_receive(const std::chrono::milliseconds timeout) const;
     score::cpp::expected_blank<score::os::Error> unlink() const;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     size_t get_id() const;
 
     score::cpp::expected<std::uint32_t, Error> get_mq_st_mode() const noexcept;

@@ -18,17 +18,12 @@ std::unique_ptr<score::os::Pthread> score::os::Pthread::Default() noexcept
     return std::make_unique<score::os::QnxPthread>();
 }
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::Pthread> score::os::Pthread::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::QnxPthread>(memory_resource);
 }
-
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */
 
 score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::setname_np(const pthread_t thread,
                                                                                const char* const name) const noexcept
@@ -81,6 +76,3 @@ score::cpp::expected_blank<score::os::Error> score::os::QnxPthread::getcpuclocki
     }
     return {};
 }
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */

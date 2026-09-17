@@ -41,12 +41,10 @@ bool IsOs(const std::string os)
         score::cpp::ignore = std::transform(sysName.begin(),
                                             sysName.end(),
                                             sysName.begin(),
-                                            /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC,MISRA.CONV.INT.SIGN: */
                                             /* Unsigned char is used for char data handling */
                                             [](const unsigned char c) {
                                                 return std::tolower(c);
                                             });
-        /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC,MISRA.CONV.INT.SIGN: */
         const std::size_t found = sysName.find(os);
         returnValue = found != std::string::npos;
     }

@@ -246,7 +246,7 @@ Result<bool> FileUtils::ValidateGroup(const Path& path, const std::string& group
     {
         return MakeUnexpected(ErrorCode::kCouldNotValidateGroup, "Unable to get file status");
     }
-    return groupResult.value().gid == status.st_gid;
+    return static_cast<std::uint64_t>(groupResult.value().gid) == status.st_gid;
 }
 
 Result<std::pair<std::unique_ptr<std::iostream>, Path>> FileUtils::OpenUniqueFile(const Path& path,
@@ -353,7 +353,7 @@ Result<bool> FileUtils::FileContentsAreIdentical(const Path& path1, const Path& 
     }
 
     // open files
-    const auto flags = std::ios_base::in | std::ios_base::binary; /* KW_SUPPRESS:MISRA.ENUM.OPERAND:ios_base */
+    const auto flags = std::ios_base::in | std::ios_base::binary;
     const auto file1 = file_factory_.Open(path1, flags);
     if (((!file1.has_value()) || (file1.value() == nullptr)) || (file1.value()->fail()))
     {

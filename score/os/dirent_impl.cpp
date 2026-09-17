@@ -17,11 +17,7 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<DIR*, score::os::Error> DirentImpl::opendir(const char* const name) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -32,11 +28,7 @@ score::cpp::expected<DIR*, score::os::Error> DirentImpl::opendir(const char* con
     }
     return dir_ptr;
 }
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<struct dirent*, score::os::Error> DirentImpl::readdir(DIR* const dirp) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 {
     /// @brief As per POSIX specification, readdir() returns a nullptr and sets the error according to errno. If the end
     /// of the directory has been reached errno is not set. In order for us to be sure, we have to set a specific errno
@@ -58,17 +50,11 @@ score::cpp::expected<struct dirent*, score::os::Error> DirentImpl::readdir(DIR* 
     // LCOV_EXCL_STOP
     return dirent_ptr;
 }
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 // Rationale: violation is happening out of our code domain due to QNX - ::scandir, no harm to our code
 // coverity[autosar_cpp14_a5_0_3_violation] see above
 score::cpp::expected<std::int32_t, score::os::Error> DirentImpl::scandir(
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     const char* const dirp,
-    /* KW_SUPPRESS_START:MISRA.PTR.TO_PTR_TO_PTR:Used parameters match the param requirements of wrapped function */
     struct dirent*** const namelist,
-    /* KW_SUPPRESS_END:MISRA.PTR.TO_PTR_TO_PTR:Used parameters match the param requirements of wrapped function */
     std::int32_t (*const filter)(const struct dirent*),
     std::int32_t (*const compar)(const struct dirent**, const struct dirent**)) const noexcept
 {
@@ -79,11 +65,7 @@ score::cpp::expected<std::int32_t, score::os::Error> DirentImpl::scandir(
     }
     return number_of_entries;
 }
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> DirentImpl::closedir(DIR* const dirp) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above

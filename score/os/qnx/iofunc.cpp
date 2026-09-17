@@ -12,9 +12,6 @@
  ********************************************************************************/
 #include "score/os/qnx/iofunc.h"
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 void score::os::IoFuncQnx::iofunc_func_init(const std::uint32_t nconnect,
                                             resmgr_connect_funcs_t* const connect,
                                             const std::uint32_t nio,
@@ -89,7 +86,7 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_write_veri
     std::int32_t* const nonblock) const noexcept
 {
     const std::int32_t result = ::iofunc_write_verify(ctp, msg, ocb, nonblock);
-    if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
+    if (result != EOK)
     {
         return score::cpp::make_unexpected(result);
     }
@@ -107,7 +104,7 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_read_verif
     std::int32_t* const nonblock) const noexcept
 {
     const std::int32_t result = ::iofunc_read_verify(ctp, msg, ocb, nonblock);
-    if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
+    if (result != EOK)
     {
         return score::cpp::make_unexpected(result);
     }
@@ -127,9 +124,7 @@ score::cpp::expected<std::int32_t, std::int32_t> score::os::IoFuncQnx::iofunc_ls
     // -1 result considered as success
     // check
     // http://www.qnx.com/developers/docs/7.0.0/index.html#com.qnx.doc.neutrino.lib_ref/topic/i/iofunc_lseek_default.html
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
     if ((result != EOK) && (result != -1))
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
     {
         return score::cpp::make_unexpected(result);
     }
@@ -144,7 +139,7 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_client_inf
     const std::int32_t result = ::iofunc_client_info_ext(ctp, ioflag, info, IOFUNC_CLIENTINFO_GETGROUPS);
 
     // LCOV_EXCL_BR_START (Creation of valid resmgr_context_t struct is not possible through unit tests)
-    if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
+    if (result != EOK)
     {
         return score::cpp::make_unexpected(result);
     }
@@ -157,7 +152,7 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_client_inf
 {
     // LCOV_EXCL_BR_START (Creation of invalid _client_info struct is not possible through unit tests)
     const std::int32_t result = ::iofunc_client_info_ext_free(info);
-    if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
+    if (result != EOK)
     {
         // LCOV_EXCL_START (Creation of invalid _client_info struct is not possible through unit tests)
         return score::cpp::make_unexpected(result);
@@ -174,7 +169,7 @@ score::cpp::expected_blank<std::int32_t> score::os::IoFuncQnx::iofunc_check_acce
     const struct _client_info* info) const noexcept
 {
     const std::int32_t result = ::iofunc_check_access(ctp, attr, checkmode, info);
-    if (result != EOK) /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
+    if (result != EOK)
     {
         return score::cpp::make_unexpected(result);
     }
@@ -316,14 +311,9 @@ score::os::IoFunc& score::os::IoFunc::instance() noexcept
     return select_instance(instance);
 }
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::IoFunc> score::os::IoFunc::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::IoFuncQnx>(memory_resource);
 }
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

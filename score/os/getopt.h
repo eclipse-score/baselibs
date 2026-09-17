@@ -19,8 +19,6 @@
 #include <unistd.h>
 #include <cstdint>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -30,28 +28,20 @@ class Getopt : public ObjectSeam<Getopt>
 {
   public:
     static Getopt& instance() noexcept;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
     // Wrapped function's signature requires C-style array
     virtual std::int32_t getopt(const std::int32_t argc,
                                 // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
                                 char* const argv[],
                                 const char* const optstring) const noexcept = 0;
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
     virtual std::int32_t getoptopt() const noexcept = 0;
     virtual std::int32_t getoptind() const noexcept = 0;
     virtual std::int32_t getopterr() const noexcept = 0;
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
     // Wrapped function's signature requires C-style array
     virtual std::int32_t getopt_long(const std::int32_t argc,
                                      char* const argv[],  // NOLINT(modernize-avoid-c-arrays) see comment above
                                      const char* const optstring,
                                      const option* const option,
                                      std::int32_t* const index) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:The wrapper function is identifiable through namespace */
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 
     virtual ~Getopt() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
@@ -63,8 +53,6 @@ class Getopt : public ObjectSeam<Getopt>
   protected:
     Getopt() = default;
 };
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score

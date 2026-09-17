@@ -30,34 +30,24 @@ namespace qnx
 class Secpol : public ObjectSeam<Secpol>
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     static Secpol& instance() noexcept;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<secpol_file_t*, score::os::Error> secpol_open(
         const char* const path,
         const std::uint32_t flags) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> secpol_close(secpol_file_t* const handle) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> secpol_posix_spawnattr_settypeid(
         secpol_file_t* const handle,
         posix_spawnattr_t* const attrp,
         const char* const name,
         const std::uint32_t flags) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> secpol_transition_type(
         secpol_file_t* const handle,
         const char* const name,
         const std::uint32_t flags) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Secpol() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

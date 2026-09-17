@@ -13,23 +13,26 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-"""Cleans up rules_lint's per-file clang-tidy SARIF reports for GitHub code scanning.
+"""Cleans up rules_lint's per-target SARIF reports for GitHub code scanning.
 
-rules_lint's clang-tidy aspect emits one SARIF file per linted source file, with
-no `ruleId` on its results, and locations reported as `%SRCROOT%`-relative URIs.
-None of this is directly usable for a GitHub code scanning upload:
+clang-tidy's and Ruff's SARIF come from a generic errorformat-based converter
+with no `ruleId` set, and paths reported as repo-root-relative URIs.
+Clippy's SARIF comes from a dedicated converter that already sets `ruleId`
+from rustc's own diagnostics.
+
+None of this is directly usable for a code scanning upload as-is:
 
 * GitHub rejects a SARIF upload if any result is missing a `ruleId` that
   resolves against that run's `tool.driver.rules`.
-* GitHub ignores `uriBaseId`/`originalUriBaseIds` entirely and resolves
-  `artifactLocation.uri` as a path relative to the repository root, so a
-  leading "./" must be stripped.
+* GitHub ignores `uriBaseId`/`originalUriBaseIds` and resolves
+  `artifactLocation.uri` relative to the repository root, so a leading
+  "./" must be stripped.
 
-This script fixes up each report in place: it synthesizes `ruleId` from the
-check name clang-tidy already appends to each message (for example
-"... [modernize-use-trailing-return-type]"), and normalizes paths. Combining
-the cleaned-up reports into a single run and enforcing GitHub's size limits is
-left to `sarif-multitool merge` and `sarif-multitool rewrite --normalize-for-ghas`.
+This script fixes up each report in place: synthesizes `ruleId` where
+missing, normalizes paths, and drops results that point outside the
+checked-out repository (vendored deps, toolchain headers). Merging the
+cleaned-up reports and enforcing GitHub's size limits is left to
+`sarif-multitool merge` and `sarif-multitool rewrite --normalize-for-ghas`.
 """
 
 import argparse
@@ -38,7 +41,29 @@ import os
 import re
 import sys
 
-RULE_ID_RE = re.compile(r"\[([\w.,-]+)\]$")
+# clang-tidy appends every check that fired as a comma-separated list, e.g.
+# "... [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]".
+# A SARIF result can only carry one ruleId, so use the first name.
+CLANG_TIDY_RULE_ID_RE = re.compile(r"\[([\w.,-]+)\]$")
+
+# Ruff's message starts with its rule code, e.g. "E402 Module level import
+# not at top of file".
+RUFF_RULE_ID_RE = re.compile(r"^([A-Z]+\d+)\b")
+
+RULE_ID_EXTRACTORS = {
+    "clang-tidy": lambda message: (
+        CLANG_TIDY_RULE_ID_RE.search(message).group(1).split(",")[0]
+        if CLANG_TIDY_RULE_ID_RE.search(message)
+        else "clang-tidy"
+    ),
+    "ruff": lambda message: (
+        RUFF_RULE_ID_RE.match(message).group(1)
+        if RUFF_RULE_ID_RE.match(message)
+        else "ruff"
+    ),
+    # Clippy's ruleId (e.g. "clippy::needless_return") is already set.
+    "clippy": None,
+}
 
 
 def load_report(path):
@@ -53,20 +78,9 @@ def load_report(path):
 
 
 def normalize_uri(uri):
-    # rules_lint reports paths relative to %SRCROOT%, e.g. "./score/result/error.h".
-    # GitHub resolves artifactLocation.uri directly against the repository root
-    # and does not honor uriBaseId, so the leading "./" must go.
+    # GitHub resolves artifactLocation.uri against the repository root and
+    # ignores uriBaseId, so the "./" rules_lint uses must go.
     return uri[2:] if uri.startswith("./") else uri
-
-
-def rule_id_for(result):
-    # clang-tidy appends every check that fired as a comma-separated list, e.g.
-    # "... [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]"
-    # when a diagnostic matches more than one aliased check. A SARIF result can
-    # only carry a single ruleId, so use the first name in that list.
-    message = result.get("message", {}).get("text", "")
-    match = RULE_ID_RE.search(message)
-    return match.group(1).split(",")[0] if match else "clang-tidy"
 
 
 def result_files(result):
@@ -76,7 +90,7 @@ def result_files(result):
             yield normalize_uri(artifact["uri"])
 
 
-def clean_report(report):
+def clean_report(report, rule_id_extractor):
     dropped_outside_repo = 0
 
     for run in report.get("runs", []):
@@ -90,15 +104,16 @@ def clean_report(report):
                     artifact["uri"] = normalize_uri(artifact["uri"])
                 artifact.pop("uriBaseId", None)
 
-            # clang-tidy also lints headers pulled in from external repos and
-            # toolchains (e.g. "external/...llvm_toolchain/..."). GitHub can
-            # only resolve paths that exist in the checked-out repository, so
-            # drop anything else.
+            # Drop results in files outside the checked-out repo (external
+            # deps, toolchains); GitHub can't resolve those paths anyway.
             if not all(os.path.isfile(f) for f in result_files(result)):
                 dropped_outside_repo += 1
                 continue
 
-            result["ruleId"] = rule_id_for(result)
+            if rule_id_extractor and not result.get("ruleId"):
+                result["ruleId"] = rule_id_extractor(
+                    result.get("message", {}).get("text", "")
+                )
             kept.append(result)
         run["results"] = kept
 
@@ -110,16 +125,23 @@ def clean_report(report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
+        "--tool",
+        required=True,
+        choices=sorted(RULE_ID_EXTRACTORS),
+        help="which linter produced the reports, to select the ruleId synthesis strategy",
+    )
+    parser.add_argument(
         "--output-dir",
         required=True,
         help="directory to write the cleaned SARIF files to",
     )
     parser.add_argument(
-        "reports", nargs="*", help="clang-tidy SARIF report files to clean up"
+        "reports", nargs="*", help="rules_lint SARIF report files to clean up"
     )
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
+    rule_id_extractor = RULE_ID_EXTRACTORS[args.tool]
 
     total_results = 0
     total_dropped_outside_repo = 0
@@ -130,7 +152,7 @@ def main():
         if report is None:
             continue
 
-        result_count, dropped_outside_repo = clean_report(report)
+        result_count, dropped_outside_repo = clean_report(report, rule_id_extractor)
         total_results += result_count
         total_dropped_outside_repo += dropped_outside_repo
 

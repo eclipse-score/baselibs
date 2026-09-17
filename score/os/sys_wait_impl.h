@@ -25,15 +25,11 @@ class SysWaitImpl final : public SysWait
 {
   public:
     constexpr SysWaitImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<pid_t, Error> wait(std::int32_t* const stat_loc) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<pid_t, Error> waitpid(const pid_t pid,
                                                std::int32_t* const stat_loc,
                                                const std::int32_t options) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 };
 }  // namespace os
 }  // namespace score

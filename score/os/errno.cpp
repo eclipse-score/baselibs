@@ -47,75 +47,73 @@ score::os::Error::Code convertErrnoToCode(const std::int32_t error_number) noexc
     switch (error_number)
     {
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EPERM: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EPERM:
             return score::os::Error::Code::kOperationNotPermitted;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENOENT: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENOENT:
             return score::os::Error::Code::kNoSuchFileOrDirectory;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EINTR: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EINTR:
             return score::os::Error::Code::kOperationWasInterruptedBySignal;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EIO: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EIO:
             return score::os::Error::Code::kInputOutput;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENXIO: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENXIO:
             return score::os::Error::Code::kNoSuchFileOrDirectory;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EBADF: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EBADF:
             return score::os::Error::Code::kBadFileDescriptor;
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case EAGAIN:  // same as EWOULDBLOCK
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
             return score::os::Error::Code::kResourceTemporarilyUnavailable;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENOMEM: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENOMEM:
             return score::os::Error::Code::kNotEnoughSpace;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EACCES: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EACCES:
             return score::os::Error::Code::kPermissionDenied;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EBUSY: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EBUSY:
             return score::os::Error::Code::kDeviceOrResourceBusy;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENOTDIR: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENOTDIR:
             return score::os::Error::Code::kNotADirectory;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EISDIR: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EISDIR:
             return score::os::Error::Code::kIsADirectory;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EINVAL: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EINVAL:
             return score::os::Error::Code::kInvalidArgument;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENFILE: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENFILE:
             return score::os::Error::Code::kTooManyOpenFilesInSystem;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EMFILE: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EMFILE:
             return score::os::Error::Code::kTooManyOpenFiles;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENOSPC: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENOSPC:
             return score::os::Error::Code::kNoSpaceLeftOnDevice;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EROFS: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EROFS:
             return score::os::Error::Code::kReadOnlyFileSystem;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENAMETOOLONG: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENAMETOOLONG:
             return score::os::Error::Code::kFilenameTooLong;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ELOOP: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ELOOP:
             return score::os::Error::Code::kToManyLevelsOfSymbolicLinks;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EOVERFLOW: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EOVERFLOW:
             return score::os::Error::Code::kValueTooLargeForDataType;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ENOTSUP: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ENOTSUP:
             return score::os::Error::Code::kOperationNotSupported;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case EEXIST: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case EEXIST:
             return score::os::Error::Code::kObjectExists;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ESRCH: /* KW_SUPPRESS:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
+        case ESRCH:
             return score::os::Error::Code::kNoSuchProcess;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case ENOSYS:
@@ -137,7 +135,6 @@ score::os::Error::Code convertGlobErrorToCode(const std::int32_t glob_error) noe
     // coverity[autosar_cpp14_m6_4_3_violation] see Note 1
     switch (glob_error)
     {
-        /* KW_SUPPRESS:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case GLOB_NOSPACE:
             return score::os::Error::Code::kGlobNoSpace;
@@ -163,7 +160,6 @@ score::os::Error::Code convertGlobErrorToCode(const std::int32_t glob_error) noe
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case GLOB_NOMATCH:
             return score::os::Error::Code::kGlobNoMatch;
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
         default:
             break;
     }
@@ -201,12 +197,10 @@ score::os::Error score::os::Error::createFromErrnoFlockSpecific(const std::int32
 
 score::os::Error score::os::Error::createFromErrno() noexcept
 {
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     // Suppress "AUTOSAR C++14 M19-3-1", The rule states: "The error indicator errno shall not be used."
     // Using library-defined macro to ensure correct operation.
     // coverity[autosar_cpp14_m19_3_1_violation]
     return Error{convertErrnoToCode(errno), errno};
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 }
 
 score::os::Error score::os::Error::createUnspecifiedError() noexcept
@@ -286,12 +280,10 @@ std::int32_t score::os::geterrno()
 
 void score::os::seterrno(const std::int32_t new_errno)
 {
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     // Suppress "AUTOSAR C++14 M19-3-1", The rule states: "The error indicator errno shall not be used."
     // Using library-defined macro to ensure correct operation.
     // coverity[autosar_cpp14_m19_3_1_violation]
     errno = new_errno;
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 }
 
 namespace score

@@ -19,7 +19,6 @@ namespace
 class ArpaInetInstance final : public score::os::ArpaInet
 {
   public:
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::os::InAddrT InetAddr(const std::string& ip_addr) const override
     {
         // JUSTIFICATION_BEGIN
@@ -40,15 +39,11 @@ class ArpaInetInstance final : public score::os::ArpaInet
         // NOLINTNEXTLINE(score-qnx-banned-builtin): see above justification
         return ::inet_addr(ip_addr.c_str());
     }
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 
     // @todo: use score::Result instead of score::cpp::expected after merging this ticket(Ticket-61178).
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected<score::os::InAddr, score::os::Error::Code> InetPton(const std::string& src) const override
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     {
         score::os::InAddr imr_multiaddr{};
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
         // JUSTIFICATION_BEGIN
         // \ID                score-qnx-banned-builtin
         // \RELATED_RULES     spp-quality-clang-tidy-qnx8-banned-builtins, posix-usage-check
@@ -66,7 +61,6 @@ class ArpaInetInstance final : public score::os::ArpaInet
         // coverity[score-qnx-banned-builtin] see above justification
         // NOLINTNEXTLINE(score-qnx-banned-builtin): see above justification
         std::int32_t conversion_state = ::inet_pton(AF_INET, src.c_str(), &imr_multiaddr);
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
         if (conversion_state == 0)
         {
             // We are using "kInvalidArgument" error code because inet_pton return 0 when 'src' does not contain a

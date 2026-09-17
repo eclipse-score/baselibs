@@ -93,9 +93,7 @@ std::int32_t ResourceManager::Run(const score::cpp::stop_token& exit_token) cons
         // wait till receive new request
         // NOLINTNEXTLINE(score-banned-function) it is among safety headers.
         const auto res = dispatch_calls_->dispatch_block(this->dispatch_context_);
-        /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-        if ((!res.has_value())) /* KW_SUPPRESS:MISRA.STMT.COND.NOT_BOOLEAN: false positive */
-        /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
+        if ((!res.has_value()))
         {
             this->logger_.LogError() << "Failed to send dispatch block request. Error:"
                                      << strerror(score::os::geterrno());
@@ -106,9 +104,7 @@ std::int32_t ResourceManager::Run(const score::cpp::stop_token& exit_token) cons
         // call the right handler of the request
         // NOLINTNEXTLINE(score-banned-function) it is among safety headers.
         const auto ret = this->dispatch_calls_->dispatch_handler(this->dispatch_context_);
-        /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-        if ((!ret.has_value())) /* KW_SUPPRESS:MISRA.STMT.COND.NOT_BOOLEAN: false positive */
-        /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
+        if ((!ret.has_value()))
         {
             this->logger_.LogError() << "Failed to send the dispatch handler request.";
             return kResourceManagerError;
@@ -127,9 +123,7 @@ std::int32_t ResourceManager::InitializeDispatchInterface()
     auto res = this->dispatch_calls_->dispatch_create();
 
     // handle the return value and exit if error
-    /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-    if (res.has_value()) /* KW_SUPPRESS:MISRA.STMT.COND.NOT_BOOLEAN: false positive */
-    /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
+    if (res.has_value())
     {
         this->dispatch_handle_ = res.value();
         this->logger_.LogDebug() << "Dispatch Interface is created";
@@ -153,12 +147,10 @@ void ResourceManager::InitializeHandlers()
         const resmgr_connect_funcs_t& connect_funcs_ptr = resource->GetResourceConnectFunctions();
 
         // Initialize the i/o and connect structures with the default handlers provided by QNX system
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Library macros */
         this->iofunc_calls_->iofunc_func_init(_RESMGR_CONNECT_NFUNCS,
                                               const_cast<resmgr_connect_funcs_t*>(&connect_funcs_ptr),
                                               _RESMGR_IO_NFUNCS,
                                               const_cast<resmgr_io_funcs_t*>(&io_funcs_ptr));
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Library macros */
         // Attach the register handlers to the system and overwrite the default functions
         resource->AttachRegisteredHandlers();
     }
@@ -204,21 +196,15 @@ std::int32_t ResourceManager::AttachResource()
                                                               const_cast<extended_dev_attr_t*>(&device_attributes_ptr));
         resource_index++;
         // Handle the returned error for the system
-        /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
         if (!res.has_value())
-        /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
         {
-            /* KW_SUPPRESS_START:MISRA.CAST.UNSIGNED_BITS: Allowed for Logging*/
             this->logger_.LogError() << "Failed to attach the Resource number" << resource_index
                                      << "to the system! Error:" << strerror(score::os::geterrno());
-            /* KW_SUPPRESS_END:MISRA.CAST.UNSIGNED_BITS: Allowed for Logging*/
             return kResourceManagerError;
         }
 
         // log
-        /*KW_SUPPRESS_START:MISRA.CAST.UNSIGNED_BITS: Allowed for Logging*/
         this->logger_.LogDebug() << "Resource number" << resource_index << "is attached.";
-        /*KW_SUPPRESS_END:MISRA.CAST.UNSIGNED_BITS: Allowed for Logging*/
     }
     return kResourceManagerNoError;
 }
@@ -229,9 +215,7 @@ std::int32_t ResourceManager::AllocateContextStructure()
     // Allocate the context structure
     // NOLINTNEXTLINE(score-banned-function) it is among safety headers.
     auto res = this->dispatch_calls_->dispatch_context_alloc(this->dispatch_handle_);
-    /* KW_SUPPRESS_START:MISRA.LOGIC.NOT_BOOL: false positive */
-    if (res.has_value()) /* KW_SUPPRESS:MISRA.STMT.COND.NOT_BOOLEAN: false positive */
-    /* KW_SUPPRESS_END:MISRA.LOGIC.NOT_BOOL: false positive */
+    if (res.has_value())
     {
         this->dispatch_context_ = res.value();
         this->logger_.LogDebug() << "The context structure for the resource manager is allocated";

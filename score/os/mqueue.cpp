@@ -15,9 +15,6 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -37,7 +34,7 @@ score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const 
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
-    return ret; /* KW_SUPPRESS:RH.LEAK: acquired resource not lost, no need to release it if ret == -1 */
+    return ret;
 }
 
 score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const name,
@@ -50,7 +47,7 @@ score::cpp::expected<std::int32_t, Error> MqueueImpl::mq_open(const char* const 
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
-    return ret; /* KW_SUPPRESS:RH.LEAK: acquired resource not lost, no need to release it if ret == -1 */
+    return ret;
 }
 
 score::cpp::expected_blank<Error> MqueueImpl::mq_unlink(const char* const name) const noexcept
@@ -152,7 +149,6 @@ std::int32_t MqueueImpl::openflag_to_nativeflag(const OpenFlag flags) const noex
         return (static_cast<std::uint32_t>(flags) & static_cast<std::uint32_t>(flag)) != 0U;
     };
 
-    /*KW_SUPPRESS_START:MISRA.USE.EXPANSION: macros used as open flags */
     std::uint32_t native_flags{};
     if (fn_test_flag(OpenFlag::kReadOnly))
     {
@@ -182,7 +178,6 @@ std::int32_t MqueueImpl::openflag_to_nativeflag(const OpenFlag flags) const noex
     {
         native_flags |= static_cast<std::uint32_t>(O_EXCL);
     }
-    /*KW_SUPPRESS_END:MISRA.USE.EXPANSION */
     return static_cast<std::int32_t>(native_flags);
 }
 
@@ -190,13 +185,9 @@ std::int32_t MqueueImpl::openflag_to_nativeflag(const OpenFlag flags) const noex
 mode_t MqueueImpl::modeflag_to_nativeflag(const ModeFlag flags) const noexcept
 {
     const auto fn_test_flag = [flags](const ModeFlag flag) -> bool {
-        /* KW_SUPPRESS_START:MISRA.CVALUE.IMPL.CAST.CPP: cast is explicit */
         return (static_cast<std::uint32_t>(flags) & static_cast<std::uint32_t>(flag)) != 0U;
-        /* KW_SUPPRESS_END:MISRA.CVALUE.IMPL.CAST.CPP */
     };
 
-    /*KW_SUPPRESS_START:MISRA.USE.EXPANSION: macros used as mode flags */
-    /*KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: bit operations are performed on an unsigned integers */
     std::uint32_t native_flags{};
     if (fn_test_flag(ModeFlag::kReadUser))
     {
@@ -234,8 +225,6 @@ mode_t MqueueImpl::modeflag_to_nativeflag(const ModeFlag flags) const noexcept
     {
         native_flags |= static_cast<std::uint32_t>(S_IXOTH);
     }
-    /*KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED */
-    /*KW_SUPPRESS_END:MISRA.USE.EXPANSION */
     return native_flags;
 }
 
@@ -248,14 +237,9 @@ score::os::Mqueue& score::os::Mqueue::instance() noexcept
     return select_instance(utils::StaticDestructionGuard<impl::MqueueImpl>::GetStorage());
 }
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::Mqueue> score::os::Mqueue::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST,MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<impl::MqueueImpl>(memory_resource);
 }
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

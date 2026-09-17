@@ -24,24 +24,16 @@ class TimeImpl final : public Time
 {
   public:
     constexpr TimeImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> clock_settime(const clockid_t clkid,
                                                             const struct timespec* const tp) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> clock_gettime(const clockid_t clkid,
                                                             struct timespec* const tp) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> clock_getres(const clockid_t clkid,
                                                            struct timespec* const res) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     struct tm* localtime_r(const time_t* timer, struct tm* tm_local_time) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     score::cpp::expected<std::int32_t, Error> timer_create(const clockid_t clock_id,
                                                            sigevent* const evp,

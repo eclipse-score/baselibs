@@ -26,13 +26,9 @@ namespace os
 class IfaddrsImpl final : public Ifaddrs
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<ifaddrs*, Error> getifaddrs() const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     void freeifaddrs(ifaddrs* ifa) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN */
 };
 
 }  // namespace os

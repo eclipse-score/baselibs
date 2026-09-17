@@ -43,13 +43,9 @@ std::string score::os::get_thread_name(std::thread& thread)
     // Length is restricted by POSIX to 16 characters, including the terminating null byte ('\0').
     constexpr std::size_t length = 16U;
 
-    /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Required by POSIX API */
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Required by POSIX API */
     // POSIX API requires C-style array
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
     char name[length];
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Required by POSIX API */
-    /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Required by POSIX API */
 
     // NOLINTBEGIN(hicpp-no-array-decay, cppcoreguidelines-pro-bounds-array-to-pointer-decay) see rationale below
     // Suppress “AUTOSAR_Cpp14_M5_2_12” rule finding: “An identifier with array type passed as a function argument
@@ -72,5 +68,5 @@ std::string score::os::get_thread_name(std::thread& thread)
 
     // POSIX API requires C-style array
     // NOLINTNEXTLINE(modernize-avoid-c-arrays, hicpp-no-array-decay) see comment above
-    return std::string(static_cast<char*>(name)); /* KW_SUPPRESS:LOCRET.RET:False positive */
+    return std::string(static_cast<char*>(name));
 }

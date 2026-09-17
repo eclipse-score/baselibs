@@ -18,10 +18,8 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_settime(const clockid_t clkid,
                                                                   const struct timespec* const tp) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t ret{::clock_settime(clkid, tp)};
     if (ret < 0)
@@ -31,10 +29,8 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::clock_settime(const clockid_
     return ret;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_gettime(const clockid_t clkid,
                                                                   struct timespec* const tp) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 
     const std::int32_t ret{::clock_gettime(clkid, tp)};
@@ -45,10 +41,8 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::clock_gettime(const clockid_
     return ret;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getres(const clockid_t clkid,
                                                                  struct timespec* const res) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 
     const std::int32_t ret{::clock_getres(clkid, res)};
@@ -59,9 +53,7 @@ score::cpp::expected<std::int32_t, Error> TimeImpl::clock_getres(const clockid_t
     return ret;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 struct tm* TimeImpl::localtime_r(const time_t* timer, struct tm* tm_local_time) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     struct tm* const local_time{::localtime_r(timer, tm_local_time)};
     return local_time;

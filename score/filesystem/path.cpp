@@ -202,7 +202,7 @@ Path& Path::operator/=(const Path& to_append) noexcept
     }
     else
     {
-        if (native_path_.back() != '/') /* KW_SUPPRESS:MISRA.CHAR.NOT_CHARACTER: Is a character */
+        if (native_path_.back() != '/')
         {
             score::cpp::ignore = native_path_.append(std::string{preferred_separator});
         }

@@ -29,23 +29,11 @@ class String : public ObjectSeam<String>
   public:
     static String& instance() noexcept;
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: memcpy is a wrapper method to call OS method memcpy */
     virtual void* memcpy(void* const dest, const void* const src, const std::size_t n) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME: memcpy is a wrapper method to call OS method memcpy */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: strerror is a wrapper method to call OS method memcpy */
     virtual char* strerror(const std::int32_t errnum) const noexcept = 0;
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME:strerror is a wrapper method to call OS method memcpy */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.STDLIB.WRONGNAME: strerror is a wrapper method to call OS method memcpy */
     virtual void* memset(void* const dest, const std::int32_t c, const std::size_t n) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.STDLIB.WRONGNAME: strerror is a wrapper method to call OS method memcpy */
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~String() = default;
 

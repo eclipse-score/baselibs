@@ -12,25 +12,17 @@
  ********************************************************************************/
 #include "score/os/linux/timerfd.h"
 
-std::int32_t score::os::timerfd_create(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
-                                          namespace usage */
-                                       const std::int32_t clock_id,
-                                       const std::int32_t flags)
+std::int32_t score::os::timerfd_create(const std::int32_t clock_id, const std::int32_t flags)
 {
     return ::timerfd_create(clock_id, flags);
 }
 
-std::int32_t score::os::timerfd_gettime(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
-                                           namespace usage */
-                                        const std::int32_t fd,
-                                        struct itimerspec* curr_value)
+std::int32_t score::os::timerfd_gettime(const std::int32_t fd, struct itimerspec* curr_value)
 {
     return ::timerfd_gettime(fd, curr_value);
 }
 
-std::int32_t score::os::timerfd_settime(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through
-                                           namespace usage */
-                                        const std::int32_t fd,
+std::int32_t score::os::timerfd_settime(const std::int32_t fd,
                                         const std::int32_t flags,
                                         const struct itimerspec* new_value,
                                         struct itimerspec* old_value)

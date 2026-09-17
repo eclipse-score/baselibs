@@ -23,24 +23,18 @@ namespace score
 {
 namespace os
 {
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<GroupBuffer, Error> GrpImpl::getgrnam(const std::string& group) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (group.size() > max_groupname_length)
     {
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
         return score::cpp::make_unexpected<>(score::os::Error::createFromErrno(ENOMEM));
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     }
 
     std::lock_guard<std::mutex> lock{gr_buffer_mutex_};
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
     // Suppress "AUTOSAR C++14 M19-3-1", The rule states: "The error indicator errno shall not be used."
     // Using library-defined macro to ensure correct operation.
     // coverity[autosar_cpp14_m19_3_1_violation]
     errno = 0;
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
 
     // This is a wrapper over C banned function, thus the suppression is justified.
     // NOLINTNEXTLINE(score-banned-function) see comment above
@@ -57,16 +51,12 @@ score::cpp::expected<GroupBuffer, Error> GrpImpl::getgrnam(const std::string& gr
         // triggered from with a unit test. In any of these cases ::getgrnam() will set an errno and return a
         // nullptr.
 
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
         // Suppress "AUTOSAR C++14 M19-3-1", The rule states: "The error indicator errno shall not be used."
         // Using library-defined macro to ensure correct operation.
         // coverity[autosar_cpp14_m19_3_1_violation]
         if (errno == 0)  // LCOV_EXCL_BR_LINE
-        /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
         {
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
             return score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOENT));
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Using library-defined macro to ensure correct operation */
         }
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());  // LCOV_EXCL_LINE
     }

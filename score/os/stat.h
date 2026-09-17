@@ -24,9 +24,8 @@
 #include <cstdint>
 #include <memory>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 // coverity[autosar_cpp14_m7_3_1_violation] see comment below
-struct stat; /* KW_SUPPRESS:MISRA.NS.GLOBAL:Struct declaration needed to avoid incomplete type error in stat() */
+struct stat;
 
 namespace score
 {
@@ -40,13 +39,13 @@ struct StatBuffer
     std::uint64_t st_ino;
     std::uint64_t st_dev;
     std::uint64_t st_nlink;
-    std::int64_t st_uid;
-    std::int64_t st_gid;
+    std::uint64_t st_uid;
+    std::uint64_t st_gid;
     std::uint64_t st_rdev;
     std::int64_t st_size;
     std::int64_t atime;
     std::int64_t mtime;
-    std::int64_t ctime; /* KW_SUPPRESS:MISRA.STDLIB.WRONGNAME:ctime is defined in a separate namespace than stdlib */
+    std::int64_t ctime;
     std::uint64_t st_blocks;
     std::int64_t st_blksize;
 };
@@ -87,30 +86,17 @@ class Stat : public ObjectSeam<Stat>
         kUnknown = 0xFFFF,
     };
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // Wrapper must be backward compatible for the applications that use linux specific stat() (without resolve_symlinks
     // argument)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::cpp::expected_blank<Error> stat(const char* const file,
                                                    StatBuffer& buf,
                                                    const bool resolve_symlinks = true) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fstat(const std::int32_t fd, StatBuffer& buf) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> mkdir(const char* const path, const Mode mode) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> chmod(const char* const path, const Mode mode) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> fchmod(const std::int32_t fd, const Mode mode) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<Mode, Error> umask(const Mode umask) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // Wrapper must be backward compatible for the applications that use linux specific fchmodat() (without
     // resolve_symlinks arg)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
@@ -118,7 +104,6 @@ class Stat : public ObjectSeam<Stat>
                                                        const char* const path,
                                                        const Mode mode,
                                                        const bool resolve_symlinks = true) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual ~Stat() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Stat(const Stat&) = delete;
@@ -132,8 +117,6 @@ class Stat : public ObjectSeam<Stat>
 
 Stat::Mode IntegerToMode(const mode_t mode) noexcept;
 mode_t ModeToInteger(const Stat::Mode mode) noexcept;
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score

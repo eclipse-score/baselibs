@@ -39,9 +39,7 @@ SocketTcp::SocketTcp(const std::shared_ptr<SocketCtrl> sock_ctrl, const Endpoint
     }
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 std::int32_t SocketTcp::ConnectAsync(AsyncConnectCallback u_cb) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
     std::int32_t ret = kExitFailure;
     if (!SocketAsync::GetWriteStatus())
@@ -72,10 +70,8 @@ SocketTcp::~SocketTcp()
     }
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 std::int32_t SocketTcp::ReadAsync(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> data,
                                   AsyncCallback u_cb) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
     std::int32_t ret = kExitFailure;
     if (!SocketAsync::GetReadStatus())
@@ -93,10 +89,8 @@ std::int32_t SocketTcp::ReadAsync(std::shared_ptr<std::vector<score::cpp::span<s
     return ret;
 }
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 std::int32_t SocketTcp::WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data,
                                    AsyncCallback u_cb) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
     std::int32_t ret = kExitFailure;
     if (!SocketAsync::GetWriteStatus())

@@ -24,16 +24,12 @@ class SysPollImpl final : public SysPoll
 {
   public:
     constexpr SysPollImpl() = default;
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // Justification: The global namespace shall only contain main, namespace declarations and extern ""C""
     // declarations. This is a wrapper function over system API inside local namespace
     // coverity[autosar_cpp14_m7_3_1_violation]
     score::cpp::expected<std::int32_t, Error> poll(struct pollfd* fds,
                                                    const nfds_t nfds,
                                                    const std::int32_t timeout) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 };
 
 }  // namespace os

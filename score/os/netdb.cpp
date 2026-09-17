@@ -13,13 +13,8 @@
 #include "score/os/netdb.h"
 
 extern "C" {
-/*KW_SUPPRESS_START: MISRA.INCL.INSIDE:extern "C" is needed to link C related code*/
 #include <netdb.h>
-/*KW_SUPPRESS_END: MISRA.INCL.INSIDE:extern "C" is needed to link C related code*/
 }
-
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 namespace score
 {
@@ -32,7 +27,6 @@ namespace
 class NetdbImpl final : public Netdb
 {
   public:
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     score::cpp::expected_blank<Error> getnameinfo(const struct sockaddr* sa,
                                                   const socklen_t salen,
                                                   char* host,
@@ -40,7 +34,6 @@ class NetdbImpl final : public Netdb
                                                   char* serv,
                                                   const socklen_t servlen,
                                                   const NameFlag flags) const noexcept override
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     {
         if (::getnameinfo(sa, salen, host, hostlen, serv, servlen, nameflag_to_nativeflag(flags)) != 0)
         {
@@ -55,48 +48,28 @@ class NetdbImpl final : public Netdb
         std::int32_t native_flags{};
         if (flags & NameFlag::kNameReq)
         {
-            /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
             // NOLINTNEXTLINE(hicpp-signed-bitwise): macro does not affect the sign of the result.
             native_flags |= NI_NAMEREQD;
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
-            /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
         }
         if (flags & NameFlag::kDatagramService)
         {
-            /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
             // NOLINTNEXTLINE(hicpp-signed-bitwise): macro does not affect the sign of the result.
             native_flags |= NI_DGRAM;
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
-            /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
         }
         if (flags & NameFlag::kNodeNameOfDomain)
         {
-            /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
             // NOLINTNEXTLINE(hicpp-signed-bitwise): macro does not affect the sign of the result.
             native_flags |= NI_NOFQDN;
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
-            /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
         }
         if (flags & NameFlag::kNumericHost)
         {
-            /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
             // NOLINTNEXTLINE(hicpp-signed-bitwise): macro does not affect the sign of the result.
             native_flags |= NI_NUMERICHOST;
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
-            /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
         }
         if (flags & NameFlag::kNumericService)
         {
-            /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
-            /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros */
             // NOLINTNEXTLINE(hicpp-signed-bitwise): macro does not affect the sign of the result.
             native_flags |= NI_NUMERICSERV;
-            /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros */
-            /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED: Macro does not affect the sign of the result */
         }
         return native_flags;
     }
@@ -111,6 +84,3 @@ score::os::Netdb& score::os::Netdb::instance() noexcept
     static score::os::NetdbImpl instance;
     return select_instance(instance);
 }
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

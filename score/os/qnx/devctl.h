@@ -33,19 +33,14 @@ namespace os
 class Devctl : public ObjectSeam<Devctl>
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     static Devctl& instance() noexcept;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> devctl(const std::int32_t fd,
                                                      const std::int32_t dev_cmd,
                                                      void* const dev_data_ptr,
                                                      const std::size_t n_bytes,
                                                      std::int32_t* const dev_info_ptr) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> devctlv(const std::int32_t fd,
                                                       const std::int32_t dev_cmd,
                                                       const std::int32_t sparts,
@@ -53,7 +48,6 @@ class Devctl : public ObjectSeam<Devctl>
                                                       const iovec* const sv,
                                                       const iovec* const rv,
                                                       std::int32_t* const dev_info_ptr) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     Devctl() = default;
     virtual ~Devctl() = default;

@@ -17,14 +17,10 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Respect wrapper function signature */
 FILE* setMntent(const char* const file, const char* const mode)
 {
     return ::setmntent(file, mode);
 }
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Respect wrapper function signature */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function */
 
 } /* namespace os */
 } /* namespace score */

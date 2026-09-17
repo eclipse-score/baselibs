@@ -47,6 +47,7 @@ mirrors upstream standard-library conventions rather than this repo's own
 style.
 """
 
+load("@aspect_rules_lint//lint:ruff.bzl", "lint_ruff_aspect")
 load("@score_cpp_policies//clang_tidy:defs.bzl", "make_clang_tidy_aspect", "make_clang_tidy_test")
 
 clang_tidy_aspect = make_clang_tidy_aspect(
@@ -58,3 +59,10 @@ clang_tidy_aspect = make_clang_tidy_aspect(
 )
 
 clang_tidy_test = make_clang_tidy_test(aspect = clang_tidy_aspect)
+
+# Only lints py_binary/py_library/py_test targets, so loose scripts not
+# wrapped in a Bazel target are not covered.
+ruff_aspect = lint_ruff_aspect(
+    binary = Label("@aspect_rules_lint//lint:ruff_bin"),
+    configs = [Label("//:ruff.toml")],
+)

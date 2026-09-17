@@ -21,3 +21,5 @@ on:
 jobs:
   copyright-check:
     uses: eclipse-score/cicd-workflows/.github/workflows/copyright.yml@af347722c7ae3ed85518895c11268d96ac728f62
+    with:
+      bazel-target: "run //tools:copyright-check"

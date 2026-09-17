@@ -17,8 +17,6 @@
 
 #include "score/expected.hpp"
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-
 namespace score
 {
 namespace os
@@ -40,15 +38,12 @@ class DirentImpl final : public Dirent
     // coverity[autosar_cpp14_a5_0_3_violation] see above
     score::cpp::expected<std::int32_t, score::os::Error> scandir(
         const char* const dirp,
-        /* KW_SUPPRESS_START:MISRA.PTR.TO_PTR_TO_PTR:Used parameters match the param requirements of wrapped function */
         struct dirent*** const namelist,
-        /* KW_SUPPRESS_END:MISRA.PTR.TO_PTR_TO_PTR:Used parameters match the param requirements of wrapped function */
         std::int32_t (*const filter)(const struct dirent*),
         std::int32_t (*const compar)(const struct dirent**, const struct dirent**)) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> closedir(DIR* const dirp) const noexcept override;
 };
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 }  // namespace os
 }  // namespace score
 

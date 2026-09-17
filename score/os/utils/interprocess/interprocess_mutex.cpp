@@ -29,7 +29,6 @@ score::os::InterprocessMutex::InterprocessMutex() noexcept
     {
         /* Failure happens if insufficient memory exists to initialise the mutex attributes object or specified invalid
          * attribute */
-        /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         // Here we are printing error logs and it doesn't harm
         // NOLINTBEGIN(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay) see comment above
         // Suppress “AUTOSAR_Cpp14_M5_2_12” rule finding: “An identifier with array type passed as a function argument
@@ -40,17 +39,14 @@ score::os::InterprocessMutex::InterprocessMutex() noexcept
         // coverity[autosar_cpp14_m5_2_12_violation]
         std::cerr << __func__ << __LINE__ << "Could not initialize pthread_mutex_attr:" << error << "Terminating.";
         // NOLINTEND(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay)
-        /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         std::terminate();
         /* LCOV_EXCL_STOP */
     }
 
     score::cpp::ignore = ::pthread_mutexattr_setpshared(
         &mutexConfig,
-        /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
         PTHREAD_PROCESS_SHARED); /** \requirement swdda.pthread_mutexattr_setpshared.pshared.PTHREAD_PROCESS_SHARED
                                   **/
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     score::cpp::ignore = ::pthread_mutex_init(&mutex, &mutexConfig); /** \requirement swdda.pthread_mutex_init.mutex **/
 }
 
@@ -65,7 +61,6 @@ void score::os::InterprocessMutex::lock() noexcept
     if (error != 0) /* LCOV_EXCL_START: Unable to reliably create an error case in the scope of a unit test. */
     {
         /* Calling again locked mutex with default attribute type blocks thread, unless mutex type is ERRORCHECK */
-        /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         // Here we are printing error logs and it doesn't harm
         // NOLINTBEGIN(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay) see comment above
         // Suppress “AUTOSAR_Cpp14_M5_2_12” rule finding: “An identifier with array type passed as a function argument
@@ -76,7 +71,6 @@ void score::os::InterprocessMutex::lock() noexcept
         // coverity[autosar_cpp14_m5_2_12_violation]
         std::cerr << __func__ << __LINE__ << "Could not lock mutex:" << error << "Terminating.";
         // NOLINTEND(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay)
-        /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         std::terminate();
         /* LCOV_EXCL_STOP */
     }
@@ -88,7 +82,6 @@ void score::os::InterprocessMutex::unlock() noexcept
     if (error != 0) /* LCOV_EXCL_START: Unable to reliably create an error case in the scope of a unit test. */
     {
         /* Mutex is not corresponds to the type when calling unlock again returns the error. */
-        /* KW_SUPPRESS_START:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         // Here we are printing error logs and it doesn't harm
         // NOLINTBEGIN(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay) see comment above
         // Suppress “AUTOSAR_Cpp14_M5_2_12” rule finding: “An identifier with array type passed as a function argument
@@ -99,7 +92,6 @@ void score::os::InterprocessMutex::unlock() noexcept
         // coverity[autosar_cpp14_m5_2_12_violation]
         std::cerr << __func__ << __LINE__ << "Could not unlock mutex:" << error << "Terminating.";
         // NOLINTEND(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay)
-        /* KW_SUPPRESS_END:MISRA.BITS.NOT_UNSIGNED:<< operator supports int operand */
         std::terminate();
         /* LCOV_EXCL_STOP */
     }

@@ -25,8 +25,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockSimpleReadFunction final : public SimpleReadFunction
 {
   public:
@@ -36,8 +34,6 @@ class MockSimpleReadFunction final : public SimpleReadFunction
     MOCK_METHOD((score::Result<void>), preRead, (off_t offset, size_t size), (override));
     MOCK_METHOD((score::Result<void>), postRead, (), (override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

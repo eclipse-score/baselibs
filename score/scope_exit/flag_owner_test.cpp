@@ -23,10 +23,6 @@ namespace
 
 TEST(FlagOwnerTest, CreatingFlagOwnerWithTrueInitialValueWillSetTheFlag)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__flag_ownership");
-    RecordProperty("Description", "Check that a flag owner initialized true reports an engaged flag.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
     // When creating the FlagOwner with the initial value set to true
     FlagOwner flag_owner{true};
 
@@ -36,10 +32,6 @@ TEST(FlagOwnerTest, CreatingFlagOwnerWithTrueInitialValueWillSetTheFlag)
 
 TEST(FlagOwnerTest, CreatingFlagOwnerWithFalseInitialValueWillClearTheFlag)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__flag_ownership");
-    RecordProperty("Description", "Check that a flag owner initialized false reports a cleared flag.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
     // When creating the FlagOwner with the initial value set to false
     FlagOwner flag_owner{false};
 
@@ -49,10 +41,6 @@ TEST(FlagOwnerTest, CreatingFlagOwnerWithFalseInitialValueWillClearTheFlag)
 
 TEST(FlagOwnerTest, MoveConstructingAFlagOwnerWillTransferTheFlagValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__flag_ownership");
-    RecordProperty("Description", "Check that move construction transfers the flag and clears the source owner.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a FlagOwner with the flag set
     FlagOwner flag_owner_1{true};
 
@@ -66,10 +54,6 @@ TEST(FlagOwnerTest, MoveConstructingAFlagOwnerWillTransferTheFlagValue)
 
 TEST(FlagOwnerTest, MoveAssigningAFlagOwnerWillTransferTheFlagValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__flag_ownership");
-    RecordProperty("Description", "Check that move assignment transfers the flag and clears the source owner.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a FlagOwner with the flag set and another the the flag cleraed
     FlagOwner flag_owner_1{true};
     FlagOwner flag_owner_2{false};
@@ -84,10 +68,6 @@ TEST(FlagOwnerTest, MoveAssigningAFlagOwnerWillTransferTheFlagValue)
 
 TEST(FlagOwnerTest, SelfMoveAssigningAFlagOwnerDoesNotChangeFlagValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__flag_ownership");
-    RecordProperty("Description", "Check that self-move assignment leaves the flag value unchanged.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
     // Given a FlagOwner with the flag set
     const bool initial_flag_value{true};
     // Note. we use a std::optional to avoid a clang compiler warning -Wself-move

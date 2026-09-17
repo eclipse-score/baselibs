@@ -24,40 +24,27 @@ class StatImpl final : public Stat
 {
   public:
     constexpr StatImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // This is a wrapper function and it simulates the behaviour of OS function
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     score::cpp::expected_blank<Error> stat(const char* const file,
                                            StatBuffer& buf,
                                            const bool resolve_symlinks = true) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fstat(const std::int32_t fd, StatBuffer& buf) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> mkdir(const char* const path, const Mode mode) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> chmod(const char* const path, const Mode mode) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fchmod(const std::int32_t fd, const Mode mode) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<Mode, Error> umask(const Mode umask) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected_blank<Error> fchmodat(const std::int32_t fd,
                                                const char* const path,
                                                const Mode mode,
                                                const bool resolve_symlinks) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
+
   private:
     void stat_to_statbuffer(const struct stat& native_stat, StatBuffer& stat_buffer) const noexcept;
 };

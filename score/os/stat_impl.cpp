@@ -15,8 +15,6 @@
 #include <fcntl.h>
 #include <type_traits>
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 namespace score
 {
 namespace os
@@ -103,16 +101,14 @@ void StatImpl::stat_to_statbuffer(const struct stat& native_stat, StatBuffer& st
     stat_buffer.st_ino = native_stat.st_ino;
     stat_buffer.st_dev = native_stat.st_dev;
     stat_buffer.st_nlink = native_stat.st_nlink;
-    stat_buffer.st_uid = static_cast<std::int64_t>(native_stat.st_uid);
-    stat_buffer.st_gid = static_cast<std::int64_t>(native_stat.st_gid);
+    stat_buffer.st_uid = static_cast<std::uint64_t>(native_stat.st_uid);
+    stat_buffer.st_gid = static_cast<std::uint64_t>(native_stat.st_gid);
     stat_buffer.st_rdev = native_stat.st_rdev;
     stat_buffer.st_size = native_stat.st_size;
     static_assert(std::is_same<time_t, std::int64_t>::value, "Types don't match");
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     stat_buffer.atime = native_stat.st_atime;  // NOLINT(cppcoreguidelines-pro-type-union-access) see comment above
     stat_buffer.mtime = native_stat.st_mtime;  // NOLINT(cppcoreguidelines-pro-type-union-access) see comment above
     stat_buffer.ctime = native_stat.st_ctime;  // NOLINT(cppcoreguidelines-pro-type-union-access) see comment above
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
 // blkcnt_t is int64 in Linux and uint64 in QNX
 // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
 // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
@@ -136,10 +132,8 @@ score::cpp::expected_blank<Error> StatImpl::fchmodat(const std::int32_t fd,
                                                      const bool resolve_symlinks) const noexcept
 {
     const mode_t native_mode{ModeToInteger(mode)};
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     const std::int32_t flags =
         resolve_symlinks ? static_cast<std::int32_t>(0) : static_cast<std::int32_t>(AT_SYMLINK_NOFOLLOW);
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     if (::fchmodat(fd, path, native_mode, flags) == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
@@ -149,6 +143,3 @@ score::cpp::expected_blank<Error> StatImpl::fchmodat(const std::int32_t fd,
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

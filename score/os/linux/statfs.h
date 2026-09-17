@@ -21,9 +21,7 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 std::int32_t statfs(const char* file, struct statfs* buf);
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score

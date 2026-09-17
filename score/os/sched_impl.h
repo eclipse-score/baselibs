@@ -17,7 +17,6 @@
 
 #include "score/expected.hpp"
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 namespace score
 {
 namespace os
@@ -62,7 +61,6 @@ class SchedImpl final : public Sched
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif  //__QNX__
 };
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 }  // namespace os
 }  // namespace score
 

@@ -26,8 +26,6 @@ namespace os
 namespace qnx
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockTimer : public Timer
 {
   public:
@@ -46,8 +44,6 @@ class MockTimer : public Timer
                 (const timer_t id),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace qnx
 }  // namespace os

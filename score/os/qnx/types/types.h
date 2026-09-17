@@ -14,7 +14,6 @@
 #ifndef SCORE_LIB_OS_QNX_TYPES_H
 #define SCORE_LIB_OS_QNX_TYPES_H
 
-/* KW_SUPPRESS_START:MISRA.INCL.INSIDE */
 /* Inclusion order is important to provide the right system defintion with the */
 /* library */
 // clang-format off
@@ -27,7 +26,6 @@
 #include "score/os/qnx/types/i_read_function.h"
 #include "score/os/qnx/types/i_seek_function.h"
 #include "score/os/qnx/types/i_write_function.h"
-/* KW_SUPPRESS_END:MISRA.INCL.INSIDE */
 /* Inclusion order is important to provide the right system defintion with the */
 /* library */
 namespace score
@@ -99,7 +97,6 @@ struct ResMgrHandlersSpec
 /// Responsibilities
 /// - extention to the QNX type to include references to the i/O handler.
 ///
-/* KW_SUPPRESS_START:MISRA.NS.GLOBAL: Passed to QNX C Library */
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init) attr passed to os by pointer to be initialize
 // coverity[autosar_cpp14_m7_3_1_violation] see comment above
 struct extended_dev_attr_t
@@ -115,6 +112,5 @@ struct extended_dev_attr_t
     score::os::ResMgrHandlersSpec handlers;
 };
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
-/* KW_SUPPRESS_END:MISRA.NS.GLOBAL: Passed to QNX C Library */
 
 #endif  // SCORE_LIB_OS_QNX_TYPES_H

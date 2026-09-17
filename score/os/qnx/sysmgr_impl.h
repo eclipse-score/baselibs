@@ -30,9 +30,7 @@ namespace qnx
 class SysMgrImpl final : public SysMgr
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, score::os::Error> sysmgr_reboot() const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 };
 
 }  // namespace qnx

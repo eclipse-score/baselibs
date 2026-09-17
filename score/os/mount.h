@@ -36,7 +36,6 @@ class Mount : public ObjectSeam<Mount>
         kNone = 0,
         kReadOnly = 1,
     };
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     // Wrapper must be backward compatible for the applications that use linux specific mount() (without datalen arg)
     // NOLINTNEXTLINE(google-default-arguments) see comment above
     virtual score::cpp::expected_blank<Error> mount(const char* const special_file,
@@ -45,11 +44,8 @@ class Mount : public ObjectSeam<Mount>
                                                     const Mount::Flag flags,
                                                     const void* const data,
                                                     const std::int32_t datalen = -1) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> umount(const char* const target) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
 
     virtual ~Mount() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

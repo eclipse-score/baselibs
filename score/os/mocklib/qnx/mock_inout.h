@@ -25,8 +25,6 @@ namespace os
 namespace qnx
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockInOut : public InOut
 {
   public:
@@ -60,8 +58,6 @@ class MockInOut : public InOut
                 (const uintptr_t port, const uint32_t val),
                 (noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace qnx
 }  // namespace os

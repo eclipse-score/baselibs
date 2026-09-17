@@ -23,11 +23,7 @@ namespace os
 namespace
 {
 constexpr const char* kLogContext{"soc"}; /* SocketBase */
-/* KW_SUPPRESS_START:MISRA.VAR.NEEDS.CONST: False Positive */
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 constexpr const std::int32_t INVALID_SOCKET_ID = -1;
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
-/* KW_SUPPRESS_END:MISRA.VAR.NEEDS.CONST: False Positive */
 }  // namespace
 
 SocketBase::SocketBase(const Endpoint endpoint) noexcept
@@ -72,14 +68,11 @@ void SocketBase::SetOption(const SockOptionVariant optionVariant) noexcept
         mw::log::LogInfo(kLogContext) << "Failed option variant not valid";
     }
 }
-/* KW_SUPPRESS_START:MISRA.LINKAGE.EXTERN:False positive. */
 score::cpp::expected<ssize_t, score::os::Error> SocketBase::WriteSync(
     std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> buffer) const noexcept
 {
     sockaddr_in sock_addr = endpoint_.ToSockaddr();
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Needed for cast to sockaddr */
     const auto recipient_sockaddr = reinterpret_cast<const struct sockaddr*>(&sock_addr);
-    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:*/
 
     const void* const bufferPtr = static_cast<const void*>(buffer->data());
     return score::os::Socket::instance().sendto(socket_fd_,
@@ -89,9 +82,7 @@ score::cpp::expected<ssize_t, score::os::Error> SocketBase::WriteSync(
                                                 recipient_sockaddr,
                                                 sizeof(*recipient_sockaddr));
 }
-/* KW_SUPPRESS_END:MISRA.LINKAGE.EXTERN:False positive. */
 
-/* KW_SUPPRESS_START:MISRA.LINKAGE.EXTERN:False positive. */
 score::cpp::variant<ssize_t, std::tuple<ssize_t, score::os::Ipv4Address>, score::os::Error> SocketBase::ReadSync(
     std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> buffer) noexcept
 {
@@ -110,9 +101,7 @@ score::cpp::variant<ssize_t, std::tuple<ssize_t, score::os::Ipv4Address>, score:
     }
 
     sockaddr_in sock_addr = endpoint_.ToSockaddr();
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Needed for cast to sockaddr */
     const auto source_address = reinterpret_cast<struct sockaddr*>(&sock_addr);
-    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:*/
     socklen_t address_length = sizeof(source_address);
 
     const auto result = score::os::Socket::instance().recvfrom(
@@ -127,14 +116,11 @@ score::cpp::variant<ssize_t, std::tuple<ssize_t, score::os::Ipv4Address>, score:
 
     return Error::createFromErrno();
 }
-/* KW_SUPPRESS_END:MISRA.LINKAGE.EXTERN:False positive. */
 
 void SocketBase::Bind(const Endpoint endpoint) noexcept
 {
     sockaddr_in sock_addr = endpoint.ToSockaddr();
-    /* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Needed for cast to sockaddr */
     const auto recipient_sockaddr = reinterpret_cast<const struct sockaddr*>(&sock_addr);
-    /* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:*/
 
     const auto bind_ret =
         score::os::Socket::instance().bind(socket_fd_, recipient_sockaddr, sizeof(*recipient_sockaddr));

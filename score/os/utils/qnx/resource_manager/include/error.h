@@ -27,11 +27,9 @@ namespace os
 
 enum class ErrorCode : score::result::ErrorCode
 {
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:Library macros */
     kIllegalSeek = ESPIPE,
     kInvalidArgument = EINVAL,
     kUnsupportedFunction = ENOSYS,
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:Library macros */
 };
 
 score::result::Error MakeError(const ErrorCode code, const std::string_view user_message = "") noexcept;

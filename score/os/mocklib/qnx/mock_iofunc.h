@@ -23,8 +23,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-
 class MockIoFunc : public IoFunc
 {
   public:
@@ -154,8 +152,6 @@ class MockIoFunc : public IoFunc
                 (resmgr_context_t * ctp, void* reserved, iofunc_ocb_t* ocb),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

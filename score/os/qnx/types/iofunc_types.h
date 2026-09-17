@@ -17,10 +17,8 @@
 
 // clang-format off
 // the order is important to correctly define RESMGR_HANDLE_T, see QNX resmgr_attach() documentation
-/* KW_SUPPRESS_START:MISRA.NS.GLOBAL: Passed to QNX C Library */
 // coverity[autosar_cpp14_m7_3_1_violation] see comment above
 struct extended_dev_attr_t;
-/* KW_SUPPRESS_START:MISRA.USE.DEFINE: Define order is important to provide the right system defintion with the library */
 // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
 // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
 // #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
@@ -30,14 +28,10 @@ struct extended_dev_attr_t;
 #define IOFUNC_ATTR_T struct extended_dev_attr_t
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #define RESMGR_HANDLE_T struct extended_dev_attr_t
-/* KW_SUPPRESS_END:MISRA.USE.DEFINE: Define order is important to provide the right system defintion with the library */
 
-/* KW_SUPPRESS_START:MISRA.INCL.INSIDE: Inclusion order is important to provide the right system defintion with the library */
 // coverity[autosar_cpp14_m16_0_1_violation] see comment above
 #include <sys/iofunc.h>
 #include <sys/dispatch.h>
-/* KW_SUPPRESS_START:MISRA.INCL.INSIDE: Inclusion order is important to provide the right system defintion with the library */
-/* KW_SUPPRESS_END:MISRA.NS.GLOBAL: Passed to QNX C Library */
 // clang-format off
 // the order is important to correctly define RESMGR_HANDLE_T, see QNX resmgr_attach() documentation
 

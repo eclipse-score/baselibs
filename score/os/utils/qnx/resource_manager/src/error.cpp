@@ -24,12 +24,9 @@ namespace
 class ResourceManagerErrorDomain final : public score::result::ErrorDomain
 {
   public:
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     /* Compiler warn suggests override instead of final, final is already specified for the entire class */
     std::string_view MessageFor(const score::result::ErrorCode& code) const noexcept override
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     {
-        /* KW_SUPPRESS_START:AUTOSAR.SWITCH.CASECOUNT: error codes expected to be extended so switch is more suitable */
         switch (static_cast<ErrorCode>(code))
         {
             case ErrorCode::kIllegalSeek:
@@ -40,7 +37,6 @@ class ResourceManagerErrorDomain final : public score::result::ErrorDomain
             default:
                 return "Unknown error.";
         }
-        /* KW_SUPPRESS_END:AUTOSAR.SWITCH.CASECOUNT: error codes expected to be extended so switch is more suitable */
     }
 };
 

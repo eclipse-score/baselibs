@@ -18,9 +18,7 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<pid_t, Error> SysWaitImpl::wait(std::int32_t* const stat_loc) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const pid_t result = ::wait(stat_loc);
     if (result == -1)
@@ -30,11 +28,9 @@ score::cpp::expected<pid_t, Error> SysWaitImpl::wait(std::int32_t* const stat_lo
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<pid_t, Error> SysWaitImpl::waitpid(const pid_t pid,
                                                         std::int32_t* const stat_loc,
                                                         const std::int32_t options) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const pid_t result = ::waitpid(pid, stat_loc, options);
     if (result == -1)

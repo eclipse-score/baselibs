@@ -30,18 +30,14 @@ namespace qnx
 class Timer
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<score::os::Error> TimerSettime(const timer_t id,
                                                                       const std::int32_t flags,
                                                                       const struct _itimer* const itime,
                                                                       struct _itimer* const oitime) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> TimerCreate(
         const clockid_t id,
         const struct sigevent* const event) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual score::cpp::expected_blank<score::os::Error> TimerDestroy(const timer_t id) const noexcept = 0;
 

@@ -23,9 +23,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */
-
 class MockDispatch : public Dispatch
 {
   public:
@@ -167,9 +164,6 @@ class MockDispatch : public Dispatch
                 (rcvid_t rcvid, const sigevent* event),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Use char to keep function signature. */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shadowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

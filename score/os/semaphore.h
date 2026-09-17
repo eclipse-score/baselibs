@@ -22,8 +22,6 @@
 #include <semaphore.h>
 #include <unistd.h>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 namespace score
 {
 namespace os
@@ -85,8 +83,6 @@ class Semaphore : public ObjectSeam<Semaphore>
     Semaphore() = default;
 };
 
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 }  // namespace os
 }  // namespace score
 

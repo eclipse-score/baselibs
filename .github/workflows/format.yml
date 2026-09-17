@@ -22,3 +22,5 @@ on:
 jobs:
   formatting-check:
     uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@f57b605a284ca117bcfd9f83ea427096faaac7d1
+    with:
+      bazel-target: "test --test_output=errors //tools:format.check"

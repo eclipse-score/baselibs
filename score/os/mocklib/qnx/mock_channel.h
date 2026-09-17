@@ -23,8 +23,6 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
-
 class MockChannel : public Channel
 {
   public:
@@ -120,8 +118,6 @@ class MockChannel : public Channel
                 (sigevent* const ev),
                 (noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
 
 }  // namespace os
 }  // namespace score

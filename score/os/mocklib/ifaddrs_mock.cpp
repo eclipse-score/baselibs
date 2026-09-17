@@ -14,21 +14,13 @@
 
 #include <netinet/in.h>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char* is used in ifaddrs structure */
-/* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Char* is used in ifaddrs structure */
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_START:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_START:AUTOSAR.OP.NEW_DELETE:Operator new is used to construct mock ifaddrs structure */
-
 namespace score
 {
 namespace os
 {
 IfaddrsMock::IfaddrsMock() : ifaddrs_list_(nullptr)
 {
-    /* KW_SUPPRESS_START:MISRA.FUNC.UNUSEDRET:Return value not needed */
     ON_CALL(*this, getifaddrs()).WillByDefault(testing::Invoke(this, &IfaddrsMock::GetIfaddrsList));
-    /* KW_SUPPRESS_END:MISRA.FUNC.UNUSEDRET:Return value not needed */
 }
 
 IfaddrsMock::~IfaddrsMock()
@@ -52,7 +44,7 @@ void IfaddrsMock::AddIfaddrsListEntry(const std::string& name,
 {
     auto new_ifa = new ifaddrs{};
     new_ifa->ifa_name = new char[name.length() + 1U]{};
-    name.copy(new_ifa->ifa_name, std::string::npos); /* KW_SUPPRESS:MISRA.FUNC.UNUSEDRET:Return value not needed */
+    name.copy(new_ifa->ifa_name, std::string::npos);
 
     sockaddr_in sockaddr_in_aux{};
     sockaddr_in_aux.sin_family = family_addr;
@@ -88,9 +80,3 @@ score::cpp::expected<ifaddrs*, Error> IfaddrsMock::GetIfaddrsList() const noexce
 }  // namespace os
 
 }  // namespace score
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char* is used in ifaddrs structure */
-/* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Char* is used in ifaddrs structure */
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_END:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_END:AUTOSAR.OP.NEW_DELETE:Operator new is used to construct mock ifaddrs structure */

@@ -26,8 +26,6 @@ namespace os
 namespace qnx
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
-
 class MockFsCrypto : public FsCrypto
 {
   public:
@@ -58,8 +56,6 @@ class MockFsCrypto : public FsCrypto
                 (const char*, int, int*),
                 (const, noexcept, override));
 };
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Shaddowing function name is intended. */
 
 }  // namespace qnx
 }  // namespace os

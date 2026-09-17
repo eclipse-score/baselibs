@@ -12,9 +12,6 @@
  ********************************************************************************/
 #include "score/os/qnx/dispatch_impl.h"
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -206,17 +203,13 @@ score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::resmgr_attach
     dispatch_t* const dpp,
     resmgr_attr_t* const attr,
     const char* const path,
-    /* KW_SUPPRESS_START:AUTOSAR.ENUM.EXPLICIT_BASE_TYPE:*/
     /* Enum _file_type is defined outside our code domain */
     const enum _file_type file_type,
-    /* KW_SUPPRESS_END:AUTOSAR.ENUM.EXPLICIT_BASE_TYPE:*/
     /* Enum _file_type is defined outside our code domain */
     const std::uint32_t flags,
     const resmgr_connect_funcs_t* const connect_funcs,
     const resmgr_io_funcs_t* const io_funcs,
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
     RESMGR_HANDLE_T* const handle) const noexcept
-/* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operation */
 
 {
     const std::int32_t res = ::resmgr_attach(dpp, attr, path, file_type, flags, connect_funcs, io_funcs, handle);
@@ -385,6 +378,3 @@ score::cpp::expected<std::int32_t, score::os::Error> DispatchImpl::msg_deliver_e
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

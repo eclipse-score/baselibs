@@ -81,9 +81,9 @@ test:bl-aarch64-qnx --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:bl-aarch64-qnx --test_lang_filters=cc,rust
 
 # Clippy linting for Rust
-build:lint --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
-build:lint --output_groups=+rules_lint_human
-build:lint --@aspect_rules_lint//lint:fail_on_violation=true
+build:clippy --aspects=@score_rust_policies//clippy:linters.bzl%clippy_strict
+build:clippy --output_groups=+rules_lint_human
+build:clippy --@aspect_rules_lint//lint:fail_on_violation=true
 
 # LLVM source-based coverage (C++ + Rust): --config=llvm_cov
 import %workspace%/tools/coverage/coverage.bazelrc
@@ -104,13 +104,24 @@ test:asan_ubsan_lsan --@rules_rust//rust/settings:experimental_use_allocator_lib
 
 # Clang-Tidy configuration for C++
 build:clang-tidy --aspects=//tools/lint:linters.bzl%clang_tidy_aspect
-build:clang-tidy --output_groups=rules_lint_human
+build:clang-tidy --output_groups=+rules_lint_human
 build:clang-tidy --extra_toolchains=@llvm_toolchain//:cc-toolchain-x86_64-linux
 build:clang-tidy --@aspect_rules_lint//lint:fail_on_violation=true
 # Once https://github.com/eclipse-score/baselibs/issues/519 is resolved we can remove this line:
 build:clang-tidy --copt=-Wno-error=deprecated-declarations
 build:clang-tidy --copt=-ffp-exception-behavior=strict
 build:clang-tidy --copt=-frounding-math
+
+# Ruff linting for Python
+build:ruff --aspects=//tools/lint:linters.bzl%ruff_aspect
+build:ruff --output_groups=+rules_lint_human
+build:ruff --@aspect_rules_lint//lint:fail_on_violation=true
+
+# All lint aspects in one build, for CI. Adding a linter here only means
+# adding a --config line, not duplicating its flags.
+build:lint --config=clang-tidy
+build:lint --config=clippy
+build:lint --config=ruff
 
 # Import user-specific configurations
 try-import %workspace%/user.bazelrc

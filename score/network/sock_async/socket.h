@@ -57,7 +57,7 @@ class SocketBase : public ISocket
     void SetConnectCb(AsyncConnectCallback cb) noexcept;
 
   protected:
-    std::int32_t socket_fd_; /* KW_SUPPRESS:MISRA.MEMB.NOT_PRIVATE:False Needed in derived socket*/
+    std::int32_t socket_fd_;
 
   private:
     Endpoint endpoint_;

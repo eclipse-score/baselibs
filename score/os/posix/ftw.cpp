@@ -14,9 +14,6 @@
 
 #include <ftw.h>
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -42,6 +39,3 @@ score::cpp::expected<std::int32_t, score::os::Error> FtwPosix::ftw(const char* c
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */

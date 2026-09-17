@@ -58,10 +58,8 @@ class Acl : public ObjectSeam<Acl>
     using Permissions = acl_permset_t;
     using EntryIndex = std::int32_t;
 
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION:OS library macros*/
     static constexpr EntryIndex kAclFirstEntry{ACL_FIRST_ENTRY};
     static constexpr EntryIndex kAclNextEntry{ACL_NEXT_ENTRY};
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION:OS library macros*/
 
     enum class Tag : std::int32_t
     {
@@ -80,7 +78,6 @@ class Acl : public ObjectSeam<Acl>
         kWrite,
     };
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<AclCollection, score::os::Error> acl_get_fd(const FileDescriptor) const noexcept = 0;
     virtual score::cpp::expected<AclCollection, score::os::Error> acl_get_file(const std::string) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> acl_create_entry(AclCollection* const,
@@ -106,7 +103,6 @@ class Acl : public ObjectSeam<Acl>
     virtual void acl_free(void* const) const noexcept = 0;
     virtual score::cpp::expected<char*, score::os::Error> acl_to_text(const AclCollection& acl,
                                                                       ssize_t* const len_p) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Acl() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation

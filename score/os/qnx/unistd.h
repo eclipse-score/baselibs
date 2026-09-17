@@ -29,11 +29,9 @@ namespace qnx
 class QnxUnistd
 {
   public:
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::int32_t, score::os::Error> setgroupspid(std::int32_t gidsetsize,
                                                                               const gid_t* grouplist,
                                                                               pid_t pid) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~QnxUnistd() = default;
 };

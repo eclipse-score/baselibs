@@ -33,9 +33,7 @@ namespace score::os
 
 Ipv4Address::Ipv4Address() noexcept = default;
 
-/* KW_SUPPRESS_START:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 Ipv4Address::Ipv4Address(const std::string& address) noexcept
-/* KW_SUPPRESS_END:AUTOSAR.STYLE.SINGLE_STMT_PER_LINE: False Positive */
 {
     std::smatch match;
     std::regex pattern(

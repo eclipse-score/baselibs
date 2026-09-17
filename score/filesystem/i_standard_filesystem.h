@@ -184,7 +184,6 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
 }  // namespace filesystem
 }  // namespace score
 
-/* KW_SUPPRESS_START:MISRA.NS.GLOBAL: */
 /* operator in local namespace will lead to build error due to name lookup algorithm */
 // coverity[autosar_cpp14_m7_3_1_violation] see above
 inline score::filesystem::PermOptions operator|(const score::filesystem::PermOptions l,
@@ -197,6 +196,5 @@ inline score::filesystem::PermOptions operator|(const score::filesystem::PermOpt
     return static_cast<score::filesystem::PermOptions>(static_cast<EnumUnderlyingType>(l) |
                                                        static_cast<EnumUnderlyingType>(r));
 }
-/* KW_SUPPRESS_END:MISRA.NS.GLOBAL: */
 
 #endif  // SCORE_LIB_FILESYSTEM_I_STANDARD_FILESYSTEM_H

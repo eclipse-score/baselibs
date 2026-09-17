@@ -26,120 +26,80 @@ class SpawnImpl final : public Spawn
 {
   public:
     constexpr SpawnImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_init(
         posix_spawnattr_t* const attrp) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_destroy(
         posix_spawnattr_t* const attrp) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getflags(
         const posix_spawnattr_t* const attrp,
         std::int16_t* const flags_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setflags(
         posix_spawnattr_t* const attrp,
         const std::int16_t flags) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getsigdefault(
         const posix_spawnattr_t* const attrp,
         sigset_t* const sigset_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setsigdefault(
         posix_spawnattr_t* const attrp,
         const sigset_t* const sigset_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getsigmask(
         const posix_spawnattr_t* const attrp,
         sigset_t* const sigset_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setsigmask(
         posix_spawnattr_t* const attrp,
         const sigset_t* const sigset_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getpgroup(const posix_spawnattr_t* const attrp,
                                                                         pid_t* const pid_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setpgroup(posix_spawnattr_t* const attrp,
                                                                         const pid_t pid) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getschedparam(
         const posix_spawnattr_t* const attrp,
         struct sched_param* const sched_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setschedparam(
         posix_spawnattr_t* const attrp,
         const struct sched_param* const sched_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getschedpolicy(
         const posix_spawnattr_t* const attrp,
         std::int32_t* const policy_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setschedpolicy(
         posix_spawnattr_t* const attrp,
         const std::int32_t policy) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawn_file_actions_init(
         posix_spawn_file_actions_t* const fact_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawn_file_actions_destroy(
         posix_spawn_file_actions_t* const fact_p) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawn_file_actions_addclose(
         posix_spawn_file_actions_t* const fact_p,
         const std::int32_t fd) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawn_file_actions_adddup2(
         posix_spawn_file_actions_t* const fact_p,
         const std::int32_t fd,
         const std::int32_t new_fd) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::int32_t, Error> posix_spawn_file_actions_addopen(
         posix_spawn_file_actions_t* const fact_p,
         const std::int32_t new_fd,
         const char* const path,
         const std::int32_t oflags,
         const mode_t omode) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // The AUTOSAR Rule A18-1-1 prohibits use of c-style arrays
     // Justification: This is a wrapper and the OS function needs C-style arrays
     // Changing it might cause issues
@@ -150,11 +110,7 @@ class SpawnImpl final : public Spawn
         const posix_spawnattr_t* const attrp,
         char* const argv[],                           // NOLINT(modernize-avoid-c-arrays) see comment above
         char* const envp[]) const noexcept override;  // NOLINT(modernize-avoid-c-arrays) see comment above
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 
-    /* KW_SUPPRESS_START:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     // The AUTOSAR Rule A18-1-1 prohibits use of c-style arrays
     // Justification: This is a wrapper and the OS function needs C-style arrays
     // Changing it might cause issues
@@ -165,8 +121,6 @@ class SpawnImpl final : public Spawn
         const posix_spawnattr_t* const attrp,
         char* const argv[],                           // NOLINT(modernize-avoid-c-arrays) see comment above
         char* const envp[]) const noexcept override;  // NOLINT(modernize-avoid-c-arrays) see comment above
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:AUTOSAR.ARRAY.CSTYLE:Wrapped function's signature requires C-style array */
 
     // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
     // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,

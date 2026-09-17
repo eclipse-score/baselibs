@@ -19,12 +19,10 @@ namespace os
 {
 namespace qnx
 {
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> ThreadCtlImpl::ThreadCtlExt(const pid_t pid,
                                                                          const std::int32_t tid,
                                                                          const std::int32_t cmd,
                                                                          void* const data) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::ThreadCtlExt(pid, tid, cmd, data) == -1)
     {

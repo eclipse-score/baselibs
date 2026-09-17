@@ -25,9 +25,6 @@
 #include <net/route.h>
 #include <sys/ioctl.h>
 
-/* KW_SUPPRESS_START:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_START:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
-
 namespace score
 {
 namespace os
@@ -207,6 +204,3 @@ score::cpp::expected_blank<score::os::Error> NetutilsImpl::set_alias_ip_address(
 
 }  // namespace os
 }  // namespace score
-
-/* KW_SUPPRESS_END:AUTOSAR.CAST.REINTERPRET:Cast is used in respect to ifaddrs structure */
-/* KW_SUPPRESS_END:MISRA.CAST.PTR.UNRELATED:Cast is used in respect to ifaddrs structure */
