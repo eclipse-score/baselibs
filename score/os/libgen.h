@@ -30,9 +30,7 @@ class Libgen : public ObjectSeam<Libgen>
     static score::cpp::pmr::unique_ptr<Libgen> Default(score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
     virtual char* base_name(char* const path) const noexcept = 0;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual char* dirname(char* const path) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~Libgen() = default;
     // Below five member functions declared to avoid autosar_cpp14_a12_0_1_violation

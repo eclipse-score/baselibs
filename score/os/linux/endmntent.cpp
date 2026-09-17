@@ -17,12 +17,10 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function */
 int32_t endMntent(FILE* const stream)
 {
     return ::endmntent(stream);
 }
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function */
 
 } /* namespace os */
 } /* namespace score */

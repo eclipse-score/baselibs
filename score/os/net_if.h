@@ -33,9 +33,7 @@ class NetIf : public ObjectSeam<NetIf>
     /// \return Either concrete OS-dependent instance or respective set mock instance
     static NetIf& instance() noexcept;
 
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected<std::uint32_t, Error> if_nametoindex(const std::string& ifname) const noexcept = 0;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
     virtual ~NetIf() = default;
 

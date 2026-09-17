@@ -103,7 +103,7 @@ bool RecursiveDirectoryIterator::OperatorIncFolderHelper(const FileType file_typ
         {
             // @todo Once we have cleaned up the mess with lib/result and lib/os/error, we can forward here the correct
             // error
-            *error_ = score::os::Error::createFromErrno(EACCES); /* KW_SUPPRESS:MISRA.USE.EXPANSION: caused by EACCES */
+            *error_ = score::os::Error::createFromErrno(EACCES);
             *folders_ = std::stack<DirectoryIterator>{};
             return true;
         }
@@ -133,7 +133,7 @@ RecursiveDirectoryIterator& RecursiveDirectoryIterator::operator++() noexcept
     {
         // @todo Once we have cleaned up the mess with lib/result and lib/os/error, we can forward here the correct
         // error
-        *error_ = score::os::Error::createFromErrno(EACCES); /* KW_SUPPRESS:MISRA.USE.EXPANSION: caused by EACCES */
+        *error_ = score::os::Error::createFromErrno(EACCES);
         *folders_ = std::stack<DirectoryIterator>{};
         return *this;
     }

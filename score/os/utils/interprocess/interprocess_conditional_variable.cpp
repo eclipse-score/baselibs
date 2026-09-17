@@ -29,12 +29,10 @@ score::os::InterprocessConditionalVariable::InterprocessConditionalVariable() no
         /* LCOV_EXCL_START */
         std::cerr << "Could not initialize conditional variable attributes with error" << error;
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
         /* LCOV_EXCL_STOP */
     }
-    /* KW_SUPPRESS_START:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     error = ::pthread_condattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
-    /* KW_SUPPRESS_END:MISRA.USE.EXPANSION: Using library-defined macro to ensure correct operations */
     /* There is no way to reliably create an error case in the scope of a unit test. */
     /* Failure happens if condition variable attributes object is invalid. */
     if (error != 0)  // LCOV_EXCL_BR_LINE
@@ -42,7 +40,7 @@ score::os::InterprocessConditionalVariable::InterprocessConditionalVariable() no
         /* LCOV_EXCL_START */
         std::cerr << "Could not set PTHREAD_PROCESS_SHARED on conditional variable with error" << error;
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
         /* LCOV_EXCL_STOP */
     }
 
@@ -55,7 +53,7 @@ score::os::InterprocessConditionalVariable::InterprocessConditionalVariable() no
         /* LCOV_EXCL_START */
         std::cerr << "Could not initialize conditional variable with error" << error;
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
         /* LCOV_EXCL_STOP */
     }
 
@@ -85,7 +83,7 @@ auto score::os::InterprocessConditionalVariable::notify_one() noexcept -> void
         /* LCOV_EXCL_START */
         std::cerr << "Error while notifying waiting thread" << error;
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
         /* LCOV_EXCL_STOP */
     }
 }
@@ -100,7 +98,7 @@ auto score::os::InterprocessConditionalVariable::notify_all() noexcept -> void
         /* LCOV_EXCL_START */
         std::cerr << "Error while notifying all waiting threads" << error;
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
         /* LCOV_EXCL_STOP */
     }
 }
@@ -112,7 +110,7 @@ auto score::os::InterprocessConditionalVariable::wait(std::unique_lock<Interproc
     {
         std::cerr << "Violated precondition. mutex needs to be locked before passing to conditional variable!";
         // coverity[autosar_cpp14_m18_0_3_violation] No harm to our code
-        std::abort(); /* KW_SUPPRESS:MISRA.STDLIB.ABORT.2012_AMD1:FATAL - The system must abort if it comes to this */
+        std::abort();
     }
 
     std::ignore = ::pthread_cond_wait(&this->conditionalVariable, &(lock.mutex()->mutex));

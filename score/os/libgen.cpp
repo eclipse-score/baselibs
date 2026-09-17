@@ -20,11 +20,9 @@ score::os::Libgen& score::os::Libgen::instance() noexcept
     return select_instance(instance);
 }
 
-/* KW_SUPPRESS_START:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST: */
 /* score::cpp::pmr::make_unique takes non-const memory_resource */
 score::cpp::pmr::unique_ptr<score::os::Libgen> score::os::Libgen::Default(
     score::cpp::pmr::memory_resource* memory_resource) noexcept
-/* KW_SUPPRESS_END:MISRA.PPARAM.NEEDS.CONST, MISRA.VAR.NEEDS.CONST */
 {
     return score::cpp::pmr::make_unique<score::os::LibgenImpl>(memory_resource);
 }

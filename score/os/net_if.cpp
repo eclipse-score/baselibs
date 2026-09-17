@@ -24,11 +24,7 @@ namespace
 
 class NetIfImpl final : public NetIf
 {
-    /* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<std::uint32_t, Error> if_nametoindex(const std::string& ifname) const noexcept override
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-    /* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
     {
         const std::uint32_t ret{::if_nametoindex(ifname.c_str())};
         if (ret == 0)

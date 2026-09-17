@@ -28,9 +28,7 @@ class GrpImpl final : public Grp
 {
   public:
     constexpr GrpImpl() = default;
-    /* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
     score::cpp::expected<GroupBuffer, Error> getgrnam(const std::string& group) const noexcept override;
-    /* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
   private:
     static GroupBuffer GroupToGroupBuffer(const struct group& native_group) noexcept;

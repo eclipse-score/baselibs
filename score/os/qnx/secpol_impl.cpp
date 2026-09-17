@@ -23,10 +23,8 @@ namespace qnx
 namespace details
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<secpol_file_t*, score::os::Error> SecpolImpl::secpol_open(const char* const path,
                                                                                const std::uint32_t flags) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     secpol_file_t* const result = ::secpol_open(path, flags);
     if (result == nullptr)
@@ -36,22 +34,18 @@ score::cpp::expected<secpol_file_t*, score::os::Error> SecpolImpl::secpol_open(c
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected_blank<score::os::Error> SecpolImpl::secpol_close(secpol_file_t* const handle) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     ::secpol_close(handle);
 
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_posix_spawnattr_settypeid(
     secpol_file_t* const handle,
     posix_spawnattr_t* const attrp,
     const char* const name,
     const std::uint32_t flags) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::secpol_posix_spawnattr_settypeid(handle, attrp, name, flags);
     if (result != 0)
@@ -61,12 +55,10 @@ score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_posix_sp
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<std::int32_t, score::os::Error> SecpolImpl::secpol_transition_type(
     secpol_file_t* const handle,
     const char* const name,
     const std::uint32_t flags) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     const std::int32_t result = ::secpol_transition_type(handle, name, flags);
     if (result != 0)

@@ -87,11 +87,9 @@ class Resource final
     ///
     /// @param <posix_handler> Handler/callback for each supported POSIX request.
     void SetRequestHandler(const std::shared_ptr<IReadFunction> read_handler);
-    /* KW_SUPPRESS_START:MISRA.FUNC.PARAMS.IDENT: function overloading, each declaration has it's definition */
     void SetRequestHandler(const std::shared_ptr<IWriteFunction> write_handler);
     void SetRequestHandler(const std::shared_ptr<ISeekFunction> lseek_handler);
     void SetRequestHandler(const std::shared_ptr<IOpenFunction> open_handler);
-    /* KW_SUPPRESS_END:MISRA.FUNC.PARAMS.IDENT */
 
     /// @brief check for all registered handlers and register it on the system,
     /// Otherwise let the system proceed with the default handlers.

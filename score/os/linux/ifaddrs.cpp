@@ -12,15 +12,12 @@
  ********************************************************************************/
 #include "score/os/linux/ifaddrs.h"
 
-std::int32_t score::os::getifaddrs(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace
-                                      usage */
-                                   struct ifaddrs** ifa)
+std::int32_t score::os::getifaddrs(struct ifaddrs** ifa)
 {
     return ::getifaddrs(ifa);
 }
 
-void score::os::freeifaddrs(/* KW_SUPPRESS:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-                            struct ifaddrs* ifa)
+void score::os::freeifaddrs(struct ifaddrs* ifa)
 {
     return ::freeifaddrs(ifa);
 }
