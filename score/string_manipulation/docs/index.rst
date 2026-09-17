@@ -26,7 +26,6 @@ String Manipulation
 .. toctree::
    :hidden:
 
-   requirements/index.rst
    architecture/index.rst
 
 The String Manipulation component provides allocation-conscious helpers for
