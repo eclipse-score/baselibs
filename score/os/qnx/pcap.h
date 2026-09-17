@@ -50,9 +50,7 @@ class Pcap : public ObjectSeam<Pcap>
 
     virtual score::cpp::expected_blank<Error> pcap_close(pcap_t* p) const noexcept = 0;
 
-    /* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
     virtual score::cpp::expected<char*, Error> pcap_geterr(pcap_t* p) const noexcept = 0;
-    /* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC*/
 
     virtual score::cpp::expected<int, Error> pcap_compile(pcap_t* p,
                                                           struct bpf_program* fp,

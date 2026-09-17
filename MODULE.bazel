@@ -102,8 +102,10 @@ bazel_dep(name = "score_process_description", version = "2.1.2")
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
-# see tools/coverage/. Includes the fix for eclipse-score/baselibs#558.
-bazel_dep(name = "score_coverage", version = "0.1.0", dev_dependency = True)
+# see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and
+# eclipse-score/coverage_tool#5 (third-party leak, dead report links, headers
+# tested through futurecpp_internal, files without coverage data listed).
+bazel_dep(name = "score_coverage", version = "0.2.0", dev_dependency = True)
 
 bazel_dep(name = "score_platform", version = "0.7.2")
 

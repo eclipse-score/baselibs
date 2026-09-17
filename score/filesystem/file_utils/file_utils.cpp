@@ -353,7 +353,7 @@ Result<bool> FileUtils::FileContentsAreIdentical(const Path& path1, const Path& 
     }
 
     // open files
-    const auto flags = std::ios_base::in | std::ios_base::binary; /* KW_SUPPRESS:MISRA.ENUM.OPERAND:ios_base */
+    const auto flags = std::ios_base::in | std::ios_base::binary;
     const auto file1 = file_factory_.Open(path1, flags);
     if (((!file1.has_value()) || (file1.value() == nullptr)) || (file1.value()->fail()))
     {

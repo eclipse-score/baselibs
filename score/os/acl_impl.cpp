@@ -23,12 +23,8 @@ namespace score
 namespace os
 {
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<Acl::AclCollection, score::os::Error> AclInstance::acl_get_fd(
     const Acl::FileDescriptor file_descriptor) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     auto* const acl = ::acl_get_fd(file_descriptor);
     if (acl == nullptr)
@@ -38,8 +34,6 @@ score::cpp::expected<Acl::AclCollection, score::os::Error> AclInstance::acl_get_
     return acl;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<Acl::AclCollection, score::os::Error> AclInstance::acl_get_file(
     const std::string file_path) const noexcept
 {
@@ -50,16 +44,10 @@ score::cpp::expected<Acl::AclCollection, score::os::Error> AclInstance::acl_get_
     }
     return acl;
 }
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<score::cpp::optional<Acl::Entry>, score::os::Error> AclInstance::acl_get_entry(
     const Acl::AclCollection collection,
     const Acl::EntryIndex index) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 {
     Acl::Entry entry{};
     /* It is not possible to cover one branch i.e. default */
@@ -76,7 +64,6 @@ score::cpp::expected<score::cpp::optional<Acl::Entry>, score::os::Error> AclInst
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case -1:  // error
             return score::cpp::make_unexpected(score::os::Error::createFromErrno());
-        /* KW_SUPPRESS_START:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
         // LCOV_EXCL_START
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         default:
@@ -85,16 +72,11 @@ score::cpp::expected<score::cpp::optional<Acl::Entry>, score::os::Error> AclInst
             /* since coverage buffers are not flushed correctly in death tests on QNX */
             std::terminate();
             // LCOV_EXCL_STOP
-            /* KW_SUPPRESS_END:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
     }
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<AclInstance::Tag, score::os::Error> AclInstance::acl_get_tag_type(
     const Acl::Entry entry) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     acl_tag_t tag{ACL_UNDEFINED_TAG};
     /* It is immposible to cover the return statement */
@@ -112,11 +94,7 @@ score::cpp::expected<AclInstance::Tag, score::os::Error> AclInstance::acl_get_ta
     }
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<void*, score::os::Error> AclInstance::acl_get_qualifier(const Acl::Entry entry) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     void* const qualifier = ::acl_get_qualifier(entry);
     if (qualifier != nullptr)
@@ -129,12 +107,8 @@ score::cpp::expected<void*, score::os::Error> AclInstance::acl_get_qualifier(con
     }
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_create_entry(Acl::AclCollection* const acl,
                                                                            Acl::Entry* const entry) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_create_entry(acl, entry) != 0)  // LCOV_EXCL_BR_LINE
     {
@@ -146,12 +120,8 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_create_entry(Acl::
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_tag_type(const Acl::Entry entry,
                                                                            const Acl::Tag tag) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_set_tag_type(entry, ConvertToPlatformDependentTag(tag)) != 0)  // LCOV_EXCL_BR_LINE
     {
@@ -163,12 +133,8 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_tag_type(const
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_qualifier(const Acl::Entry entry,
                                                                             const void* const qualifier) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_set_qualifier(entry, qualifier) != 0)
     {
@@ -177,12 +143,8 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_qualifier(cons
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected<bool, score::os::Error> AclInstance::acl_get_perm(const Acl::Permissions permission_set,
                                                                        const Acl::Permission permission) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
 // coverity[autosar_cpp14_a16_0_1_violation] Different implementation required for linux and QNX
 #if defined(__linux__)
@@ -207,29 +169,17 @@ score::cpp::expected<bool, score::os::Error> AclInstance::acl_get_perm(const Acl
     return result;
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 void AclInstance::acl_get_permset(const Acl::Entry entry, Acl::Permissions* const permissions) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     score::cpp::ignore = ::acl_get_permset(entry, permissions);
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 void AclInstance::acl_clear_perms(const Acl::Permissions permissions) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     score::cpp::ignore = ::acl_clear_perms(permissions);
 }
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_add_perm(const Acl::Permissions permissions,
                                                                        const Acl::Permission permission) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_add_perm(permissions, ConvertToPlatformDependentPermission(permission)) != 0)  // LCOV_EXCL_BR_LINE
     {
@@ -241,11 +191,7 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_add_perm(const Acl
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_calc_mask(Acl::AclCollection* const acl) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_calc_mask(acl) != 0)  // LCOV_EXCL_BR_LINE
     {
@@ -257,11 +203,7 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_calc_mask(Acl::Acl
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_valid(const Acl::AclCollection acl) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_valid(acl) != 0)
     {
@@ -270,12 +212,8 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_valid(const Acl::A
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_fd(const Acl::FileDescriptor file_descriptor,
                                                                      const Acl::AclCollection acl) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     if (::acl_set_fd(file_descriptor, acl) != 0)
     {
@@ -284,11 +222,7 @@ score::cpp::expected_blank<score::os::Error> AclInstance::acl_set_fd(const Acl::
     return {};
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
-/* KW_SUPPRESS_START:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
 void AclInstance::acl_free(void* const object) const noexcept
-/* KW_SUPPRESS_END:AUTOSAR.MEMB.VIRTUAL.FINAL: Compiler warn suggests override */
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     score::cpp::ignore = ::acl_free(object);
 }
@@ -302,23 +236,22 @@ acl_tag_t AclInstance::ConvertToPlatformDependentTag(const ::score::os::Acl::Tag
     {
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kGroup:
-            return ACL_GROUP; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return ACL_GROUP;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kOwningGroup:
-            return ACL_GROUP_OBJ; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return ACL_GROUP_OBJ;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kMaximumAllowedPermissions:
-            return ACL_MASK; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return ACL_MASK;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kOther:
-            return ACL_OTHER; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return ACL_OTHER;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kUser:
-            return ACL_USER; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return ACL_USER;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Tag::kOwningUser:
-            return ACL_USER_OBJ; /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
-        /* KW_SUPPRESS_START:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
+            return ACL_USER_OBJ;
         // LCOV_EXCL_START
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         default:
@@ -327,7 +260,6 @@ acl_tag_t AclInstance::ConvertToPlatformDependentTag(const ::score::os::Acl::Tag
             /* since coverage buffers are not flushed correctly in death tests on QNX */
             std::terminate();
             // LCOV_EXCL_STOP
-            /* KW_SUPPRESS_END:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
     }
 }
 
@@ -339,24 +271,23 @@ acl_tag_t AclInstance::ConvertToPlatformDependentTag(const ::score::os::Acl::Tag
     switch (tag)  // LCOV_EXCL_BR_LINE
     {
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_GROUP: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_GROUP:
             return Tag::kGroup;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_GROUP_OBJ: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_GROUP_OBJ:
             return Tag::kOwningGroup;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_MASK: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_MASK:
             return Tag::kMaximumAllowedPermissions;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_OTHER: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_OTHER:
             return Tag::kOther;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_USER: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_USER:
             return Tag::kUser;
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
-        case ACL_USER_OBJ: /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+        case ACL_USER_OBJ:
             return Tag::kOwningUser;
-        /* KW_SUPPRESS_START:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
         // LCOV_EXCL_START
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         default:
@@ -365,7 +296,6 @@ acl_tag_t AclInstance::ConvertToPlatformDependentTag(const ::score::os::Acl::Tag
             /* since coverage buffers are not flushed correctly in death tests on QNX */
             std::terminate();
             // LCOV_EXCL_STOP
-            /* KW_SUPPRESS_END:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
     }
 }
 
@@ -379,14 +309,13 @@ acl_perm_t AclInstance::ConvertToPlatformDependentPermission(
     {
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Permission::kExecute:
-            return static_cast<acl_perm_t>(ACL_EXECUTE); /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return static_cast<acl_perm_t>(ACL_EXECUTE);
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Permission::kRead:
-            return static_cast<acl_perm_t>(ACL_READ); /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
+            return static_cast<acl_perm_t>(ACL_READ);
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         case Permission::kWrite:
-            return static_cast<acl_perm_t>(ACL_WRITE); /* KW_SUPPRESS:MISRA.USE.EXPANSION:OS library macros */
-        /* KW_SUPPRESS_START:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
+            return static_cast<acl_perm_t>(ACL_WRITE);
         // LCOV_EXCL_START
         // coverity[autosar_cpp14_m6_4_5_violation] see Note 1
         default:
@@ -395,14 +324,11 @@ acl_perm_t AclInstance::ConvertToPlatformDependentPermission(
             /* since coverage buffers are not flushed correctly in death tests on QNX */
             std::terminate();
             // LCOV_EXCL_STOP
-            /* KW_SUPPRESS_END:MISRA.SWITCH.NO_BREAK:Terminated with terminate function from std */
     }
 }
 
-/* KW_SUPPRESS_START:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 score::cpp::expected<char*, score::os::Error> AclInstance::acl_to_text(const Acl::AclCollection& acl,
                                                                        ssize_t* const len_p) const noexcept
-/* KW_SUPPRESS_END:MISRA.VAR.HIDDEN:Wrapper function is identifiable through namespace usage */
 {
     auto* const acl_text = ::acl_to_text(acl, len_p);
     if (acl_text == nullptr)

@@ -23,8 +23,6 @@
 #include <sys/types.h>
 #include <cstdint>
 
-/* KW_SUPPRESS_START:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
-
 namespace score
 {
 namespace os
@@ -34,10 +32,8 @@ class Statvfs : public ObjectSeam<Statvfs>
 {
   public:
     static Statvfs& instance() noexcept;
-    /* KW_SUPPRESS_START: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     virtual score::cpp::expected_blank<Error> statvfs(const char* const path,
                                                       struct statvfs* const buf) const noexcept = 0;
-    /* KW_SUPPRESS_END: MISRA.VAR.HIDDEN: Wrapper function is identifiable through namespace usage */
     virtual ~Statvfs() = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Statvfs(const Statvfs&) = delete;
@@ -48,8 +44,6 @@ class Statvfs : public ObjectSeam<Statvfs>
   protected:
     Statvfs() = default;
 };
-
-/* KW_SUPPRESS_END:AUTOSAR.BUILTIN_NUMERIC:Char is used in respect to the wrapped function's signature */
 
 }  // namespace os
 }  // namespace score
