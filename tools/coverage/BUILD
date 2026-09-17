@@ -53,6 +53,10 @@ score_coverage_scope(
         "//score/json:interface",
         "//score/json:json_serializer",
         "//score/json/internal/parser/vajson:vajson_parser",
+        # Second writer backend: only reachable under the non-default
+        # //score/json:writer_library=vajson select; has a coverage grant.
+        # Pulls in its :vajson_serialize dependency.
+        "//score/json/internal/writer/vajson:vajson_backend",
         "//score/language/rust/memres",
         "//score/language/rust/stop_token",
         "//score/language/safecpp/aborts_upon_exception:abortsuponexception",

@@ -36,7 +36,11 @@ cc_library(
     srcs = ["vajson_backend.cpp"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
+    visibility = [
+        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
+        "//tools/coverage:__pkg__",
+        "@score_baselibs//score/json/internal/writer:__pkg__",
+    ],
     deps = [
         ":vajson_serialize",
         "@score_baselibs//score/json/internal/writer:writer_backend",
