@@ -32,11 +32,7 @@
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 #include "score/json/internal/writer/vajson/writer/types/object_type.h"
 
-namespace score
-{
-namespace json
-{
-namespace vajson
+namespace score::json::vajson
 {
 /// \brief A serializer for JSON value types
 /// \tparam Return Type of the return value of a << operation. Must be one of the following types: - Unit: Serializer
@@ -49,7 +45,7 @@ class GenericValueSerializer final
     /// \brief Type of the return value
     /// \details Set the type of the return value to be either its own type GenericValueSerializer (for arrays or a
     ///     specified type) or the type specified by Return.
-    using Next = typename std::conditional_t<std::is_same<Return, Self>::value, GenericValueSerializer, Return>;
+    using Next = typename std::conditional_t<std::is_same_v<Return, Self>, GenericValueSerializer, Return>;
 
     /// \brief Constructs a GenericValueSerializer from an output stream
     /// \details Do not create an instance of GenericValueSerializer directly, use the aliases in
@@ -190,20 +186,9 @@ class GenericValueSerializer final
     /// \param[in] value Number to check.
     /// \return True if the value is finite, false otherwise.
     template <typename T>
-    static auto IsFinite(const T value) noexcept -> bool
+    static auto IsFinite(T const value) noexcept -> bool
     {
-        bool is_finite{true};
-        // Coverity doesn't know constexpr if statements
-        // coverity[autosar_cpp14_a7_1_8_violation]
-        if constexpr (std::is_floating_point<T>::value)
-        {
-            is_finite = std::isfinite(value);
-        }
-        else
-        {
-            static_cast<void>(value);
-        }
-        return is_finite;
+        return !std::is_floating_point_v<T> || std::isfinite(value);
     }
 
     /// \brief Serializes a value
@@ -246,8 +231,6 @@ class GenericValueSerializer final
     SerializerState serializer_state_;
 };
 
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_H
