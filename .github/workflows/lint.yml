@@ -14,6 +14,8 @@
 # Runs clang-tidy, Clippy, and Ruff through rules_lint in one job. Each build
 # uses fail_on_violation=false so violating targets still produce SARIF; the
 # job fails at the end, once everything has been collected and uploaded.
+# `manual` targets are built separately, by name, since `//...` skips them;
+# see .github/tools/manual_lint_targets.sh.
 name: Linter checks
 permissions:
   contents: read
@@ -46,6 +48,14 @@ jobs:
           bazel build --config=bl-x86_64-linux --config=lint --keep_going \
             --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
             -- //...
+      - name: Bazel build with linters (manual targets)
+        run: |
+          mapfile -t manual_targets < <(.github/tools/manual_lint_targets.sh bl-x86_64-linux)
+          if [ "${#manual_targets[@]}" -gt 0 ]; then
+            bazel build --config=bl-x86_64-linux --config=lint --keep_going \
+              --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
+              -- "${manual_targets[@]}" || true
+          fi
       - name: Collect human-readable lint reports
         if: always()
         run: |

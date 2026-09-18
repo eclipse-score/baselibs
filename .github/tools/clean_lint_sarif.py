@@ -36,6 +36,7 @@ cleaned-up reports and enforcing GitHub's size limits is left to
 """
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -159,7 +160,11 @@ def main():
         if result_count == 0:
             continue
 
-        out_name = path.replace(os.sep, "__") + ".sarif"
+        # Flattening a deeply-nested Bazel output path into one filename can
+        # exceed the filesystem's filename length limit; hash it instead.
+        # The name only needs to be unique, since the merge step globs
+        # every ".sarif" file in the tool's output directory.
+        out_name = hashlib.sha1(path.encode()).hexdigest() + ".sarif"
         with open(os.path.join(args.output_dir, out_name), "w", encoding="utf-8") as f:
             json.dump(report, f)
         written += 1
