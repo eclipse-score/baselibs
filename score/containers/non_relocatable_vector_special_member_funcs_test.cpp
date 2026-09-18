@@ -348,6 +348,26 @@ TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveConstructingMovesAllElements)
     }
 }
 
+TYPED_TEST(NonRelocatableVectorTrivialFixture, MoveConstructingLeavesSourceWithZeroSizeAndCapacity)
+{
+    // Given a NonRelocatableVector which has been filled with elements
+    this->GivenANonRelocatableVectorConstructedWithNumberOfElements(kNonZeroNumberElements);
+
+    for (std::size_t i = 0; i < kNonZeroNumberElements; ++i)
+    {
+        score::cpp::ignore = this->unit_->emplace_back(i);
+    }
+
+    // When move constructing a new NonRelocatableVector
+    NonRelocatableVector<typename NonRelocatableVectorTrivialFixture<TypeParam>::ElementType,
+                         typename NonRelocatableVectorTrivialFixture<TypeParam>::Allocator>
+        new_vector{std::move(*this->unit_)};
+
+    // Then the moved-from vector reports zero size and zero capacity
+    EXPECT_EQ(this->unit_->size(), 0U);
+    EXPECT_EQ(this->unit_->capacity(), 0U);
+}
+
 TYPED_TEST(NonRelocatableVectorNonTrivialFixture, MoveConstructingMovesAllElements)
 {
     // Given a NonRelocatableVector which has been filled with elements
