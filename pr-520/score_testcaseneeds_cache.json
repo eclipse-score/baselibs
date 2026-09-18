@@ -45222,7 +45222,7 @@
   {
     "name": "VajsonSerializeTest__SerializesNestedAnyToCompactJson",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "29",
+    "line": "28",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45236,7 +45236,7 @@
   {
     "name": "VajsonSerializeTest__SerializesObjectKeysUsingStringComparisonAdaptor",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "46",
+    "line": "45",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45250,7 +45250,7 @@
   {
     "name": "VajsonSerializeTest__EscapesControlCharactersWithoutShortEscapeSequence",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "56",
+    "line": "55",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45264,7 +45264,7 @@
   {
     "name": "VajsonSerializeTest__EscapesNullCharacterInsideString",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "64",
+    "line": "63",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45278,7 +45278,7 @@
   {
     "name": "VajsonSerializeTest__EscapesControlCharactersInObjectKeys",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "72",
+    "line": "71",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45292,7 +45292,7 @@
   {
     "name": "VajsonSerializeTest__PrefersShortEscapeSequencesOverUnicodeEscapes",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "82",
+    "line": "81",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45306,7 +45306,7 @@
   {
     "name": "VajsonSerializeTest__EscapesEveryControlCharacterAndNothingElse",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "90",
+    "line": "89",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45320,7 +45320,7 @@
   {
     "name": "VajsonSerializeTest__PassesMultiByteUtf8CharactersThrough",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "112",
+    "line": "111",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45334,7 +45334,7 @@
   {
     "name": "VajsonSerializeTest__SerializesFiniteDouble",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "120",
+    "line": "119",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45348,7 +45348,7 @@
   {
     "name": "VajsonSerializeTest__RejectsInfiniteDouble",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "129",
+    "line": "128",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45362,7 +45362,7 @@
   {
     "name": "VajsonSerializeTest__RejectsNegativeInfiniteFloat",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "135",
+    "line": "134",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45376,7 +45376,7 @@
   {
     "name": "VajsonSerializeTest__RejectsNotANumber",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "141",
+    "line": "140",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45390,7 +45390,7 @@
   {
     "name": "VajsonSerializeTest__RejectsNotANumberOnStream",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "147",
+    "line": "146",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45404,7 +45404,7 @@
   {
     "name": "VajsonSerializeTest__SerializesBothBooleanValues",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "158",
+    "line": "157",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -45418,7 +45418,7 @@
   {
     "name": "VajsonSerializeTest__SerializesTopLevelList",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "167",
+    "line": "166",
     "result": "passed",
     "repo_name": null,
     "hash": null,
