@@ -41,6 +41,9 @@ build --credential_helper="*.qnx.com=%workspace%/.github/tools/qnx_credential_he
 build --features=minimal_warnings --features=-strict_warnings --features=warnings_as_errors
 build --incompatible_strict_action_env
 build --per_file_copt=external/.*google_benchmark.*@-Wno-error
+# acl is vendored third-party source (see third_party/acl/acl.BUILD); it does not
+# meet this repo's strict warning bar (e.g. -Wcast-qual), so demote its warnings.
+build --per_file_copt=external/.*acl-src.*@-Wno-error
 
 # Common flags for tests
 test:_bl_common --build_tests_only
