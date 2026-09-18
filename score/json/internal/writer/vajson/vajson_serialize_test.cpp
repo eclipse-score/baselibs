@@ -72,7 +72,9 @@ TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
 TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
 {
     Object object{};
-    object[std::string{"a\x1e" "b"}] = Any{std::string{"v"}};
+    object[std::string{
+        "a\x1e"
+        "b"}] = Any{std::string{"v"}};
     const auto result = VajsonToBuffer(object);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"a\\u001eb\":\"v\"}"});

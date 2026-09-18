@@ -79,12 +79,13 @@ inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::i
     constexpr std::size_t kUnicodeEscapeLength{6U};
 
     // Only characters below U+0020 reach this function, hence the two upper hexadecimal digits are always zero.
-    const std::array<char, kUnicodeEscapeLength> escape{'\\',
-                                      'u',
-                                      '0',
-                                      '0',
-                                      kHexDigits[static_cast<std::size_t>((value >> kNibbleWidth) & kNibbleMask)],
-                                      kHexDigits[static_cast<std::size_t>(value & kNibbleMask)]};
+    const std::array<char, kUnicodeEscapeLength> escape{
+        '\\',
+        'u',
+        '0',
+        '0',
+        kHexDigits[static_cast<std::size_t>((value >> kNibbleWidth) & kNibbleMask)],
+        kHexDigits[static_cast<std::size_t>(value & kNibbleMask)]};
     os.write(escape.data(), static_cast<std::streamsize>(escape.size()));
 }
 
