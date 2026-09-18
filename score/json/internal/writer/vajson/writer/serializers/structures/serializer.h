@@ -20,11 +20,7 @@
 
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
 
-namespace score
-{
-namespace json
-{
-namespace vajson
+namespace score::json::vajson
 {
 /// \brief State of the object to be serialized
 /// \details Indicates if the object is empty or not. Commas should only appended if the object is not empty.
@@ -80,8 +76,6 @@ using ArrayStart = ArraySerializer;
 
 /// \brief Type of the output writer
 using WriterType = std::reference_wrapper<std::ostream>;
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_SERIALIZER_H

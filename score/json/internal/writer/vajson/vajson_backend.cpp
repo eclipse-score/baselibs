@@ -27,13 +27,7 @@ score::Result<void> SerializeToStreamInternal(std::ostream& out_stream, const T&
 
 }  // namespace
 
-namespace score
-{
-namespace json
-{
-namespace internal
-{
-namespace writer
+namespace score::json::internal::writer
 {
 
 score::Result<void> SerializeToStream(std::ostream& out_stream, const score::json::Object& json_data)
@@ -66,7 +60,4 @@ score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data)
     return score::json::VajsonToBuffer(json_data);
 }
 
-}  // namespace writer
-}  // namespace internal
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::internal::writer

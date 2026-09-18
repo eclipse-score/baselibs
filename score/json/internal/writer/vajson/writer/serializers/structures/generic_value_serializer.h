@@ -186,7 +186,7 @@ class GenericValueSerializer final
     /// \param[in] value Number to check.
     /// \return True if the value is finite, false otherwise.
     template <typename T>
-    static auto IsFinite(T const value) noexcept -> bool
+    static auto IsFinite(const T value) noexcept -> bool
     {
         return !std::is_floating_point_v<T> || std::isfinite(value);
     }

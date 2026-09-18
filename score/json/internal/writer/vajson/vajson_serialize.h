@@ -24,15 +24,11 @@
 #include <ostream>
 #include <string>
 #include <utility>
-namespace score
+
+namespace score::json
 {
-namespace json
-{
-namespace internal
-{
-namespace writer
-{
-namespace vajson
+
+namespace internal::writer::vajson
 {
 class ObjectKeySerializer final
 {
@@ -152,9 +148,8 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 
     return *std::move(serialized);
 }
-}  // namespace vajson
-}  // namespace writer
-}  // namespace internal
+}  // namespace internal::writer::vajson
+
 class VajsonSerialize final
 {
   public:
@@ -174,13 +169,9 @@ class VajsonSerialize final
 score::Result<std::string> VajsonToBuffer(const score::json::Object& json_data);
 score::Result<std::string> VajsonToBuffer(const score::json::List& json_data);
 score::Result<std::string> VajsonToBuffer(const score::json::Any& json_data);
-}  // namespace json
-}  // namespace score
-namespace score
-{
-namespace json
-{
-namespace vajson
+}  // namespace score::json
+
+namespace score::json::vajson
 {
 template <typename Next>
 auto operator<<(GenericValueSerializer<Next>&& serializer, const score::json::Object& value) noexcept ->
@@ -200,7 +191,6 @@ auto operator<<(GenericValueSerializer<Next>&& serializer, const score::json::An
 {
     return score::json::internal::writer::vajson::SerializeValue(std::move(serializer), value);
 }
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson
+
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_VAJSON_SERIALIZE_H

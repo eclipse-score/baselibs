@@ -21,11 +21,7 @@
 #include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
-namespace score
-{
-namespace json
-{
-namespace vajson
+namespace score::json::vajson
 {
 /// \brief A serializer for JSON keys
 /// \details This class only allows adding a key into the object and always returns a value serializer to only allow a
@@ -97,8 +93,6 @@ class KeySerializer final
     SerializerState serializer_state_;
 };
 
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_KEY_SERIALIZER_H

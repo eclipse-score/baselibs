@@ -27,13 +27,7 @@
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
-namespace score
-{
-namespace json
-{
-namespace vajson
-{
-namespace internal
+namespace score::json::vajson::internal
 {
 /// \brief An escaped JSON string type
 class EscapedJsonString
@@ -161,9 +155,6 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
     return os;
 }
 
-}  // namespace internal
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson::internal
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H

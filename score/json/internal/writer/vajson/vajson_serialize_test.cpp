@@ -20,9 +20,8 @@
 #include <sstream>
 #include <string>
 #include <string_view>
-namespace score
-{
-namespace json
+
+namespace score::json
 {
 namespace
 {
@@ -174,5 +173,4 @@ TEST(VajsonSerializeTest, SerializesTopLevelList)
     EXPECT_EQ(*result, std::string{"[5,\"value\"]"});
 }
 }  // namespace
-}  // namespace json
-}  // namespace score
+}  // namespace score::json

@@ -25,11 +25,7 @@
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/types/basic_types.h"
 
-namespace score
-{
-namespace json
-{
-namespace vajson
+namespace score::json::vajson
 {
 inline namespace types
 {
@@ -109,8 +105,8 @@ auto JArray(const Range& range, Fn&& fn = IdSerializer<Range>{}) noexcept -> JAr
 // clang-format off
 }  // inline namespace types
 // clang-format off
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+} // namespace score::json::vajson
+
+
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_ARRAY_TYPE_H

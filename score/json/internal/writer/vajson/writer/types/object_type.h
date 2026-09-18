@@ -20,11 +20,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace score
-{
-namespace json
-{
-namespace vajson
+namespace score::json::vajson
 {
 inline namespace types
 {
@@ -51,8 +47,6 @@ auto JObject(Fn&& fn) noexcept -> JObjectType<Fn>
 // clang-format off
 }  // inline namespace types
 // clang-format on
-}  // namespace vajson
-}  // namespace json
-}  // namespace score
+}  // namespace score::json::vajson
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_H
