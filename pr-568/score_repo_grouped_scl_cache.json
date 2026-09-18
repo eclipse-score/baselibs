@@ -2248,9 +2248,45 @@
               "result_text": ""
             },
             {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/0__ConstructingWithNonZeroElementsAllocatesAllElements",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/1__ConstructingWithNonZeroElementsAllocatesAllElements",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/2__ConstructingWithNonZeroElementsAllocatesAllElements",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/3__ConstructingWithNonZeroElementsAllocatesAllElements",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__ConstructingWithNonZeroElementsDoesNotCallElementConstructors",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 164,
+              "line": 165,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2259,7 +2295,7 @@
             {
               "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__DestructingWithNonZeroElementsDoesNotCallAnyDestructors",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 220,
+              "line": 221,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2268,7 +2304,7 @@
             {
               "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__DestructingWithNonZeroEmplacedElementsCallsDestructorAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 239,
+              "line": 240,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2277,7 +2313,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/0__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 264,
+              "line": 265,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2286,7 +2322,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/0__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 424,
+              "line": 426,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2295,7 +2331,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 582,
+              "line": 584,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2304,7 +2340,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/1__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 264,
+              "line": 265,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2313,7 +2349,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/1__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 424,
+              "line": 426,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2322,7 +2358,7 @@
             {
               "name": "NonRelocatableVectorTrivialFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 582,
+              "line": 584,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2331,7 +2367,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/0__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 293,
+              "line": 294,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2340,7 +2376,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/0__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 453,
+              "line": 455,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2349,7 +2385,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 618,
+              "line": 620,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2358,7 +2394,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/1__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 293,
+              "line": 294,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2367,7 +2403,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/1__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 453,
+              "line": 455,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2376,7 +2412,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 618,
+              "line": 620,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2385,7 +2421,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 324,
+              "line": 325,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2394,7 +2430,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 484,
+              "line": 486,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2403,7 +2439,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 656,
+              "line": 658,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2412,7 +2448,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__CopyConstructingCopiesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 324,
+              "line": 325,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2421,7 +2457,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 484,
+              "line": 486,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2430,7 +2466,34 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 656,
+              "line": 658,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__CopyConstructingAllocatesBasedOnCapacity",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 371,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__CopyConstructingAllocatesBasedOnCapacity",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 371,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__CopyConstructingAllocatesBasedOnCapacity",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 371,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -2663,7 +2726,7 @@
             {
               "name": "NonRelocatableVectorFixture/0__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2672,7 +2735,7 @@
             {
               "name": "NonRelocatableVectorFixture/1__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2681,7 +2744,7 @@
             {
               "name": "NonRelocatableVectorFixture/2__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2690,7 +2753,7 @@
             {
               "name": "NonRelocatableVectorFixture/3__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2699,7 +2762,7 @@
             {
               "name": "NonRelocatableVectorFixture/4__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2708,7 +2771,7 @@
             {
               "name": "NonRelocatableVectorFixture/5__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2717,7 +2780,7 @@
             {
               "name": "NonRelocatableVectorFixture/6__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2726,7 +2789,7 @@
             {
               "name": "NonRelocatableVectorFixture/7__DestructingWithZeroElementsDoesNotDeallocate",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 181,
+              "line": 182,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2744,7 +2807,7 @@
             {
               "name": "NonRelocatableVectorPolymorphicAllocatorFixture/0__DestructingWithNonZeroElementsDeallocatesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 199,
+              "line": 200,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2762,7 +2825,7 @@
             {
               "name": "NonRelocatableVectorPolymorphicAllocatorFixture/1__DestructingWithNonZeroElementsDeallocatesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 199,
+              "line": 200,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2780,7 +2843,7 @@
             {
               "name": "NonRelocatableVectorPolymorphicAllocatorFixture/2__DestructingWithNonZeroElementsDeallocatesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 199,
+              "line": 200,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2798,7 +2861,7 @@
             {
               "name": "NonRelocatableVectorPolymorphicAllocatorFixture/3__DestructingWithNonZeroElementsDeallocatesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 199,
+              "line": 200,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2807,7 +2870,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__CopyConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 403,
+              "line": 405,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2816,7 +2879,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 530,
+              "line": 532,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2825,7 +2888,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 561,
+              "line": 563,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2834,7 +2897,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 711,
+              "line": 713,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2843,7 +2906,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__CopyConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 403,
+              "line": 405,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2852,7 +2915,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 530,
+              "line": 532,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2861,7 +2924,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 561,
+              "line": 563,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2870,7 +2933,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 711,
+              "line": 713,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2879,7 +2942,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__CopyConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 403,
+              "line": 405,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2888,7 +2951,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 530,
+              "line": 532,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2897,7 +2960,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 561,
+              "line": 563,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2906,7 +2969,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 711,
+              "line": 713,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2915,7 +2978,7 @@
             {
               "name": "EmptyDynamicArrayOfNonTrivialElementTypeMemoryTest__TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 803,
+              "line": 804,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -2924,7 +2987,7 @@
             {
               "name": "EmptyDynamicArrayOfTrivialElementTypeMemoryTest__TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 819,
+              "line": 820,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -3067,7 +3130,7 @@
             {
               "name": "DynamicArrayTestFixture/0__SelfMoveAssign",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 324,
+              "line": 325,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3076,7 +3139,7 @@
             {
               "name": "DynamicArrayTestFixture/0__CanSetValueOfArrayElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 349,
+              "line": 350,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3085,7 +3148,7 @@
             {
               "name": "DynamicArrayTestFixture/0__CanConstructWithNonMoveableOrCopyableElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 371,
+              "line": 372,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3094,7 +3157,7 @@
             {
               "name": "DynamicArrayTestFixture/0__DestructorOfNonTrivialTypesCalled",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 387,
+              "line": 388,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3103,7 +3166,7 @@
             {
               "name": "DynamicArrayTestFixture/0__CanConstructWithTriviallyConstructableDestructibleElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 406,
+              "line": 407,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3112,7 +3175,7 @@
             {
               "name": "DynamicArrayTestFixture/0__ConstructingDynamicArrayWithTrivialTypeWithTooManyElementsTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 430,
+              "line": 431,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3121,7 +3184,7 @@
             {
               "name": "DynamicArrayTestFixture/0__AccessingConstRefArrayOutOfBoundsTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 462,
+              "line": 463,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3130,7 +3193,7 @@
             {
               "name": "DynamicArrayTestFixture/0__IteratingTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 481,
+              "line": 482,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3139,7 +3202,7 @@
             {
               "name": "DynamicArrayTestFixture/0__IteratingNonTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 505,
+              "line": 506,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3148,7 +3211,7 @@
             {
               "name": "DynamicArrayTestFixture/0__ConstIteratingNonTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 535,
+              "line": 536,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3157,7 +3220,7 @@
             {
               "name": "DynamicArrayTestFixture/0__ConstIteratingNonTrivialTypeVariation",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 555,
+              "line": 556,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3166,7 +3229,7 @@
             {
               "name": "DynamicArrayTestFixture/0__BracketOperatorAllowsSettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 577,
+              "line": 578,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3175,7 +3238,7 @@
             {
               "name": "DynamicArrayTestFixture/0__BracketOperatorAllowsGettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 596,
+              "line": 597,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3184,7 +3247,7 @@
             {
               "name": "DynamicArrayTestFixture/0__ConstBracketOperatorAllowsGettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 615,
+              "line": 616,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3193,7 +3256,7 @@
             {
               "name": "DynamicArrayTestFixture/0__DataShouldReturnPointerToFirstElement",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 637,
+              "line": 638,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3202,7 +3265,7 @@
             {
               "name": "DynamicArrayTestFixture/0__ConstDataShouldReturnPointerToFirstElement",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 648,
+              "line": 649,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3211,7 +3274,7 @@
             {
               "name": "DynamicArrayTestFixture/0__BeginIsEqualToEndWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 659,
+              "line": 660,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3220,7 +3283,7 @@
             {
               "name": "DynamicArrayTestFixture/0__CBeginIsEqualToCEndWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 676,
+              "line": 677,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3229,7 +3292,7 @@
             {
               "name": "DynamicArrayTestFixture/0__DataReturnsNullptrWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 693,
+              "line": 694,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3238,7 +3301,7 @@
             {
               "name": "DynamicArrayTestFixture/0__SizeReturnsZeroWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 710,
+              "line": 711,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3247,7 +3310,7 @@
             {
               "name": "DynamicArrayTestFixture/0__SizeReturnsZeroWhenArrayIsEmptyWithValue",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 727,
+              "line": 728,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3256,7 +3319,7 @@
             {
               "name": "DynamicArrayTestFixture/0__AccessingElementWithAtWhenArrayIsEmptyTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 748,
+              "line": 749,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3265,7 +3328,7 @@
             {
               "name": "DynamicArrayTestFixture/0__AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 765,
+              "line": 766,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3274,7 +3337,7 @@
             {
               "name": "DynamicArrayTestFixture/0__IteratingOverEmptyArrayIteratesZeroTimes",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 782,
+              "line": 783,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3373,7 +3436,7 @@
             {
               "name": "DynamicArrayTestFixture/1__SelfMoveAssign",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 324,
+              "line": 325,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3382,7 +3445,7 @@
             {
               "name": "DynamicArrayTestFixture/1__CanSetValueOfArrayElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 349,
+              "line": 350,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3391,7 +3454,7 @@
             {
               "name": "DynamicArrayTestFixture/1__CanConstructWithNonMoveableOrCopyableElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 371,
+              "line": 372,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3400,7 +3463,7 @@
             {
               "name": "DynamicArrayTestFixture/1__DestructorOfNonTrivialTypesCalled",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 387,
+              "line": 388,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3409,7 +3472,7 @@
             {
               "name": "DynamicArrayTestFixture/1__CanConstructWithTriviallyConstructableDestructibleElements",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 406,
+              "line": 407,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3418,7 +3481,7 @@
             {
               "name": "DynamicArrayTestFixture/1__ConstructingDynamicArrayWithTrivialTypeWithTooManyElementsTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 430,
+              "line": 431,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3427,7 +3490,7 @@
             {
               "name": "DynamicArrayTestFixture/1__AccessingConstRefArrayOutOfBoundsTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 462,
+              "line": 463,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3436,7 +3499,7 @@
             {
               "name": "DynamicArrayTestFixture/1__IteratingTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 481,
+              "line": 482,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3445,7 +3508,7 @@
             {
               "name": "DynamicArrayTestFixture/1__IteratingNonTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 505,
+              "line": 506,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3454,7 +3517,7 @@
             {
               "name": "DynamicArrayTestFixture/1__ConstIteratingNonTrivialType",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 535,
+              "line": 536,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3463,7 +3526,7 @@
             {
               "name": "DynamicArrayTestFixture/1__ConstIteratingNonTrivialTypeVariation",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 555,
+              "line": 556,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3472,7 +3535,7 @@
             {
               "name": "DynamicArrayTestFixture/1__BracketOperatorAllowsSettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 577,
+              "line": 578,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3481,7 +3544,7 @@
             {
               "name": "DynamicArrayTestFixture/1__BracketOperatorAllowsGettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 596,
+              "line": 597,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3490,7 +3553,7 @@
             {
               "name": "DynamicArrayTestFixture/1__ConstBracketOperatorAllowsGettingDataAtIndex",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 615,
+              "line": 616,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3499,7 +3562,7 @@
             {
               "name": "DynamicArrayTestFixture/1__DataShouldReturnPointerToFirstElement",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 637,
+              "line": 638,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3508,7 +3571,7 @@
             {
               "name": "DynamicArrayTestFixture/1__ConstDataShouldReturnPointerToFirstElement",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 648,
+              "line": 649,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3517,7 +3580,7 @@
             {
               "name": "DynamicArrayTestFixture/1__BeginIsEqualToEndWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 659,
+              "line": 660,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3526,7 +3589,7 @@
             {
               "name": "DynamicArrayTestFixture/1__CBeginIsEqualToCEndWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 676,
+              "line": 677,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3535,7 +3598,7 @@
             {
               "name": "DynamicArrayTestFixture/1__DataReturnsNullptrWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 693,
+              "line": 694,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3544,7 +3607,7 @@
             {
               "name": "DynamicArrayTestFixture/1__SizeReturnsZeroWhenArrayIsEmpty",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 710,
+              "line": 711,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3553,7 +3616,7 @@
             {
               "name": "DynamicArrayTestFixture/1__SizeReturnsZeroWhenArrayIsEmptyWithValue",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 727,
+              "line": 728,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3562,7 +3625,7 @@
             {
               "name": "DynamicArrayTestFixture/1__AccessingElementWithAtWhenArrayIsEmptyTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 748,
+              "line": 749,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3571,7 +3634,7 @@
             {
               "name": "DynamicArrayTestFixture/1__AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 765,
+              "line": 766,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3580,7 +3643,7 @@
             {
               "name": "DynamicArrayTestFixture/1__IteratingOverEmptyArrayIteratesZeroTimes",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 782,
+              "line": 783,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3589,7 +3652,7 @@
             {
               "name": "DynamicArrayCopyConstructorMemoryTest__CopyConstructorWithZeroSizeArrayDoesNotLeakMemory",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 837,
+              "line": 838,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
@@ -3598,7 +3661,7 @@
             {
               "name": "DynamicArrayCopyConstructorMemoryTest__CopyConstructorWithNonTrivialZeroSizeArrayDoesNotLeakMemory",
               "file": "score/containers/dynamic_array_test.cpp",
-              "line": 863,
+              "line": 864,
               "need": "comp_req__containers__dynamic_array",
               "verify_type": "partially",
               "result": "passed",
