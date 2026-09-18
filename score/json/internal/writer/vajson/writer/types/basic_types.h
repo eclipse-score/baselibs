@@ -108,8 +108,10 @@ constexpr auto operator""_key(const char* s, std::size_t size) noexcept -> JKeyT
 // clang-format on
 
 /// \brief A Number type
+/// \details bool is excluded: it is a JSON boolean, not a JSON number, and has no std::to_chars overload.
+///     Use JBool instead.
 /// \tparam N Type of number.
-template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N>>>
+template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N> && !std::is_same_v<N, bool>>>
 class JNumberType final
 {
   public:
@@ -129,74 +131,12 @@ class JNumberType final
     N value_;
 };
 
-/// \brief A char Number type
-template <>
-class JNumberType<char> final
-{
-  public:
-    /// \brief Constructs a Number type
-    /// \param[in] num Number to serialize.
-    constexpr explicit JNumberType(char num) noexcept : value_(std::char_traits<char>::to_int_type(num)) {}
-
-    /// \brief Returns the contained value
-    /// \return The value.
-    [[nodiscard]] auto GetValue() const noexcept -> std::int32_t
-    {
-        return this->value_;
-    }
-
-  private:
-    /// \brief Wrapped number value
-    std::int32_t value_;
-};
-
-/// \brief A std::uint8_t Number type
-template <>
-class JNumberType<std::uint8_t> final
-{
-  public:
-    /// \brief Constructs a Number type
-    /// \param[in] num Number to serialize.
-    constexpr explicit JNumberType(std::uint8_t num) noexcept : value_(static_cast<std::uint32_t>(num)) {}
-
-    /// \brief Returns the contained value
-    /// \return The value.
-    [[nodiscard]] auto GetValue() const noexcept -> std::uint32_t
-    {
-        return this->value_;
-    }
-
-  private:
-    /// \brief Wrapped number value
-    std::uint32_t value_;
-};
-
-/// \brief A std::int8_t Number type
-template <>
-class JNumberType<std::int8_t> final
-{
-  public:
-    /// \brief Constructs a Number type
-    /// \param[in] num Number to serialize.
-    constexpr explicit JNumberType(std::int8_t num) noexcept : value_(static_cast<std::int32_t>(num)) {}
-
-    /// \brief Returns the contained value
-    /// \return The value.
-    [[nodiscard]] auto GetValue() const noexcept -> std::int32_t
-    {
-        return this->value_;
-    }
-
-  private:
-    /// \brief Wrapped number value
-    std::int32_t value_;
-};
-
 /// \brief Serializes a Number value
+/// \details bool is excluded: it is a JSON boolean, not a JSON number. Use JBool instead.
 /// \tparam N Type of number.
 /// \param[in] n The number to serialize.
 /// \return The serializable number type.
-template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N>>>
+template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N> && !std::is_same_v<N, bool>>>
 constexpr auto JNumber(N n) noexcept -> JNumberType<N>
 {
     return JNumberType<N>{n};

@@ -112,7 +112,7 @@ class GenericValueSerializer final
     auto operator<<(JNumberType<T> number) && noexcept -> Next
     {
         return this->Serialize([this, number]() noexcept {
-            const T value = static_cast<T>(number.GetValue());
+            const T value = number.GetValue();
 
             if (!IsFinite(value))
             {
