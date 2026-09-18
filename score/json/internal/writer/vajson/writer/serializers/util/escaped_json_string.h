@@ -43,7 +43,7 @@ class EscapedJsonString
 
     /// \brief Returns the contained string
     /// \return The contained string.
-    auto GetValue() const noexcept -> std::string_view
+    [[nodiscard]] auto GetValue() const noexcept -> std::string_view
     {
         return this->value_;
     }

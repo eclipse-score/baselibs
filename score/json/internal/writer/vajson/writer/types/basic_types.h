@@ -65,7 +65,7 @@ class JKeyType final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> std::string_view
+    [[nodiscard]] auto GetValue() const noexcept -> std::string_view
     {
         return this->value_;
     }
@@ -109,7 +109,7 @@ constexpr auto operator""_key(const char* s, std::size_t size) noexcept -> JKeyT
 
 /// \brief A Number type
 /// \tparam N Type of number.
-template <typename N, typename = typename std::enable_if<std::is_arithmetic<N>::value>::type>
+template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N>>>
 class JNumberType final
 {
   public:
@@ -119,7 +119,7 @@ class JNumberType final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> N
+    [[nodiscard]] auto GetValue() const noexcept -> N
     {
         return this->value_;
     }
@@ -140,7 +140,7 @@ class JNumberType<char> final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> std::int32_t
+    [[nodiscard]] auto GetValue() const noexcept -> std::int32_t
     {
         return this->value_;
     }
@@ -161,7 +161,7 @@ class JNumberType<std::uint8_t> final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> std::uint32_t
+    [[nodiscard]] auto GetValue() const noexcept -> std::uint32_t
     {
         return this->value_;
     }
@@ -182,7 +182,7 @@ class JNumberType<std::int8_t> final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> std::int32_t
+    [[nodiscard]] auto GetValue() const noexcept -> std::int32_t
     {
         return this->value_;
     }
@@ -196,7 +196,7 @@ class JNumberType<std::int8_t> final
 /// \tparam N Type of number.
 /// \param[in] n The number to serialize.
 /// \return The serializable number type.
-template <typename N, typename = typename std::enable_if<std::is_arithmetic<N>::value>::type>
+template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N>>>
 constexpr auto JNumber(N n) noexcept -> JNumberType<N>
 {
     return JNumberType<N>{n};
@@ -212,7 +212,7 @@ class JStringType final
 
     /// \brief Returns the contained value
     /// \return The value.
-    auto GetValue() const noexcept -> std::string_view
+    [[nodiscard]] auto GetValue() const noexcept -> std::string_view
     {
         return this->value_;
     }

@@ -38,7 +38,7 @@ struct JObjectType final
 /// \param[in] fn Function used to serialize the object.
 /// \return The serializable object type.
 /// \pre The passed function does not throw any exceptions
-template <typename Fn, typename = std::enable_if_t<std::is_rvalue_reference<Fn&&>::value>>
+template <typename Fn, typename = std::enable_if_t<std::is_rvalue_reference_v<Fn&&>>>
 auto JObject(Fn&& fn) noexcept -> JObjectType<Fn>
 {  // coverity[autosar_cpp14_a13_3_1_violation]
     return {std::forward<Fn>(fn)};
