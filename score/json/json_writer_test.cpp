@@ -35,6 +35,15 @@ using ::testing::ByMove;
 using ::testing::Return;
 using ::testing::StrEq;
 
+// The selected serialization backend decides the emitted representation: json_serialize pretty-prints with a four
+// space indentation, whereas vajson emits compact JSON without insignificant whitespace. Which backend is linked is
+// chosen by the //score/json:writer_library flag and communicated here via local_defines.
+#if defined(WRITER_VAJSON)
+constexpr auto kKeySeparator = "\":";
+#else
+constexpr auto kKeySeparator = "\": ";
+#endif
+
 class TestJsonList : public json::List
 {
   public:
@@ -47,6 +56,9 @@ class TestJsonList : public json::List
         emplace_back(std::move(obj));
     }
 
+#if defined(WRITER_VAJSON)
+    static constexpr auto expected = R"([1234,"string",{"key":"value"}])";
+#else
     static constexpr auto expected = R"([
     1234,
     "string",
@@ -54,6 +66,7 @@ class TestJsonList : public json::List
         "key": "value"
     }
 ])";
+#endif
 };
 
 class TestJsonObject : public json::Object
@@ -65,10 +78,14 @@ class TestJsonObject : public json::Object
         emplace("num", score::json::Any{1});
     }
 
+#if defined(WRITER_VAJSON)
+    static constexpr auto expected = R"({"num":1,"string":"foo"})";
+#else
     static constexpr auto expected = R"({
     "num": 1,
     "string": "foo"
 })";
+#endif
 };
 
 class TestJsonAny : public json::Any
@@ -232,8 +249,8 @@ class JsonWriterIntegerTest : public ::testing::Test
 // The Number variant currently supports std::int{8,16,32,64}_t and std::uint{8,16,32,64}_t.
 // Types such as long long and unsigned long long can only be tested on platforms where the above typedefs resolve to
 // them (usually <64-bit platforms).
-// This test suite covers all integral types not causing a -Wsign-promo error exercised by our num_put overrides and
-// accepted by the production JSON implementation.
+// This test suite covers all integral types not causing a -Wsign-promo error accepted by the production JSON
+// implementation.
 using IntegralTypes = ::testing::Types<std::int32_t, std::int64_t, std::uint32_t, std::uint64_t>;
 TYPED_TEST_SUITE(JsonWriterIntegerTest, IntegralTypes, );
 
@@ -276,26 +293,34 @@ TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)
     const std::string json_str = *result;
 
     // Verify all values are formatted correctly
-    EXPECT_NE(std::string::npos, json_str.find(std::string{"\"zero\": "} + std::to_string(static_cast<T>(0))));
-    EXPECT_NE(std::string::npos, json_str.find(std::string{"\"positive\": "} + std::to_string(static_cast<T>(12345))));
+    EXPECT_NE(std::string::npos,
+              json_str.find(std::string{"\"zero"} + kKeySeparator + std::to_string(static_cast<T>(0))));
+    EXPECT_NE(std::string::npos,
+              json_str.find(std::string{"\"positive"} + kKeySeparator + std::to_string(static_cast<T>(12345))));
 
-    EXPECT_NE(std::string::npos, json_str.find(std::string{"\"p9\": "} + std::to_string(static_cast<T>(9))));
-    EXPECT_NE(std::string::npos, json_str.find(std::string{"\"p10\": "} + std::to_string(static_cast<T>(10))));
-    EXPECT_NE(std::string::npos, json_str.find(std::string{"\"p11\": "} + std::to_string(static_cast<T>(11))));
+    EXPECT_NE(std::string::npos,
+              json_str.find(std::string{"\"p9"} + kKeySeparator + std::to_string(static_cast<T>(9))));
+    EXPECT_NE(std::string::npos,
+              json_str.find(std::string{"\"p10"} + kKeySeparator + std::to_string(static_cast<T>(10))));
+    EXPECT_NE(std::string::npos,
+              json_str.find(std::string{"\"p11"} + kKeySeparator + std::to_string(static_cast<T>(11))));
 
     if constexpr (std::numeric_limits<T>::is_signed)
     {
         EXPECT_NE(std::string::npos,
-                  json_str.find(std::string{"\"negative\": "} + std::to_string(static_cast<T>(-12345))));
+                  json_str.find(std::string{"\"negative"} + kKeySeparator + std::to_string(static_cast<T>(-12345))));
         EXPECT_NE(std::string::npos,
-                  json_str.find(std::string{"\"min\": "} + std::to_string(std::numeric_limits<T>::min())));
-        EXPECT_NE(std::string::npos, json_str.find(std::string{"\"m9\": "} + std::to_string(static_cast<T>(-9))));
-        EXPECT_NE(std::string::npos, json_str.find(std::string{"\"m10\": "} + std::to_string(static_cast<T>(-10))));
-        EXPECT_NE(std::string::npos, json_str.find(std::string{"\"m11\": "} + std::to_string(static_cast<T>(-11))));
+                  json_str.find(std::string{"\"min"} + kKeySeparator + std::to_string(std::numeric_limits<T>::min())));
+        EXPECT_NE(std::string::npos,
+                  json_str.find(std::string{"\"m9"} + kKeySeparator + std::to_string(static_cast<T>(-9))));
+        EXPECT_NE(std::string::npos,
+                  json_str.find(std::string{"\"m10"} + kKeySeparator + std::to_string(static_cast<T>(-10))));
+        EXPECT_NE(std::string::npos,
+                  json_str.find(std::string{"\"m11"} + kKeySeparator + std::to_string(static_cast<T>(-11))));
     }
 
     EXPECT_NE(std::string::npos,
-              json_str.find(std::string{"\"max\": "} + std::to_string(std::numeric_limits<T>::max())));
+              json_str.find(std::string{"\"max"} + kKeySeparator + std::to_string(std::numeric_limits<T>::max())));
 }
 
 }  // namespace
