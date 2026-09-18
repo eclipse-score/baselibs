@@ -1857,6 +1857,59 @@
         }
       },
       {
+        "need": "comp_req__memory__endianness",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Endianness__WeAreRunningOnALittleEndianSystem",
+              "file": "score/memory/endianness_test.cpp",
+              "line": 22,
+              "need": "comp_req__memory__endianness",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Endianness__CannotBeLittleAndBigAtTheSameTime",
+              "file": "score/memory/endianness_test.cpp",
+              "line": 38,
+              "need": "comp_req__memory__endianness",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Endianness__SwitchingBytesNecessary",
+              "file": "score/memory/endianness_test.cpp",
+              "line": 48,
+              "need": "comp_req__memory__endianness",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Endianness__ByteSwap",
+              "file": "score/memory/endianness_test.cpp",
+              "line": 61,
+              "need": "comp_req__memory__endianness",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Endianness__BigEndianToHostEndianness",
+              "file": "score/memory/endianness_test.cpp",
+              "line": 73,
+              "need": "comp_req__memory__endianness",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__containers__intrusive_list",
         "links": {
           "CodeLinks": [],
