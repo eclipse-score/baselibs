@@ -23,12 +23,6 @@ namespace score
 namespace hash
 {
 
-HashCalculatorFactory::HashCalculatorFactory(
-    score::cpp::optional<std::reference_wrapper<const openssl::IOpensslLib>> openssl_lib) noexcept
-    : IHashCalculatorFactory(), openssl_lib_{openssl_lib}
-{
-}
-
 Result<std::unique_ptr<IHashCalculator>> HashCalculatorFactory::CreateHashCalculator(
     const HashAlgorithm algorithm) const noexcept
 {
@@ -45,22 +39,6 @@ Result<std::unique_ptr<IHashCalculator>> HashCalculatorFactory::CreateHashCalcul
         case HashAlgorithm::kSha256:
             result = static_cast<std::unique_ptr<IHashCalculator>>(std::make_unique<Sha256Digest>());
             break;
-        case HashAlgorithm::kSha1:
-        case HashAlgorithm::kSha384:
-        case HashAlgorithm::kSha512:
-        {
-            auto digest = openssl_lib_.has_value() ? OpensslHashCalculator::Create(algorithm, openssl_lib_->get())
-                                                   : OpensslHashCalculator::Create(algorithm);
-            if (!digest.has_value())
-            {
-                mw::log::LogError() << "HashCalculatorFactory::Could not create OpenSSL based digest";
-                return MakeUnexpected<std::unique_ptr<IHashCalculator>>(digest.error());
-            }
-
-            result = static_cast<std::unique_ptr<IHashCalculator>>(
-                std::make_unique<OpensslHashCalculator>(std::move(*digest)));
-            break;
-        }
         case HashAlgorithm::kCrc32Autosar:
         case HashAlgorithm::kNone:
         case HashAlgorithm::kLast:

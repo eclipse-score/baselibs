@@ -51,22 +51,21 @@ TEST_F(TypedHashFixture, GetBytesAsSpan)
 
 TEST(TypedHashTest, CanCreateFromValidString)
 {
-    const score::cpp::pmr::string sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
-    Hash::ByteVector expected_bytes = {0x89, 0xFD, 0xDE, 0x0B, 0x28, 0x37, 0x3D, 0xC4, 0xF3, 0x61,
-                                       0xCF, 0xB8, 0x10, 0xB3, 0x53, 0x42, 0xCC, 0x2C, 0x32, 0x32};
+    const score::cpp::pmr::string crc32{"39a34f41"};
+    Hash::ByteVector expected_bytes{0x39, 0xA3, 0x4F, 0x41};
 
-    Result<TypedHash<HashAlgorithm::kSha1>> sha1_hash_result = TypedHash<HashAlgorithm::kSha1>::FromString(sha1);
-    ASSERT_TRUE(sha1_hash_result.has_value());
+    Result<TypedHash<HashAlgorithm::kCrc32>> crc32_hash_result = TypedHash<HashAlgorithm::kCrc32>::FromString(crc32);
+    ASSERT_TRUE(crc32_hash_result.has_value());
 
-    TypedHash<HashAlgorithm::kSha1> sha1_hash = sha1_hash_result.value();
-    auto result = sha1_hash.GetBytes();
+    TypedHash<HashAlgorithm::kCrc32> crc32_hash = crc32_hash_result.value();
+    auto result = crc32_hash.GetBytes();
     EXPECT_TRUE(std::equal(result.begin(), result.end(), expected_bytes.begin(), expected_bytes.end()));
 
-    score::cpp::pmr::string result_str = sha1_hash.ToString();
-    EXPECT_EQ(result_str, sha1);
+    score::cpp::pmr::string result_str = crc32_hash.ToString();
+    EXPECT_EQ(result_str, crc32);
 
-    Hash sha1_hash_nontyped{HashAlgorithm::kSha1, expected_bytes};
-    EXPECT_EQ(sha1_hash_nontyped, sha1_hash.ToHash());
+    Hash crc32_hash_nontyped{HashAlgorithm::kCrc32, expected_bytes};
+    EXPECT_EQ(crc32_hash_nontyped, crc32_hash.ToHash());
 }
 
 TEST(TypedHashTest, ToStringEmptyValueTest)

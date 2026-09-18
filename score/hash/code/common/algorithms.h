@@ -25,26 +25,22 @@ namespace score
 namespace hash
 {
 
+// Retain the existing capacity to avoid changing the layout of public hash types during the algorithm migration.
 constexpr std::size_t kMaxDigestSize{64U};
 
-constexpr std::uint8_t kSha1Size{20U};
 constexpr std::uint8_t kSha256Size{32U};
-constexpr std::uint8_t kSha384Size{48U};
-constexpr std::uint8_t kSha512Size{64U};
 constexpr std::uint8_t kCrc32Size{4U};
 constexpr std::uint8_t kCrc32AutosarSize{4U};
 
-/// Cryptographic hash algorithm
+/// Hash and checksum algorithms retained for safety-integrity use cases.
 enum class HashAlgorithm : std::uint8_t
 {
     kNone = 0,
-    kSha1,
-    kSha256,
-    kSha384,
-    kSha512,
-    kCrc32,
-    kCrc32Autosar,
-    kLast
+    // Values 1, 3, and 4 are reserved for the removed SHA-1, SHA-384, and SHA-512 identifiers.
+    kSha256 = 2,
+    kCrc32 = 5,
+    kCrc32Autosar = 6,
+    kLast = 7
 };
 
 // Suppress "UNUSED C++14 A13-2-2" rule finding: "A binary arithmetic operator and a bitwise operator shall return
@@ -64,17 +60,8 @@ inline score::mw::log::LogStream& operator<<(score::mw::log::LogStream& stream, 
         case HashAlgorithm::kCrc32Autosar:
             modifiedStream << "Crc32Autosar";
             break;
-        case HashAlgorithm::kSha1:
-            modifiedStream << "Sha1";
-            break;
         case HashAlgorithm::kSha256:
             modifiedStream << "Sha256";
-            break;
-        case HashAlgorithm::kSha384:
-            modifiedStream << "Sha384";
-            break;
-        case HashAlgorithm::kSha512:
-            modifiedStream << "Sha512";
             break;
         case HashAlgorithm::kNone:
             modifiedStream << "None";
@@ -93,18 +80,17 @@ inline score::mw::log::LogStream& operator<<(score::mw::log::LogStream& stream, 
 score::cpp::optional<std::uint8_t> HashSizeInBytes(const HashAlgorithm algorithm) noexcept;
 score::cpp::optional<std::uint8_t> HashSizeInCharacters(const HashAlgorithm algorithm) noexcept;
 
-/// @brief identify the hash algorithm from the \p hash_string
-/// @example if input is sha1sum as string "526eac4f80dd6e6e73c7a501dff1abc83f0b7ccc" the return will be
-/// HashAlgorithm::kSha1
+/// @brief Identifies the hash algorithm from the length of \p hash_string.
+/// @example A 64-character hexadecimal digest is identified as HashAlgorithm::kSha256.
 ///
 /// @param[in] hash_string  - the hash as a string
 /// @return HashAlgorithm   - the \p hash_string algorithm type
 HashAlgorithm IdentifyHash(std::string_view hash_string) noexcept;
 
-/// @brief identify hash algorithm from \p hash_size_in_bytes, for example vector.size()
+/// @brief Identifies the hash algorithm from \p hash_size_in_bytes, for example vector.size().
 ///
-/// @param[in] hash_vector  - hash size in bytes
-/// @return HashAlgorithm   -the \p hash_size_in_bytes algorithm type
+/// @param[in] hash_size_in_bytes  - hash size in bytes
+/// @return HashAlgorithm          - the \p hash_size_in_bytes algorithm type
 HashAlgorithm IdentifyHash(std::size_t hash_size_in_bytes) noexcept;
 
 }  // namespace hash
