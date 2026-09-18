@@ -42,9 +42,12 @@ SCORE_STRUCT_VISITABLE(S2, f1, f2)
 /// @req{VISIT-OSTREAM}
 TEST(ostream_visitor, basic)
 {
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test the basic types.");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__visitor");
+    RecordProperty("Description",
+                   "Check that ostream_visitor, a custom visitor implementation, formats scalars, strings, arrays, "
+                   "vectors, pairs, tuples, and a visitable struct via the generic visit() dispatch.");
     RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     EXPECT_EQ(test_to_string(char('A')), "A");
     EXPECT_EQ(test_to_string(5), "5");
@@ -82,9 +85,13 @@ SCORE_STRUCT_VISITABLE(SS2S3, s2, s3)
 /// @req{VISIT-OSTREAM-COMPOUND}
 TEST(ostream_visitor, compound)
 {
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test the compound types.");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__nested");
+    RecordProperty("Description",
+                   "Check that ostream_visitor formats nested compound types (2D arrays, vectors of vectors, "
+                   "and nested pairs) via the generic visit() dispatch.");
     RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     using namespace std;
 
