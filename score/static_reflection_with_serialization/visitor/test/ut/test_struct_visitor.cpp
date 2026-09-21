@@ -308,7 +308,7 @@ TEST(struct_visitor, TemplatedStructShallNotContainTrailingWhitespace)
     RecordProperty("Description",
                    "Check that the compiler-generated trailing whitespace in a templated struct's pretty-function "
                    "name is stripped from the name reported by visit().");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
     using namespace ::score::common::visitor;
 

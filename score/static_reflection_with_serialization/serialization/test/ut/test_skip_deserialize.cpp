@@ -105,7 +105,7 @@ TEST(serializer_visitor, skip_deserialize_test_overflow)
     RecordProperty("Description",
                    "Check that serialize returns zero when the destination buffer is too small to hold the "
                    "serialized data.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     std::array<char, 4> buffer;

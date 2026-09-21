@@ -672,7 +672,7 @@ TEST_F(serializer_visitor_overflows, basic__serializer_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct into an undersized serialize buffer is detected as a "
                    "zero-offset error rather than producing an equal value.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 100, 2048);
     EXPECT_EQ(result.first.getZeroOffset(), true);
@@ -685,7 +685,7 @@ TEST_F(serializer_visitor_overflows, basic__derserializer_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct from an undersized deserialize buffer is detected as an "
                    "out-of-bounds error rather than producing an equal value.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 2048, 100);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
@@ -698,7 +698,7 @@ TEST_F(serializer_visitor_overflows, basic_deserializer_overflow_const)
     RecordProperty("Description",
                    "Check that the const-pointer overload of deserialize also detects an undersized deserialize "
                    "buffer as an out-of-bounds error.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in = 2048UL;
     constexpr auto size_out = 100UL;
@@ -730,7 +730,7 @@ TEST_F(serializer_visitor_overflows, dynamic_part__serializer_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct with a large dynamically-sized vector member into a buffer that "
                    "was never allocated for that dynamic part is detected as a zero-offset error.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in_out = 4096UL;
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, size_in_out, size_in_out);
@@ -745,7 +745,7 @@ TEST_F(serializer_visitor_overflows, dynamic_part_serializer_overflow_too_small_
     RecordProperty("Description",
                    "Check that a subsize_t too small to represent a large dynamic part's element count is detected "
                    "as a zero-offset error rather than silently truncating.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto size_in_out = 4096UL;
     result_type result =
@@ -761,7 +761,7 @@ TEST_F(serializer_visitor_overflows, dynamic_part__deserilizer_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct with a large dynamically-sized vector member from an "
                    "undersized deserialize buffer is detected as an out-of-bounds error.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, 8192, 4096);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
@@ -787,7 +787,7 @@ TEST_F(serializer_visitor_overflows, string__serialization_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct with a maximal-length string member into an undersized "
                    "serialize buffer is detected as a zero-offset error.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 2048, 4096);
     EXPECT_EQ(result.first.getZeroOffset(), true);
@@ -800,7 +800,7 @@ TEST_F(serializer_visitor_overflows, string_deserialization_overflow)
     RecordProperty("Description",
                    "Check that deserializing a struct with a maximal-length string member from an undersized "
                    "deserialize buffer is detected as an out-of-bounds error.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 4096, 2048);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
@@ -813,7 +813,7 @@ TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_overflow)
     RecordProperty("Description",
                    "Check that logger_type_info::copy leaves the number-of-characters field at its all-bits-set "
                    "sentinel when the destination buffer is smaller than the encoded value's own size.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     constexpr auto cmpr = std::numeric_limits<char>::is_signed ? 0x7f : 0xff;
     constexpr auto array_size = 64UL;
@@ -839,7 +839,7 @@ TEST_F(serializer_visitor_overflows, test_logger_type_info_copy_size_not_fit)
     RecordProperty("Description",
                    "Check that logger_type_info::copy zero-fills the number-of-characters field when the destination "
                    "buffer is too small to fit the type's name.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     constexpr auto array_size = 64UL;
@@ -900,7 +900,7 @@ TEST(logging_serializer_test, serialize_int_data_with_big_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of serialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance{1, 2};
@@ -917,7 +917,7 @@ TEST(logging_serializer_test, deserialize_int_data_with_big_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of deserialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance_in{1, 2};
@@ -940,7 +940,7 @@ TEST(logging_serializer_test, deserialize_byte_data_with_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of deserialize byte data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     test::StructOneSigned struct_one_signed_out;
