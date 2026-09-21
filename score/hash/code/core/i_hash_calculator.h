@@ -27,7 +27,7 @@ namespace score
 namespace hash
 {
 
-/// @brief This is an interface that calculates cryptographic hash over blocks of data.
+/// @brief This is an interface that calculates a hash or checksum over blocks of data.
 ///
 /// Depending on the algorithm selected, the hash value is calculated.
 /// Example : Input data = 123abc sha256sum = DD130A849D7B29E5541B05D2F7F86A4ACD4F1EC598C1C9438783F56BC4F0FF80
