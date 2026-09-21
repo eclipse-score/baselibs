@@ -43,7 +43,6 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenMaxQueueLengthReached)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_queue");
     RecordProperty("Description",
                    "This test check that QueueSender::Push() would return false if queue is full and pushing into the "
                    "queue is impossible");
@@ -76,7 +75,6 @@ TEST(SynchronizedQueue, CheckFalseResponseOnPushWhenQueueObjectDoesNotExist)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_queue");
     RecordProperty("Description",
                    "This test check that QueueSender::Push() would return false "
                    "if queue object doesn't exist anymore");
@@ -105,7 +103,6 @@ TEST(SynchronizedQueue, CallPopForEmptyQueue)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_queue");
     RecordProperty("Description",
                    "This test check that SynchronizedQueue::Pop() would return nullopt if queue is empty");
 
