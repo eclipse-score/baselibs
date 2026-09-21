@@ -27,7 +27,6 @@ namespace
 
 TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_future_cpp_expected() converts a const-lvalue expected holding a value "
                    "into a score::cpp::expected holding the same value.");
@@ -48,7 +47,6 @@ TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithError)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_future_cpp_expected() converts a const-lvalue expected holding an error "
                    "into a score::cpp::expected holding the same error.");
@@ -69,7 +67,6 @@ TEST(ExtensionsTest, CanConvertFromExpectedConstLValueRefToAmpExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_future_cpp_expected() converts an rvalue expected holding a move-only "
                    "value into a score::cpp::expected holding that value.");
@@ -90,7 +87,6 @@ TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithError)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_future_cpp_expected() converts an rvalue expected holding a move-only "
                    "error into a score::cpp::expected holding that error.");
@@ -111,7 +107,6 @@ TEST(ExtensionsTest, CanConvertFromExpectedRValueRefToAmpExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_expected() converts a const-lvalue score::cpp::expected holding a value "
                    "into a score::details::expected holding the same value.");
@@ -131,7 +126,6 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithError)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_expected() converts a const-lvalue score::cpp::expected holding an error "
                    "into a score::details::expected holding the same error.");
@@ -152,7 +146,6 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedConstLValueRefToExpectedWithError)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_expected() converts an rvalue score::cpp::expected holding a move-only "
                    "value into a score::details::expected holding that value.");
@@ -173,7 +166,6 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithValue)
 
 TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithError)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that to_score_expected() converts an rvalue score::cpp::expected holding a move-only "
                    "error into a score::details::expected holding that error.");
@@ -195,7 +187,6 @@ TEST(ExtensionsTest, CanConvertFromAmpExpectedRValueRefToExpectedWithError)
 
 TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that expected_value_to_score_future_cpp_optional_or_else() converts a const-lvalue "
                    "expected holding a value into a score::cpp::optional holding that value, without invoking the "
@@ -221,7 +212,6 @@ TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that expected_value_to_score_future_cpp_optional_or_else() invokes the error handler "
                    "exactly once and yields an empty score::cpp::optional when the const-lvalue expected holds an "
@@ -246,7 +236,6 @@ TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedConstLVal
 
 TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedRValueRefHasValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that expected_value_to_score_future_cpp_optional_or_else() converts an rvalue expected "
                    "holding a move-only value into a score::cpp::optional holding that value, without invoking the "
@@ -272,7 +261,6 @@ TEST(ExtensionsTest, ConvertToAmpOptionalWhenExpectedRValueRefHasValue)
 
 TEST(ExtensionsTest, OnConversionToAmpOptionalCallInvocableWhenExpectedLValueRefHasNoValue)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
     RecordProperty("Description",
                    "Check that expected_value_to_score_future_cpp_optional_or_else() passes the moved-out error to "
                    "the error handler and yields an empty score::cpp::optional when the rvalue expected holds an "
