@@ -23,7 +23,6 @@ cc_library(
     tags = ["FFI"],
     visibility = [
         "@score_baselibs//score/concurrency:__pkg__",
-        "@score_baselibs//score/memory/shared:__pkg__",
     ],
     deps = [],
 )
@@ -57,9 +56,6 @@ cc_gtest_unit_test(
     name = "atomic_indirector_test",
     srcs = ["atomic_indirector_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    visibility = [
-        "@score_baselibs//score/memory:__pkg__",
-    ],
     deps = [
         ":atomic_indirector",
         ":atomic_indirector_mock_binding",
