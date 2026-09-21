@@ -32,7 +32,7 @@ score::os::Result<std::vector<uint8_t>> LoadBuffer(const score::filesystem::Path
 }
 
 score::os::Result<score::cpp::blank> LoadBuffer(const score::filesystem::Path& path,
-                                                std::pmr::vector<uint8_t>& data) noexcept
+                                                score::cpp::pmr::vector<uint8_t>& data) noexcept
 {
     return detail::LoadBufferImpl(detail::OS{}, path, data);
 }
