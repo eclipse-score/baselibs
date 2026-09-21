@@ -11,31 +11,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library")
-
-# Bazel-native equivalent of upstream acl's `./configure --enable-nls`: gates
-# whether include/misc.h's `_()` macro (see @acl-src//:acl) routes through gettext().
-bool_flag(
-    name = "enable_nls",
-    build_setting_default = False,
-)
-
-config_setting(
-    name = "nls_enabled",
-    flag_values = {":enable_nls": "True"},
-    visibility = ["@acl-src//:__pkg__"],
-)
 
 # Hand-written stand-in for acl's autoconf-generated include/config.h, consumed by
 # @acl-src (see MODULE.bazel and acl.BUILD) which vendors libacl from source.
 cc_library(
     name = "config_h",
     hdrs = ["config.h"],
-    defines = select({
-        ":nls_enabled": ["ENABLE_NLS=1"],
-        "//conditions:default": [],
-    }),
     includes = ["."],
     visibility = ["@acl-src//:__pkg__"],
 )

@@ -160,11 +160,12 @@ llvm.toolchain(
 use_repo(llvm, "llvm_toolchain")
 
 deb = use_repo_rule("@download_utils//download/deb:defs.bzl", "download_deb")
+
 archive = use_repo_rule("@download_utils//download/archive:defs.bzl", "download_archive")
 
 # acl is vendored from upstream source instead of a prebuilt, arch-pinned Ubuntu .deb
 # (see third_party/acl/acl.BUILD and score/os/BUILD's `:acl` target) to avoid the
-# recurring -fPIC/arch breakage tracked by SWP-278650 (eclipse-score/baselibs#172, #496, #78).
+# recurring -fPIC/arch breakage tracked by eclipse-score/baselibs#172, #496, #78.
 archive(
     name = "acl-src",
     build = "//third_party/acl:acl.BUILD",

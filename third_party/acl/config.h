@@ -54,14 +54,10 @@
 #define VERSION "2.4.0"
 
 /*
- * ENABLE_NLS is deliberately not hardcoded here: it's controlled by the
- * --@score_baselibs//third_party/acl:enable_nls Bazel flag instead (see BUILD's
- * config_h target), so consumers get real bazel-style control over it rather
- * than needing to fork this file.
- *
  * Intentionally left undefined (matches upstream's "not detected"/disabled state):
- * - HAVE_GETTEXT / HAVE_DCGETTEXT / HAVE_ICONV: not referenced by the vendored
- *   source subset; only ENABLE_NLS itself gates include/misc.h's `_()` macro.
+ * - ENABLE_NLS / HAVE_GETTEXT / HAVE_DCGETTEXT / HAVE_ICONV: this repo has no message
+ *   catalogs and nothing needs translated acl error strings, so NLS stays disabled;
+ *   only ENABLE_NLS itself gates include/misc.h's `_()` macro.
  * - HAVE_VISIBILITY_ATTRIBUTE: no -fvisibility=hidden; the same compiled objects
  *   back both the static (:acl) and dynamically-linked (:acl_shared) variants.
  * - HAVE_OPENAT2 / HAVE_LINUX_OPENAT2_H / USE_OPENAT2 / UNSAFE_RESTORE_WARNINGS,
