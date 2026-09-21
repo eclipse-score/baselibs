@@ -20,14 +20,7 @@
 #include <ostream>
 #include <string>
 
-namespace score
-{
-namespace json
-{
-namespace internal
-{
-namespace writer
-{
+namespace score::json::internal::writer {
 
 /// \brief Backend seam for JSON serialization.
 ///
@@ -53,9 +46,6 @@ score::Result<std::string> SerializeToBuffer(const score::json::Object& json_dat
 score::Result<std::string> SerializeToBuffer(const score::json::List& json_data);
 score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data);
 
-}  // namespace writer
-}  // namespace internal
-}  // namespace json
-}  // namespace score
+}
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_WRITER_BACKEND_H

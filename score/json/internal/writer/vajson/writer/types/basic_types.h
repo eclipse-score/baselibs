@@ -35,7 +35,7 @@ struct JNullType final
 
 /// \brief Serializes a Null value
 /// \return The serializable null type.
-constexpr inline auto JNull() noexcept -> JNullType
+constexpr auto JNull() noexcept -> JNullType
 {
     return JNullType{};
 }
@@ -50,7 +50,7 @@ struct JBoolType final
 /// \brief Serializes a Bool value
 /// \param[in] b Bool value to serialize.
 /// \return The serializable bool type.
-constexpr inline auto JBool(bool b) noexcept -> JBoolType
+constexpr auto JBool(bool b) noexcept -> JBoolType
 {
     return {b};
 }

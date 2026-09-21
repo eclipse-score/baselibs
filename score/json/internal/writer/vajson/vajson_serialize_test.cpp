@@ -27,6 +27,14 @@ namespace
 {
 TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "serializing a nested Any of objects, lists, booleans, strings and null into compact JSON, cf. "
+                   "RFC-8259 section 2");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object nested_object{};
     nested_object["number"] = Any{std::int32_t{7}};
     List list{};
@@ -44,6 +52,14 @@ TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
 }
 TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty(
+        "Description",
+        "serializing object members addressed by std::string_view and by string literal keys, cf. RFC-8259 section 4");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object[std::string_view{"alpha"}] = Any{std::string{"a"}};
     object["beta"] = Any{std::uint32_t{2U}};
@@ -54,6 +70,13 @@ TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
 // RFC 8259, section 7 does not allow characters in the range U+0000 to U+001F to appear unescaped in a string.
 TEST(VajsonSerializeTest, EscapesControlCharactersWithoutShortEscapeSequence)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "escaping control characters that have no short escape sequence as \\uXXXX, cf. RFC-8259 section 7");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object["value"] = Any{std::string{"\x01\x0b\x1f"}};
     const auto result = VajsonToBuffer(object);
@@ -62,6 +85,12 @@ TEST(VajsonSerializeTest, EscapesControlCharactersWithoutShortEscapeSequence)
 }
 TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "escaping the null character embedded in a string, cf. RFC-8259 section 7");
+    RecordProperty("TestType", "requirements-based");              // requirements test
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
+
     Object object{};
     object["value"] = Any{std::string{std::string_view{"a\0b", 3U}}};
     const auto result = VajsonToBuffer(object);
@@ -70,6 +99,12 @@ TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
 }
 TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "escaping control characters appearing in object keys, cf. RFC-8259 section 7");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object[std::string{
         "a\x1e"
@@ -80,6 +115,14 @@ TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
 }
 TEST(VajsonSerializeTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "using the two-character escape sequences for backspace, form feed, line feed, carriage return and "
+                   "tab, cf. RFC-8259 section 7");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object["value"] = Any{std::string{"\b\f\n\r\t"}};
     const auto result = VajsonToBuffer(object);
@@ -88,6 +131,14 @@ TEST(VajsonSerializeTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
 }
 TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "escaping every character in the range U+0000 to U+001F while leaving the printable characters "
+                   "untouched, cf. RFC-8259 section 7");
+    RecordProperty("TestType", "requirements-based");              // requirements test
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
+
     std::string value{};
     for (std::uint32_t character{0U}; character <= 0x7FU; ++character)
     {
@@ -110,6 +161,12 @@ TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
 }
 TEST(VajsonSerializeTest, PassesMultiByteUtf8CharactersThrough)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "passing multi-byte UTF-8 characters through unescaped, cf. RFC-8259 section 8");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object["value"] = Any{std::string{"\u00e4\u20ac"}};
     const auto result = VajsonToBuffer(object);
@@ -118,6 +175,12 @@ TEST(VajsonSerializeTest, PassesMultiByteUtf8CharactersThrough)
 }
 TEST(VajsonSerializeTest, SerializesFiniteDouble)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "serializing a finite double value, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     Object object{};
     object["number"] = Any{double{1.5}};
     const auto result = VajsonToBuffer(object);
@@ -127,24 +190,55 @@ TEST(VajsonSerializeTest, SerializesFiniteDouble)
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
 TEST(VajsonSerializeTest, RejectsInfiniteDouble)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty(
+        "Description",
+        "failure in serializing positive infinity, which has no JSON representation, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "error-guessing");
+
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::infinity()};
     EXPECT_FALSE(VajsonToBuffer(object).has_value());
 }
 TEST(VajsonSerializeTest, RejectsNegativeInfiniteFloat)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty(
+        "Description",
+        "failure in serializing negative infinity, which has no JSON representation, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "error-guessing");
+
     Object object{};
     object["number"] = Any{-std::numeric_limits<float>::infinity()};
     EXPECT_FALSE(VajsonToBuffer(object).has_value());
 }
 TEST(VajsonSerializeTest, RejectsNotANumber)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "failure in serializing NaN, which has no JSON representation, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "error-guessing");
+
     List list{};
     list.emplace_back(Any{std::numeric_limits<double>::quiet_NaN()});
     EXPECT_FALSE(VajsonToBuffer(list).has_value());
 }
 TEST(VajsonSerializeTest, RejectsNotANumberOnStream)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty(
+        "Description",
+        "failure in serializing NaN to a stream without writing the non-representable number, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "error-guessing");
+
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::quiet_NaN()};
     std::ostringstream out_stream{};
@@ -156,6 +250,12 @@ TEST(VajsonSerializeTest, RejectsNotANumberOnStream)
 }
 TEST(VajsonSerializeTest, SerializesBothBooleanValues)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "serializing both boolean literals, cf. RFC-8259 section 3");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     List list{};
     list.emplace_back(Any{true});
     list.emplace_back(Any{false});
@@ -165,6 +265,12 @@ TEST(VajsonSerializeTest, SerializesBothBooleanValues)
 }
 TEST(VajsonSerializeTest, SerializesTopLevelList)
 {
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "serializing a list as the top-level JSON value, cf. RFC-8259 section 2");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
     List list{};
     list.emplace_back(Any{std::uint8_t{5U}});
     list.emplace_back(Any{std::string{"value"}});

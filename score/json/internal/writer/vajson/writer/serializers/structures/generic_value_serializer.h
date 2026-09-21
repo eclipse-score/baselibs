@@ -121,7 +121,8 @@ class GenericValueSerializer final
             else
             {
                 // Buffer size: max 24 chars for double, ~20 for int64, extra space for safety
-                std::array<char, 64> buffer{};
+                static constexpr std::size_t kBufferSize{64};
+                std::array<char, kBufferSize> buffer{};
 
                 const auto conversion_result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value);
 
