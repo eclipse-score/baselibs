@@ -102,6 +102,7 @@ score_coverage_scope(
         "//score/os:statvfs",
         "//score/os:string",
         "//score/os:sys_uio",
+        "//score/os:syslog_impl",
         "//score/os:sys_wait",
         "//score/os:time",
         "//score/os/posix:ftw_posix",
