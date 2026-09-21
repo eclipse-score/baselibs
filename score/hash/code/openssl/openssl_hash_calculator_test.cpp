@@ -78,12 +78,6 @@ void HashCalculatorTest::ExpectSha256Call()
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha1Test)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-1 calculator.");
-
     const StructDigest* digest_type_sha1 = openssl_lib_.DigestAlgoSha1();
     StructDigestCtx* digest_context_sha1 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha1 = openssl_lib_.InitDigestCtx(digest_context_sha1, digest_type_sha1, nullptr);
@@ -116,12 +110,6 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha256Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-384 calculator.");
-
     const StructDigest* digest_type_sha384 = openssl_lib_.DigestAlgoSha384();
     StructDigestCtx* digest_context_sha384 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha384 = openssl_lib_.InitDigestCtx(digest_context_sha384, digest_type_sha384, nullptr);
@@ -139,13 +127,6 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha512Test)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms, comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-512 calculator, and "
-                   "that Update() still functions correctly on a move-assigned-into calculator instance.");
-
     const StructDigest* digest_type_sha512 = openssl_lib_.DigestAlgoSha512();
     StructDigestCtx* digest_context_sha512 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha512 = openssl_lib_.InitDigestCtx(digest_context_sha512, digest_type_sha512, nullptr);
@@ -223,7 +204,7 @@ TEST_F(HashCalculatorTest, InvalidDigestInitCreateAlgoTest)
 TEST_F(HashCalculatorTest, InvalidCreateAlgorthimTest)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that Create() returns an instantiation error, instead of throwing, for the unsupported "
@@ -259,11 +240,6 @@ TEST_F(HashCalculatorTest, UpdateStreamTest)
 
 TEST_F(HashCalculatorTest, EmptyUpdateTest)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description", "Check that Update() returns an error, instead of a value, for an empty span.");
-
     ExpectSha256Call();
     score::cpp::span<const std::uint8_t> data;
 

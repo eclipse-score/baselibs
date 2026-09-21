@@ -72,7 +72,7 @@ TEST_F(Crc32IeeeTest, TwoUpdates)
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
                    "Check that splitting the input across two Update() calls accumulates state and yields the "
-                   "same checksum as a single Update() call over the whole input.");
+                   "known checksum for the complete input.");
 
     // Given an input text split in the middle at kPivot
     constexpr auto kPivot{sizeof(kTest) / 2U};

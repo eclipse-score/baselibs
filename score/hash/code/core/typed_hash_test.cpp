@@ -33,22 +33,11 @@ class TypedHashFixture : public ::testing::Test
 
 TEST_F(TypedHashFixture, CanCompareEqual)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description", "Check that two TypedHash instances with the same byte content compare equal.");
-
     EXPECT_EQ(unit_, (TypedHash<HashAlgorithm::kSha256>{{0x01}}));
 }
 
 TEST_F(TypedHashFixture, DoesNotCompareEqualOnDifferentContent)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that two TypedHash instances with different byte content do not compare equal.");
-
     EXPECT_NE(unit_, (TypedHash<HashAlgorithm::kSha256>{{0x02}}));
 }
 
@@ -130,13 +119,6 @@ TEST(TypedHashTest, CanSerializeToJsonAny)
 
 TEST(TypedHashTest, CanDeserializeFromJsonAny)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that TypedHash::FromAny() deserializes a hex string JSON value back into a TypedHash, "
-                   "and rejects an unsupported algorithm or a non-string JSON value with the expected error.");
-
     const TypedHash<HashAlgorithm::kSha256> expected_hash{
         {0xFF, 0x18, 0x25, 0x62, 0x92, 0xF5, 0xF2, 0xBA, 0x52, 0x61, 0xB5, 0x59, 0x40, 0xCD, 0xF1, 0x12,
          0x5C, 0xE3, 0x0E, 0x97, 0xC2, 0x2A, 0xCE, 0x6A, 0xFA, 0x54, 0xB7, 0xAF, 0x38, 0x72, 0xC3, 0x51}};

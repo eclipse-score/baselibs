@@ -127,8 +127,8 @@ TYPED_TEST_P(HashCalculatorFactoryCreationTest, CalculateCrc32)
 TYPED_TEST_P(HashCalculatorFactoryCreationTest, Crc32AutosarNotSupportedInIeeeVariant)
 {
     this->RecordProperty("PartiallyVerifies", "comp_req__hash__crc32_algorithm");
-    this->RecordProperty("TestType", "fault-injection");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
     this->RecordProperty("Description",
                          "Check that the IEEE-variant factory rejects the CRC-32-Autosar algorithm identifier, "
                          "since that variant is not supported by this factory.");
@@ -154,7 +154,7 @@ INSTANTIATE_TYPED_TEST_SUITE_P(WorkingDigests, HashCalculatorFactoryCreationTest
 TEST(HashCalculatorFactory, hashCalculatorFactoryFailTest)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
-    RecordProperty("TestType", "fault-injection");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that the factory returns an error, instead of a calculator, when asked to create a "
@@ -208,13 +208,6 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailedHashObjCreation)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description",
-                   "Check that CalculateHash() returns an error, instead of a value, for HashAlgorithm::kNone with "
-                   "span input.");
-
     HashCalculatorFactory unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
@@ -226,13 +219,6 @@ TEST(HashCalculatorFactory, FailedHashObjCreation)
 
 TEST(HashCalculatorFactory, FailedHashObjCreationStream)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description",
-                   "Check that CalculateHash() returns an error, instead of a value, for HashAlgorithm::kNone with "
-                   "stream input.");
-
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abc");
 
@@ -243,13 +229,6 @@ TEST(HashCalculatorFactory, FailedHashObjCreationStream)
 
 TEST(HashCalculatorFactory, InvalidHashCalculatorSpanInput)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description",
-                   "Check that CalculateHash() returns an error, instead of a value, for an empty (default "
-                   "constructed) span.");
-
     HashCalculatorFactory unit{};
     score::cpp::span<const std::uint8_t> data;
 
@@ -260,13 +239,6 @@ TEST(HashCalculatorFactory, InvalidHashCalculatorSpanInput)
 
 TEST(HashCalculatorFactory, InvalidhashCalculatorStreamInput)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description",
-                   "Check that CalculateHash() returns an error, instead of a value, when the input stream is "
-                   "already in a failed state.");
-
     HashCalculatorFactory unit{};
     std::istringstream test_input{};
     test_input.setstate(std::ios::failbit);
@@ -278,13 +250,6 @@ TEST(HashCalculatorFactory, InvalidhashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailHashObjCreationWithMaxRead)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
-    RecordProperty("Description",
-                   "Check that CalculateHash() with a max-read limit still returns an error for "
-                   "HashAlgorithm::kNone.");
-
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abcefg");
 
@@ -297,7 +262,7 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInputWithMaxRead)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
                    "Check that CalculateHash() computes the digest only over the first max-read bytes of a "
                    "stream, ignoring the remainder.");
@@ -333,8 +298,8 @@ TEST(HashCalculatorFactory, InstantiateWithFailingOpenSslLib)
 TEST(HashCalculatorFactory, InstantiateWithSuccess)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description",
                    "Check that the factory successfully creates a calculator by driving the underlying OpenSSL "
                    "digest lookup, context creation and initialization calls in the expected order.");
@@ -358,8 +323,8 @@ TEST(HashCalculatorFactory, InstantiateWithSuccess)
 TEST(SafeHashCalculatorFactory, TryToInstantiateNonexistentHash)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
-    RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
                    "Check that SafeHashCalculatorFactory returns an error, instead of a calculator, for an "
                    "algorithm it does not support (SHA-1).");

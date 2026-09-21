@@ -122,9 +122,9 @@ TEST(HashIdentify, CanNotIdentifyBadHashesFromSize)
 
 TEST(HashIdentify, CorrectSizes)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_bytes, comp_req__hash__value_retrieval_hex");
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms, comp_req__hash__crc32_algorithm");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that HashSizeInBytes()/HashSizeInCharacters() report the correct byte and hex-character "
                    "lengths for every supported algorithm, and report no value for kNone/kLast.");

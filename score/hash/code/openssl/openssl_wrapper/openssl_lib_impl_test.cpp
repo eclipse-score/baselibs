@@ -55,7 +55,7 @@ void OpensslLibTest::TearDown()
 TEST_F(OpensslLibTest, Sha1Test)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that the OpenSSL wrapper resolves a non-null SHA-1 digest type.");
 
@@ -66,10 +66,10 @@ TEST_F(OpensslLibTest, Sha1Test)
 
 TEST_F(OpensslLibTest, Sha256Test)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description", "Check that a digest context created from the SHA-256 digest type is non-null.");
+    RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("Description", "Check that CreateDigestCtx() returns a non-null digest context.");
 
     EXPECT_NE(digest_context_, nullptr);
 }
@@ -77,7 +77,7 @@ TEST_F(OpensslLibTest, Sha256Test)
 TEST_F(OpensslLibTest, Sha384Test)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that the OpenSSL wrapper resolves a non-null SHA-384 digest type.");
 
@@ -89,7 +89,7 @@ TEST_F(OpensslLibTest, Sha384Test)
 TEST_F(OpensslLibTest, Sha512Test)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that the OpenSSL wrapper resolves a non-null SHA-512 digest type.");
 
@@ -101,8 +101,8 @@ TEST_F(OpensslLibTest, Sha512Test)
 TEST_F(OpensslLibTest, DigestCtxNewTest)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description", "Check that CreateDigestCtx() returns a non-null digest context.");
 
     EXPECT_NE(digest_context_, nullptr);
@@ -111,8 +111,8 @@ TEST_F(OpensslLibTest, DigestCtxNewTest)
 TEST_F(OpensslLibTest, DigestInitExTest)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description", "Check that InitDigestCtx() successfully initializes a digest context.");
 
     auto result = unit_.InitDigestCtx(digest_context_, digest_type_, nullptr);
@@ -123,8 +123,8 @@ TEST_F(OpensslLibTest, DigestInitExTest)
 TEST_F(OpensslLibTest, DigestUpdateTest)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description",
                    "Check that UpdateDigestCtx() successfully feeds data into an initialized digest context.");
 
@@ -142,8 +142,7 @@ TEST_F(OpensslLibTest, DigestFinalExTest)
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("Description",
-                   "Check that FinalizeDigestValue() successfully finalizes a digest context to its output value.");
+    RecordProperty("Description", "Check that FinalizeDigestValue() reports successful context finalization.");
 
     char msg[] = "Hello World\n";
     unsigned char data[64];
