@@ -489,9 +489,53 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="requirements">
+  
+<style>
+.score-testcase-result {
+  font-weight: bold;
+}
+.score-testcase-result--passed {
+  color: #146c2e;
+}
+.score-testcase-result--failed {
+  color: #b42318;
+}
+.score-testcase-result--skipped {
+  color: #8a5300;
+}
+.score-testcase-result--disabled {
+  color: #5f6368;
+}
+html[data-theme="dark"] .score-testcase-result--passed {
+  color: #7ee787;
+}
+html[data-theme="dark"] .score-testcase-result--failed {
+  color: #ff7b72;
+}
+html[data-theme="dark"] .score-testcase-result--skipped {
+  color: #d29922;
+}
+html[data-theme="dark"] .score-testcase-result--disabled {
+  color: #c4cad2;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .score-testcase-result--passed {
+    color: #7ee787;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--failed {
+    color: #ff7b72;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--skipped {
+    color: #d29922;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--disabled {
+    color: #c4cad2;
+  }
+}
+</style>
+<section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-3887cb03">
+<div class="need_container docutils container" id="SNCB-12a6615c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__memory_lib_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -537,7 +581,7 @@
 </div>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-a6044969">
+<div class="need_container docutils container" id="SNCB-ed1c59e3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__shared_memory">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -584,7 +628,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-442211a7">
+<div class="need_container docutils container" id="SNCB-92f61f51">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__offset_ptr">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -631,7 +675,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-22d340e6">
+<div class="need_container docutils container" id="SNCB-a005982e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__shared_container">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -678,7 +722,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-789692dc">
+<div class="need_container docutils container" id="SNCB-3057af37">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__inter_process_sync">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -725,7 +769,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-1669c892">
+<div class="need_container docutils container" id="SNCB-36a5bc72">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__bounds_check">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -772,7 +816,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-05118c44">
+<div class="need_container docutils container" id="SNCB-b86afcca">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__endianness">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -793,6 +837,7 @@
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span><span class="needs_spacer">, </span><span class="needs_data">memory</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/8b1662d22635d980ed49189c45f854b7f6c4fa09/score/memory/endianness_test.cpp#L22">Endianness__WeAreRunningOnALittleEndianSystem<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/8b1662d22635d980ed49189c45f854b7f6c4fa09/score/memory/endianness_test.cpp#L38">Endianness__CannotBeLittleAndBigAtTheSameTime<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/8b1662d22635d980ed49189c45f854b7f6c4fa09/score/memory/endianness_test.cpp#L48">Endianness__SwitchingBytesNecessary<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/8b1662d22635d980ed49189c45f854b7f6c4fa09/score/memory/endianness_test.cpp#L61">Endianness__ByteSwap<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/8b1662d22635d980ed49189c45f854b7f6c4fa09/score/memory/endianness_test.cpp#L73">Endianness__BigEndianToHostEndianness<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em></span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__memory_library">feat_req__baselibs__memory_library</a></span></span></div>
@@ -819,7 +864,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c24f6a34">
+<div class="need_container docutils container" id="SNCB-f19f2a97">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__sealed_shm">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -866,7 +911,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8d68c07f">
+<div class="need_container docutils container" id="SNCB-d9d0e8b6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__typed_memory">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -913,7 +958,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-70d93cc9">
+<div class="need_container docutils container" id="SNCB-59ab3dc0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__resource_registry">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -960,7 +1005,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d6e4f88c">
+<div class="need_container docutils container" id="SNCB-cce5d945">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__string_utils">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1007,7 +1052,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-46a164e4">
+<div class="need_container docutils container" id="SNCB-14e55798">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__atomic_ops">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1057,7 +1102,7 @@
 </section>
 <section id="non-functional-requirements">
 <h2>Non-Functional Requirements<a class="headerlink" href="#non-functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-ac81ed75">
+<div class="need_container docutils container" id="SNCB-3858b147">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__deterministic_alloc">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1104,7 +1149,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f2c8b6e2">
+<div class="need_container docutils container" id="SNCB-3f64c24a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__memory__address_independence">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
