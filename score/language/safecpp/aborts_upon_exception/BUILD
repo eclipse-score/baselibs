@@ -52,6 +52,10 @@ cc_test(
     ],
     features = ["aborts_upon_exception"],
     tags = ["manual"],
+    target_compatible_with = select({
+        "@platforms//os:qnx": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/language/futurecpp",

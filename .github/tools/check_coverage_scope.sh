@@ -41,7 +41,7 @@ bazel query \
    except attr(\"target_compatible_with\", \"qnx\", $UNIVERSE)" \
   --output=label 2>/dev/null | sort -u > "$all"
 
-bazel cquery --noimplicit_deps \
+bazel cquery --noimplicit_deps --config=bl-x86_64-linux \
   "kind(\"cc_library|rust_library\", deps(labels(deps, $SCOPE)))" \
   --output=label 2>/dev/null | awk '{print $1}' | grep '^//score' | sort -u > "$scoped"
 
