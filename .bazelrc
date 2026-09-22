@@ -88,19 +88,49 @@ build:clippy --@aspect_rules_lint//lint:fail_on_violation=true
 # LLVM source-based coverage (C++ + Rust): --config=llvm_cov
 import %workspace%/tools/coverage/coverage.bazelrc
 
-# Sanitizer configuration for C++ and Rust
-test:asan_ubsan_lsan --features=asan
-test:asan_ubsan_lsan --features=ubsan
-test:asan_ubsan_lsan --features=lsan
-test:asan_ubsan_lsan --copt -g3
-test:asan_ubsan_lsan --platform_suffix=asan_ubsan_lsan
-test:asan_ubsan_lsan --test_env=ASAN_OPTIONS="exitcode=55 allow_addr2line=1 verbosity=1 coverage=1 check_initialization_order=1 detect_stack_use_after_return=1 print_stats=1 halt_on_error=1 allocator_may_return_null=1 detect_leaks=1"
-test:asan_ubsan_lsan --test_env=UBSAN_OPTIONS="exitcode=55 allow_addr2line=1 verbosity=1 coverage=1 print_stacktrace=1 halt_on_error=1"
+# Sanitizer configuration for C++ and Rust.
+# Runtime options, suppressions and the test wrapper come from @score_cpp_policies//sanitizers,
+# mirroring its sanitizers.bazelrc, which Bazel cannot import from an external module.
+# Compile and link flags still come from the score_bazel_cpp_toolchains features; they are
+# replaced by the policy-owned `score_*` features with eclipse-score/baselibs#519.
+# Those features already add `-g`, so only stripping has to be disabled here.
+build:_bl_sanitizer_common --strip=never
 # Partial enablement of sanitizers for Rust. Compile-time checks are not available.
 # Final link of `rust_binary` and `rust_test` is routed through the C++ toolchain linker.
-test:asan_ubsan_lsan --@rules_rust//rust/settings:experimental_use_cc_common_link=True
+build:_bl_sanitizer_common --@rules_rust//rust/settings:experimental_use_cc_common_link=True
 # Allow `cc_common.link` to use allocator libraries with mangled symbols, as provided by rustc 1.90.
-test:asan_ubsan_lsan --@rules_rust//rust/settings:experimental_use_allocator_libraries_with_mangled_symbols=True
+build:_bl_sanitizer_common --@rules_rust//rust/settings:experimental_use_allocator_libraries_with_mangled_symbols=True
+test:_bl_sanitizer_common --run_under=@score_cpp_policies//sanitizers:wrapper
+
+build:asan --config=_bl_sanitizer_common
+build:asan --features=asan
+build:asan --@score_cpp_policies//sanitizers/flags:asan=True
+build:asan --platform_suffix=asan
+
+build:ubsan --config=_bl_sanitizer_common
+build:ubsan --features=ubsan
+build:ubsan --@score_cpp_policies//sanitizers/flags:ubsan=True
+build:ubsan --platform_suffix=ubsan
+
+build:lsan --config=_bl_sanitizer_common
+build:lsan --features=lsan
+build:lsan --@score_cpp_policies//sanitizers/flags:lsan=True
+build:lsan --platform_suffix=lsan
+
+build:tsan --config=_bl_sanitizer_common
+build:tsan --features=tsan
+build:tsan --@score_cpp_policies//sanitizers/flags:tsan=True
+build:tsan --platform_suffix=tsan
+
+# Composite configs. The last --platform_suffix wins, overriding the single-sanitizer ones.
+build:asan_ubsan_lsan --config=asan
+build:asan_ubsan_lsan --config=ubsan
+build:asan_ubsan_lsan --config=lsan
+build:asan_ubsan_lsan --platform_suffix=asan_ubsan_lsan
+
+build:tsan_ubsan --config=tsan
+build:tsan_ubsan --config=ubsan
+build:tsan_ubsan --platform_suffix=tsan_ubsan
 
 # Clang-Tidy configuration for C++
 build:clang-tidy --aspects=//tools/lint:linters.bzl%clang_tidy_aspect

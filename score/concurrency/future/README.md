@@ -49,10 +49,51 @@ Sometimes a consumer does not want to actively wait on the fulfillment of a prom
 when the shared state is set. To set such a callback use `Then(...)`. The callback takes as parameter a `score::Result`
 that either contains the data or the error within the shared state.
 
-Please be aware, that the callback is executed by the producer. Hence, you must be careful of lifetime assumptions. (
-Capturing `this` is in most cases a **very** bad idea)
+Please be aware, that the callback is executed by the producer. Hence, you must be careful of lifetime assumptions.
+As a general rule, nothing should be captured by reference (including `this`) unless it is absolutely clear that its
+lifetime outlives the continuation's execution.
 
 Further, when attaching a continuation callback, this disables the functionality of `OnAbort(...)`.
+
+Because continuation execution time is not controlled by the consumer and may happen much later (or immediately if the
+state is already ready), it is easy to accidentally rely on invalid lifetimes. Prefer capturing by copy or move so the
+continuation owns everything it needs. When a reference genuinely cannot be avoided, wrap continuation setup in a small
+scoped function; this does not by itself prevent capturing short-lived references, but it makes the scope in which the
+continuation may run explicit and easier to review against your lifetime assumptions.
+
+Example pattern:
+
+```cpp
+void StartRead(ReadService& service,
+			   Request req,
+			   std::shared_ptr<State> state) {
+	auto AttachScopedContinuation =
+		[](score::concurrency::InterruptibleFuture<Response> future,
+		   std::shared_ptr<State> state_handle) {
+			future.Then([state = std::move(state_handle)](score::Result<Response> result) {
+				// Use only state with guaranteed lifetime.
+				if (result.has_value()) {
+					state->OnSuccess(*result);
+				} else {
+					state->OnError(result.error());
+				}
+			});
+		};
+
+	auto promise = score::concurrency::InterruptiblePromise<Response>{};
+	auto maybe_future = promise.GetInterruptibleFuture();
+	if (!maybe_future.has_value()) {
+		state->OnError(maybe_future.error());
+		return;
+	}
+
+	AttachScopedContinuation(std::move(*maybe_future), state);
+	service.Read(std::move(req), std::move(promise));
+}
+```
+
+This pattern makes the continuation's capture set explicit and localized. In particular, avoid capturing anything by
+reference (including `this`) unless you can prove the referenced object outlives all possible continuation executions.
 
 ## Pitfalls
 
@@ -78,6 +119,17 @@ breaks the cyclic dependency.
 But, it is impossible to cover the case where the promise is destructed without explicitly setting the state. Normally,
 the destructor of the promise would set the shared state implicitly to an error. But because of the cyclic dependency,
 the destructor of the promise is never actually called. As a result, both the promise and the shared state are leaked.
+
+### Continuation execution window
+
+**TL;DR:** Attach continuations inside a dedicated scoped function and capture only objects with guaranteed lifetime
+(`shared_ptr`, value types, IDs). Do not capture anything by reference (including `this`) by default.
+
+`Then(...)` callbacks may run on a producer-controlled execution path and not at a consumer-chosen point in time.
+Treat them as potentially delayed and externally scheduled work. Prefer capturing by copy or move; references are
+sometimes unavoidable, and in that case a scoped function does not prevent capturing short-lived references. What it
+does is spell out, in one place, exactly what is captured and how long each captured reference needs to stay valid,
+so a reviewer can check those lifetime assumptions against how and when the continuation is actually invoked.
 
 ## Class diagram
 
