@@ -20,11 +20,11 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <score/vector.hpp>
 
 #include <cerrno>
 #include <cstring>
 #include <iterator>
-#include <memory_resource>
 #include <vector>
 
 namespace score
@@ -46,14 +46,14 @@ const score::filesystem::Path kTestPath{"/tmp/test.bin"};
 constexpr std::int64_t kTestFileSize = 10;
 constexpr std::int64_t kInvalidNegativeSize = -100;
 
-class ThrowingBadAllocResource : public std::pmr::memory_resource
+class ThrowingBadAllocResource : public score::cpp::pmr::memory_resource
 {
     void* do_allocate(std::size_t /*bytes*/, std::size_t /*align*/) override
     {
         throw std::bad_alloc{};
     }
     void do_deallocate(void* /*p*/, std::size_t /*bytes*/, std::size_t /*align*/) override {}
-    bool do_is_equal(const std::pmr::memory_resource& other) const noexcept override
+    bool do_is_equal(const score::cpp::pmr::memory_resource& other) const noexcept override
     {
         return this == &other;
     }
@@ -63,14 +63,14 @@ struct CustomResizeException : public std::exception
 {
 };
 
-class ThrowingCustomExceptionResource : public std::pmr::memory_resource
+class ThrowingCustomExceptionResource : public score::cpp::pmr::memory_resource
 {
     void* do_allocate(std::size_t /*bytes*/, std::size_t /*align*/) override
     {
         throw CustomResizeException{};
     }
     void do_deallocate(void* /*p*/, std::size_t /*bytes*/, std::size_t /*align*/) override {}
-    bool do_is_equal(const std::pmr::memory_resource& other) const noexcept override
+    bool do_is_equal(const score::cpp::pmr::memory_resource& other) const noexcept override
     {
         return this == &other;
     }
@@ -427,7 +427,7 @@ TEST_F(LoadFlatbufferTest, ResizeBadAllocReturnsEnomemAndClosesFile)
     SetUpSuccessfulClose();
 
     ThrowingBadAllocResource bad_alloc_resource;
-    std::pmr::vector<uint8_t> data{&bad_alloc_resource};
+    score::cpp::pmr::vector<uint8_t> data{&bad_alloc_resource};
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -441,7 +441,7 @@ TEST_F(LoadFlatbufferTest, ResizeCustomExceptionReturnsErrorAndClosesFile)
     SetUpSuccessfulClose();
 
     ThrowingCustomExceptionResource custom_resource;
-    std::pmr::vector<uint8_t> data{&custom_resource};
+    score::cpp::pmr::vector<uint8_t> data{&custom_resource};
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -501,7 +501,7 @@ TEST(LoadBufferPublicApiTest, PmrVectorOverloadSuccessPathReturnsEmpty)
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    std::pmr::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = score::flatbuffers::LoadBuffer(kDevNull, data);
     ASSERT_TRUE(result.has_value());
     EXPECT_TRUE(data.empty());
@@ -512,7 +512,7 @@ TEST(LoadBufferPublicApiTest, PmrVectorOverloadErrorPathReturnsError)
     RecordProperty("TestType", "structural-branch-coverage");
     RecordProperty("TestType", "fault-injection");
 
-    std::pmr::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = score::flatbuffers::LoadBuffer(kNonExistent, data);
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kNoSuchFileOrDirectory);

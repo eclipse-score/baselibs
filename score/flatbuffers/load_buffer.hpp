@@ -20,8 +20,8 @@
 #include "score/filesystem/path.h"
 #include "score/os/errno.h"
 
+#include <score/vector.hpp>
 #include <cstdint>
-#include <memory_resource>
 #include <vector>
 
 namespace score
@@ -41,12 +41,12 @@ namespace flatbuffers
 ///       as `score::os::Error::Code::kNotEnoughSpace`.
 ///       Any other exception from `resize()` is returned as an unspecified error.
 ///
-/// @see LoadBuffer(const score::filesystem::Path&, std::pmr::vector<uint8_t>&)
+/// @see LoadBuffer(const score::filesystem::Path&, score::cpp::pmr::vector<uint8_t>&)
 ///      for a variant using polymorphic memory resources.
 score::os::Result<std::vector<uint8_t>> LoadBuffer(const score::filesystem::Path& path) noexcept;
 
 /// @brief Loads the entire contents of a binary file into a
-/// `std::pmr::vector<uint8_t>`.
+/// `score::cpp::pmr::vector<uint8_t>`.
 ///
 /// @param[in] path   The filesystem path to the file to load.
 /// @param[out] data  Output container where the file contents will be placed.
@@ -61,7 +61,7 @@ score::os::Result<std::vector<uint8_t>> LoadBuffer(const score::filesystem::Path
 /// @note `data` is not cleared before use. On error, its contents are
 ///       unspecified — it may have been resized and partially populated.
 score::os::Result<score::cpp::blank> LoadBuffer(const score::filesystem::Path& path,
-                                                std::pmr::vector<uint8_t>& data) noexcept;
+                                                score::cpp::pmr::vector<uint8_t>& data) noexcept;
 }  // namespace flatbuffers
 }  // namespace score
 
