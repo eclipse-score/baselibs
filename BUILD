@@ -11,6 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_license//rules:license.bzl", "license")
 load("@score_docs_as_code//:docs.bzl", "docs")
 load(":qemu.bzl", "qemu_aarch64")
 
@@ -24,6 +25,18 @@ exports_files(
     ["cr_checker_exclusion"],
     visibility = ["//tools:__pkg__"],
 )
+
+# Machine-readable license declaration for SBOM/compliance tooling (e.g.
+# rules_license's gather_licenses_info aspect, or score_sbom once it consumes
+# rules_license providers).
+license(
+    name = "license",
+    package_name = "score_baselibs",
+    license_kinds = ["@rules_license//licenses/spdx:Apache-2.0"],
+    package_url = "https://github.com/eclipse-score/baselibs",
+)
+
+package(default_applicable_licenses = [":license"])
 
 docs(
     bundles = [
