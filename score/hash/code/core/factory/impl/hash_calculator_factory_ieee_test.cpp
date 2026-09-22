@@ -208,6 +208,13 @@ TEST(HashCalculatorFactory, HashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailedHashObjCreation)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, when the underlying hash "
+                   "calculator fails to be created for HashAlgorithm::kNone, given a span input.");
+
     HashCalculatorFactory unit{};
     std::vector<std::uint8_t> test_input{'1', '2', '3', 'a', 'b', 'c'};
     score::cpp::span<const std::uint8_t> data(test_input);
@@ -219,6 +226,13 @@ TEST(HashCalculatorFactory, FailedHashObjCreation)
 
 TEST(HashCalculatorFactory, FailedHashObjCreationStream)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, when the underlying hash "
+                   "calculator fails to be created for HashAlgorithm::kNone, given a std::istream input.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abc");
 
@@ -250,6 +264,14 @@ TEST(HashCalculatorFactory, InvalidhashCalculatorStreamInput)
 
 TEST(HashCalculatorFactory, FailHashObjCreationWithMaxRead)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that CalculateHash() returns an error, instead of a value, when the underlying hash "
+                   "calculator fails to be created for HashAlgorithm::kNone, given a std::istream input with a "
+                   "max-read limit.");
+
     HashCalculatorFactory unit{};
     std::istringstream test_input("123abcefg");
 

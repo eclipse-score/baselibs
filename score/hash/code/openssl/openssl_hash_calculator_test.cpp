@@ -78,6 +78,12 @@ void HashCalculatorTest::ExpectSha256Call()
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha1Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-1 calculator.");
+
     const StructDigest* digest_type_sha1 = openssl_lib_.DigestAlgoSha1();
     StructDigestCtx* digest_context_sha1 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha1 = openssl_lib_.InitDigestCtx(digest_context_sha1, digest_type_sha1, nullptr);
@@ -110,6 +116,12 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha256Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-384 calculator.");
+
     const StructDigest* digest_type_sha384 = openssl_lib_.DigestAlgoSha384();
     StructDigestCtx* digest_context_sha384 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha384 = openssl_lib_.InitDigestCtx(digest_context_sha384, digest_type_sha384, nullptr);
@@ -127,6 +139,12 @@ TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha384Test)
 
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha512Test)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-512 calculator.");
+
     const StructDigest* digest_type_sha512 = openssl_lib_.DigestAlgoSha512();
     StructDigestCtx* digest_context_sha512 = openssl_lib_.CreateDigestCtx();
     std::int32_t hash_digest_sha512 = openssl_lib_.InitDigestCtx(digest_context_sha512, digest_type_sha512, nullptr);
