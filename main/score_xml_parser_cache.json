@@ -3348,6 +3348,54 @@
     "url": ""
   },
   {
+    "name": "SynchronizedQueue__CallPushWhenPopIsWaitingForTimeout",
+    "file": "score/concurrency/synchronized_queue_test.cpp",
+    "line": 128,
+    "need": "comp_req__concurrency__synchronized_queue",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SynchronizedQueue__CallPushWithConstValueWhenPopIsWaitingForTimeout",
+    "file": "score/concurrency/synchronized_queue_test.cpp",
+    "line": 170,
+    "need": "comp_req__concurrency__synchronized_queue",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SynchronizedQueue__CallPushAndPopAtForNoneEmptyQueue",
+    "file": "score/concurrency/synchronized_queue_test.cpp",
+    "line": 212,
+    "need": "comp_req__concurrency__synchronized_queue",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SynchronizedQueue__MakeStressTestForPushingFromMultipleThreads",
+    "file": "score/concurrency/synchronized_queue_test.cpp",
+    "line": 262,
+    "need": "comp_req__concurrency__synchronized_queue",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
     "name": "Endianness__WeAreRunningOnALittleEndianSystem",
     "file": "score/memory/endianness_test.cpp",
     "line": 22,

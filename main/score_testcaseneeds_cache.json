@@ -21758,7 +21758,7 @@
   {
     "name": "SynchronizedQueue__CheckFalseResponseOnPushWhenQueueObjectDoesNotExist",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "76",
+    "line": "74",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21772,7 +21772,7 @@
   {
     "name": "SynchronizedQueue__CallPopForEmptyQueue",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "106",
+    "line": "102",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21786,7 +21786,7 @@
   {
     "name": "SynchronizedQueue__CallPushWhenPopIsWaitingForTimeout",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "134",
+    "line": "128",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21794,13 +21794,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__concurrency__synchronized_queue",
     "FullyVerifies": null
   },
   {
     "name": "SynchronizedQueue__CallPushWithConstValueWhenPopIsWaitingForTimeout",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "177",
+    "line": "170",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21808,13 +21808,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__concurrency__synchronized_queue",
     "FullyVerifies": null
   },
   {
     "name": "SynchronizedQueue__CallPushAndPopAtForNoneEmptyQueue",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "220",
+    "line": "212",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21822,13 +21822,13 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__concurrency__synchronized_queue",
     "FullyVerifies": null
   },
   {
     "name": "SynchronizedQueue__MakeStressTestForPushingFromMultipleThreads",
     "file": "score/concurrency/synchronized_queue_test.cpp",
-    "line": "271",
+    "line": "262",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21836,7 +21836,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__concurrency__synchronized_queue",
     "FullyVerifies": null
   },
   {
