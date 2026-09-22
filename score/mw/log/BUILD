@@ -16,6 +16,8 @@ load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
+package(default_applicable_licenses = ["//:license"])
+
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
     extra_features = [

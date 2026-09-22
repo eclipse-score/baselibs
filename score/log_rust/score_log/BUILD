@@ -12,6 +12,8 @@
 # *******************************************************************************
 load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
+package(default_applicable_licenses = ["//:license"])
+
 rust_library(
     name = "score_log",
     srcs = glob(["**/*.rs"]),

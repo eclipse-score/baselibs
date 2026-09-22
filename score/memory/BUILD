@@ -17,9 +17,12 @@ load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
-package(default_visibility = [
-    "@score_baselibs//score/memory:__subpackages__",
-])
+package(
+    default_applicable_licenses = ["//:license"],
+    default_visibility = [
+        "@score_baselibs//score/memory:__subpackages__",
+    ],
+)
 
 cc_library(
     name = "endianness",

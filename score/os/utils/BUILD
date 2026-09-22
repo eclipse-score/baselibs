@@ -14,6 +14,8 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/os:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+package(default_applicable_licenses = ["//:license"])
+
 cc_library(
     name = "mqueue_headers",
     hdrs = ["mqueue.h"],

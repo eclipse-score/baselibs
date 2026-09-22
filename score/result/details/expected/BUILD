@@ -15,6 +15,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+package(default_applicable_licenses = ["//:license"])
+
 cc_library(
     name = "expected",
     srcs = ["expected.cpp"],

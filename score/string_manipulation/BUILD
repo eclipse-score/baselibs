@@ -15,6 +15,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 
+package(default_applicable_licenses = ["//:license"])
+
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
     extra_features = [

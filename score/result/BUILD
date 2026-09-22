@@ -16,6 +16,8 @@ load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
+package(default_applicable_licenses = ["//:license"])
+
 cc_library(
     name = "error",
     srcs = [

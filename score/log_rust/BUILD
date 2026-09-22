@@ -13,6 +13,8 @@
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 
+package(default_applicable_licenses = ["//:license"])
+
 string_flag(
     name = "safety_level",
     build_setting_default = "asil_b",

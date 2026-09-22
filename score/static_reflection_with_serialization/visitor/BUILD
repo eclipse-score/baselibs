@@ -13,6 +13,8 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
+package(default_applicable_licenses = ["//:license"])
+
 _compiler_warning_features = [
     "additional_warnings",
     "strict_warnings",

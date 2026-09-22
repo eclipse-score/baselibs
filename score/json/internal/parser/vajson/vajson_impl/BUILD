@@ -11,7 +11,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-package(default_visibility = ["@score_baselibs//score/json:__subpackages__"])
+package(
+    default_applicable_licenses = ["//:license"],
+    default_visibility = ["@score_baselibs//score/json:__subpackages__"],
+)
 
 cc_library(
     name = "vajson_impl",

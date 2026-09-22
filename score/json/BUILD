@@ -16,6 +16,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
+package(default_applicable_licenses = ["//:license"])
+
 LIB_JSON_VISIBILITY = ["//visibility:public"]
 
 string_flag(

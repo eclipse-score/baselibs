@@ -12,6 +12,8 @@
 # *******************************************************************************
 load("@rules_rust//rust:defs.bzl", "rust_proc_macro", "rust_test")
 
+package(default_applicable_licenses = ["//:license"])
+
 rust_proc_macro(
     name = "score_log_fmt_macro",
     srcs = glob(["*.rs"]),
