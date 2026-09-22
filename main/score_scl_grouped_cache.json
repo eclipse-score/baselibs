@@ -2456,6 +2456,118 @@
     }
   },
   {
+    "need": "comp_req__utils__base64_encoding",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "Base64Test__EncodeEmptyString",
+          "file": "score/utils/base64_test.cpp",
+          "line": 22,
+          "need": "comp_req__utils__base64_encoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__EncodeSingleByte",
+          "file": "score/utils/base64_test.cpp",
+          "line": 33,
+          "need": "comp_req__utils__base64_encoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__EncodeTwoBytes",
+          "file": "score/utils/base64_test.cpp",
+          "line": 44,
+          "need": "comp_req__utils__base64_encoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__EncodeMultipleBytes",
+          "file": "score/utils/base64_test.cpp",
+          "line": 55,
+          "need": "comp_req__utils__base64_encoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__utils__base64_decoding",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "Base64Test__DecodeEmptyString",
+          "file": "score/utils/base64_test.cpp",
+          "line": 66,
+          "need": "comp_req__utils__base64_decoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__DecodeSingleByte",
+          "file": "score/utils/base64_test.cpp",
+          "line": 77,
+          "need": "comp_req__utils__base64_decoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__DecodeTwoBytes",
+          "file": "score/utils/base64_test.cpp",
+          "line": 88,
+          "need": "comp_req__utils__base64_decoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "Base64Test__DecodeMultipleBytes",
+          "file": "score/utils/base64_test.cpp",
+          "line": 99,
+          "need": "comp_req__utils__base64_decoding",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__memory__endianness",
     "links": {
       "CodeLinks": [],
