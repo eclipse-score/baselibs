@@ -190,5 +190,9 @@
   {
     "version": "pr-614",
     "url": "https://eclipse-score.github.io/baselibs/pr-614/"
+  },
+  {
+    "version": "pr-616",
+    "url": "https://eclipse-score.github.io/baselibs/pr-616/"
   }
 ]
