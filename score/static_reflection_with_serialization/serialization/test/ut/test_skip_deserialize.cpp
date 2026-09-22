@@ -68,8 +68,9 @@ TEST(serializer_visitor, skip_deserialize)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Check that skip_deserialize-annotated fields are excluded from the payload compatibility check "
-                   "and correctly skipped when deserializing into a struct with fewer or reordered payload fields.");
+                   "Check that is_payload_compatible() rejects S3s, which omits S's vector field, and that "
+                   "deserializing S's serialized bytes into S1 and S2, whose skip_deserialize-annotated fields "
+                   "reorder the layout, still recovers the retained f1 and f2 values correctly.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     // S has an "added" std::vector member compared to S3;, it should be detected as incompatible

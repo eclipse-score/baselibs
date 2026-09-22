@@ -658,9 +658,9 @@ TEST_F(serializer_visitor_overflows, basic__no_overflow)
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
                    "Check that a struct round-trips without error when the serialize and deserialize buffers are "
-                   "exactly large enough to hold it.");
+                   "large enough to hold it.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 2048, 2048);
     EXPECT_EQ(result.first.operator bool(), true);
     EXPECT_EQ(result.second, true);
@@ -673,7 +673,7 @@ TEST_F(serializer_visitor_overflows, basic__serializer_overflow)
                    "Check that deserializing a struct into an undersized serialize buffer is detected as a "
                    "zero-offset error rather than producing an equal value.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 100, 2048);
     EXPECT_EQ(result.first.getZeroOffset(), true);
     EXPECT_EQ(result.second, false);
@@ -686,7 +686,7 @@ TEST_F(serializer_visitor_overflows, basic__derserializer_overflow)
                    "Check that deserializing a struct from an undersized deserialize buffer is detected as an "
                    "out-of-bounds error rather than producing an equal value.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 2048, 100);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -699,7 +699,7 @@ TEST_F(serializer_visitor_overflows, basic_deserializer_overflow_const)
                    "Check that the const-pointer overload of deserialize also detects an undersized deserialize "
                    "buffer as an out-of-bounds error.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     constexpr auto size_in = 2048UL;
     constexpr auto size_out = 100UL;
     result_type result =
@@ -714,9 +714,9 @@ TEST_F(serializer_visitor_overflows, dynamic_part__no_overflow)
                    "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
                    "Check that a struct with a large dynamically-sized vector member round-trips without error "
-                   "when the serialize and deserialize buffers are exactly large enough to hold it.");
+                   "when the serialize and deserialize buffers are large enough to hold it.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     structureWithHugeDynamicPart.dynamicPart.resize(100);
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, 4096, 4096);
     EXPECT_EQ(result.first.operator bool(), true);
@@ -731,7 +731,7 @@ TEST_F(serializer_visitor_overflows, dynamic_part__serializer_overflow)
                    "Check that deserializing a struct with a large dynamically-sized vector member into a buffer that "
                    "was never allocated for that dynamic part is detected as a zero-offset error.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     constexpr auto size_in_out = 4096UL;
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, size_in_out, size_in_out);
     EXPECT_EQ(result.first.getZeroOffset(), true);
@@ -762,7 +762,7 @@ TEST_F(serializer_visitor_overflows, dynamic_part__deserilizer_overflow)
                    "Check that deserializing a struct with a large dynamically-sized vector member from an "
                    "undersized deserialize buffer is detected as an out-of-bounds error.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(structureWithHugeDynamicPart, 8192, 4096);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -772,10 +772,10 @@ TEST_F(serializer_visitor_overflows, string__no_overflow)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Check that a struct with a maximal-length string member round-trips without error when the "
-                   "serialize and deserialize buffers are exactly large enough to hold it.");
+                   "Check that a struct with a long string member round-trips without error when the serialize "
+                   "and deserialize buffers are large enough to hold it.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 4096, 4096);
     EXPECT_EQ(result.first.operator bool(), true);
     EXPECT_EQ(result.second, true);
@@ -785,10 +785,10 @@ TEST_F(serializer_visitor_overflows, string__serialization_overflow)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Check that deserializing a struct with a maximal-length string member into an undersized "
-                   "serialize buffer is detected as a zero-offset error.");
+                   "Check that deserializing a struct with a long string member into an undersized serialize "
+                   "buffer is detected as a zero-offset error.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 2048, 4096);
     EXPECT_EQ(result.first.getZeroOffset(), true);
     EXPECT_EQ(result.second, false);
@@ -798,10 +798,10 @@ TEST_F(serializer_visitor_overflows, string_deserialization_overflow)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Check that deserializing a struct with a maximal-length string member from an undersized "
-                   "deserialize buffer is detected as an out-of-bounds error.");
+                   "Check that deserializing a struct with a long string member from an undersized deserialize "
+                   "buffer is detected as an out-of-bounds error.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 4096, 2048);
     EXPECT_EQ(result.first.getOutOfBounds(), true);
     EXPECT_EQ(result.second, false);
@@ -900,7 +900,7 @@ TEST(logging_serializer_test, serialize_int_data_with_big_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of serialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance{1, 2};
@@ -917,7 +917,7 @@ TEST(logging_serializer_test, deserialize_int_data_with_big_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of deserialize integer data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     std::tuple<int, int> tuple_instance_in{1, 2};
@@ -940,7 +940,7 @@ TEST(logging_serializer_test, deserialize_byte_data_with_miss_match_size)
     RecordProperty("Description",
                    "Verify the inability of deserialize byte data by providing a size bigger than"
                    "the original data size.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     test::StructOneSigned struct_one_signed_out;
@@ -975,6 +975,8 @@ TEST(clear_functionality_test, test_that_clear_function_can_clear_vector_of_int3
 
     VectorWrapper vector_wrapper_instance{};
     score::common::visitor::detail::clear(vector_wrapper_instance);
+
+    EXPECT_TRUE(vector_wrapper_instance.vector_of_int.empty());
 }
 
 }  // namespace test

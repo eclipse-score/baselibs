@@ -39,10 +39,10 @@ SCORE_STRUCT_VISITABLE(S2, f1, f2)
 
 }  // namespace test
 
-/// @req{VISIT-OSTREAM}
 TEST(ostream_visitor, basic)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__visitor");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
                    "Check that ostream_visitor, a custom visitor implementation, formats scalars, strings, arrays, "
                    "vectors, pairs, tuples, and a visitable struct via the generic visit() dispatch.");
@@ -82,11 +82,11 @@ struct SS2S3
 SCORE_STRUCT_VISITABLE(S3, f1, f2, f3)
 SCORE_STRUCT_VISITABLE(SS2S3, s2, s3)
 
-/// @req{VISIT-OSTREAM-COMPOUND}
 TEST(ostream_visitor, compound)
 {
     RecordProperty("PartiallyVerifies",
-                   "comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__nested");
+                   "comp_req__static_reflect_serial__visitor, comp_req__static_reflect_serial__container, "
+                   "comp_req__static_reflect_serial__nested");
     RecordProperty("Description",
                    "Check that ostream_visitor formats nested compound types (2D arrays, vectors of vectors, "
                    "and nested pairs) via the generic visit() dispatch.");
