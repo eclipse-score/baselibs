@@ -122,6 +122,13 @@ TEST(HashIdentify, CanNotIdentifyBadHashesFromSize)
 
 TEST(HashIdentify, CorrectSizes)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms, comp_req__hash__crc32_algorithm");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that HashSizeInBytes()/HashSizeInCharacters() report the correct byte and hex-character "
+                   "lengths for every supported algorithm, and report no value for kNone/kLast.");
+
     const auto expected_sizes_bytes = std::map<const HashAlgorithm, const std::uint8_t>{
         {HashAlgorithm::kCrc32, 4},
         {HashAlgorithm::kCrc32Autosar, 4},

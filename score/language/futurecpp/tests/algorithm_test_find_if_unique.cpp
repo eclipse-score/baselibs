@@ -46,6 +46,11 @@ TYPED_TEST_SUITE(find_if_unique_fixture, find_if_unique_fixture_types, /*unused*
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, check_empty_container)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "an empty container");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for an element equal to 0");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned");
+
     // given
     TypeParam container;
 
@@ -61,6 +66,11 @@ TYPED_TEST(find_if_unique_fixture, check_empty_container)
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, element_present_in_container_of_size_one)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "a container with exactly one matching element");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for that element");
+    ::testing::Test::RecordProperty("then", "an iterator to that element is returned");
+
     // given
     TypeParam container = {99};
 
@@ -76,6 +86,11 @@ TYPED_TEST(find_if_unique_fixture, element_present_in_container_of_size_one)
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, element_not_present_in_container_of_size_one)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "a container with exactly one element that does not match");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for a non-matching value");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned");
+
     // given
     TypeParam container = {100};
 
@@ -91,6 +106,11 @@ TYPED_TEST(find_if_unique_fixture, element_not_present_in_container_of_size_one)
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, element_not_present_in_container_with_multiple_elements)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "a container with several elements none of which match");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for a non-matching value");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned");
+
     // given
     TypeParam container = {-67, -1, 0, 1, 8, 25, 25, 100, 100};
 
@@ -106,6 +126,11 @@ TYPED_TEST(find_if_unique_fixture, element_not_present_in_container_with_multipl
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, element_present_in_container_with_multiple_elements)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "a container with several elements exactly one of which matches");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for that value");
+    ::testing::Test::RecordProperty("then", "an iterator to the unique matching element is returned");
+
     // given
     TypeParam container = {-67, -2, -1, 0, 8, 25, 25, 100, 100};
 
@@ -121,6 +146,11 @@ TYPED_TEST(find_if_unique_fixture, element_present_in_container_with_multiple_el
 /// @requirement CB-#17899210
 TYPED_TEST(find_if_unique_fixture, element_present_multiple_times_in_container)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given", "a container where more than one element matches the predicate");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for the repeated value");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned because the match is not unique");
+
     // given
     TypeParam container = {0, 0, 5, 1, 8, 100, 100, 25, 25};
 
@@ -136,6 +166,12 @@ TYPED_TEST(find_if_unique_fixture, element_present_multiple_times_in_container)
 /// @requirement CB-#17899210
 TEST(find_if_unique_test, element_present_in_array_any_combination)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty(
+        "given", "an array containing exactly one matching element, permuted into every possible ordering");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for that value in each permutation");
+    ::testing::Test::RecordProperty("then", "an iterator to the matching element is returned every time");
+
     // given
     std::array<int, 5> container = {1, 5, 8, 100, 100};
 
@@ -156,6 +192,12 @@ TEST(find_if_unique_test, element_present_in_array_any_combination)
 /// @requirement CB-#17899210
 TEST(find_if_unique_test, element_not_present_in_array_any_combination)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty("given",
+                                    "an array with no matching element, permuted into every possible ordering");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for a non-matching value in each permutation");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned every time");
+
     // given
     std::array<int, 5> container = {1, 5, 8, 100, 100};
 
@@ -175,6 +217,12 @@ TEST(find_if_unique_test, element_not_present_in_array_any_combination)
 /// @requirement CB-#17899210
 TEST(find_if_unique_test, element_present_multiple_times_in_array_any_combination)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.FindIfUniqueElement");
+    ::testing::Test::RecordProperty(
+        "given", "an array where the searched-for value appears more than once, permuted into every possible ordering");
+    ::testing::Test::RecordProperty("when", "find_if_unique searches for that repeated value in each permutation");
+    ::testing::Test::RecordProperty("then", "the end iterator is returned every time because the match is not unique");
+
     // given
     std::array<int, 5> container = {1, 5, 8, 100, 100};
 
