@@ -183,19 +183,9 @@ public:
     /// \pre the distance between the input iterators shall be in a range of [0, MaxSize]
     template <typename InputIterator,
               typename = decltype(*std::declval<InputIterator&>(), ++std::declval<InputIterator&>())>
-    explicit inplace_vector(InputIterator begin, InputIterator end) : base_t{}
+    explicit inplace_vector(InputIterator begin, InputIterator end)
+        : inplace_vector{begin, end, typename std::iterator_traits<InputIterator>::iterator_category{}}
     {
-        SCORE_LANGUAGE_FUTURECPP_PRECONDITION(std::distance(begin, end) >= 0);
-        SCORE_LANGUAGE_FUTURECPP_PRECONDITION(static_cast<std::size_t>(std::distance(begin, end)) <= MaxSize);
-        try
-        {
-            const auto new_end = std::uninitialized_copy(begin, end, std::begin(*this));
-            base_t::set_size(static_cast<std::size_t>(new_end - std::begin(*this)));
-        }
-        catch (...)
-        {
-            // do nothing
-        }
     }
 
     /// \brief Constructor with initializer list.
@@ -214,12 +204,12 @@ public:
     {
         try
         {
-            this->set_size(other.size());
             score::cpp::ignore = std::uninitialized_copy_n(other.data(), other.size(), this->data());
+            this->set_size(other.size());
         }
         catch (...)
         {
-            this->set_size(0U);
+            // do nothing because `uninitialized_copy_n` destroys all already copied elements
         }
     }
 
@@ -233,12 +223,12 @@ public:
             try
             {
                 score::cpp::ignore = std::destroy_n(this->data(), this->size());
-                this->set_size(other.size());
                 score::cpp::ignore = std::uninitialized_copy_n(other.data(), other.size(), this->data());
+                this->set_size(other.size());
             }
             catch (...)
             {
-                this->set_size(0U);
+                // do nothing because `uninitialized_copy_n` destroys all already copied elements
             }
         }
         return *this;
@@ -250,12 +240,12 @@ public:
     {
         try
         {
-            this->set_size(other.size());
             score::cpp::ignore = std::uninitialized_move_n(other.data(), other.size(), this->data());
+            this->set_size(other.size());
         }
         catch (...)
         {
-            this->set_size(0U);
+            // do nothing because `uninitialized_move_n` destroys all already copied elements
         }
         score::cpp::ignore = std::destroy_n(other.data(), other.size());
         other.set_size(0U);
@@ -271,12 +261,12 @@ public:
             try
             {
                 score::cpp::ignore = std::destroy_n(this->data(), this->size());
-                this->set_size(other.size());
                 score::cpp::ignore = std::uninitialized_move_n(other.data(), other.size(), this->data());
+                this->set_size(other.size());
             }
             catch (...)
             {
-                this->set_size(0U);
+                // do nothing because `uninitialized_move_n` destroys all already copied elements
             }
             score::cpp::ignore = std::destroy_n(other.data(), other.size());
             other.set_size(0U);
@@ -609,6 +599,42 @@ public:
     /// \}
 
 private:
+    /// \brief Construct from "single-pass" iterators
+    template <typename InputIterator>
+    inplace_vector(InputIterator begin, const InputIterator end, const std::input_iterator_tag)
+    {
+        try
+        {
+            for (; begin != end; ++begin)
+            {
+                emplace_back(*begin);
+            }
+        }
+        catch (...)
+        {
+            // roll back all already copied elements
+            clear();
+        }
+    }
+
+    /// \brief Construct from "multi-pass" iterators
+    template <typename InputIterator>
+    inplace_vector(const InputIterator begin, const InputIterator end, const std::forward_iterator_tag)
+    {
+        const auto length = std::distance(begin, end);
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION(length >= 0);
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION(static_cast<std::size_t>(length) <= MaxSize);
+        try
+        {
+            const auto new_end = std::uninitialized_copy(begin, end, std::begin(*this));
+            base_t::set_size(static_cast<std::size_t>(new_end - std::begin(*this)));
+        }
+        catch (...)
+        {
+            // do nothing because `uninitialized_copy` destroys all already copied elements
+        }
+    }
+
     /// \brief Removes (cast away) constness from iterator.
     iterator const_iterator_cast(const const_iterator& it) { return std::begin(*this) + (it - std::cbegin(*this)); }
 

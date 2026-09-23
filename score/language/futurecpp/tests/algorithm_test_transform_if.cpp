@@ -38,6 +38,13 @@ bool test_predicate(const double value) { return value < 4.0; }
 /// @requirement CB-#42720373
 TEST(transform_if, ForwardIterator)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.ConditionalTransform");
+    ::testing::Test::RecordProperty("given",
+                                    "an input range accessed only through a forward iterator and an output array");
+    ::testing::Test::RecordProperty("when",
+                                    "transform_if transforms elements smaller than 4.0 by doubling them as integers");
+    ::testing::Test::RecordProperty("then", "only the selected elements are written to the output range in order");
+
     const std::forward_list<double> input{{1.1, 2.2, 3.3, 4.4, 5.5, 6.6}};
     std::array<int, 42> output{};
 
@@ -55,6 +62,13 @@ TEST(transform_if, ForwardIterator)
 /// @requirement CB-#42720373
 TEST(transform_if, BidirectionalIterator)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.ConditionalTransform");
+    ::testing::Test::RecordProperty("given",
+                                    "an input range accessed through a bidirectional iterator and an output array");
+    ::testing::Test::RecordProperty("when",
+                                    "transform_if transforms elements smaller than 4.0 by doubling them as integers");
+    ::testing::Test::RecordProperty("then", "only the selected elements are written to the output range in order");
+
     const std::list<double> input{{1.1, 2.2, 3.3, 4.4, 5.5, 6.6}};
     std::array<int, 42> output{};
 
@@ -72,6 +86,13 @@ TEST(transform_if, BidirectionalIterator)
 /// @requirement CB-#42720373
 TEST(transform_if, RandomAccessIterator)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.ConditionalTransform");
+    ::testing::Test::RecordProperty("given",
+                                    "an input range accessed through a random-access iterator and an output array");
+    ::testing::Test::RecordProperty("when",
+                                    "transform_if transforms elements smaller than 4.0 by doubling them as integers");
+    ::testing::Test::RecordProperty("then", "only the selected elements are written to the output range in order");
+
     const std::vector<double> input{{1.1, 2.2, 3.3, 4.4, 5.5, 6.6}};
     std::array<int, 42> output{};
 
