@@ -13,13 +13,14 @@ Use this reference when linking, migrating, or reviewing C++ gtest and Rust unit
 5. Record the metadata using the language-specific mechanism below.
 6. Run the narrow test target, usually `bazel test --config=bl-x86_64-linux //score/<component>/...`, to confirm the test still passes.
 7. Run `bazel run //:docs` to confirm the linked requirement ID resolves. A passing test does not prove this: `RecordProperty`/`record_property` values are untyped strings with no compile-time or test-runtime check against the metamodel, so a typoed or removed ID only surfaces as a docs build warning or error. The route is complete when both the test passes and the docs build reports no unresolved-link or missing-property issue for it.
+8. Before moving to the next test, re-read this test's own assertions against the `Description`, `TestType`, and links you just wrote (see [Common Pitfalls](#common-pitfalls)). Nothing in the toolchain checks these values, so this self-check is the only gate until a human or a second review pass looks at it.
 
 ### Migrate legacy metadata
 
 1. Determine what the test actually asserts and find the matching `comp_req__...`.
 2. Replace legacy linkage with `FullyVerifies` or `PartiallyVerifies`.
 3. Add missing `TestType`, `DerivationTechnique`, and `Description`.
-4. Remove non-mandated metadata such as `ASIL` and `Priority`.
+4. Remove non-mandated metadata such as `ASIL` and `Priority`, including legacy `@req{...}` comment tags left over from Doxygen-based tracing.
 5. Run the affected tests; the route is complete when no legacy metadata remains in the touched tests.
 
 | Legacy pattern | Compliant replacement |
@@ -28,6 +29,17 @@ Use this reference when linking, migrating, or reviewing C++ gtest and Rust unit
 | `SCR-*` ID | The corresponding docs-as-code `comp_req__...` ID |
 | Raw C++ symbol, e.g. `::score::json::ToJsonAny` | The `comp_req__...` need implemented by that symbol |
 | `ASIL`, `Priority` | Remove; safety belongs on the requirement, not the test |
+| `/// @req{ID}` comment above the test | Remove; replace with `FullyVerifies`/`PartiallyVerifies` metadata inside the test body |
+
+## Common Pitfalls
+
+These recur when migrating many similar tests in one pass, especially by reusing wording across tests instead of re-deriving each `Description` from that test's own assertions:
+
+- **No real assertion.** A test that calls the code under test but has no `EXPECT_*`/`assert!` tied to the claimed behavior is not verification evidence, even if it is linked. Add the missing assertion or drop the link.
+- **Reused/templated `Description` text.** Near-identical fixtures (e.g. a family of overflow/round-trip tests) tempt you to copy one test's description to the next. Re-check each one against its own inputs: which side (serialize vs. deserialize) receives the undersized/oversized buffer, whether fields are reordered vs. merely dropped/retained, whether a callback fires once per element or once with all elements.
+- **Representative constants misclassified as `boundary-values`.** A fixture using round sizes like 100, 2048, 4096 bytes is usually exercising `equivalence-classes` (valid vs. invalid capacity), not a spec-stated boundary. Reserve `boundary-values` for a value tied to an actual documented limit, an off-by-one, or a 0/1/2-element collection.
+- **`interface-test` under-used.** Parameter/error-handling checks across an API (rejecting an oversized length, a malformed buffer, an invalid handle) are `interface-test`, not `requirements-based`, even when they also happen to satisfy a `comp_req`.
+- **Missing container linkage.** If a component treats `std::string` or another type as an automatically-iterable container, link the container requirement whenever a test exercises that type through the generic path, not just when it uses `std::vector` directly.
 
 ### Review test linkage
 
