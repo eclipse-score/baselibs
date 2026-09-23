@@ -13,7 +13,11 @@
 #include "score/os/sys_wait_impl.h"
 #include "gtest/gtest.h"
 #include "score/os/sys_wait.h"
+#include <sys/wait.h>
+#include <unistd.h>
 #include <chrono>
+#include <csignal>
+#include <cstdlib>
 #include <ctime>
 #include <ratio>
 
@@ -41,10 +45,24 @@ pid_t spawnProcess()
     if (cpid == 0)
     {
         sleep(SLEEP_DURATION);
-        exit(EXIT_SUCCESS);
+        ::_exit(EXIT_SUCCESS);
     }
     return cpid;
 }
+
+class StrayChildReaper : public ::testing::Environment
+{
+  public:
+    // Make sure there's no other child processes before running the tests (placed by e.g. --run_under wrappers).
+    void SetUp() override
+    {
+        while (::waitpid(-1, nullptr, 0) > 0)
+        {
+        }
+    }
+};
+
+const auto* const kStrayChildReaper = ::testing::AddGlobalTestEnvironment(new StrayChildReaper{});
 
 TEST(SysWaitImplTest, Wait)
 {
@@ -117,6 +135,8 @@ TEST(SysWaitImplTest, WaitpidFail)
     score::cpp::expected<pid_t, Error> retval =
         syswait.waitpid(cpid, &status, ~(WNOHANG | WUNTRACED | WCONTINUED | WNOTHREAD | WCLONE | WALL));
     EXPECT_EQ(retval.error(), score::os::Error::createFromErrno(EINVAL));
+    EXPECT_EQ(::kill(cpid, SIGKILL), 0);
+    EXPECT_EQ(::waitpid(cpid, nullptr, 0), cpid);
 }
 }  // namespace test
 }  // namespace os
