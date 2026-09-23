@@ -1857,6 +1857,815 @@
         }
       },
       {
+        "need": "comp_req__utils__base64_encoding",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Base64Test__EncodeEmptyString",
+              "file": "score/utils/base64_test.cpp",
+              "line": 22,
+              "need": "comp_req__utils__base64_encoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__EncodeSingleByte",
+              "file": "score/utils/base64_test.cpp",
+              "line": 33,
+              "need": "comp_req__utils__base64_encoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__EncodeTwoBytes",
+              "file": "score/utils/base64_test.cpp",
+              "line": 44,
+              "need": "comp_req__utils__base64_encoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__EncodeMultipleBytes",
+              "file": "score/utils/base64_test.cpp",
+              "line": 55,
+              "need": "comp_req__utils__base64_encoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__base64_decoding",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "Base64Test__DecodeEmptyString",
+              "file": "score/utils/base64_test.cpp",
+              "line": 66,
+              "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__DecodeSingleByte",
+              "file": "score/utils/base64_test.cpp",
+              "line": 77,
+              "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__DecodeTwoBytes",
+              "file": "score/utils/base64_test.cpp",
+              "line": 88,
+              "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Base64Test__DecodeMultipleBytes",
+              "file": "score/utils/base64_test.cpp",
+              "line": 99,
+              "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__value_retrieval_bytes",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "HashFixture__GetBytesAsSpan",
+              "file": "score/hash/code/core/hash_test.cpp",
+              "line": 46,
+              "need": "comp_req__hash__value_retrieval_bytes",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
+              "file": "score/hash/code/core/hash_test.cpp",
+              "line": 95,
+              "need": "comp_req__hash__value_retrieval_bytes",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypedHashFixture__GetBytesAsSpan",
+              "file": "score/hash/code/core/typed_hash_test.cpp",
+              "line": 44,
+              "need": "comp_req__hash__value_retrieval_bytes",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__value_retrieval_hex",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "HashTest__CanCreateFromValidString",
+              "file": "score/hash/code/core/hash_test.cpp",
+              "line": 59,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashTest__ToStringEmptyValueTest",
+              "file": "score/hash/code/core/hash_test.cpp",
+              "line": 83,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
+              "file": "score/hash/code/core/hash_test.cpp",
+              "line": 95,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypedHashTest__CanCreateFromValidString",
+              "file": "score/hash/code/core/typed_hash_test.cpp",
+              "line": 57,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypedHashTest__ToStringEmptyValueTest",
+              "file": "score/hash/code/core/typed_hash_test.cpp",
+              "line": 84,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TypedHashTest__CanSerializeToJsonAny",
+              "file": "score/hash/code/core/typed_hash_test.cpp",
+              "line": 96,
+              "need": "comp_req__hash__value_retrieval_hex",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__factory_interface",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__HashCalculatorFactorySuccessTest",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 38,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__HashCalculatorFactorySuccessTest",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 38,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__hashCalculatorFactoryFailTest",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 154,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailedHashObjCreation",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 209,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailedHashObjCreationStream",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 227,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailHashObjCreationWithMaxRead",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 265,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__InstantiateWithFailingOpenSslLib",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 303,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__InstantiateWithSuccess",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 320,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 345,
+              "need": "comp_req__hash__factory_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__calculation_interface",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__CalculateSha256",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 91,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__CalculateCrc32",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 109,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__CalculateSha256",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 91,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__CalculateCrc32",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 109,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__HashCalculatorSpanInput",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 168,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__HashCalculatorStreamInput",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 189,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__HashCalculatorStreamInputWithMaxRead",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 283,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__UpdateStreamTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 240,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidDigestUpdateTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 271,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__UpdateFromStreamTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 293,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidUpdateFromStreamTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 312,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__UpdateFromStreamGoesBadTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 335,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__BadInputUpdateFromStreamTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 363,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__EmptyInputUpdateFromStreamTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 384,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidFinalizeTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 408,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 427,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__Sha256Test",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 67,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__DigestCtxNewTest",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 101,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__DigestInitExTest",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 111,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__DigestUpdateTest",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 123,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__DigestFinalExTest",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 140,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Crc32IeeeTest__Hash",
+              "file": "score/hash/code/crc/crc32_ieee_test.cpp",
+              "line": 48,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Crc32IeeeTest__TwoUpdates",
+              "file": "score/hash/code/crc/crc32_ieee_test.cpp",
+              "line": 68,
+              "need": "comp_req__hash__calculation_interface",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__sha_algorithms",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__CalculateSha256",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 91,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__CalculateSha256",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 91,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__HashAlgorithmsSimpleSha1Test",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 79,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 102,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__HashAlgorithmsSimpleSha384Test",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 117,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__HashAlgorithmsSimpleSha512Test",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 140,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 427,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__Sha1Test",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 55,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__Sha384Test",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 77,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OpensslLibTest__Sha512Test",
+              "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
+              "line": 89,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashIdentify__CorrectSizes",
+              "file": "score/hash/code/common/algorithms_test.cpp",
+              "line": 123,
+              "need": "comp_req__hash__sha_algorithms",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__crc32_algorithm",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__CalculateCrc32",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 109,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__Crc32AutosarNotSupportedInIeeeVariant",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 127,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__CalculateCrc32",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 109,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "WorkingDigests/HashCalculatorFactoryCreationTest/1__Crc32AutosarNotSupportedInIeeeVariant",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 127,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Crc32IeeeTest__Hash",
+              "file": "score/hash/code/crc/crc32_ieee_test.cpp",
+              "line": 48,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Crc32IeeeTest__TwoUpdates",
+              "file": "score/hash/code/crc/crc32_ieee_test.cpp",
+              "line": 68,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashIdentify__CorrectSizes",
+              "file": "score/hash/code/common/algorithms_test.cpp",
+              "line": 123,
+              "need": "comp_req__hash__crc32_algorithm",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__hash__safe_computation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "HashCalculatorFactory__hashCalculatorFactoryFailTest",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 154,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailedHashObjCreation",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 209,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailedHashObjCreationStream",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 227,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__FailHashObjCreationWithMaxRead",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 265,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorFactory__InstantiateWithFailingOpenSslLib",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 303,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
+              "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+              "line": 345,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__NullDigestTypeCreateAlgoTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 172,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidDigestCtxCreateAlgoTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 187,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidDigestInitCreateAlgoTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 204,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "HashCalculatorTest__InvalidCreateAlgorthimTest",
+              "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+              "line": 222,
+              "need": "comp_req__hash__safe_computation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__concurrency__synchronized_queue",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "SynchronizedQueue__CallPushWhenPopIsWaitingForTimeout",
+              "file": "score/concurrency/synchronized_queue_test.cpp",
+              "line": 128,
+              "need": "comp_req__concurrency__synchronized_queue",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SynchronizedQueue__CallPushWithConstValueWhenPopIsWaitingForTimeout",
+              "file": "score/concurrency/synchronized_queue_test.cpp",
+              "line": 170,
+              "need": "comp_req__concurrency__synchronized_queue",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SynchronizedQueue__CallPushAndPopAtForNoneEmptyQueue",
+              "file": "score/concurrency/synchronized_queue_test.cpp",
+              "line": 212,
+              "need": "comp_req__concurrency__synchronized_queue",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SynchronizedQueue__MakeStressTestForPushingFromMultipleThreads",
+              "file": "score/concurrency/synchronized_queue_test.cpp",
+              "line": 262,
+              "need": "comp_req__concurrency__synchronized_queue",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__result__type_safety",
         "links": {
           "CodeLinks": [],
@@ -3984,7 +4793,7 @@
             {
               "name": "ExtensionsTest__ConvertToStdOptionalWhenExpectedConstLValueRefHasValue",
               "file": "score/result/details/expected/extensions_test.cpp",
-              "line": 288,
+              "line": 300,
               "need": "comp_req__result__std_integration",
               "verify_type": "partially",
               "result": "passed",
@@ -3993,7 +4802,7 @@
             {
               "name": "ExtensionsTest__OnConversionToStdOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue",
               "file": "score/result/details/expected/extensions_test.cpp",
-              "line": 312,
+              "line": 324,
               "need": "comp_req__result__std_integration",
               "verify_type": "partially",
               "result": "passed",
@@ -4002,7 +4811,7 @@
             {
               "name": "ExtensionsTest__ConvertToStdOptionalWhenExpectedRValueRefHasValue",
               "file": "score/result/details/expected/extensions_test.cpp",
-              "line": 335,
+              "line": 347,
               "need": "comp_req__result__std_integration",
               "verify_type": "partially",
               "result": "passed",
@@ -4011,7 +4820,7 @@
             {
               "name": "ExtensionsTest__OnConversionToStdOptionalCallInvocableWhenExpectedLValueRefHasNoValue",
               "file": "score/result/details/expected/extensions_test.cpp",
-              "line": 360,
+              "line": 372,
               "need": "comp_req__result__std_integration",
               "verify_type": "partially",
               "result": "passed",
@@ -4101,6 +4910,122 @@
               "file": "score/result/details/expected/expected_constructor_test.cpp",
               "line": 690,
               "need": "comp_req__result__deterministic_behavior",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__result__futurecpp_integration",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedConstLValueRefToAmpExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 28,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedConstLValueRefToAmpExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 49,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedRValueRefToAmpExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 70,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromExpectedRValueRefToAmpExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 91,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedConstLValueRefToExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 112,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedConstLValueRefToExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 132,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedRValueRefToExpectedWithValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 153,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__CanConvertFromAmpExpectedRValueRefToExpectedWithError",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 174,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToAmpOptionalWhenExpectedConstLValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 196,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToAmpOptionalCallInvocableWhenExpectedConstLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 222,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__ConvertToAmpOptionalWhenExpectedRValueRefHasValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 247,
+              "need": "comp_req__result__futurecpp_integration",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ExtensionsTest__OnConversionToAmpOptionalCallInvocableWhenExpectedLValueRefHasNoValue",
+              "file": "score/result/details/expected/extensions_test.cpp",
+              "line": 273,
+              "need": "comp_req__result__futurecpp_integration",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -4634,9 +5559,18 @@
               "result_text": ""
             },
             {
+              "name": "NonRelocatableVectorTrivialFixture/0__MoveConstructingLeavesSourceWithZeroSizeAndCapacity",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 455,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "NonRelocatableVectorTrivialFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 584,
+              "line": 611,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4661,9 +5595,18 @@
               "result_text": ""
             },
             {
+              "name": "NonRelocatableVectorTrivialFixture/1__MoveConstructingLeavesSourceWithZeroSizeAndCapacity",
+              "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
+              "line": 455,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "NonRelocatableVectorTrivialFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 584,
+              "line": 611,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4681,7 +5624,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/0__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 455,
+              "line": 482,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4690,7 +5633,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 620,
+              "line": 647,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4708,7 +5651,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/1__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 455,
+              "line": 482,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4717,7 +5660,7 @@
             {
               "name": "NonRelocatableVectorNonTrivialFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 620,
+              "line": 647,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4735,7 +5678,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 486,
+              "line": 513,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4744,7 +5687,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/0__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 658,
+              "line": 685,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4762,7 +5705,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveConstructingMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 486,
+              "line": 513,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4771,7 +5714,7 @@
             {
               "name": "NonRelocatableVectorTriviallyConstructibleDestructibleTypeFixture/1__MoveAssigningMovesAllElements",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 658,
+              "line": 685,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -4799,6 +5742,987 @@
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__CopyConstructingAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
               "line": 371,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/0__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/1__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/2__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/3__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/4__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/5__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/6__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmptyIsTrueWhenConstructedWithZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 82,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmptyIsTrueWhenConstructedWithNonZeroCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 96,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmptyIsFalseAfterEmplaceBack",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 112,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmptyIsTrueAgainAfterPopBackEmptiesSingleElementVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 128,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__PopBackDecrementsSize",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 146,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__PopBackOnEmptyVectorTerminates",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 209,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__PopBackDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 223,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmplaceBackAfterPopBackReusesFreedSlot",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 265,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__PoppingAllElementsOneByOneEmptiesTheVector",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 287,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__ClearSetsSizeToZero",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 317,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__ClearDoesNotChangeCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 382,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorFixture/7__EmplaceBackAfterClearRefillsUpToCapacity",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 424,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorTrivialFixture/0__PopBackLeavesRemainingElementsUnchanged",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 166,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorTrivialFixture/1__PopBackLeavesRemainingElementsUnchanged",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 166,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__PopBackDestroysRemovedElement",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 189,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__ClearDestroysAllElements",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 338,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorSpecialMemberFunctionRecorderFixture__ClearOnEmptyVectorIsANoOp",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 358,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/0__PopBackDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 243,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/0__ClearDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 402,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/1__PopBackDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 243,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/1__ClearDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 402,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/2__PopBackDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 243,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/2__ClearDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 402,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/3__PopBackDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 243,
+              "need": "comp_req__containers__non_relocatable_vector",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "NonRelocatableVectorPolymorphicAllocatorFixture/3__ClearDoesNotDeallocateOrAllocateMemory",
+              "file": "score/containers/non_relocatable_vector_capacity_test.cpp",
+              "line": 402,
               "need": "comp_req__containers__non_relocatable_vector",
               "verify_type": "partially",
               "result": "passed",
@@ -5184,7 +7108,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 532,
+              "line": 559,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5193,7 +7117,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 563,
+              "line": 590,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5202,7 +7126,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/0__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 713,
+              "line": 740,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5220,7 +7144,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 532,
+              "line": 559,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5229,7 +7153,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 563,
+              "line": 590,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5238,7 +7162,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/1__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 713,
+              "line": 740,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5256,7 +7180,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotAllocateNewMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 532,
+              "line": 559,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5265,7 +7189,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveConstructingDoesNotDeallocateMemory",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 563,
+              "line": 590,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
@@ -5274,7 +7198,7 @@
             {
               "name": "NonRelocatableVectorCopyableAndMoveablePolymorphicAllocatorFixture/2__MoveAssigningAllocatesBasedOnCapacity",
               "file": "score/containers/non_relocatable_vector_special_member_funcs_test.cpp",
-              "line": 713,
+              "line": 740,
               "need": "comp_req__containers__deterministic_behavior",
               "verify_type": "partially",
               "result": "passed",
