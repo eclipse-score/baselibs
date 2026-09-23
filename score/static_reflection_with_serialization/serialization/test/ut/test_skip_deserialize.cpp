@@ -70,7 +70,8 @@ TEST(serializer_visitor, skip_deserialize)
     RecordProperty("Description",
                    "Check that is_payload_compatible() rejects S3s, which omits S's vector field, and that "
                    "deserializing S's serialized bytes into S1 and S2, whose skip_deserialize-annotated fields "
-                   "reorder the layout, still recovers the retained f1 and f2 values correctly.");
+                   "retain only f1 or only f2 respectively while keeping the original field order, still recovers "
+                   "the retained value correctly.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     // S has an "added" std::vector member compared to S3;, it should be detected as incompatible

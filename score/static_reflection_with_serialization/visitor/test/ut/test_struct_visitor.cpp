@@ -180,7 +180,8 @@ TEST(struct_visitor, struct_visitable)
                    "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__visitor");
     RecordProperty("Description",
                    "Check that SCORE_STRUCT_VISITABLE registers the correct name, field count, and field names, and "
-                   "that visit() dispatches once per field, for structs with 1 to 20 fields.");
+                   "that visit() invokes the visitor once with all of a struct's fields as arguments, for structs "
+                   "with 1 to 20 fields.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
@@ -210,8 +211,8 @@ TEST(struct_visitor, visit_as)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__visitor");
     RecordProperty("Description",
-                   "Check that visit_as() and visit() both traverse every field of SCORE_STRUCT_VISITABLE-registered "
-                   "structs with 1 to 20 fields.");
+                   "Check that visit_as() and visit() both invoke the visitor once with all of a struct's fields "
+                   "as arguments, for SCORE_STRUCT_VISITABLE-registered structs with 1 to 20 fields.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     EXPECT_EQ(visit_as(test_visitor_t{}, test::S1{}), 1);

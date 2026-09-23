@@ -206,7 +206,7 @@ TEST(serializer_visitor, serialized)
     RecordProperty("Description",
                    "Check that serialized_t computes the expected on-wire size for primitives, pairs, tuples, "
                    "optional, bitset, strings, vectors, arrays, containers, C arrays, references, and enums.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     EXPECT_EQ(check_serialized<char>(), sizeof(char));
     EXPECT_EQ(check_serialized<uint8_t>(), sizeof(uint8_t));
@@ -670,8 +670,8 @@ TEST_F(serializer_visitor_overflows, basic__serializer_overflow)
 {
     RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Check that deserializing a struct into an undersized serialize buffer is detected as a "
-                   "zero-offset error rather than producing an equal value.");
+                   "Check that serializing a struct into an undersized buffer, then deserializing the resized "
+                   "buffer, is detected as a zero-offset error rather than producing an equal value.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(normalStructure, 100, 2048);
@@ -728,8 +728,8 @@ TEST_F(serializer_visitor_overflows, dynamic_part__serializer_overflow)
     RecordProperty("PartiallyVerifies",
                    "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
-                   "Check that deserializing a struct with a large dynamically-sized vector member into a buffer that "
-                   "was never allocated for that dynamic part is detected as a zero-offset error.");
+                   "Check that serializing a struct with a large dynamically-sized vector member into a buffer too "
+                   "small for that dynamic part is detected as a zero-offset error when deserializing the result.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     constexpr auto size_in_out = 4096UL;
@@ -770,7 +770,8 @@ TEST_F(serializer_visitor_overflows, dynamic_part__deserilizer_overflow)
 
 TEST_F(serializer_visitor_overflows, string__no_overflow)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
                    "Check that a struct with a long string member round-trips without error when the serialize "
                    "and deserialize buffers are large enough to hold it.");
@@ -783,10 +784,11 @@ TEST_F(serializer_visitor_overflows, string__no_overflow)
 
 TEST_F(serializer_visitor_overflows, string__serialization_overflow)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
-                   "Check that deserializing a struct with a long string member into an undersized serialize "
-                   "buffer is detected as a zero-offset error.");
+                   "Check that serializing a struct with a long string member into an undersized buffer, then "
+                   "deserializing the resized buffer, is detected as a zero-offset error.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     result_type result = ThereAndBackWithErrorCheck(structureWithALongString, 2048, 4096);
@@ -796,7 +798,8 @@ TEST_F(serializer_visitor_overflows, string__serialization_overflow)
 
 TEST_F(serializer_visitor_overflows, string_deserialization_overflow)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__static_reflect_serial__reflect, comp_req__static_reflect_serial__container");
     RecordProperty("Description",
                    "Check that deserializing a struct with a long string member from an undersized deserialize "
                    "buffer is detected as an out-of-bounds error.");

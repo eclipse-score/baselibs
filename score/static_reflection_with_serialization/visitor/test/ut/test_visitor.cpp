@@ -137,7 +137,7 @@ TEST(visitor, namespaces)
     RecordProperty("Description",
                    "Check that visit() resolves the correct visit_as overload via argument-dependent lookup when "
                    "the visitor and visitable types live in different namespaces.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(ns1::test_visitor_t{}, ns1::test_visitable_t{}), 11);
@@ -179,7 +179,7 @@ TEST(visitor, overloads)
     RecordProperty("Description",
                    "Check that visit() picks the most specific visit_as overload between a generic scalar template "
                    "and a non-template int overload.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(test_visitor_t{}, 42.0), 42.0);
@@ -206,7 +206,7 @@ TEST(visitor, conversions)
     RecordProperty("Description",
                    "Check that visit() accepts an argument implicitly convertible to the target type and a visitor "
                    "derived from the type expected by visit_as.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     using namespace ::score::common::visitor;
     EXPECT_EQ(visit(test_visitor_derived_t{}, test_int_convertible_t{42}), 6 * 9);
