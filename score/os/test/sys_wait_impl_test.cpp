@@ -79,8 +79,8 @@ TEST(SysWaitImplTest, Wait)
     cpid = spawnProcess();
     score::cpp::expected<pid_t, Error> ret = syswait.wait(&status);
     steady_clock::time_point t2 = steady_clock::now();
-    auto seconds = duration_cast<std::chrono::milliseconds>(t2 - t1);
-    EXPECT_TRUE(seconds.count() > SLEEP_DURATION);
+    auto elapsed = duration_cast<std::chrono::milliseconds>(t2 - t1);
+    EXPECT_GE(elapsed.count(), SLEEP_DURATION * 1000);
     EXPECT_EQ(cpid, ret.value());
     EXPECT_FALSE(WIFEXITED(status) && WEXITSTATUS(status));
 }
@@ -114,8 +114,8 @@ TEST(SysWaitImplTest, Waitpid)
     cpid = spawnProcess();
     score::cpp::expected<pid_t, Error> ret = syswait.waitpid(cpid, &status, WUNTRACED | WCONTINUED);
     steady_clock::time_point t2 = steady_clock::now();
-    auto seconds = duration_cast<std::chrono::milliseconds>(t2 - t1);
-    EXPECT_TRUE(seconds.count() > SLEEP_DURATION);
+    auto elapsed = duration_cast<std::chrono::milliseconds>(t2 - t1);
+    EXPECT_GE(elapsed.count(), SLEEP_DURATION * 1000);
     EXPECT_EQ(cpid, ret.value());
     EXPECT_FALSE(WIFEXITED(status) && WEXITSTATUS(status));
 }
