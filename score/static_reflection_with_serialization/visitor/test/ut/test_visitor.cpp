@@ -55,7 +55,7 @@ TEST(visitor, visitable_and_nonvisitable)
     RecordProperty("Description",
                    "Check that visit() dispatches to a type's visit_as overload when visitable, and falls back to "
                    "conversion via visitable_type when no visit_as overload is found.");
-    RecordProperty("TestType", "requirements-based");
+    RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     test_visitable_t v1;
     test_nonvisitable_t nv1;
