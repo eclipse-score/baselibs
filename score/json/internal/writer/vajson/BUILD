@@ -28,6 +28,7 @@ cc_library(
         "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
+        "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
     ],
 )
 

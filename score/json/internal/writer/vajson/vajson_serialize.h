@@ -17,6 +17,7 @@
 #include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer_impl.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
 #include "score/result/result.h"
+#include "score/string_manipulation/string_comparison_adaptor.h"
 #include <score/assert.hpp>
 #include <score/utility.hpp>
 #include <cstdint>
@@ -33,7 +34,8 @@ namespace internal::writer::vajson
 class ObjectKeySerializer final
 {
   public:
-    auto operator()(const score::memory::StringComparisonAdaptor& key) const noexcept -> score::json::vajson::JKeyType
+    auto operator()(const score::string_manipulation::StringComparisonAdaptor& key) const noexcept
+        -> score::json::vajson::JKeyType
     {
         return score::json::vajson::JKey(key.GetAsStringView());
     }
