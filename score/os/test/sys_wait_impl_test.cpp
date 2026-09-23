@@ -13,7 +13,11 @@
 #include "score/os/sys_wait_impl.h"
 #include "gtest/gtest.h"
 #include "score/os/sys_wait.h"
+#include <sys/wait.h>
+#include <unistd.h>
 #include <chrono>
+#include <csignal>
+#include <cstdlib>
 #include <ctime>
 #include <ratio>
 
@@ -41,10 +45,24 @@ pid_t spawnProcess()
     if (cpid == 0)
     {
         sleep(SLEEP_DURATION);
-        exit(EXIT_SUCCESS);
+        ::_exit(EXIT_SUCCESS);
     }
     return cpid;
 }
+
+class StrayChildReaper : public ::testing::Environment
+{
+  public:
+    // Make sure there's no other child processes before running the tests (placed by e.g. --run_under wrappers).
+    void SetUp() override
+    {
+        while (::waitpid(-1, nullptr, 0) > 0)
+        {
+        }
+    }
+};
+
+const auto* const kStrayChildReaper = ::testing::AddGlobalTestEnvironment(new StrayChildReaper{});
 
 TEST(SysWaitImplTest, Wait)
 {
@@ -61,8 +79,8 @@ TEST(SysWaitImplTest, Wait)
     cpid = spawnProcess();
     score::cpp::expected<pid_t, Error> ret = syswait.wait(&status);
     steady_clock::time_point t2 = steady_clock::now();
-    auto seconds = duration_cast<std::chrono::milliseconds>(t2 - t1);
-    EXPECT_TRUE(seconds.count() > SLEEP_DURATION);
+    auto elapsed = duration_cast<std::chrono::milliseconds>(t2 - t1);
+    EXPECT_GE(elapsed.count(), SLEEP_DURATION * 1000);
     EXPECT_EQ(cpid, ret.value());
     EXPECT_FALSE(WIFEXITED(status) && WEXITSTATUS(status));
 }
@@ -96,8 +114,8 @@ TEST(SysWaitImplTest, Waitpid)
     cpid = spawnProcess();
     score::cpp::expected<pid_t, Error> ret = syswait.waitpid(cpid, &status, WUNTRACED | WCONTINUED);
     steady_clock::time_point t2 = steady_clock::now();
-    auto seconds = duration_cast<std::chrono::milliseconds>(t2 - t1);
-    EXPECT_TRUE(seconds.count() > SLEEP_DURATION);
+    auto elapsed = duration_cast<std::chrono::milliseconds>(t2 - t1);
+    EXPECT_GE(elapsed.count(), SLEEP_DURATION * 1000);
     EXPECT_EQ(cpid, ret.value());
     EXPECT_FALSE(WIFEXITED(status) && WEXITSTATUS(status));
 }
@@ -117,6 +135,8 @@ TEST(SysWaitImplTest, WaitpidFail)
     score::cpp::expected<pid_t, Error> retval =
         syswait.waitpid(cpid, &status, ~(WNOHANG | WUNTRACED | WCONTINUED | WNOTHREAD | WCLONE | WALL));
     EXPECT_EQ(retval.error(), score::os::Error::createFromErrno(EINVAL));
+    EXPECT_EQ(::kill(cpid, SIGKILL), 0);
+    EXPECT_EQ(::waitpid(cpid, nullptr, 0), cpid);
 }
 }  // namespace test
 }  // namespace os
