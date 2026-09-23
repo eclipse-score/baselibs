@@ -33,6 +33,15 @@ namespace
 /// @requirement CB-#15969146
 TEST(algorithm_test, clamp)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.ClampToInterval");
+    ::testing::Test::RecordProperty("given",
+                                    "a value and an interval [lo, hi], optionally with a custom comparison function");
+    ::testing::Test::RecordProperty("when",
+                                    "clamp is called with values inside, on the boundary of, below, and above the "
+                                    "interval, for floating-point, integral, and reference types");
+    ::testing::Test::RecordProperty(
+        "then", "clamp returns lo, hi, or the original value (or a reference to it) exactly as the interval requires");
+
     EXPECT_DOUBLE_EQ(5.0, score::cpp::clamp(0.0, 5.0, 5.0, std::greater<double>()));
 
     // floating point
@@ -109,6 +118,19 @@ TEST(algorithm_test, clamp)
 /// @requirement CB-#15969146
 TEST(algorithm_test, constexpr_clamp)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.ClampToInterval");
+    ::testing::Test::RecordProperty("given",
+                                    "a value and an interval [lo, hi], optionally with a custom comparison function, "
+                                    "all available as constant expressions");
+    ::testing::Test::RecordProperty("when",
+                                    "clamp is called in a constant expression context with values inside, on the "
+                                    "boundary of, below, and above the interval, for floating-point and integral "
+                                    "types");
+    ::testing::Test::RecordProperty(
+        "then",
+        "clamp returns lo, hi, or the original value exactly as the interval requires, and the result is usable in a "
+        "static_assert");
+
     static_assert(score::cpp::equals_bitexact(5.0 - score::cpp::clamp(0.0, 5.0, 5.0, std::greater<double>()), 0.0));
 
     // floating point

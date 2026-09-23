@@ -49,6 +49,11 @@ const auto map = std::array<std::tuple<color, int, std::string>, 5>{
 /// @requirement CB-#17899979
 TEST(multidirectional_map_to_test, having_one_entry_in_the_map)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.MultidirectionalMapLookup");
+    ::testing::Test::RecordProperty("given", "a multidirectional map where each key appears only once");
+    ::testing::Test::RecordProperty("when", "map_to looks up an existing key in either direction");
+    ::testing::Test::RecordProperty("then", "the associated value is returned");
+
     const auto result_string = score::cpp::map_to<std::string>(green, map);
     ASSERT_TRUE(result_string.has_value());
     EXPECT_EQ("green", result_string.value());
@@ -70,6 +75,12 @@ TEST(multidirectional_map_to_test, having_one_entry_in_the_map)
 /// @requirement CB-#17899979
 TEST(multidirectional_map_to_test, having_more_than_one_entry_in_the_map)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.MultidirectionalMapLookup");
+    ::testing::Test::RecordProperty("given",
+                                    "a multidirectional map containing duplicate keys mapped to different values");
+    ::testing::Test::RecordProperty("when", "map_to looks up the duplicated key");
+    ::testing::Test::RecordProperty("then", "the value of the first matching entry is returned");
+
     const auto result_int = score::cpp::map_to<int>(blue, map);
     ASSERT_TRUE(result_int.has_value());
     EXPECT_EQ(3, result_int.value());
@@ -81,6 +92,11 @@ TEST(multidirectional_map_to_test, having_more_than_one_entry_in_the_map)
 /// @requirement CB-#17899979
 TEST(multidirectional_map_to_test, having_no_entry_in_the_map)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.MultidirectionalMapLookup");
+    ::testing::Test::RecordProperty("given", "a multidirectional map");
+    ::testing::Test::RecordProperty("when", "map_to looks up a key that is not present in the map");
+    ::testing::Test::RecordProperty("then", "an empty optional is returned");
+
     EXPECT_FALSE(score::cpp::map_to<std::string>(purple, map).has_value());
     EXPECT_FALSE(score::cpp::map_to<color>(15, map).has_value());
     EXPECT_FALSE(score::cpp::map_to<int>(std::string{"orange"}, map).has_value());

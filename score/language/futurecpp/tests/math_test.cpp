@@ -3019,6 +3019,10 @@ constexpr std::int32_t compare_three_way(const T a, const T b)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_float_interpolation)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "floating-point endpoints and an interpolation factor in [0, 1]");
+    ::testing::Test::RecordProperty("when", "lerp is called");
+    ::testing::Test::RecordProperty("then", "the linearly interpolated value is returned");
     EXPECT_FLOAT_EQ(0.1F, score::cpp::lerp(0.0F, 1.0F, 0.1F));
     EXPECT_FLOAT_EQ(0.5F, score::cpp::lerp(0.0F, 1.0F, 0.5F));
     EXPECT_FLOAT_EQ(0.9F, score::cpp::lerp(0.0F, 1.0F, 0.9F));
@@ -3032,6 +3036,10 @@ TEST(math_test, lerp_float_interpolation)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_float_extrapolation)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "floating-point endpoints and a factor outside [0, 1]");
+    ::testing::Test::RecordProperty("when", "lerp is called");
+    ::testing::Test::RecordProperty("then", "the linearly extrapolated value is returned");
     EXPECT_FLOAT_EQ(2.0F, score::cpp::lerp(0.0F, 1.0F, 2.0F));
     EXPECT_FLOAT_EQ(-1.0F, score::cpp::lerp(0.0F, 1.0F, -1.0F));
     EXPECT_FLOAT_EQ(-1.0F, score::cpp::lerp(0.0F, 2.0F, -0.5F));
@@ -3045,6 +3053,10 @@ TEST(math_test, lerp_float_extrapolation)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_float_exactness)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "floating-point endpoints and an endpoint factor");
+    ::testing::Test::RecordProperty("when", "lerp is called with a factor of zero or one");
+    ::testing::Test::RecordProperty("then", "the corresponding endpoint is returned exactly");
     const float a{1.0F};
     const float b{2.0F};
     EXPECT_FLOAT_EQ(a, score::cpp::lerp(a, b, 0.0F));
@@ -3057,6 +3069,10 @@ TEST(math_test, lerp_float_exactness)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_float_monotonicity)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "ordered floating-point factors and endpoints");
+    ::testing::Test::RecordProperty("when", "lerp is evaluated for increasing and decreasing endpoints");
+    ::testing::Test::RecordProperty("then", "the result follows the endpoint ordering monotonically");
     const float a{1.0F};
     const float b{2.0F};
     const float t1{0.1F};
@@ -3075,6 +3091,10 @@ TEST(math_test, lerp_float_monotonicity)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_float_consistency)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "equal floating-point endpoints");
+    ::testing::Test::RecordProperty("when", "lerp is evaluated with arbitrary factors");
+    ::testing::Test::RecordProperty("then", "the common endpoint value is returned");
     const float a{1.0F};
     const float b{2.0F};
     const float t1{0.1F};
@@ -3089,6 +3109,10 @@ TEST(math_test, lerp_float_consistency)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_double_interpolation)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "double endpoints and an interpolation factor in [0, 1]");
+    ::testing::Test::RecordProperty("when", "lerp is called");
+    ::testing::Test::RecordProperty("then", "the linearly interpolated value is returned");
     EXPECT_DOUBLE_EQ(0.1, score::cpp::lerp(0.0, 1.0, 0.1));
     EXPECT_DOUBLE_EQ(0.5, score::cpp::lerp(0.0, 1.0, 0.5));
     EXPECT_DOUBLE_EQ(0.9, score::cpp::lerp(0.0, 1.0, 0.9));
@@ -3102,6 +3126,10 @@ TEST(math_test, lerp_double_interpolation)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_double_extrapolation)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "double endpoints and a factor outside [0, 1]");
+    ::testing::Test::RecordProperty("when", "lerp is called");
+    ::testing::Test::RecordProperty("then", "the linearly extrapolated value is returned");
     EXPECT_DOUBLE_EQ(2.0, score::cpp::lerp(0.0, 1.0, 2.0));
     EXPECT_DOUBLE_EQ(-1.0, score::cpp::lerp(0.0, 1.0, -1.0));
     EXPECT_DOUBLE_EQ(-1.0, score::cpp::lerp(0.0, 2.0, -0.5));
@@ -3115,6 +3143,10 @@ TEST(math_test, lerp_double_extrapolation)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_double_exactness)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "double endpoints and an endpoint factor");
+    ::testing::Test::RecordProperty("when", "lerp is called with a factor of zero or one");
+    ::testing::Test::RecordProperty("then", "the corresponding endpoint is returned exactly");
     const double a{1.0};
     const double b{2.0};
     EXPECT_DOUBLE_EQ(a, score::cpp::lerp(a, b, 0.0));
@@ -3127,6 +3159,10 @@ TEST(math_test, lerp_double_exactness)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_double_monotonicity)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "ordered double factors and endpoints");
+    ::testing::Test::RecordProperty("when", "lerp is evaluated for increasing and decreasing endpoints");
+    ::testing::Test::RecordProperty("then", "the result follows the endpoint ordering monotonically");
     const double a{1.0};
     const double b{2.0};
     const double t1{0.1};
@@ -3145,6 +3181,10 @@ TEST(math_test, lerp_double_monotonicity)
 /// @requirement CB-#18288545
 TEST(math_test, lerp_double_consistency)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.Lerp");
+    ::testing::Test::RecordProperty("given", "equal double endpoints");
+    ::testing::Test::RecordProperty("when", "lerp is evaluated with arbitrary factors");
+    ::testing::Test::RecordProperty("then", "the common endpoint value is returned");
     const double a{1.0};
     const double b{2.0};
     const double t1{0.1};

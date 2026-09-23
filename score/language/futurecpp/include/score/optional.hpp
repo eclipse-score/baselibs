@@ -167,6 +167,23 @@ public:
         }
     }
 
+    /// \brief Conversion from std::optional.
+    ///
+    /// \note non-standard. but simplifies transition to `std::optional`
+    /// \note These are templates on purpose: It excludes constructors from overload resolution for a braced-init-list
+    /// \{
+    // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversion from `std::optional`
+    template <typename U, typename = typename std::enable_if_t<std::is_same_v<U, T>>>
+    optional(const std::optional<U>& other) : base_{other}
+    {
+    }
+    // NOLINTNEXTLINE(google-explicit-constructor) allow implicit conversion from `std::optional`
+    template <typename U, typename = typename std::enable_if_t<std::is_same_v<U, T>>>
+    optional(std::optional<U>&& other) : base_{std::move(other)}
+    {
+    }
+    /// \}
+
     /// \brief Assign a null-value, same as calling \a reset().
     ///
     /// Reset the optional to an empty state.

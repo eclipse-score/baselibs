@@ -20,6 +20,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <cstdint>
+#include <cstdlib>
 #include <iostream>
 
 namespace score
@@ -61,6 +62,44 @@ class FcntlImplTest : public ::testing::Test
     {
         char string[] = "Test";
         write(pipe[1], string, (strlen(string) + 1));
+    }
+
+    /// Locks the test file via a second file descriptor. Only for use in a forked child process.
+    void LockInChildProcess(const Fcntl::Operation operation)
+    {
+        const auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+        EXPECT_NE(file_descriptor, -1);
+        score::utils::ScopeExit<> scoped_operation_open{[file_descriptor]() noexcept {
+            if (file_descriptor != -1)
+            {
+                ::close(file_descriptor);
+            }
+        }};
+        const bool locked{(file_descriptor != -1) &&
+                          score::os::Fcntl::instance().flock(file_descriptor, operation).has_value()};
+        EXPECT_TRUE(locked);
+        // Unblock the parent process even on failure, it would wait until the test times out otherwise.
+        Signal(parent_pipe);
+        if (locked)
+        {
+            // wait for parent process to finish.
+            Wait(child_pipe);
+        }
+    }
+
+    /// Ends the child process, reporting its assertion results via the exit code.
+    /// Returning instead would let the child repeat all remaining test cases, racing with the parent.
+    [[noreturn]] void TerminateChild() const
+    {
+        ::_exit(::testing::Test::HasFailure() ? EXIT_FAILURE : EXIT_SUCCESS);
+    }
+
+    void ExpectChildSucceeded()
+    {
+        int status{};
+        ASSERT_NE(wait(&status), -1);
+        EXPECT_TRUE(WIFEXITED(status));
+        EXPECT_EQ(WEXITSTATUS(status), EXIT_SUCCESS);
     }
 
   protected:
@@ -330,18 +369,8 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockTwice)
     ASSERT_NE(ret, -1) << "Fork failed";
     if (ret == 0)
     {
-        auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-        ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
-            ::close(file_descriptor);
-        }};
-        auto result = score::os::Fcntl::instance().flock(file_descriptor,
-                                                         Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
-        ASSERT_TRUE(result.has_value());
-        // unblock parent process.
-        Signal(parent_pipe);
-        // wait for parent process to finish.
-        Wait(child_pipe);
+        LockInChildProcess(Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
+        TerminateChild();
     }
     else
     {
@@ -353,7 +382,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockTwice)
         // unblock child process
         Signal(child_pipe);
         // wait for child process to exit. If parent process exits before child. Child process could become zombie.
-        wait(nullptr);
+        ExpectChildSucceeded();
     }
 }
 
@@ -369,18 +398,8 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockAndSharedLock)
     ASSERT_NE(ret, -1) << "Fork failed";
     if (ret == 0)
     {
-        auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-        ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
-            ::close(file_descriptor);
-        }};
-        auto result = score::os::Fcntl::instance().flock(file_descriptor,
-                                                         Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
-        ASSERT_TRUE(result.has_value());
-        // unblock parent process.
-        Signal(parent_pipe);
-        // wait for parent process to finish.
-        Wait(child_pipe);
+        LockInChildProcess(Fcntl::Operation::kLockExclusive | Fcntl::Operation::kLockNB);
+        TerminateChild();
     }
     else
     {
@@ -392,7 +411,7 @@ TEST_F(FcntlImplTest, FlockFailsWhenTryToObtainExclusiveLockAndSharedLock)
         // unblock child process
         Signal(child_pipe);
         // wait for child process to exit. If parent process exits before child. Child process could become zombie.
-        wait(nullptr);
+        ExpectChildSucceeded();
     }
 }
 
@@ -408,18 +427,8 @@ TEST_F(FcntlImplTest, FlockSucceedsWhenTryToObtainSharedLockTwice)
     ASSERT_NE(ret, -1) << "Fork failed";
     if (ret == 0)
     {
-        auto file_descriptor = ::open(filename_, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-        ASSERT_NE(file_descriptor, -1);
-        score::utils::ScopeExit<> scoped_operation_open{[&file_descriptor]() noexcept {
-            ::close(file_descriptor);
-        }};
-        auto result = score::os::Fcntl::instance().flock(file_descriptor,
-                                                         Fcntl::Operation::kLockShared | Fcntl::Operation::kLockNB);
-        ASSERT_TRUE(result.has_value());
-        // unblock parent process.
-        Signal(parent_pipe);
-        // wait for parent process to finish.
-        Wait(child_pipe);
+        LockInChildProcess(Fcntl::Operation::kLockShared | Fcntl::Operation::kLockNB);
+        TerminateChild();
     }
     else
     {
@@ -431,7 +440,7 @@ TEST_F(FcntlImplTest, FlockSucceedsWhenTryToObtainSharedLockTwice)
         // unblock child process
         Signal(child_pipe);
         // wait for child process to exit. If parent process exits before child. Child process could become zombie.
-        wait(nullptr);
+        ExpectChildSucceeded();
     }
 }
 
