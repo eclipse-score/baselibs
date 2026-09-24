@@ -26,8 +26,6 @@ cc_gtest_unit_test(
     name = "unit_tests",
     srcs = ["arguments_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     deps = [":arguments"],

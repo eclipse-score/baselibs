@@ -27,8 +27,6 @@ cc_test(
     name = "ipv4_address_test",
     srcs = ["ipv4_address_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["unit"],
@@ -42,8 +40,6 @@ cc_test(
     name = "udp_socket_test",
     srcs = ["udp_socket_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["unit"],
@@ -60,8 +56,6 @@ cc_test(
     name = "vlan_test",
     srcs = ["vlan_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["unit"],
