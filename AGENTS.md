@@ -17,7 +17,7 @@ docs/           # Feature-level and module-level Sphinx docs.
 .github/        # CI workflows, CODEOWNERS, tools
 ```
 
-**Key root files:** `MODULE.bazel` (Bazel module definition and deps), `.bazelrc` (entry point, imports `score.bazelrc/`), `score.bazelrc/` (platform, sanitizer and lint configs), `Cargo.toml` (Rust workspace).
+**Key root files:** `MODULE.bazel` (Bazel module definition and deps), `.bazelrc` (entry point, imports `score.bazelrc/`), `score.bazelrc/` (platform, sanitizer and lint configs), `REPO.bazel` (repository-wide toolchain features), `Cargo.toml` (Rust workspace).
 
 ## Core Libraries and Preferred Alternatives
 
