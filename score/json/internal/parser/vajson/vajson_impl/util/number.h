@@ -449,7 +449,12 @@ class JsonNumber final
     {
         Optional<TargetType> opt{};
 
-        if ((std::numeric_limits<TargetType>::max() >= number) && (std::numeric_limits<TargetType>::lowest() <= number))
+        // The comparison converts to the common type anyway; be explicit to avoid -Wdouble-promotion.
+        using CommonType = std::common_type_t<TargetType, SourceType>;
+        const CommonType value{static_cast<CommonType>(number)};
+
+        if ((static_cast<CommonType>(std::numeric_limits<TargetType>::max()) >= value) &&
+            (static_cast<CommonType>(std::numeric_limits<TargetType>::lowest()) <= value))
         {
             static_cast<void>(opt.emplace(TargetType(number)));
         }
