@@ -114,7 +114,7 @@ TEST(ExpectedTest, MoveAssignmentHasCorrectNoexcept)
     RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
     RecordProperty("Description",
                    "Check that expected's move assignment is noexcept only when both the value and error types "
-                   "are themselves nothrow move-assignable.");
+                   "are themselves nothrow move-assignable and nothrow move-constructible.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_move_assignable_v<expected<NothrowMoveOnlyType, NothrowMoveOnlyType>>);
@@ -377,7 +377,7 @@ TEST(ExpectedVoidTest, MoveAssignmentHasCorrectNoexcept)
     RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
     RecordProperty("Description",
                    "Check that expected<void, E>'s move assignment is noexcept only when E is itself nothrow "
-                   "move-assignable.");
+                   "move-assignable and nothrow move-constructible.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(std::is_nothrow_move_assignable_v<expected<void, NothrowMoveOnlyType>>);

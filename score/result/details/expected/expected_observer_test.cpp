@@ -337,7 +337,7 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromLValueReferenceWithoutValue)
     expected<ValueType, ErrorType> unit{unexpect};
 
     // Expect an exception if accessing the value
-    EXPECT_THROW(std::ignore = std::move(unit).value(), std::exception);
+    EXPECT_THROW(std::ignore = unit.value(), std::exception);
 }
 
 TEST(ExpectedTest, CanRetrieveValueFromConstLValueReference)
@@ -371,7 +371,7 @@ TEST(ExpectedTest, AbortsWhenRetrieveValueFromConstLValueReferenceWithoutValue)
     const expected<ValueType, ErrorType> unit{unexpect};
 
     // Expect an exception if accessing the value
-    EXPECT_THROW(std::ignore = std::move(unit).value(), std::exception);
+    EXPECT_THROW(std::ignore = unit.value(), std::exception);
 }
 
 TEST(ExpectedTest, CanRetrieveValueFromRValueReference)
@@ -511,7 +511,7 @@ TEST(ExpectedTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
     const expected<ValueType, ErrorType> unit{};
 
     // Expect an abort if accessing the error
-    EXPECT_EXIT(std::ignore = std::move(unit).error(), testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(std::ignore = unit.error(), testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(ExpectedTest, CanRetrieveErrorFromRValueReference)
@@ -915,7 +915,7 @@ TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromConstLValueReferenceWithValue)
     const expected<void, ErrorType> unit{};
 
     // Expect an abort if accessing the error
-    EXPECT_EXIT(std::ignore = std::move(unit).error(), testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(std::ignore = unit.error(), testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(ExpectedVoidTest, AbortsWhenRetrieveErrorFromRValueReferenceWithValue)
