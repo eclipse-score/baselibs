@@ -44,6 +44,23 @@ struct IntWrapper
 
 using LPtr2IntW = LockedPtr<IntWrapper, std::unique_lock<MockMutex>>;
 
+struct ConstLockedPtrFallback
+{
+    const LPtr2IntW& operator()() const;
+};
+
+template <typename Callable, typename = void>
+struct IsConstRvalueOrElseInvocable : std::false_type
+{
+};
+
+template <typename Callable>
+struct IsConstRvalueOrElseInvocable<
+    Callable,
+    std::void_t<decltype(std::declval<const LPtr2IntW&&>().or_else(std::declval<Callable>()))>> : std::true_type
+{
+};
+
 double ValueBy10(LPtr2IntW& lp)
 {
     return lp->value / 10.0;
@@ -719,6 +736,51 @@ TEST(LockedPtrTest, OrElseRvalueRefNonNull)
     EXPECT_FALSE(fallback_mut.is_locked()) << "the fallback mutex should NOT be locked as the callable isn't invoked";
 }
 
+TEST(LockedPtrTest, OrElseLvalueRefNonNull)
+{
+    IntWrapper obj{42};
+    MockMutex mut;
+    auto lp = LockedPtr(&obj, std::unique_lock{mut});
+
+    MockMutex fallback_mut;
+    auto fallback_lp = LPtr2IntW{nullptr, std::unique_lock{fallback_mut}};
+    bool callable_invoked = false;
+
+    auto& result = lp.or_else([&]() -> LPtr2IntW& {
+        callable_invoked = true;
+        return fallback_lp;
+    });
+
+    EXPECT_FALSE(callable_invoked) << "or_else callable should not be invoked when pointer is non-null";
+    EXPECT_EQ(&result, &lp) << "or_else should return a reference to the original LockedPtr";
+    EXPECT_EQ(result.get(), &obj) << "or_else should preserve the non-null pointer";
+    EXPECT_TRUE(mut.is_locked()) << "mut should remain locked by the original LockedPtr";
+    EXPECT_TRUE(fallback_mut.is_locked()) << "the unused fallback LockedPtr should retain its mutex";
+}
+
+TEST(LockedPtrTest, OrElseLvalueRefNull)
+{
+    IntWrapper* nullp = nullptr;
+    MockMutex mut;
+    auto lp = LockedPtr(nullp, std::unique_lock{mut});
+
+    IntWrapper fallback{99};
+    MockMutex fallback_mut;
+    auto fallback_lp = LPtr2IntW{&fallback, std::unique_lock{fallback_mut}};
+    bool callable_invoked = false;
+
+    auto& result = lp.or_else([&]() -> LPtr2IntW& {
+        callable_invoked = true;
+        return fallback_lp;
+    });
+
+    EXPECT_TRUE(callable_invoked) << "or_else callable should be invoked when pointer is null";
+    EXPECT_EQ(&result, &fallback_lp) << "or_else should return the fallback LockedPtr reference";
+    EXPECT_EQ(result.get(), &fallback) << "or_else should return the fallback pointer";
+    EXPECT_TRUE(mut.is_locked()) << "mut should remain locked by the original null LockedPtr";
+    EXPECT_TRUE(fallback_mut.is_locked()) << "the fallback LockedPtr should retain its mutex";
+}
+
 TEST(LockedPtrTest, OrElseRvalueRefNull)
 {
     IntWrapper* nullp = nullptr;
@@ -820,6 +882,11 @@ TEST(LockedPtrTest, OrElseConstLvalueRefNull)
     EXPECT_EQ(&result, &fallback_lp) << "or_else should return the fallback LockedPtr reference";
     EXPECT_TRUE(mut.is_locked()) << "mut should remain locked by the original null LockedPtr";
     EXPECT_TRUE(fallback_mut.is_locked()) << "the returned fallback LockedPtr should hold its mutex";
+}
+
+TEST(LockedPtrTest, OrElseConstRvalueRefIsDisabled)
+{
+    static_assert(!IsConstRvalueOrElseInvocable<ConstLockedPtrFallback>::value);
 }
 
 }  // namespace test
