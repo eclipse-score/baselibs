@@ -356,6 +356,63 @@ class LockedPtr
     }
 
     /**
+     * @brief Invokes a callable if the pointer is null, returning the callable's result.
+     *        If non-null, returns a mutable reference to this LockedPtr.
+     *        The callable must return a mutable LockedPtr reference.
+     * @tparam Func Callable type that takes no arguments and returns a LockedPtr&.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return *this if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&& f) & -> LockedPtr&
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Invokes a callable if the pointer is null, returning the callable's result.
+     *        If non-null, moves *this into the return value.
+     *        The callable must return a LockedPtr.
+     * @tparam Func Callable type that takes no arguments and returns a LockedPtr.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return std::move(*this) if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, LockedPtr>>>
+    [[nodiscard]] auto or_else(Func&& f) && -> LockedPtr
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return std::move(*this);
+    }
+
+    /**
+     * @brief Const lvalue overload. Invokes a callable if the pointer is null.
+     *        If non-null, returns a const reference to *this, otherwise returns the result of the callable.
+     *        The callable must return a const LockedPtr reference.
+     * @tparam Func Callable type that takes no arguments and returns const LockedPtr&.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return *this if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, const LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&& f) const& -> const LockedPtr&
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return *this;
+    }
+
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, const LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&&) const&& -> const LockedPtr& = delete;
+
+    /**
      * @brief Equality comparison with another LockedPtr.
      * @param other The LockedPtr to compare with.
      * @return true if both LockedPtrs point to the same object, false otherwise.
