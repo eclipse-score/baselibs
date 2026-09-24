@@ -28,22 +28,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: bl-x86_64-qnx
-            bazel-config: bl-x86_64-qnx
+          - name: score-qnx-x86_64
+            bazel-config: score-qnx-x86_64
             working-directory: "."
             bazel-target: "//score/..."
-            bazel-disk-cache: bl-x86_64-qnx
+            bazel-disk-cache: score-qnx-x86_64
             bazel-test-target: >-
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
-          - name: bl-aarch64-qnx
-            bazel-config: bl-aarch64-qnx
+          - name: score-qnx-aarch64
+            bazel-config: score-qnx-aarch64
             working-directory: "."
             bazel-target: "//score/..."
-            bazel-disk-cache: bl-aarch64-qnx
+            bazel-disk-cache: score-qnx-aarch64
             bazel-test-target: >-
               //score/...
               -//score/language/futurecpp/tests:memory_resource_test
