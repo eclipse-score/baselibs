@@ -22,8 +22,6 @@ cc_library(
         "sock_async.h",
     ],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],  # platform_only
@@ -42,8 +40,6 @@ cc_library(
     srcs = ["net_endpoint.cpp"],
     hdrs = ["net_endpoint.h"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],  # platform_only
@@ -61,8 +57,6 @@ cc_library(
         "sock_factory.h",
     ],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],  # platform_only
@@ -80,8 +74,6 @@ cc_library(
     srcs = ["sock_ctrl.cpp"],
     hdrs = ["sock_ctrl.h"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],  # platform_only
@@ -99,8 +91,6 @@ cc_library(
         "socket.h",
     ],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     deps = [
@@ -116,8 +106,6 @@ cc_test(
     name = "sock_async_test",
     srcs = ["sock_async_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     flaky = True,
@@ -137,8 +125,6 @@ cc_test(
     name = "socket_test",
     srcs = ["socket_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["unit"],

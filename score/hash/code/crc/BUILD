@@ -27,9 +27,7 @@ cc_library(
         "lookup_table.h",
     ],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],
@@ -44,9 +42,7 @@ cc_library(
         "crc32_mock.h",
     ],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -58,9 +54,7 @@ cc_test(
     name = "unit_test_ieee",
     srcs = ["crc32_ieee_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     visibility = ["@score_baselibs//score/hash:__pkg__"],
