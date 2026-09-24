@@ -2184,4 +2184,12 @@ TEST(make_optional, creates_const_correct_optional)
     }
 }
 
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#9372297
+TEST(optional, NonStandard_SimplifyTransitionToStdOptional)
+{
+    static_assert(std::is_convertible_v<std::optional<int>, score::cpp::optional<int>>);
+    static_assert(std::is_convertible_v<score::cpp::optional<int>, std::optional<int>>);
+}
+
 } // namespace

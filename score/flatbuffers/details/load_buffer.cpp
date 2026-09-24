@@ -26,13 +26,13 @@ score::os::Result<std::vector<uint8_t>> LoadBuffer(const score::filesystem::Path
     const auto read_result = detail::LoadBufferImpl(detail::OS{}, path, data);
     if (read_result.has_value())
     {
-        return std::move(data);
+        return data;
     }
     return score::cpp::make_unexpected(read_result.error());
 }
 
 score::os::Result<score::cpp::blank> LoadBuffer(const score::filesystem::Path& path,
-                                                std::pmr::vector<uint8_t>& data) noexcept
+                                                score::cpp::pmr::vector<uint8_t>& data) noexcept
 {
     return detail::LoadBufferImpl(detail::OS{}, path, data);
 }

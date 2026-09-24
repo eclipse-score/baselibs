@@ -12,6 +12,7 @@
  ********************************************************************************/
 
 #include <gtest/gtest.h>
+#include <score/vector.hpp>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <algorithm>
@@ -21,7 +22,6 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
-#include <memory_resource>
 #include <string>
 #include <system_error>
 #include <vector>
@@ -99,7 +99,7 @@ void ExpectVectorLoad(const score::filesystem::Path& path, const std::vector<uin
 void ExpectPmrVectorLoad(const score::filesystem::Path& path, const std::vector<uint8_t>& expected)
 {
     SCOPED_TRACE(path.CStr());
-    std::pmr::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = LoadBuffer(path, data);
     ASSERT_TRUE(result.has_value());
     const std::vector<uint8_t> data_copy(data.cbegin(), data.cend());
@@ -117,7 +117,7 @@ void ExpectVectorLoad(const score::filesystem::Path& path, const score::os::Erro
 void ExpectPmrVectorLoad(const score::filesystem::Path& path, const score::os::Error::Code& expected)
 {
     SCOPED_TRACE(path.CStr());
-    std::pmr::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = LoadBuffer(path, data);
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), expected);
@@ -268,9 +268,10 @@ TEST_F(LoadFlatbufferTest, PmrOverloadFailsOnResize)
     const auto path = WriteFile("1mb.bin", content);
 
     std::array<std::byte, kBufferSize> buffer{};  // not enough to fit 1mb file
-    std::pmr::monotonic_buffer_resource mbr{buffer.data(), buffer.size(), std::pmr::null_memory_resource()};
-    std::pmr::polymorphic_allocator<uint8_t> pmr_alloc{&mbr};
-    std::pmr::vector<uint8_t> data{pmr_alloc};
+    score::cpp::pmr::monotonic_buffer_resource mbr{
+        buffer.data(), buffer.size(), score::cpp::pmr::null_memory_resource()};
+    score::cpp::pmr::polymorphic_allocator<uint8_t> pmr_alloc{&mbr};
+    score::cpp::pmr::vector<uint8_t> data{pmr_alloc};
     const auto result = LoadBuffer(path, data);
     ASSERT_EQ(result.error(), score::os::Error::Code::kNotEnoughSpace);
     ASSERT_EQ(data.size(), 0U);
