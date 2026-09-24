@@ -13,7 +13,7 @@
 # LLVM source-based coverage (C++ + Rust) via @score_coverage (eclipse-score/coverage_tool).
 # Use with: bazel coverage --config=llvm_cov //score/... --build_tests_only
 #
-# Do NOT combine with --config=bl-x86_64-linux: it registers the GCC
+# Do NOT combine with --config=score-linux-x86_64: it registers the GCC
 # toolchain after this file's flags, the last --extra_toolchains wins
 # resolution, and GCC produces no LLVM covmap.
 

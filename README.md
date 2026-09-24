@@ -72,15 +72,15 @@ cd baselibs
 
 ```bash
 # Build all targets
-bazel build --config=bl-x86_64-linux //...
+bazel build --config=score-linux-x86_64 //...
 
 # Run all tests
-bazel test --config=bl-x86_64-linux //...
+bazel test --config=score-linux-x86_64 //...
 ```
 
 #### Building for AArch64 Linux
 
-Use the same command as for x86_64 Linux, but replace `--config=bl-x86_64-linux` with `--config=bl-aarch64-linux`.
+Use the same command as for x86_64 Linux, but replace `--config=score-linux-x86_64` with `--config=score-linux-aarch64`.
 
 > [!NOTE]
 > AArch64 Linux support is currently experimental. Some targets may not build successfully.
@@ -104,17 +104,17 @@ qemu-aarch64 --version
 Running tests:
 
 ```bash
-bazel test --config=bl-aarch64-linux //score/...
+bazel test --config=score-linux-aarch64 //score/...
 ```
 
 #### Building for x86_64 QNX 8.0 SDP
 
 ```bash
 # Build all targets
-bazel build --config=bl-x86_64-qnx -- //score/...
+bazel build --config=score-qnx-x86_64 -- //score/...
 
 # Run all tests
-bazel test --config=bl-x86_64-qnx //...
+bazel test --config=score-qnx-x86_64 //...
 ```
 
 > [!NOTE]
@@ -125,14 +125,14 @@ bazel test --config=bl-x86_64-qnx //...
 
 #### Building for AArch64 QNX 8.0 SDP
 
-Use the same command as for x86_64 QNX, but replace `--config=bl-x86_64-qnx` with `--config=bl-aarch64-qnx`.
+Use the same command as for x86_64 QNX, but replace `--config=score-qnx-x86_64` with `--config=score-qnx-aarch64`.
 
 ### Sanitizers
 
 To detect memory errors, undefined behavior, and memory leaks, run tests with sanitizers enabled:
 
 ```bash
-bazel test --config=bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...
+bazel test --config=score-linux-x86_64 --config=asan_ubsan_lsan --build_tests_only -- //score/...
 ```
 
 This configuration enables:

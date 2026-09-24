@@ -43,7 +43,7 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Bazel build with linters
         run: |
-          bazel build --config=bl-x86_64-linux --config=lint --keep_going \
+          bazel build --config=score-linux-x86_64 --config=lint --keep_going \
             --output_groups=+rules_lint_machine --@aspect_rules_lint//lint:fail_on_violation=false \
             -- //...
       - name: Collect human-readable lint reports
