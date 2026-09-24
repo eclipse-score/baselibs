@@ -21,6 +21,12 @@ namespace
 
 TEST(ExplicitImplicitConstructibleTest, ChecksWorkCorrectly)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that is_only_explicitly_constructible_v and is_implicitly_constructible_v correctly "
+                   "distinguish an explicit-only default constructor from an implicit one.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given an explicitly and an implicitly constructible type
     struct Explicit
     {
