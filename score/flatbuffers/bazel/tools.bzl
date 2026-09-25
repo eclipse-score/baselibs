@@ -477,29 +477,48 @@ def _generate_json_schema_impl(ctx):
 
     # Collect include directories from included .fbs files
     include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
-    include_dirs = {f.dirname: True for f in include_files}
 
     temp_subdir = "tmp_{}".format(ctx.label.name)
 
     # Step 0: Strip "= null;" optional-scalar defaults, which flatc --jsonschema does not
     # support (unlike --cpp and --binary). Optionality has no JSON-schema representation
-    # anyway (an omitted key is already "absent" in JSON), so this rewrites the schema fed
-    # to flatc --jsonschema only; the original schema_file (e.g. also used for --cpp and
-    # --binary generation elsewhere) is untouched.
-    sanitized_schema_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, schema_file.basename))
+    # anyway (an omitted key is already "absent" in JSON), so this rewrites the schemas fed
+    # to flatc --jsonschema only; the original schema_file/include_files (e.g. also used for
+    # --cpp and --binary generation elsewhere) are untouched.
+    #
+    # All schema inputs (the root schema plus every file supplied via the public `includes`
+    # attribute) may declare optional-scalar defaults, so each of them must be sanitized and
+    # staged into a common tree that mirrors their original include-path layout, and flatc
+    # must be invoked against that staged tree so `include` directives resolve correctly.
+    all_schema_files = [schema_file] + include_files
 
-    strip_args = ctx.actions.args()
-    strip_args.add("--input", schema_file.path)
-    strip_args.add("--output", sanitized_schema_file.path)
+    sanitized_schema_file = None
+    sanitized_include_dirs = {}
+    sanitized_inputs = []
 
-    ctx.actions.run(
-        inputs = [schema_file],
-        outputs = [sanitized_schema_file],
-        executable = strip_optional_scalar_defaults,
-        arguments = [strip_args],
-        mnemonic = "FlatbuffersStripOptionalScalarDefaults",
-        progress_message = "Stripping optional-scalar defaults from %s" % schema_file.short_path,
-    )
+    for f in all_schema_files:
+        staged_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, f.short_path))
+
+        strip_args = ctx.actions.args()
+        strip_args.add("--input", f.path)
+        strip_args.add("--output", staged_file.path)
+
+        ctx.actions.run(
+            inputs = [f],
+            outputs = [staged_file],
+            executable = strip_optional_scalar_defaults,
+            arguments = [strip_args],
+            mnemonic = "FlatbuffersStripOptionalScalarDefaults",
+            progress_message = "Stripping optional-scalar defaults from %s" % f.short_path,
+        )
+
+        sanitized_inputs.append(staged_file)
+        sanitized_include_dirs[staged_file.dirname] = True
+
+        if f == schema_file:
+            sanitized_schema_file = staged_file
+
+    include_dirs = sanitized_include_dirs
 
     # Step 1: Run flatc --jsonschema to generate raw schema
     default_name = schema_file.basename.replace(".fbs", ".schema.json")
@@ -529,7 +548,7 @@ def _generate_json_schema_impl(ctx):
     args.add(sanitized_schema_file.path)
 
     ctx.actions.run(
-        inputs = [sanitized_schema_file] + include_files,
+        inputs = sanitized_inputs,
         outputs = [raw_schema_file],
         executable = flatc,
         arguments = [args],
