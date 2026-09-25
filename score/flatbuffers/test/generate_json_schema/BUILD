@@ -46,6 +46,24 @@ build_test(
     ],
 )
 
+# flatc --jsonschema rejects "= null;" optional-scalar defaults outright, even though --cpp
+# and --binary support them. This proves generate_json_schema strips them internally so
+# callers can pass their schema straight through without a separate sed/genrule step first.
+generate_json_schema(
+    name = "gen_json_schema_optional_scalar",
+    output = "test_optional_scalar.schema.json",
+    schema = "//score/flatbuffers/test/testdata:test_optional_scalar.fbs",
+)
+
+build_test(
+    name = "gen_json_schema_optional_scalar_test",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
+    targets = [":gen_json_schema_optional_scalar"],
+)
+
 # End-to-end check of the whole flatc --jsonschema -> schema_generator.py pipeline against a
 # real .fbs fixture that uses every supported comment token (@title, @default, @min, @max,
 # @required, @shared) plus (required) fields, a deprecated field, an enum, a union, vectors,

@@ -472,13 +472,56 @@ def _generate_json_schema_impl(ctx):
     # Get the schema generator script
     schema_generator = ctx.executable._schema_generator
 
+    # Get the optional-scalar-default stripping script
+    strip_optional_scalar_defaults = ctx.executable._strip_optional_scalar_defaults
+
     # Collect include directories from included .fbs files
     include_files = ctx.files.includes + [ctx.file._buffer_version_fbs]
-    include_dirs = {f.dirname: True for f in include_files}
+
+    temp_subdir = "tmp_{}".format(ctx.label.name)
+
+    # Step 0: Strip "= null;" optional-scalar defaults, which flatc --jsonschema does not
+    # support (unlike --cpp and --binary). Optionality has no JSON-schema representation
+    # anyway (an omitted key is already "absent" in JSON), so this rewrites the schemas fed
+    # to flatc --jsonschema only; the original schema_file/include_files (e.g. also used for
+    # --cpp and --binary generation elsewhere) are untouched.
+    #
+    # All schema inputs (the root schema plus every file supplied via the public `includes`
+    # attribute) may declare optional-scalar defaults, so each of them must be sanitized and
+    # staged into a common tree that mirrors their original include-path layout, and flatc
+    # must be invoked against that staged tree so `include` directives resolve correctly.
+    all_schema_files = [schema_file] + include_files
+
+    sanitized_schema_file = None
+    sanitized_include_dirs = {}
+    sanitized_inputs = []
+
+    for f in all_schema_files:
+        staged_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, f.short_path))
+
+        strip_args = ctx.actions.args()
+        strip_args.add("--input", f.path)
+        strip_args.add("--output", staged_file.path)
+
+        ctx.actions.run(
+            inputs = [f],
+            outputs = [staged_file],
+            executable = strip_optional_scalar_defaults,
+            arguments = [strip_args],
+            mnemonic = "FlatbuffersStripOptionalScalarDefaults",
+            progress_message = "Stripping optional-scalar defaults from %s" % f.short_path,
+        )
+
+        sanitized_inputs.append(staged_file)
+        sanitized_include_dirs[staged_file.dirname] = True
+
+        if f == schema_file:
+            sanitized_schema_file = staged_file
+
+    include_dirs = sanitized_include_dirs
 
     # Step 1: Run flatc --jsonschema to generate raw schema
     default_name = schema_file.basename.replace(".fbs", ".schema.json")
-    temp_subdir = "tmp_{}".format(ctx.label.name)
     raw_schema_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, default_name))
 
     # Options for flatc --jsonschema: Generate a JSON Schema from a FlatBuffer schema.
@@ -502,10 +545,10 @@ def _generate_json_schema_impl(ctx):
     for inc_dir in include_dirs:
         args.add("-I", inc_dir)
     args.add("-o", raw_schema_file.dirname)
-    args.add(schema_file.path)
+    args.add(sanitized_schema_file.path)
 
     ctx.actions.run(
-        inputs = [schema_file] + include_files,
+        inputs = sanitized_inputs,
         outputs = [raw_schema_file],
         executable = flatc,
         arguments = [args],
@@ -561,6 +604,12 @@ generate_json_schema = rule(
             cfg = "exec",
             doc = "The schema_generator script for post-processing JSON schema output",
         ),
+        "_strip_optional_scalar_defaults": attr.label(
+            default = "//score/flatbuffers/bazel:strip_optional_scalar_defaults",
+            executable = True,
+            cfg = "exec",
+            doc = "Script that strips optional-scalar \"= null;\" defaults, which flatc --jsonschema does not support.",
+        ),
         "_buffer_version_fbs": attr.label(
             default = "@score_baselibs//score/flatbuffers/common:buffer_version.fbs",
             allow_single_file = [".fbs"],
@@ -569,8 +618,12 @@ generate_json_schema = rule(
     },
     doc = """Generates a rich JSON schema from a FlatBuffer schema.
 
-    This rule runs flatc --jsonschema and post-processes the output to convert it to
+    This rule strips optional-scalar "= null;" defaults (unsupported by flatc
+    --jsonschema, though supported by --cpp/--binary) from a copy of the schema, runs
+    flatc --jsonschema on that copy, and post-processes the output to convert it to
     draft-2020-12 format with extracted metadata (@title, @default, @min, @max, etc.).
+    The schema label passed in is used as-is elsewhere (e.g. for --cpp/--binary
+    generation) and does not need pre-stripping by the caller.
 
     @score_baselibs//score/flatbuffers/common:buffer_version.fbs is always included
     automatically. The schema must include buffer_version.fbs manually if it uses
