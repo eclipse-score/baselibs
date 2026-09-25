@@ -35,7 +35,7 @@ class Ifaddrs : public ObjectSeam<Ifaddrs>
 
     virtual void freeifaddrs(ifaddrs* ifa) const noexcept = 0;
 
-    virtual ~Ifaddrs() = default;
+    ~Ifaddrs() override = default;
     Ifaddrs() = default;
     Ifaddrs(const Ifaddrs& other) = delete;
     Ifaddrs(Ifaddrs&& other) = delete;

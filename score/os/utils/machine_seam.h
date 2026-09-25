@@ -27,7 +27,7 @@ class Machine : public ObjectSeam<Machine>
 
     virtual bool is_qemu() const noexcept = 0;
 
-    virtual ~Machine() = default;
+    ~Machine() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Machine(const Machine&) = delete;
     Machine& operator=(const Machine&) = delete;

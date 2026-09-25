@@ -225,7 +225,7 @@ class Spawn : public ObjectSeam<Spawn>
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif  //__QNX__
 
-    virtual ~Spawn() = default;
+    ~Spawn() override = default;
 
   protected:
     Spawn() = default;

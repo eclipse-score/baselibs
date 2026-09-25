@@ -26,7 +26,7 @@ class SocketUdp final : public SocketAsync, public std::enable_shared_from_this<
   public:
     SocketUdp(const std::shared_ptr<SocketCtrl> sock_ctrl, const Endpoint endpoint);
     std::int32_t GetSockFD() const noexcept override;
-    ~SocketUdp();
+    ~SocketUdp() override;
     std::int32_t ReadAsync(std::shared_ptr<std::vector<score::cpp::span<std::uint8_t>>> data,
                            AsyncCallback u_cb) noexcept override;
     std::int32_t WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data,

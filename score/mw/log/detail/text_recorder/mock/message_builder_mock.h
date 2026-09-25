@@ -33,7 +33,7 @@ class MessageBuilderMock : public IMessageBuilder
 {
   public:
     MessageBuilderMock() = default;
-    ~MessageBuilderMock() = default;
+    ~MessageBuilderMock() override = default;
 
     MOCK_METHOD((score::cpp::optional<score::cpp::span<const std::uint8_t>>), GetNextSpan, (), (noexcept, override));
     MOCK_METHOD(void, SetNextMessage, (LogRecord&), (noexcept, override));

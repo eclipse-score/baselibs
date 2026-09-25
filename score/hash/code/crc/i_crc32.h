@@ -28,7 +28,7 @@ class ICrc32HashCalculator : public IHashCalculator
 {
   public:
     ICrc32HashCalculator() noexcept = default;
-    virtual ~ICrc32HashCalculator() noexcept = default;
+    ~ICrc32HashCalculator() noexcept override = default;
     ICrc32HashCalculator(const ICrc32HashCalculator&) noexcept = delete;
     ICrc32HashCalculator(ICrc32HashCalculator&&) noexcept = delete;
     ICrc32HashCalculator& operator=(const ICrc32HashCalculator&) noexcept = delete;

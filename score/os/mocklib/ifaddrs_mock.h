@@ -29,7 +29,7 @@ class IfaddrsMock : public Ifaddrs
   public:
     IfaddrsMock();
 
-    ~IfaddrsMock();
+    ~IfaddrsMock() override;
 
     MOCK_METHOD((score::cpp::expected<ifaddrs*, Error>), getifaddrs, (), (const, noexcept, override));
 

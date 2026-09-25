@@ -58,7 +58,7 @@ class Grp : public ObjectSeam<Grp>
     /// \return A structure holding the name and id of the group or an error
     virtual score::cpp::expected<GroupBuffer, Error> getgrnam(const std::string& group) const noexcept = 0;
 
-    virtual ~Grp() = default;
+    ~Grp() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Grp(const Grp&) = delete;
     Grp& operator=(const Grp&) = delete;

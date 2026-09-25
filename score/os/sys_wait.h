@@ -36,7 +36,7 @@ class SysWait : public ObjectSeam<SysWait>
                                                        std::int32_t* const stat_loc,
                                                        const std::int32_t options) const noexcept = 0;
 
-    virtual ~SysWait() = default;
+    ~SysWait() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     SysWait(const SysWait&) = delete;
     SysWait& operator=(const SysWait&) = delete;

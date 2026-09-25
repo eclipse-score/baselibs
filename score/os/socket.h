@@ -151,7 +151,7 @@ class Socket : public ObjectSeam<Socket>
                                                                const std::uint32_t message_array_length,
                                                                const MessageFlag flags) const noexcept = 0;
 
-    virtual ~Socket() = default;
+    ~Socket() override = default;
 
   protected:
     Socket() = default;

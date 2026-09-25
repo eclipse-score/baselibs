@@ -103,7 +103,7 @@ class Mman : public ObjectSeam<Mman>
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif
 
-    virtual ~Mman() = default;
+    ~Mman() override = default;
     // Below five member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Mman(const Mman&) = delete;
     Mman& operator=(const Mman&) = delete;

@@ -128,7 +128,7 @@ class Unistd : public ObjectSeam<Unistd>
                                                                     size_t bufsize,
                                                                     struct passwd** result) const noexcept = 0;
 
-    virtual ~Unistd() = default;
+    ~Unistd() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Unistd(const Unistd&) = delete;
     Unistd& operator=(const Unistd&) = delete;
