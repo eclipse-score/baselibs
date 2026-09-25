@@ -34,7 +34,7 @@ class Statvfs : public ObjectSeam<Statvfs>
     static Statvfs& instance() noexcept;
     virtual score::cpp::expected_blank<Error> statvfs(const char* const path,
                                                       struct statvfs* const buf) const noexcept = 0;
-    virtual ~Statvfs() = default;
+    ~Statvfs() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Statvfs(const Statvfs&) = delete;
     Statvfs& operator=(const Statvfs&) = delete;

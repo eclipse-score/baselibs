@@ -32,7 +32,7 @@ class Libgen : public ObjectSeam<Libgen>
     virtual char* base_name(char* const path) const noexcept = 0;
     virtual char* dirname(char* const path) const noexcept = 0;
 
-    virtual ~Libgen() = default;
+    ~Libgen() override = default;
     // Below five member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Libgen(const Libgen&) = delete;
     Libgen& operator=(const Libgen&) = delete;

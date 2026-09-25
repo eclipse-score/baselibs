@@ -48,7 +48,7 @@ class Netdb : public ObjectSeam<Netdb>
                                                           const socklen_t servlen,
                                                           const NameFlag flags) const noexcept = 0;
 
-    virtual ~Netdb() = default;
+    ~Netdb() override = default;
 
   protected:
     Netdb() = default;

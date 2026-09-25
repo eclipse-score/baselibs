@@ -35,7 +35,7 @@ class String : public ObjectSeam<String>
 
     virtual void* memset(void* const dest, const std::int32_t c, const std::size_t n) const noexcept = 0;
 
-    virtual ~String() = default;
+    ~String() override = default;
 
   protected:
     String() = default;

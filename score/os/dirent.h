@@ -44,7 +44,7 @@ class Dirent : public ObjectSeam<Dirent>
         std::int32_t (*const compar)(const struct dirent**, const struct dirent**)) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> closedir(DIR* const dirp) const noexcept = 0;
 
-    virtual ~Dirent() = default;
+    ~Dirent() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Dirent(const Dirent&) = delete;
     Dirent& operator=(const Dirent&) = delete;

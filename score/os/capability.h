@@ -115,7 +115,7 @@ class ProcessCapabilities : public ObjectSeam<ProcessCapabilities>
 
     score::cpp::expected_blank<Error> ReduceProcessCapabilitiesTo(const std::vector<Capability>& capabilities) noexcept;
 
-    virtual ~ProcessCapabilities() = default;
+    ~ProcessCapabilities() override = default;
 
   protected:
     ProcessCapabilities() = default;

@@ -35,7 +35,7 @@ class NetIf : public ObjectSeam<NetIf>
 
     virtual score::cpp::expected<std::uint32_t, Error> if_nametoindex(const std::string& ifname) const noexcept = 0;
 
-    virtual ~NetIf() = default;
+    ~NetIf() override = default;
 
   protected:
     NetIf() = default;

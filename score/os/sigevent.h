@@ -38,7 +38,7 @@ class SigEvent : public ObjectSeam<SigEvent>
     };
 
     SigEvent() = default;
-    virtual ~SigEvent() = default;
+    ~SigEvent() override = default;
     SigEvent(const SigEvent&) = delete;
     SigEvent& operator=(const SigEvent&) = delete;
     SigEvent(SigEvent&&) = delete;
