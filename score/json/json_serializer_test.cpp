@@ -69,7 +69,7 @@ struct CustomSerializable
 namespace score::json::test
 {
 
-// This one cannot be inside the unnamed namespace as we do not use the STRUCT_VISITABLE facility. This, however,
+// This one cannot be inside the unnamed namespace as we do not use the SCORE_STRUCT_VISITABLE facility. This, however,
 // makes clang-tidy complain since we now have unused declarations. Outside the unnamed namespace, the compiler cannot
 // determine whether they're used and this silences clang-tidy.
 struct VisitableTypeWithCustomSerialization
@@ -705,7 +705,7 @@ TEST(JsonSerializerTest, UseCustomSerializationOnVisitableStruct)
     RecordProperty("Verifies", "JsonSerializer");
     RecordProperty("Description",
                    "This test verifies that the custom serialization function of a struct is used, even if the struct "
-                   "is visitable using STRUCT_VISITABLE.");
+                   "is visitable using SCORE_STRUCT_VISITABLE.");
     RecordProperty("ASIL", "QM");
     RecordProperty("Priority", "2");
     RecordProperty("DerivationTechnique", "requirements-analysis");  // architecture
