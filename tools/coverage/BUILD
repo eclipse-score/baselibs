@@ -53,6 +53,7 @@ score_coverage_scope(
         "//score/json:interface",
         "//score/json:json_serializer",
         "//score/json/internal/parser/vajson:vajson_parser",
+        "//score/json/internal/writer/vajson:vajson_backend",
         "//score/language/rust/memres",
         "//score/language/rust/stop_token",
         "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
