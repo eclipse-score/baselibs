@@ -60,9 +60,7 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -95,9 +93,7 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [

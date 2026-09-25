@@ -13,7 +13,7 @@
 # LLVM source-based coverage (C++ + Rust) via @score_coverage (eclipse-score/coverage_tool).
 # Use with: bazel coverage --config=llvm_cov //score/... --build_tests_only
 #
-# Do NOT combine with --config=bl-x86_64-linux: it registers the GCC
+# Do NOT combine with --config=score-linux-x86_64: it registers the GCC
 # toolchain after this file's flags, the last --extra_toolchains wins
 # resolution, and GCC produces no LLVM covmap.
 
@@ -43,8 +43,13 @@ coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Cllvm-args=-run
 coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Clink-dead-code
 coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Zcoverage-options=branch
 
-# Clang 22 warns where GCC 12 does not (e.g. -Wunused-variable in tests that
-# deliberately keep a copy alive); do not turn those into errors in the
-# coverage-only build. --host_features covers exec-config builds of scope deps.
+# The @score_cpp_policies warning flags are GCC-only and Clang 22 warns where GCC 12 does not,
+# so drop warning enforcement from the coverage-only build. --host_features covers exec-config
+# builds of scope deps.
+coverage:llvm_cov --features=-strict_warnings --features=-warnings_as_errors
+coverage:llvm_cov --host_features=-strict_warnings --host_features=-warnings_as_errors
+
+# score/mw still requests treat_warnings_as_errors, the -Werror feature of the rules_cc unix
+# toolchain config that backs the Clang toolchain of this config.
 coverage:llvm_cov --features=-treat_warnings_as_errors
 coverage:llvm_cov --host_features=-treat_warnings_as_errors

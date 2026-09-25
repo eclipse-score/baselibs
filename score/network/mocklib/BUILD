@@ -19,8 +19,6 @@ cc_library(
     srcs = ["udp_socket_mock.cpp"],
     hdrs = ["udp_socket_mock.h"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],

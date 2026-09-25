@@ -20,9 +20,7 @@ cc_test(
     srcs = ["bit_manipulation_test.cpp"],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -36,9 +34,7 @@ cc_test(
     srcs = ["bitmask_operators_test.cpp"],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [

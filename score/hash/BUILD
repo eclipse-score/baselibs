@@ -15,9 +15,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 COMPILER_WARNING_FEATURES = [
-    "treat_warnings_as_errors",
     "strict_warnings",
-    "additional_warnings",
 ]
 
 cc_library(

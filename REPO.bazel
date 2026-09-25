@@ -11,6 +11,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-COMPILER_WARNING_FEATURES = [
-    "strict_warnings",
-]
+# The injected flags come after a target's own copts, so enabling the warning levels globally
+# would defeat the `-w` and `-Wno-error` opt-outs of third-party code. Only levels belong here;
+# a REPO.bazel travels with the sources, so `warnings_as_errors` stays in .bazelrc.
+repo(features = [
+    "minimal_warnings",
+])

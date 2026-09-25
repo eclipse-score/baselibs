@@ -20,9 +20,9 @@ local_path_override(
 bazel_dep(name = "rules_cc", version = "0.2.17")
 
 # C++ Toolchain configuration
-bazel_dep(name = "score_bazel_platforms", version = "1.0.0")
+bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.3", dev_dependency = True)
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
