@@ -34,6 +34,24 @@ py_binary(
 )
 
 py_library(
+    name = "strip_optional_scalar_defaults_lib",
+    srcs = ["strip_optional_scalar_defaults.py"],
+    imports = ["."],
+    tags = ["manual"],
+)
+
+py_test(
+    name = "strip_optional_scalar_defaults_test",
+    size = "small",
+    srcs = ["strip_optional_scalar_defaults_test.py"],
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    deps = [":strip_optional_scalar_defaults_lib"],
+)
+
+py_library(
     name = "schema_generator_lib",
     srcs = ["schema_generator.py"],
     # Put this package on sys.path so the test can "import schema_generator" directly,
