@@ -64,6 +64,36 @@ build_test(
     targets = [":gen_json_schema_optional_scalar"],
 )
 
+# Keep the included fixture in this BUILD file so the include-path regression is tested
+# without relying on the optional scalar in the root schema alone.
+genrule(
+    name = "optional_scalar_included_fixture",
+    outs = ["test_optional_scalar_included.fbs"],
+    cmd = "printf 'namespace OptionalScalarInclude;\ntable Included { value:int = null; }\n' > $@",
+)
+
+genrule(
+    name = "optional_scalar_include_root_fixture",
+    outs = ["test_optional_scalar_include_root.fbs"],
+    cmd = "printf 'include \"test_optional_scalar_included.fbs\";\nnamespace OptionalScalarInclude;\ntable Root { included:Included; }\nroot_type Root;\n' > $@",
+)
+
+generate_json_schema(
+    name = "gen_json_schema_included_optional_scalar",
+    includes = [":test_optional_scalar_included.fbs"],
+    output = "test_included_optional_scalar.schema.json",
+    schema = ":test_optional_scalar_include_root.fbs",
+)
+
+build_test(
+    name = "gen_json_schema_included_optional_scalar_test",
+    target_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],  # build_test doesn't work under QEMU
+    targets = [":gen_json_schema_included_optional_scalar"],
+)
+
 # End-to-end check of the whole flatc --jsonschema -> schema_generator.py pipeline against a
 # real .fbs fixture that uses every supported comment token (@title, @default, @min, @max,
 # @required, @shared) plus (required) fields, a deprecated field, an enum, a union, vectors,

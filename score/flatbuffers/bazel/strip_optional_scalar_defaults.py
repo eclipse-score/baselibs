@@ -37,6 +37,12 @@ import re
 # string literals.
 _NULL_DEFAULT = re.compile(r"\s*=\s*null\b")
 
+# The two halves of a default whose tokens are separated by a comment, e.g.
+# "a:uint32 = /* explanation */ null;": a code chunk ending in "=" and the next code
+# chunk starting with "null".
+_TRAILING_EQ = re.compile(r"\s*=\s*\Z")
+_LEADING_NULL = re.compile(r"\s*null\b")
+
 # The next lexical element that has to be skipped over: a line comment (which "///" doc
 # comments are a special case of), a block comment, or a string literal.
 _SKIPPED = re.compile(r'//|/\*|"')
@@ -57,18 +63,42 @@ def strip_null_defaults(content):
     "remove null default" regex inside comments or strings, only in actual schema code,
     avoiding false-positive matches like a "= null" appearing in a doc comment.
     """
-    out = []
+    parts = []  # (is_code, text)
     pos = 0
     while True:
         skipped = _SKIPPED.search(content, pos)
         code_end = skipped.start() if skipped else len(content)
-        out.append(_NULL_DEFAULT.sub("", content[pos:code_end]))
+        parts.append((True, _NULL_DEFAULT.sub("", content[pos:code_end])))
         if not skipped:
-            return "".join(out)
+            break
         terminator = _SKIPPED_END[skipped.group()].search(content, skipped.end())
         end = terminator.end() if terminator else len(content)
-        out.append(content[skipped.start() : end])
+        parts.append((skipped.group() == '"', content[skipped.start() : end]))
         pos = end
+
+    # Second pass: a "= null" default whose tokens are split by one or more (line or
+    # block) comments. The comment text itself is preserved.
+    for i, (is_code, text) in enumerate(parts):
+        if not is_code:
+            continue
+        equals = _TRAILING_EQ.search(text)
+        if not equals:
+            continue
+        j = i + 1
+        # Skip over comments and the whitespace-only code between them.
+        while j < len(parts) and (
+            (not parts[j][0] and not parts[j][1].startswith('"'))
+            or (parts[j][0] and not parts[j][1].strip())
+        ):
+            j += 1
+        if j >= len(parts) or not parts[j][0]:
+            continue
+        null = _LEADING_NULL.match(parts[j][1])
+        if null:
+            parts[i] = (True, text[: equals.start()])
+            parts[j] = (True, parts[j][1][null.end() :])
+
+    return "".join(text for _, text in parts)
 
 
 def main():
