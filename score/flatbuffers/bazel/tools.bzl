@@ -13,6 +13,18 @@
 
 """Starlark rules for configuration file processing using flatc from FlatBuffers."""
 
+def _staged_relative_path(short_path):
+    """Rewrites a File.short_path for use as a declare_file path under a staging subdir.
+
+    Files from external repositories have a short_path starting with "../<repo>/...",
+    which declare_file rejects because it contains "..". Move the "../" prefix into a
+    literal "external/" directory so the relative layout is preserved without escaping
+    the package.
+    """
+    if short_path.startswith("../"):
+        return "external/" + short_path[len("../"):]
+    return short_path
+
 def _serialize_buffer_impl(ctx):
     """Implementation of the serialize_buffer rule."""
 
@@ -497,7 +509,10 @@ def _generate_json_schema_impl(ctx):
     sanitized_inputs = []
 
     for f in all_schema_files:
-        staged_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, f.short_path))
+        staged_short_path = f.short_path
+        if staged_short_path.startswith("../"):
+            staged_short_path = "external/{}".format(staged_short_path[3:])
+        staged_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, staged_short_path))
 
         strip_args = ctx.actions.args()
         strip_args.add("--input", f.path)
@@ -517,7 +532,6 @@ def _generate_json_schema_impl(ctx):
 
         if f == schema_file:
             sanitized_schema_file = staged_file
-
     include_dirs = sanitized_include_dirs
 
     # Step 1: Run flatc --jsonschema to generate raw schema
