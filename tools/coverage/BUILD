@@ -148,4 +148,7 @@ score_coverage_reporter(
     backend = "gcov",
     coverage_scope = ":coverage_scope",
     gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
+    # Manual: depends on the QNX SDP package, which a wildcard build on a
+    # Linux host without QNX credentials must not try to fetch.
+    tags = ["manual"],
 )
