@@ -2,12 +2,12 @@
   "schema_version": "2",
   "generated_by": "sphinx_build",
   "overall_metrics": {
-    "total": 200,
+    "total": 203,
     "with_code_link": 0,
-    "with_test_link": 40,
+    "with_test_link": 42,
     "fully_linked": 0,
     "with_code_link_pct": 0.0,
-    "with_test_link_pct": 20.0,
+    "with_test_link_pct": 20.689655172413794,
     "fully_linked_pct": 0.0
   },
   "metrics_by_type": {
@@ -21,12 +21,12 @@
       "fully_linked_pct": 0.0
     },
     "comp_req": {
-      "total": 157,
+      "total": 160,
       "with_code_link": 0,
-      "with_test_link": 40,
+      "with_test_link": 42,
       "fully_linked": 0,
       "with_code_link_pct": 0.0,
-      "with_test_link_pct": 25.477707006369428,
+      "with_test_link_pct": 26.25,
       "fully_linked_pct": 0.0
     },
     "tool_req": {
@@ -41,8 +41,8 @@
   },
   "tests": {
     "total": 24513,
-    "linked_to_requirements": 978,
-    "linked_to_requirements_pct": 3.9897197405458327,
+    "linked_to_requirements": 980,
+    "linked_to_requirements_pct": 3.9978786766205685,
     "broken_references": []
   }
 }

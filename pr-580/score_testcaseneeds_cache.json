@@ -291308,7 +291308,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291322,7 +291322,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291336,7 +291336,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291350,7 +291350,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291364,7 +291364,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291378,7 +291378,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291392,7 +291392,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291406,7 +291406,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291420,7 +291420,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291434,7 +291434,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291448,7 +291448,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291462,7 +291462,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291476,7 +291476,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291490,7 +291490,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291504,7 +291504,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291518,7 +291518,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291532,7 +291532,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291546,7 +291546,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291560,7 +291560,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291574,7 +291574,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291588,7 +291588,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291602,7 +291602,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291616,7 +291616,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291630,7 +291630,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291644,7 +291644,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291658,7 +291658,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291672,7 +291672,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291686,7 +291686,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291700,7 +291700,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291714,7 +291714,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291728,7 +291728,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
     "FullyVerifies": null
   },
   {
@@ -291742,7 +291742,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291756,7 +291756,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291770,7 +291770,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291784,7 +291784,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291798,7 +291798,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291812,7 +291812,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291826,7 +291826,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291840,7 +291840,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__memory__string_utils",
+    "PartiallyVerifies": "comp_req__string_manipulation__lazy_split",
     "FullyVerifies": null
   },
   {
@@ -291848,27 +291848,27 @@
     "file": "score/string_manipulation/arguments/arguments_test.cpp",
     "line": "18",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__string_manipulation__args_conv",
     "FullyVerifies": null
   },
   {
     "name": "GetArguments__ReturnsVectorWithProvidedArguments",
     "file": "score/string_manipulation/arguments/arguments_test.cpp",
-    "line": "26",
+    "line": "30",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__string_manipulation__args_conv",
     "FullyVerifies": null
   },
   {
