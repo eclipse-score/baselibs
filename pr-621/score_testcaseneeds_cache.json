@@ -318920,6 +318920,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "score/flatbuffers/test/generate_json_schema/gen_json_schema_included_optional_scalar_test.sh",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "score/flatbuffers/test/generate_json_schema/gen_json_schema_test.sh",
     "file": null,
     "line": null,
