@@ -88,6 +88,10 @@ docs(
             "mount_at": "baselibs/components/result",
         },
         {
+            "bundle": "//score/analysis:docs",
+            "mount_at": "baselibs/components/analysis",
+        },
+        {
             "bundle": "//score/analysis/tracing:docs",
             "mount_at": "baselibs/components/analysis/tracing",
         },

@@ -12,22 +12,8 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-Tracing
-#######
-
-.. document:: Analysis Tracing
-   :id: doc__analysis_tracing
-   :status: draft
-   :version: 1
-   :safety: ASIL_B
-   :security: YES
-   :realizes: wp__cmpt_request[version==1]
+analysis
+########
 
 .. toctree::
    :hidden:
-
-   requirements/index.rst
-   architecture/index.rst
-
-The Analysis Tracing component provides tracing support utilities that protect
-wrapped data from undetected memory corruption.
