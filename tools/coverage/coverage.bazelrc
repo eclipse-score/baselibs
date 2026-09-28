@@ -48,3 +48,22 @@ coverage:llvm_cov --@rules_rust//rust/settings:extra_rustc_flag=-Zcoverage-optio
 # coverage-only build. --host_features covers exec-config builds of scope deps.
 coverage:llvm_cov --features=-treat_warnings_as_errors
 coverage:llvm_cov --host_features=-treat_warnings_as_errors
+
+# ---------------------------------------------------------------------------
+# QNX on-target coverage (gcov backend of score_coverage, C++ only).
+# Use with: bazel coverage --config=qnx_cov //score/... --build_tests_only
+#           bazel run @score_coverage//:generate_coverage_html -- --platform qnx ...
+# The tests run in QEMU through score_qnx_unit_tests (run_under_qnx), which
+# brings the .gcda counters back; Bazel's own per-test collector turns them
+# into LCOV; score_coverage's gcov reporter produces the report. Rust sources
+# are listed as not-instrumented here and measured by the Linux run.
+# ---------------------------------------------------------------------------
+coverage:qnx_cov --config=bl-x86_64-qnx
+coverage:qnx_cov --run_under=@score_qnx_unit_tests//src:run_under_qnx
+coverage:qnx_cov --test_lang_filters=cc
+coverage:qnx_cov --nocache_test_results
+coverage:qnx_cov --combined_report=lcov
+coverage:qnx_cov --dynamic_mode=off
+coverage:qnx_cov --instrument_test_targets
+coverage:qnx_cov --coverage_output_generator=@bazel_tools//tools/test:lcov_merger
+coverage:qnx_cov --coverage_report_generator=//tools/coverage:gcov_reporter_wrapper

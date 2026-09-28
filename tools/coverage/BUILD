@@ -139,3 +139,13 @@ score_coverage_reporter(
     llvm_profdata = "@llvm_toolchain//:llvm-profdata",
     visibility = ["//visibility:public"],
 )
+
+# QNX on-target coverage: QCC is GCC-based, so the counters are gcov's.
+# Selected by the coverage:qnx_cov config (see coverage.bazelrc).
+score_coverage_reporter(
+    name = "gcov_reporter_wrapper",
+    testonly = True,
+    backend = "gcov",
+    coverage_scope = ":coverage_scope",
+    gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
+)

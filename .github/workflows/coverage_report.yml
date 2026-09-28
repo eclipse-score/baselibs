@@ -70,3 +70,65 @@ jobs:
           path: coverage_artifact/
           include-hidden-files: true
           retention-days: 10
+
+  # QNX on-target coverage (C++): the gcov backend of score_coverage. Tests run
+  # in QEMU through score_qnx_unit_tests, which brings the .gcda counters
+  # back. Same-repository branches only: the QNX secrets are not exposed to
+  # forks on pull_request events.
+  qnx-coverage-report:
+    name: Coverage bl-x86_64-qnx (gcov, on target)
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: eclipse-score/more-disk-space@3fac5780033e636b114cf69e891dc19d640855c2 # v1.1
+        with:
+          level: 2
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+      - name: Setup Bazel Cache
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
+        with:
+          unique-cache-name: ${{ github.workflow }}-${{ github.job }}
+      - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30ed908edcf367bc38ebff5b386a244f9b6417a7 # 2025-06-04
+      - name: Setup QNX SDP usage
+        uses: eclipse-score/cicd-actions/setup-qnx-sdp@a2b3c36fc7d1b9d03880d19935c7ac9cfffe58c6 # 2026-05-19
+        with:
+          qnx-license: ${{ secrets.SCORE_QNX_LICENSE }}
+          qnx-user: ${{ secrets.SCORE_QNX_USER }}
+          qnx-password: ${{ secrets.SCORE_QNX_PASSWORD }}
+          qnx-credential-helper: .github/tools/qnx_credential_helper.py
+          qnx-license-dir: /opt/score_qnx/license
+      - name: Install qemu
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-system
+      - name: Enable KVM group permissions
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Run Bazel Coverage on QNX (gcov, C++)
+        run: |
+          set -euo pipefail
+          bazel coverage --lockfile_mode=error --config=qnx_cov --build_tests_only \
+            --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- //score/... \
+            -//score/language/futurecpp/tests:memory_resource_test \
+            -//score/language/futurecpp/tests:zip_iterator_test \
+            -//score/os/test:asil_qm_test \
+            -//score/os/test:grp_test
+      - name: Generate HTML Coverage Report (QNX)
+        env:
+          COVERAGE_THRESHOLD: "0"
+        run: |
+          bazel run --lockfile_mode=error @score_coverage//:generate_coverage_html -- \
+            --platform qnx \
+            --yaml tools/coverage/coverage_justifications.yaml \
+            --testlogs-subdir score \
+            --archive-dir coverage_artifact_qnx
+      - name: Upload Coverage Artifacts (QNX)
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ github.event.repository.name }}_cpp_coverage_report_qnx
+          path: coverage_artifact_qnx/
+          include-hidden-files: true
+          retention-days: 10

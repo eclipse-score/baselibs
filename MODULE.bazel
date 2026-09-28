@@ -107,6 +107,15 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 # tested through futurecpp_internal, files without coverage data listed).
 bazel_dep(name = "score_coverage", version = "0.2.0", dev_dependency = True)
 
+# VALIDATION ONLY: the gcov backend for QNX on-target coverage is in
+# eclipse-score/coverage_tool PR #10; replace by the 0.3.0 release once it
+# is in the registry.
+git_override(
+    module_name = "score_coverage",
+    commit = "bcd4b3e",
+    remote = "https://github.com/eclipse-score/coverage_tool.git",
+)
+
 bazel_dep(name = "score_platform", version = "0.7.2")
 
 ## Configure the python toolchain
