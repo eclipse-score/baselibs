@@ -140,7 +140,9 @@ This configuration enables:
 - **UndefinedBehaviorSanitizer (UBSan)**: Detects undefined behavior at runtime.
 - **LeakSanitizer (LSan)**: Memory leak detector.
 
-The sanitizers are configured with verbose output and will halt on the first error detected.
+Each sanitizer is also available on its own via `--config=asan`, `--config=ubsan`, `--config=lsan` and `--config=tsan`, and ThreadSanitizer can be combined with UBSan via `--config=tsan_ubsan`. ASan and LSan cannot be combined with TSan, because their runtime libraries are incompatible.
+
+The runtime options and the suppression files come from the shared [score_cpp_policies sanitizer policy](https://github.com/eclipse-score/score_cpp_policies/tree/main/sanitizers). The sanitizers are configured with verbose output and will halt on the first error detected.
 
 ### Generating Documentation
 

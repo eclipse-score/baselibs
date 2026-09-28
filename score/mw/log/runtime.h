@@ -43,7 +43,7 @@ class Runtime final
     // private and the user should initialize the Runtime via GetRecorder(). The MeyerSingleton class is used to create
     // the Runtime singleton. Therefore, MeyerSingleton needs access to the private Runtime constructor.
     // coverity[autosar_cpp14_a11_3_1_violation]
-    friend class score::singleton::MeyerSingleton<Runtime, score::memory::shared::AtomicIndirectorReal>;
+    friend class score::singleton::MeyerSingleton<Runtime, score::concurrency::AtomicIndirectorReal>;
 
   public:
     /// \brief Implements a singleton, so no copying or moving

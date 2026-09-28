@@ -47,6 +47,10 @@ TYPED_TEST_SUITE(integer_types_test_fixture, integer_types, /*unused*/);
 /// @requirement CB-#55626118
 TYPED_TEST(integer_types_test_fixture, saturate_cast_equal_types)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.SaturateCast");
+    ::testing::Test::RecordProperty("given", "an integer value of the same source and destination type");
+    ::testing::Test::RecordProperty("when", "saturate_cast is called");
+    ::testing::Test::RecordProperty("then", "the value is returned unchanged");
     EXPECT_EQ(score::cpp::saturate_cast<TypeParam>(TypeParam{19}), TypeParam{19});
     EXPECT_EQ(score::cpp::saturate_cast<TypeParam>(std::numeric_limits<TypeParam>::lowest()),
               std::numeric_limits<TypeParam>::lowest());
@@ -80,6 +84,10 @@ TYPED_TEST_SUITE(first_type_within_second_type_test_fixture, first_type_within_s
 /// @requirement CB-#55626118
 TYPED_TEST(first_type_within_second_type_test_fixture, saturate_cast_first_type_within_second_type)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.SaturateCast");
+    ::testing::Test::RecordProperty("given", "a smaller integer type whose range fits entirely within a larger type");
+    ::testing::Test::RecordProperty("when", "saturate_cast is called between the two types");
+    ::testing::Test::RecordProperty("then", "values at the boundaries of the smaller type are preserved exactly");
     using SmallerType = typename TestFixture::FirstType;
     using LargerType = typename TestFixture::SecondType;
 
@@ -117,6 +125,11 @@ TYPED_TEST_SUITE(partial_overlap_types_test_fixture, partial_overlap_types, /*un
 /// @requirement CB-#55626118
 TYPED_TEST(partial_overlap_types_test_fixture, saturate_cast_partial_overlap)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.SaturateCast");
+    ::testing::Test::RecordProperty("given",
+                                    "two integer types with partially overlapping ranges (signed/unsigned pair)");
+    ::testing::Test::RecordProperty("when", "saturate_cast is called with values outside the destination range");
+    ::testing::Test::RecordProperty("then", "the result is clamped to the nearest boundary of the destination type");
     using LowerType = typename TestFixture::FirstType;
     using HigherType = typename TestFixture::SecondType;
 
@@ -132,6 +145,10 @@ TYPED_TEST(partial_overlap_types_test_fixture, saturate_cast_partial_overlap)
 /// @requirement CB-#55626118
 TEST(test_is_saturate_cast_supported_type, test_supported_and_unsupported_types)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.SaturateCast");
+    ::testing::Test::RecordProperty("given", "integer, float, char, and bool types");
+    ::testing::Test::RecordProperty("when", "is_saturate_cast_supported_type is queried for each");
+    ::testing::Test::RecordProperty("then", "only non-bool non-char integer types are reported as supported");
     EXPECT_TRUE(score::cpp::detail::is_saturate_cast_supported_type<unsigned char>());
     EXPECT_TRUE(score::cpp::detail::is_saturate_cast_supported_type<unsigned short int>());
     EXPECT_TRUE(score::cpp::detail::is_saturate_cast_supported_type<unsigned int>());
@@ -169,6 +186,11 @@ struct test_struct
 /// @requirement CB-#55626118
 TEST(saturate_cast_test, test_sfinae_friendliyness)
 {
+    ::testing::Test::RecordProperty("lobster-tracing", "amp.SaturateCast");
+    ::testing::Test::RecordProperty("given", "valid and invalid type combinations for saturate_cast");
+    ::testing::Test::RecordProperty("when", "template substitution is attempted via can_saturate_cast");
+    ::testing::Test::RecordProperty("then",
+                                    "unsupported types produce substitution failure without a hard compiler error");
     EXPECT_TRUE((can_saturate_cast<unsigned short int, unsigned long int>::value));
     EXPECT_TRUE((can_saturate_cast<unsigned int, unsigned long long int>::value));
     EXPECT_TRUE((can_saturate_cast<signed int, signed long int>::value));

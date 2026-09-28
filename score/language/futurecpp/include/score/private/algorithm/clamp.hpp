@@ -47,7 +47,7 @@ namespace score::cpp
 template <typename T, typename Compare>
 constexpr const T& clamp(const T& value, const T& lo, const T& hi, Compare comp)
 {
-    SCORE_LANGUAGE_FUTURECPP_ASSERT_DBG(!comp(hi, lo));
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_DBG(!comp(hi, lo));
     return comp(value, lo) ? lo : comp(hi, value) ? hi : value;
 }
 

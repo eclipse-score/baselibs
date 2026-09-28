@@ -21,11 +21,11 @@
 #ifndef SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_DEFAULT_BACKEND_HPP
 #define SCORE_LANGUAGE_FUTURECPP_PRIVATE_SIMD_DEFAULT_BACKEND_HPP
 
+#include <score/private/math/equals_bitexact.hpp>
 #include <score/private/simd/abi.hpp>
 #include <score/private/simd/array.hpp>
 
 #include <score/assert.hpp>
-#include <score/float.hpp>
 #include <score/math.hpp>
 
 #include <algorithm>

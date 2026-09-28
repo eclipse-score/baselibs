@@ -109,6 +109,27 @@ cc_unit_test(
     ],
 )
 
+cc_unit_test(
+    name = "non_relocatable_vector_capacity_test",
+    srcs = ["non_relocatable_vector_capacity_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        # These tests catch exceptions instead of using gtest EXPECT_DEATH so we disable aborts_upon_exception.
+        "-aborts_upon_exception",
+    ],
+    deps = [
+        ":non_relocatable_vector",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/containers/test:allocator_test_type_helpers",
+        "@score_baselibs//score/containers/test:container_test_types",
+        "@score_baselibs//score/containers/test:fake_memory_resource",
+        "@score_baselibs//score/containers/test:fancy_pointer_allocator",
+        "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+        "@score_baselibs//score/mw/log:backend_stub_testutil",
+    ],
+)
+
 cc_library(
     name = "dynamic_array",
     srcs = ["dynamic_array.cpp"],

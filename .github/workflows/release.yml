@@ -42,6 +42,10 @@ jobs:
     uses: ./.github/workflows/coverage_report.yml
   lint:
     uses: ./.github/workflows/lint.yml
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
   sanitizers:
     uses: ./.github/workflows/sanitizers_linux.yml
   create-release:

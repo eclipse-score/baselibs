@@ -25,6 +25,12 @@ namespace
 
 TEST(ExpectedTest, IsDefaultConstructibleWhenValueTypeIsDefaultConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E> is default constructible and holds a default-constructed value "
+                   "when T is default constructible.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a default-constructible type
     class DefaultConstructibleType
     {
@@ -42,6 +48,11 @@ TEST(ExpectedTest, IsDefaultConstructibleWhenValueTypeIsDefaultConstructible)
 
 TEST(ExpectedTest, IsNotDefaultConstructibleWhenValueTypeIsNotDefaultConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E> is not default constructible when T is not default constructible.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // Given a non-default-constructible type
     class NonDefaultConstructibleType
     {
@@ -55,6 +66,12 @@ TEST(ExpectedTest, IsNotDefaultConstructibleWhenValueTypeIsNotDefaultConstructib
 
 TEST(ExpectedTest, IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that a value-holding expected<T, E> is trivially copy constructible when T and E are, "
+                   "and that the copy holds the same value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected initialized with a copyable value
     std::int32_t value{14};
     expected<CopyableType, ErrorType> unit{value};
@@ -72,6 +89,12 @@ TEST(ExpectedTest, IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithV
 
 TEST(ExpectedTest, IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that an error-holding expected<T, E> is trivially copy constructible when T and E are, "
+                   "and that the copy holds the same error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an unexpected initialized with a copyable error
     std::int32_t value{14};
     unexpected<CopyableType> wrapped{value};
@@ -90,12 +113,23 @@ TEST(ExpectedTest, IsCopyConstructibleWhenInnerTypesAreCopyConstructibleAndWithE
 
 TEST(ExpectedTest, IsNotCopyConstructibleWhenInnerTypesAreNotCopyConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E> is not copy constructible when either T or E is not copyable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_copy_constructible_v<expected<CopyableType, NothrowMoveOnlyType>>);
     static_assert(!std::is_copy_constructible_v<expected<NothrowMoveOnlyType, CopyableType>>);
 }
 
 TEST(ExpectedTest, IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that a value-holding expected<T, E> is trivially move constructible when T and E are, "
+                   "and that the value is transferred to the moved-to instance.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected initialized with a move-only value
     std::int32_t value{14};
     expected<NothrowMoveOnlyType, ErrorType> unit{value};
@@ -112,6 +146,12 @@ TEST(ExpectedTest, IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithV
 
 TEST(ExpectedTest, IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that an error-holding expected<T, E> is trivially move constructible when T and E are, "
+                   "and that the error is transferred to the moved-to instance.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected initialized with a move-only value
     std::int32_t value{14};
     expected<ValueType, NothrowMoveOnlyType> unit{unexpected{value}};
@@ -128,12 +168,23 @@ TEST(ExpectedTest, IsMoveConstructibleWhenInnerTypesAreMoveConstructibleAndWithE
 
 TEST(ExpectedTest, IsNotMoveConstructibleWhenInnerTypesAreNotMoveConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<T, E> is not move constructible when either T or E is not movable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_move_constructible_v<expected<NothrowMoveOnlyType, UnmovableType>>);
     static_assert(!std::is_move_constructible_v<expected<UnmovableType, NothrowMoveOnlyType>>);
 }
 
 TEST(ExpectedTest, IsOnlyNothrowMoveConstructibleIfInnerTypesAre)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected<T, E>'s move constructor is noexcept only when both T and E are "
+                   "themselves nothrow move constructible.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_nothrow_move_constructible_v<expected<ThrowMoveOnlyType, ThrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_move_constructible_v<expected<NothrowMoveOnlyType, ThrowMoveOnlyType>>);
     static_assert(!std::is_nothrow_move_constructible_v<expected<ThrowMoveOnlyType, NothrowMoveOnlyType>>);
@@ -142,6 +193,12 @@ TEST(ExpectedTest, IsOnlyNothrowMoveConstructibleIfInnerTypesAre)
 
 TEST(ExpectedTest, CanCopyConstructFromCompatibleExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected holding a value can be copy constructed from another expected with a "
+                   "convertible value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with a value
     std::int32_t value{14};
     expected<CopyableType, ErrorType> e1{value};
@@ -157,6 +214,12 @@ TEST(ExpectedTest, CanCopyConstructFromCompatibleExpectedWithValue)
 
 TEST(ExpectedTest, CanCopyConstructFromCompatibleExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected holding an error can be copy constructed from another expected with a "
+                   "convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with an error
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -173,6 +236,12 @@ TEST(ExpectedTest, CanCopyConstructFromCompatibleExpectedWithError)
 
 TEST(ExpectedTest, CanMoveConstructFromCompatibleExpectedWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected holding a value can be move constructed from another expected with a "
+                   "convertible value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with a value
     std::int32_t value{14};
     expected<NothrowMoveOnlyType, ErrorType> e1{value};
@@ -187,6 +256,12 @@ TEST(ExpectedTest, CanMoveConstructFromCompatibleExpectedWithValue)
 
 TEST(ExpectedTest, CanMoveConstructFromCompatibleExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected holding an error can be move constructed from another expected with a "
+                   "convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with an error
     std::int32_t error{14};
     expected<ValueType, NothrowMoveOnlyType> e1{unexpected{error}};
@@ -201,6 +276,11 @@ TEST(ExpectedTest, CanMoveConstructFromCompatibleExpectedWithError)
 
 TEST(ExpectedTest, CanCopyConstructFromCompatibleTypeWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected can be copy constructed directly from a value of a convertible type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable value
     std::int32_t value{14};
     CopyableType wrapped{value};
@@ -215,6 +295,12 @@ TEST(ExpectedTest, CanCopyConstructFromCompatibleTypeWithValue)
 
 TEST(ExpectedTest, CanMoveConstructFromCompatibleTypeWithValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected can be move constructed directly from a move-only value of a "
+                   "convertible type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a move-only a value
     std::int32_t value{14};
     NothrowMoveOnlyType wrapped{value};
@@ -229,6 +315,12 @@ TEST(ExpectedTest, CanMoveConstructFromCompatibleTypeWithValue)
 
 TEST(ExpectedTest, CanCopyConstructFromCompatibleTypeWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected can be copy constructed directly from an unexpected of a convertible "
+                   "error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable error
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -243,6 +335,12 @@ TEST(ExpectedTest, CanCopyConstructFromCompatibleTypeWithError)
 
 TEST(ExpectedTest, CanMoveConstructFromCompatibleTypeWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an expected can be move constructed directly from an unexpected of a move-only, "
+                   "convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a move-only error
     std::int32_t error{14};
     NothrowMoveOnlyType wrapped{error};
@@ -257,6 +355,12 @@ TEST(ExpectedTest, CanMoveConstructFromCompatibleTypeWithError)
 
 TEST(ExpectedTest, CanInPlaceConstructValue)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected can be constructed in place, forwarding constructor arguments directly to "
+                   "the value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -271,6 +375,12 @@ TEST(ExpectedTest, CanInPlaceConstructValue)
 
 TEST(ExpectedTest, CanInPlaceConstructValueWithInitializerList)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected can be constructed in place from an initializer list plus additional "
+                   "constructor arguments forwarded to the value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -286,6 +396,12 @@ TEST(ExpectedTest, CanInPlaceConstructValueWithInitializerList)
 
 TEST(ExpectedTest, CanInPlaceConstructError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected can be constructed in an error state in place, forwarding constructor "
+                   "arguments directly to the error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -300,6 +416,12 @@ TEST(ExpectedTest, CanInPlaceConstructError)
 
 TEST(ExpectedTest, CanInPlaceConstructErrorWithInitializerList)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected can be constructed in an error state in place from an initializer list "
+                   "plus additional constructor arguments forwarded to the error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -315,11 +437,23 @@ TEST(ExpectedTest, CanInPlaceConstructErrorWithInitializerList)
 
 TEST(ExpectedTest, IsTriviallyDestructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__deterministic_behavior");
+    RecordProperty("Description",
+                   "Check that expected<T, E> is trivially destructible when T and E are, avoiding any dynamic "
+                   "cleanup on teardown.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_trivially_destructible_v<expected<ValueType, ErrorType>>);
 }
 
 TEST(ExpectedTest, CanWrapExpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that an expected can itself be used as the value type of another expected, preserving "
+                   "constructibility, copyability, and movability.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_constructible_v<expected<expected<ValueType, ErrorType>, ErrorType>>);
     static_assert(std::is_copy_constructible_v<expected<expected<ValueType, ErrorType>, ErrorType>>);
     static_assert(std::is_move_constructible_v<expected<expected<ValueType, ErrorType>, ErrorType>>);
@@ -329,6 +463,12 @@ TEST(ExpectedTest, CanWrapExpected)
 
 TEST(ExpectedVoidTest, IsDefaultConstructibleWhenValueTypeIsVoid)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<void, E> is default constructible and default-constructs into the valid "
+                   "state.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     // Given default-constructing expected with void type
     expected<void, ErrorType> expected{};
 
@@ -338,6 +478,12 @@ TEST(ExpectedVoidTest, IsDefaultConstructibleWhenValueTypeIsVoid)
 
 TEST(ExpectedVoidTest, IsCopyConstructibleWhenErrorIsCopyConstructuble)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<void, E> is trivially copy constructible when E is, and that the copy "
+                   "holds the same error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a void expected initialized with an error
     const std::int32_t error{83};
     CopyableType wrapped{error};
@@ -356,11 +502,21 @@ TEST(ExpectedVoidTest, IsCopyConstructibleWhenErrorIsCopyConstructuble)
 
 TEST(ExpectedVoidTest, IsNotCopyConstructibleWhenErrorIsNotCopyConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that expected<void, E> is not copy constructible when E is not copyable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_copy_constructible_v<expected<void, NothrowMoveOnlyType>>);
 }
 
 TEST(ExpectedVoidTest, IsMoveConstructibleWhenErrorisMoveConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that expected<void, E> is trivially move constructible when E is, and that the error "
+                   "is transferred to the moved-to instance.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected initialized with a move-only error
     std::int32_t error{14};
     expected<void, NothrowMoveOnlyType> unit{unexpected{error}};
@@ -377,17 +533,33 @@ TEST(ExpectedVoidTest, IsMoveConstructibleWhenErrorisMoveConstructible)
 
 TEST(ExpectedVoidTest, IsNotMoveConstructibleWhenErrorIsNotMoveConstructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that expected<void, E> is not move constructible when E is not movable.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_move_constructible_v<expected<void, UnmovableType>>);
 }
 
 TEST(ExpectedVoidTest, IsOnlyNothrowMoveConstructibleIfErrorIs)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__exception_free_operation");
+    RecordProperty("Description",
+                   "Check that expected<void, E>'s move constructor is noexcept only when E is itself nothrow "
+                   "move constructible.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     static_assert(!std::is_nothrow_move_constructible_v<expected<void, ThrowMoveOnlyType>>);
     static_assert(std::is_nothrow_move_constructible_v<expected<void, NothrowMoveOnlyType>>);
 }
 
 TEST(ExpectedVoidTest, CanCopyConstructFromCompatibleExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an error-holding expected<void, E> can be copy constructed from another "
+                   "expected<void, E> with a convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with an error
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -404,6 +576,12 @@ TEST(ExpectedVoidTest, CanCopyConstructFromCompatibleExpectedWithError)
 
 TEST(ExpectedVoidTest, CanMoveConstructFromCompatibleExpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that an error-holding expected<void, E> can be move constructed from another "
+                   "expected<void, E> with a convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an expected with an error
     std::int32_t error{14};
     expected<void, NothrowMoveOnlyType> e1{unexpected{error}};
@@ -418,6 +596,12 @@ TEST(ExpectedVoidTest, CanMoveConstructFromCompatibleExpectedWithError)
 
 TEST(ExpectedVoidTest, CanCopyConstructFromCompatibleTypeWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected<void, E> can be copy constructed directly from an unexpected of a "
+                   "convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a copyable error
     std::int32_t error{14};
     unexpected<CopyableType> wrapped{error};
@@ -432,6 +616,12 @@ TEST(ExpectedVoidTest, CanCopyConstructFromCompatibleTypeWithError)
 
 TEST(ExpectedVoidTest, CanMoveConstructFromCompatibleTypeWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected<void, E> can be move constructed directly from an unexpected of a "
+                   "move-only, convertible error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a move-only error
     std::int32_t error{14};
     NothrowMoveOnlyType wrapped{error};
@@ -446,6 +636,10 @@ TEST(ExpectedVoidTest, CanMoveConstructFromCompatibleTypeWithError)
 
 TEST(ExpectedVoidTest, CanInPlaceConstruct)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description", "Check that expected<void, E> can be constructed in place into the valid state.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When constructing an expected in-place
     expected<void, ErrorType> unit{std::in_place};
 
@@ -455,6 +649,12 @@ TEST(ExpectedVoidTest, CanInPlaceConstruct)
 
 TEST(ExpectedVoidTest, CanInPlaceConstructError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected<void, E> can be constructed in an error state in place, forwarding "
+                   "constructor arguments directly to the error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -469,6 +669,12 @@ TEST(ExpectedVoidTest, CanInPlaceConstructError)
 
 TEST(ExpectedVoidTest, CanInPlaceConstructErrorWithInitializerList)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that expected<void, E> can be constructed in an error state in place from an "
+                   "initializer list plus additional constructor arguments forwarded to the error type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::int32_t copyable{15};
     std::int32_t moveonly{17};
 
@@ -483,11 +689,23 @@ TEST(ExpectedVoidTest, CanInPlaceConstructErrorWithInitializerList)
 
 TEST(ExpectedVoidTest, IsTriviallyDestructible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__deterministic_behavior");
+    RecordProperty("Description",
+                   "Check that expected<void, E> is trivially destructible when E is, avoiding any dynamic "
+                   "cleanup on teardown.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_trivially_destructible_v<expected<void, ErrorType>>);
 }
 
 TEST(ExpectedVoidTest, CanWrapExpected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that a value-less expected<void, E> can itself be used as the value type of another "
+                   "expected, preserving constructibility, copyability, and movability.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static_assert(std::is_constructible_v<expected<expected<void, ErrorType>, ErrorType>>);
     static_assert(std::is_copy_constructible_v<expected<expected<void, ErrorType>, ErrorType>>);
     static_assert(std::is_move_constructible_v<expected<expected<void, ErrorType>, ErrorType>>);

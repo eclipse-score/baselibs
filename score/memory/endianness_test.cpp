@@ -21,6 +21,13 @@ namespace
 
 TEST(Endianness, WeAreRunningOnALittleEndianSystem)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__memory__endianness");
+    RecordProperty("Description",
+                   "Check that IsSystemLittleEndian() reports true, documenting the host byte order assumed "
+                   "throughout the codebase.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     // Listen, if this test fails, then this means that this test is no longer running on a little endian machine, _NOT_
     // that the test is wrong or the code under test! Yes, this is not a unit test, but we assume in a lot of places in
     // our code that we are running on little endian (we try to clean this up, which is why we introduce this library)
@@ -30,23 +37,48 @@ TEST(Endianness, WeAreRunningOnALittleEndianSystem)
 
 TEST(Endianness, CannotBeLittleAndBigAtTheSameTime)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__memory__endianness");
+    RecordProperty("Description", "Check that a system is never reported as both little- and big-endian.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
     EXPECT_TRUE(IsSystemLittleEndian() != IsSystemBigEndian());
 }
 
 TEST(Endianness, SwitchingBytesNecessary)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__memory__endianness");
+    RecordProperty("Description",
+                   "Check that SwitchingBytesNecessary() reports true for big endian and false for little endian, "
+                   "i.e. it correctly detects when a byte order conversion is needed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     EXPECT_TRUE(SwitchingBytesNecessary(Endianness::kBigEndian));
     EXPECT_FALSE(SwitchingBytesNecessary(Endianness::kLittleEndian));
 }
 
 TEST(Endianness, ByteSwap)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__memory__endianness");
+    RecordProperty("Description",
+                   "Check that ByteSwap() reverses the byte order of 32-bit and 64-bit unsigned integers.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     EXPECT_EQ(ByteSwap(0x10203040U), 0x40302010U);
     EXPECT_EQ(ByteSwap(static_cast<std::uint64_t>(0x1020304050607080ULL)), 0x8070605040302010ULL);
 }
 
 TEST(Endianness, BigEndianToHostEndianness)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__memory__endianness");
+    RecordProperty("Description",
+                   "Check that BigEndianToHostEndianness() converts a big-endian value to host byte order, "
+                   "byte-swapping on little-endian hosts and passing through unchanged on big-endian hosts.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     if (IsSystemLittleEndian())
     {
         EXPECT_EQ(BigEndianToHostEndianness(0x10203040U), ByteSwap(0x10203040U));

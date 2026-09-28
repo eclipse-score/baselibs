@@ -20,6 +20,12 @@ namespace score::result
 
 TEST(RustBridgeTests, GetMessageForErrorCodeFFI)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__domain_error_information");
+    RecordProperty("Description",
+                   "Check that the C-ABI bridge function resolves the message for an error code through a "
+                   "user-defined error domain, for consumption from Rust.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::string_view error_message;
     LibResultErrorDomainGetMessageForErrorCode(
         dummy_error_domain, static_cast<ErrorCode>(DummyErrorCode::kFirstError), error_message);

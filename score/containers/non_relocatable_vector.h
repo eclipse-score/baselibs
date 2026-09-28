@@ -140,6 +140,14 @@ class NonRelocatableVector
     template <typename... Args>
     auto emplace_back(Args&&... args) -> ElementType&;
 
+    /// \brief Destroys the last element, reducing size() by one.
+    /// \pre size() is greater than zero.
+    void pop_back();
+
+    /// \brief Destroys every element, reducing size() to zero.
+    /// \note capacity() is unchanged and no memory is deallocated.
+    void clear() noexcept;
+
     ElementType& at(const size_type index);
 
     const ElementType& at(const size_type index) const;
@@ -151,6 +159,12 @@ class NonRelocatableVector
     size_type size() const noexcept
     {
         return size_;
+    }
+
+    /// \brief Checks whether the vector has no elements.
+    [[nodiscard]] bool empty() const noexcept
+    {
+        return size_ == 0U;
     }
 
     size_type capacity() const noexcept
@@ -179,6 +193,9 @@ class NonRelocatableVector
     using pointer = typename std::allocator_traits<Allocator>::pointer;
 
     static pointer allocate_array(size_type number_of_elements, Allocator& allocator);
+
+    /// \brief Destroys every constructed element, leaving size_ and the underlying storage untouched.
+    void DestroyElements() noexcept;
 
     iterator GetPastTheEndIterator() const;
 
@@ -229,6 +246,8 @@ NonRelocatableVector<ElementType, Allocator>::NonRelocatableVector(NonRelocatabl
       capacity_{std::move(other.capacity_)}
 {
     other.non_relocatable_vector_ = nullptr;
+    other.size_ = 0U;
+    other.capacity_ = 0U;
 }
 
 template <typename ElementType, typename Allocator>
@@ -288,14 +307,20 @@ NonRelocatableVector<ElementType, Allocator>::~NonRelocatableVector() noexcept
     {
         return;
     }
-    using alloc_traits = std::allocator_traits<decltype(alloc_)>;
+    DestroyElements();
+    std::allocator_traits<Allocator>::deallocate(alloc_, non_relocatable_vector_, capacity_);
+}
+
+template <typename ElementType, typename Allocator>
+void NonRelocatableVector<ElementType, Allocator>::DestroyElements() noexcept
+{
+    using alloc_traits = std::allocator_traits<Allocator>;
     auto cur_pointer = non_relocatable_vector_;
     for (size_type i = 0U; i < size_; i++)
     {
         alloc_traits::destroy(alloc_, detail::to_address(cur_pointer));
         std::advance(cur_pointer, 1);
     }
-    alloc_traits::deallocate(alloc_, non_relocatable_vector_, capacity_);
 }
 
 template <typename ElementType, typename Allocator>
@@ -311,6 +336,23 @@ auto NonRelocatableVector<ElementType, Allocator>::emplace_back(Args&&... args) 
     std::allocator_traits<Allocator>::construct(alloc_, current_storage_pointer, std::forward<Args>(args)...);
     size_ += 1U;
     return *current_storage_pointer;
+}
+
+template <typename ElementType, typename Allocator>
+// coverity[autosar_cpp14_a15_5_3_violation] only precondition may throw, which is intentional
+void NonRelocatableVector<ElementType, Allocator>::pop_back()
+{
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(size_ > 0U, "Cannot pop_back an empty vector.");
+
+    std::allocator_traits<Allocator>::destroy(alloc_, GetLastElement(non_relocatable_vector_, size_));
+    size_ -= 1U;
+}
+
+template <typename ElementType, typename Allocator>
+void NonRelocatableVector<ElementType, Allocator>::clear() noexcept
+{
+    DestroyElements();
+    size_ = 0U;
 }
 
 template <typename ElementType, typename Allocator>

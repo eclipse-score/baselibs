@@ -10,5 +10,20 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+#include "score/os/syslog.h"
 
-#include "score/memory/shared/atomic_mock.h"
+#include "score/os/syslog_impl.h"
+
+namespace score
+{
+namespace os
+{
+
+/* score::cpp::pmr::make_unique takes non-const memory_resource */
+score::cpp::pmr::unique_ptr<Syslog> Syslog::Default(score::cpp::pmr::memory_resource* memory_resource) noexcept
+{
+    return score::cpp::pmr::make_unique<SyslogImpl>(memory_resource);
+}
+
+}  // namespace os
+}  // namespace score

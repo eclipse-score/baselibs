@@ -83,13 +83,13 @@ struct consistency<type_map_entry<K, V>...>
     template <typename T, typename... Ts>
     static constexpr auto create_binary_mask()
     {
-        return make_array<size_t>(std::is_same<T, Ts>::value...);
+        return make_array<size_t>(std::is_same_v<T, Ts> ? size_t{1} : size_t{0}...);
     }
 
     template <typename T, typename... Ts>
     static constexpr size_t is_single_key_unique()
     {
-        return static_cast<size_t>(1UL == sum(create_binary_mask<T, Ts...>()));
+        return (1UL == sum(create_binary_mask<T, Ts...>())) ? size_t{1} : size_t{0};
     }
 
     static constexpr bool are_all_keys_unique()

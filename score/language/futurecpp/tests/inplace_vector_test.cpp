@@ -1405,6 +1405,18 @@ TEST(inplace_vector_test, crbegin_and_crend)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#17893146
+TEST(inplace_vector_test, construction_with_iterators_single_pass)
+{
+    std::istringstream str2("1 2 3 4 5 6 7 8 9 10");
+
+    score::cpp::inplace_vector<std::int32_t, 10U> actual(std::istream_iterator<int>{str2}, std::istream_iterator<int>{});
+
+    std::vector<std::int32_t> expected{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    EXPECT_TRUE(std::equal(std::cbegin(expected), std::cend(expected), std::cbegin(actual), std::cend(actual)));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#17893146
 TEST(inplace_vector_test, construction_with_iterators)
 {
     std::vector<std::int32_t> origin{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};

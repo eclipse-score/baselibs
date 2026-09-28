@@ -66,13 +66,14 @@ static_assert(std::is_empty<::score::common::visitor::skip_deserialize<int>>(), 
 
 TEST(serializer_visitor, skip_deserialize)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
     RecordProperty("Description",
-                   "Logging library shall provide an annotation mechanism for data structures to support automatic "
-                   "serialization/deserialization.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that is_payload_compatible() rejects S3s, which omits S's vector field, and that "
+                   "deserializing S's serialized bytes into S1 and S2, whose skip_deserialize-annotated fields "
+                   "retain only f1 or only f2 respectively while keeping the original field order, still recovers "
+                   "the retained value correctly.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     // S has an "added" std::vector member compared to S3;, it should be detected as incompatible
     EXPECT_FALSE((::score::common::visitor::is_payload_compatible<test::S3s, test::S>()));
 
@@ -102,11 +103,12 @@ TEST(serializer_visitor, skip_deserialize)
 
 TEST(serializer_visitor, skip_deserialize_test_overflow)
 {
-    RecordProperty("ParentRequirement", "SCR-1633893, SCR-861550");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Skip deserialization in case the data to be serialized is bigger than the buffer.");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+    RecordProperty("PartiallyVerifies", "comp_req__static_reflect_serial__reflect");
+    RecordProperty("Description",
+                   "Check that serialize returns zero when the destination buffer is too small to hold the "
+                   "serialized data.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     std::array<char, 4> buffer;
     using serializer = ::score::common::visitor::logging_serializer;

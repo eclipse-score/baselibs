@@ -37,7 +37,7 @@ template <typename T, typename V>
 struct rebind
 {
     // part of C++ standard https://en.cppreference.com/w/cpp/numeric/simd.html
-    // but currently not implemented by `amp`. It creates a type of `mask<T>` with the size of `V`.
+    // but currently not implemented by `amp`. It creates a type of `vec<T>` with the size of `V`.
     // vector registers have a fixed length (for example 128 Bits). scale with ratio of both simd value types.
     using type = score::cpp::simd::vec<T, sizeof(T) / sizeof(typename V::value_type) * score::cpp::simd::vec<T>::size()>;
 };
@@ -638,6 +638,20 @@ TYPED_TEST(simd_floating_point_fixture, EqualFloatSpecialValues)
     EXPECT_TRUE(none_of(-inf == inf));
     EXPECT_TRUE(none_of(inf == -inf));
     EXPECT_TRUE(all_of(-inf == -inf));
+    EXPECT_TRUE(none_of(nan == nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, EqualFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(all_of(zero == zero));
+    EXPECT_TRUE(all_of(-zero == zero));
+    EXPECT_TRUE(all_of(zero == -zero));
+    EXPECT_TRUE(all_of(-zero == -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -692,6 +706,20 @@ TYPED_TEST(simd_floating_point_fixture, NotEqualFloatSpecialValues)
     EXPECT_TRUE(all_of(-inf != inf));
     EXPECT_TRUE(all_of(inf != -inf));
     EXPECT_TRUE(none_of(-inf != -inf));
+    EXPECT_TRUE(all_of(nan != nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, NotEqualFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(none_of(zero != zero));
+    EXPECT_TRUE(none_of(-zero != zero));
+    EXPECT_TRUE(none_of(zero != -zero));
+    EXPECT_TRUE(none_of(-zero != -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -748,6 +776,20 @@ TYPED_TEST(simd_floating_point_fixture, LessThanFloatSpecialValues)
     EXPECT_TRUE(all_of(-inf < inf));
     EXPECT_TRUE(none_of(inf < -inf));
     EXPECT_TRUE(none_of(-inf < -inf));
+    EXPECT_TRUE(none_of(nan < nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, LessThanFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(none_of(zero < zero));
+    EXPECT_TRUE(none_of(-zero < zero));
+    EXPECT_TRUE(none_of(zero < -zero));
+    EXPECT_TRUE(none_of(-zero < -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -802,6 +844,20 @@ TYPED_TEST(simd_floating_point_fixture, LessEqualFloatSpecialValues)
     EXPECT_TRUE(all_of(-inf <= inf));
     EXPECT_TRUE(none_of(inf <= -inf));
     EXPECT_TRUE(all_of(-inf <= -inf));
+    EXPECT_TRUE(none_of(nan <= nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, LessEqualFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(all_of(zero <= zero));
+    EXPECT_TRUE(all_of(-zero <= zero));
+    EXPECT_TRUE(all_of(zero <= -zero));
+    EXPECT_TRUE(all_of(-zero <= -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -856,6 +912,20 @@ TYPED_TEST(simd_floating_point_fixture, GreaterThanFloatSpecialValues)
     EXPECT_TRUE(none_of(-inf > inf));
     EXPECT_TRUE(all_of(inf > -inf));
     EXPECT_TRUE(none_of(-inf > -inf));
+    EXPECT_TRUE(none_of(nan > nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, GreaterThanFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(none_of(zero > zero));
+    EXPECT_TRUE(none_of(-zero > zero));
+    EXPECT_TRUE(none_of(zero > -zero));
+    EXPECT_TRUE(none_of(-zero > -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -910,6 +980,20 @@ TYPED_TEST(simd_floating_point_fixture, GreaterEqualFloatSpecialValues)
     EXPECT_TRUE(none_of(-inf >= inf));
     EXPECT_TRUE(all_of(inf >= -inf));
     EXPECT_TRUE(all_of(-inf >= -inf));
+    EXPECT_TRUE(none_of(nan >= nan));
+}
+
+/// @testmethods TM_REQUIREMENT
+/// @requirement CB-#18398050
+TYPED_TEST(simd_floating_point_fixture, GreaterEqualFloat_SignedZero)
+{
+    using value_type = typename TypeParam::value_type;
+    const TypeParam zero{value_type{0}};
+
+    EXPECT_TRUE(all_of(zero >= zero));
+    EXPECT_TRUE(all_of(-zero >= zero));
+    EXPECT_TRUE(all_of(zero >= -zero));
+    EXPECT_TRUE(all_of(-zero >= -zero));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -967,7 +1051,7 @@ TYPED_TEST(simd_vec_fixture, Max)
 
 /// @testmethods TM_REQUIREMENT
 /// @requirement CB-#18398050
-TYPED_TEST(simd_floating_point_fixture, MaxSpecialFloatValues)
+TYPED_TEST(simd_floating_point_fixture, MaxFloatSpecialValues)
 {
     using value_type = typename TypeParam::value_type;
 

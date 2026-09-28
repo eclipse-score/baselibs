@@ -31,6 +31,20 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "json_serialize_backend",
+    srcs = ["json_serialize_backend.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
+    deps = [
+        ":json_serialize",
+        "@score_baselibs//score/json/internal/writer:writer_backend",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/safe_math",
+    ],
+)
+
 cc_test(
     name = "json_serialize_unit_test",
     srcs = [

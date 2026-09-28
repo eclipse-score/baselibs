@@ -60,7 +60,6 @@ The Containers library should provide type-safe data structures and efficient me
 
 * :need:`comp_req__containers__dynamic_array`
 * :need:`comp_req__containers__intrusive_list`
-* :need:`comp_req__containers__type_safety`
 * :need:`comp_req__containers__deterministic_behavior`
 
 The component should be extensible in the future to support additional data structures and algorithms as needed.

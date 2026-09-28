@@ -38,6 +38,10 @@ class UnexpectedTests : public ::testing::Test
 
 TEST_F(UnexpectedTests, CanMakeErroneousResultUsingUnexpectedTypeAlias)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description", "Check that a Result can be set to an error state using the Unexpected type alias.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Result<bool> result{Unexpected{error}};
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), error);
@@ -45,6 +49,11 @@ TEST_F(UnexpectedTests, CanMakeErroneousResultUsingUnexpectedTypeAlias)
 
 TEST_F(UnexpectedTests, CanMakeErroneousResultUsingMakeUnexpectedWithCodeAndUserMessage)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that MakeUnexpected(code, user_message) sets a Result to an error state carrying both.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Result<bool> result{MakeUnexpected(DummyErrorCode::kFirstError, error.UserMessage())};
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), error);
@@ -52,6 +61,12 @@ TEST_F(UnexpectedTests, CanMakeErroneousResultUsingMakeUnexpectedWithCodeAndUser
 
 TEST_F(UnexpectedTests, LegacyCanMakeErroneousResultUsingMakeUnexpectedWithError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__set_result");
+    RecordProperty("Description",
+                   "Check that the legacy MakeUnexpected<T>(Error) overload sets a Result to an error state carrying "
+                   "a pre-built Error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Result<bool> result{MakeUnexpected<bool>(error)};
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), error);
@@ -96,6 +111,12 @@ class MoveOnlyType
 
 TEST_F(ConversionTests, CanConvertLValueResultWithValueToStdOptional)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that ResultToOptionalOrElse converts an lvalue Result holding a value into an "
+                   "std::optional holding that value, without invoking the error handler.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CopyableType value{14};
     const Result<CopyableType> result{value};
     EXPECT_CALL(error_handling, Call(_)).Times(0);
@@ -106,6 +127,12 @@ TEST_F(ConversionTests, CanConvertLValueResultWithValueToStdOptional)
 
 TEST_F(ConversionTests, CanConvertLValueResultWithErrorToStdOptional)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that ResultToOptionalOrElse converts an lvalue Result holding an error into an empty "
+                   "std::optional, invoking the error handler exactly once.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Result<CopyableType> result{unexpect, error};
     EXPECT_CALL(error_handling, Call(error)).Times(1);
     std::optional<CopyableType> optional = ResultToOptionalOrElse(result, error_handling.AsStdFunction());
@@ -114,6 +141,12 @@ TEST_F(ConversionTests, CanConvertLValueResultWithErrorToStdOptional)
 
 TEST_F(ConversionTests, CanConvertRValueResultWithValueToStdOptional)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that ResultToOptionalOrElse converts an rvalue Result holding a move-only value into an "
+                   "std::optional holding that value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto raw_value{96};
     MoveOnlyType value{raw_value};
     Result<MoveOnlyType> result{std::move(value)};
@@ -125,6 +158,12 @@ TEST_F(ConversionTests, CanConvertRValueResultWithValueToStdOptional)
 
 TEST_F(ConversionTests, CanConvertRValueResultWithErrorToStdOptional)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__std_integration");
+    RecordProperty("Description",
+                   "Check that ResultToOptionalOrElse converts an rvalue Result holding an error into an empty "
+                   "std::optional, invoking the error handler exactly once.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Result<MoveOnlyType> result{unexpect, error};
     EXPECT_CALL(error_handling, Call(error)).Times(1);
     std::optional<MoveOnlyType> optional = ResultToOptionalOrElse(std::move(result), error_handling.AsStdFunction());
@@ -137,16 +176,29 @@ class TypeTraitsTests : public ::testing::Test
 
 TEST_F(TypeTraitsTests, IsResultVIsTrueIfIsTemplatedResult)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description",
+                   "Check that IsResultV is true for a Result<T> instantiation with a concrete value type.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     EXPECT_TRUE(IsResultV<Result<bool>>);
 }
 
 TEST_F(TypeTraitsTests, IsResultVIsTrueIfIsResultBlank)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that IsResultV is true for the value-less Result<void> instantiation.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     EXPECT_TRUE(IsResultV<Result<void>>);
 }
 
 TEST_F(TypeTraitsTests, IsResultVIsFalseIfIsNoResult)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__result__type_safety");
+    RecordProperty("Description", "Check that IsResultV is false for a type that is not a Result instantiation.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     EXPECT_FALSE(IsResultV<bool>);
 }
 
