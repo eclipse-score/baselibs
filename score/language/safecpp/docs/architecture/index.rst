@@ -53,7 +53,7 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__safecpp__aborts_upon_exception[version==1], comp_req__safecpp__safe_math[version==1], comp_req__safecpp__scoped_guards[version==1], comp_req__safecpp__nullstring[version==1], comp_req__safecpp__safe_atomic[version==1], comp_req__safecpp__coverage_termination[version==1]
+   :fulfils: comp_req__safecpp__aborts_upon_exception[version==1], comp_req__safecpp__safe_math[version==1], comp_req__safecpp__nullstring[version==1], comp_req__safecpp__safe_atomic[version==1], comp_req__safecpp__coverage_termination[version==1]
    :belongs_to: comp__baselibs_safecpp[version==1]
 
    .. needarch::

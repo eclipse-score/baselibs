@@ -59,18 +59,6 @@ Functional Requirements
    that detect overflow, underflow, divide-by-zero, and precision loss for both integer and floating-point types,
    ensuring errors are handled safely and undefined behavior is prevented.
 
-.. comp_req:: Scoped Guards
-   :id: comp_req__safecpp__scoped_guards
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__utils_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_safecpp[version==1]
-
-   The safecpp library shall provide scope-bound callable wrappers that prevent resource leaks.
-
 .. comp_req:: Null-Terminated String
    :id: comp_req__safecpp__nullstring
    :reqtype: Functional

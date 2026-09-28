@@ -88,6 +88,10 @@ docs(
             "mount_at": "baselibs/components/result",
         },
         {
+            "bundle": "//score/scope_exit:docs",
+            "mount_at": "baselibs/components/scope_exit",
+        },
+        {
             "bundle": "//score/static_reflection_with_serialization:docs",
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },

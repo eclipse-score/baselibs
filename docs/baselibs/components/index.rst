@@ -18,9 +18,8 @@ Components
 .. toctree::
    :maxdepth: 1
 
-    abi_compatible_data_types/docs/index
+   abi_compatible_data_types/docs/index
 
-   
 Overview
 ==========
 
@@ -48,6 +47,7 @@ Overview
   as Linux and QNX.
 - :need:`doc__result`: Provides a unified approach to error handling without exceptions, conforming to C++23
   ``std::expected``.
+- :need:`doc__scope_exit`: Provides RAII-based scope guards that invoke a callable on scope exit unless released.
 - :need:`doc__static_reflection_with_serialization`: A header-only library for binary serialization,
   deserialization, and compile-time type reflection of heterogenuous C++ data structures with focus
   on compile-time safety and efficiency of serialization, as well as efficiency of filtering by
