@@ -67,6 +67,11 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":bitmanipulation",
+        ":bitmask_operators",
+    ],
+    primary_need_id = "comp__baselibs_bit_manipulation",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

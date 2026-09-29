@@ -15,6 +15,16 @@ load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
+        "//score/language/safecpp/safe_math:safe_math",
+        "//score/language/safecpp/safe_atomics:try_atomic_add",
+        "//score/language/safecpp/scoped_function:scope",
+        "//score/language/safecpp/scoped_function:copyable_scoped_function",
+        "//score/language/safecpp/scoped_function:move_only_scoped_function",
+        "//score/language/safecpp/string_view:zstring_view",
+    ],
+    primary_need_id = "comp__baselibs_safecpp",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

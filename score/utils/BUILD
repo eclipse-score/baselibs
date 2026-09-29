@@ -78,6 +78,11 @@ clang_tidy_extra_checks(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":base64",
+        ":static_destruction_guard",
+    ],
+    primary_need_id = "comp__baselibs_utils",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
