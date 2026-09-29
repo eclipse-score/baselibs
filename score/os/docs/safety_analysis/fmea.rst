@@ -16,8 +16,8 @@
 FMEA (Failure Modes and Effects Analysis)
 =========================================
 
-.. document:: os FMEA
-   :id: doc__os_fmea
+.. document:: OSAL FMEA
+   :id: doc__osal_fmea
    :status: draft
    :version: 1
    :safety: ASIL_B
