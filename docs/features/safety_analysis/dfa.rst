@@ -219,7 +219,7 @@ DFA
 For all identified applicable failure initiators, the DFA is performed in the following section.
 
 .. feat_saf_dfa:: memory access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__memory_access
    :failure_id: UI_01_02
    :failure_effect: memory of using component may be corrupted leading to safety requirement violation
@@ -232,7 +232,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    out of bounds access should be detected by unit testing/sanitizers.
 
 .. feat_saf_dfa:: locked ressource
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__locked_ressource
    :failure_id: UI_01_04
    :failure_effect: Deadlock/Livelock leads to stalling of the execution
@@ -246,7 +246,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    "filesystem" component may fail on this but this is covered by common platform aou linked above.
 
 .. feat_saf_dfa:: concurrent file access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__conc_file_access
    :failure_id: SR_01_02
    :failure_effect: Concurrent file access may lead to corruption of the file
@@ -258,7 +258,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    The user has to care for concurrent file access. This is not covered by the filesytem library.
 
 .. feat_saf_dfa:: concurrent memory access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__conc_memory_access
    :failure_id: SR_01_10
    :failure_effect: Concurrent memory access may lead to corruption of the memory
@@ -270,7 +270,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    The user has to care for concurrent memory access. This is not covered by the bitmanipulation library.
 
 .. feat_saf_dfa:: blocked execution
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__blocked_execution
    :failure_id: UI_01_06
    :failure_effect: Using application is blocked from execution and thus cannot fulfill its safety function
@@ -283,7 +283,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    all blocks should be detected by unit testing.
 
 .. feat_saf_dfa:: CPU starvation
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==1]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
    :id: feat_saf_dfa__baselibs__cpu_starvation
    :failure_id: UI_01_10
    :failure_effect: CPU starvation leads to delayed execution and may violate safety timing requirements.

@@ -166,10 +166,9 @@ Note: If a Review ID is not applicable for your architecture, then state ""n/a" 
 The following static views in "valid" state and with "inspected" tag set are in the scope of this inspection:
 
 .. needtable::
-   :filter: docname is not None and "baselibs" in docname and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "architecture" in docname and status == "valid"
    :style: table
    :types: feat_arc_sta
-   :tags: baselibs
    :columns: id;status;tags
    :colwidths: 25,25,25
    :sort: title
@@ -177,10 +176,9 @@ The following static views in "valid" state and with "inspected" tag set are in 
 and the following dynamic views:
 
 .. needtable::
-   :filter: docname is not None and "baselibs" in docname and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "architecture" in docname and status == "valid"
    :style: table
    :types: feat_arc_dyn
-   :tags: baselibs
    :columns: id;status;tags
    :colwidths: 25,25,25
    :sort: title

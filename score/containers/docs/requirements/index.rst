@@ -35,7 +35,7 @@ Functional Requirements
    :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==1]
+   :satisfied_by: comp__baselibs_containers[version==2]
 
    The Containers library shall provide a fixed-size array container with construction-time size specification.
 
@@ -47,7 +47,7 @@ Functional Requirements
    :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==1]
+   :satisfied_by: comp__baselibs_containers[version==2]
 
    The Containers library shall provide an intrusive doubly-linked list based on the C++ standardization proposal P0406R1.
 
@@ -59,7 +59,7 @@ Functional Requirements
    :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==1]
+   :satisfied_by: comp__baselibs_containers[version==2]
 
    The Containers library shall provide a non-relocatable vector container that maintains stable element addresses.
 
@@ -75,7 +75,7 @@ Non-Functional Requirements
    :derived_from: feat_req__baselibs__containers_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==1]
+   :satisfied_by: comp__baselibs_containers[version==2]
 
    The Containers library shall provide deterministic behavior with no dynamic memory allocation.
 

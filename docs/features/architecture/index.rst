@@ -85,18 +85,14 @@ The decomposition of Baselibs into modular libraries is motivated by the need fo
 Static Architecture
 -------------------
 
-   ..
-      The fulfils in feat_arc_sta and feat_arc_dyn should be optional.
-      Issue: https://github.com/eclipse-score/process_description/issues/642
 
 .. feat_arc_sta:: Baselibs Static View
    :id: feat_arc_sta__baselibs__static_view_arch
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :version: 1
-   :fulfils: feat_req__baselibs__abi_containers[version==2], feat_req__baselibs__bitmanipulation[version==2], feat_req__baselibs__concurrency_library[version==2], feat_req__baselibs__containers_library[version==2], feat_req__baselibs__utils_library[version==2], feat_req__baselibs__filesystem_library[version==2], feat_req__baselibs__flatbuffers_library[version==2], feat_req__baselibs__json_library[version==2], feat_req__baselibs__memory_library[version==2], feat_req__baselibs__result_library[version==2]
-   :includes: logic_arc_int__baselibs__json[version==1], logic_arc_int__baselibs__memory_shared[version==1], logic_arc_int__baselibs__result[version==1], logic_arc_int__baselibs__bit_manipulation[version==1], logic_arc_int__baselibs__bit_mask_operator[version==1], logic_arc_int__baselibs__dynamic_array[version==1], logic_arc_int__baselibs__intrusive_list[version==1], logic_arc_int__baselibs__filesystem[version==1], logic_arc_int__baselibs__utils_base64[version==1], logic_arc_int__baselibs__utils_scoped_op[version==1], logic_arc_int__baselibs__promise[version==1], logic_arc_int__baselibs__future[version==1], logic_arc_int__baselibs__shared_future[version==1], logic_arc_int__baselibs__executor[version==1], logic_arc_int__baselibs__task[version==1], logic_arc_int__baselibs__task_result[version==1], logic_arc_int__baselibs__synchronized_queue[version==1], logic_arc_int__baselibs__condition_variable[version==1], logic_arc_int__baselibs__aborts_upon_ex[version==1], logic_arc_int__baselibs__coverage_termination[version==1], logic_arc_int__baselibs__safemath[version==1], logic_arc_int__baselibs__safeatomics[version==1], logic_arc_int__baselibs__scoped_function[version==1], logic_arc_int__baselibs__string_view[version==1]
+   :version: 2
+   :includes: logic_arc_int__baselibs__json[version==1], logic_arc_int__baselibs__memory_shared[version==1], logic_arc_int__baselibs__result[version==1], logic_arc_int__baselibs__bit_manipulation[version==1], logic_arc_int__baselibs__bit_mask_operator[version==1], logic_arc_int__baselibs__dynamic_array[version==1], logic_arc_int__baselibs__intrusive_list[version==1], logic_arc_int__baselibs__filesystem[version==1], logic_arc_int__baselibs__utils_base64[version==1], logic_arc_int__baselibs__utils_scoped_op[version==1], logic_arc_int__baselibs__promise[version==1], logic_arc_int__baselibs__future[version==1], logic_arc_int__baselibs__shared_future[version==1], logic_arc_int__baselibs__executor[version==1], logic_arc_int__baselibs__task[version==1], logic_arc_int__baselibs__task_result[version==1], logic_arc_int__baselibs__synchronized_queue[version==1], logic_arc_int__baselibs__condition_variable[version==1], logic_arc_int__baselibs__aborts_upon_ex[version==1], logic_arc_int__baselibs__coverage_termination[version==1], logic_arc_int__baselibs__safemath[version==1], logic_arc_int__baselibs__safeatomics[version==1], logic_arc_int__baselibs__scoped_function[version==1], logic_arc_int__baselibs__string_view[version==1], logic_arc_int__b_r__fixvec[version==1], logic_arc_int__b_r__inlinevec[version==1], logic_arc_int__b_r__fixqueue[version==1], logic_arc_int__b_r__inlqueue[version==1]
    :tags: inspected
    :belongs_to: feat__baselibs[version==1]
 
@@ -112,8 +108,8 @@ Static Architecture
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: feat_req__baselibs__abi_containers[version==2], feat_req__baselibs__bitmanipulation[version==2], feat_req__baselibs__concurrency_library[version==2], feat_req__baselibs__containers_library[version==2], feat_req__baselibs__utils_library[version==2], feat_req__baselibs__filesystem_library[version==2], feat_req__baselibs__flatbuffers_library[version==2], feat_req__baselibs__json_library[version==2], feat_req__baselibs__memory_library[version==2], feat_req__baselibs__result_library[version==2]
    :belongs_to: feat__baselibs[version==1]
+   :tags: inspected
 
    not needed, simple caller/callee sequence
 
@@ -126,4 +122,4 @@ The Baselibs feature exposes the following logical interfaces:
    :style: table
    :columns: title;id;status
    :sort: title
-   :filter: id in ['logic_arc_int__baselibs__json', 'logic_arc_int__baselibs__memory_shared', 'logic_arc_int__baselibs__result', 'logic_arc_int__baselibs__bit_manipulation', 'logic_arc_int__baselibs__bit_mask_operator', 'logic_arc_int__baselibs__dynamic_array', 'logic_arc_int__baselibs__intrusive_list', 'logic_arc_int__baselibs__filesystem', 'logic_arc_int__baselibs__utils_base64', 'logic_arc_int__baselibs__utils_scoped_op', 'logic_arc_int__baselibs__promise', 'logic_arc_int__baselibs__future', 'logic_arc_int__baselibs__shared_future', 'logic_arc_int__baselibs__executor', 'logic_arc_int__baselibs__task', 'logic_arc_int__baselibs__task_result', 'logic_arc_int__baselibs__synchronized_queue', 'logic_arc_int__baselibs__condition_variable', 'logic_arc_int__baselibs__aborts_upon_ex', 'logic_arc_int__baselibs__coverage_termination', 'logic_arc_int__baselibs__safemath', 'logic_arc_int__baselibs__safeatomics', 'logic_arc_int__baselibs__scoped_function', 'logic_arc_int__baselibs__string_view']
+   :filter: id in ['logic_arc_int__baselibs__json', 'logic_arc_int__baselibs__memory_shared', 'logic_arc_int__baselibs__result', 'logic_arc_int__baselibs__bit_manipulation', 'logic_arc_int__baselibs__bit_mask_operator', 'logic_arc_int__baselibs__dynamic_array', 'logic_arc_int__baselibs__intrusive_list', 'logic_arc_int__baselibs__filesystem', 'logic_arc_int__baselibs__utils_base64', 'logic_arc_int__baselibs__utils_scoped_op', 'logic_arc_int__baselibs__promise', 'logic_arc_int__baselibs__future', 'logic_arc_int__baselibs__shared_future', 'logic_arc_int__baselibs__executor', 'logic_arc_int__baselibs__task', 'logic_arc_int__baselibs__task_result', 'logic_arc_int__baselibs__synchronized_queue', 'logic_arc_int__baselibs__condition_variable', 'logic_arc_int__baselibs__aborts_upon_ex', 'logic_arc_int__baselibs__coverage_termination', 'logic_arc_int__baselibs__safemath', 'logic_arc_int__baselibs__safeatomics', 'logic_arc_int__baselibs__scoped_function', 'logic_arc_int__baselibs__string_view', 'logic_arc_int__b_r__fixvec', 'logic_arc_int__b_r__inlinevec', 'logic_arc_int__b_r__fixqueue', 'logic_arc_int__b_r__inlqueue']
