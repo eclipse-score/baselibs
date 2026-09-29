@@ -18,7 +18,7 @@ Container Component Architecture
 .. document:: Container Architecture
    :id: doc__containers_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -36,16 +36,10 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :tags: baselibs_containers
    :implements: logic_arc_int__baselibs__dynamic_array[version==1], logic_arc_int__baselibs__intrusive_list[version==1]
    :belongs_to: feat__baselibs[version==1]
-
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Containers Static view
    :id: comp_arc_sta__baselibs__containers
@@ -54,7 +48,7 @@ Static Architecture
    :status: valid
    :version: 2
    :fulfils: comp_req__containers__dynamic_array[version==1], comp_req__containers__intrusive_list[version==1], comp_req__containers__non_relocatable_vector[version==1], comp_req__containers__deterministic_behavior[version==1]
-   :belongs_to: comp__baselibs_containers[version==1]
+   :belongs_to: comp__baselibs_containers[version==2]
 
    .. needarch::
       :scale: 50
