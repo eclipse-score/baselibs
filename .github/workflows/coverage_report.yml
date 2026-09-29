@@ -70,7 +70,6 @@ jobs:
           path: coverage_artifact/
           include-hidden-files: true
           retention-days: 10
-
   # QNX on-target coverage (C++): the gcov backend of score_coverage. Tests run
   # in QEMU through score_qnx_unit_tests, which brings the .gcda counters
   # back. Same-repository branches only: the QNX secrets are not exposed to
