@@ -15,16 +15,9 @@
 Components
 ==========
 
-.. toctree::
-   :maxdepth: 1
-
-   abi_compatible_data_types/docs/index
-
-   
 Overview
 ==========
 
-- :need:`doc__abi_compatible_data_types`: ABI-compatible data types for zero-copy inter-process communication between C++ and Rust.
 - :need:`doc__bitmanipulation`: Utilities for bit manipulation.
 - :need:`doc__concurrency`: Provides a generic interface to execute any C++ callable in a parallel context,
   supporting various execution strategies (e.g., thread pool, timed execution), thread safety,
@@ -48,6 +41,7 @@ Overview
   as Linux and QNX.
 - :need:`doc__result`: Provides a unified approach to error handling without exceptions, conforming to C++23
   ``std::expected``.
+- :need:`doc__shared_layout`: Cross-Language Shared-Layout Data Types for zero-copy data exchange between C++ and Rust.
 - :need:`doc__static_reflection_with_serialization`: A header-only library for binary serialization,
   deserialization, and compile-time type reflection of heterogenuous C++ data structures with focus
   on compile-time safety and efficiency of serialization, as well as efficiency of filtering by

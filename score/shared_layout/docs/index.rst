@@ -12,17 +12,17 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. _abi_compatible_data_types_component:
+.. _shared_layout_component:
 
-ABI Compatible Data Types
-#########################
+Cross-Language Shared-Layout Data Types
+#######################################
 
-.. document:: ABI Compatible Data Types
-   :id: doc__abi_compatible_data_types
+.. document:: Cross-Language Shared-Layout Data Types
+   :id: doc__shared_layout
    :status: valid
    :version: 1
    :safety: ASIL_B
-   :tags: component_request, abi_compatible_data_types
+   :tags: component_request, shared_layout
    :security: YES
    :realizes: wp__cmpt_request[version==1]
 

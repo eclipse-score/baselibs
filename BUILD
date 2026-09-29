@@ -88,6 +88,10 @@ docs(
             "mount_at": "baselibs/components/result",
         },
         {
+            "bundle": "//score/shared_layout:docs",
+            "mount_at": "baselibs/components/shared_layout",
+        },
+        {
             "bundle": "//score/static_reflection_with_serialization:docs",
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },
