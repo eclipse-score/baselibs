@@ -85,7 +85,7 @@ docs(
         },
         {
             "bundle": "//score/os:docs",
-            "mount_at": "baselibs/components/os",
+            "mount_at": "baselibs/components/osal",
         },
         {
             "bundle": "//score/result:docs",
