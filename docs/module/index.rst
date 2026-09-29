@@ -20,7 +20,7 @@
               comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==2],
               comp__baselibs_containers_rust[version==2], comp__baselibs_filesystem[version==1],
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
-              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
+              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==2],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
               comp__baselibs_static_reflection[version==1]
    :status: valid
@@ -37,7 +37,7 @@
               comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==2],
               comp__baselibs_containers_rust[version==2], comp__baselibs_filesystem[version==1],
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
-              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
+              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==2],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
               comp__baselibs_static_reflection[version==1]
 

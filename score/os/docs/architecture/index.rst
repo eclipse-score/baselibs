@@ -35,9 +35,9 @@ Static Architecture
    :security: YES
    :safety: ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :tags: baselibs_os
-   :implements:
+   :implements: logic_arc_int__baselibs__os[version==1]
    :belongs_to: feat__baselibs[version==1]
 
 
@@ -46,9 +46,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 1
-   :fulfils: comp_req__os__env_get[version==1], comp_req__os__env_set[version==1], comp_req__os__env_unset[version==1]
-   :belongs_to: comp__baselibs_os[version==1]
+   :version: 2
+   :fulfils: comp_req__os__asil_b_operation_delegation[version==1], comp_req__os__qm_operation_delegation[version==1], comp_req__os__error_information[version==1]
+   :belongs_to: comp__baselibs_os[version==2]
 
    .. needarch::
       :scale: 50
