@@ -13,8 +13,8 @@
    # *******************************************************************************
 
 
-.. document:: OS Requirements Inspection Checklist
-   :id: doc__os_req_inspection
+.. document:: OSAL Requirements Inspection Checklist
+   :id: doc__osal_req_inspection
    :status: draft
    :version: 1
    :safety: ASIL_B

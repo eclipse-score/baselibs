@@ -37,7 +37,7 @@ Overview
   overflow-safe arithmetic, scoped callable execution, abort-on-exception enforcement, atomic overflow
   prevention, null-terminated string view utilities, and coverage data preservation in GTest death tests.
 - :need:`doc__memory`: Utility library for memory handling, including an abstraction layer for shared memory.
-- :need:`doc__os`: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
+- :need:`doc__osal`: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
   as Linux and QNX.
 - :need:`doc__result`: Provides a unified approach to error handling without exceptions, conforming to C++23
   ``std::expected``.

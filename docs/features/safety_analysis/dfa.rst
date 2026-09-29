@@ -18,11 +18,18 @@ DFA (Dependent Failure Analysis)
 
 .. document:: Baselibs DFA
    :id: doc__baselibs_dfa
-   :status: valid
-   :version: 1
+   :status: draft
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__feature_dfa[version==1]
+
+.. warning::
+
+   The OSAL interfaces and external operating system dependencies change the scope of the Baselibs architecture.
+   The applicability decisions and analysis below have not been reassessed for that change.
+   The carried-forward entries are invalid and do not establish sufficient mitigation for the updated architecture.
+   Reassessment and independent review are tracked in `#705 <https://github.com/eclipse-score/baselibs/issues/705>`_, following component request `#665 <https://github.com/eclipse-score/baselibs/issues/665>`_.
 
 
 Dependent Failure Initiators
@@ -219,78 +226,82 @@ DFA
 For all identified applicable failure initiators, the DFA is performed in the following section.
 
 .. feat_saf_dfa:: memory access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__memory_access
    :failure_id: UI_01_02
    :failure_effect: memory of using component may be corrupted leading to safety requirement violation
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
    :sufficient: no
-   :status: valid
-   :version: 1
+   :status: invalid
+   :version: 2
 
    All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
    out of bounds access should be detected by unit testing/sanitizers.
 
 .. feat_saf_dfa:: locked ressource
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__locked_ressource
    :failure_id: UI_01_04
    :failure_effect: Deadlock/Livelock leads to stalling of the execution
    :mitigated_by: feat_req__baselibs__memory_library[version==2],aou_req__platform__flow_monitoring[version==1]
-   :sufficient: yes
-   :status: valid
-   :version: 1
+   :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
+   :sufficient: no
+   :status: invalid
+   :version: 2
 
    Only components "filesystem" and "memory_shared" should have the problem ("bitmanipulation" should not be affected due to shortness of execution)
    "memory_shared" cares for this by above linked feature requirement and :need:`comp_req__memory__atomic_ops`.
    "filesystem" component may fail on this but this is covered by common platform aou linked above.
 
 .. feat_saf_dfa:: concurrent file access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__conc_file_access
    :failure_id: SR_01_02
    :failure_effect: Concurrent file access may lead to corruption of the file
    :mitigated_by: aou_req__filesystem__thread_safety[version==1]
-   :sufficient: yes
-   :status: valid
-   :version: 1
+   :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
+   :sufficient: no
+   :status: invalid
+   :version: 2
 
    The user has to care for concurrent file access. This is not covered by the filesytem library.
 
 .. feat_saf_dfa:: concurrent memory access
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__conc_memory_access
    :failure_id: SR_01_10
    :failure_effect: Concurrent memory access may lead to corruption of the memory
    :mitigated_by: aou_req__bitmanipulation__concurrent_access[version==1]
-   :sufficient: yes
-   :status: valid
-   :version: 1
+   :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
+   :sufficient: no
+   :status: invalid
+   :version: 2
 
    The user has to care for concurrent memory access. This is not covered by the bitmanipulation library.
 
 .. feat_saf_dfa:: blocked execution
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__blocked_execution
    :failure_id: UI_01_06
    :failure_effect: Using application is blocked from execution and thus cannot fulfill its safety function
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
    :sufficient: no
-   :status: valid
-   :version: 1
+   :status: invalid
+   :version: 2
 
    All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
    all blocks should be detected by unit testing.
 
 .. feat_saf_dfa:: CPU starvation
-   :violates: feat_arc_sta__baselibs__static_view_arch[version==2]
+   :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
    :id: feat_saf_dfa__baselibs__cpu_starvation
    :failure_id: UI_01_10
    :failure_effect: CPU starvation leads to delayed execution and may violate safety timing requirements.
    :mitigated_by: aou_req__platform__flow_monitoring[version==1]
-   :sufficient: yes
-   :status: valid
-   :version: 1
+   :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
+   :sufficient: no
+   :status: invalid
+   :version: 2
 
    Some care is taken to avoid using too much CPU time, but this cannot be covered fully.
    Platform level AoU asks applications with timing requirements to cover this by program flow monitoring.
