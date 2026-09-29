@@ -20,24 +20,26 @@
               comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==2],
               comp__baselibs_containers_rust[version==2], comp__baselibs_filesystem[version==1],
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
-              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
+              comp__baselibs_safecpp[version==1], comp__baselibs_osal[version==2],
+              comp__baselibs_osal_qm[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
               comp__baselibs_static_reflection[version==1]
    :status: valid
-   :version: 2
+   :version: 3
    :safety: ASIL_B
    :security: YES
 
 .. mod_view_sta:: Baselibs Static View
    :id: mod_view_sta__baselibs__baselibs
-   :version: 2
+   :version: 3
    :includes: comp__baselibs_json[version==2], comp__baselibs_json_wrapper[version==1],
               comp__baselibs_vajson[version==1],
               comp__baselibs_memory_shared[version==1], comp__baselibs_result[version==1],
               comp__baselibs_bit_manipulation[version==1], comp__baselibs_containers[version==2],
               comp__baselibs_containers_rust[version==2], comp__baselibs_filesystem[version==1],
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
-              comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
+              comp__baselibs_safecpp[version==1], comp__baselibs_osal[version==2],
+              comp__baselibs_osal_qm[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
               comp__baselibs_static_reflection[version==1]
 
