@@ -65,5 +65,12 @@ coverage:qnx_cov --nocache_test_results
 coverage:qnx_cov --combined_report=lcov
 coverage:qnx_cov --dynamic_mode=off
 coverage:qnx_cov --instrument_test_targets
+# Bazel guesses --instrumentation_filter from the packages of the test targets
+# and only strips a trailing "/tests" (plural) to reach the code under test.
+# Our tests live in "test" subpackages (score/os/test, score/os/utils/test,
+# ...), so the guess leaves the libraries out and the stock collector of the
+# gcov backend drops their counters: score/os showed 0 % on QNX. The LLVM
+# backend on Linux is unaffected (its merger does not consult the filter).
+coverage:qnx_cov --instrumentation_filter=^//score[/:]
 coverage:qnx_cov --coverage_output_generator=@bazel_tools//tools/test:lcov_merger
 coverage:qnx_cov --coverage_report_generator=//tools/coverage:gcov_reporter_wrapper
