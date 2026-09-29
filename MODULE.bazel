@@ -107,14 +107,6 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 # tested through futurecpp_internal, files without coverage data listed).
 bazel_dep(name = "score_coverage", version = "0.3.0", dev_dependency = True)
 
-# TEMPORARY: pins the 0.3.0 release commit until the registry entry
-# (eclipse-score/bazel_registry PR #519) is merged; then drop this override.
-git_override(
-    module_name = "score_coverage",
-    commit = "c2eb26aeec94",
-    remote = "https://github.com/eclipse-score/coverage_tool.git",
-)
-
 bazel_dep(name = "score_platform", version = "0.7.2")
 
 ## Configure the python toolchain
