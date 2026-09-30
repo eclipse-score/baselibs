@@ -37,7 +37,7 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_utils
-   :implements: logic_arc_int__baselibs__utils_base64[version==1],logic_arc_int__baselibs__utils_scoped_op[version==1]
+   :implements: logic_arc_int__baselibs__utils_base64[version==1]
    :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
@@ -80,21 +80,5 @@ Interfaces
    :version: 1
    :included_by: logic_arc_int__baselibs__utils_base64[version==1]
 
-.. logic_arc_int_op:: Constructor
-   :id: logic_arc_int_op__utils__scoped_op_construct
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
-
 .. needextend:: c.this_doc() and type == "logic_arc_int_op"
    :+tags: baselibs, utils
-
-.. logic_arc_int_op:: Destructor
-   :id: logic_arc_int_op__utils__scoped_op_destruct
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
