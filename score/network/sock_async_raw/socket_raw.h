@@ -31,7 +31,7 @@ class SocketRaw final : public SocketAsync, public std::enable_shared_from_this<
     std::int32_t WriteAsync(std::shared_ptr<std::vector<score::cpp::span<uint8_t>>> data,
                             AsyncCallback u_cb) noexcept override;
     std::int32_t ConnectAsync(AsyncConnectCallback cb) noexcept override;
-    ~SocketRaw();
+    ~SocketRaw() override;
 
   private:
     std::shared_ptr<SocketCtrl> sock_ctrl_;

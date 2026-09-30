@@ -86,7 +86,7 @@ class AtomicIndirectorFixture : public ::testing::Test
         EXPECT_EQ(AtomicIndirectorMock<int>::GetMockObject(), atomic_mock_.get());
     }
 
-    ~AtomicIndirectorFixture()
+    ~AtomicIndirectorFixture() override
     {
         // Cleanup mock object
         AtomicIndirectorMock<int>::SetMockObject(nullptr);

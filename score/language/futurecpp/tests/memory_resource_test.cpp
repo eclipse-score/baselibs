@@ -67,7 +67,7 @@ public:
 
     test_memory_resource(memory_resource* const upstream = score::cpp::pmr::new_delete_resource()) : upstream_{upstream} {}
 
-    ~test_memory_resource()
+    ~test_memory_resource() override
     {
         for (const auto& ai : allocations)
         {

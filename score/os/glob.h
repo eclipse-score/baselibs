@@ -82,7 +82,7 @@ class Glob : public ObjectSeam<Glob>
 
     virtual score::cpp::expected<MatchResult, Error> Match(const std::string& pattern,
                                                            const Glob::Flag flags) noexcept = 0;
-    virtual ~Glob() = default;
+    ~Glob() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Glob() = default;
     Glob(const Glob&) = delete;

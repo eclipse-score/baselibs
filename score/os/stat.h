@@ -39,8 +39,8 @@ struct StatBuffer
     std::uint64_t st_ino;
     std::uint64_t st_dev;
     std::uint64_t st_nlink;
-    std::uint64_t st_uid;
-    std::uint64_t st_gid;
+    std::int64_t st_uid;
+    std::int64_t st_gid;
     std::uint64_t st_rdev;
     std::int64_t st_size;
     std::int64_t atime;
@@ -104,7 +104,7 @@ class Stat : public ObjectSeam<Stat>
                                                        const char* const path,
                                                        const Mode mode,
                                                        const bool resolve_symlinks = true) const noexcept = 0;
-    virtual ~Stat() = default;
+    ~Stat() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Stat(const Stat&) = delete;
     Stat& operator=(const Stat&) = delete;

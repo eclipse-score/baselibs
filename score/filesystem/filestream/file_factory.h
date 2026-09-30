@@ -36,7 +36,7 @@ class FileFactory final : public IFileFactory
 {
   public:
     FileFactory() noexcept = default;
-    virtual ~FileFactory() noexcept = default;
+    ~FileFactory() noexcept override = default;
     FileFactory(const FileFactory&) = default;
     FileFactory& operator=(const FileFactory&) = default;
     FileFactory(FileFactory&&) noexcept = default;
