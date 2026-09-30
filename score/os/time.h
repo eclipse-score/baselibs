@@ -65,7 +65,7 @@ class Time : public ObjectSeam<Time>
     virtual score::cpp::expected<std::int32_t, Error> clock_getcpuclockid(const pid_t pid,
                                                                           clockid_t& clock_id) const noexcept = 0;
 
-    virtual ~Time() = default;
+    ~Time() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Time(const Time&) = delete;
     Time& operator=(const Time&) = delete;

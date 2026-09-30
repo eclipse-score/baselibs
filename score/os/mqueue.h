@@ -90,7 +90,7 @@ class Mqueue : public ObjectSeam<Mqueue>
     virtual score::cpp::expected_blank<Error> mq_close(const mqd_t mqdes) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> mq_getattr(const mqd_t mqdes, mq_attr& mqstat) const noexcept = 0;
 
-    virtual ~Mqueue() = default;
+    ~Mqueue() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Mqueue(const Mqueue&) = delete;
     Mqueue& operator=(const Mqueue&) = delete;
