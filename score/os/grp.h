@@ -15,6 +15,7 @@
 
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 
 #include <score/expected.hpp>
 
@@ -40,10 +41,9 @@ struct GroupBuffer
     // coverity[autosar_cpp14_a9_6_1_violation]
     char name[max_groupname_length + static_cast<std::size_t>(1)];
     // NOLINTEND(modernize-avoid-c-arrays)
-    // Rationale: Violation due to gid_t which is typedef as unsigned int, which is of non standard type,
-    // No harm for implementation.
+    // Rationale: GroupId wraps gid_t, whose width is platform defined by POSIX. No harm for implementation.
     // coverity[autosar_cpp14_a9_6_1_violation]
-    gid_t gid;
+    GroupId gid;
 };
 
 class Grp : public ObjectSeam<Grp>

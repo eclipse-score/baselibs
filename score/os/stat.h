@@ -16,6 +16,7 @@
 #include "score/bitmanipulation/bitmask_operators.h"
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 
 #include "score/expected.hpp"
 #include "score/memory.hpp"
@@ -39,8 +40,8 @@ struct StatBuffer
     std::uint64_t st_ino;
     std::uint64_t st_dev;
     std::uint64_t st_nlink;
-    std::int64_t st_uid;
-    std::int64_t st_gid;
+    UserId st_uid;
+    GroupId st_gid;
     std::uint64_t st_rdev;
     std::int64_t st_size;
     std::int64_t atime;

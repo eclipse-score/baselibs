@@ -167,11 +167,11 @@ class SpawnImpl final : public Spawn
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setnode(posix_spawnattr_t* attrp,
                                                                       std::uint32_t node) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_getcred(const posix_spawnattr_t* attrp,
-                                                                      uid_t* uid_p,
-                                                                      gid_t* gid_p) const noexcept override;
+                                                                      UserId* uid_p,
+                                                                      GroupId* gid_p) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_setcred(posix_spawnattr_t* attrp,
-                                                                      uid_t uid,
-                                                                      gid_t gid) const noexcept override;
+                                                                      UserId uid,
+                                                                      GroupId gid) const noexcept override;
     score::cpp::expected<std::int32_t, Error> posix_spawnattr_gettypeid(
         const posix_spawnattr_t* attrp,
         std::uint32_t* type_id_p) const noexcept override;

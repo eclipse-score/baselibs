@@ -32,7 +32,7 @@ TEST(GetGrNam, ReturnsCorrectBuffer)
     const auto group_name{"root"};
     const auto result = Grp::instance().getgrnam(group_name);
     ASSERT_TRUE(result.has_value());
-    EXPECT_EQ(result.value().gid, 0);
+    EXPECT_EQ(result.value().gid, GroupId{0});
     EXPECT_STREQ(result.value().name, group_name);
 }
 
@@ -61,11 +61,11 @@ TEST(GetGrNam, SecondCallDoesNotOverwriteBuffer)
     const auto result_daemon = Grp::instance().getgrnam(group_name_2);
 
     ASSERT_TRUE(result_root.has_value());
-    EXPECT_EQ(result_root.value().gid, 0);
+    EXPECT_EQ(result_root.value().gid, GroupId{0});
     EXPECT_STREQ(result_root.value().name, group_name_root);
 
     ASSERT_TRUE(result_daemon.has_value());
-    EXPECT_EQ(result_daemon.value().gid, group_number_2);
+    EXPECT_EQ(result_daemon.value().gid, GroupId{group_number_2});
     EXPECT_STREQ(result_daemon.value().name, group_name_2);
 }
 

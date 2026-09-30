@@ -30,8 +30,7 @@ namespace qnx
 class QnxUnistdImpl final : public QnxUnistd
 {
   public:
-    score::cpp::expected<std::int32_t, score::os::Error> setgroupspid(const std::int32_t gidsetsize,
-                                                                      const gid_t* const grouplist,
+    score::cpp::expected<std::int32_t, score::os::Error> setgroupspid(const score::cpp::span<const GroupId> grouplist,
                                                                       const pid_t pid) const noexcept override;
 };
 

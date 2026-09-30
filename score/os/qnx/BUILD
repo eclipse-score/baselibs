@@ -451,7 +451,9 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//visibility:public"],  # platform_only
     deps = [
+        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:user_id",
     ],
 )
 

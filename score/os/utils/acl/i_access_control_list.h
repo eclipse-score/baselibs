@@ -15,10 +15,10 @@
 
 #include "score/os/acl.h"
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 
 #include "score/expected.hpp"
 
-#include <sys/types.h>
 #include <vector>
 
 namespace score
@@ -31,7 +31,7 @@ namespace os
 class IAccessControlList
 {
   public:
-    using UserIdentifier = uid_t;
+    using UserIdentifier = UserId;
 
     /// \brief Assigns the given permission towards the given user. This can be invoked multiple times for any number of
     /// user and permission combinations.

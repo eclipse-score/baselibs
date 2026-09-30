@@ -301,14 +301,14 @@ TEST_F(FileUtilsTest, ValidateGroup_equalGroups)
     const auto gid = 78293;
     //  Given specific gid returned for a file
     auto getFileGid = [this](Unused, os::StatBuffer& buf, Unused) -> score::cpp::expected_blank<score::os::Error> {
-        buf.st_gid = gid;
+        buf.st_gid = os::GroupId{gid};
         return os_no_error;
     };
     EXPECT_CALL(*stat_mock_, stat(StrEq("/dir1/file1"), _, _)).WillOnce(getFileGid);
     //  and the same gid returned for a group
     auto getGroupGid = [](Unused) -> score::cpp::expected<os::GroupBuffer, score::os::Error> {
         os::GroupBuffer buf{};
-        buf.gid = gid;
+        buf.gid = os::GroupId{gid};
         return buf;
     };
     EXPECT_CALL(*grp_mock_, getgrnam(StrEq("group_name"))).WillOnce(getGroupGid);
@@ -328,14 +328,14 @@ TEST_F(FileUtilsTest, ValidateGroup_diffGroups)
     const auto gid2 = 39287;
     //  Given specific gid returned for a file
     auto getFileGid = [this](Unused, os::StatBuffer& buf, Unused) -> score::cpp::expected_blank<score::os::Error> {
-        buf.st_gid = gid1;
+        buf.st_gid = os::GroupId{gid1};
         return os_no_error;
     };
     EXPECT_CALL(*stat_mock_, stat(StrEq("/dir1/file1"), _, _)).WillOnce(getFileGid);
     //  and the another gid returned for a group
     auto getGroupGid = [](Unused) -> score::cpp::expected<os::GroupBuffer, score::os::Error> {
         os::GroupBuffer buf{};
-        buf.gid = gid2;
+        buf.gid = os::GroupId{gid2};
         return buf;
     };
     EXPECT_CALL(*grp_mock_, getgrnam(StrEq("group_name"))).WillOnce(getGroupGid);
@@ -356,14 +356,15 @@ TEST_F(FileUtilsTest, ChangeGroup_checkCalls)
     //  Given a 'gid' value
     auto getGroupGid = [](Unused) -> score::cpp::expected<os::GroupBuffer, score::os::Error> {
         os::GroupBuffer buf{};
-        buf.gid = gid;
+        buf.gid = os::GroupId{gid};
         return buf;
     };
     EXPECT_CALL(*grp_mock_, getgrnam(StrEq("group_name"))).WillOnce(Invoke(getGroupGid));
     //  Given a 'uid' value read
-    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(uid));
+    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(os::UserId{uid}));
     //  Expect call with read 'uid' and given 'gid'
-    EXPECT_CALL(*unistd_mock_, chown(StrEq("/dir1/file1"), Eq(uid), Eq(gid))).WillOnce(Return(os_no_error));
+    EXPECT_CALL(*unistd_mock_, chown(StrEq("/dir1/file1"), Eq(os::UserId{uid}), Eq(os::GroupId{gid})))
+        .WillOnce(Return(os_no_error));
 
     const auto result = unit_.ChangeGroup(path, group_name);
 
@@ -407,9 +408,10 @@ TEST_F(FileUtilsTest, ChangeGroup_checkOkChmodByGID)
     const auto gid = 4321;
 
     //  Given a 'uid' value read
-    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(uid));
+    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(os::UserId{uid}));
     //  Expect call with read 'uid' and given 'gid'
-    EXPECT_CALL(*unistd_mock_, chown(StrEq("/dir1/file1"), Eq(uid), Eq(gid))).WillOnce(Return(os_no_error));
+    EXPECT_CALL(*unistd_mock_, chown(StrEq("/dir1/file1"), Eq(os::UserId{uid}), Eq(os::GroupId{gid})))
+        .WillOnce(Return(os_no_error));
 
     const auto result = unit_.ChangeGroup(path, gid);
 
@@ -423,7 +425,7 @@ TEST_F(FileUtilsTest, ChangeGroup_checkNokChmodByGID)
     const auto gid = 4321;
 
     //  Given a 'uid' value read
-    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(uid));
+    EXPECT_CALL(*unistd_mock_, getuid()).WillOnce(Return(os::UserId{uid}));
     //  When chmod fails
     EXPECT_CALL(*unistd_mock_, chown(StrEq("/dir1/file1"), _, _)).WillOnce(Return(os_enoent));
 

@@ -117,36 +117,24 @@ std::string ComposeTempFilename(std::string original_filename) noexcept
     return metadata.value().mode;
 }
 
-// Supression: -1 is a value to indicate to the system that we don't intend to change the user id (Linux and QNX
-// compatible). Since -1 is equal to max value for unsigned type of variable we defined as cast -1U to uid_t.
-// coverity[autosar_cpp14_m5_3_2_violation]
-// coverity[autosar_cpp14_m5_19_1_violation]
-inline constexpr uid_t kDoNotChangeUID{static_cast<uid_t>(-1U)};
-
-// Supression: -1 is a value to indicate to the system that we don't intend to change the group id (Linux and QNX
-// compatible). Since -1 is equal to max value for unsigned type of variable we defined as cast -1U to gid_t.
-// coverity[autosar_cpp14_m5_3_2_violation]
-// coverity[autosar_cpp14_m5_19_1_violation]
-inline constexpr uid_t kDoNotChangeGID{static_cast<gid_t>(-1U)};
-
-[[nodiscard]] uid_t ExtractUid(const details::IdentityMetadata& metadata,
-                               const AtomicUpdateOwnershipFlags ownership_flag)
+[[nodiscard]] os::UserId ExtractUid(const details::IdentityMetadata& metadata,
+                                    const AtomicUpdateOwnershipFlags ownership_flag)
 {
-    const uid_t uid = metadata.uid;
-    if (((ownership_flag & kUseCurrentProcessUID) == kUseCurrentProcessUID) || (uid == ::getuid()))
+    const os::UserId uid = metadata.uid;
+    if (((ownership_flag & kUseCurrentProcessUID) == kUseCurrentProcessUID) || (uid == os::UserId{::getuid()}))
     {
-        return score::filesystem::kDoNotChangeUID;
+        return os::kUnchangedUserId;
     }
     return uid;
 }
 
-[[nodiscard]] gid_t ExtractGid(const details::IdentityMetadata& metadata,
-                               const AtomicUpdateOwnershipFlags ownership_flag)
+[[nodiscard]] os::GroupId ExtractGid(const details::IdentityMetadata& metadata,
+                                     const AtomicUpdateOwnershipFlags ownership_flag)
 {
-    const gid_t gid = metadata.gid;
-    if (((ownership_flag & kUseCurrentProcessGID) == kUseCurrentProcessGID) || (gid == ::getgid()))
+    const os::GroupId gid = metadata.gid;
+    if (((ownership_flag & kUseCurrentProcessGID) == kUseCurrentProcessGID) || (gid == os::GroupId{::getgid()}))
     {
-        return score::filesystem::kDoNotChangeGID;
+        return os::kUnchangedGroupId;
     }
     return gid;
 }
@@ -155,10 +143,10 @@ Result<void> AdjustOwnership(const Path& temp_path,
                              const details::IdentityMetadata& metadata,
                              const AtomicUpdateOwnershipFlags ownership_flag)
 {
-    const uid_t uid = ExtractUid(metadata, ownership_flag);
-    const gid_t gid = ExtractGid(metadata, ownership_flag);
+    const os::UserId uid = ExtractUid(metadata, ownership_flag);
+    const os::GroupId gid = ExtractGid(metadata, ownership_flag);
 
-    if ((uid == kDoNotChangeUID) && (gid == kDoNotChangeGID))
+    if ((uid == os::kUnchangedUserId) && (gid == os::kUnchangedGroupId))
     {
         return {};
     }
@@ -227,18 +215,8 @@ Result<IdentityMetadata> GetIdentityMetadata(const Path& path)
     }
 
     os::Stat::Mode mode = os::IntegerToMode(buffer.st_mode);
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
-    // loss."
-    // Rationale: QNX defined uid_t as uint32_t, so no data loss expected
-    // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
-    const auto uid = static_cast<uid_t>(buffer.st_uid);
-    // Suppress "AUTOSAR C++14 A4-7-1" rule finding. This rule states: "An integer expression shall not lead to data
-    // loss."
-    // Rationale: QNX defined gid_t as uint32_t, so no data loss expected
-    // coverity[autosar_cpp14_a4_7_1_violation : FALSE]
-    const auto gid = static_cast<gid_t>(buffer.st_gid);
 
-    return IdentityMetadata{mode, uid, gid};
+    return IdentityMetadata{mode, buffer.st_uid, buffer.st_gid};
 }
 
 }  // namespace details
