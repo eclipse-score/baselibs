@@ -18,7 +18,7 @@ Concurrency Component Architecture
 .. document:: Concurrency Architecture
    :id: doc__concurrency_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -41,11 +41,6 @@ Static Architecture
    :implements: logic_arc_int__baselibs__promise[version==1], logic_arc_int__baselibs__future[version==1], logic_arc_int__baselibs__shared_future[version==1], logic_arc_int__baselibs__executor[version==1], logic_arc_int__baselibs__task[version==1], logic_arc_int__baselibs__task_result[version==1], logic_arc_int__baselibs__synchronized_queue[version==1], logic_arc_int__baselibs__condition_variable[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Concurrency Static view
    :id: comp_arc_sta__baselibs__concurrency
@@ -61,6 +56,11 @@ Static Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------

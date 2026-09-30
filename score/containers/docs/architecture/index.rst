@@ -18,7 +18,7 @@ Container Component Architecture
 .. document:: Container Architecture
    :id: doc__containers_architecture
    :status: valid
-   :version: 2
+   :version: 3
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -26,7 +26,7 @@ Container Component Architecture
 Overview/Description
 --------------------
 
-see :need:`doc__containers_architecture`
+see :need:`doc__containers`
 
 Static Architecture
 -------------------
@@ -56,6 +56,10 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------
