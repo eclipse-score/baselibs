@@ -35,7 +35,6 @@ Functional Requirements
    :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :tags: inspected
    :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide an operation that converts a command-line argument array into an ordered collection of null-terminated string views.
@@ -48,7 +47,6 @@ Functional Requirements
    :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :tags: inspected
    :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide a forward-iterable operation that lazily splits a string view on a delimiter, preserves empty substrings required by delimiter placement, and performs no dynamic memory allocation.
@@ -61,7 +59,12 @@ Functional Requirements
    :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :tags: inspected
    :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
    The String Manipulation component shall provide a string-like adaptor that accepts supported string representations, exposes their content as a string view, compares by content, and produces equal hashes for equal content.
+
+.. needextend:: c.this_doc() and type == "comp_req"
+   :+tags: baselibs
+
+.. needextend:: c.this_doc() and type == "comp_req"
+   :+tags: string_manipulation

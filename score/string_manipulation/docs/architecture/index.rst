@@ -32,3 +32,12 @@ String Manipulation Architecture
    :belongs_to: feat__baselibs[version==1]
 
    The String Manipulation component contains helpers for command-line arguments, string-view splitting, and string-like comparisons.
+
+.. comp_arc_sta:: String Manipulation Static view
+   :id: comp_arc_sta__baselibs__string_manipulation
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__string_manipulation__args_conv[version==1], comp_req__string_manipulation__lazy_split[version==1], comp_req__string_manipulation__cmp_hash[version==1]
+   :belongs_to: comp__baselibs_string_manipulation[version==1]

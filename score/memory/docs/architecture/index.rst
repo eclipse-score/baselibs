@@ -37,7 +37,7 @@ Memory Shared Component Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__memory__shared_memory[version==1], comp_req__memory__offset_ptr[version==1], comp_req__memory__shared_container[version==1], comp_req__memory__inter_process_sync[version==1], comp_req__memory__bounds_check[version==1], comp_req__memory__endianness[version==1], comp_req__memory__sealed_shm[version==1], comp_req__memory__typed_memory[version==1], comp_req__memory__resource_registry[version==1], comp_req__memory__string_utils[version==1], comp_req__memory__atomic_ops[version==1], comp_req__memory__deterministic_alloc[version==1], comp_req__memory__address_independence[version==1]
+   :fulfils: comp_req__memory__shared_memory[version==1], comp_req__memory__offset_ptr[version==1], comp_req__memory__shared_container[version==1], comp_req__memory__inter_process_sync[version==1], comp_req__memory__bounds_check[version==1], comp_req__memory__endianness[version==1], comp_req__memory__sealed_shm[version==1], comp_req__memory__typed_memory[version==1], comp_req__memory__resource_registry[version==1], comp_req__memory__atomic_ops[version==1], comp_req__memory__deterministic_alloc[version==1], comp_req__memory__address_independence[version==1]
    :belongs_to: comp__baselibs_memory_shared[version==1]
 
    .. needarch::

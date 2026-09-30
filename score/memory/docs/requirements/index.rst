@@ -141,11 +141,11 @@ Functional Requirements
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__memory_library[version==2]
-   :status: valid
-   :version: 1
+   :status: invalid
+   :version: 2
    :satisfied_by: comp__baselibs_memory_shared[version==1]
 
-   The Memory library shall provide zero-allocation string utilities including splitting, comparison, and compile-time literals.
+   Retired: superseded by the String Manipulation component's own requirements (:need:`comp_req__string_manipulation__lazy_split`, :need:`comp_req__string_manipulation__cmp_hash`).
 
 .. comp_req:: Atomic Operations in Shared Memory
    :id: comp_req__memory__atomic_ops
