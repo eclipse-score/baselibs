@@ -1,0 +1,56 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Sanitizer configuration for C++ and Rust.
+# Runtime options, suppressions and the test wrapper come from @score_cpp_policies//sanitizers,
+# mirroring its sanitizers.bazelrc, which Bazel cannot import from an external module.
+# The `score_*` features are injected in MODULE.bazel and add `-g1`, so only stripping is left.
+build:_score_sanitizer_common --strip=never
+# Partial enablement of sanitizers for Rust. Compile-time checks are not available.
+# Final link of `rust_binary` and `rust_test` is routed through the C++ toolchain linker.
+build:_score_sanitizer_common --@rules_rust//rust/settings:experimental_use_cc_common_link=True
+# Allow `cc_common.link` to use allocator libraries with mangled symbols, as provided by rustc 1.90.
+build:_score_sanitizer_common --@rules_rust//rust/settings:experimental_use_allocator_libraries_with_mangled_symbols=True
+test:_score_sanitizer_common --run_under=@score_cpp_policies//sanitizers:wrapper
+
+build:asan --config=_score_sanitizer_common
+build:asan --features=score_asan
+build:asan --@score_cpp_policies//sanitizers/flags:asan=True
+build:asan --platform_suffix=asan
+
+build:ubsan --config=_score_sanitizer_common
+# Each toolchain knows only its own variant and ignores the other name.
+build:ubsan --features=score_ubsan_gcc
+build:ubsan --features=score_ubsan_clang
+build:ubsan --@score_cpp_policies//sanitizers/flags:ubsan=True
+build:ubsan --platform_suffix=ubsan
+
+build:lsan --config=_score_sanitizer_common
+build:lsan --features=score_lsan
+build:lsan --@score_cpp_policies//sanitizers/flags:lsan=True
+build:lsan --platform_suffix=lsan
+
+build:tsan --config=_score_sanitizer_common
+build:tsan --features=score_tsan
+build:tsan --@score_cpp_policies//sanitizers/flags:tsan=True
+build:tsan --platform_suffix=tsan
+
+# Composite configs. The last --platform_suffix wins, overriding the single-sanitizer ones.
+build:asan_ubsan_lsan --config=asan
+build:asan_ubsan_lsan --config=ubsan
+build:asan_ubsan_lsan --config=lsan
+build:asan_ubsan_lsan --platform_suffix=asan_ubsan_lsan
+
+build:tsan_ubsan --config=tsan
+build:tsan_ubsan --config=ubsan
+build:tsan_ubsan --platform_suffix=tsan_ubsan
