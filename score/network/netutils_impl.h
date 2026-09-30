@@ -24,7 +24,7 @@ class NetutilsImpl final : public Netutils
 {
   public:
     NetutilsImpl() = default;
-    ~NetutilsImpl() = default;
+    ~NetutilsImpl() override = default;
 
     score::cpp::expected<std::uint32_t, score::os::Error> get_net_mask(
         const std::string& ifc_name) const noexcept override;

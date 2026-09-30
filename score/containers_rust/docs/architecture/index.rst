@@ -18,7 +18,7 @@ Rust Containers Architecture
 .. document:: Rust Containers Architecture
    :id: doc__containers_rust_architecture
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: NO
    :realizes: wp__component_arch[version==1]
@@ -38,7 +38,17 @@ The implementation of the containers library comprises two main parts:
 Static Architecture
 -------------------
 
-.. comp_arc_sta:: Rust Containers
+.. comp:: Rust Containers
+   :id: comp__baselibs_containers_rust
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 2
+   :implements: logic_arc_int__b_r__fixvec[version==1], logic_arc_int__b_r__inlinevec[version==1], logic_arc_int__b_r__fixqueue[version==1], logic_arc_int__b_r__inlqueue[version==1]
+   :belongs_to: feat__baselibs[version==1]
+   :tags: baselibs_rust_containers_rust
+
+.. comp_arc_sta:: Rust Containers Static View
    :id: comp_arc_sta__baselibs_rust__containers_rust
    :security: YES
    :safety: ASIL_B
@@ -46,7 +56,7 @@ Static Architecture
    :version: 1
    :tags: baselibs_rust_containers_rust
    :fulfils: comp_req__containers_rust__fixed_vector[version==1], comp_req__containers_rust__inline_vector[version==1], comp_req__containers_rust__fixed_queue[version==1], comp_req__containers_rust__inline_queue[version==1]
-   :belongs_to: comp__baselibs_containers_rust[version==1]
+   :belongs_to: comp__baselibs_containers_rust[version==2]
 
    .. needarch::
       :scale: 50

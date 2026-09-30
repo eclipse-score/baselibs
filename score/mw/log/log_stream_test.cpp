@@ -93,7 +93,7 @@ template <typename T>
 class DurationTest : public testing::Test
 {
   public:
-    ~DurationTest() {}
+    ~DurationTest() override {}
 
   public:
     LogStream Unit()
