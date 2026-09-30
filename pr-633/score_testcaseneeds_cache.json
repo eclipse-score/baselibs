@@ -298482,7 +298482,7 @@
   {
     "name": "UnistdFixture__CloseFileDescriptor",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "129",
+    "line": "128",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298496,7 +298496,7 @@
   {
     "name": "UnistdFixture__UnlinkRemovesFile",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "152",
+    "line": "151",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298510,7 +298510,7 @@
   {
     "name": "UnistdFixture__UnlinkReturnsErrorIfNonExistingPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "174",
+    "line": "173",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298524,7 +298524,7 @@
   {
     "name": "UnistdFixture__PipeOpensWithoutError",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "191",
+    "line": "190",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298538,7 +298538,7 @@
   {
     "name": "UnistdFixture__DupReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "209",
+    "line": "208",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298552,7 +298552,7 @@
   {
     "name": "UnistdFixture__DupReturnsNoErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "221",
+    "line": "220",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298566,7 +298566,7 @@
   {
     "name": "UnistdFixture__Dup2ReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "235",
+    "line": "234",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298580,7 +298580,7 @@
   {
     "name": "UnistdFixture__ReadReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "247",
+    "line": "246",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298594,7 +298594,7 @@
   {
     "name": "UnistdFixture__PReadReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "262",
+    "line": "261",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298608,7 +298608,7 @@
   {
     "name": "UnistdFixture__PReadReturnsNonErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "277",
+    "line": "276",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298622,7 +298622,7 @@
   {
     "name": "UnistdFixture__WriteReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "297",
+    "line": "296",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298636,7 +298636,7 @@
   {
     "name": "UnistdFixture__PWriteReturnsNonErrorIfPassPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "312",
+    "line": "311",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298650,7 +298650,7 @@
   {
     "name": "UnistdFixture__PWriteReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "332",
+    "line": "331",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298664,7 +298664,7 @@
   {
     "name": "UnistdFixture__LSeekReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "347",
+    "line": "346",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298678,7 +298678,7 @@
   {
     "name": "UnistdFixture__LSeekReturnsNonErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "359",
+    "line": "358",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298692,7 +298692,7 @@
   {
     "name": "UnistdFixture__FTruncateReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "377",
+    "line": "376",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298706,7 +298706,7 @@
   {
     "name": "UnistdFixture__FTruncateNonErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "389",
+    "line": "388",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298720,7 +298720,7 @@
   {
     "name": "UnistdFixture__GetUiIdMatchSystemGetuid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "406",
+    "line": "405",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298734,7 +298734,7 @@
   {
     "name": "UnistdFixture__GetGidMatchSystemGetGid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "417",
+    "line": "416",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298748,7 +298748,7 @@
   {
     "name": "UnistdFixture__GetPidMatchSystemGetPid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "428",
+    "line": "427",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298762,7 +298762,7 @@
   {
     "name": "UnistdFixture__GetPpidMatchSystemGetPpid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "439",
+    "line": "438",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298776,7 +298776,7 @@
   {
     "name": "UnistdFixture__SetuidNotChangesUidIfPassInvalidId",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "450",
+    "line": "449",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298790,7 +298790,7 @@
   {
     "name": "UnistdFixture__SetGidNotChangesGidIfPassInvalidId",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "468",
+    "line": "467",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298804,7 +298804,7 @@
   {
     "name": "UnistdFixture__ReadLinkReturnsErrorIfPassEmptyPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "488",
+    "line": "487",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298818,7 +298818,7 @@
   {
     "name": "UnistdFixture__ReadLinkReturnsNoErrorIfPassValidPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "503",
+    "line": "502",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298832,7 +298832,7 @@
   {
     "name": "UnistdFixture__FSyncReturnsErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "533",
+    "line": "532",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298846,7 +298846,7 @@
   {
     "name": "UnistdFixture__FSyncReturnsNonErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "545",
+    "line": "544",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298860,7 +298860,7 @@
   {
     "name": "UnistdFixture__FDataSyncReturnsNonErrorIfPassInvalidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "562",
+    "line": "561",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298874,7 +298874,7 @@
   {
     "name": "UnistdFixture__FDataSyncReturnsNonErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "574",
+    "line": "573",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298888,7 +298888,7 @@
   {
     "name": "UnistdFixture__NanosleepReturnsNonErrorIfPassValidSleepParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "591",
+    "line": "590",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298902,7 +298902,7 @@
   {
     "name": "UnistdFixture__NanosleepReturnsErrorIfPassInvalidSleepParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "605",
+    "line": "604",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298916,7 +298916,7 @@
   {
     "name": "UnistdFixture__SysconfReturnsErrorIfPassInvalidParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "618",
+    "line": "617",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298930,7 +298930,7 @@
   {
     "name": "UnistdFixture__SysconfReturnsNonErrorIfPassValidParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "630",
+    "line": "629",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298944,7 +298944,7 @@
   {
     "name": "UnistdFixture__LinkReturnsErrorIfPassEmptyPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "642",
+    "line": "641",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298958,7 +298958,7 @@
   {
     "name": "UnistdFixture__LinkReturnsNonErrorIfPassValidPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "654",
+    "line": "653",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298972,7 +298972,7 @@
   {
     "name": "UnistdFixture__SymlinkReturnsErrorIfPassEmptyPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "672",
+    "line": "671",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -298986,7 +298986,7 @@
   {
     "name": "UnistdFixture__SymlinkReturnsNonErrorIfPassValidPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "684",
+    "line": "683",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299000,7 +299000,7 @@
   {
     "name": "UnistdFixture__ChdirReturnsErrorIfPassEmptyPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "702",
+    "line": "701",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299014,7 +299014,7 @@
   {
     "name": "UnistdFixture__ChdirReturnsNonErrorIfPassValidPath",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "714",
+    "line": "713",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299028,7 +299028,7 @@
   {
     "name": "UnistdFixture__ChownReturnsErrorIfPassInvalidParams",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "726",
+    "line": "725",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299042,7 +299042,7 @@
   {
     "name": "UnistdFixture__ChownReturnsNonErrorIfPassValidParams",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "738",
+    "line": "737",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299056,7 +299056,7 @@
   {
     "name": "UnistdFixture__GetcwdReturnsErrorIfPassNullBuffer",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "756",
+    "line": "755",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299070,7 +299070,7 @@
   {
     "name": "UnistdFixture__GetcwdReturnsNonErrorIfPassAllocatedBuffer",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "769",
+    "line": "768",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299084,7 +299084,7 @@
   {
     "name": "UnistdFixture__AccessMatchesReadWriteAccessForExistingFile",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "782",
+    "line": "781",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299098,7 +299098,7 @@
   {
     "name": "UnistdFixture__AccessReturnsErrorIfPassNonExistingFile",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "810",
+    "line": "809",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299112,7 +299112,7 @@
   {
     "name": "UnistdFixture__AccessReturnsNonErrorForExistingFileWithReadWriteAccess",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "834",
+    "line": "833",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299126,7 +299126,7 @@
   {
     "name": "UnistdFixture__UnistdAccessReturnsErrorIfPassNonExistingFile",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "862",
+    "line": "861",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299140,7 +299140,7 @@
   {
     "name": "UnistdFixture__UnistdGettidReturnsPositiveTid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "886",
+    "line": "885",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299154,7 +299154,7 @@
   {
     "name": "UnistdFixture__UnistdAlarmSetsAndReportsPendingAlarm",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "897",
+    "line": "896",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299168,7 +299168,7 @@
   {
     "name": "UnistdFixture__UnistdAlarmTriggersInExpectedTime",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "912",
+    "line": "911",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299182,7 +299182,7 @@
   {
     "name": "UnistdFixture__CloseReturnsErrIfPassInvalidParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "960",
+    "line": "959",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299196,7 +299196,7 @@
   {
     "name": "UnistdFixture__Dup2ReturnsNoErrorIfPassValidParam",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "973",
+    "line": "972",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299210,7 +299210,7 @@
   {
     "name": "UnistdFixture__ReadReturnsNoErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "993",
+    "line": "992",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299224,7 +299224,7 @@
   {
     "name": "UnistdFixture__WriteReturnNoErrorIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1032",
+    "line": "1031",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299238,7 +299238,7 @@
   {
     "name": "UnistdFixture__SetuidReturnsErrorIfPassInvalidUid",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1065",
+    "line": "1064",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299252,7 +299252,7 @@
   {
     "name": "UnistdFixture__SetuidReturnsNoErrorIfPassValidID",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1082",
+    "line": "1081",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299266,7 +299266,7 @@
   {
     "name": "UnistdFixture__WriteReturnNoErrorAndSyncIfPassValidFd",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1102",
+    "line": "1101",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299280,7 +299280,7 @@
   {
     "name": "UnistdFixture__GetpwnamReturnsNoErrorIfPassValidUser",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1150",
+    "line": "1149",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299294,7 +299294,7 @@
   {
     "name": "UnistdFixture__GetpwnamReturnsErrorIfBufferIsToSmall",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1171",
+    "line": "1170",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299308,7 +299308,7 @@
   {
     "name": "UnistdFixture__GetpwnamReturnsErrorIfPassInvalidUser",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1190",
+    "line": "1189",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299322,7 +299322,7 @@
   {
     "name": "Unistd__DefaultShallReturnImplInstance",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "947",
+    "line": "946",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -299336,7 +299336,7 @@
   {
     "name": "Unistd__PMRDefaultShallReturnImplInstance",
     "file": "score/os/test/unistdTest.cpp",
-    "line": "1136",
+    "line": "1135",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
