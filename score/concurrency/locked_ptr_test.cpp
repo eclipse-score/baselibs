@@ -100,11 +100,10 @@ score::cpp::optional<IntWrapper*> OptMoveGet(LPtr2IntW lp)
 
 TEST(LockedPtrTest, ConstructionWithTypes)
 {
-    EXPECT_TRUE((std::is_constructible_v<LockedPtr<int, BasicLockableArchetype>, int*, BasicLockableArchetype>))
-        << "LockedPtr should be constructible with BasicLockableArchetype";
-    EXPECT_TRUE(
-        (std::is_constructible_v<LockedPtr<const int, BasicLockableArchetype>, const int*, BasicLockableArchetype>))
-        << "LockedPtr should be constructible with BasicLockableArchetype";
+    EXPECT_TRUE((std::is_constructible_v<LockedPtr<int, LockableWithOwnsLock>, int*, LockableWithOwnsLock>))
+        << "LockedPtr should be constructible with LockableWithOwnsLock";
+    EXPECT_TRUE((std::is_constructible_v<LockedPtr<const int, LockableWithOwnsLock>, const int*, LockableWithOwnsLock>))
+        << "LockedPtr should be constructible with LockableWithOwnsLock";
     EXPECT_TRUE(
         (std::is_constructible_v<LockedPtr<int, std::unique_lock<std::mutex>>, int*, std::unique_lock<std::mutex>>))
         << "LockedPtr should be constructible with std::unique_lock<std::mutex>";
@@ -112,20 +111,56 @@ TEST(LockedPtrTest, ConstructionWithTypes)
         (std::is_constructible_v<LockedPtr<int, std::shared_lock<std::mutex>>, int*, std::shared_lock<std::mutex>>))
         << "LockedPtr should be constructible with std::shared_lock<std::mutex>";
 
-    EXPECT_TRUE((!std::is_copy_constructible_v<LockedPtr<int, BasicLockableArchetype>>))
+    EXPECT_TRUE((!std::is_copy_constructible_v<LockedPtr<int, LockableWithOwnsLock>>))
         << "LockedPtr should not be copy-constructible";
-    EXPECT_TRUE((!std::is_copy_assignable_v<LockedPtr<int, BasicLockableArchetype>>))
+    EXPECT_TRUE((!std::is_copy_assignable_v<LockedPtr<int, LockableWithOwnsLock>>))
         << "LockedPtr should not be copy-assignable";
-    EXPECT_TRUE((std::is_move_constructible_v<LockedPtr<int, BasicLockableArchetype>>))
+    EXPECT_TRUE((std::is_move_constructible_v<LockedPtr<int, LockableWithOwnsLock>>))
         << "LockedPtr should be move-constructible";
-    EXPECT_TRUE((std::is_move_assignable_v<LockedPtr<int, BasicLockableArchetype>>))
+    EXPECT_TRUE((std::is_move_assignable_v<LockedPtr<int, LockableWithOwnsLock>>))
         << "LockedPtr should be move-assignable";
+}
+
+TEST(LockedPtrTest, ConstructionMaintainsLockOwnershipInvariant)
+{
+    {
+        IntWrapper value{42};
+        MockMutex mutex;
+        const auto pointer = LockedPtr(&value, std::unique_lock{mutex});
+
+        EXPECT_TRUE(mutex.is_locked()) << "a non-null LockedPtr should retain its lock";
+        EXPECT_TRUE(pointer) << "the non-null LockedPtr should retain its pointer";
+    }
+
+    {
+        MockMutex mutex;
+        const auto pointer = LockedPtr<IntWrapper, std::unique_lock<MockMutex>>{nullptr, std::unique_lock{mutex}};
+
+        EXPECT_FALSE(mutex.is_locked()) << "a null LockedPtr should release an owned lock";
+        EXPECT_FALSE(pointer) << "the null LockedPtr should remain null";
+    }
+
+    {
+        MockMutex mutex;
+        const auto pointer =
+            LockedPtr<IntWrapper, std::unique_lock<MockMutex>>{nullptr, std::unique_lock{mutex, std::defer_lock}};
+
+        EXPECT_FALSE(mutex.is_locked()) << "a null LockedPtr should leave an unowned lock unlocked";
+        EXPECT_FALSE(pointer) << "the null LockedPtr with an unowned lock should remain null";
+    }
+
+    {
+        std::unique_lock<MockMutex> lock{};
+        const auto pointer = LockedPtr<IntWrapper, std::unique_lock<MockMutex>>{nullptr, std::move(lock)};
+
+        EXPECT_FALSE(pointer) << "a null LockedPtr with an unassociated lock should remain null";
+    }
 }
 
 TEST(LockedPtrTest, SwappingWithTypes)
 {
-    EXPECT_TRUE((std::is_swappable_v<LockedPtr<int, BasicLockableArchetype>>))
-        << "LockedPtr with BasicLockableArchetype should be swappable";
+    EXPECT_TRUE((std::is_swappable_v<LockedPtr<int, LockableWithOwnsLock>>))
+        << "LockedPtr with LockableWithOwnsLock should be swappable";
     EXPECT_TRUE((std::is_swappable_v<LockedPtr<int, std::unique_lock<std::mutex>>>))
         << "LockedPtr with unique_lock should be swappable";
     EXPECT_TRUE((std::is_swappable_v<LockedPtr<int, std::shared_lock<std::shared_mutex>>>))
@@ -135,7 +170,7 @@ TEST(LockedPtrTest, SwappingWithTypes)
 TEST(LockedPtrTest, DereferenceTests)
 {
     int x = 10;
-    LPtr2int<BasicLockableArchetype> lp_basic{&x, BasicLockableArchetype{}};
+    LPtr2int<LockableWithOwnsLock> lp_basic{&x, LockableWithOwnsLock{}};
 
     EXPECT_EQ(*lp_basic, 10);
     EXPECT_EQ(*std::as_const(lp_basic), 10);
@@ -186,18 +221,18 @@ TEST(LockedPtrTest, UnlockGuardBasicLockableArchetypeTests)
 {
     int x = 42;
 
-    LPtr2int<BasicLockableArchetype> lp_basic{&x, BasicLockableArchetype{}};
+    LPtr2int<LockableWithOwnsLock> lp_basic{&x, LockableWithOwnsLock{}};
 
     {
         auto ug_basic = lp_basic.unlock_guard();
-        EXPECT_TRUE((std::is_same_v<decltype(ug_basic), UnlockGuard<BasicLockableArchetype>>))
-            << "unlock_guard() should return UnlockGuard<BasicLockableArchetype>";
+        EXPECT_TRUE((std::is_same_v<decltype(ug_basic), UnlockGuard<LockableWithOwnsLock>>))
+            << "unlock_guard() should return UnlockGuard<LockableWithOwnsLock>";
     }
 
     {
         auto cug_basic = std::as_const(lp_basic).unlock_guard();
-        EXPECT_TRUE((std::is_same_v<decltype(cug_basic), UnlockGuard<BasicLockableArchetype>>))
-            << "unlock_guard() should return UnlockGuard<BasicLockableArchetype>";
+        EXPECT_TRUE((std::is_same_v<decltype(cug_basic), UnlockGuard<LockableWithOwnsLock>>))
+            << "unlock_guard() should return UnlockGuard<LockableWithOwnsLock>";
     }
 }
 
@@ -507,6 +542,18 @@ TEST(LockedPtrTest, UnlockGuard)
     }
 
     EXPECT_TRUE(mut.is_locked());
+
+    IntWrapper* null_pointer{nullptr};
+    MockMutex null_mutex;
+    auto null_locked_pointer = LockedPtr(null_pointer, std::unique_lock{null_mutex});
+    EXPECT_FALSE(null_mutex.is_locked());
+
+    {
+        auto guard = null_locked_pointer.unlock_guard();
+        EXPECT_FALSE(null_mutex.is_locked());
+    }
+
+    EXPECT_FALSE(null_mutex.is_locked());
 }
 
 TEST(LockedPtrTest, TransformLvalueRefNotNull)

@@ -34,7 +34,7 @@ namespace concurrency
  * temporarily unlock the Lock while ensuring it gets locked again when the UnlockGuard goes out of scope.
  *
  * @tparam T Type of the object being pointed to.
- * @tparam Lock Type of the lock that manages access to the object. Must satisfy the BasicLockable concept.
+ * @tparam Lock Type of the lock that manages access to the object. Must satisfy LockWithOwnsLock.
  *
  * @details
  * LockedPtr is a smart pointer that combines a raw pointer to an object of type T and a lock of type Lock.
@@ -55,14 +55,21 @@ namespace concurrency
 template <typename T,
           typename Lock,
           typename =
-              std::enable_if_t<std::conjunction_v<is_basic_lockable<Lock>, std::negation<std::is_reference<Lock>>>>>
+              std::enable_if_t<std::conjunction_v<LockWithOwnsLock<Lock>, std::negation<std::is_reference<Lock>>>>>
 class LockedPtr
 {
   public:
     /**
      * @brief Constructs a LockedPtr that manages the given pointer and lock.
+     * @post A null LockedPtr does not own its lock.
      */
-    LockedPtr(T* ptr, Lock lock) : ptr_(ptr), lock_(std::move(lock)) {}
+    LockedPtr(T* ptr, Lock lock) : ptr_(ptr), lock_(std::move(lock))
+    {
+        if ((ptr_ == nullptr) && lock_.owns_lock())
+        {
+            lock_.unlock();
+        }
+    }
 
     /**
      * @brief Destructor that destroys the lock thereby releasing the lock.

@@ -50,20 +50,26 @@ class UnlockGuard
 {
   public:
     /**
-     * @brief Holds on to the Lockable and unlocks it.
-     * @pre The lockable must be locked before constructing the UnlockGuard.
+     * @brief Holds on to the Lockable and unlocks it if it owns a lock.
+     * @pre A lockable without owns_lock() must be locked before constructing the UnlockGuard.
      * @param lockable The Lockable object to be temporarily unlocked.
      */
-    explicit UnlockGuard(Lockable& lockable) : lockable_{lockable}
+    explicit UnlockGuard(Lockable& lockable) : lockable_{lockable}, relock_{OwnsLock(lockable)}
     {
-        lockable_.unlock();
+        if (relock_)
+        {
+            lockable_.unlock();
+        }
     }
     /**
-     * @brief Locks the Lockable again.
+     * @brief Locks the Lockable again if this guard unlocked it.
      */
     ~UnlockGuard()
     {
-        lockable_.lock();
+        if (relock_)
+        {
+            lockable_.lock();
+        }
     }
 
     /**
@@ -76,7 +82,17 @@ class UnlockGuard
     UnlockGuard& operator=(UnlockGuard&&) = delete;
 
   private:
+    static bool OwnsLock(const Lockable& lockable)
+    {
+        if constexpr (LockWithOwnsLock<Lockable>::value)
+        {
+            return lockable.owns_lock();
+        }
+        return true;
+    }
+
     Lockable& lockable_;
+    bool relock_;
 };
 
 }  // namespace score::concurrency

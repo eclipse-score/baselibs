@@ -75,6 +75,14 @@ TEST(UnlockGuardTest, UniqueLockUnlocksOnConstructionLocksOnDestruction)
     }
 
     EXPECT_TRUE(ul.owns_lock());
+
+    std::unique_lock deferred_lock{mut, std::defer_lock};
+    {
+        UnlockGuard guard{deferred_lock};
+        EXPECT_FALSE(deferred_lock.owns_lock());
+    }
+
+    EXPECT_FALSE(deferred_lock.owns_lock());
 }
 
 }  // namespace test

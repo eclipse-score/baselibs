@@ -14,6 +14,7 @@
 #define SCORE_LIB_CONCURRENCY_TYPE_TRAITS_H
 
 #include <type_traits>
+#include <utility>
 
 namespace score
 {
@@ -33,6 +34,16 @@ template <typename T>
 inline constexpr bool is_basic_lockable_v = is_basic_lockable<T>::value;
 template <typename T>
 using is_basic_lockable_t = typename is_basic_lockable<T>::type;
+
+template <typename T, typename = void>
+struct LockWithOwnsLock : std::false_type
+{
+};
+
+template <typename T>
+struct LockWithOwnsLock<T, std::void_t<decltype(std::declval<const T&>().owns_lock())>> : is_basic_lockable<T>
+{
+};
 
 }  // namespace score
 
