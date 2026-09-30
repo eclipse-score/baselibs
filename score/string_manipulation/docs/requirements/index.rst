@@ -51,7 +51,7 @@ Functional Requirements
 
    The String Manipulation component shall provide a forward-iterable operation that lazily splits a string view on a delimiter, preserves empty substrings required by delimiter placement, and performs no dynamic memory allocation.
 
-.. comp_req:: String-Like Comparison and Hashing
+.. comp_req:: String-Like Value Comparison
    :id: comp_req__string_manipulation__cmp_hash
    :reqtype: Functional
    :security: YES
@@ -61,7 +61,7 @@ Functional Requirements
    :version: 1
    :satisfied_by: comp__baselibs_string_manipulation[version==1]
 
-   The String Manipulation component shall provide a string-like adaptor that accepts supported string representations, exposes their content as a string view, compares by content, and produces equal hashes for equal content.
+   The String Manipulation component shall provide an adaptor that unifies distinct string-like representations (`std::string`, `std::string_view`, and string literals) into a single value type, so callers can compare and use them interchangeably by content, including as keys in associative containers, regardless of the underlying representation.
 
 .. needextend:: c.this_doc() and type == "comp_req"
    :+tags: baselibs
