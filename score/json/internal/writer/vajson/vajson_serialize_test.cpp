@@ -187,6 +187,44 @@ TEST(VajsonSerializeTest, SerializesFiniteDouble)
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"number\":1.5}"});
 }
+TEST(VajsonSerializeTest, PreservesDoublePrecision)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "serializing a double that is not representable as a float without narrowing it, cf. RFC-8259 "
+                   "section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Object object{};
+    object["third"] = Any{1.0 / 3.0};
+    object["pi"] = Any{3.14159265358979311599796346854};
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({"pi":3.141592653589793,"third":0.3333333333333333})"});
+}
+TEST(VajsonSerializeTest, SerializesNumbersInTheirStoredArithmeticType)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "serializing every arithmetic type a Number can hold, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    Object object{};
+    object["u8"] = Any{std::uint8_t{255U}};
+    object["u64"] = Any{std::numeric_limits<std::uint64_t>::max()};
+    object["i8"] = Any{std::int8_t{-128}};
+    object["i64"] = Any{std::numeric_limits<std::int64_t>::min()};
+    object["f"] = Any{0.1F};
+    object["d"] = Any{0.1};
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result,
+              std::string{R"({"d":0.1,"f":0.1,"i64":-9223372036854775808,"i8":-128,"u64":18446744073709551615,)"
+                          R"("u8":255})"});
+}
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
 TEST(VajsonSerializeTest, RejectsInfiniteDouble)
 {
