@@ -314224,7 +314224,7 @@
     "hash": "",
     "url": "",
     "TestType": "fault-injection",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__analysis_tracing__canary_integrity",
     "FullyVerifies": null
@@ -314238,7 +314238,7 @@
     "hash": "",
     "url": "",
     "TestType": "fault-injection",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__analysis_tracing__canary_integrity",
     "FullyVerifies": null
@@ -314252,7 +314252,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": "comp_req__analysis_tracing__canary_integrity",
     "FullyVerifies": null
