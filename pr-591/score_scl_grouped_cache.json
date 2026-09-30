@@ -12432,7 +12432,7 @@
     }
   },
   {
-    "need": "comp_req__scope_exit__scoped_execution",
+    "need": "comp_req__scope_exit__invoke_on_destruction",
     "links": {
       "CodeLinks": [],
       "TestLinks": [
@@ -12440,7 +12440,7 @@
           "name": "ScopeExitFixture__CreatingDoesNotCallDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 64,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__invoke_on_destruction",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12452,7 +12452,7 @@
           "name": "ScopeExitFixture__DestroyingCallsDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 81,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__invoke_on_destruction",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12464,31 +12464,47 @@
           "name": "ScopeExitFixture__DestroyingWithScopedFunctionCallsDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 102,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__invoke_on_destruction",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
           "repo_name": "local_repo",
           "hash": "",
           "url": ""
-        },
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__scope_exit__release",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
         {
           "name": "ScopeExitFixture__DestroyingAfterCallingReleaseDoesNotCallDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 124,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__release",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
           "repo_name": "local_repo",
           "hash": "",
           "url": ""
-        },
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__scope_exit__move_transfer",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
         {
           "name": "ScopeExitFixture__MoveConstructingGuardDoesNotCallDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 143,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__move_transfer",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12500,7 +12516,7 @@
           "name": "ScopeExitFixture__DestroyingMoveConstructedMovedFromGuardDoesNotCallDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 160,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__move_transfer",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12512,19 +12528,7 @@
           "name": "ScopeExitFixture__DestroyingMoveConstructedMovedToGuardCallsDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 179,
-          "need": "comp_req__scope_exit__scoped_execution",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "ScopeExitFixture__MoveAssigningGuardCallsDestructionHandlerOnMovedToGuard",
-          "file": "score/scope_exit/scope_exit_test.cpp",
-          "line": 198,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__move_transfer",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12536,7 +12540,7 @@
           "name": "ScopeExitFixture__DestroyingMoveAssignedMovedFromGuardDoesNotCallDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 216,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__move_transfer",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12548,7 +12552,27 @@
           "name": "ScopeExitFixture__DestroyingMoveAssignedMovedToGuardCallsDestructionHandler",
           "file": "score/scope_exit/scope_exit_test.cpp",
           "line": 235,
-          "need": "comp_req__scope_exit__scoped_execution",
+          "need": "comp_req__scope_exit__move_transfer",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__scope_exit__replace_on_assignment",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "ScopeExitFixture__MoveAssigningGuardCallsDestructionHandlerOnMovedToGuard",
+          "file": "score/scope_exit/scope_exit_test.cpp",
+          "line": 198,
+          "need": "comp_req__scope_exit__replace_on_assignment",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",

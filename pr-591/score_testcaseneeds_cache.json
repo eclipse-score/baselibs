@@ -343386,9 +343386,9 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "boundary-values",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
@@ -343402,7 +343402,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
@@ -343416,7 +343416,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
@@ -343428,9 +343428,9 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "boundary-values",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__release",
     "FullyVerifies": null
   },
   {
@@ -343444,7 +343444,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
@@ -343458,7 +343458,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
@@ -343472,7 +343472,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
@@ -343486,7 +343486,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__replace_on_assignment",
     "FullyVerifies": null
   },
   {
@@ -343500,7 +343500,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
@@ -343514,7 +343514,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__scope_exit__scoped_execution",
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   }
 ]
