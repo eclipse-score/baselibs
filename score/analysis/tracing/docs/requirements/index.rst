@@ -35,7 +35,6 @@ Functional Requirements
    :derived_from: feat_req__com__data_corruption[version==1]
    :status: valid
    :version: 1
-   :tags: inspected
    :satisfied_by: comp__baselibs_analysis_tracing[version==1]
 
-   The Analysis Tracing component shall wrap arbitrary data with configurable start and end canary values, detect corruption of either canary during data access, and report corrupted data as unavailable.
+   The Analysis Tracing component shall wrap arbitrary data with 32-bit or 64-bit start and end canary values, detect corruption of either canary during data access, and report corrupted data as unavailable.

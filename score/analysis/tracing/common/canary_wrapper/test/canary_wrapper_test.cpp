@@ -468,7 +468,7 @@ TEST(CanaryWrapperTest, DetectsOnlyStartCanaryCorruptionWithValidEnd)
     RecordProperty("Description",
                    "Check that corrupting only the start canary is rejected while the end canary remains valid.");
     RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "boundary-values");
     CanaryWrapper<int> wrapper(42);
 
     // Verify initial state is valid
@@ -489,7 +489,7 @@ TEST(CanaryWrapperTest, DetectsOnlyEndCanaryCorruptionWithValidStart)
     RecordProperty("Description",
                    "Check that corrupting only the end canary is rejected while the start canary remains valid.");
     RecordProperty("TestType", "fault-injection");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "boundary-values");
     CanaryWrapper<int> wrapper(42);
 
     // Verify initial state is valid
@@ -510,7 +510,7 @@ TEST(CanaryWrapperTest, BothCanariesValidReturnsData)
     RecordProperty("PartiallyVerifies", "comp_req__analysis_tracing__canary_integrity");
     RecordProperty("Description", "Check that data remains available when both canaries retain their valid values.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("DerivationTechnique", "boundary-values");
     CanaryWrapper<int> wrapper(42);
 
     // Both canaries are valid - this tests the "all false" path
