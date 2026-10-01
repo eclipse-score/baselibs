@@ -330,8 +330,8 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsWhenWriteAccessDenied)
     // stat returns a regular file
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IRUSR | S_IRGRP | S_IROTH};
-        buffer.st_uid = ::getuid();
-        buffer.st_gid = ::getgid();
+        buffer.st_uid = static_cast<decltype(buffer.st_uid)>(::getuid());
+        buffer.st_gid = static_cast<decltype(buffer.st_gid)>(::getgid());
         return score::cpp::expected_blank<os::Error>{};
     };
     EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));
@@ -352,8 +352,8 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateSucceedsWhenWriteAccessGranted)
     // stat returns a regular file
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IWUSR};
-        buffer.st_uid = ::getuid();
-        buffer.st_gid = ::getgid();
+        buffer.st_uid = static_cast<decltype(buffer.st_uid)>(::getuid());
+        buffer.st_gid = static_cast<decltype(buffer.st_gid)>(::getgid());
         return score::cpp::expected_blank<os::Error>{};
     };
     EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));
@@ -373,8 +373,8 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsOnNonRegularFile)
     // stat returns a non-regular file (e.g. a directory)
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFDIR};
-        buffer.st_uid = ::getuid();
-        buffer.st_gid = ::getgid();
+        buffer.st_uid = static_cast<decltype(buffer.st_uid)>(::getuid());
+        buffer.st_gid = static_cast<decltype(buffer.st_gid)>(::getgid());
         return score::cpp::expected_blank<os::Error>{};
     };
     EXPECT_CALL(*stat_, stat(_, _, _)).WillOnce(Invoke(set_mode));

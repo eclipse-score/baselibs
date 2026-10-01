@@ -96,7 +96,7 @@ class AtomicMockGuard
 class MeyerSingletonFixture : public test::SingleTestPerProcessFixture
 {
   public:
-    ~MeyerSingletonFixture()
+    ~MeyerSingletonFixture() override
     {
         InitializationTrackedClass::class_initialization_count_ = 0U;
     }

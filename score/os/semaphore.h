@@ -72,7 +72,7 @@ class Semaphore : public ObjectSeam<Semaphore>
     virtual score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem,
                                                            std::int32_t* const sval) const noexcept = 0;
 
-    virtual ~Semaphore() = default;
+    ~Semaphore() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Semaphore(const Semaphore&) = delete;
     Semaphore& operator=(const Semaphore&) = delete;

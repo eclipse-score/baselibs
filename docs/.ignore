@@ -1,0 +1,7 @@
+# reference_integration mounts this directory into its aggregated docs
+# build via sphinx_mounts, which walks it independently of Sphinx's own
+# exclude_patterns. baselibs' own docs/conf.py already excludes this file
+# from baselibs' native docs build; mirror that here so it stays excluded
+# from the aggregated build too, instead of only being reachable through a
+# toctree link added solely for reference_integration's benefit.
+cpp-style-guide.md

@@ -17,7 +17,7 @@ docs/           # Feature-level and module-level Sphinx docs.
 .github/        # CI workflows, CODEOWNERS, tools
 ```
 
-**Key root files:** `MODULE.bazel` (Bazel module definition and deps), `.bazelrc` (all build configs), `Cargo.toml` (Rust workspace).
+**Key root files:** `MODULE.bazel` (Bazel module definition and deps), `.bazelrc` (entry point, imports `score.bazelrc/`), `score.bazelrc/` (platform, sanitizer and lint configs), `REPO.bazel` (repository-wide toolchain features), `Cargo.toml` (Rust workspace).
 
 ## Core Libraries and Preferred Alternatives
 
@@ -31,26 +31,26 @@ A few `score/` libraries exist specifically to replace a standard C++ feature th
 
 ## Building and Testing
 
-Always use `--config=bl-x86_64-linux` for Linux x86_64 builds. This flag is **required** — bare `bazel build //...` will fail due to missing platform/toolchain configuration.
+Always use `--config=score-linux-x86_64` for Linux x86_64 builds. This flag is **required** — bare `bazel build //...` will fail due to missing platform/toolchain configuration.
 
 ### Build
 
 ```bash
-bazel build --config=bl-x86_64-linux //score/...   # All C++ and Rust libraries
+bazel build --config=score-linux-x86_64 //score/...   # All C++ and Rust libraries
 ```
 
 ### Test
 
 ```bash
-bazel test --config=bl-x86_64-linux //score/...    # All C++ and Rust tests
+bazel test --config=score-linux-x86_64 //score/...    # All C++ and Rust tests
 ```
 
 To test a single target, replace `//score/...` with the specific Bazel label, e.g., `//score/containers_rust:containers_test`.
 
-### Other Configs (reference only — prefer bl-x86_64-linux)
+### Other Configs (reference only — prefer score-linux-x86_64)
 
-- `--config=bl-aarch64-linux` — AArch64 Linux (cross-compile, needs `qemu-user`)
-- `--config=bl-x86_64-qnx` / `--config=bl-aarch64-qnx` — QNX (needs SDP credentials). If a user requests a QNX build, first confirm they have QNX SDP credentials configured. If not, direct them to obtain credentials before proceeding and do not generate QNX build commands.
+- `--config=score-linux-aarch64` — AArch64 Linux (cross-compile, needs `qemu-user`)
+- `--config=score-qnx-x86_64` / `--config=score-qnx-aarch64` — QNX (needs SDP credentials). If a user requests a QNX build, first confirm they have QNX SDP credentials configured. If not, direct them to obtain credentials before proceeding and do not generate QNX build commands.
 
 ## Formatting
 
@@ -111,7 +111,7 @@ Rust (`.rs`), Python (`.py`), Starlark (`.bzl`), BUILD files — use `#` comment
 ### clang-tidy (C++)
 
 ```bash
-bazel build --config=bl-x86_64-linux --config=clang-tidy -- //...
+bazel build --config=score-linux-x86_64 --config=clang-tidy -- //...
 ```
 
 Config: `.clang-tidy` at repo root.
@@ -132,7 +132,7 @@ bazel build --config=clippy -- //score/...
 ### C++ Sanitizers
 
 ```bash
-bazel test --config=bl-x86_64-linux --config=asan_ubsan_lsan --build_tests_only -- //score/...
+bazel test --config=score-linux-x86_64 --config=asan_ubsan_lsan --build_tests_only -- //score/...
 ```
 
 ## General coding commenting guidelines

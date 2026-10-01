@@ -280,13 +280,11 @@ TEST(VajsonSerializeTest, SerializesTopLevelList)
 }
 TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
 {
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",
-                   "pretty printing nested objects and lists with a four space indentation per nesting level, cf. "
-                   "RFC-8259 section 2");
-    RecordProperty("TestType", "requirements-based");                // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+                   "Check that pretty-printing nested objects and lists emits four-space indentation at every level.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     Object nested_object{};
     nested_object["number"] = Any{std::int32_t{7}};
