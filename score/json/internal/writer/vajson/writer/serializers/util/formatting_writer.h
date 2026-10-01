@@ -57,6 +57,7 @@ class FormattingWriter final
 
     /// \brief Returns the underlying output stream to write scalar values into
     /// \return The output stream passed on construction.
+    [[nodiscard]]
     auto Stream() const noexcept -> std::ostream&
     {
         return stream_;
