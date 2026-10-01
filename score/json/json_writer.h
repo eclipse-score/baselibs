@@ -17,6 +17,7 @@
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/json/i_json_writer.h"
 
+#include <cstdint>
 #include <string_view>
 
 namespace score
@@ -28,6 +29,15 @@ enum class FileSyncMode
 {
     kSynced,
     kUnsynced,
+};
+
+/// @brief Layout of the serialized JSON representation.
+enum class Formatting : std::uint8_t
+{
+    /// @brief No insignificant whitespace is emitted.
+    kCompact,
+    /// @brief The output is indented and spread over multiple lines to be human readable.
+    kPrettyPrint,
 };
 
 class JsonWriter final : public IJsonWriter
@@ -57,19 +67,19 @@ class JsonWriter final : public IJsonWriter
      *
      *  The `ownership` parameter is ignored when kUnsynced mode is used.
      *
-     *  The `pretty_print` parameter only takes effect with the vaJSON writer backend.
+     *  The `formatting` parameter only takes effect with the vaJSON writer backend.
      *  The json_serialize backend always pretty-prints and ignores it.
      *
      *  @param file_sync_mode: Determines the synchronization mode (see above).
      *  @param ownership: When using kSynced mode, determines how to adjust the ownership
      *                    of the temporary file created.
-     *  @param pretty_print: Whether the output is indented and spread over multiple lines to be human readable.
-     *                       Otherwise it is written without insignificant whitespace.
+     *  @param formatting: Layout of the output, either compact without insignificant whitespace (kCompact)
+     *                     or indented and spread over multiple lines to be human readable (kPrettyPrint).
      */
     explicit JsonWriter(FileSyncMode file_sync_mode = FileSyncMode::kUnsynced,
                         const score::filesystem::AtomicUpdateOwnershipFlags ownership =
                             score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
-                        const bool pretty_print = false) noexcept;
+                        const Formatting formatting = Formatting::kCompact) noexcept;
     JsonWriter(const JsonWriter&) = delete;
     JsonWriter(JsonWriter&&) noexcept = delete;
     JsonWriter& operator=(const JsonWriter&) = delete;
@@ -94,8 +104,8 @@ class JsonWriter final : public IJsonWriter
   private:
     FileSyncMode file_sync_mode_;
     const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership_;
-    /// @brief Whether the output is pretty-printed, if the selected writer backend supports it.
-    const bool pretty_print_;
+    /// @brief Layout of the output, if the selected writer backend supports it.
+    const Formatting formatting_;
 };
 
 }  // namespace json

@@ -157,8 +157,9 @@ class VajsonSerialize final
   public:
     /// @brief Constructs a serializer writing into out_stream
     /// @param out_stream The stream to write the serialized representation to. It must outlive this instance.
-    /// @param pretty_print Whether the output is indented and spread over multiple lines to be human readable.
-    explicit VajsonSerialize(std::ostream& out_stream, const bool pretty_print = false) noexcept;
+    /// @param formatting Layout of the output.
+    explicit VajsonSerialize(std::ostream& out_stream,
+                             const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact) noexcept;
     ~VajsonSerialize() noexcept = default;
     VajsonSerialize(const VajsonSerialize&) = delete;
     VajsonSerialize(VajsonSerialize&&) noexcept = default;
@@ -170,16 +171,22 @@ class VajsonSerialize final
 
   private:
     std::ostream& out_stream_;
-    /// @brief Whether the output is indented and spread over multiple lines
-    bool pretty_print_;
+    /// @brief Layout of the output
+    vajson::VajsonFormatting formatting_;
 };
 /// @brief Serializes json_data into a string
 /// @param json_data The data to serialize
-/// @param pretty_print Whether the output is indented and spread over multiple lines to be human readable.
+/// @param formatting Layout of the output.
 /// @return The serialized representation on success, error otherwise
-score::Result<std::string> VajsonToBuffer(const score::json::Object& json_data, const bool pretty_print = false);
-score::Result<std::string> VajsonToBuffer(const score::json::List& json_data, const bool pretty_print = false);
-score::Result<std::string> VajsonToBuffer(const score::json::Any& json_data, const bool pretty_print = false);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Object& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::List& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Any& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
 }  // namespace score::json
 
 namespace score::json::vajson

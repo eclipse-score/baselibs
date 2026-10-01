@@ -18,10 +18,18 @@
 namespace
 {
 
-template <typename T>
-score::Result<void> SerializeToStreamInternal(std::ostream& out_stream, const T& json_data, const bool pretty_print)
+score::json::vajson::VajsonFormatting ToVajsonFormatting(const score::json::Formatting formatting) noexcept
 {
-    score::json::VajsonSerialize serializer{out_stream, pretty_print};
+    return (formatting == score::json::Formatting::kPrettyPrint) ? score::json::vajson::VajsonFormatting::kPrettyPrint
+                                                                 : score::json::vajson::VajsonFormatting::kCompact;
+}
+
+template <typename T>
+score::Result<void> SerializeToStreamInternal(std::ostream& out_stream,
+                                              const T& json_data,
+                                              const score::json::Formatting formatting)
+{
+    score::json::VajsonSerialize serializer{out_stream, ToVajsonFormatting(formatting)};
     return serializer << json_data;
 }
 
@@ -32,38 +40,41 @@ namespace score::json::internal::writer
 
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::Object& json_data,
-                                      const bool pretty_print)
+                                      const score::json::Formatting formatting)
 {
-    return SerializeToStreamInternal(out_stream, json_data, pretty_print);
+    return SerializeToStreamInternal(out_stream, json_data, formatting);
 }
 
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::List& json_data,
-                                      const bool pretty_print)
+                                      const score::json::Formatting formatting)
 {
-    return SerializeToStreamInternal(out_stream, json_data, pretty_print);
+    return SerializeToStreamInternal(out_stream, json_data, formatting);
 }
 
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::Any& json_data,
-                                      const bool pretty_print)
+                                      const score::json::Formatting formatting)
 {
-    return SerializeToStreamInternal(out_stream, json_data, pretty_print);
+    return SerializeToStreamInternal(out_stream, json_data, formatting);
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::Object& json_data, const bool pretty_print)
+score::Result<std::string> SerializeToBuffer(const score::json::Object& json_data,
+                                             const score::json::Formatting formatting)
 {
-    return score::json::VajsonToBuffer(json_data, pretty_print);
+    return score::json::VajsonToBuffer(json_data, ToVajsonFormatting(formatting));
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::List& json_data, const bool pretty_print)
+score::Result<std::string> SerializeToBuffer(const score::json::List& json_data,
+                                             const score::json::Formatting formatting)
 {
-    return score::json::VajsonToBuffer(json_data, pretty_print);
+    return score::json::VajsonToBuffer(json_data, ToVajsonFormatting(formatting));
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data, const bool pretty_print)
+score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data,
+                                             const score::json::Formatting formatting)
 {
-    return score::json::VajsonToBuffer(json_data, pretty_print);
+    return score::json::VajsonToBuffer(json_data, ToVajsonFormatting(formatting));
 }
 
 }  // namespace score::json::internal::writer

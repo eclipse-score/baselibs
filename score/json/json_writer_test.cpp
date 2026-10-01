@@ -38,7 +38,6 @@ using ::testing::StrEq;
 // json_serialize always pretty-prints, whereas vajson only does so on request and emits compact JSON otherwise.
 // The tests request pretty printing, so both backends emit the same representation and share the expectations.
 // Which backend is linked is chosen by the //score/json:writer_library flag and communicated here via local_defines.
-constexpr bool kPrettyPrint{true};
 constexpr auto kKeySeparator = "\": ";
 
 class TestJsonList : public json::List
@@ -100,8 +99,9 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     template <typename Json, typename... OpenArgs>
     std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type, OpenArgs&&... open_args)
     {
-        score::json::JsonWriter writer{
-            type, score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID, kPrettyPrint};
+        score::json::JsonWriter writer{type,
+                                       score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                       Formatting::kPrettyPrint};
         std::string_view path_view{path};
         auto result = writer.ToFile(json, path_view, file_factory_fake, std::forward<OpenArgs>(open_args)...);
 
@@ -126,7 +126,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     typename TestFixture::SampleJson json;
     score::json::JsonWriter writer{FileSyncMode::kUnsynced,
                                    score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
-                                   kPrettyPrint};
+                                   Formatting::kPrettyPrint};
     std::string buffer = *writer.ToBuffer(json);
 
     EXPECT_EQ(buffer, TypeParam::expected);
@@ -233,7 +233,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
 }
 
 #if defined(WRITER_VAJSON)
-// Only vajson can emit compact JSON, json_serialize ignores the pretty print flag.
+// Only vajson can emit compact JSON, json_serialize ignores the formatting.
 TEST(JsonWriterTest, ToBufferCompact)
 {
     RecordProperty("Verifies", "::score::json::JsonWriter::ToBuffer");
@@ -243,7 +243,9 @@ TEST(JsonWriterTest, ToBufferCompact)
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Priority", "3");
 
-    score::json::JsonWriter writer{};
+    score::json::JsonWriter writer{FileSyncMode::kUnsynced,
+                                   score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                   Formatting::kCompact};
     const auto buffer = writer.ToBuffer(TestJsonObject{});
 
     ASSERT_TRUE(buffer.has_value());
@@ -300,7 +302,7 @@ TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)
     // Use the JsonWriter to serialize
     score::json::JsonWriter writer{FileSyncMode::kUnsynced,
                                    score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
-                                   kPrettyPrint};
+                                   Formatting::kPrettyPrint};
     auto result = writer.ToBuffer(obj);
     ASSERT_TRUE(result.has_value());
     const std::string json_str = *result;

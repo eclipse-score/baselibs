@@ -23,6 +23,7 @@ cc_library(
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
+        "@score_baselibs//score/json:writer_interface",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],

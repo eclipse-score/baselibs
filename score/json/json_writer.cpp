@@ -27,7 +27,7 @@ template <typename T>
 score::Result<void> ToFileInternal(const T& json_data,
                                    const std::string_view& file_path,
                                    score::filesystem::IFileFactory& file_factory,
-                                   const bool pretty_print)
+                                   const score::json::Formatting formatting)
 {
     const std::string file_path_string{file_path.data(), file_path.size()};
     const auto file = file_factory.Open(file_path_string, std::ios::out | std::ios::trunc);
@@ -37,7 +37,7 @@ score::Result<void> ToFileInternal(const T& json_data,
         return score::Result<void>{score::unexpect, error};
     }
 
-    return score::json::internal::writer::SerializeToStream(**file, json_data, pretty_print);
+    return score::json::internal::writer::SerializeToStream(**file, json_data, formatting);
 }
 
 template <typename T>
@@ -45,16 +45,16 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
                                          const std::string_view& file_path,
                                          score::filesystem::IFileFactory& file_factory,
                                          const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership,
-                                         const bool pretty_print)
+                                         const score::json::Formatting formatting)
 
 {
     return file_factory.AtomicUpdate(std::string{file_path}, std::ios::out | std::ios::trunc, atomic_ownership)
         .transform_error([](auto err) noexcept {
             return score::json::MakeError(score::json::Error::kInvalidFilePath, err.UserMessage());
         })
-        .and_then([&json_data, pretty_print](auto filestream) -> score::Result<void> {
+        .and_then([&json_data, formatting](auto filestream) -> score::Result<void> {
             auto serializer_result =
-                score::json::internal::writer::SerializeToStream(*filestream, json_data, pretty_print);
+                score::json::internal::writer::SerializeToStream(*filestream, json_data, formatting);
             return filestream->Close().and_then([serializer_result](auto&&...) noexcept {
                 return serializer_result;
             });
@@ -62,17 +62,17 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
 }
 
 template <typename T>
-score::Result<std::string> ToBufferInternal(const T& json_data, const bool pretty_print)
+score::Result<std::string> ToBufferInternal(const T& json_data, const score::json::Formatting formatting)
 {
-    return score::json::internal::writer::SerializeToBuffer(json_data, pretty_print);
+    return score::json::internal::writer::SerializeToBuffer(json_data, formatting);
 }
 
 }  // namespace
 
 score::json::JsonWriter::JsonWriter(FileSyncMode file_sync_mode,
                                     const score::filesystem::AtomicUpdateOwnershipFlags ownership,
-                                    const bool pretty_print) noexcept
-    : IJsonWriter{}, file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}, pretty_print_{pretty_print}
+                                    const Formatting formatting) noexcept
+    : IJsonWriter{}, file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}, formatting_{formatting}
 {
 }
 
@@ -85,8 +85,8 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::Object& j
                                       std::string_view{file_path.begin(), file_path.size()},
                                       *file_factory,
                                       atomic_ownership_,
-                                      pretty_print_)
-               : ToFileInternal(json_data, file_path, *file_factory, pretty_print_);
+                                      formatting_)
+               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& json_data,
@@ -98,8 +98,8 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& jso
                                       std::string_view{file_path.begin(), file_path.size()},
                                       *file_factory,
                                       atomic_ownership_,
-                                      pretty_print_)
-               : ToFileInternal(json_data, file_path, *file_factory, pretty_print_);
+                                      formatting_)
+               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json_data,
@@ -111,21 +111,21 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json
                                       std::string_view{file_path.begin(), file_path.size()},
                                       *file_factory,
                                       atomic_ownership_,
-                                      pretty_print_)
-               : ToFileInternal(json_data, file_path, *file_factory, pretty_print_);
+                                      formatting_)
+               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::Object& json_data)
 {
-    return ToBufferInternal(json_data, pretty_print_);
+    return ToBufferInternal(json_data, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::List& json_data)
 {
-    return ToBufferInternal(json_data, pretty_print_);
+    return ToBufferInternal(json_data, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::Any& json_data)
 {
-    return ToBufferInternal(json_data, pretty_print_);
+    return ToBufferInternal(json_data, formatting_);
 }

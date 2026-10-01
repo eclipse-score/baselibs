@@ -449,6 +449,8 @@ Independently of the parser, the serialization backend is selected by the `write
 
 bazel test --config=spp_host_clang //score/json/... --//score/json:writer_library="vajson"
 
-Mind that the two backends differ in the representation they emit: `json_serialize` pretty-prints with a four
-space indentation, whereas `vajson` emits compact JSON without any insignificant whitespace between tokens. Both
-produce valid, equivalent JSON, but consumers comparing serialized output byte-wise are affected by the choice.
+Mind that the two backends differ in the representation they emit: `json_serialize` always pretty-prints with a four
+space indentation, whereas `vajson` honors the `Formatting` passed to `JsonWriter`. With `Formatting::kCompact` (the
+default) it emits compact JSON without any insignificant whitespace between tokens. With `Formatting::kPrettyPrint` it
+also indents by four spaces, but writes empty arrays and objects as `[]` and `{}`. Both produce valid, equivalent JSON,
+but consumers comparing serialized output byte-wise are affected by the choice.

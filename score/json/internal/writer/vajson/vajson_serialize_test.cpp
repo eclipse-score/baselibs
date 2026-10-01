@@ -25,8 +25,6 @@ namespace score::json
 {
 namespace
 {
-constexpr bool kPrettyPrint{true};
-
 TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
 {
     RecordProperty("Verifies", "SCR-5310867");
@@ -301,7 +299,7 @@ TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
     Object root{};
     root["list"] = Any{std::move(list)};
     root["string"] = Any{std::string{"text"}};
-    const auto result = VajsonToBuffer(Any{std::move(root)}, kPrettyPrint);
+    const auto result = VajsonToBuffer(Any{std::move(root)}, vajson::VajsonFormatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({
     "list": [
@@ -332,7 +330,7 @@ TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
     root["empty_list"] = Any{List{}};
     root["empty_object"] = Any{Object{}};
     root["list"] = Any{std::move(list)};
-    const auto result = VajsonToBuffer(root, kPrettyPrint);
+    const auto result = VajsonToBuffer(root, vajson::VajsonFormatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({
     "empty_list": [],
@@ -342,8 +340,8 @@ TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
         []
     ]
 })"});
-    EXPECT_EQ(VajsonToBuffer(Object{}, kPrettyPrint).value(), std::string{"{}"});
-    EXPECT_EQ(VajsonToBuffer(List{}, kPrettyPrint).value(), std::string{"[]"});
+    EXPECT_EQ(VajsonToBuffer(Object{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"{}"});
+    EXPECT_EQ(VajsonToBuffer(List{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"[]"});
 }
 TEST(VajsonSerializeTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
 {
@@ -353,7 +351,7 @@ TEST(VajsonSerializeTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
     RecordProperty("TestType", "requirements-based");  // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    const auto result = VajsonToBuffer(Any{std::string{"value"}}, kPrettyPrint);
+    const auto result = VajsonToBuffer(Any{std::string{"value"}}, vajson::VajsonFormatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"\"value\""});
 }
@@ -369,7 +367,7 @@ TEST(VajsonSerializeTest, PrettyPrintsToStream)
     list.emplace_back(Any{std::uint8_t{5U}});
     list.emplace_back(Any{std::string{"value"}});
     std::ostringstream out_stream{};
-    VajsonSerialize serializer{out_stream, kPrettyPrint};
+    VajsonSerialize serializer{out_stream, vajson::VajsonFormatting::kPrettyPrint};
     const auto result = serializer << list;
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(out_stream.str(), std::string{"[\n    5,\n    \"value\"\n]"});
