@@ -22,6 +22,7 @@ docs_bundle(
         "//score/language/safecpp/scoped_function:scope",
         "//score/language/safecpp/scoped_function:copyable_scoped_function",
         "//score/language/safecpp/scoped_function:move_only_scoped_function",
+        "//score/language/safecpp/string_view:null_termination_check",
         "//score/language/safecpp/string_view:zstring_view",
     ],
     primary_need_id = "comp__baselibs_safecpp",

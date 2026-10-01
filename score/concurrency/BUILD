@@ -606,7 +606,11 @@ cc_library(
 
 docs_bundle(
     name = "docs",
-    code_targets = [":concurrency"],
+    code_targets = [
+        ":atomic_indirector",
+        ":concurrency",
+        "//score/concurrency/thread_load_tracking:thread_load_tracking",
+    ],
     primary_need_id = "comp__baselibs_concurrency",
     source_dir = "docs",
     visibility = ["//visibility:public"],
