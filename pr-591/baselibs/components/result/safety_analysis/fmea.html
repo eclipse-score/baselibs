@@ -406,7 +406,6 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../concurrency/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../containers/index.html">containers</a></li>
@@ -430,6 +429,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
@@ -497,7 +497,7 @@
                   
   <section id="fmea-failure-modes-and-effects-analysis">
 <h1>FMEA (Failure Modes and Effects Analysis)<a class="headerlink" href="#fmea-failure-modes-and-effects-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-238a9288">
+<div class="need_container docutils container" id="SNCB-5a36dd9a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__result_fmea">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -543,7 +543,7 @@
 <section id="failure-mode-list">
 <h2>Failure Mode List<a class="headerlink" href="#failure-mode-list" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 44 </span><span class="caption-text">Fault Models for sequence diagrams</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Fault Models for sequence diagrams</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 16.7%" />
 <col style="width: 33.3%" />
@@ -640,7 +640,7 @@
 <section id="fmea">
 <h2>FMEA<a class="headerlink" href="#fmea" title="Link to this heading">#</a></h2>
 <p>For all identified applicable failure initiators, the FMEA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-9b145e26">
+<div class="need_container docutils container" id="SNCB-d2164445">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__error_code">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -666,7 +666,7 @@
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_dyn__baselibs__result" title="comp_saf_fmea__result__error_code">comp_arc_dyn__baselibs__result</a></span></span></div>
+<div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__result" title="comp_saf_fmea__result__error_code">comp_arc_sta__baselibs__result</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -690,7 +690,7 @@ An Assumption of Use shall ensure the user verifies the error domain before inte
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-234b2691">
+<div class="need_container docutils container" id="SNCB-de43a125">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__error_message_life">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -717,7 +717,7 @@ An Assumption of Use shall ensure the user verifies the error domain before inte
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../requirements/index.html#aou_req__result__resource_lifetime" title="comp_saf_fmea__result__error_message_life">aou_req__result__resource_lifetime</a></span></span></div>
-<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_dyn__baselibs__result" title="comp_saf_fmea__result__error_message_life">comp_arc_dyn__baselibs__result</a></span></span></div>
+<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__result" title="comp_saf_fmea__result__error_message_life">comp_arc_sta__baselibs__result</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -742,7 +742,7 @@ or a separate AoU should be established for it.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b3e6fbb7">
+<div class="need_container docutils container" id="SNCB-9ec4e1be">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__unchecked">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -768,7 +768,7 @@ or a separate AoU should be established for it.</p></td>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../requirements/index.html#aou_req__result__error_reaction" title="comp_saf_fmea__result__unchecked">aou_req__result__error_reaction</a>, <a class="reference internal" href="../requirements/index.html#aou_req__result__value_handling" title="comp_saf_fmea__result__unchecked">aou_req__result__value_handling</a></span></span></div>
-<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_dyn__baselibs__result" title="comp_saf_fmea__result__unchecked">comp_arc_dyn__baselibs__result</a></span></span></div>
+<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__result" title="comp_saf_fmea__result__unchecked">comp_arc_sta__baselibs__result</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -791,7 +791,7 @@ the program will deterministically terminate. The provided Assumptions of Use re
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0dd384b3">
+<div class="need_container docutils container" id="SNCB-b7fa3823">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_saf_fmea table" id="comp_saf_fmea__result__stop_user">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -817,7 +817,7 @@ the program will deterministically terminate. The provided Assumptions of Use re
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a></span></span></div>
-<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_dyn__baselibs__result" title="comp_saf_fmea__result__stop_user">comp_arc_dyn__baselibs__result</a></span></span></div>
+<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#comp_arc_sta__baselibs__result" title="comp_saf_fmea__result__stop_user">comp_arc_sta__baselibs__result</a></span></span></div>
 </span></div>
 </div>
 </td>
