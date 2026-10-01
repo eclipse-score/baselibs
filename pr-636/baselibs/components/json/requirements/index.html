@@ -497,9 +497,53 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="requirements">
+  
+<style>
+.score-testcase-result {
+  font-weight: bold;
+}
+.score-testcase-result--passed {
+  color: #146c2e;
+}
+.score-testcase-result--failed {
+  color: #b42318;
+}
+.score-testcase-result--skipped {
+  color: #8a5300;
+}
+.score-testcase-result--disabled {
+  color: #5f6368;
+}
+html[data-theme="dark"] .score-testcase-result--passed {
+  color: #7ee787;
+}
+html[data-theme="dark"] .score-testcase-result--failed {
+  color: #ff7b72;
+}
+html[data-theme="dark"] .score-testcase-result--skipped {
+  color: #d29922;
+}
+html[data-theme="dark"] .score-testcase-result--disabled {
+  color: #c4cad2;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .score-testcase-result--passed {
+    color: #7ee787;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--failed {
+    color: #ff7b72;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--skipped {
+    color: #d29922;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--disabled {
+    color: #c4cad2;
+  }
+}
+</style>
+<section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-0d1036c5">
+<div class="need_container docutils container" id="SNCB-6d58a8c3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -544,7 +588,7 @@
 </div>
 <section id="general-requirements">
 <h2>General Requirements<a class="headerlink" href="#general-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-48322773">
+<div class="need_container docutils container" id="SNCB-0651c4f9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__deserialization">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -592,7 +636,7 @@ parse and check for well-formedness.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a8fb0178">
+<div class="need_container docutils container" id="SNCB-adf88576">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__serialization">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -613,6 +657,7 @@ parse and check for well-formedness.</p></td>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span><span class="needs_spacer">, </span><span class="needs_data">json</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/d1b3cb7028042258d9224278dd6b4b778738608c/score/json/internal/writer/vajson/vajson_serialize_test.cpp#L283">VajsonSerializeTest__PrettyPrintsNestedAny<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></span></span></div>
@@ -639,7 +684,7 @@ parse and check for well-formedness.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-796bbe40">
+<div class="need_container docutils container" id="SNCB-6c6a7e4d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__user_format">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -691,7 +736,7 @@ parse and check for well-formedness.</p></td>
 </section>
 <section id="user-friendly-api-for-information-exchange">
 <h2>User friendly API for information exchange<a class="headerlink" href="#user-friendly-api-for-information-exchange" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-600f8855">
+<div class="need_container docutils container" id="SNCB-59f8cd27">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__lang_idioms">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -738,7 +783,7 @@ parse and check for well-formedness.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-108f671d">
+<div class="need_container docutils container" id="SNCB-e120ebf7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__lang_infra">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -788,7 +833,7 @@ whenever possible and meaningful.</p>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-27e2f9df">
+<div class="need_container docutils container" id="SNCB-e5a1e4be">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__type_compatibility">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -841,7 +886,7 @@ validate that the requested return type is compatible with the type and value of
 </section>
 <section id="full-testability-for-the-user-facing-api">
 <h2>Full testability for the user facing API<a class="headerlink" href="#full-testability-for-the-user-facing-api" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-d410b661">
+<div class="need_container docutils container" id="SNCB-bdfb1dd8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__full_testability">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -893,7 +938,7 @@ validate that the requested return type is compatible with the type and value of
 </section>
 <section id="safety-impact">
 <h2>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-7938fe0c">
+<div class="need_container docutils container" id="SNCB-5da28846">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__json__asil">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -943,7 +988,7 @@ validate that the requested return type is compatible with the type and value of
 </section>
 <section id="aou-requirements">
 <h2>AoU Requirements<a class="headerlink" href="#aou-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-9de06b8c">
+<div class="need_container docutils container" id="SNCB-afd436a4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__json__data_integrity">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -989,7 +1034,7 @@ validate that the requested return type is compatible with the type and value of
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-1463bf7d">
+<div class="need_container docutils container" id="SNCB-9d20dd1f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__json__access_control">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">

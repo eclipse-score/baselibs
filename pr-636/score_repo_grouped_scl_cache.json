@@ -3567,6 +3567,23 @@
         }
       },
       {
+        "need": "comp_req__json__serialization",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
+              "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+              "line": 283,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__os__env_get",
         "links": {
           "CodeLinks": [],
