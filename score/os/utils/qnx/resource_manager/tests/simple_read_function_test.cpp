@@ -81,7 +81,7 @@ TEST_F(SimpleReadFunctionTest, getOffset_io_type_offset)
 {
     io_read_t msg;
     RESMGR_OCB_T ocb;
-    off_t expected_off = 0xf1;
+    const off_t expected_off = 0xf1;
 
     memset(&msg, 0, sizeof(msg));
     memset(&ocb, 0, sizeof(ocb));
@@ -98,7 +98,7 @@ TEST_F(SimpleReadFunctionTest, getOffset_io_type_none)
 {
     io_read_t msg;
     RESMGR_OCB_T ocb;
-    off_t expected_off = 0xf1;
+    const off_t expected_off = 0xf1;
 
     memset(&msg, 0, sizeof(msg));
     memset(&ocb, 0, sizeof(ocb));
@@ -118,7 +118,7 @@ TEST_F(SimpleReadFunctionTest, getOffset_invalid_io_type)
     memset(&msg, 0, sizeof(msg));
     memset(&ocb, 0, sizeof(ocb));
     // set invalid type
-    msg.i.xtype = ~_IO_XTYPE_OFFSET;
+    msg.i.xtype = ~static_cast<_Uint32t>(_IO_XTYPE_OFFSET);
 
     auto result = score::os::SimpleReadFunction::getOffset(&msg, &ocb);
     ASSERT_FALSE(result.has_value());
@@ -149,7 +149,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_preRead)
     io_read_t msg;
     RESMGR_OCB_T ocb;
     IOFUNC_ATTR_T attr;
-    off_t offset = 412;
+    const off_t offset = 412;
 
     // init the msg and ocb by valid expected data
     memset(&msg, 0, sizeof(msg));
@@ -177,7 +177,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_read)
     io_read_t msg;
     RESMGR_OCB_T ocb;
     IOFUNC_ATTR_T attr;
-    off_t offset = 412;
+    const off_t offset = 412;
 
     // init the msg and ocb by valid expected data
     memset(&msg, 0, sizeof(msg));
@@ -206,7 +206,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_return_error_due_to_post_read)
     io_read_t msg;
     RESMGR_OCB_T ocb;
     IOFUNC_ATTR_T attr;
-    off_t offset = 412;
+    const off_t offset = 412;
 
     // init the msg and ocb by valid expected data
     memset(&msg, 0, sizeof(msg));
@@ -238,7 +238,7 @@ TEST_F(SimpleReadFunctionTest, func_operator_returns_error_due_to_resmgr_msgwrit
     io_read_t msg;
     RESMGR_OCB_T ocb;
     IOFUNC_ATTR_T attr;
-    off_t offset = 412;
+    const off_t offset = 412;
 
     // init the msg and ocb by valid expected data
     memset(&msg, 0, sizeof(msg));

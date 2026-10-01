@@ -17,8 +17,6 @@ cc_library(
     name = "abortsuponexception",
     srcs = ["aborts_upon_exception.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],

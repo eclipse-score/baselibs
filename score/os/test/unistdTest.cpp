@@ -22,7 +22,6 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <chrono>
-#include <climits>
 #include <thread>
 
 #if defined(__QNX__)
@@ -1071,7 +1070,7 @@ TEST_F(UnistdFixture, SetuidReturnsErrorIfPassInvalidUid)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     const uid_t uid_before_set = unit_->getuid();
-    const uid_t invalid_id = UINT_MAX;
+    const uid_t invalid_id = static_cast<uid_t>(-1);
     const auto val = unit_->setuid(invalid_id);
     EXPECT_FALSE(val.has_value());
     EXPECT_EQ(val.error(), score::os::Error::Code::kInvalidArgument);

@@ -15,11 +15,34 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.4", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.3", dev_dependency = True)
+bazel_dep(name = "score_cpp_policies", version = "0.1.1", dev_dependency = True)
+
+# score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
+WARNING_FEATURES = [
+    "@score_cpp_policies//warnings/gcc/features:minimal_warnings",
+    "@score_cpp_policies//warnings/gcc/features:strict_warnings",
+    "@score_cpp_policies//warnings/gcc/features:all_wall_warnings",
+    "@score_cpp_policies//warnings/gcc/features:warnings_as_errors",
+]
+
+# Same for the sanitizer features. UBSan needs a compiler-specific variant on top of the base.
+SANITIZER_FEATURES = [
+    "@score_cpp_policies//sanitizers/features:debug_symbols",
+    "@score_cpp_policies//sanitizers/features:asan",
+    "@score_cpp_policies//sanitizers/features:ubsan_base",
+    "@score_cpp_policies//sanitizers/features:lsan",
+    "@score_cpp_policies//sanitizers/features:tsan",
+]
+
+GCC_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_gcc"]
+
+LLVM_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_clang"]
 
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
     target_cpu = "x86_64",
     target_os = "linux",
     use_default_package = True,
@@ -27,6 +50,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_gcc_aarch64_toolchain",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
     target_cpu = "aarch64",
     target_os = "linux",
     use_default_package = True,
@@ -34,6 +58,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
     sdp_version = "8.0.4",
     target_cpu = "x86_64",
     target_os = "qnx",
@@ -42,6 +67,7 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
     sdp_version = "8.0.4",
     target_cpu = "aarch64",
     target_os = "qnx",
@@ -125,7 +151,6 @@ python.toolchain(
 bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
-bazel_dep(name = "score_cpp_policies", version = "0.1.1", dev_dependency = True)
 bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
@@ -136,7 +161,7 @@ llvm.toolchain(
         # the LLVM coverage pipeline so death tests / abnormal exits still
         # flush coverage counters (only active under --config=llvm_cov).
         "@score_coverage//:enable_llvm_coverage_for_death_tests",
-    ],
+    ] + WARNING_FEATURES + LLVM_SANITIZER_FEATURES,
     link_libs = {"linux-x86_64": [
         "-lrt",
         "-latomic",
@@ -229,5 +254,5 @@ git_override(
 # Constraint values for specifying platforms and toolchains
 #
 #############################################################
-bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "platforms", version = "1.1.0")
 bazel_dep(name = "score_bazel_platforms", version = "1.1.0")

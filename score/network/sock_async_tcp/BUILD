@@ -20,8 +20,6 @@ cc_library(
         "socket_tcp.h",
     ],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     visibility = ["//visibility:public"],
@@ -40,8 +38,6 @@ cc_test(
     name = "socket_tcp_test",
     srcs = ["socket_tcp_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["unit"],

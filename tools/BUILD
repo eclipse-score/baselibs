@@ -35,6 +35,7 @@ copyright_checker(
         ".github",
         "BUILD",
         "MODULE.bazel",
+        "REPO.bazel",
         "bazel",
         "docs",
         "examples",
