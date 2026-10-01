@@ -18,7 +18,7 @@ Safecpp Component Architecture
 .. document:: Safecpp Architecture
    :id: doc__safecpp_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -26,7 +26,7 @@ Safecpp Component Architecture
 Overview/Description
 --------------------
 
-see :need:`doc__safecpp_architecture`
+see :need:`doc__safecpp`
 
 Static Architecture
 -------------------
@@ -41,11 +41,6 @@ Static Architecture
    :implements: logic_arc_int__baselibs__aborts_upon_ex[version==1], logic_arc_int__baselibs__coverage_termination[version==1], logic_arc_int__baselibs__safemath[version==1], logic_arc_int__baselibs__safeatomics[version==1], logic_arc_int__baselibs__scoped_function[version==1], logic_arc_int__baselibs__string_view[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Safecpp Static view
    :id: comp_arc_sta__baselibs__safecpp
@@ -62,8 +57,14 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
+
 Interfaces
 ----------
+
 .. logic_arc_int_op:: Allocate exception
    :id: logic_arc_int_op__safecpp__allocate_exception
    :security: YES

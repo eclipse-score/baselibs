@@ -15,6 +15,22 @@
 Memory Shared Component Architecture
 ************************************
 
+.. document:: Memory Shared Architecture
+   :id: doc__memory_shared_architecture
+   :status: valid
+   :version: 1
+   :safety: ASIL_B
+   :security: YES
+   :realizes: wp__component_arch[version==1]
+
+Overview/Description
+--------------------
+
+see :need:`doc__memory`
+
+Static Architecture
+-------------------
+
 .. comp:: Memory Shared
    :id: comp__baselibs_memory_shared
    :security: YES
@@ -25,11 +41,6 @@ Memory Shared Component Architecture
    :uses: logic_arc_int__os__fcntl[version==1], logic_arc_int__os__stat[version==1], logic_arc_int__os__mman[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Memory Shared Static view
    :id: comp_arc_sta__baselibs__memory_shared
@@ -45,6 +56,14 @@ Memory Shared Component Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
+
+Interfaces
+----------
 
 .. logic_arc_int_op:: Open
    :id: logic_arc_int_op__baselibs__open

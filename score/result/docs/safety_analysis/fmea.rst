@@ -101,7 +101,7 @@ FMEA
 For all identified applicable failure initiators, the FMEA is performed in the following section.
 
 .. comp_saf_fmea:: Result Error Code Cross-Domain Misinterpretation
-   :violates: comp_arc_dyn__baselibs__result[version==1]
+   :violates: comp_arc_sta__baselibs__result[version==1]
    :id: comp_saf_fmea__result__error_code
    :fault_id: CO_01_01
    :failure_effect: When retrieving error information, the error code is returned as a domain-agnostic integer. If the user interprets this code under a different error domain than the one that produced it, the error is misidentified, potentially leading to incorrect error reaction.
@@ -115,7 +115,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    An Assumption of Use shall ensure the user verifies the error domain before interpreting the error code.
 
 .. comp_saf_fmea:: Result Error Message Lifetime Violation
-   :violates: comp_arc_dyn__baselibs__result[version==1]
+   :violates: comp_arc_sta__baselibs__result[version==1]
    :id: comp_saf_fmea__result__error_message_life
    :fault_id: MF_01_05
    :failure_effect: The error message provided during error construction is stored as a non-owning reference. If the referenced data is no longer valid when the user retrieves the error message, accessing it results in undefined behavior.
@@ -131,7 +131,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    or a separate AoU should be established for it.
 
 .. comp_saf_fmea:: Result Unchecked Value or Error Access
-   :violates: comp_arc_dyn__baselibs__result[version==1]
+   :violates: comp_arc_sta__baselibs__result[version==1]
    :id: comp_saf_fmea__result__unchecked
    :fault_id: MF_01_06
    :failure_effect: If the user calls value without the result containing a value, or calls error without the result containing an error, the program will terminate. This may occur when the user does not check the state of the result before accessing it.
@@ -144,7 +144,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    the program will deterministically terminate. The provided Assumptions of Use require the user to check and handle both states before access.
 
 .. comp_saf_fmea:: Result Stop User
-   :violates: comp_arc_dyn__baselibs__result[version==1]
+   :violates: comp_arc_sta__baselibs__result[version==1]
    :id: comp_saf_fmea__result__stop_user
    :fault_id: EX_01_06
    :failure_effect: The user provides a transformation or error handling operation to the Result library. If this operation does not terminate (e.g., infinite loop), the calling execution is blocked indefinitely.

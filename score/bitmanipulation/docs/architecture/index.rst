@@ -18,7 +18,7 @@ Bitmanipulation Component Architecture
 .. document:: bitmanipulation Architecture
    :id: doc__bitmanipulation_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -41,11 +41,6 @@ Static Architecture
    :implements: logic_arc_int__baselibs__bit_manipulation[version==1],logic_arc_int__baselibs__bit_mask_operator[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Bit Manipulation Static view
    :id: comp_arc_sta__baselibs__bit_manipulation
@@ -62,20 +57,13 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
+
 Interfaces
 ----------
-
-.. .. logic_arc_int:: Bit Manipulation
-   :id: logic_arc_int__baselibs__bit_manipulation
-   :security: NO
-   :safety: ASIL_B
-   :status: valid
-
-.. .. logic_arc_int:: Bit Mask Operator
-   :id: logic_arc_int__baselibs__bit_mask_operator
-   :security: NO
-   :safety: ASIL_B
-   :status: valid
 
 .. logic_arc_int_op:: Set Bit
    :id: logic_arc_int_op__baselibs__set_bit
