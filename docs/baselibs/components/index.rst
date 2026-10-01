@@ -41,6 +41,7 @@ Overview
   as Linux and QNX.
 - :need:`doc__result`: Provides a unified approach to error handling without exceptions, conforming to C++23
   ``std::expected``.
+- :need:`doc__scope_exit`: Provides RAII-based scope guards that invoke a callable on scope exit unless released.
 - :need:`doc__shared_layout`: Cross-Language Shared-Layout Data Types for zero-copy data exchange between C++ and Rust.
 - :need:`doc__static_reflection_with_serialization`: A header-only library for binary serialization,
   deserialization, and compile-time type reflection of heterogenuous C++ data structures with focus
