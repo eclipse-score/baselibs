@@ -236,12 +236,10 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
 // Only vajson can emit compact JSON, json_serialize ignores the pretty print flag.
 TEST(JsonWriterTest, ToBufferCompact)
 {
-    RecordProperty("Verifies", "::score::json::JsonWriter::ToBuffer");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "writing compact json to string buffer, cf. RFC-8259 section 2");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description", "Check that JsonWriter emits compact object JSON through the vaJSON backend by default.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Priority", "3");
 
     score::json::JsonWriter writer{};
     const auto buffer = writer.ToBuffer(TestJsonObject{});
