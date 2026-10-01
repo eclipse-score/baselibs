@@ -206,7 +206,7 @@ class PthreadMockTest : public Test
         Pthread::set_testing_instance(mock_pthread);
     }
 
-    ~PthreadMockTest()
+    ~PthreadMockTest() override
     {
         Pthread::restore_instance();
     }

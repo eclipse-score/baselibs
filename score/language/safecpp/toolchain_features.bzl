@@ -10,8 +10,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+# Owned by @score_cpp_policies. `minimal_warnings` and `warnings_as_errors` are enabled
+# globally, so only the opt-in level belongs here.
 COMPILER_WARNING_FEATURES = [
-    "treat_warnings_as_errors",
     "strict_warnings",
-    "additional_warnings",
 ]

@@ -47,7 +47,7 @@ void IfaddrsMock::AddIfaddrsListEntry(const std::string& name,
     name.copy(new_ifa->ifa_name, std::string::npos);
 
     sockaddr_in sockaddr_in_aux{};
-    sockaddr_in_aux.sin_family = family_addr;
+    sockaddr_in_aux.sin_family = static_cast<sa_family_t>(family_addr);
     sockaddr_in_aux.sin_addr = in_addr{address};
     sockaddr_in_aux.sin_port = 0;
 

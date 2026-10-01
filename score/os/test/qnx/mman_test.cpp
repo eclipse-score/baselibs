@@ -59,7 +59,8 @@ TEST_F(MmanTestFixture, ShmCtlFailsWithInvalidPhysicalAddress)
     auto shm_open_result = ::shm_open(shm_name, O_RDWR | O_CREAT | O_EXCL, 0000);
 
     ASSERT_NE(shm_open_result, -1);
-    const auto result = unit_->shm_ctl(shm_open_result, SHMCTL_ANON | SHMCTL_TYMEM | SHMCTL_PHYS, -1, 4095);
+    const auto result =
+        unit_->shm_ctl(shm_open_result, SHMCTL_ANON | SHMCTL_TYMEM | SHMCTL_PHYS, static_cast<std::uint64_t>(-1), 4095);
 
     EXPECT_FALSE(result.has_value());
 
@@ -80,11 +81,12 @@ TEST_F(MmanTestFixture, ShmCtlSucceeds)
     auto open_result = ::posix_typed_mem_open(name, O_RDWR, POSIX_TYPED_MEM_ALLOCATE_CONTIG);
     ASSERT_NE(open_result, -1);
 
-    const char* shm_name = "/test_mmap1";
-    auto shm_open_result = ::shm_open(shm_name, O_RDWR | O_CREAT | O_EXCL, 0000);
+    const char* typed_shm_name = "/test_mmap1";
+    auto shm_open_result = ::shm_open(typed_shm_name, O_RDWR | O_CREAT | O_EXCL, 0000);
 
     ASSERT_NE(shm_open_result, -1);
-    const auto result = unit_->shm_ctl(shm_open_result, SHMCTL_ANON | SHMCTL_TYMEM | SHMCTL_PHYS, open_result, 0);
+    const auto result = unit_->shm_ctl(
+        shm_open_result, SHMCTL_ANON | SHMCTL_TYMEM | SHMCTL_PHYS, static_cast<std::uint64_t>(open_result), 0);
 
     EXPECT_TRUE(result.has_value());
     ASSERT_EQ(::close(shm_open_result), 0);
@@ -229,7 +231,7 @@ TEST_F(MmanTestFixture, ShmOpenHandleFailsWithInvalidHandle)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    shm_handle_t invalid_handle = -1;
+    shm_handle_t invalid_handle = static_cast<shm_handle_t>(-1);
     std::int32_t flags = O_RDWR;
 
     const auto result = unit_->shm_open_handle(invalid_handle, flags);

@@ -104,7 +104,7 @@ class Acl : public ObjectSeam<Acl>
     virtual score::cpp::expected<char*, score::os::Error> acl_to_text(const AclCollection& acl,
                                                                       ssize_t* const len_p) const noexcept = 0;
 
-    virtual ~Acl() = default;
+    ~Acl() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Acl(const Acl&) = delete;
     Acl& operator=(const Acl&) = delete;
