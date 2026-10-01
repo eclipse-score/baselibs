@@ -289682,7 +289682,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "boundary-values",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
     "PartiallyVerifies": null,
     "FullyVerifies": null
@@ -289696,7 +289696,7 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
+    "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": null,
     "FullyVerifies": null
