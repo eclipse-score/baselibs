@@ -409,6 +409,10 @@ class LockedPtr
         return *this;
     }
 
+    /**
+     * @brief Disable or_else on const rvalues as they cannot be moved from and a new const LockedPtr cannot be created
+     * while the lock is held by this which is const.
+     */
     template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, const LockedPtr&>>>
     [[nodiscard]] auto or_else(Func&&) const&& -> const LockedPtr& = delete;
 
