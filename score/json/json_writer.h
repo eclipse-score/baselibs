@@ -73,13 +73,14 @@ class JsonWriter final : public IJsonWriter
      *  @param file_sync_mode: Determines the synchronization mode (see above).
      *  @param ownership: When using kSynced mode, determines how to adjust the ownership
      *                    of the temporary file created.
-     *  @param formatting: Layout of the output, either compact without insignificant whitespace (kCompact)
-     *                     or indented and spread over multiple lines to be human readable (kPrettyPrint).
+     *  @param formatting: Layout of the output, either indented and spread over multiple lines to be human
+     *                     readable (kPrettyPrint, the default) or compact without insignificant
+     *                     whitespace (kCompact).
      */
     explicit JsonWriter(FileSyncMode file_sync_mode = FileSyncMode::kUnsynced,
                         const score::filesystem::AtomicUpdateOwnershipFlags ownership =
                             score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
-                        const Formatting formatting = Formatting::kCompact) noexcept;
+                        const Formatting formatting = Formatting::kPrettyPrint) noexcept;
     JsonWriter(const JsonWriter&) = delete;
     JsonWriter(JsonWriter&&) noexcept = delete;
     JsonWriter& operator=(const JsonWriter&) = delete;
