@@ -32,8 +32,8 @@ namespace score::json::internal::writer
 ///
 /// Note that the emitted representation is backend specific: `json_serialize` always pretty-prints with a four space
 /// indentation and ignores `formatting`.
-/// `vajson` emits compact JSON without insignificant whitespace, unless `formatting` is `Formatting::kPrettyPrint`.
-/// Then it also indents by four spaces, but writes empty arrays and objects as `[]` and `{}`.
+/// `vajson` indents by four spaces as well, but writes empty arrays and objects as `[]` and `{}`. If `formatting` is
+/// `Formatting::kCompact`, it emits compact JSON without insignificant whitespace instead.
 
 /// \brief Serializes json_data into out_stream
 /// \param out_stream The stream to write the serialized representation to

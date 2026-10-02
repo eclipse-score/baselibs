@@ -258,6 +258,22 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
 }
 
+// Holds for either backend: json_serialize always pretty-prints, vajson defaults to it.
+TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that a JsonWriter constructed without a Formatting argument writes pretty-printed JSON.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
+    score::json::JsonWriter writer{};
+
+    EXPECT_EQ(*writer.ToBuffer(TestJsonObject{}), TestJsonObject::kExpectedPrettyPrint);
+    EXPECT_EQ(*writer.ToBuffer(TestJsonList{}), TestJsonList::kExpectedPrettyPrint);
+    EXPECT_EQ(*writer.ToBuffer(TestJsonAny{}), TestJsonAny::kExpectedPrettyPrint);
+}
+
 template <typename T>
 class JsonWriterIntegerTest : public ::testing::Test
 {
