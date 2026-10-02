@@ -17,8 +17,6 @@
 #include "score/json/internal/model/error.h"
 #include "score/result/result.h"
 
-#include <type_traits>
-#include <utility>
 #include <variant>
 
 namespace score
@@ -56,17 +54,6 @@ class Number
 
     template <typename T, typename = std::enable_if_t<std::is_arithmetic<T>::value, bool>>
     score::Result<T> As() const noexcept;
-
-    /// @brief Invokes the visitor with the value in the arithmetic type it is stored as
-    /// @tparam Visitor Callable accepting every alternative of ArithmeticType.
-    /// @param visitor The callable to invoke.
-    /// @return Whatever the visitor returns.
-    template <typename Visitor>
-    decltype(auto) Visit(Visitor&& visitor) const noexcept
-    {
-        static_assert(std::is_trivially_copyable_v<ArithmeticType>, "alternatives must not be able to throw");
-        return std::visit(std::forward<Visitor>(visitor), value_);
-    }
 
     friend bool operator==(const Number& lhs, const Number& rhs) noexcept;
 

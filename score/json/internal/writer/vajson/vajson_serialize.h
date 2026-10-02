@@ -24,7 +24,6 @@
 #include <optional>
 #include <ostream>
 #include <string>
-#include <type_traits>
 #include <utility>
 
 namespace score::json
@@ -50,25 +49,33 @@ auto SerializeNumber(score::json::vajson::GenericValueSerializer<Next>&& seriali
                      const score::json::Number& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next
 {
-    using Serialized = typename score::json::vajson::GenericValueSerializer<Next>::Next;
+    // The serializer is consumed by whichever alternative matches, so the outcome is parked in an
+    // optional to keep a single exit point. Number::As() re-parses the value on every call, hence the
+    // chain stays an else-if: the alternatives must be probed lazily, in order.
+    std::optional<typename score::json::vajson::GenericValueSerializer<Next>::Next> serialized{};
 
-    // Dispatching on the stored type
-    return value.Visit([&serializer](const auto stored) noexcept -> Serialized {
-        using Stored = std::decay_t<decltype(stored)>;
+    if (const auto unsigned_value = value.As<std::uint64_t>(); unsigned_value.has_value())
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*unsigned_value));
+    }
+    else if (const auto signed_value = value.As<std::int64_t>(); signed_value.has_value())
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*signed_value));
+    }
+    else if (const auto float_value = value.As<float>(); float_value.has_value())
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*float_value));
+    }
+    else if (const auto double_value = value.As<double>(); double_value.has_value())
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*double_value));
+    }
+    else
+    {
+        serialized.emplace(std::move(serializer) << score::json::vajson::JNull());
+    }
 
-        if constexpr (std::is_floating_point_v<Stored>)
-        {
-            return std::move(serializer) << score::json::vajson::JNumber(stored);
-        }
-        else if constexpr (std::is_unsigned_v<Stored>)
-        {
-            return std::move(serializer) << score::json::vajson::JNumber(static_cast<std::uint64_t>(stored));
-        }
-        else
-        {
-            return std::move(serializer) << score::json::vajson::JNumber(static_cast<std::int64_t>(stored));
-        }
-    });
+    return *std::move(serialized);
 }
 template <typename Next>
 auto SerializeList(score::json::vajson::GenericValueSerializer<Next>&& serializer,
