@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/concurrency/type_traits.h"
+#include "score/concurrency/test_types.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -42,13 +43,6 @@ class HasLockAndUnlockMismatchedSignature
     void unlock(int*) {}
 };
 
-class BasicLockableArchetype
-{
-  public:
-    void lock() {}
-    void unlock() {}
-};
-
 }  // namespace
 
 TEST(TypeTraitsTest, IsBasicLockableCompileTimeChecks)
@@ -60,7 +54,8 @@ TEST(TypeTraitsTest, IsBasicLockableCompileTimeChecks)
         << "HasLockAndUnlockMismatchedSignature should not be basic_lockable";
 
     // Positive cases
-    EXPECT_TRUE((is_basic_lockable_v<BasicLockableArchetype>)) << "BasicLockableArchetype should be basic_lockable";
+    EXPECT_TRUE((is_basic_lockable_v<test::BasicLockableArchetype>))
+        << "BasicLockableArchetype should be basic_lockable";
 
     // Standard library types
     EXPECT_TRUE((is_basic_lockable_v<std::mutex>)) << "std::mutex should be basic_lockable";
@@ -76,4 +71,17 @@ TEST(TypeTraitsTest, IsBasicLockableCompileTimeChecks)
         << "std::unique_lock<std::mutex> should be basic_lockable";
     EXPECT_TRUE((is_basic_lockable_v<std::shared_lock<std::shared_mutex>>))
         << "std::shared_lock<std::shared_mutex> should be basic_lockable";
+}
+
+TEST(TypeTraitsTest, LockWithOwnsLockCompileTimeChecks)
+{
+    EXPECT_FALSE((LockWithOwnsLock<test::BasicLockableArchetype>::value))
+        << "a basic lockable without owns_lock should not satisfy LockWithOwnsLock";
+    EXPECT_TRUE((LockWithOwnsLock<test::LockableWithOwnsLock>::value))
+        << "LockableWithOwnsLock should satisfy LockWithOwnsLock";
+    EXPECT_FALSE((LockWithOwnsLock<std::mutex>::value)) << "std::mutex should not satisfy LockWithOwnsLock";
+    EXPECT_TRUE((LockWithOwnsLock<std::unique_lock<std::mutex>>::value))
+        << "std::unique_lock<std::mutex> should satisfy LockWithOwnsLock";
+    EXPECT_TRUE((LockWithOwnsLock<std::shared_lock<std::shared_mutex>>::value))
+        << "std::shared_lock<std::shared_mutex> should satisfy LockWithOwnsLock";
 }
