@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.3", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.4", dev_dependency = True)
 bazel_dep(name = "score_cpp_policies", version = "0.1.1", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
