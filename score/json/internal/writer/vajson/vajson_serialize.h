@@ -155,7 +155,11 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 class VajsonSerialize final
 {
   public:
-    explicit VajsonSerialize(std::ostream& out_stream) noexcept;
+    /// @brief Constructs a serializer writing into out_stream
+    /// @param out_stream The stream to write the serialized representation to. It must outlive this instance.
+    /// @param formatting Layout of the output.
+    explicit VajsonSerialize(std::ostream& out_stream,
+                             const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact) noexcept;
     ~VajsonSerialize() noexcept = default;
     VajsonSerialize(const VajsonSerialize&) = delete;
     VajsonSerialize(VajsonSerialize&&) noexcept = default;
@@ -167,10 +171,22 @@ class VajsonSerialize final
 
   private:
     std::ostream& out_stream_;
+    /// @brief Layout of the output
+    vajson::VajsonFormatting formatting_;
 };
-score::Result<std::string> VajsonToBuffer(const score::json::Object& json_data);
-score::Result<std::string> VajsonToBuffer(const score::json::List& json_data);
-score::Result<std::string> VajsonToBuffer(const score::json::Any& json_data);
+/// @brief Serializes json_data into a string
+/// @param json_data The data to serialize
+/// @param formatting Layout of the output.
+/// @return The serialized representation on success, error otherwise
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Object& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::List& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Any& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kCompact);
 }  // namespace score::json
 
 namespace score::json::vajson
