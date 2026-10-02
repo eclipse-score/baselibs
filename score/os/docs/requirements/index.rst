@@ -27,41 +27,47 @@ Requirements
 Functional Requirements
 =======================
 
-.. comp_req:: Environment variable getting
-   :id: comp_req__os__env_get
+.. comp_req:: ASIL-B OS Operation Delegation
+   :id: comp_req__os__asil_b_operation_delegation
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__os_library[version==1]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
+   :satisfied_by: comp__baselibs_os[version==2]
 
-   The OS component shall provide functions for getting an environment variable.
+   For each operation declared by an ASIL-B-classified public wrapper interface, the OS component shall invoke the
+   corresponding operating system operation with argument values equivalent to those supplied by the caller and shall
+   provide its successful return value and output-parameter values through the declared C++ API.
 
-.. comp_req:: Environment variable setting
-   :id: comp_req__os__env_set
+.. comp_req:: QM OS Operation Delegation
+   :id: comp_req__os__qm_operation_delegation
    :reqtype: Functional
    :security: YES
-   :safety: ASIL_B
+   :safety: QM
+   :derived_from: feat_req__baselibs__os_library[version==1]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
+   :satisfied_by: comp__baselibs_os[version==2]
 
-   The OS component shall provide functions for setting environment variable.
+   For each operation declared by a QM-classified public wrapper interface, the OS component shall invoke the
+   corresponding operating system operation with argument values equivalent to those supplied by the caller and shall
+   provide its successful return value and output-parameter values through the declared C++ API.
 
-.. comp_req:: Environment variable unsetting
-   :id: comp_req__os__env_unset
-   :reqtype: Functional
+.. comp_req:: OS Error Information
+   :id: comp_req__os__error_information
+   :reqtype: Interface
    :security: YES
    :safety: ASIL_B
+   :derived_from: feat_req__baselibs__os_library[version==1]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
+   :satisfied_by: comp__baselibs_os[version==2]
 
-   The OS component shall provide functions for unsetting environment variable.
+   When an operating system operation exposed by an ASIL-B-classified wrapper fails and the wrapper declares an OS
+   error result, the OS component shall make the operating system error code reported for the failed operation
+   available to the caller.
 
 .. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, os
