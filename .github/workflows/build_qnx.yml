@@ -12,7 +12,7 @@
 # *******************************************************************************
 name: Bazel Build (QNX)
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, reopened, synchronize]
   push:
     branches:
@@ -35,7 +35,6 @@ jobs:
             bazel-disk-cache: score-qnx-x86_64
             bazel-test-target: >-
               //score/...
-              -//score/language/futurecpp/tests:memory_resource_test
               -//score/language/futurecpp/tests:zip_iterator_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
@@ -46,7 +45,6 @@ jobs:
             bazel-disk-cache: score-qnx-aarch64
             bazel-test-target: >-
               //score/...
-              -//score/language/futurecpp/tests:memory_resource_test
               -//score/os/utils/inotify:unit_test
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
           - name: x86_64-qnx (examples/integration)
