@@ -14,8 +14,10 @@
 #define SCORE_LIB_OS_QNX_UNISTD_H
 
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 
 #include "score/expected.hpp"
+#include "score/span.hpp"
 
 #include <unistd.h>
 
@@ -29,8 +31,7 @@ namespace qnx
 class QnxUnistd
 {
   public:
-    virtual score::cpp::expected<std::int32_t, score::os::Error> setgroupspid(std::int32_t gidsetsize,
-                                                                              const gid_t* grouplist,
+    virtual score::cpp::expected<std::int32_t, score::os::Error> setgroupspid(score::cpp::span<const GroupId> grouplist,
                                                                               pid_t pid) const noexcept = 0;
 
     virtual ~QnxUnistd() = default;
