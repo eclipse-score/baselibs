@@ -888,6 +888,7 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    primary_need_id = "comp__baselibs_os",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
