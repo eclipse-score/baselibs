@@ -4512,9 +4512,33 @@
     "url": ""
   },
   {
+    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 262,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
     "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
     "line": 281,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": 373,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",

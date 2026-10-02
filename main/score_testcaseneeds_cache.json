@@ -282660,9 +282660,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "262",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonWriterIntegerTest/0__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "275",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282676,7 +282690,7 @@
   {
     "name": "JsonWriterIntegerTest/1__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "275",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282690,7 +282704,7 @@
   {
     "name": "JsonWriterIntegerTest/2__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "275",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282704,7 +282718,7 @@
   {
     "name": "JsonWriterIntegerTest/3__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "275",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -290066,9 +290080,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesEmptyContainersCompactly",
+    "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
     "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
     "line": "373",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__SerializesEmptyContainersCompactly",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "401",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
