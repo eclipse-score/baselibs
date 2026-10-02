@@ -39,8 +39,8 @@ class JsonSerializer;
 /// reasons: Either the inner types could not be deserialized because their type didn't match, or a field that is not
 /// optional was not found inside the JSON hierarchy.
 ///
-/// For structures to be deserialized, it needs to be visitable. This requires the macro STRUCT_VISITABLE to be used
-/// with the given type and all attributes that shall be deserialized need to be passed to the macro.
+/// For structures to be deserialized, it needs to be visitable. This requires the macro SCORE_STRUCT_VISITABLE to be
+/// used with the given type and all attributes that shall be deserialized need to be passed to the macro.
 ///
 /// \tparam T The type to deserialize. The type needs to be default-constructible.
 /// \param any The JSON hierarchy to deserialize.
@@ -53,8 +53,8 @@ template <typename T>
 
 /// Converts a type that can be serialized into JSON into a JSON hierarchy.
 ///
-/// For structures to be serialized, it needs to be visitable. This requires the macro STRUCT_VISITABLE to be used
-/// with the given type and all attributes that shall be serialized need to be passed to the macro.
+/// For structures to be serialized, it needs to be visitable. This requires the macro SCORE_STRUCT_VISITABLE to be
+/// used with the given type and all attributes that shall be serialized need to be passed to the macro.
 ///
 /// \tparam T The type to serialize.
 /// \return The JSON hierarchy representing the given type.
@@ -270,9 +270,9 @@ class JsonSerializer
 };
 
 /// This is the definition of the base case which assumes it is a visitable structure. For a structure to be visitable,
-/// the macro STRUCT_VISITABLE has to be used and all the attributes that shall be serializable or deserializable
+/// the macro SCORE_STRUCT_VISITABLE has to be used and all the attributes that shall be serializable or deserializable
 /// need to be passed. It then serializes and deserializes all attributes of the struct in the sequence of their
-/// appearance in the STRUCT_VISITABLE macro.
+/// appearance in the SCORE_STRUCT_VISITABLE macro.
 ///
 /// This specialization is only used if the visitable type does _not_ have ToAny and/or FromAny. If at least one of
 /// these methods is present, the general case is used which forwards the call to these methods of the type.
