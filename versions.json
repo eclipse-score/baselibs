@@ -96,20 +96,8 @@
     "url": "https://eclipse-score.github.io/baselibs/pr-491/"
   },
   {
-    "version": "pr-503",
-    "url": "https://eclipse-score.github.io/baselibs/pr-503/"
-  },
-  {
-    "version": "pr-508",
-    "url": "https://eclipse-score.github.io/baselibs/pr-508/"
-  },
-  {
     "version": "pr-515",
     "url": "https://eclipse-score.github.io/baselibs/pr-515/"
-  },
-  {
-    "version": "pr-524",
-    "url": "https://eclipse-score.github.io/baselibs/pr-524/"
   },
   {
     "version": "pr-528",
@@ -152,24 +140,24 @@
     "url": "https://eclipse-score.github.io/baselibs/pr-633/"
   },
   {
-    "version": "pr-636",
-    "url": "https://eclipse-score.github.io/baselibs/pr-636/"
-  },
-  {
-    "version": "pr-641",
-    "url": "https://eclipse-score.github.io/baselibs/pr-641/"
-  },
-  {
-    "version": "pr-646",
-    "url": "https://eclipse-score.github.io/baselibs/pr-646/"
-  },
-  {
     "version": "pr-650",
     "url": "https://eclipse-score.github.io/baselibs/pr-650/"
   },
   {
     "version": "pr-651",
     "url": "https://eclipse-score.github.io/baselibs/pr-651/"
+  },
+  {
+    "version": "pr-652",
+    "url": "https://eclipse-score.github.io/baselibs/pr-652/"
+  },
+  {
+    "version": "pr-654",
+    "url": "https://eclipse-score.github.io/baselibs/pr-654/"
+  },
+  {
+    "version": "pr-655",
+    "url": "https://eclipse-score.github.io/baselibs/pr-655/"
   },
   {
     "version": "pr-83",
@@ -190,25 +178,5 @@
   {
     "version": "v0.2.14",
     "url": "https://eclipse-score.github.io/baselibs/v0.2.14/"
-  },
-  {
-    "version": "pr-652",
-    "url": "https://eclipse-score.github.io/baselibs/pr-652/"
-  },
-  {
-    "version": "pr-653",
-    "url": "https://eclipse-score.github.io/baselibs/pr-653/"
-  },
-  {
-    "version": "pr-656",
-    "url": "https://eclipse-score.github.io/baselibs/pr-656/"
-  },
-  {
-    "version": "pr-655",
-    "url": "https://eclipse-score.github.io/baselibs/pr-655/"
-  },
-  {
-    "version": "pr-654",
-    "url": "https://eclipse-score.github.io/baselibs/pr-654/"
   }
 ]
