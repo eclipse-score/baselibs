@@ -509,9 +509,7 @@ def _generate_json_schema_impl(ctx):
     sanitized_inputs = []
 
     for f in all_schema_files:
-        staged_short_path = f.short_path
-        if staged_short_path.startswith("../"):
-            staged_short_path = "external/{}".format(staged_short_path[3:])
+        staged_short_path = _staged_relative_path(f.short_path)
         staged_file = ctx.actions.declare_file("{}/{}".format(temp_subdir, staged_short_path))
 
         strip_args = ctx.actions.args()
