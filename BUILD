@@ -100,6 +100,10 @@ docs(
             "mount_at": "baselibs/components/static_reflection_with_serialization",
         },
         {
+            "bundle": "//score/string_manipulation:docs",
+            "mount_at": "baselibs/components/string_manipulation",
+        },
+        {
             "bundle": "//score/utils:docs",
             "mount_at": "baselibs/components/utils",
         },
