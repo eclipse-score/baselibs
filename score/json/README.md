@@ -17,11 +17,11 @@
   - [Constraints](#constraints)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
-  - [Selecting base library](#selecting-base-library)
   - [Selecting writer library](#selecting-writer-library)
+  - [Deprecated `base_library` flag](#deprecated-base_library-flag)
 
 This JSON library is designed as an abstraction layer which can switch to using
-other parsers/serializers under the hood. At the moment it uses vaJson from Vector for parsing,
+other serializers under the hood. It uses vaJson from Vector for parsing,
 which is ASIL D certified. For serialization a custom implementation is used by default, with vaJson
 available as an alternative, [selectable via a feature flag](#selecting-writer-library).
 
@@ -35,7 +35,8 @@ abstraction and use-cases that are not yet covered are extended.
 
 ### Bazel target
 
-This library offers the Bazel target `//score/json`, which is uniquely ASIL B certified. However, this certification is valid only when the target utilizes the vaJson parser from Vector, [selectable via a feature flag](#selecting-base-library).
+This library offers the Bazel target `//score/json`, which is ASIL B certified when using the vaJson parser from
+Vector, which is the only parser this library supports.
 
 Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//score/json:json_serializer`, which is **not** ASIL B certified.
 
@@ -431,21 +432,10 @@ initializing vaJson from a path to the file where safety requirements are assume
 
 This library does not provide a way for the user to to initialize vaJson from an input stream.
 
-## Selecting base library
-
-This library supports usage of vector json library and nhlomann json library. By default vector json library is used.
-
-In order to make use of nlohmann json library, feature flag needs to be set. Please see an example below.
-
-bazel test --config=spp_host_clang //score/json/... --//score/json:base_library="nlohmann"
-
-nlohmann json library do not supports hexadecimal. As it is not part of json standard.
-
 ## Selecting writer library
 
-Independently of the parser, the serialization backend is selected by the `writer_library` flag. It accepts
-`json_serialize` (the default, a custom implementation) and `vajson` (the vector json library). The parser flag
-`base_library` has no influence on serialization.
+The serialization backend is selected by the `writer_library` flag. It accepts
+`json_serialize` (the default, a custom implementation) and `vajson` (the vector json library).
 
 bazel test --config=spp_host_clang //score/json/... --//score/json:writer_library="vajson"
 
@@ -454,3 +444,10 @@ space indentation, whereas `vajson` honors the `Formatting` passed to `JsonWrite
 (the default) it also indents by four spaces, but writes empty arrays and objects as `[]` and `{}`. With
 `Formatting::kCompact` it emits compact JSON without any insignificant whitespace between tokens. Both produce valid,
 equivalent JSON, but consumers comparing serialized output byte-wise are affected by the choice.
+
+## Deprecated `base_library` flag
+
+The `base_library` flag (and its `nlohmann` value) no longer has any effect: vaJson is the only parser backend.
+The flag is kept, as a deprecated no-op, only so that consumers who still pass it on the command line or in their
+`.bazelrc` don't hit a hard build failure. Remove it from your build configuration; it will be deleted in a future
+release.

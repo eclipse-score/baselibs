@@ -93,7 +93,6 @@ class score::json::JsonParser {
 }
 
 score::json::JsonParser --> score::json::VajsonParser : use
-score::json::JsonParser --> score::json::NlohmannParser : use
 
 
 class score::json::JsonSerialize #LightSteelBlue {
@@ -138,42 +137,6 @@ score::json::VajsonParser --> amsr::json::ParserResult : use
 score::json::VajsonParser --> amsr::json::ParserState : use
 score::json::VajsonParser --> amsr::json::JsonErrc : use
 score::json::VajsonParser --> amsr::json::JsonData : use
-
-
-class score::json::NlohmannParser #LightSteelBlue {
-  {static}+FromFile(file_path: std::string_view): score::Result<Any>
-  {static}+FromBuffer(buffer: std::string_view): score::Result<Any>
-}
-
-score::json::NlohmannParser --> score::json::JsonBuilder : use
-score::json::NlohmannParser --> score::json::Any : use
-score::json::NlohmannParser --> nlohmann::json : use
-score::json::NlohmannParser --> score::json::Error : use
-score::json::NlohmannParser --> score::Result : use
-
-
-class score::json::JsonBuilder #LightSteelBlue {
-  +GetData(): score::Result<score::json::Any>
-  +HandleEvent(event: nlohmann::json::parse_event_t, parsed: nlohmann::json): bool
-}
-
-score::json::JsonBuilder *-- score::json::Any
-score::json::JsonBuilder --> nlohmann::json : use
-score::json::JsonBuilder --> score::Result : use
-score::json::JsonBuilder --> score::json::Error : use
-
-
-class nlohmann::json <<typedef>> #LightSteelBlue
-
-nlohmann::json *-- nlohmann::basic_json
-
-
-class nlohmann::basic_json<     > #LightSteelBlue
-
-nlohmann::basic_json --> nlohmann::detail::parse_event_t : use
-
-
-enum nlohmann::detail::parse_event_t #LightSteelBlue
 
 
 class score::json::Any {

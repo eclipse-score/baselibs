@@ -16,10 +16,7 @@ load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER
 
 alias(
     name = "parser",
-    actual = select({
-        "@score_baselibs//score/json:base_library_nlohmann": "@score_baselibs//score/json/internal/parser/nlohmann:nlohmann_parser",
-        "@score_baselibs//score/json:base_library_vajson": "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
-    }),
+    actual = "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
     visibility = ["@score_baselibs//score/json:__pkg__"],
 )
 
