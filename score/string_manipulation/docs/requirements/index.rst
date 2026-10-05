@@ -52,7 +52,7 @@ Functional Requirements
    The String Manipulation component shall provide a forward-iterable operation that lazily splits a string view on a delimiter, preserves empty substrings required by delimiter placement, and performs no dynamic memory allocation.
 
 .. comp_req:: String-Like Value Comparison
-   :id: comp_req__string_manipulation__cmp_hash
+   :id: comp_req__string_manipulation__cmp_adaptor
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B

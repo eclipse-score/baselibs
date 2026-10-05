@@ -39,5 +39,5 @@ String Manipulation Architecture
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__string_manipulation__args_conv[version==1], comp_req__string_manipulation__lazy_split[version==1], comp_req__string_manipulation__cmp_hash[version==1]
+   :fulfils: comp_req__string_manipulation__args_conv[version==1], comp_req__string_manipulation__lazy_split[version==1], comp_req__string_manipulation__cmp_adaptor[version==1]
    :belongs_to: comp__baselibs_string_manipulation[version==1]

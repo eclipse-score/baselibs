@@ -145,7 +145,7 @@ Functional Requirements
    :version: 2
    :satisfied_by: comp__baselibs_memory_shared[version==1]
 
-   Retired: superseded by the String Manipulation component's own requirements (:need:`comp_req__string_manipulation__lazy_split`, :need:`comp_req__string_manipulation__cmp_hash`).
+   Retired: superseded by the String Manipulation component's own requirements (:need:`comp_req__string_manipulation__lazy_split`, :need:`comp_req__string_manipulation__cmp_adaptor`).
 
 .. comp_req:: Atomic Operations in Shared Memory
    :id: comp_req__memory__atomic_ops
