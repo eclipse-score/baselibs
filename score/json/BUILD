@@ -19,27 +19,6 @@ load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 LIB_JSON_VISIBILITY = ["//visibility:public"]
 
 string_flag(
-    name = "base_library",
-    build_setting_default = "vajson",
-    values = [
-        "vajson",
-        "nlohmann",
-    ],
-)
-
-config_setting(
-    name = "base_library_vajson",
-    flag_values = {":base_library": "vajson"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
-)
-
-config_setting(
-    name = "base_library_nlohmann",
-    flag_values = {":base_library": "nlohmann"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
-)
-
-string_flag(
     name = "writer_library",
     build_setting_default = "json_serialize",
     values = [
@@ -117,10 +96,6 @@ cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    local_defines = select({
-        ":base_library_nlohmann": ["NLOHMANN"],
-        ":base_library_vajson": ["VAJSON"],
-    }),
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [

@@ -28,7 +28,7 @@ namespace score::json::internal::writer
 ///
 /// Exactly one backend provides definitions for the declarations below. Which one is linked is decided at build
 /// time by the `//score/json:writer_library` flag, resolved through the `//score/json/internal/writer:writer`
-/// alias -- the same mechanism the parser uses via `//score/json:base_library`.
+/// alias.
 ///
 /// Note that the emitted representation is backend specific: `json_serialize` always pretty-prints with a four space
 /// indentation and ignores `formatting`.

@@ -42,7 +42,6 @@ deps = [
 ## Configuration
 
 Required flags in `.bazelrc`:
-- `--@score_baselibs//score/json:base_library=nlohmann`
 - `--@score_baselibs//score/memory/shared/flags:use_typedshmd=False`
 
 These must be set by consumers to properly configure Base Libraries.
