@@ -52,6 +52,12 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":hash",
+        ":safe_hash",
+        "//score/hash/code/core/factory/impl:factory_headers",
+    ],
+    primary_need_id = "comp__baselibs_hash",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

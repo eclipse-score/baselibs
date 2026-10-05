@@ -275,6 +275,7 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    code_targets = [":futurecpp"],
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

@@ -32,10 +32,10 @@ class KeySerializer final
     /// \brief Serializer state after adding a key
     using Next = ObjectSerializerValue;
 
-    /// \brief Constructs a KeySerializer from an output stream
+    /// \brief Constructs a KeySerializer from a writer
     /// \details Do not create an instance of KeySerializer directly, use the aliases in
     ///     score/json/internal/writer/vajson/writer/serializers/structures/serializer.h
-    /// \param[in] os Output stream to write into.
+    /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
     explicit KeySerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
         : os_(os), serializer_state_{state}
@@ -58,35 +58,25 @@ class KeySerializer final
 
     /// \brief Serializes a key
     /// \details
-    /// - Add a comma, if necessary.
-    /// - Serialize the key.
+    /// - Add a comma, if another member was serialized before.
+    /// - Start a new, indented line if pretty printing is enabled.
+    /// - Serialize the key followed by the name separator.
     /// \param[in] key to serialize.
     /// \return The succeeding serializer.
     auto operator<<(JKeyType key) const&& noexcept -> Next
     {
-        this->WriteComma();
+        this->os_.get().BeginElement(this->serializer_state_ == SerializerState::kNonEmpty);
 
-        this->os_.get().put('"');
-        this->os_.get() << internal::EscapedJsonString(key);
-        constexpr auto colon_str = R"(":)"sv;
-        this->os_.get().write(colon_str.data(), colon_str.size());
+        this->os_.get().Stream().put('"');
+        this->os_.get().Stream() << internal::EscapedJsonString(key);
+        this->os_.get().Stream().put('"');
+        this->os_.get().WriteNameSeparator();
 
         return Next(this->os_.get());
     }
 
   private:
-    /// \brief Adds a comma to the stream, if necessary
-    /// \details
-    /// - If another element was serialized before, add a comma.
-    void WriteComma() const noexcept
-    {
-        if (this->serializer_state_ == SerializerState::kNonEmpty)
-        {
-            this->os_.get().put(',');
-        }
-    }
-
-    /// \brief Output stream to write into
+    /// \brief Writer to write into
     WriterType os_;
 
     /// \brief Serializer state
