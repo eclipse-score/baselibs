@@ -3583,7 +3583,7 @@
             {
               "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
               "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-              "line": 281,
+              "line": 319,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -3592,7 +3592,7 @@
             {
               "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
               "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-              "line": 373,
+              "line": 411,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
