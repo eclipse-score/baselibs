@@ -426,6 +426,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -492,7 +493,7 @@
                   
   <section id="memory-shared-component-architecture">
 <h1>Memory Shared Component Architecture<a class="headerlink" href="#memory-shared-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-5f170a94">
+<div class="need_container docutils container" id="SNCB-e201105a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__memory_shared_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -541,7 +542,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-2cfb31cf">
+<div class="need_container docutils container" id="SNCB-d56769bf">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_memory_shared">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -591,7 +592,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-51cb7722">
+<div class="need_container docutils container" id="SNCB-196a4168">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__memory_shared">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -613,7 +614,7 @@
 <div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_memory_shared" title="comp_arc_sta__baselibs__memory_shared">comp__baselibs_memory_shared</a></span></span></div>
-<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__memory__address_independence" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__address_independence</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__atomic_ops" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__atomic_ops</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__bounds_check" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__bounds_check</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__deterministic_alloc" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__deterministic_alloc</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__endianness" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__endianness</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__inter_process_sync" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__inter_process_sync</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__offset_ptr" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__offset_ptr</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__resource_registry" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__resource_registry</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__sealed_shm" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__sealed_shm</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_container" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__string_utils" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__string_utils</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__typed_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__typed_memory</a></span></span></div>
+<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__memory__address_independence" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__address_independence</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__atomic_ops" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__atomic_ops</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__bounds_check" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__bounds_check</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__deterministic_alloc" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__deterministic_alloc</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__endianness" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__endianness</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__inter_process_sync" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__inter_process_sync</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__offset_ptr" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__offset_ptr</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__resource_registry" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__resource_registry</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__sealed_shm" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__sealed_shm</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_container" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_container</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__shared_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__shared_memory</a>, <a class="reference internal" href="../requirements/index.html#comp_req__memory__typed_memory" title="comp_arc_sta__baselibs__memory_shared">comp_req__memory__typed_memory</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -644,7 +645,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-8865ecca">
+<div class="need_container docutils container" id="SNCB-28983f51">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__open">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -687,7 +688,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2e2846fe">
+<div class="need_container docutils container" id="SNCB-f87df265">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__update">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -730,7 +731,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-bdf809ee">
+<div class="need_container docutils container" id="SNCB-e0951589">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__lock">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -773,7 +774,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b99abf07">
+<div class="need_container docutils container" id="SNCB-1d1f7341">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_perm">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
