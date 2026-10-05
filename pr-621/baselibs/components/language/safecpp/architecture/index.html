@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
@@ -46,10 +46,10 @@
     <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -64,7 +64,7 @@
     <script src="../../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/language/safecpp/architecture/index';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.21.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
@@ -406,7 +406,6 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../concurrency/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../containers/index.html">containers</a></li>
@@ -433,6 +432,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../mw_log/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../os/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../utils/index.html">utils</a></li>
 </ul>
@@ -503,7 +504,7 @@
                   
   <section id="safecpp-component-architecture">
 <h1>Safecpp Component Architecture<a class="headerlink" href="#safecpp-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-ba97eb39">
+<div class="need_container docutils container" id="SNCB-39445f83">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__safecpp_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -523,7 +524,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">safecpp</span></span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/architecture_design/architecture_workproducts.html#wp__component_arch">wp__component_arch</a></span></span></div>
 </span></div>
@@ -549,11 +550,11 @@
 </div>
 <section id="overview-description">
 <h2>Overview/Description<a class="headerlink" href="#overview-description" title="Link to this heading">#</a></h2>
-<p>see <a class="reference internal" href="#doc__safecpp_architecture" title="doc__safecpp_architecture"><em class="xref need">Safecpp Architecture (doc__safecpp_architecture)</em></a></p>
+<p>see <a class="reference internal" href="../index.html#doc__safecpp" title="doc__safecpp"><em class="xref need">Safecpp Library (doc__safecpp)</em></a></p>
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-debf71db">
+<div class="need_container docutils container" id="SNCB-b376e423">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_safecpp">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -573,11 +574,13 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_safecpp</span><span class="needs_spacer">, </span><span class="needs_data">safecpp</span></span></span></div>
+<div class="line"><span class="needs_bazel_target"><span class="needs_label">bazel_target: </span><span class="needs_data">[&quot;&#64;&#64;//score/language/safecpp/aborts_upon_exception:abortsuponexception&quot;,&quot;&#64;&#64;//score/language/safecpp/safe_math:safe_math&quot;,&quot;&#64;&#64;//score/language/safecpp/safe_atomics:try_atomic_add&quot;,&quot;&#64;&#64;//score/language/safecpp/scoped_function:scope&quot;,&quot;&#64;&#64;//score/language/safecpp/scoped_function:copyable_scoped_function&quot;,&quot;&#64;&#64;//score/language/safecpp/scoped_function:move_only_scoped_function&quot;,&quot;&#64;&#64;//score/language/safecpp/string_view:null_termination_check&quot;,&quot;&#64;&#64;//score/language/safecpp/string_view:zstring_view&quot;]</span></span></div>
+<div class="line"><span class="needs_bazel_type"><span class="needs_label">bazel_type: </span><span class="needs_data">[&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;,&quot;cc_library&quot;]</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
 <div class="line">has: <span class="belongs_to"><span><a class="reference internal" href="#comp_arc_sta__baselibs__safecpp" title="comp__baselibs_safecpp">comp_arc_sta__baselibs__safecpp</a></span></span></div>
-<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__safecpp__aborts_upon_exception" title="comp__baselibs_safecpp">comp_req__safecpp__aborts_upon_exception</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__coverage_termination" title="comp__baselibs_safecpp">comp_req__safecpp__coverage_termination</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__nullstring" title="comp__baselibs_safecpp">comp_req__safecpp__nullstring</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_atomic" title="comp__baselibs_safecpp">comp_req__safecpp__safe_atomic</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_math" title="comp__baselibs_safecpp">comp_req__safecpp__safe_math</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__scoped_guards" title="comp__baselibs_safecpp">comp_req__safecpp__scoped_guards</a></span></span></div>
+<div class="line">satisfies: <span class="satisfied_by"><span><a class="reference internal" href="../requirements/index.html#comp_req__safecpp__aborts_upon_exception" title="comp__baselibs_safecpp">comp_req__safecpp__aborts_upon_exception</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__coverage_termination" title="comp__baselibs_safecpp">comp_req__safecpp__coverage_termination</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__nullstring" title="comp__baselibs_safecpp">comp_req__safecpp__nullstring</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_atomic" title="comp__baselibs_safecpp">comp_req__safecpp__safe_atomic</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_math" title="comp__baselibs_safecpp">comp_req__safecpp__safe_math</a></span></span></div>
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__aborts_upon_ex">logic_arc_int__baselibs__aborts_upon_ex</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__coverage_termination">logic_arc_int__baselibs__coverage_termination</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__safeatomics">logic_arc_int__baselibs__safeatomics</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__safemath">logic_arc_int__baselibs__safemath</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__scoped_function">logic_arc_int__baselibs__scoped_function</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__string_view">logic_arc_int__baselibs__string_view</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../../module/index.html#mod__baselibs" title="comp__baselibs_safecpp">mod__baselibs</a>, <a class="reference internal" href="../../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_safecpp">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
@@ -585,9 +588,7 @@
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml" id="needarch-baselibs/components/language/safecpp/architecture/index-0">
-<object data="../../../../../_images/plantuml-d25f37ec60aedc732c131423d5229fe9ad6bb700.svg" type="image/svg+xml" style="width:1328px;height:388px;background:#FFFFFF;"></object></p>
-</td>
+<tr class="content row-odd"><td class="content" colspan="6"></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp__baselibs_safecpp" title="comp__baselibs_safecpp">comp__baselibs_safecpp</a></span></span></div>
@@ -603,7 +604,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e4c72f0c">
+<div class="need_container docutils container" id="SNCB-99e1864c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__safecpp">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -626,13 +627,13 @@
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_safecpp" title="comp_arc_sta__baselibs__safecpp">comp__baselibs_safecpp</a></span></span></div>
-<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__safecpp__aborts_upon_exception" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__aborts_upon_exception</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__coverage_termination" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__coverage_termination</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__nullstring" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__nullstring</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_atomic" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__safe_atomic</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_math" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__safe_math</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__scoped_guards" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__scoped_guards</a></span></span></div>
+<div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__safecpp__aborts_upon_exception" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__aborts_upon_exception</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__coverage_termination" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__coverage_termination</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__nullstring" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__nullstring</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_atomic" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__safe_atomic</a>, <a class="reference internal" href="../requirements/index.html#comp_req__safecpp__safe_math" title="comp_arc_sta__baselibs__safecpp">comp_req__safecpp__safe_math</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml" id="needarch-baselibs/components/language/safecpp/architecture/index-1">
+<tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml" id="needarch-baselibs/components/language/safecpp/architecture/index-0">
 <object data="../../../../../_images/plantuml-d25f37ec60aedc732c131423d5229fe9ad6bb700.svg" type="image/svg+xml" style="width:1328px;height:388px;background:#FFFFFF;"></object></p>
 </td>
 </tr>
@@ -651,9 +652,13 @@
 </div>
 </div>
 </section>
+<section id="dynamic-architecture">
+<h2>Dynamic Architecture<a class="headerlink" href="#dynamic-architecture" title="Link to this heading">#</a></h2>
+<p>No need for sequence diagram. Simple caller callee flow.</p>
+</section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-3e76ca5b">
+<div class="need_container docutils container" id="SNCB-748a1d74">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__allocate_exception">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -697,7 +702,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-74a59fce">
+<div class="need_container docutils container" id="SNCB-c16abdea">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__terminate_handler">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -741,7 +746,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-eafb6cf8">
+<div class="need_container docutils container" id="SNCB-b04cd921">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__signal_handler">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -785,7 +790,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-705be7e4">
+<div class="need_container docutils container" id="SNCB-05d3efaa">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_add">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -829,7 +834,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8fc63a2a">
+<div class="need_container docutils container" id="SNCB-b306d395">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_subtract">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -873,7 +878,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-7f362803">
+<div class="need_container docutils container" id="SNCB-92d6dc33">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_multiply">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -917,7 +922,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-22755c56">
+<div class="need_container docutils container" id="SNCB-2ce374e4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_divide">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -961,7 +966,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-59778735">
+<div class="need_container docutils container" id="SNCB-0c75c92e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_negate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1005,7 +1010,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-247d8ee4">
+<div class="need_container docutils container" id="SNCB-ee346df4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_abs">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1049,7 +1054,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-03b191c8">
+<div class="need_container docutils container" id="SNCB-8ff5daef">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_cast">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1093,7 +1098,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-da02bdeb">
+<div class="need_container docutils container" id="SNCB-bbf4523b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_less">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1137,7 +1142,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e61004bd">
+<div class="need_container docutils container" id="SNCB-5438a69e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_greater">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1181,7 +1186,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-09c5b661">
+<div class="need_container docutils container" id="SNCB-0057756e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_equal">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1225,7 +1230,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c2f6c546">
+<div class="need_container docutils container" id="SNCB-bff4915c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_notequal">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1269,7 +1274,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3ccc244c">
+<div class="need_container docutils container" id="SNCB-09061bd3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_lessequal">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1313,7 +1318,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-936372f6">
+<div class="need_container docutils container" id="SNCB-5fb164ce">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safemath_greatereq">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1357,7 +1362,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0d805d27">
+<div class="need_container docutils container" id="SNCB-e50ad9df">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__safeatomics_atomic">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1401,7 +1406,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-037b6887">
+<div class="need_container docutils container" id="SNCB-fa42260b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__scoped_function_mo">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1445,7 +1450,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4a348349">
+<div class="need_container docutils container" id="SNCB-78621a85">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__scoped_function_co">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1489,7 +1494,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-969fef30">
+<div class="need_container docutils container" id="SNCB-e04f53f3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__scoped_function_ex">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1533,7 +1538,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-be14c0d9">
+<div class="need_container docutils container" id="SNCB-1d1471c9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__safecpp__string_view_null">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1629,6 +1634,7 @@
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-description">Overview/Description</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#static-architecture">Static Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-architecture">Dynamic Architecture</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaces">Interfaces</a></li>
 </ul>
   </nav></div>
@@ -1662,8 +1668,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1687,7 +1693,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>
