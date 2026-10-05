@@ -282158,7 +282158,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "127",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282172,7 +282172,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "143",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282186,7 +282186,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "162",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282200,7 +282200,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "180",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282214,7 +282214,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "199",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282228,7 +282228,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "221",
+    "line": "239",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282242,7 +282242,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "127",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282256,7 +282256,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "143",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282270,7 +282270,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "162",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282284,7 +282284,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "180",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282298,7 +282298,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "199",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282312,7 +282312,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "221",
+    "line": "239",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282326,7 +282326,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "127",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282340,7 +282340,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "143",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282354,7 +282354,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "162",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282368,7 +282368,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "180",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282382,7 +282382,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "199",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282396,7 +282396,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "221",
+    "line": "239",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282408,9 +282408,275 @@
     "FullyVerifies": null
   },
   {
+    "name": "JsonWriterWriteToFileTest/3__ToBuffer",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "143",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "161",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "180",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToSyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "198",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "217",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToSyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "239",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToBuffer",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "143",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "161",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "180",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToSyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "198",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "217",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToSyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "239",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToBuffer",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "143",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "161",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "180",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToSyncedFile",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "198",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "217",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToSyncedFileResultsInError",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "239",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "262",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonWriterIntegerTest/0__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "257",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282424,7 +282690,7 @@
   {
     "name": "JsonWriterIntegerTest/1__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "257",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282438,7 +282704,7 @@
   {
     "name": "JsonWriterIntegerTest/2__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "257",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -282452,7 +282718,7 @@
   {
     "name": "JsonWriterIntegerTest/3__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "257",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289758,6 +290024,90 @@
     "FullyVerifies": null
   },
   {
+    "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "281",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__PrettyPrintsEmptyContainersOnOneLine",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "315",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__PrettyPrintsTopLevelScalarWithoutWhitespace",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "344",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__PrettyPrintsToStream",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "356",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "373",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "VajsonSerializeTest__SerializesEmptyContainersCompactly",
+    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
+    "line": "401",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "SocketTCPTest__ConnectSuccess",
     "file": "score/network/sock_async_tcp/socket_tcp_test.cpp",
     "line": "75",
@@ -291308,7 +291658,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291322,7 +291672,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291336,7 +291686,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291350,7 +291700,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291364,7 +291714,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291378,7 +291728,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291392,7 +291742,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291406,7 +291756,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291420,7 +291770,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291434,7 +291784,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291448,7 +291798,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291462,7 +291812,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291476,7 +291826,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291490,7 +291840,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291504,7 +291854,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291518,7 +291868,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291532,7 +291882,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291546,7 +291896,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291560,7 +291910,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291574,7 +291924,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291588,7 +291938,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291602,7 +291952,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291616,7 +291966,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291630,7 +291980,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291644,7 +291994,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291658,7 +292008,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291672,7 +292022,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291686,7 +292036,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291700,7 +292050,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291714,7 +292064,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -291728,7 +292078,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__string_manipulation__cmp_hash",
+    "PartiallyVerifies": "comp_req__string_manipulation__cmp_adaptor",
     "FullyVerifies": null
   },
   {
@@ -343382,139 +343732,139 @@
     "file": "score/scope_exit/scope_exit_test.cpp",
     "line": "64",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingCallsDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "76",
+    "line": "81",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingWithScopedFunctionCallsDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "92",
+    "line": "102",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__invoke_on_destruction",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingAfterCallingReleaseDoesNotCallDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "109",
+    "line": "124",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__release",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__MoveConstructingGuardDoesNotCallDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "123",
+    "line": "143",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingMoveConstructedMovedFromGuardDoesNotCallDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "134",
+    "line": "160",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingMoveConstructedMovedToGuardCallsDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "148",
+    "line": "179",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__MoveAssigningGuardCallsDestructionHandlerOnMovedToGuard",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "162",
+    "line": "198",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__replace_on_assignment",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingMoveAssignedMovedFromGuardDoesNotCallDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "174",
+    "line": "216",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   },
   {
     "name": "ScopeExitFixture__DestroyingMoveAssignedMovedToGuardCallsDestructionHandler",
     "file": "score/scope_exit/scope_exit_test.cpp",
-    "line": "188",
+    "line": "235",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__scope_exit__move_transfer",
     "FullyVerifies": null
   }
 ]
