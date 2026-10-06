@@ -69,6 +69,11 @@ class CommonVisitorLogic
         return meta_;
     }
 
+    void SetFieldIndex(std::size_t field_index)
+    {
+        meta_.field_index_ = field_index;
+    }
+
   private:
     MetaInformation meta_{};
 };

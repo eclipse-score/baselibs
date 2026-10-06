@@ -41,6 +41,7 @@ template <typename Structure>
 void MarkMetaInformationAboutElement(CommonVisitorLogic& visitor, std::size_t counter)
 {
     using visitable = ::score::common::visitor::struct_visitable<Structure>;
+    visitor.SetFieldIndex(counter);
     if (counter == static_cast<std::size_t>(0U))
     {
         visitor.MarkAsFirstElementInStruct();
