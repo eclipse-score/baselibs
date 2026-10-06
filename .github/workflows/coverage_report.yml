@@ -75,7 +75,7 @@ jobs:
   # back. Same-repository branches only: the QNX secrets are not exposed to
   # forks on pull_request events.
   qnx-coverage-report:
-    name: Coverage bl-x86_64-qnx (gcov, on target)
+    name: Coverage score-qnx-x86_64 (gcov, on target)
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:

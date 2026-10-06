@@ -63,7 +63,7 @@ coverage:llvm_cov --host_features=-treat_warnings_as_errors
 # into LCOV; score_coverage's gcov reporter produces the report. Rust sources
 # are listed as not-instrumented here and measured by the Linux run.
 # ---------------------------------------------------------------------------
-coverage:qnx_cov --config=bl-x86_64-qnx
+coverage:qnx_cov --config=score-qnx-x86_64
 coverage:qnx_cov --run_under=@score_qnx_unit_tests//src:run_under_qnx
 coverage:qnx_cov --test_lang_filters=cc
 coverage:qnx_cov --nocache_test_results
