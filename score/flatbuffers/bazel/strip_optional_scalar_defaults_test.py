@@ -36,6 +36,18 @@ class StripNullDefaultsTest(unittest.TestCase):
     def test_default_split_across_lines(self):
         self.assertEqual(strip_null_defaults("a: uint32\n    = null;"), "a: uint32;")
 
+    def test_default_split_by_block_comment(self):
+        self.assertEqual(
+            strip_null_defaults("a: uint32 = /* note */ null;"),
+            "a: uint32/* note */;",
+        )
+
+    def test_default_split_by_line_comment(self):
+        self.assertEqual(
+            strip_null_defaults("a: uint32 = // note\n null;"),
+            "a: uint32// note\n;",
+        )
+
     def test_other_defaults_are_kept(self):
         self.assertEqual(strip_null_defaults("a: uint32 = 0;"), "a: uint32 = 0;")
 
