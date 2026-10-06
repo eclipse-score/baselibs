@@ -178,6 +178,9 @@ score_coverage_scope(
     name = "coverage_scope_qnx",
     testonly = True,
     platform = "@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix",
+    # Manual, like the gcov reporter: a wildcard build on a Linux host would
+    # analyse the scope for QNX without the QNX toolchains registered.
+    tags = ["manual"],
     visibility = ["//visibility:private"],
     deps = SCOPE_DEPS,
 )
