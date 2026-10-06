@@ -137,7 +137,7 @@ bazel_dep(name = "score_coverage", version = "0.3.1", dev_dependency = True)
 # the run's platform) on real QNX; replaced by the 0.4.0 release.
 git_override(
     module_name = "score_coverage",
-    commit = "5d74f70844cc3cf9e88afa06886a903362c8e4c1",
+    commit = "afefbed18353046c4f9d686d7005fcef10de2074",
     remote = "https://github.com/eclipse-score/coverage_tool.git",
 )
 
