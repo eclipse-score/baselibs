@@ -159,7 +159,6 @@ SCOPE_DEPS_QNX = [
     "//score/os/qnx:thread_ctl",
     "//score/os/qnx:timer",
     "//score/os/qnx:unistd",
-    "//score/os/utils:tcp_keep_alive",
     "//score/os/utils/qnx/resource_manager:resource_manager",
 ]
 
