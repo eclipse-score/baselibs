@@ -15,16 +15,9 @@
 Components
 ==========
 
-.. toctree::
-   :maxdepth: 1
-
-   abi_compatible_data_types/docs/index
-
-   
 Overview
 ==========
 
-- :need:`doc__abi_compatible_data_types`: ABI-compatible data types for zero-copy inter-process communication between C++ and Rust.
 - :need:`doc__bitmanipulation`: Utilities for bit manipulation.
 - :need:`doc__concurrency`: Provides a generic interface to execute any C++ callable in a parallel context,
   supporting various execution strategies (e.g., thread pool, timed execution), thread safety,
@@ -48,10 +41,14 @@ Overview
   as Linux and QNX.
 - :need:`doc__result`: Provides a unified approach to error handling without exceptions, conforming to C++23
   ``std::expected``.
+- :need:`doc__scope_exit`: Provides RAII-based scope guards that invoke a callable on scope exit unless released.
+- :need:`doc__shared_layout`: Cross-Language Shared-Layout Data Types for zero-copy data exchange between C++ and Rust.
 - :need:`doc__static_reflection_with_serialization`: A header-only library for binary serialization,
   deserialization, and compile-time type reflection of heterogenuous C++ data structures with focus
   on compile-time safety and efficiency of serialization, as well as efficiency of filtering by
   content during deserialization.
 - *mw::log*: Logging frontend.
+- :need:`doc__string_manipulation`: Provides allocation-conscious helpers for command-line arguments,
+  lazy string-view splitting, and string-like comparison and hashing.
 - :need:`doc__utils`: Provides a collection of small, reusable utilities that do not fit into the other
   base libraries.

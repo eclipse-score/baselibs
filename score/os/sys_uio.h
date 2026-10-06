@@ -41,7 +41,7 @@ class SysUio : public ObjectSeam<SysUio>
                                                              const struct iovec* iovec_ptr,
                                                              const std::int32_t count) const noexcept = 0;
 
-    virtual ~SysUio() = default;
+    ~SysUio() override = default;
 
   protected:
     SysUio() = default;

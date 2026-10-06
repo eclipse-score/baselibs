@@ -52,7 +52,7 @@ class Netutils : public ObjectSeam<Netutils>
         const std::string& ifc_name,
         const Ipv4Address& ip_addr) const noexcept = 0;
 
-    virtual ~Netutils() = default;
+    ~Netutils() override = default;
 };
 
 }  // namespace os

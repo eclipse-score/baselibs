@@ -38,7 +38,7 @@ class ArpaInet : public ObjectSeam<ArpaInet>
     // @todo: use score::Result instead of score::cpp::expected after merging this ticket(Ticket-61178).
     virtual score::cpp::expected<InAddr, Error::Code> InetPton(const std::string& src) const = 0;
 
-    virtual ~ArpaInet() = default;
+    ~ArpaInet() override = default;
 
   protected:
     ArpaInet() = default;

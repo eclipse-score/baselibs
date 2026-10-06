@@ -19,6 +19,7 @@
 #include <ostream>
 
 #include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/writer/vajson/writer/serializers/util/formatting_writer.h"
 
 namespace score::json::vajson
 {
@@ -34,9 +35,9 @@ enum class SerializerState : bool
 class Unit
 {
   public:
-    /// \brief Constructs a Unit type from an output stream
+    /// \brief Constructs a Unit type from a writer
     /// \details This satisfies the 'Next' state interface for serializers.
-    explicit Unit(std::reference_wrapper<std::ostream>, SerializerState = SerializerState::kEmpty) noexcept {}
+    explicit Unit(std::reference_wrapper<FormattingWriter>, SerializerState = SerializerState::kEmpty) noexcept {}
 };
 
 /// \brief A marker struct that only tells the GenericValueSerializer to return itself after using operator<<()
@@ -75,7 +76,7 @@ using ArraySerializer = GenericValueSerializer<>;
 using ArrayStart = ArraySerializer;
 
 /// \brief Type of the output writer
-using WriterType = std::reference_wrapper<std::ostream>;
+using WriterType = std::reference_wrapper<FormattingWriter>;
 }  // namespace score::json::vajson
 
 #endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_SERIALIZER_H

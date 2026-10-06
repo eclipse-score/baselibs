@@ -53,7 +53,7 @@ class Uname : public ObjectSeam<Uname>
 
     virtual score::cpp::optional<SystemInfo> GetUname() = 0;
 
-    virtual ~Uname() = default;
+    ~Uname() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Uname(const Uname&) = delete;
     Uname& operator=(const Uname&) = delete;

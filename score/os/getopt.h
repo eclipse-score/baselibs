@@ -43,7 +43,7 @@ class Getopt : public ObjectSeam<Getopt>
                                      const option* const option,
                                      std::int32_t* const index) const noexcept = 0;
 
-    virtual ~Getopt() = default;
+    ~Getopt() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Getopt(const Getopt&) = delete;
     Getopt& operator=(const Getopt&) = delete;

@@ -671,7 +671,7 @@ TEST_F(SocketTestFixture, TestSendmmsgAndRecvmmsg)
     ASSERT_EQ(recv_result.value(), num_messages);
     for (size_t i = 0; i < num_messages; ++i)
     {
-        std::string received_message(recv_buffers[i], recv_msgs[i].msg_len);
+        std::string received_message(recv_buffers[i], static_cast<size_t>(recv_msgs[i].msg_len));
         EXPECT_EQ(received_message, messages[i]);
     }
 }

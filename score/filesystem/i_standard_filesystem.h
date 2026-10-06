@@ -67,7 +67,7 @@ class IStandardFilesystem : public os::ObjectSeam<IStandardFilesystem>
     IStandardFilesystem() = default;
     static IStandardFilesystem& instance() noexcept;
 
-    virtual ~IStandardFilesystem() noexcept;
+    ~IStandardFilesystem() noexcept override;
 
     IStandardFilesystem(const IStandardFilesystem&) = delete;
     IStandardFilesystem(const IStandardFilesystem&&) noexcept = delete;

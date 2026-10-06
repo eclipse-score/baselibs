@@ -74,7 +74,7 @@ class Stdlib : public ObjectSeam<Stdlib>
     virtual Result<void*> calloc(size_t num_of_elements, size_t size) const noexcept = 0;
     virtual void free(void* ptr) const noexcept = 0;
 
-    virtual ~Stdlib() = default;
+    ~Stdlib() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Stdlib(const Stdlib&) = delete;
     Stdlib& operator=(const Stdlib&) = delete;

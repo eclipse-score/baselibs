@@ -1037,8 +1037,8 @@ TEST_P(CT__VaJson__V2__Parsers__InvalidJson, DetectInvalidJson)
 INSTANTIATE_TEST_SUITE_P(InvalidJson,
                          CT__VaJson__V2__Parsers__InvalidJson,
                          ::testing::ValuesIn(InvalidJsonCases),
-                         [](const testing::TestParamInfo<InvalidJsonCase>& info) noexcept {
-                             return info.param.name;
+                         [](const testing::TestParamInfo<InvalidJsonCase>& param_info) noexcept {
+                             return param_info.param.name;
                          });
 
 // ---------------------------------------------------------------------------

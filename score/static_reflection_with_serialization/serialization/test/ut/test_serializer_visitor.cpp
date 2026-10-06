@@ -646,7 +646,7 @@ class serializer_visitor_overflows : public ::testing::Test
 
     void TearDown() override {}
 
-    ~serializer_visitor_overflows() {}
+    ~serializer_visitor_overflows() override {}
 
     PotentiallyTooBigStructure normalStructure;
     PotentiallyTooBigStructure structureWithHugeDynamicPart;

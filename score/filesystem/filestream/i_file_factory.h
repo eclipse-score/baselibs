@@ -68,7 +68,7 @@ class IFileFactory : public os::ObjectSeam<IFileFactory>
         const AtomicUpdateOwnershipFlags ownership_flag = kUseTargetFileUID | kUseTargetFileGID) = 0;
 
     /// @brief Destructor
-    virtual ~IFileFactory() noexcept;
+    ~IFileFactory() noexcept override;
 
     /// @brief Default Constructor
     IFileFactory() noexcept;

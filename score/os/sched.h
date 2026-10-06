@@ -60,7 +60,7 @@ class Sched : public ObjectSeam<Sched>
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale
 #endif  //__QNX__
 
-    virtual ~Sched() = default;
+    ~Sched() override = default;
 
   protected:
     Sched() = default;

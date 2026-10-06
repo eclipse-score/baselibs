@@ -20,9 +20,7 @@ cc_library(
     name = "static_destruction_guard",
     hdrs = ["static_destruction_guard.h"],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["FFI"],
     visibility = ["//visibility:public"],
@@ -32,9 +30,7 @@ cc_gtest_unit_test(
     name = "static_destruction_guard_test",
     srcs = ["static_destruction_guard_test.cpp"],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     visibility = ["@score_baselibs//score/utils:__pkg__"],
     deps = [
@@ -62,9 +58,7 @@ cc_test(
         "base64_test.cpp",
     ],
     features = [
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     visibility = ["@score_baselibs//score/utils:__pkg__"],
@@ -84,6 +78,12 @@ clang_tidy_extra_checks(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":base64",
+        ":static_destruction_guard",
+        "//score/utils/meyer_singleton:meyer_singleton",
+    ],
+    primary_need_id = "comp__baselibs_utils",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

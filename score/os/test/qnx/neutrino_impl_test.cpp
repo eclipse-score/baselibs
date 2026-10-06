@@ -32,7 +32,7 @@ TEST_F(NeutrinoImplFixture, ThreadCtlTestReturnsError)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    std::int32_t cmd = 0xFFFFFFFF;
+    std::int32_t cmd = static_cast<std::int32_t>(0xFFFFFFFF);
     std::int32_t data = 10;
 
     const auto val = Neutrino::instance().ThreadCtl(cmd, &data);
@@ -95,7 +95,7 @@ TEST_F(NeutrinoImplFixture, InterruptAttachAndDetachTest)
 
     EXPECT_NE(neutrino_.InterruptWait_r(id, &timeout), EOK);
 
-    std::uint32_t ret = neutrino_.InterruptDetach(id);
+    std::int32_t ret = neutrino_.InterruptDetach(id);
     EXPECT_NE(ret, -1);
 }
 

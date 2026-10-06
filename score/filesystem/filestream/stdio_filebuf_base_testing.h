@@ -63,7 +63,7 @@ class StdioFilebufBase : public std::filebuf
 {
   public:
     StdioFilebufBase(int fd, std::ios::openmode) : file_handle_{fd} {}
-    virtual ~StdioFilebufBase() = default;
+    ~StdioFilebufBase() override = default;
     StdioFilebufBase(const StdioFilebufBase&) = delete;
     StdioFilebufBase& operator=(const StdioFilebufBase&) = delete;
     StdioFilebufBase(StdioFilebufBase&& other) noexcept : file_handle_{other.file_handle_}

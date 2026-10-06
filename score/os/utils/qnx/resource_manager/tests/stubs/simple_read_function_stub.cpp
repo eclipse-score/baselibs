@@ -21,7 +21,13 @@ SimpleReadFunctionStub::SimpleReadFunctionStub(score::os::ResMgr& resmgr, score:
 // we are simulating reading from registers with 8 bytes, register at a time
 score::Result<size_t> SimpleReadFunctionStub::read(const off_t offset, const size_t nbytes, uint64_t& result)
 {
-    if ((offset * nbytes) >= data_.size())
+    // Reject negative offsets up front so that the conversion to size_t below is value-preserving.
+    if (offset < 0)
+    {
+        return score::MakeUnexpected(score::os::ErrorCode::kIllegalSeek);
+    }
+
+    if ((static_cast<size_t>(offset) * nbytes) >= data_.size())
     {
         return score::MakeUnexpected(score::os::ErrorCode::kIllegalSeek);
     }

@@ -50,7 +50,7 @@ class Path : public ObjectSeam<Path>
     /// @brief Returns the absolute path to the executable
     virtual score::cpp::expected<std::string, score::os::Error> get_exec_path() const noexcept = 0;
 
-    virtual ~Path() = default;
+    ~Path() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Path(const Path&) = delete;
     Path& operator=(const Path&) = delete;

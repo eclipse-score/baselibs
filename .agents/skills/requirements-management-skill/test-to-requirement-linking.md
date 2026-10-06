@@ -11,7 +11,7 @@ Use this reference when linking, migrating, or reviewing C++ gtest and Rust unit
 3. Choose `TestType` and `DerivationTechnique` from [Metadata Reference](#metadata-reference).
 4. Add a concise `Description` that states objective, input, and expected outcome.
 5. Record the metadata using the language-specific mechanism below.
-6. Run the narrow test target, usually `bazel test --config=bl-x86_64-linux //score/<component>/...`, to confirm the test still passes.
+6. Run the narrow test target, usually `bazel test --config=score-linux-x86_64 //score/<component>/...`, to confirm the test still passes.
 7. Run `bazel run //:docs` to confirm the linked requirement ID resolves. A passing test does not prove this: `RecordProperty`/`record_property` values are untyped strings with no compile-time or test-runtime check against the metamodel, so a typoed or removed ID only surfaces as a docs build warning or error. The route is complete when both the test passes and the docs build reports no unresolved-link or missing-property issue for it.
 
 ### Migrate legacy metadata

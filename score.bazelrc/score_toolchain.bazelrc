@@ -1,0 +1,60 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+
+# Host defaults, also in effect for targets built without one of the configs below.
+common --host_platform=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
+common --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
+common --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+
+test:_score_common --build_tests_only
+
+# Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
+build:score-linux-x86_64 --platforms=@score_bazel_platforms//:x86_64-linux-gcc_12.2.0-posix
+build:score-linux-x86_64 --extra_toolchains=@score_gcc_x86_64_toolchain//:x86_64-linux-gcc_12.2.0
+build:score-linux-x86_64 --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_unknown_linux_gnu
+test:score-linux-x86_64 --config=_score_common
+
+# Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
+build:score-linux-aarch64 --platforms=@score_bazel_platforms//:aarch64-linux-gcc_12.2.0-posix
+build:score-linux-aarch64 --extra_toolchains=@score_gcc_aarch64_toolchain//:aarch64-linux-gcc_12.2.0
+build:score-linux-aarch64 --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_linux_gnu
+test:score-linux-aarch64 --config=_score_common
+test:score-linux-aarch64 --test_timeout=300
+test:score-linux-aarch64 --run_under=//:qemu_aarch64
+test:score-linux-aarch64 --test_tag_filters=-no_rust_doc_test
+
+# Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
+build:score-qnx-x86_64 --platforms=@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix
+build:score-qnx-x86_64 --extra_toolchains=@score_qcc_x86_64_toolchain//:x86_64-qnx-sdp_8.0.0
+build:score-qnx-x86_64 --extra_toolchains=@score_qnx_x86_64_ifs_toolchain//:ifs-x86_64-qnx-sdp_8.0.0
+build:score-qnx-x86_64 --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_x86_64_pc_nto_qnx800
+test:score-qnx-x86_64 --config=_score_common
+test:score-qnx-x86_64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:score-qnx-x86_64 --test_lang_filters=cc,rust
+
+# Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
+build:score-qnx-aarch64 --platforms=@score_bazel_platforms//:aarch64-qnx-sdp_8.0.0-posix
+build:score-qnx-aarch64 --extra_toolchains=@score_qcc_aarch64_toolchain//:aarch64-qnx-sdp_8.0.0
+build:score-qnx-aarch64 --extra_toolchains=@score_qnx_aarch64_ifs_toolchain//:ifs-aarch64-qnx-sdp_8.0.0
+build:score-qnx-aarch64 --extra_toolchains=@score_toolchains_rust//toolchains/ferrocene:ferrocene_aarch64_unknown_nto_qnx800
+test:score-qnx-aarch64 --config=_score_common
+test:score-qnx-aarch64 --test_timeout=300
+test:score-qnx-aarch64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:score-qnx-aarch64 --test_lang_filters=cc,rust
+
+# Deprecated aliases for the previous config names.
+# `test` inherits `build:` entries, so the aliased config's `test:` entries are pulled in too.
+build:bl-x86_64-linux --config=score-linux-x86_64
+build:bl-aarch64-linux --config=score-linux-aarch64
+build:bl-x86_64-qnx --config=score-qnx-x86_64
+build:bl-aarch64-qnx --config=score-qnx-aarch64

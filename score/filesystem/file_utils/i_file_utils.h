@@ -77,7 +77,7 @@ class IFileUtils : public os::ObjectSeam<IFileUtils>
     /// \return True if file @path ownership matches @group_name
     virtual Result<bool> ValidateGroup(const Path& path, const std::string& group_name) const noexcept = 0;
 
-    virtual ~IFileUtils() noexcept;
+    ~IFileUtils() noexcept override;
 
     IFileUtils(const IFileUtils&) = delete;
     IFileUtils(const IFileUtils&&) noexcept = delete;

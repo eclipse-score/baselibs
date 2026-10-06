@@ -42,7 +42,7 @@ int SimpleReadFunction::operator()(resmgr_context_t* ctp,
         return *get_offset_result.error();
     }
 
-    const size_t nbytes = _IO_READ_GET_NBYTES(msg);
+    const size_t nbytes = static_cast<size_t>(_IO_READ_GET_NBYTES(msg));
     auto pre_read_result = preRead(get_offset_result.value(), nbytes);
     if (!pre_read_result.has_value())
     {
@@ -99,7 +99,7 @@ score::Result<off_t> SimpleReadFunction::getOffset(const io_read_t* msg, const R
             // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast) justified
             auto xoff = reinterpret_cast<const struct _xtype_offset*>(
                 &msg->i + 1);  // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic) justified
-            result = xoff->offset;
+            result = static_cast<off_t>(xoff->offset);
             break;
         }
 

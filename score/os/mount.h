@@ -47,7 +47,7 @@ class Mount : public ObjectSeam<Mount>
 
     virtual score::cpp::expected_blank<Error> umount(const char* const target) const noexcept = 0;
 
-    virtual ~Mount() = default;
+    ~Mount() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Mount(const Mount&) = delete;
     Mount& operator=(const Mount&) = delete;

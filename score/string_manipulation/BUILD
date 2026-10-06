@@ -14,6 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
+load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
@@ -60,9 +61,7 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -95,13 +94,17 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
         ":split_string_view",
         "@googletest//:gtest_main",
     ],
+)
+
+docs_bundle(
+    name = "docs",
+    source_dir = "docs",
+    visibility = ["//visibility:public"],
 )

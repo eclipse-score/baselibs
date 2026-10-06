@@ -138,7 +138,7 @@ score::cpp::expected<std::uint64_t, score::os::Error> ProcMgrImpl::procmgr_value
     std::uint64_t result = ::procmgr_value_current(id);
     if (result == std::numeric_limits<std::uint64_t>::max())
     {
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno(result));
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
     return result;
 }

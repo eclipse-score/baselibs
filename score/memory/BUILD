@@ -69,9 +69,7 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -87,9 +85,7 @@ cc_test(
     ],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -123,6 +119,12 @@ clang_tidy_extra_checks(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":data_type_size_info",
+        ":endianness",
+        ":pmr_ring_buffer",
+    ],
+    primary_need_id = "comp__baselibs_memory_shared",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

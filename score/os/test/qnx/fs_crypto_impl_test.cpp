@@ -87,7 +87,6 @@ TEST_F(fsCryptoImplTest, TestFunction_fs_crypto_domain_add_Failure)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const std::size_t bytes_length = 64;
     const char* path = "/persistent/test";
     std::int32_t domain{-1};
     std::int32_t type{FS_CRYPTO_TYPE_XTS};

@@ -104,7 +104,7 @@ class Stat : public ObjectSeam<Stat>
                                                        const char* const path,
                                                        const Mode mode,
                                                        const bool resolve_symlinks = true) const noexcept = 0;
-    virtual ~Stat() = default;
+    ~Stat() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Stat(const Stat&) = delete;
     Stat& operator=(const Stat&) = delete;

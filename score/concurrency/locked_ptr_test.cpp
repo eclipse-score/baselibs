@@ -222,26 +222,26 @@ TEST(LockedPtrTest, UnlockGuardUniqueLockTests)
 
     {
         IntWrapper obj{42};
-        MockMutex mut{};
-        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
-        EXPECT_TRUE(mut.is_locked());
+        MockMutex mock_mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mock_mut}};
+        EXPECT_TRUE(mock_mut.is_locked());
         {
             auto ug = lp_obj.unlock_guard();
-            EXPECT_FALSE(mut.is_locked());
+            EXPECT_FALSE(mock_mut.is_locked());
         }
-        EXPECT_TRUE(mut.is_locked());
+        EXPECT_TRUE(mock_mut.is_locked());
     }
 
     {
         IntWrapper obj{42};
-        MockMutex mut{};
-        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mut}};
-        EXPECT_TRUE(mut.is_locked());
+        MockMutex mock_mut{};
+        LPtr2IntW lp_obj{&obj, std::unique_lock<MockMutex>{mock_mut}};
+        EXPECT_TRUE(mock_mut.is_locked());
         {
             auto cug = std::as_const(lp_obj).unlock_guard();
-            EXPECT_FALSE(mut.is_locked());
+            EXPECT_FALSE(mock_mut.is_locked());
         }
-        EXPECT_TRUE(mut.is_locked());
+        EXPECT_TRUE(mock_mut.is_locked());
     }
 }
 
@@ -691,9 +691,9 @@ TEST(LockedPtrTest, AndThenConstRvalueRefNull)
     const auto lp = LockedPtr(nullp, std::unique_lock{mut});
 
     bool is_invoked = false;
-    auto COptValueBy10InvocationTracked = [&is_invoked](const LPtr2IntW& lp) {
+    auto COptValueBy10InvocationTracked = [&is_invoked](const LPtr2IntW& lp_arg) {
         is_invoked = true;
-        return COptValueBy10(lp);
+        return COptValueBy10(lp_arg);
     };
     EXPECT_EQ(std::move(lp).and_then(COptValueBy10InvocationTracked), score::cpp::nullopt);
     EXPECT_FALSE(is_invoked);

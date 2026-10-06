@@ -29,7 +29,7 @@ namespace
 class SomeInterface : public AllocatorAwareErasedType<SomeInterface>
 {
   public:
-    virtual ~SomeInterface() = default;
+    ~SomeInterface() override = default;
     [[nodiscard]] virtual std::int32_t GetData() const noexcept = 0;
     virtual void SetData(std::int32_t) noexcept = 0;
 };

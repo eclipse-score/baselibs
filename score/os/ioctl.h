@@ -33,7 +33,7 @@ class Ioctl : public ObjectSeam<Ioctl>
                                                     const std::int32_t request,
                                                     void* const arg) const noexcept = 0;
 
-    virtual ~Ioctl() = default;
+    ~Ioctl() override = default;
 
   protected:
     Ioctl() = default;

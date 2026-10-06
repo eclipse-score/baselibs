@@ -22,8 +22,6 @@ cc_library(
         "sha256digest.h",
     ],
     features = [
-        "treat_warnings_as_errors",
-        "additional_warnings",
         "strict_warnings",
     ],
     tags = ["FFI"],

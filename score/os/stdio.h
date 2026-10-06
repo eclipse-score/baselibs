@@ -43,7 +43,7 @@ class Stdio : public ObjectSeam<Stdio>
 
     virtual score::cpp::expected<std::int32_t, Error> fileno(FILE* const stream) const noexcept = 0;
 
-    virtual ~Stdio() = default;
+    ~Stdio() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     Stdio(const Stdio&) = delete;
     Stdio& operator=(const Stdio&) = delete;

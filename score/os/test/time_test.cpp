@@ -406,7 +406,7 @@ TEST(TimeImplTest, PeriodicTimerCreationSuccess)
     // For periodic timer, interval should remain set
     // The kernel may slightly adjust the interval to its internal timer resolution
     EXPECT_EQ(current_value.it_interval.tv_sec, 0);
-    EXPECT_NEAR(current_value.it_interval.tv_nsec, 50000000, 2000000);
+    EXPECT_NEAR(static_cast<double>(current_value.it_interval.tv_nsec), 50000000.0, 2000000.0);
 
     // Timer should be armed with remaining time less than interval
     EXPECT_GE(current_value.it_value.tv_nsec, 0);
@@ -587,7 +587,8 @@ TEST(TimeImplTest, TimerSettimeWithAbsoluteTimeFlag)
     new_value.it_interval.tv_nsec = 0;
 
     // TIMER_ABSTIME: treat it_value as an absolute CLOCK_REALTIME timestamp
-    const auto settime_result = Time::instance().timer_settime(timerid, TIMER_ABSTIME, &new_value, nullptr);
+    const auto settime_result =
+        Time::instance().timer_settime(timerid, static_cast<std::int32_t>(TIMER_ABSTIME), &new_value, nullptr);
     EXPECT_TRUE(settime_result.has_value());
     EXPECT_EQ(settime_result.value(), 0);
 

@@ -14,9 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 _compiler_warning_features = [
-    "additional_warnings",
     "strict_warnings",
-    "treat_warnings_as_errors",
 ]
 
 cc_library(

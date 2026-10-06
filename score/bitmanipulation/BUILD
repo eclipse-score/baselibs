@@ -20,9 +20,7 @@ cc_test(
     srcs = ["bit_manipulation_test.cpp"],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -36,9 +34,7 @@ cc_test(
     srcs = ["bitmask_operators_test.cpp"],
     features = [
         "aborts_upon_exception",
-        "treat_warnings_as_errors",
         "strict_warnings",
-        "additional_warnings",
     ],
     tags = ["unit"],
     deps = [
@@ -71,6 +67,11 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":bitmanipulation",
+        ":bitmask_operators",
+    ],
+    primary_need_id = "comp__baselibs_bit_manipulation",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

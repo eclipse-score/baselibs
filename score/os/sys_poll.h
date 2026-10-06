@@ -44,7 +44,7 @@ class SysPoll : public ObjectSeam<SysPoll>
                                                            const nfds_t nfds,
                                                            const std::int32_t timeout) const noexcept = 0;
 
-    virtual ~SysPoll() = default;
+    ~SysPoll() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
     SysPoll(const SysPoll&) = delete;
     SysPoll& operator=(const SysPoll&) = delete;

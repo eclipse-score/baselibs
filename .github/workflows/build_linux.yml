@@ -33,16 +33,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: bl-x86_64-linux
+          - name: score-linux-x86_64
             artifact-name: x86_64-linux
-            bazel-config: bl-x86_64-linux
+            bazel-config: score-linux-x86_64
             working-directory: "."
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
-          - name: bl-aarch64-linux
+          - name: score-linux-aarch64
             artifact-name: aarch64-linux
-            bazel-config: bl-aarch64-linux
+            bazel-config: score-linux-aarch64
             working-directory: "."
             bazel-build-target: "//..."
             bazel-test-target: >-
@@ -68,7 +68,7 @@ jobs:
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
       - name: Install QEMU
-        if: matrix.bazel-config == 'bl-aarch64-linux'
+        if: matrix.bazel-config == 'score-linux-aarch64'
         run: |
           sudo apt-get update
           sudo apt install -y qemu-user
