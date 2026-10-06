@@ -133,6 +133,14 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 # tested through futurecpp_internal, files without coverage data listed).
 bazel_dep(name = "score_coverage", version = "0.3.1", dev_dependency = True)
 
+# TEMPORARY: validates eclipse-score/coverage_tool#24 (scope evaluated for
+# the run's platform) on real QNX; replaced by the 0.4.0 release.
+git_override(
+    module_name = "score_coverage",
+    commit = "e9be6feba6e9bb6b2b49abea23e98cf653aba831",
+    remote = "https://github.com/eclipse-score/coverage_tool.git",
+)
+
 bazel_dep(name = "score_platform", version = "0.7.2")
 
 ## Configure the python toolchain
