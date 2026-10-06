@@ -106,21 +106,6 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      # TEMPORARY diagnostic: all 284 tests were skipped as incompatible with the
-      # QNX platform after the merge with main; an explicitly requested target
-      # makes Bazel print the dependency chain to the incompatible constraint.
-      - name: Diagnose test incompatibility (TEMPORARY)
-        run: |
-          bazel build --lockfile_mode=error --config=score-qnx-x86_64 --collect_code_coverage \
-            --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- \
-            //tools/coverage:coverage_scope_qnx || true
-          bazel build --lockfile_mode=error --config=qnx_cov \
-            --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- \
-            //score/os/test:acl_test || true
-          bazel cquery --lockfile_mode=error --config=score-qnx-x86_64 \
-            --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" \
-            'tests(//score/os/test:all)' --output=starlark \
-            --starlark:expr='str(target.label) + " " + str(providers(target).keys())' 2>&1 | grep -i -m5 "incompatible" || true
       - name: Run Bazel Coverage on QNX (gcov, C++)
         run: |
           set -euo pipefail

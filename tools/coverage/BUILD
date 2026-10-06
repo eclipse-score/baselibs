@@ -37,7 +37,6 @@ SCOPE_DEPS_COMMON = [
     "//score/concurrency/thread_load_tracking",
     "//score/containers:dynamic_array",
     "//score/containers:intrusivelist",
-    "//score/containers_rust:containers",
     "//score/datetime_converter:time_conversion",
     "//score/flatbuffers:flatbufferutils",
     "//score/hash",
@@ -52,13 +51,9 @@ SCOPE_DEPS_COMMON = [
     "//score/json:json_serializer",
     "//score/json/internal/parser/vajson:vajson_parser",
     "//score/json/internal/writer/vajson:vajson_backend",
-    "//score/language/rust/memres",
-    "//score/language/rust/stop_token",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
     "//score/language/safecpp/safe_atomics:try_atomic_add",
     "//score/language/safecpp/string_view:null_termination_check",
-    "//score/log_rust/stdout_logger",
-    "//score/log_rust/stdout_logger_cpp_init",
     "//score/memory:data_type_size_info",
     "//score/memory:endianness",
     "//score/memory:pmr_ring_buffer",
@@ -111,20 +106,30 @@ SCOPE_DEPS_COMMON = [
     "//score/os/utils/inotify:inotify_instance_impl",
     "//score/os/utils/interprocess:interprocess_notification",
     "//score/result:result_for_rust",
-    "//score/result/rust:result_cxx",
-    "//score/result/rust:result_rs",
     "//score/scope_exit",
     "//score/static_reflection_with_serialization/serialization",
     "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
     "//score/string_manipulation/arguments",
-    "//score/sync",
-    "//score/thread",
     "//score/utils:base64",
 ]
 
 # Roots that exist on one platform only. A root incompatible with the scope's
 # platform fails the analysis, hence the select().
 SCOPE_DEPS_LINUX = [
+    # Rust roots and the C++ wrappers that link Rust: crate_universe marks the
+    # crates incompatible with platforms outside rules_rust's triple list
+    # (x86_64-pc-nto-qnx800 is not in it), an incompatible root would make
+    # the QNX scope, the report generator and thereby every QNX test
+    # incompatible, and the gcov backend cannot measure Rust anyway.
+    "//score/containers_rust:containers",
+    "//score/language/rust/memres",
+    "//score/language/rust/stop_token",
+    "//score/log_rust/stdout_logger",
+    "//score/log_rust/stdout_logger_cpp_init",
+    "//score/result/rust:result_cxx",
+    "//score/result/rust:result_rs",
+    "//score/sync",
+    "//score/thread",
     "//score/os:syslog_impl",
     # Wrappers whose only in-repo consumers are mocks/tests; still shipped
     # production code (coverage visibility grants).
