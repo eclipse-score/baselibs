@@ -62,6 +62,13 @@ def strip_null_defaults(content):
     Effectively it's a small hand-rolled lexer/tokenizer. It never applies the
     "remove null default" regex inside comments or strings, only in actual schema code,
     avoiding false-positive matches like a "= null" appearing in a doc comment.
+
+    The second pass handles defaults split by comments (doctests):
+
+    >>> strip_null_defaults("a:uint32 = /* note */ null;")
+    'a:uint32/* note */;'
+    >>> strip_null_defaults("a:uint32 = // note\\n null;")
+    'a:uint32// note\\n;'
     """
     parts = []  # (is_code, text)
     pos = 0
