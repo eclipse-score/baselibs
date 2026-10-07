@@ -225150,7 +225150,7 @@
   {
     "name": "container_test_basics/0__copy_assignment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "393",
+    "line": "395",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225164,7 +225164,7 @@
   {
     "name": "container_test_basics/0__equality_operators",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "410",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225178,7 +225178,7 @@
   {
     "name": "container_test_basics/0__post_increment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "424",
+    "line": "426",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225192,7 +225192,7 @@
   {
     "name": "container_test_basics/0__default_construcitble",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "436",
+    "line": "438",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225206,7 +225206,7 @@
   {
     "name": "container_test_basics/0__use_in_stl_algorithm_with_forward_iterator_requirement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "447",
+    "line": "449",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225248,7 +225248,7 @@
   {
     "name": "container_test_basics/1__copy_assignment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "393",
+    "line": "395",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225262,7 +225262,7 @@
   {
     "name": "container_test_basics/1__equality_operators",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "410",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225276,7 +225276,7 @@
   {
     "name": "container_test_basics/1__post_increment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "424",
+    "line": "426",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225290,7 +225290,7 @@
   {
     "name": "container_test_basics/1__default_construcitble",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "436",
+    "line": "438",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225304,7 +225304,7 @@
   {
     "name": "container_test_basics/1__use_in_stl_algorithm_with_forward_iterator_requirement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "447",
+    "line": "449",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225346,7 +225346,7 @@
   {
     "name": "container_test_basics/2__copy_assignment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "393",
+    "line": "395",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225360,7 +225360,7 @@
   {
     "name": "container_test_basics/2__equality_operators",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "410",
+    "line": "412",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225374,7 +225374,7 @@
   {
     "name": "container_test_basics/2__post_increment",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "424",
+    "line": "426",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225388,7 +225388,7 @@
   {
     "name": "container_test_basics/2__default_construcitble",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "436",
+    "line": "438",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225402,7 +225402,7 @@
   {
     "name": "container_test_basics/2__use_in_stl_algorithm_with_forward_iterator_requirement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "447",
+    "line": "449",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225416,7 +225416,7 @@
   {
     "name": "container_test_bi_directional/0__predecrement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "464",
+    "line": "466",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225430,7 +225430,7 @@
   {
     "name": "container_test_bi_directional/0__postdecrement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "476",
+    "line": "478",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225444,7 +225444,7 @@
   {
     "name": "container_test_bi_directional/0__use_in_stl_algorithm_with_bidirectional_iterator_requirement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "489",
+    "line": "491",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225458,7 +225458,7 @@
   {
     "name": "container_test_bi_directional/1__predecrement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "464",
+    "line": "466",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225472,7 +225472,7 @@
   {
     "name": "container_test_bi_directional/1__postdecrement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "476",
+    "line": "478",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225486,7 +225486,7 @@
   {
     "name": "container_test_bi_directional/1__use_in_stl_algorithm_with_bidirectional_iterator_requirement",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "489",
+    "line": "491",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225500,7 +225500,7 @@
   {
     "name": "container_test_random_access/0__comparison_operator",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "505",
+    "line": "508",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225514,7 +225514,7 @@
   {
     "name": "container_test_random_access/0__offset_iterator_operators",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "522",
+    "line": "525",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225528,7 +225528,7 @@
   {
     "name": "container_test_random_access/0__difference_operator",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "546",
+    "line": "549",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225542,7 +225542,7 @@
   {
     "name": "container_test_random_access/0__subscript_operator",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "562",
+    "line": "565",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225556,7 +225556,7 @@
   {
     "name": "make_zip_range__typical_data",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "584",
+    "line": "587",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225570,7 +225570,7 @@
   {
     "name": "make_zip_range__get_iterator_tuple",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "604",
+    "line": "607",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -225584,7 +225584,7 @@
   {
     "name": "make_sized_zip_range__typical_data",
     "file": "score/language/futurecpp/tests/zip_iterator_test.cpp",
-    "line": "623",
+    "line": "626",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -319242,6 +319242,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "score/flatbuffers/bazel/strip_optional_scalar_defaults_test",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "score/flatbuffers/bazel/schema_generator_test",
     "file": null,
     "line": null,
@@ -319257,6 +319271,34 @@
   },
   {
     "name": "score/flatbuffers/test/generate_json_schema/gen_rich_json_schema_diff_test-test.sh",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "score/flatbuffers/test/generate_json_schema/gen_json_schema_optional_scalar_test.sh",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "score/flatbuffers/test/generate_json_schema/gen_json_schema_included_optional_scalar_test.sh",
     "file": null,
     "line": null,
     "result": "passed",
