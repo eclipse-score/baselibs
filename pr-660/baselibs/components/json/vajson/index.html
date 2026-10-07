@@ -74,7 +74,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="VaJson Component Architecture" href="architecture/index.html" />
-    <link rel="prev" title="nlohman_json" href="../nlohman_json/index.html" />
+    <link rel="prev" title="Requirements" href="../json_wrapper/requirements/index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.1" />
@@ -419,7 +419,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">JSON Component Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../architecture/chklst_arc_inspection.html">Architecture Inspection Checklist</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../json_wrapper/index.html">JSON Wrapper</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../nlohman_json/index.html">nlohman_json</a></li>
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">VaJson</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="architecture/index.html">VaJson Component Architecture</a></li>
 <li class="toctree-l3"><a class="reference internal" href="requirements/index.html">Requirements</a></li>
@@ -509,7 +508,7 @@
                   
   <section id="vajson">
 <h1>VaJson<a class="headerlink" href="#vajson" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-34fb2fca">
+<div class="need_container docutils container" id="SNCB-e649ea95">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -529,7 +528,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">component_request</span></span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/change_management/change_management_workproducts.html#wp__cmpt_request">wp__cmpt_request</a></span></span></div>
 </span></div>
@@ -591,7 +590,7 @@ This reduces the effort to satisfy S-CORE internal process requirements.</p>
 <section id="backward-compatibility">
 <h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Link to this heading">#</a></h2>
 <p>VaJson is integrated as an optional backend through the existing S-CORE JSON wrapper.
-Users can select the JSON backend (for example, VaJson or nlohmann), so existing functionality remains backward compatible.</p>
+vaJson is now the only JSON backend; the library no longer offers a backend selection.</p>
 </section>
 <section id="security-impact">
 <h2>Security Impact<a class="headerlink" href="#security-impact" title="Link to this heading">#</a></h2>
@@ -721,12 +720,12 @@ Vector will not create the required S-CORE process documentation (for example, s
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../nlohman_json/index.html"
+       href="../json_wrapper/requirements/index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">nlohman_json</p>
+        <p class="prev-next-title">Requirements</p>
       </div>
     </a>
     <a class="right-next"
