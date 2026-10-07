@@ -20,7 +20,7 @@ load("//third_party/openssl:openssl_transition.bzl", "openssl_library")
 #   build --@score_baselibs//third_party/openssl:openssl_crypto_impl=//my/openssl:target
 label_flag(
     name = "openssl_crypto_impl",
-    build_setting_default = "@openssl//:crypto",
+    build_setting_default = "@score_openssl//:openssl_shared",
     tags = ["manual"],
     visibility = ["//visibility:public"],
 )
