@@ -20,26 +20,23 @@
 # the run through the "workflow-approval" environment. Same-repository PRs,
 # pushes to main and the merge queue run without approval.
 name: Code coverage (QNX, gcov on target)
-
 on:
   pull_request_target:
     types: [opened, reopened, synchronize]
   push:
     branches:
       - main
+      - dcalavrezo_qnx_coverage # TEMPORARY: validate this workflow before merge (pull_request_target runs the base branch's definition)
   merge_group:
     types: [checks_requested]
   workflow_dispatch:
-
 permissions:
   contents: read
   pull-requests: read
   actions: write
-
 concurrency:
   group: coverage-qnx-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request_target' }}
-
 jobs:
   approval:
     name: Approval (fork PRs only)
@@ -51,7 +48,6 @@ jobs:
     steps:
       - name: Blocking on approval
         run: 'true'
-
   qnx-coverage-report:
     name: Coverage score-qnx-x86_64 (gcov, on target)
     needs: approval
