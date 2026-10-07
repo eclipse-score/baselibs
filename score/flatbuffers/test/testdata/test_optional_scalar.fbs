@@ -1,0 +1,16 @@
+/// Fixture exercising an optional scalar ("= null;") default.
+///
+/// flatc --jsonschema rejects "= null;" outright, so generate_json_schema must strip it
+/// from the copy of the schema it feeds to flatc --jsonschema (see
+/// strip_optional_scalar_defaults.py) while leaving --cpp/--binary generation (which does
+/// support "= null;") on the original schema unaffected.
+namespace demo.optional_scalar;
+
+table OptionalScalarConfig {
+    /// Absent (as opposed to defaulted to 0) is a meaningful, distinct state for this field.
+    instance_id:uint32 = null;
+}
+
+root_type OptionalScalarConfig;
+
+file_identifier "OPSC";
