@@ -43,6 +43,25 @@ class HasLockAndUnlockMismatchedSignature
     void unlock(int*) {}
 };
 
+class LockWithVoidOwnsLock
+{
+  public:
+    void lock() {}
+    void unlock() {}
+    void owns_lock() const {}
+};
+
+class LockWithIntOwnsLock
+{
+  public:
+    void lock() {}
+    void unlock() {}
+    int owns_lock() const
+    {
+        return 1;
+    }
+};
+
 }  // namespace
 
 TEST(TypeTraitsTest, IsBasicLockableCompileTimeChecks)
@@ -77,6 +96,10 @@ TEST(TypeTraitsTest, LockWithOwnsLockCompileTimeChecks)
 {
     EXPECT_FALSE((LockWithOwnsLock<test::BasicLockableArchetype>::value))
         << "a basic lockable without owns_lock should not satisfy LockWithOwnsLock";
+    EXPECT_FALSE((LockWithOwnsLock<LockWithVoidOwnsLock>::value))
+        << "a lock with void owns_lock should not satisfy LockWithOwnsLock";
+    EXPECT_FALSE((LockWithOwnsLock<LockWithIntOwnsLock>::value))
+        << "a lock with non-bool owns_lock should not satisfy LockWithOwnsLock";
     EXPECT_TRUE((LockWithOwnsLock<test::LockableWithOwnsLock>::value))
         << "LockableWithOwnsLock should satisfy LockWithOwnsLock";
     EXPECT_FALSE((LockWithOwnsLock<std::mutex>::value)) << "std::mutex should not satisfy LockWithOwnsLock";

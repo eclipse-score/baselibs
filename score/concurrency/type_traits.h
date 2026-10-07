@@ -41,7 +41,8 @@ struct LockWithOwnsLock : std::false_type
 };
 
 template <typename T>
-struct LockWithOwnsLock<T, std::void_t<decltype(std::declval<const T&>().owns_lock())>> : is_basic_lockable<T>
+struct LockWithOwnsLock<T, std::enable_if_t<std::is_same_v<decltype(std::declval<const T&>().owns_lock()), bool>>>
+    : is_basic_lockable<T>
 {
 };
 

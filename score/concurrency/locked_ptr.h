@@ -28,8 +28,10 @@ namespace concurrency
 
 /**
  * @brief RAII smart pointer that allows for thread-safe access to an object guarded by a lock.
- *        The Lock is held during the lifetime of LockedPtr. On destruction, lock is destroyed which would release the
- * lock. LockedPtr provides pointer-like semantics (operator*, operator->) to access the underlying object.
+ *        If constructed with a held lock and a non-null pointer, the lock remains held for the lifetime of the
+ *        LockedPtr. On destruction, the lock is destroyed and released. LockedPtr provides pointer-like semantics
+ *        (operator*, operator->) to access the underlying object.
+ *        If constructed with a nullptr and a held lock, the lock is immediately unlocked.
  *        Additionally, LockedPtr provides an unlock_guard() method that returns an UnlockGuard which can be used to
  * temporarily unlock the Lock while ensuring it gets locked again when the UnlockGuard goes out of scope.
  *
@@ -61,7 +63,8 @@ class LockedPtr
   public:
     /**
      * @brief Constructs a LockedPtr that manages the given pointer and lock.
-     * @post A null LockedPtr does not own its lock.
+     * @post If ptr is nullptr and lock owns its lock on construction, the constructor unlocks it.
+     * @post If ptr is non-null and lock is held, the lock remains held for the lifetime of the LockedPtr.
      */
     LockedPtr(T* ptr, Lock lock) : ptr_(ptr), lock_(std::move(lock))
     {
