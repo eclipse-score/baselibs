@@ -41,9 +41,9 @@ implementation provided. But generally there is a "Wrapper" and an "Implementati
 
 Design Decisions:
 
-It was decided to use the nlohman_json OSS library (see `nlohman/json <https://github.com/nlohmann/json>`_). This decision still has to be documented (TBD).
+It was decided to use the vaJson parser from Vector (see :need:`doc__vajson`), which is ASIL D certified.
 
-JSON writing functionality is implemented in the "Wrapper", i.e. the nlohman_json OSS library is not used for this.
+JSON writing functionality is implemented in the "Wrapper" and does not depend on the parser backend.
 Reasoning is that this functionality is reused from an already qualified baselibs implementation.
 
 Design Constraints:
@@ -64,9 +64,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :implements: logic_arc_int__baselibs__json[version==1]
-   :consists_of: comp__baselibs_json_wrapper[version==1], comp__baselibs_nlohman_json[version==1]
+   :consists_of: comp__baselibs_json_wrapper[version==1], comp__baselibs_vajson[version==1]
    :belongs_to: feat__baselibs[version==1]
 
 .. comp_arc_sta:: JSON Static view
@@ -76,7 +76,7 @@ Static Architecture
    :status: valid
    :version: 1
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
-   :belongs_to: comp__baselibs_json[version==1]
+   :belongs_to: comp__baselibs_json[version==2]
 
    .. needarch::
       :scale: 50
@@ -95,7 +95,7 @@ Dynamic Architecture
    :status: invalid
    :version: 1
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
-   :belongs_to: comp__baselibs_json[version==1]
+   :belongs_to: comp__baselibs_json[version==2]
 
    put here a sequence diagram (TBD)
 
@@ -131,10 +131,4 @@ Lower Level Components
    :implements: logic_arc_int__baselibs__json[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-.. comp:: nlohman-JSON
-   :id: comp__baselibs_nlohman_json
-   :security: YES
-   :safety:  ASIL_B
-   :status: valid
-   :version: 1
-   :belongs_to: feat__baselibs[version==1]
+See :need:`comp__baselibs_vajson` in :need:`doc__vajson_architecture` for the vaJson lower-level component.

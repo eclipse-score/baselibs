@@ -18,15 +18,15 @@ Requirements
 .. document:: JSON Wrapper Requirements
    :id: doc__json_wrapper_requirements
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp[version==1]
 
 Due to low complexity, the requirements of the JSON component were not split into the "sub" components
-"JSON Wrapper" and "nlohman_json". Reasoning is the low number of requirements (only about ten).
+"JSON Wrapper" and "vaJson". Reasoning is the low number of requirements (only about ten).
 The component split was done nevertheless, because "JSON Wrapper" is implemented as part of the S-CORE project and
-"nlohman_json" is reused from open source.
+"vaJson" is reused from a third-party vendor (Vector).
 
 So the requirements for "JSON Wrapper" are documented in :need:`doc__json_requirements`
 (all requirements which are "fulfilled_by" :need:`comp__baselibs_json_wrapper`)

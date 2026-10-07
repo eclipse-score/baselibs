@@ -35,8 +35,8 @@ abstraction and use-cases that are not yet covered are extended.
 
 ### Bazel target
 
-This library offers the Bazel target `//score/json`, which is ASIL B certified when using the vaJson parser from
-Vector, which is the only parser this library supports.
+This library offers the Bazel target `//score/json`, which is ASIL B certified. It uses the vaJson parser from
+Vector, the only parser this library supports.
 
 Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//score/json:json_serializer`, which is **not** ASIL B certified.
 
