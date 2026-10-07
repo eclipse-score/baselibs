@@ -426,6 +426,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -492,7 +493,7 @@
                   
   <section id="rust-containers-architecture">
 <h1>Rust Containers Architecture<a class="headerlink" href="#rust-containers-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-7f54660a">
+<div class="need_container docutils container" id="SNCB-c6933fa0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__containers_rust_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -548,7 +549,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-de0e8a63">
+<div class="need_container docutils container" id="SNCB-7e4941ab">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_containers_rust">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -568,6 +569,8 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_rust_containers_rust</span></span></span></div>
+<div class="line"><span class="needs_bazel_target"><span class="needs_label">bazel_target: </span><span class="needs_data">&#64;&#64;//score/containers_rust:containers</span></span></div>
+<div class="line"><span class="needs_bazel_type"><span class="needs_label">bazel_type: </span><span class="needs_data">rust_library</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
@@ -596,7 +599,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-078d674d">
+<div class="need_container docutils container" id="SNCB-d716fb69">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs_rust__containers_rust">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -650,7 +653,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-2fe3414f">
+<div class="need_container docutils container" id="SNCB-864ddbee">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int table" id="logic_arc_int__b_r__fixvec">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -695,7 +698,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-35a3c5ca">
+<div class="need_container docutils container" id="SNCB-d6ba4df2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixvec_push">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -738,7 +741,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4cea46c5">
+<div class="need_container docutils container" id="SNCB-91e20ae8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixvec_pop">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -781,7 +784,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3130f6b6">
+<div class="need_container docutils container" id="SNCB-5b237167">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixvec_clear">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -824,7 +827,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c9ce546e">
+<div class="need_container docutils container" id="SNCB-72fba4aa">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixvec_index">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -867,7 +870,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e18b3c23">
+<div class="need_container docutils container" id="SNCB-9dc0e7d8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixvec_iterate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -910,7 +913,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-34f51605">
+<div class="need_container docutils container" id="SNCB-5b168b2f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int table" id="logic_arc_int__b_r__inlinevec">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -955,7 +958,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c3bbd86d">
+<div class="need_container docutils container" id="SNCB-67fbdadb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlinevec_push">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -998,7 +1001,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8e2bb678">
+<div class="need_container docutils container" id="SNCB-1121c9f0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlinevec_pop">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1041,7 +1044,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f3629383">
+<div class="need_container docutils container" id="SNCB-83dea4f2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlinevec_clear">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1084,7 +1087,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-92c907dc">
+<div class="need_container docutils container" id="SNCB-48b8011a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlinevec_index">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1127,7 +1130,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3a142006">
+<div class="need_container docutils container" id="SNCB-a0cb6213">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlinevec_iterate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1170,7 +1173,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e68bdd64">
+<div class="need_container docutils container" id="SNCB-1106fc60">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int table" id="logic_arc_int__b_r__fixqueue">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1215,7 +1218,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-fd32e1d5">
+<div class="need_container docutils container" id="SNCB-2711edee">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_pushfront">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1258,7 +1261,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d1ece471">
+<div class="need_container docutils container" id="SNCB-e45f06a6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_pushback">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1301,7 +1304,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-021e11e9">
+<div class="need_container docutils container" id="SNCB-16544e75">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_popfront">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1344,7 +1347,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-83f7b7c1">
+<div class="need_container docutils container" id="SNCB-186071bb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_popback">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1387,7 +1390,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-036a7d43">
+<div class="need_container docutils container" id="SNCB-ee79e33c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_clear">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1430,7 +1433,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-baeeb22f">
+<div class="need_container docutils container" id="SNCB-b6166a32">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__fixqueue_iterate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1473,7 +1476,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-48807e7e">
+<div class="need_container docutils container" id="SNCB-3eb3c268">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int table" id="logic_arc_int__b_r__inlqueue">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1518,7 +1521,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-64a92eb6">
+<div class="need_container docutils container" id="SNCB-4c7b1cac">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_pushfront">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1561,7 +1564,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-78333355">
+<div class="need_container docutils container" id="SNCB-3fb97958">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_pushback">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1604,7 +1607,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ca14a729">
+<div class="need_container docutils container" id="SNCB-228e33ce">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_popfront">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1647,7 +1650,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0b8beb81">
+<div class="need_container docutils container" id="SNCB-7afa9463">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_popback">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1690,7 +1693,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-13fc871d">
+<div class="need_container docutils container" id="SNCB-dccfd463">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_clear">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1733,7 +1736,7 @@ one using heap-allocated storage, and one using inline storage</p></li>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0e8d8d38">
+<div class="need_container docutils container" id="SNCB-267abf9e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__cont__inlqueue_iterate">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
