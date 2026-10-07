@@ -35,7 +35,7 @@ jobs:
             bazel-disk-cache: score-qnx-x86_64
             bazel-test-target: >-
               //score/...
-              -//score/language/futurecpp/tests:zip_iterator_test
+              -//score/language/futurecpp/tests:memory_resource_test
               -//score/os/test:asil_qm_test
               -//score/os/test:grp_test
           - name: score-qnx-aarch64
