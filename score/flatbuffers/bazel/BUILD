@@ -81,3 +81,9 @@ py_test(
     ],
     deps = [":schema_generator_lib"],
 )
+
+filegroup(
+    name = "starlark_rule_links",
+    srcs = [":codegen.bzl"],
+    visibility = ["//visibility:public"],
+)
