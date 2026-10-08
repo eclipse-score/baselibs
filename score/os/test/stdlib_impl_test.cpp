@@ -51,8 +51,8 @@ TEST(StdlibImpl, system_callFail)
 
 TEST(StdlibImpl, getenv_exist)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
-    RecordProperty("Description", "Check return on existing value");
+    RecordProperty("PartiallyVerifies", "comp_req__os__asil_b_operation_delegation");
+    RecordProperty("Description", "Check that querying an existing environment variable returns its stored value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -64,8 +64,8 @@ TEST(StdlibImpl, getenv_exist)
 
 TEST(StdlibImpl, getenv_nonexist)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
-    RecordProperty("Description", "Check return on non-existing value");
+    RecordProperty("PartiallyVerifies", "comp_req__os__asil_b_operation_delegation");
+    RecordProperty("Description", "Check that querying a missing environment variable returns a null pointer.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -76,8 +76,8 @@ TEST(StdlibImpl, getenv_nonexist)
 
 TEST(StdlibImpl, getenv_error)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_get");
-    RecordProperty("Description", "Check return on invalid parameter");
+    RecordProperty("PartiallyVerifies", "comp_req__os__asil_b_operation_delegation");
+    RecordProperty("Description", "Check that querying a name containing an equals sign returns a null pointer.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -87,8 +87,8 @@ TEST(StdlibImpl, getenv_error)
 
 TEST(StdlibImpl, setenv)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_set");
-    RecordProperty("Description", "Check setting and overwriting of values");
+    RecordProperty("PartiallyVerifies", "comp_req__os__asil_b_operation_delegation");
+    RecordProperty("Description", "Check that setting an environment variable respects the overwrite argument.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -111,8 +111,10 @@ TEST(StdlibImpl, setenv)
 
 TEST(StdlibImpl, setenv_error)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_set");
-    RecordProperty("Description", "Check invalid paramters");
+    RecordProperty("PartiallyVerifies", "comp_req__os__error_information");
+    RecordProperty(
+        "Description",
+        "Check that setting an environment variable with an empty, null, or equals-containing name returns EINVAL.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -143,8 +145,9 @@ TEST(StdlibImpl, setenv_error)
 
 TEST(StdlibImpl, unsetenv)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_unset");
-    RecordProperty("Description", "Check unsetting existing and non-existing value");
+    RecordProperty("PartiallyVerifies", "comp_req__os__asil_b_operation_delegation");
+    RecordProperty("Description",
+                   "Check that removing an existing or missing environment variable succeeds and leaves it absent.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
@@ -165,8 +168,9 @@ TEST(StdlibImpl, unsetenv)
 
 TEST(StdlibImpl, unsetenv_error)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__env_unset");
-    RecordProperty("Description", "Check invalid parameters");
+    RecordProperty("PartiallyVerifies", "comp_req__os__error_information");
+    RecordProperty("Description",
+                   "Check that removing an empty or equals-containing environment variable name returns EINVAL.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
