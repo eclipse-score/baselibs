@@ -83,9 +83,9 @@ struct IdentityMetadata
     // coverity[autosar_cpp14_m11_0_1_violation]
     os::Stat::Mode mode{};
     // coverity[autosar_cpp14_m11_0_1_violation]
-    uid_t uid{};
+    os::UserId uid{};
     // coverity[autosar_cpp14_m11_0_1_violation]
-    gid_t gid{};
+    os::GroupId gid{};
 };
 
 Result<IdentityMetadata> GetIdentityMetadata(const Path& path);

@@ -50,6 +50,7 @@ test_suite(
         ":string_impl_test",
         ":sys_wait_impl_test",
         ":uname_test",
+        ":user_id_test",
         ":version_test",
         "@score_baselibs//score/os/test/linux:unit_tests_linux",
     ],
@@ -534,6 +535,19 @@ cc_test(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:grp",
+    ],
+)
+
+cc_test(
+    name = "user_id_test",
+    srcs = ["user_id_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + [
+        "aborts_upon_exception",
+    ],
+    tags = ["unit"],
+    deps = [
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/os:user_id",
     ],
 )
 

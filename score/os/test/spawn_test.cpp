@@ -1197,8 +1197,8 @@ TEST_F(SpawnTest, posix_spawnattr_setcred_success)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const uid_t set_uid{1};
-    const gid_t set_gid{1};
+    const score::os::UserId set_uid{1};
+    const score::os::GroupId set_gid{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setcred(&attr, set_uid, set_gid);
     ASSERT_TRUE(set_result.has_value());
     EXPECT_EQ(set_result.value(), 0);
@@ -1206,8 +1206,8 @@ TEST_F(SpawnTest, posix_spawnattr_setcred_success)
     uid_t get_uid{};
     gid_t get_gid{};
     ASSERT_EQ(::posix_spawnattr_getcred(&attr, &get_uid, &get_gid), 0);
-    EXPECT_EQ(get_uid, set_uid);
-    EXPECT_EQ(get_gid, set_gid);
+    EXPECT_EQ(score::os::UserId{get_uid}, set_uid);
+    EXPECT_EQ(score::os::GroupId{get_gid}, set_gid);
 }
 
 TEST_F(SpawnTest, posix_spawnattr_getcred_success)
@@ -1222,13 +1222,31 @@ TEST_F(SpawnTest, posix_spawnattr_getcred_success)
     const gid_t set_gid{1};
     ASSERT_EQ(::posix_spawnattr_setcred(&attr, set_uid, set_gid), 0);
 
-    uid_t get_uid{};
-    gid_t get_gid{};
+    score::os::UserId get_uid{};
+    score::os::GroupId get_gid{};
     const auto get_result = score::os::Spawn::instance().posix_spawnattr_getcred(&attr, &get_uid, &get_gid);
     ASSERT_TRUE(get_result.has_value());
     EXPECT_EQ(get_result.value(), 0);
-    EXPECT_EQ(get_uid, set_uid);
-    EXPECT_EQ(get_gid, set_gid);
+    EXPECT_EQ(get_uid, score::os::UserId{set_uid});
+    EXPECT_EQ(get_gid, score::os::GroupId{set_gid});
+}
+
+TEST_F(SpawnTest, posix_spawnattr_getcred_rejects_nullptr)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SpawnTest posix_spawnattr_getcred returns EINVAL for nullptr output");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    score::os::UserId get_uid{};
+    score::os::GroupId get_gid{};
+    const auto uid_result = score::os::Spawn::instance().posix_spawnattr_getcred(&attr, nullptr, &get_gid);
+    ASSERT_FALSE(uid_result.has_value());
+    EXPECT_EQ(uid_result.error(), score::os::Error::Code::kInvalidArgument);
+    const auto gid_result = score::os::Spawn::instance().posix_spawnattr_getcred(&attr, &get_uid, nullptr);
+    ASSERT_FALSE(gid_result.has_value());
+    EXPECT_EQ(gid_result.error(), score::os::Error::Code::kInvalidArgument);
 }
 
 TEST(SpawnImpl, posix_spawnattr_setcred_failure)
@@ -1243,8 +1261,8 @@ TEST(SpawnImpl, posix_spawnattr_setcred_failure)
     ASSERT_EQ(::posix_spawnattr_init(&attr), 0);
     ASSERT_EQ(::posix_spawnattr_destroy(&attr), 0);
 
-    const uid_t set_uid{1};
-    const gid_t set_gid{1};
+    const score::os::UserId set_uid{1};
+    const score::os::GroupId set_gid{1};
     const auto set_result = score::os::Spawn::instance().posix_spawnattr_setcred(&attr, set_uid, set_gid);
     ASSERT_FALSE(set_result.has_value());
 }
@@ -1264,12 +1282,12 @@ TEST(SpawnImpl, posix_spawnattr_getcred_failure)
     ASSERT_EQ(::posix_spawnattr_setcred(&attr, set_uid, set_gid), 0);
     ASSERT_EQ(::posix_spawnattr_destroy(&attr), 0);
 
-    uid_t get_uid{};
-    gid_t get_gid{};
+    score::os::UserId get_uid{};
+    score::os::GroupId get_gid{};
     const auto get_result = score::os::Spawn::instance().posix_spawnattr_getcred(&attr, &get_uid, &get_gid);
     ASSERT_FALSE(get_result.has_value());
-    EXPECT_NE(get_uid, set_uid);
-    EXPECT_NE(get_gid, set_gid);
+    EXPECT_NE(get_uid, score::os::UserId{set_uid});
+    EXPECT_NE(get_gid, score::os::GroupId{set_gid});
 }
 
 TEST_F(SpawnTest, posix_spawnattr_settypeid_success)

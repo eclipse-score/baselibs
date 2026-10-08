@@ -12,12 +12,30 @@
  ********************************************************************************/
 #include "score/os/qnx/unistd_impl.h"
 
+#include <array>
+#include <climits>
+#include <cstddef>
+
 score::cpp::expected<std::int32_t, score::os::Error> score::os::qnx::QnxUnistdImpl::setgroupspid(
-    const std::int32_t gidsetsize,
-    const gid_t* const grouplist,
+    const score::cpp::span<const GroupId> grouplist,
     const pid_t pid) const noexcept
 {
-    const std::int32_t result = ::setgroupspid(gidsetsize, grouplist, pid);
+    constexpr std::size_t kMaxGroups{static_cast<std::size_t>(NGROUPS_MAX)};
+    if (grouplist.size() > kMaxGroups)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL));
+    }
+
+    // Copy instead of reinterpret_cast: GroupId[] is not guaranteed to alias gid_t[].
+    std::array<gid_t, kMaxGroups> native_groups{};
+    std::size_t count{0U};
+    for (const GroupId group : grouplist)
+    {
+        native_groups.at(count) = group.native();
+        ++count;
+    }
+
+    const std::int32_t result = ::setgroupspid(static_cast<std::int32_t>(count), native_groups.data(), pid);
     if (result == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
