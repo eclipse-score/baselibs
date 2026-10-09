@@ -506,7 +506,7 @@
                   
   <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-85c35ca0">
+<div class="need_container docutils container" id="SNCB-98b80f21">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_wrapper_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -549,10 +549,12 @@
 </table>
 </div>
 </div>
-<p>Due to low complexity, the requirements of the JSON component were not split into the “sub” components
-“JSON Wrapper” and “vaJson”. Reasoning is the low number of requirements (only about ten).
-The component split was done nevertheless, because “JSON Wrapper” is implemented as part of the S-CORE project and
-“vaJson” is reused from a third-party vendor (Vector).</p>
+<p>Due to low complexity, the shared requirements of the JSON component were not split into the “sub” components
+“JSON Wrapper” and “vaJson”: both are covered by the requirements documented here. Reasoning is the low number of
+requirements (only about ten).</p>
+<p>vaJson, being reused from a third-party vendor (Vector), additionally has backend-specific requirements (e.g.
+validation, trailing commas, hexadecimal integers, unicode) that do not apply to “JSON Wrapper”. Those are documented
+separately in <a class="reference internal" href="../../vajson/requirements/index.html#doc__vajson_requirements" title="doc__vajson_requirements"><em class="xref need">VaJson Requirements (doc__vajson_requirements)</em></a>.</p>
 <p>So the requirements for “JSON Wrapper” are documented in <a class="reference internal" href="../../requirements/index.html#doc__json_requirements" title="doc__json_requirements"><em class="xref need">JSON Requirements (doc__json_requirements)</em></a>
 (all requirements which are “fulfilled_by” <a class="reference internal" href="../../architecture/index.html#comp__baselibs_json_wrapper" title="comp__baselibs_json_wrapper"><em class="xref need">JSON-Wrapper (comp__baselibs_json_wrapper)</em></a>)</p>
 </section>

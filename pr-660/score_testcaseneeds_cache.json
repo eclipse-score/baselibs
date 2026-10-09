@@ -284118,7 +284118,7 @@
   {
     "name": "VajsonParser__CanParseObjectHexadecimalNumber",
     "file": "score/json/internal/parser/vajson/vajson_parser_test.cpp",
-    "line": "27",
+    "line": "26",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284132,7 +284132,7 @@
   {
     "name": "VajsonParser__CanParseTwoByteBuffer",
     "file": "score/json/internal/parser/vajson/vajson_parser_test.cpp",
-    "line": "73",
+    "line": "72",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284146,7 +284146,7 @@
   {
     "name": "VajsonParser__CanParseBufferWithUtf8Bom",
     "file": "score/json/internal/parser/vajson/vajson_parser_test.cpp",
-    "line": "91",
+    "line": "90",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284342,7 +284342,7 @@
   {
     "name": "Number__Bool",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "53",
+    "line": "52",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284356,7 +284356,7 @@
   {
     "name": "Number__Uint8",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "65",
+    "line": "64",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284370,7 +284370,7 @@
   {
     "name": "Number__Uint16",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "77",
+    "line": "76",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284384,7 +284384,7 @@
   {
     "name": "Number__Uint32",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "89",
+    "line": "88",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284398,7 +284398,7 @@
   {
     "name": "Number__Uint64",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "101",
+    "line": "100",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284412,7 +284412,7 @@
   {
     "name": "Number__Int8",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "113",
+    "line": "112",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284426,7 +284426,7 @@
   {
     "name": "Number__Int16",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "125",
+    "line": "124",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284440,7 +284440,7 @@
   {
     "name": "Number__Int32",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "137",
+    "line": "136",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284454,7 +284454,7 @@
   {
     "name": "Number__Int64",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "149",
+    "line": "148",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284468,7 +284468,7 @@
   {
     "name": "Number__Float",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "161",
+    "line": "160",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284482,7 +284482,7 @@
   {
     "name": "Number__Double",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "173",
+    "line": "172",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284496,7 +284496,7 @@
   {
     "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "185",
+    "line": "184",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284510,7 +284510,7 @@
   {
     "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "198",
+    "line": "197",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284524,7 +284524,7 @@
   {
     "name": "Number__FloatingPointWithoutDecimalPoint",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "212",
+    "line": "211",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284538,7 +284538,7 @@
   {
     "name": "Number__NearDoubleLimitsIsParsable",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "225",
+    "line": "224",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -284552,7 +284552,7 @@
   {
     "name": "Number__FloatingPointOverflowIsRejected",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
-    "line": "237",
+    "line": "236",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
