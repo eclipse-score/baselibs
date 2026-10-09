@@ -371,21 +371,23 @@ TYPED_TEST(container_test_basics, copy_constructor)
 /// @requirement CB-#18579441
 TYPED_TEST(container_test_basics, swap)
 {
-    typename TestFixture::ContainerType container{1.2, 3.4, 5.6};
+    typename TestFixture::ContainerType first_container{1.2, 3.4};
+    typename TestFixture::ContainerType second_container{5.6, 7.8};
 
-    auto iter1 = make_zip_iterator_begin(container.begin(), std::next(container.begin()));
-    auto iter2 = iter1;
-    ++iter1;
+    const auto range = score::cpp::make_zip_range(first_container, second_container);
+    auto iter1 = range.begin();
+    auto iter2 = std::next(iter1);
 
-    EXPECT_EQ(*iter1, std::make_tuple(3.4, 5.6));
-    EXPECT_EQ(*iter2, std::make_tuple(1.2, 3.4));
+    EXPECT_EQ(*iter1, std::make_tuple(1.2, 5.6));
+    EXPECT_EQ(*iter2, std::make_tuple(3.4, 7.8));
 
     std::swap(iter1, iter2);
-    EXPECT_EQ(*iter1, std::make_tuple(1.2, 3.4));
-    EXPECT_EQ(*iter2, std::make_tuple(3.4, 5.6));
+    EXPECT_EQ(*iter1, std::make_tuple(3.4, 7.8));
+    EXPECT_EQ(*iter2, std::make_tuple(1.2, 5.6));
 
     swap(*iter1, *iter2);
-    EXPECT_EQ(*container.begin(), 3.4);
+    EXPECT_EQ(*iter1, std::make_tuple(1.2, 5.6));
+    EXPECT_EQ(*iter2, std::make_tuple(3.4, 7.8));
 }
 
 /// @testmethods TM_REQUIREMENT
@@ -488,16 +490,17 @@ TYPED_TEST(container_test_bi_directional, postdecrement)
 /// @requirement CB-#18579441
 TYPED_TEST(container_test_bi_directional, use_in_stl_algorithm_with_bidirectional_iterator_requirement)
 {
-    typename TestFixture::ContainerType container{1.2, 3.4, 5.6};
-    const auto range = score::cpp::make_zip_range(score::cpp::make_range_pair(container.begin(), std::next(container.begin(), 2)),
-                                           score::cpp::make_range_pair(std::next(container.begin()), container.end()));
+    typename TestFixture::ContainerType first_container{1.2, 3.4};
+    typename TestFixture::ContainerType second_container{5.6, 7.8};
+    const auto range = score::cpp::make_zip_range(first_container, second_container);
     auto begin = range.begin();
-    auto end = range.end();
+    const auto end = range.end();
 
-    EXPECT_EQ(*begin, std::make_tuple(1.2, 3.4));
-    EXPECT_EQ(*std::next(begin), std::make_tuple(3.4, 5.6));
+    EXPECT_EQ(*begin, std::make_tuple(1.2, 5.6));
+    EXPECT_EQ(*std::next(begin), std::make_tuple(3.4, 7.8));
     std::reverse(begin, end);
-    EXPECT_EQ(*begin, std::make_tuple(3.4, 5.6));
+    EXPECT_EQ(*begin, std::make_tuple(3.4, 7.8));
+    EXPECT_EQ(*std::next(begin), std::make_tuple(1.2, 5.6));
 }
 
 /// @testmethods TM_REQUIREMENT
