@@ -18,25 +18,18 @@ load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 LIB_JSON_VISIBILITY = ["//visibility:public"]
 
+# No-op, kept only so consumers who still pass --base_library on the command line or in their
+# .bazelrc don't get a hard "no such target" build failure. vaJson is the only parser backend;
+# this flag no longer selects anything. Remove in the next breaking release.
 string_flag(
     name = "base_library",
     build_setting_default = "vajson",
+    deprecation = "base_library no longer has any effect, vaJson is the only parser backend. " +
+                  "Remove this flag from your build configuration; it will be deleted in a future release.",
     values = [
         "vajson",
         "nlohmann",
     ],
-)
-
-config_setting(
-    name = "base_library_vajson",
-    flag_values = {":base_library": "vajson"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
-)
-
-config_setting(
-    name = "base_library_nlohmann",
-    flag_values = {":base_library": "nlohmann"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
 )
 
 string_flag(
@@ -117,10 +110,6 @@ cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    local_defines = select({
-        ":base_library_nlohmann": ["NLOHMANN"],
-        ":base_library_vajson": ["VAJSON"],
-    }),
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [

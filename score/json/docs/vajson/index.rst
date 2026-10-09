@@ -18,7 +18,7 @@ VaJson
 .. document:: vajson
    :id: doc__vajson
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: NO
    :realizes: wp__cmpt_request[version==1]
@@ -75,8 +75,8 @@ In addition, VaJson satisfies the extended requirements defined in :need:`doc__v
 Backward Compatibility
 ======================
 
-VaJson is integrated as an optional backend through the existing S-CORE JSON wrapper.
-Users can select the JSON backend (for example, VaJson or nlohmann), so existing functionality remains backward compatible.
+VaJson is integrated through the existing S-CORE JSON wrapper and is now the sole parser backend; parser backend
+selection has been removed. Serialization backend selection (`writer_library`) is unaffected and remains available.
 
 
 Security Impact

@@ -11,7 +11,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "gtest/gtest.h"
-#ifdef VAJSON
 
 #include "score/json/internal/parser/number_parser_test_suite.h"
 #include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
@@ -250,6 +249,3 @@ INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, VajsonParser, /*unused*/);
 }  // namespace
 }  // namespace json
 }  // namespace score
-#else
-GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(NumberTest);
-#endif

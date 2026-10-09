@@ -13,7 +13,6 @@
 
 #include "gtest/gtest.h"
 
-#ifdef VAJSON
 #include "score/json/internal/parser/parsers_test_suite.h"
 #include "score/json/internal/parser/vajson/vajson_parser.h"
 
@@ -112,6 +111,3 @@ INSTANTIATE_TYPED_TEST_SUITE_P(Test, ParserTest, VajsonParser, /*unused*/);
 }  // namespace
 }  // namespace json
 }  // namespace score
-#else
-GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(ParserTest);
-#endif
