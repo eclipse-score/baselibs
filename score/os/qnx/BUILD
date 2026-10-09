@@ -146,6 +146,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
+        "//tools/coverage:__pkg__",  # coverage scope (QNX)
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
@@ -230,6 +231,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
+        "//tools/coverage:__pkg__",  # coverage scope (QNX)
         "@score_baselibs//score/analysis/tracing/daemon:__subpackages__",
         "@score_baselibs//score/os/mocklib/qnx:__subpackages__",
         "@score_baselibs//score/os/test/qnx:__subpackages__",
@@ -408,6 +410,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
+        "//tools/coverage:__pkg__",  # coverage scope (QNX)
         "@score_baselibs//score/os/mocklib/qnx:__pkg__",
     ],
     deps = [
@@ -468,6 +471,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
+        "//tools/coverage:__pkg__",  # coverage scope (QNX)
         "@score_baselibs//score/os:__subpackages__",
     ],
     deps = [
@@ -495,6 +499,7 @@ cc_library(
     tags = ["FFI"],
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = [
+        "//tools/coverage:__pkg__",  # coverage scope (QNX)
         "@score_baselibs//score/analysis/tracing:__subpackages__",
         "@score_baselibs//score/os:__subpackages__",
     ],

@@ -131,7 +131,15 @@ bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and
 # eclipse-score/coverage_tool#5 (third-party leak, dead report links, headers
 # tested through futurecpp_internal, files without coverage data listed).
-bazel_dep(name = "score_coverage", version = "0.3.0", dev_dependency = True)
+bazel_dep(name = "score_coverage", version = "0.3.1", dev_dependency = True)
+
+# TEMPORARY: validates eclipse-score/coverage_tool#24 (scope evaluated for
+# the run's platform) on real QNX; replaced by the 0.4.0 release.
+git_override(
+    module_name = "score_coverage",
+    commit = "afefbed18353046c4f9d686d7005fcef10de2074",
+    remote = "https://github.com/eclipse-score/coverage_tool.git",
+)
 
 bazel_dep(name = "score_platform", version = "0.7.3")
 

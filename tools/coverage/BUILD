@@ -25,109 +25,168 @@ load("@score_coverage//:defs.bzl", "score_coverage_reporter", "score_coverage_sc
 #       except attr(testonly, 1, //score/...)
 #       except attr("target_compatible_with", "qnx", //score/...)'
 # then keep only targets no other target in the result depends on.
+# Roots shared by every platform (the scope aspect walks their transitive
+# deps; select()s inside them resolve for the scope's platform).
+SCOPE_DEPS_COMMON = [
+    # Public API alias of the generic trace library: reaches the
+    # interface_types production libraries (the mock and the stub default
+    # implementation are excluded - see scope_exclusions.txt).
+    "//score/analysis/tracing/generic_trace_library:api",
+    "//score/analysis/tracing/common/canary_wrapper",
+    "//score/bitmanipulation",
+    "//score/concurrency/thread_load_tracking",
+    "//score/containers:dynamic_array",
+    "//score/containers:intrusivelist",
+    "//score/datetime_converter:time_conversion",
+    "//score/flatbuffers:flatbufferutils",
+    "//score/hash",
+    "//score/hash:safe_hash",
+    "//score/hash/code/core:hash_cal_mock",
+    "//score/hash/code/core/factory:factory_mock",
+    "//score/hash/code/core/factory/impl:factory_headers",
+    "//score/hash/code/crc:mocks",
+    # Parser/writer-facing interface: not reachable from the impl libs
+    # under the default base_library select; has a coverage grant.
+    "//score/json:interface",
+    "//score/json:json_serializer",
+    "//score/json/internal/parser/vajson:vajson_parser",
+    "//score/json/internal/writer/vajson:vajson_backend",
+    "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
+    "//score/language/safecpp/safe_atomics:try_atomic_add",
+    "//score/language/safecpp/string_view:null_termination_check",
+    "//score/memory:data_type_size_info",
+    "//score/memory:endianness",
+    "//score/memory:pmr_ring_buffer",
+    "//score/mw/log:console",
+    "//score/mw/log:minimal",
+    "//score/mw/log:plugin_api",
+    "//score/mw/log/configuration:nvconfigfactory",
+    "//score/mw/log/detail:empty_recorder_factory",
+    "//score/mw/log/detail:thread_local_guard",
+    # NOT in scope: //score/mw/log/detail/utils/signal_handling - a
+    # dependency-forest root whose restricted visibility cannot be
+    # granted here: its BUILD file is under the restricted path
+    # score/mw/** (internal-export process). Its files are absent
+    # from the report until a grant is exported internally.
+    "//score/network:netutils",
+    "//score/network:udp_socket",
+    "//score/network:vlan",
+    "//score/network/sock_async:socket_factory",
+    "//score/os:arpa_inet",
+    "//score/os:capability",
+    "//score/os:dlfcn",
+    "//score/os:getopt",
+    "//score/os:glob",
+    "//score/os:mman",
+    "//score/os:mount",
+    "//score/os:net_if",
+    "//score/os:netdb",
+    # Public select() aliases: reach the linux-only pthread_default /
+    # rt_default implementation libraries (private, alias-only access).
+    "//score/os:pthread",
+    "//score/os:rt",
+    "//score/os:sched",
+    "//score/os:semaphore",
+    "//score/os:sigevent",
+    "//score/os:spawn",
+    "//score/os:statvfs",
+    "//score/os:string",
+    "//score/os:sys_uio",
+    "//score/os:sys_wait",
+    "//score/os:time",
+    "//score/os/posix:ftw_posix",
+    "//score/os/utils:detect_os",
+    "//score/os/utils:signal",
+    "//score/os/utils:machine",
+    "//score/os/utils:mqueue",
+    "//score/os/utils:spinlock",
+    "//score/os/utils:thread",
+    "//score/os/utils/acl:mock",
+    "//score/os/utils/fake:machine_fake",
+    "//score/os/utils/inotify:inotify_instance_impl",
+    "//score/os/utils/interprocess:interprocess_notification",
+    "//score/result:result_for_rust",
+    "//score/scope_exit",
+    "//score/static_reflection_with_serialization/serialization",
+    "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
+    "//score/string_manipulation/arguments",
+    "//score/utils:base64",
+]
+
+# Roots that exist on one platform only. A root incompatible with the scope's
+# platform fails the analysis, hence the select().
+SCOPE_DEPS_LINUX = [
+    # Rust roots and the C++ wrappers that link Rust: crate_universe marks the
+    # crates incompatible with platforms outside rules_rust's triple list
+    # (x86_64-pc-nto-qnx800 is not in it), an incompatible root would make
+    # the QNX scope, the report generator and thereby every QNX test
+    # incompatible, and the gcov backend cannot measure Rust anyway.
+    "//score/containers_rust:containers",
+    "//score/language/rust/memres",
+    "//score/language/rust/stop_token",
+    "//score/log_rust/stdout_logger",
+    "//score/log_rust/stdout_logger_cpp_init",
+    "//score/result/rust:result_cxx",
+    "//score/result/rust:result_rs",
+    "//score/sync",
+    "//score/thread",
+    "//score/os:syslog_impl",
+    # Wrappers whose only in-repo consumers are mocks/tests; still shipped
+    # production code (coverage visibility grants).
+    "//score/os/linux",
+    "//score/os/linux/utils:network_interface",
+]
+
+SCOPE_DEPS_QNX = [
+    # bazel query 'kind("cc_library|rust_library", attr(target_compatible_with, "qnx", //score/...))
+    #     except attr(testonly, 1, //score/...)', reduced to roots; pthread_qnx /
+    # rt_qnx are reached through the pthread / rt aliases.
+    "//score/os/qnx:devctl",
+    "//score/os/qnx:fs_crypto",
+    "//score/os/qnx:inout",
+    "//score/os/qnx:mman",
+    "//score/os/qnx:neutrino",
+    "//score/os/qnx:pathmgr",
+    "//score/os/qnx:pcap",
+    "//score/os/qnx:pci",
+    "//score/os/qnx:procmgr",
+    "//score/os/qnx:secpol",
+    "//score/os/qnx:secpolev",
+    "//score/os/qnx:sigevent_qnx",
+    "//score/os/qnx:slog2_impl",
+    "//score/os/qnx:sysctl",
+    "//score/os/qnx:sysmgr",
+    "//score/os/qnx:thread_ctl",
+    "//score/os/qnx:timer",
+    "//score/os/qnx:unistd",
+    "//score/os/utils/qnx/resource_manager:resource_manager",
+]
+
+SCOPE_DEPS = SCOPE_DEPS_COMMON + select({
+    "@platforms//os:qnx": SCOPE_DEPS_QNX,
+    "//conditions:default": SCOPE_DEPS_LINUX,
+})
+
 score_coverage_scope(
     name = "coverage_scope",
     testonly = True,
     visibility = ["//visibility:private"],
-    deps = [
-        # Public API alias of the generic trace library: reaches the
-        # interface_types production libraries (the mock and the stub default
-        # implementation are excluded - see scope_exclusions.txt).
-        "//score/analysis/tracing/generic_trace_library:api",
-        "//score/analysis/tracing/common/canary_wrapper",
-        "//score/bitmanipulation",
-        "//score/concurrency/thread_load_tracking",
-        "//score/containers:dynamic_array",
-        "//score/containers:intrusivelist",
-        "//score/containers_rust:containers",
-        "//score/datetime_converter:time_conversion",
-        "//score/flatbuffers:flatbufferutils",
-        "//score/hash",
-        "//score/hash:safe_hash",
-        "//score/hash/code/core:hash_cal_mock",
-        "//score/hash/code/core/factory:factory_mock",
-        "//score/hash/code/core/factory/impl:factory_headers",
-        "//score/hash/code/crc:mocks",
-        # Parser/writer-facing interface: not reachable from the impl libs
-        # under the default base_library select; has a coverage grant.
-        "//score/json:interface",
-        "//score/json:json_serializer",
-        "//score/json/internal/parser/vajson:vajson_parser",
-        "//score/json/internal/writer/vajson:vajson_backend",
-        "//score/language/rust/memres",
-        "//score/language/rust/stop_token",
-        "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
-        "//score/language/safecpp/safe_atomics:try_atomic_add",
-        "//score/language/safecpp/string_view:null_termination_check",
-        "//score/log_rust/stdout_logger",
-        "//score/log_rust/stdout_logger_cpp_init",
-        "//score/memory:data_type_size_info",
-        "//score/memory:endianness",
-        "//score/memory:pmr_ring_buffer",
-        "//score/mw/log:console",
-        "//score/mw/log:minimal",
-        "//score/mw/log:plugin_api",
-        "//score/mw/log/configuration:nvconfigfactory",
-        "//score/mw/log/detail:empty_recorder_factory",
-        "//score/mw/log/detail:thread_local_guard",
-        # NOT in scope: //score/mw/log/detail/utils/signal_handling - a
-        # dependency-forest root whose restricted visibility cannot be
-        # granted here: its BUILD file is under the restricted path
-        # score/mw/** (internal-export process). Its files are absent
-        # from the report until a grant is exported internally.
-        "//score/network:netutils",
-        "//score/network:udp_socket",
-        "//score/network:vlan",
-        "//score/network/sock_async:socket_factory",
-        "//score/os:arpa_inet",
-        "//score/os:capability",
-        "//score/os:dlfcn",
-        "//score/os:getopt",
-        "//score/os:glob",
-        "//score/os:mman",
-        "//score/os:mount",
-        "//score/os:net_if",
-        "//score/os:netdb",
-        # Public select() aliases: reach the linux-only pthread_default /
-        # rt_default implementation libraries (private, alias-only access).
-        "//score/os:pthread",
-        "//score/os:rt",
-        "//score/os:sched",
-        # Wrappers whose only in-repo consumers are mocks/tests; still shipped
-        # production code (coverage visibility grants).
-        "//score/os/linux",
-        "//score/os/linux/utils:network_interface",
-        "//score/os:semaphore",
-        "//score/os:sigevent",
-        "//score/os:spawn",
-        "//score/os:statvfs",
-        "//score/os:string",
-        "//score/os:sys_uio",
-        "//score/os:syslog_impl",
-        "//score/os:sys_wait",
-        "//score/os:time",
-        "//score/os/posix:ftw_posix",
-        "//score/os/utils:detect_os",
-        "//score/os/utils:signal",
-        "//score/os/utils:machine",
-        "//score/os/utils:mqueue",
-        "//score/os/utils:spinlock",
-        "//score/os/utils:thread",
-        "//score/os/utils/acl:mock",
-        "//score/os/utils/fake:machine_fake",
-        "//score/os/utils/inotify:inotify_instance_impl",
-        "//score/os/utils/interprocess:interprocess_notification",
-        "//score/result:result_for_rust",
-        "//score/result/rust:result_cxx",
-        "//score/result/rust:result_rs",
-        "//score/scope_exit",
-        "//score/static_reflection_with_serialization/serialization",
-        "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
-        "//score/string_manipulation/arguments",
-        "//score/sync",
-        "//score/thread",
-        "//score/utils:base64",
-    ],
+    deps = SCOPE_DEPS,
+)
+
+# Scope of the QNX run. Bazel analyses the scope in the exec configuration
+# (host platform); `platform` makes it follow the run's platform, so the
+# select()s above and inside the libraries resolve for QNX
+# (eclipse-score/coverage_tool#23).
+score_coverage_scope(
+    name = "coverage_scope_qnx",
+    testonly = True,
+    platform = "@score_bazel_platforms//:x86_64-qnx-sdp_8.0.0-posix",
+    # Manual, like the gcov reporter: a wildcard build on a Linux host would
+    # analyse the scope for QNX without the QNX toolchains registered.
+    tags = ["manual"],
+    visibility = ["//visibility:private"],
+    deps = SCOPE_DEPS,
 )
 
 score_coverage_reporter(
@@ -138,4 +197,17 @@ score_coverage_reporter(
     llvm_cxxfilt = "@llvm_toolchain_llvm//:bin/llvm-cxxfilt",
     llvm_profdata = "@llvm_toolchain//:llvm-profdata",
     visibility = ["//visibility:public"],
+)
+
+# QNX on-target coverage: QCC is GCC-based, so the counters are gcov's.
+# Selected by the coverage:qnx_cov config (see coverage.bazelrc).
+score_coverage_reporter(
+    name = "gcov_reporter_wrapper",
+    testonly = True,
+    backend = "gcov",
+    coverage_scope = ":coverage_scope_qnx",
+    gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
+    # Manual: depends on the QNX SDP package, which a wildcard build on a
+    # Linux host without QNX credentials must not try to fetch.
+    tags = ["manual"],
 )
