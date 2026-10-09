@@ -92,7 +92,6 @@ jobs:
           bazel coverage --lockfile_mode=error --config=qnx_cov --build_tests_only \
             --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- //score/... \
             -//score/language/futurecpp/tests:memory_resource_test \
-            -//score/language/futurecpp/tests:zip_iterator_test \
             -//score/os/test:asil_qm_test \
             -//score/os/test:grp_test
       - name: Generate HTML Coverage Report (QNX)
