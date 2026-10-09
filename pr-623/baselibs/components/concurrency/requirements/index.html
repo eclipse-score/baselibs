@@ -27,8 +27,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
-<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+  <link href="../../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
@@ -46,10 +46,10 @@
     <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-needs/modern.css?v=803738c0" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="../../../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
-<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
 
     <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -64,7 +64,7 @@
     <script src="../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/concurrency/requirements/index';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.20.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.21.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
@@ -406,7 +406,6 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">concurrency</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Concurrency Component Architecture</a></li>
@@ -429,7 +428,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mw_log/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../os/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -540,7 +542,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </style>
 <section id="requirements">
 <h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-eba5a36a">
+<div class="need_container docutils container" id="SNCB-2daade69">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__concurrency_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -586,7 +588,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </div>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-3fc521a1">
+<div class="need_container docutils container" id="SNCB-23c9b440">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__task_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -633,7 +635,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-12f209d1">
+<div class="need_container docutils container" id="SNCB-b033623e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__task_cancellation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -680,7 +682,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-df4a9071">
+<div class="need_container docutils container" id="SNCB-e4f99018">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__simple_task">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -727,7 +729,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ad922eb6">
+<div class="need_container docutils container" id="SNCB-96def16e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__task_result">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -774,7 +776,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-db7a0afc">
+<div class="need_container docutils container" id="SNCB-63bd5406">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__periodic_task">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -821,7 +823,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-eeb459cf">
+<div class="need_container docutils container" id="SNCB-9190d006">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__delayed_task">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -868,7 +870,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ed31814c">
+<div class="need_container docutils container" id="SNCB-5b790ce2">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__executor_interface">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -915,7 +917,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-cd3460dc">
+<div class="need_container docutils container" id="SNCB-c89656af">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__thread_pool">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -962,7 +964,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-066b77e5">
+<div class="need_container docutils container" id="SNCB-c165a982">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__condition_variable">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1009,7 +1011,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f0a55b87">
+<div class="need_container docutils container" id="SNCB-74344099">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__interruptible_wait">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1056,7 +1058,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-bfe338ea">
+<div class="need_container docutils container" id="SNCB-2523b026">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__notification">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1103,7 +1105,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-21c15cf3">
+<div class="need_container docutils container" id="SNCB-0dd3aee3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__synchronized_queue">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1124,7 +1126,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs</span><span class="needs_spacer">, </span><span class="needs_data">concurrency</span></span></span></div>
 <div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/9816eb0bb59a0e81c47d03449ec20b9be80f81ad/score/concurrency/synchronized_queue_test.cpp#L128">SynchronizedQueue__CallPushWhenPopIsWaitingForTimeout<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/9816eb0bb59a0e81c47d03449ec20b9be80f81ad/score/concurrency/synchronized_queue_test.cpp#L170">SynchronizedQueue__CallPushWithConstValueWhenPopIsWaitingForTimeout<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/9816eb0bb59a0e81c47d03449ec20b9be80f81ad/score/concurrency/synchronized_queue_test.cpp#L212">SynchronizedQueue__CallPushAndPopAtForNoneEmptyQueue<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/9816eb0bb59a0e81c47d03449ec20b9be80f81ad/score/concurrency/synchronized_queue_test.cpp#L262">SynchronizedQueue__MakeStressTestForPushingFromMultipleThreads<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em></span></span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/97fbbed010da221d2ba74026a1fdd1b109cfb50e/score/concurrency/synchronized_queue_test.cpp#L128">SynchronizedQueue__CallPushWhenPopIsWaitingForTimeout<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/97fbbed010da221d2ba74026a1fdd1b109cfb50e/score/concurrency/synchronized_queue_test.cpp#L170">SynchronizedQueue__CallPushWithConstValueWhenPopIsWaitingForTimeout<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/97fbbed010da221d2ba74026a1fdd1b109cfb50e/score/concurrency/synchronized_queue_test.cpp#L212">SynchronizedQueue__CallPushAndPopAtForNoneEmptyQueue<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/97fbbed010da221d2ba74026a1fdd1b109cfb50e/score/concurrency/synchronized_queue_test.cpp#L262">SynchronizedQueue__MakeStressTestForPushingFromMultipleThreads<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__concurrency_library">feat_req__baselibs__concurrency_library</a></span></span></div>
@@ -1151,7 +1153,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4e25e3e0">
+<div class="need_container docutils container" id="SNCB-aea2ce1d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__long_running_threads">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1201,7 +1203,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </section>
 <section id="non-functional-requirements">
 <h2>Non-Functional Requirements<a class="headerlink" href="#non-functional-requirements" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-064b9be4">
+<div class="need_container docutils container" id="SNCB-b8d4a8b0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__memory_usage_control">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1248,7 +1250,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8234a583">
+<div class="need_container docutils container" id="SNCB-cdbf871b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__memory_reservation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1295,7 +1297,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-42ce9165">
+<div class="need_container docutils container" id="SNCB-e40d8d34">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__thread_count_reporting">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1342,7 +1344,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-63ef7ad0">
+<div class="need_container docutils container" id="SNCB-02101e6e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__operation_timeout">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1389,7 +1391,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-711f6314">
+<div class="need_container docutils container" id="SNCB-e03f72fa">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__concurrency__error_handling">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1439,7 +1441,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </section>
 <section id="assumptions-of-use-aou">
 <h2>Assumptions of Use (AoU)<a class="headerlink" href="#assumptions-of-use-aou" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-0db0b294">
+<div class="need_container docutils container" id="SNCB-d990e386">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__concurrency__coop_cancellation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1483,7 +1485,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-140ce7a0">
+<div class="need_container docutils container" id="SNCB-af560557">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__concurrency__memory_management">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1527,7 +1529,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2a780527">
+<div class="need_container docutils container" id="SNCB-dc507807">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__concurrency__thread_pool_sizing">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1571,7 +1573,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0f03aada">
+<div class="need_container docutils container" id="SNCB-e022d14c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_aou_req table" id="aou_req__concurrency__thread_safety">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1700,8 +1702,8 @@ html[data-theme="dark"] .score-testcase-result--disabled {
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
-<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1725,7 +1727,7 @@ html[data-theme="dark"] .score-testcase-result--disabled {
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
 </p></div>
       
     </div>
