@@ -15,12 +15,14 @@
 Verification Report
 ===================
 
-.. document:: Baselibs Module Verification Report
-   :id: doc__baselibs_verification_report
+.. mod_ver_report:: Baselibs Module Verification Report
+   :id: mod_vrep__baselibs__report
    :post_template: module_verification_report
    :status: valid
    :safety: ASIL_B
    :security: YES
+   :verification_method: test_and_inspection
+   :belongs_to: mod__baselibs
    :realizes: wp__verification_module_ver_report
    :report_version: v1.0
    :version: 1
