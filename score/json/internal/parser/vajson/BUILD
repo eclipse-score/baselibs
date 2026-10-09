@@ -37,7 +37,6 @@ cc_test(
     name = "vajson_parser_test",
     srcs = ["vajson_parser_test.cpp"],
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    local_defines = ["VAJSON"],
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__subpackages__",
@@ -53,7 +52,6 @@ cc_test(
     name = "number_parser_test",
     srcs = ["number_parser_test.cpp"],
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    local_defines = ["VAJSON"],
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__subpackages__",

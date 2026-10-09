@@ -74,7 +74,7 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
@@ -93,7 +93,7 @@ Dynamic Architecture
    :security: YES
    :safety: ASIL_B
    :status: invalid
-   :version: 1
+   :version: 2
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
