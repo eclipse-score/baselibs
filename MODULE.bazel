@@ -115,6 +115,10 @@ git_override(
     commit = "b4d1f90cf761eeb588c0920c708ae6a4ffb6b71b",
     remote = "https://github.com/Valeo-S-CORE-Organization/openssl.git",
 )
+bazel_dep(name = "rules_foreign_cc", version = "0.15.1")
+register_toolchains(
+    "@rules_foreign_cc//toolchains:preinstalled_pkgconfig_toolchain",
+)
 
 ## Configure the Rust toolchain
 

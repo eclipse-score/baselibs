@@ -32,10 +32,7 @@ openssl_library(
 
 alias(
     name = "openssl",
-    actual = select({
-        "@platforms//os:qnx": "//third_party/qnx:openssl",
-        "//conditions:default": ":openssl_default",
-    }),
+    actual = ":openssl_default",
     visibility = ["//visibility:public"],
 )
 
