@@ -15,7 +15,7 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.4", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.3", dev_dependency = True)
 bazel_dep(name = "score_cpp_policies", version = "0.1.1", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
@@ -109,10 +109,10 @@ bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
 bazel_dep(name = "download_utils", version = "1.2.2")
 bazel_dep(name = "rules_cc", version = "0.2.17")
-bazel_dep(name = "score_openssl", version = "3.6.1")
+bazel_dep(name = "score_openssl", version = "0.1.0")
 git_override(
     module_name = "score_openssl",
-    commit = "b4d1f90cf761eeb588c0920c708ae6a4ffb6b71b",
+    commit = "040d3b605d2d027d475750f489b3b70b7ad7d1fc",
     remote = "https://github.com/Valeo-S-CORE-Organization/openssl.git",
 )
 
@@ -121,6 +121,12 @@ git_override(
 bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.13")
+git_override(
+    module_name = "score_crates",
+    commit = "4c35085f8313902669cdc1d54dd4f9527513e060",
+    remote = "https://github.com/Valeo-S-CORE-Organization/score-crates.git",
+)
+
 bazel_dep(name = "cxx.rs", version = "1.0.186")
 
 bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
