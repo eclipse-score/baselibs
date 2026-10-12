@@ -67,9 +67,6 @@ class JsonWriter final : public IJsonWriter
      *
      *  The `ownership` parameter is ignored when kUnsynced mode is used.
      *
-     *  The `formatting` parameter only takes effect with the vaJSON writer backend.
-     *  The json_serialize backend always pretty-prints and ignores it.
-     *
      *  @param file_sync_mode: Determines the synchronization mode (see above).
      *  @param ownership: When using kSynced mode, determines how to adjust the ownership
      *                    of the temporary file created.
@@ -105,7 +102,6 @@ class JsonWriter final : public IJsonWriter
   private:
     FileSyncMode file_sync_mode_;
     const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership_;
-    /// @brief Layout of the output, if the selected writer backend supports it.
     const Formatting formatting_;
 };
 
