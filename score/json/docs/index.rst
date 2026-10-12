@@ -33,7 +33,6 @@ JSON-Library
    architecture/index.rst
    architecture/chklst_arc_inspection.rst
    json_wrapper/index.rst
-   nlohman_json/index.rst
    vajson/index.rst
    safety_analysis/fmea.rst
    safety_analysis/dfa.rst

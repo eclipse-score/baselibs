@@ -1,6 +1,6 @@
 ..
    # *******************************************************************************
-   # Copyright (c) 2025 Contributors to the Eclipse Foundation
+   # Copyright (c) 2026 Contributors to the Eclipse Foundation
    #
    # See the NOTICE file(s) distributed with this work for additional
    # information regarding copyright ownership.
@@ -12,12 +12,23 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-nlohman_json
-############
+String Manipulation
+####################
 
-nlohman_json is an OSS library (see `nlohman/json <https://github.com/nlohmann/json>`_)
+.. document:: String Manipulation
+   :id: doc__string_manipulation
+   :status: draft
+   :version: 1
+   :safety: ASIL_B
+   :security: YES
+   :realizes: wp__cmpt_request[version==1]
 
-It is integrated into JSON component by forking and built as a Bazel third-party component.
+.. toctree::
+   :hidden:
 
-The library will be qualified by using the TSF methodology as described in `process_description/trustable <https://eclipse-score.github.io/process_description/main/trustable/index.html>`_
-The qualification documentation is here (TBD: add link)
+   requirements/index.rst
+   architecture/index.rst
+
+The String Manipulation component provides allocation-conscious helpers for
+handling command-line arguments, splitting string views, and comparing
+string-like values.

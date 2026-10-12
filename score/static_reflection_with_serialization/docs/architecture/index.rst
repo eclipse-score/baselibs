@@ -18,7 +18,7 @@ Static Reflection with Serialization Component Architecture
 .. document:: static_reflection_with_serialization Architecture
    :id: doc__static_refl_with_serial_arch
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -41,11 +41,6 @@ Static Architecture
    :implements: logic_arc_int__baselibs__static_reflection[version==1],logic_arc_int__baselibs__generic_serial[version==1],logic_arc_int__baselibs__log_serial[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Static Reflection with Serialization Static view
    :id: comp_arc_sta__baselibs__static_reflection
@@ -61,6 +56,11 @@ Static Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------

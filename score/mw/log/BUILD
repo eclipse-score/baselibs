@@ -496,6 +496,7 @@ cc_unit_test_suites_for_host_and_qnx(
 
 docs_bundle(
     name = "docs",
+    primary_need_id = "comp__log",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

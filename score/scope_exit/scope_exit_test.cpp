@@ -63,6 +63,11 @@ class ScopeExitFixture : public ::testing::Test
 // use GivenAScopeExit.
 TEST_F(ScopeExitFixture, CreatingDoesNotCallDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__invoke_on_destruction");
+    RecordProperty("Description",
+                   "Check that constructing a scope guard does not invoke its cleanup callback prematurely.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When creating a ScopeExit
     bool destruction_handler_called{false};
     ScopeExit<> scope_exit{[&destruction_handler_called]() noexcept {
@@ -75,22 +80,32 @@ TEST_F(ScopeExitFixture, CreatingDoesNotCallDestructionHandler)
 
 TEST_F(ScopeExitFixture, DestroyingCallsDestructionHandler)
 {
-    bool destruction_handler_called{false};
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__invoke_on_destruction");
+    RecordProperty("Description",
+                   "Check that destroying an active scope guard invokes its cleanup callback exactly once.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    std::size_t destruction_handler_call_count{0U};
     {
         // Given a ScopeExit
-        ScopeExit<> scope_exit{[&destruction_handler_called]() noexcept {
-            destruction_handler_called = true;
+        ScopeExit<> scope_exit{[&destruction_handler_call_count]() noexcept {
+            ++destruction_handler_call_count;
         }};
 
         // When destroying the ScopeExit
     }
 
-    // Then the destruction handler is called
-    EXPECT_TRUE(destruction_handler_called);
+    // Then the destruction handler is called exactly once
+    EXPECT_EQ(destruction_handler_call_count, 1U);
 }
 
 TEST_F(ScopeExitFixture, DestroyingWithScopedFunctionCallsDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__invoke_on_destruction");
+    RecordProperty("Description",
+                   "Check that a scope guard accepts a move-only scoped callback and invokes it at destruction.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     safecpp::Scope<> scope{};
     bool destruction_handler_called{false};
     {
@@ -108,6 +123,11 @@ TEST_F(ScopeExitFixture, DestroyingWithScopedFunctionCallsDestructionHandler)
 
 TEST_F(ScopeExitFixture, DestroyingAfterCallingReleaseDoesNotCallDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__release");
+    RecordProperty("Description",
+                   "Check that releasing an active scope guard suppresses its cleanup callback at destruction.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     GivenAScopeExit();
 
     // and given that Release has been called on the ScopeExit
@@ -122,6 +142,12 @@ TEST_F(ScopeExitFixture, DestroyingAfterCallingReleaseDoesNotCallDestructionHand
 
 TEST_F(ScopeExitFixture, MoveConstructingGuardDoesNotCallDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__move_transfer");
+    RecordProperty(
+        "Description",
+        "Check that move construction transfers callback ownership without invoking the moved-from callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenAScopeExit();
 
     // When move constructing a new ScopeExit
@@ -133,6 +159,11 @@ TEST_F(ScopeExitFixture, MoveConstructingGuardDoesNotCallDestructionHandler)
 
 TEST_F(ScopeExitFixture, DestroyingMoveConstructedMovedFromGuardDoesNotCallDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__move_transfer");
+    RecordProperty("Description",
+                   "Check that destroying a moved-from guard does not invoke the transferred cleanup callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenAScopeExit();
 
     // and given a new ScopeExit move constructed from another
@@ -147,6 +178,11 @@ TEST_F(ScopeExitFixture, DestroyingMoveConstructedMovedFromGuardDoesNotCallDestr
 
 TEST_F(ScopeExitFixture, DestroyingMoveConstructedMovedToGuardCallsDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__move_transfer");
+    RecordProperty("Description",
+                   "Check that destroying the move destination invokes the transferred cleanup callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenAScopeExit();
 
     // and given a new ScopeExit move constructed from another
@@ -161,6 +197,12 @@ TEST_F(ScopeExitFixture, DestroyingMoveConstructedMovedToGuardCallsDestructionHa
 
 TEST_F(ScopeExitFixture, MoveAssigningGuardCallsDestructionHandlerOnMovedToGuard)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__replace_on_assignment");
+    RecordProperty(
+        "Description",
+        "Check that move assignment invokes the destination's former callback and transfers the source callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenTwoScopeExits();
 
     // When move assigning one ScopeExit to another
@@ -173,6 +215,11 @@ TEST_F(ScopeExitFixture, MoveAssigningGuardCallsDestructionHandlerOnMovedToGuard
 
 TEST_F(ScopeExitFixture, DestroyingMoveAssignedMovedFromGuardDoesNotCallDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__move_transfer");
+    RecordProperty("Description",
+                   "Check that destroying a move-assigned source guard does not invoke its transferred callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenTwoScopeExits();
 
     // and given that one ScopeExit was move assigned to another
@@ -187,6 +234,11 @@ TEST_F(ScopeExitFixture, DestroyingMoveAssignedMovedFromGuardDoesNotCallDestruct
 
 TEST_F(ScopeExitFixture, DestroyingMoveAssignedMovedToGuardCallsDestructionHandler)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__scope_exit__move_transfer");
+    RecordProperty("Description",
+                   "Check that destroying a move-assigned destination invokes the transferred callback.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
     GivenTwoScopeExits();
 
     // and given that one ScopeExit was move assigned to another

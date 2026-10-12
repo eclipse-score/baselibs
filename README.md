@@ -23,7 +23,6 @@ Replace `x.x.x` with a version from the [S-CORE Bazel Registry](https://github.c
 To use Base Libraries properly, you need to set the following build settings in your `.bazelrc` file or pass them to the `bazel` command:
 
 ```bash
---@score_baselibs//score/json:base_library=nlohmann
 --@score_baselibs//score/memory/shared/flags:use_typedshmd=False
 ```
 

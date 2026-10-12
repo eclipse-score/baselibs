@@ -194,6 +194,8 @@ cc_test(
 
 docs_bundle(
     name = "docs",
+    code_targets = [":filesystem"],
+    primary_need_id = "comp__baselibs_filesystem",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

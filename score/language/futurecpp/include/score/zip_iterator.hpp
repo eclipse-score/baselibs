@@ -311,6 +311,12 @@ std::ptrdiff_t minimum_container_size(const ContainerSizes... container_sizes)
 /// \warning When specifying a range of iterators make sure they have the same range, otherwise a `begin != end` logic
 /// might never terminate
 ///
+/// \warning Mutating operations through a zip_iterator, such as swap, assignment, or algorithms like `std::reverse`
+/// and `std::sort`, require that the zipped iterators do not alias each other's elements.
+/// An example of aliasing is zipping offset views of the same container.
+/// With aliasing, the per-element writes conflict and their order is unspecified, so results differ between platforms.
+/// Read-only use of overlapping ranges is fine.
+///
 /// \see Helper functions make_sized_zip_range(...) and make_zip_range(...)
 ///
 /// \tparam Iterators Types which should be wrapped in the zip_iterator

@@ -18,6 +18,7 @@ load("//score/flatbuffers/bazel:tools.bzl", "serialize_multiple_versioned_buffer
 exports_files(
     [
         "test.fbs",
+        "test_optional_scalar.fbs",
         "test_rich_schema.fbs",
         "test_versioned.fbs",
         "test_versioned_min.fbs",

@@ -44,7 +44,7 @@ TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
     root["boolean"] = Any{true};
     root["list"] = Any{std::move(list)};
     root["string"] = Any{std::string{"line1\n\"quoted\"\\line2"}};
-    const auto result = VajsonToBuffer(Any{std::move(root)});
+    const auto result = VajsonToBuffer(Any{std::move(root)}, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result,
               std::string{
@@ -63,7 +63,7 @@ TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
     Object object{};
     object[std::string_view{"alpha"}] = Any{std::string{"a"}};
     object["beta"] = Any{std::uint32_t{2U}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"alpha\":\"a\",\"beta\":2}"});
 }
@@ -79,7 +79,7 @@ TEST(VajsonSerializeTest, EscapesControlCharactersWithoutShortEscapeSequence)
 
     Object object{};
     object["value"] = Any{std::string{"\x01\x0b\x1f"}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\\u0001\\u000b\\u001f\"}"});
 }
@@ -93,7 +93,7 @@ TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
 
     Object object{};
     object["value"] = Any{std::string{std::string_view{"a\0b", 3U}}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"a\\u0000b\"}"});
 }
@@ -109,7 +109,7 @@ TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
     object[std::string{
         "a\x1e"
         "b"}] = Any{std::string{"v"}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"a\\u001eb\":\"v\"}"});
 }
@@ -125,7 +125,7 @@ TEST(VajsonSerializeTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
 
     Object object{};
     object["value"] = Any{std::string{"\b\f\n\r\t"}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\\b\\f\\n\\r\\t\"}"});
 }
@@ -146,7 +146,7 @@ TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
     }
     Object object{};
     object["value"] = Any{value};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
 
     // No unescaped control character may survive in the output.
@@ -169,7 +169,7 @@ TEST(VajsonSerializeTest, PassesMultiByteUtf8CharactersThrough)
 
     Object object{};
     object["value"] = Any{std::string{"\u00e4\u20ac"}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\u00e4\u20ac\"}"});
 }
@@ -183,9 +183,47 @@ TEST(VajsonSerializeTest, SerializesFiniteDouble)
 
     Object object{};
     object["number"] = Any{double{1.5}};
-    const auto result = VajsonToBuffer(object);
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"number\":1.5}"});
+}
+TEST(VajsonSerializeTest, PreservesDoublePrecision)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "serializing a double that is not representable as a float without narrowing it, cf. RFC-8259 "
+                   "section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    Object object{};
+    object["third"] = Any{1.0 / 3.0};
+    object["pi"] = Any{3.14159265358979311599796346854};
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({"pi":3.141592653589793,"third":0.3333333333333333})"});
+}
+TEST(VajsonSerializeTest, SerializesNumbersInTheirStoredArithmeticType)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "serializing every arithmetic type a Number can hold, cf. RFC-8259 section 6");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    Object object{};
+    object["u8"] = Any{std::uint8_t{255U}};
+    object["u64"] = Any{std::numeric_limits<std::uint64_t>::max()};
+    object["i8"] = Any{std::int8_t{-128}};
+    object["i64"] = Any{std::numeric_limits<std::int64_t>::min()};
+    object["f"] = Any{0.1F};
+    object["d"] = Any{0.1};
+    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result,
+              std::string{R"({"d":0.1,"f":0.1,"i64":-9223372036854775808,"i8":-128,"u64":18446744073709551615,)"
+                          R"("u8":255})"});
 }
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
 TEST(VajsonSerializeTest, RejectsInfiniteDouble)
@@ -259,7 +297,7 @@ TEST(VajsonSerializeTest, SerializesBothBooleanValues)
     List list{};
     list.emplace_back(Any{true});
     list.emplace_back(Any{false});
-    const auto result = VajsonToBuffer(list);
+    const auto result = VajsonToBuffer(list, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"[true,false]"});
 }
@@ -274,9 +312,145 @@ TEST(VajsonSerializeTest, SerializesTopLevelList)
     List list{};
     list.emplace_back(Any{std::uint8_t{5U}});
     list.emplace_back(Any{std::string{"value"}});
-    const auto result = VajsonToBuffer(list);
+    const auto result = VajsonToBuffer(list, vajson::VajsonFormatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"[5,\"value\"]"});
+}
+TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that pretty-printing nested objects and lists emits four-space indentation at every level.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    Object nested_object{};
+    nested_object["number"] = Any{std::int32_t{7}};
+    List nested_list{};
+    nested_list.emplace_back(Any{true});
+    List list{};
+    list.emplace_back(Any{Null{}});
+    list.emplace_back(Any{std::move(nested_object)});
+    list.emplace_back(Any{std::move(nested_list)});
+    Object root{};
+    root["list"] = Any{std::move(list)};
+    root["string"] = Any{std::string{"text"}};
+    const auto result = VajsonToBuffer(Any{std::move(root)}, vajson::VajsonFormatting::kPrettyPrint);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({
+    "list": [
+        null,
+        {
+            "number": 7
+        },
+        [
+            true
+        ]
+    ],
+    "string": "text"
+})"});
+}
+TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "pretty printing empty objects and lists without inner whitespace, cf. RFC-8259 section 4 and 5");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    List list{};
+    list.emplace_back(Any{Object{}});
+    list.emplace_back(Any{List{}});
+    Object root{};
+    root["empty_list"] = Any{List{}};
+    root["empty_object"] = Any{Object{}};
+    root["list"] = Any{std::move(list)};
+    const auto result = VajsonToBuffer(root, vajson::VajsonFormatting::kPrettyPrint);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({
+    "empty_list": [],
+    "empty_object": {},
+    "list": [
+        {},
+        []
+    ]
+})"});
+    EXPECT_EQ(VajsonToBuffer(Object{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"{}"});
+    EXPECT_EQ(VajsonToBuffer(List{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"[]"});
+}
+TEST(VajsonSerializeTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "pretty printing a scalar top-level value, cf. RFC-8259 section 2");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const auto result = VajsonToBuffer(Any{std::string{"value"}}, vajson::VajsonFormatting::kPrettyPrint);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{"\"value\""});
+}
+TEST(VajsonSerializeTest, PrettyPrintsToStream)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "pretty printing a list into a stream, cf. RFC-8259 section 2 and 5");
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
+
+    List list{};
+    list.emplace_back(Any{std::uint8_t{5U}});
+    list.emplace_back(Any{std::string{"value"}});
+    std::ostringstream out_stream{};
+    VajsonSerialize serializer{out_stream, vajson::VajsonFormatting::kPrettyPrint};
+    const auto result = serializer << list;
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(out_stream.str(), std::string{"[\n    5,\n    \"value\"\n]"});
+}
+TEST(VajsonSerializeTest, PrettyPrintsWhenFormattingIsOmitted)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that omitting the formatting argument pretty-prints, for every VajsonToBuffer overload and "
+                   "for the stream serializer.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
+    Object object{};
+    object["number"] = Any{std::int32_t{7}};
+    const std::string expected_object{"{\n    \"number\": 7\n}"};
+    EXPECT_EQ(VajsonToBuffer(object).value(), expected_object);
+
+    Object object_in_any{};
+    object_in_any["number"] = Any{std::int32_t{7}};
+    EXPECT_EQ(VajsonToBuffer(Any{std::move(object_in_any)}).value(), expected_object);
+
+    List list{};
+    list.emplace_back(Any{std::move(object)});
+    const std::string expected_list{"[\n    {\n        \"number\": 7\n    }\n]"};
+    EXPECT_EQ(VajsonToBuffer(list).value(), expected_list);
+
+    std::ostringstream out_stream{};
+    VajsonSerialize serializer{out_stream};
+    ASSERT_TRUE((serializer << list).has_value());
+    EXPECT_EQ(out_stream.str(), expected_list);
+}
+TEST(VajsonSerializeTest, SerializesEmptyContainersCompactly)
+{
+    RecordProperty("Verifies", "SCR-5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "serializing empty objects and lists into compact JSON, cf. RFC-8259 section 4 and 5");
+    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    Object root{};
+    root["empty_list"] = Any{List{}};
+    root["empty_object"] = Any{Object{}};
+    const auto result = VajsonToBuffer(root, vajson::VajsonFormatting::kCompact);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({"empty_list":[],"empty_object":{}})"});
 }
 }  // namespace
 }  // namespace score::json

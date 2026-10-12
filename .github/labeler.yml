@@ -13,7 +13,9 @@
 # Component labels: applied when a PR changes files in the mapped folder.
 comp-abi-types:
   - changed-files:
-      - any-glob-to-any-file: 'score/containers_rust/**'
+      - any-glob-to-any-file:
+          - 'score/containers_rust/**'
+          - 'score/shared_layout/**'
 comp-allocator:
   - changed-files:
       - any-glob-to-any-file: 'score/allocator/**'

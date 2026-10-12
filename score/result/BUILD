@@ -106,6 +106,15 @@ cc_gtest_unit_test(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":result",
+        ":result_for_rust",
+        ":error_msg_mapping",
+        "//score/result/rust:result_cxx",
+        "//score/result/rust:result_rs",
+        "//score/result/rust:rust",
+    ],
+    primary_need_id = "comp__baselibs_result",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

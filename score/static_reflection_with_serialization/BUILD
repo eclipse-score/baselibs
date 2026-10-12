@@ -24,6 +24,8 @@ test_suite(
 
 docs_bundle(
     name = "docs",
+    code_targets = ["//score/static_reflection_with_serialization/serialization:serialization"],
+    primary_need_id = "comp__baselibs_static_reflection",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

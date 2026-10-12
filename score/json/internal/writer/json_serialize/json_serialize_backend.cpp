@@ -226,33 +226,54 @@ namespace internal
 namespace writer
 {
 
-score::Result<void> SerializeToStream(std::ostream& out_stream, const score::json::Object& json_data)
+score::Result<void> SerializeToStream(std::ostream& out_stream,
+                                      const score::json::Object& json_data,
+                                      const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToStreamInternal(out_stream, json_data);
 }
 
-score::Result<void> SerializeToStream(std::ostream& out_stream, const score::json::List& json_data)
+score::Result<void> SerializeToStream(std::ostream& out_stream,
+                                      const score::json::List& json_data,
+                                      const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToStreamInternal(out_stream, json_data);
 }
 
-score::Result<void> SerializeToStream(std::ostream& out_stream, const score::json::Any& json_data)
+score::Result<void> SerializeToStream(std::ostream& out_stream,
+                                      const score::json::Any& json_data,
+                                      const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToStreamInternal(out_stream, json_data);
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::Object& json_data)
+score::Result<std::string> SerializeToBuffer(const score::json::Object& json_data,
+                                             const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToBufferInternal(json_data);
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::List& json_data)
+score::Result<std::string> SerializeToBuffer(const score::json::List& json_data,
+                                             const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToBufferInternal(json_data);
 }
 
-score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data)
+score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data,
+                                             const score::json::Formatting formatting)
 {
+    // This backend always pretty-prints, see writer_backend.h.
+    score::cpp::ignore = formatting;
     return SerializeToBufferInternal(json_data);
 }
 

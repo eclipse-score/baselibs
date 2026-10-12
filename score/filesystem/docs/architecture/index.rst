@@ -18,7 +18,7 @@ Filesystem Component Architecture
 .. document:: Filesystem Architecture
    :id: doc__filesystem_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :security: YES
    :safety: ASIL_B
    :realizes: wp__component_arch[version==1]
@@ -40,11 +40,6 @@ Static Architecture
    :implements: logic_arc_int__baselibs__filesystem[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: Filesystem Static view
    :id: comp_arc_sta__baselibs__filesystem
@@ -60,6 +55,11 @@ Static Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------

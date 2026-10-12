@@ -171,6 +171,12 @@ cc_library(
 
 docs_bundle(
     name = "docs",
+    code_targets = [
+        ":dynamic_array",
+        ":intrusivelist",
+        ":non_relocatable_vector",
+    ],
+    primary_need_id = "comp__baselibs_containers",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

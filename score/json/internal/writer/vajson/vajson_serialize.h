@@ -24,6 +24,7 @@
 #include <optional>
 #include <ostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 namespace score::json
@@ -49,33 +50,25 @@ auto SerializeNumber(score::json::vajson::GenericValueSerializer<Next>&& seriali
                      const score::json::Number& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next
 {
-    // The serializer is consumed by whichever alternative matches, so the outcome is parked in an
-    // optional to keep a single exit point. Number::As() re-parses the value on every call, hence the
-    // chain stays an else-if: the alternatives must be probed lazily, in order.
-    std::optional<typename score::json::vajson::GenericValueSerializer<Next>::Next> serialized{};
+    using Serialized = typename score::json::vajson::GenericValueSerializer<Next>::Next;
 
-    if (const auto unsigned_value = value.As<std::uint64_t>(); unsigned_value.has_value())
-    {
-        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*unsigned_value));
-    }
-    else if (const auto signed_value = value.As<std::int64_t>(); signed_value.has_value())
-    {
-        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*signed_value));
-    }
-    else if (const auto float_value = value.As<float>(); float_value.has_value())
-    {
-        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*float_value));
-    }
-    else if (const auto double_value = value.As<double>(); double_value.has_value())
-    {
-        serialized.emplace(std::move(serializer) << score::json::vajson::JNumber(*double_value));
-    }
-    else
-    {
-        serialized.emplace(std::move(serializer) << score::json::vajson::JNull());
-    }
+    // Dispatching on the stored type
+    return value.Visit([&serializer](const auto stored) noexcept -> Serialized {
+        using Stored = std::decay_t<decltype(stored)>;
 
-    return *std::move(serialized);
+        if constexpr (std::is_floating_point_v<Stored>)
+        {
+            return std::move(serializer) << score::json::vajson::JNumber(stored);
+        }
+        else if constexpr (std::is_unsigned_v<Stored>)
+        {
+            return std::move(serializer) << score::json::vajson::JNumber(static_cast<std::uint64_t>(stored));
+        }
+        else
+        {
+            return std::move(serializer) << score::json::vajson::JNumber(static_cast<std::int64_t>(stored));
+        }
+    });
 }
 template <typename Next>
 auto SerializeList(score::json::vajson::GenericValueSerializer<Next>&& serializer,
@@ -155,7 +148,12 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 class VajsonSerialize final
 {
   public:
-    explicit VajsonSerialize(std::ostream& out_stream) noexcept;
+    /// @brief Constructs a serializer writing into out_stream
+    /// @param out_stream The stream to write the serialized representation to. It must outlive this instance.
+    /// @param formatting Layout of the output, pretty printed by default.
+    explicit VajsonSerialize(
+        std::ostream& out_stream,
+        const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint) noexcept;
     ~VajsonSerialize() noexcept = default;
     VajsonSerialize(const VajsonSerialize&) = delete;
     VajsonSerialize(VajsonSerialize&&) noexcept = default;
@@ -167,10 +165,22 @@ class VajsonSerialize final
 
   private:
     std::ostream& out_stream_;
+    /// @brief Layout of the output
+    vajson::VajsonFormatting formatting_;
 };
-score::Result<std::string> VajsonToBuffer(const score::json::Object& json_data);
-score::Result<std::string> VajsonToBuffer(const score::json::List& json_data);
-score::Result<std::string> VajsonToBuffer(const score::json::Any& json_data);
+/// @brief Serializes json_data into a string
+/// @param json_data The data to serialize
+/// @param formatting Layout of the output, pretty printed by default.
+/// @return The serialized representation on success, error otherwise
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Object& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::List& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
+score::Result<std::string> VajsonToBuffer(
+    const score::json::Any& json_data,
+    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
 }  // namespace score::json
 
 namespace score::json::vajson

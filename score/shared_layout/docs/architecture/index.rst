@@ -12,11 +12,11 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-ABI Compatible Data Types Component Architecture
-************************************************
+Cross-Language Shared-Layout Data Types Component Architecture
+**************************************************************
 
-.. document:: ABI Compatible Data Types Architecture
-   :id: doc__abi_compatible_data_types_architecture
+.. document:: Cross-Language Shared-Layout Data Types Architecture
+   :id: doc__shared_layout_architecture
    :status: valid
    :version: 1
    :safety: ASIL_B
@@ -26,18 +26,18 @@ ABI Compatible Data Types Component Architecture
 Overview/Description
 --------------------
 
-see :need:`doc__abi_compatible_data_types`
+see :need:`doc__shared_layout`
 
 Static Architecture
 -------------------
 
-.. comp:: ABI Compatible Data Types
-   :id: comp__baselibs_abi_compatible_data_types
+.. comp:: Cross-Language Shared-Layout Data Types
+   :id: comp__baselibs_shared_layout
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :tags: baselibs_abi_compatible_data_types
+   :tags: baselibs_shared_layout
    :belongs_to: feat__baselibs[version==1]
 
    .. needarch::

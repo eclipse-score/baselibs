@@ -6,9 +6,11 @@ compile_commands.json
 target/
 rust-project.json
 
-# docs build artifacts
-_build
+# docs-as-code build artifacts
+# Please don't edit locally; repo_policy_sync keeps this block in sync from score_tools.
+_build/
 ubproject.toml
+# end docs-as-code build artifacts
 
 # coverage report output (repo root only; tools/coverage is tracked)
 /coverage*/

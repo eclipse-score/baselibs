@@ -206,6 +206,8 @@ cc_test(
 
 docs_bundle(
     name = "docs",
+    code_targets = [":flatbufferutils"],
+    primary_need_id = "comp__baselibs_flatbuffers",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

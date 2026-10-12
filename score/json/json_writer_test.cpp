@@ -21,6 +21,7 @@
 #include <limits>
 #include <memory>
 #include <sstream>
+#include <string_view>
 #include <vector>
 
 namespace score
@@ -35,14 +36,8 @@ using ::testing::ByMove;
 using ::testing::Return;
 using ::testing::StrEq;
 
-// The selected serialization backend decides the emitted representation: json_serialize pretty-prints with a four
-// space indentation, whereas vajson emits compact JSON without insignificant whitespace. Which backend is linked is
-// chosen by the //score/json:writer_library flag and communicated here via local_defines.
-#if defined(WRITER_VAJSON)
-constexpr auto kKeySeparator = "\":";
-#else
+// Which backend is linked is chosen by the //score/json:writer_library flag and communicated here via local_defines.
 constexpr auto kKeySeparator = "\": ";
-#endif
 
 class TestJsonList : public json::List
 {
@@ -56,17 +51,14 @@ class TestJsonList : public json::List
         emplace_back(std::move(obj));
     }
 
-#if defined(WRITER_VAJSON)
-    static constexpr auto expected = R"([1234,"string",{"key":"value"}])";
-#else
-    static constexpr auto expected = R"([
+    static constexpr std::string_view kExpectedCompact{R"([1234,"string",{"key":"value"}])"};
+    static constexpr std::string_view kExpectedPrettyPrint{R"([
     1234,
     "string",
     {
         "key": "value"
     }
-])";
-#endif
+])"};
 };
 
 class TestJsonObject : public json::Object
@@ -78,14 +70,11 @@ class TestJsonObject : public json::Object
         emplace("num", score::json::Any{1});
     }
 
-#if defined(WRITER_VAJSON)
-    static constexpr auto expected = R"({"num":1,"string":"foo"})";
-#else
-    static constexpr auto expected = R"({
+    static constexpr std::string_view kExpectedCompact{R"({"num":1,"string":"foo"})"};
+    static constexpr std::string_view kExpectedPrettyPrint{R"({
     "num": 1,
     "string": "foo"
-})";
-#endif
+})"};
 };
 
 class TestJsonAny : public json::Any
@@ -93,16 +82,42 @@ class TestJsonAny : public json::Any
   public:
     TestJsonAny() : json::Any(std::string{"any_foo"}) {}
 
-    static constexpr auto expected = R"("any_foo")";
+    static constexpr std::string_view kExpectedCompact{R"("any_foo")"};
+    static constexpr std::string_view kExpectedPrettyPrint{kExpectedCompact};
 };
 
-using JsonSampleTypes = ::testing::Types<TestJsonList, TestJsonObject, TestJsonAny>;
+/// @brief Combines a sample JSON value with the formatting it is written with.
+template <typename SampleType, Formatting formatting>
+struct WriterTestCase
+{
+    using SampleJson = SampleType;
+    static constexpr Formatting kFormatting{formatting};
+};
+
+using WriterTestCases = ::testing::Types<WriterTestCase<TestJsonList, Formatting::kCompact>,
+                                         WriterTestCase<TestJsonList, Formatting::kPrettyPrint>,
+                                         WriterTestCase<TestJsonObject, Formatting::kCompact>,
+                                         WriterTestCase<TestJsonObject, Formatting::kPrettyPrint>,
+                                         WriterTestCase<TestJsonAny, Formatting::kCompact>,
+                                         WriterTestCase<TestJsonAny, Formatting::kPrettyPrint>>;
 
 template <typename T>
 class JsonWriterWriteToFileTest : public ::testing::Test
 {
   protected:
-    using SampleJson = T;
+    using SampleJson = typename T::SampleJson;
+    static constexpr Formatting kFormatting{T::kFormatting};
+
+    /// @brief Returns the representation the linked backend emits for SampleJson written with kFormatting.
+    static std::string_view Expected() noexcept
+    {
+#if defined(WRITER_VAJSON)
+        return (kFormatting == Formatting::kCompact) ? SampleJson::kExpectedCompact : SampleJson::kExpectedPrettyPrint;
+#else
+        // json_serialize ignores the formatting and always pretty-prints.
+        return SampleJson::kExpectedPrettyPrint;
+#endif
+    }
 
     score::filesystem::SimpleStringStreamCollection stream{};
     std::shared_ptr<score::filesystem::FileFactoryFake> file_factory_fake{
@@ -111,7 +126,8 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     template <typename Json, typename... OpenArgs>
     std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type, OpenArgs&&... open_args)
     {
-        score::json::JsonWriter writer{type};
+        score::json::JsonWriter writer{
+            type, score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID, kFormatting};
         std::string_view path_view{path};
         auto result = writer.ToFile(json, path_view, file_factory_fake, std::forward<OpenArgs>(open_args)...);
 
@@ -122,7 +138,7 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     }
 };
 
-TYPED_TEST_SUITE(JsonWriterWriteToFileTest, JsonSampleTypes, );
+TYPED_TEST_SUITE(JsonWriterWriteToFileTest, WriterTestCases, );
 
 TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
 {
@@ -134,10 +150,12 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     this->RecordProperty("Priority", "3");
 
     typename TestFixture::SampleJson json;
-    score::json::JsonWriter writer{};
+    score::json::JsonWriter writer{FileSyncMode::kUnsynced,
+                                   score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                   TestFixture::kFormatting};
     std::string buffer = *writer.ToBuffer(json);
 
-    EXPECT_EQ(buffer, TypeParam::expected);
+    EXPECT_EQ(buffer, TestFixture::Expected());
 }
 
 TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
@@ -156,7 +174,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
 
-    EXPECT_EQ(file_content, TypeParam::expected);
+    EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
 TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
@@ -174,7 +192,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kUnsynced);
 
-    EXPECT_EQ(file_content, TypeParam::expected);
+    EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
 TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
@@ -193,7 +211,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
 
-    EXPECT_EQ(file_content, TypeParam::expected);
+    EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
 TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
@@ -238,6 +256,22 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
 
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
+}
+
+// Holds for either backend: json_serialize always pretty-prints, vajson defaults to it.
+TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that a JsonWriter constructed without a Formatting argument writes pretty-printed JSON.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
+    score::json::JsonWriter writer{};
+
+    EXPECT_EQ(*writer.ToBuffer(TestJsonObject{}), TestJsonObject::kExpectedPrettyPrint);
+    EXPECT_EQ(*writer.ToBuffer(TestJsonList{}), TestJsonList::kExpectedPrettyPrint);
+    EXPECT_EQ(*writer.ToBuffer(TestJsonAny{}), TestJsonAny::kExpectedPrettyPrint);
 }
 
 template <typename T>
@@ -287,7 +321,9 @@ TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)
     obj["max"] = score::json::Any{std::numeric_limits<T>::max()};
 
     // Use the JsonWriter to serialize
-    score::json::JsonWriter writer;
+    score::json::JsonWriter writer{FileSyncMode::kUnsynced,
+                                   score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                   Formatting::kPrettyPrint};
     auto result = writer.ToBuffer(obj);
     ASSERT_TRUE(result.has_value());
     const std::string json_str = *result;

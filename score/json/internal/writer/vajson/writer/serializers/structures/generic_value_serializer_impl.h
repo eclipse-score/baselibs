@@ -38,9 +38,9 @@ auto GenericValueSerializer<Return>::operator<<(JObjectType<Fn> object) && noexc
         using ReturnType = decltype(object.fn(ObjectStart(this->os_.get())));
         static_assert(std::is_same<ReturnType, KeySerializer>::value, "Cannot close object in current state");
 
-        this->os_.get().put('{');
+        this->os_.get().BeginContainer('{');
         static_cast<void>(object.fn(ObjectStart(this->os_.get())));
-        this->os_.get().put('}');
+        this->os_.get().EndContainer('}');
     });
 }
 

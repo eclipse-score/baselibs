@@ -47,10 +47,10 @@ class GenericValueSerializer final
     ///     specified type) or the type specified by Return.
     using Next = typename std::conditional_t<std::is_same_v<Return, Self>, GenericValueSerializer, Return>;
 
-    /// \brief Constructs a GenericValueSerializer from an output stream
+    /// \brief Constructs a GenericValueSerializer from a writer
     /// \details Do not create an instance of GenericValueSerializer directly, use the aliases in
     ///     score/json/internal/writer/vajson/writer/serializers/structures/serializer.h
-    /// \param[in] os Output stream to write into.
+    /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
     /// \param[in] bom The BOM type to write.
     explicit GenericValueSerializer(WriterType os,
@@ -82,7 +82,7 @@ class GenericValueSerializer final
     {
         return this->Serialize([this]() noexcept {
             constexpr auto null_str = "null"sv;
-            this->os_.get().write(null_str.data(), null_str.size());
+            this->os_.get().Stream().write(null_str.data(), null_str.size());
         });
     }
 
@@ -96,7 +96,7 @@ class GenericValueSerializer final
         // NOLINTNEXTLINE(whitespace/line_length)
         // coverity[autosar_cpp14_m8_5_1_violation]
         return this->Serialize([this, value]() noexcept {
-            this->os_.get().write(value.data(), static_cast<std::streamsize>(value.size()));
+            this->os_.get().Stream().write(value.data(), static_cast<std::streamsize>(value.size()));
         });
     }
 
@@ -116,7 +116,7 @@ class GenericValueSerializer final
 
             if (!IsFinite(value))
             {
-                this->os_.get().setstate(std::ios_base::failbit);
+                this->os_.get().Stream().setstate(std::ios_base::failbit);
             }
             else
             {
@@ -129,8 +129,8 @@ class GenericValueSerializer final
                 AssertCondition(conversion_result.ec == std::errc{},
                                 "GenericValueSerializer: Could not convert number to textual representation.");
 
-                this->os_.get().write(buffer.data(),
-                                      static_cast<std::streamsize>(conversion_result.ptr - buffer.data()));
+                this->os_.get().Stream().write(buffer.data(),
+                                               static_cast<std::streamsize>(conversion_result.ptr - buffer.data()));
             }
         });
     }
@@ -145,9 +145,9 @@ class GenericValueSerializer final
     auto operator<<(JStringType string) && noexcept -> Next
     {
         return this->Serialize([this, string]() noexcept {
-            this->os_.get().put('"');
-            this->os_.get() << internal::EscapedJsonString(string);
-            this->os_.get().put('"');
+            this->os_.get().Stream().put('"');
+            this->os_.get().Stream() << internal::EscapedJsonString(string);
+            this->os_.get().Stream().put('"');
         });
     }
 
@@ -165,9 +165,9 @@ class GenericValueSerializer final
     auto operator<<(JArrayType<Fn> tuple) && noexcept -> Next
     {
         return this->Serialize([this, tuple]() noexcept {
-            this->os_.get().put('[');
+            this->os_.get().BeginContainer('[');
             static_cast<void>(tuple.fn(ArrayStart(this->os_.get())));
-            this->os_.get().put(']');
+            this->os_.get().EndContainer(']');
         });
     }
 
@@ -194,8 +194,9 @@ class GenericValueSerializer final
 
     /// \brief Serializes a value
     /// \details
-    /// - If another element was serialized before:
-    /// - Add a comma.
+    /// - If the value is an array element:
+    /// - Add a comma if another element was serialized before.
+    /// - Start a new, indented line if pretty printing is enabled.
     /// - Execute the given serializer function.
     /// \tparam Fn Type of function.
     /// \param[in] fn Serializer call function.
@@ -204,9 +205,10 @@ class GenericValueSerializer final
     template <typename Fn>
     auto Serialize(Fn&& fn) const noexcept -> Next
     {
-        if (this->serializer_state_ == SerializerState::kNonEmpty)
+        // A document or member value is never preceded by a sibling, only array elements need a separation.
+        if constexpr (std::is_same_v<Return, Self>)
         {
-            this->os_.get().put(',');
+            this->os_.get().BeginElement(this->serializer_state_ == SerializerState::kNonEmpty);
         }
         std::forward<Fn>(fn)();
         return Next(this->os_.get(), SerializerState::kNonEmpty);
@@ -221,11 +223,11 @@ class GenericValueSerializer final
         if (type == EncodingType::kUtf8)
         {
             constexpr std::string_view kUtf8Bom{"\xEF\xBB\xBF"sv};
-            this->os_.get().write(kUtf8Bom.data(), kUtf8Bom.size());
+            this->os_.get().Stream().write(kUtf8Bom.data(), kUtf8Bom.size());
         }
     }
 
-    /// \brief Output stream to write into
+    /// \brief Writer to write into
     WriterType os_;
 
     /// \brief Serializer state

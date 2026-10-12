@@ -18,7 +18,7 @@ Rust Containers Architecture
 .. document:: Rust Containers Architecture
    :id: doc__containers_rust_architecture
    :status: draft
-   :version: 2
+   :version: 3
    :safety: ASIL_B
    :security: NO
    :realizes: wp__component_arch[version==1]
@@ -64,6 +64,10 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------

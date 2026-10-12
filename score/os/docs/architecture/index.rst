@@ -12,13 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-os Component Architecture
-**********************************
+OS Component Architecture
+*************************
 
 .. document:: OS Architecture
    :id: doc__os_architecture
    :status: valid
-   :version: 1
+   :version: 2
    :security: YES
    :safety: ASIL_B
    :realizes: wp__component_arch[version==1]
@@ -37,14 +37,9 @@ Static Architecture
    :status: valid
    :version: 1
    :tags: baselibs_os
-   :implements: 
+   :implements:
    :belongs_to: feat__baselibs[version==1]
 
-   .. needarch::
-      :scale: 50
-      :align: center
-
-      {{ draw_component(need(), needs) }}
 
 .. comp_arc_sta:: OS Static view
    :id: comp_arc_sta__baselibs__os
@@ -60,6 +55,11 @@ Static Architecture
       :align: center
 
       {{ draw_component(need(), needs) }}
+
+Dynamic Architecture
+--------------------
+
+No need for sequence diagram. Simple caller callee flow.
 
 Interfaces
 ----------

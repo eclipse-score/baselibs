@@ -36,6 +36,8 @@ rust_test(
 
 docs_bundle(
     name = "docs",
+    code_targets = [":containers"],
+    primary_need_id = "comp__baselibs_containers_rust",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
