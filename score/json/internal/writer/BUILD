@@ -14,8 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-# Declarations of the serialization backend seam. Exactly one backend provides the definitions; which one is
-# selected by the `//score/json:writer_library` flag below.
+# Declarations of the serialization functions, defined by `//score/json/internal/writer/vajson:vajson_backend`.
 cc_library(
     name = "writer_backend",
     hdrs = ["writer_backend.h"],
@@ -27,13 +26,4 @@ cc_library(
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],
-)
-
-alias(
-    name = "writer",
-    actual = select({
-        "@score_baselibs//score/json:writer_library_json_serialize": "@score_baselibs//score/json/internal/writer/json_serialize:json_serialize_backend",
-        "@score_baselibs//score/json:writer_library_vajson": "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
-    }),
-    visibility = ["@score_baselibs//score/json:__pkg__"],
 )

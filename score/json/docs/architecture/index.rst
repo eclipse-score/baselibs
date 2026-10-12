@@ -18,7 +18,7 @@ JSON Component Architecture
 .. document:: JSON Architecture
    :id: doc__json_architecture
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -43,18 +43,18 @@ Design Decisions:
 
 It was decided to use the vaJson parser from Vector (see :need:`doc__vajson`), which is ASIL D certified.
 
-JSON writing functionality is implemented in the "Wrapper" and does not depend on the parser backend.
-Reasoning is that this functionality is reused from an already qualified baselibs implementation.
+JSON writing functionality is provided by the vaJson serializer, which is wrapped by the "Wrapper" component.
 
 Design Constraints:
 
 The feature description states that this component provides a "JSON abstraction layer that can switch between different parsers/serializers under the hood."
+Currently vaJson is the only implementation, for parsing as well as for serialization, so nothing is selectable.
 
 Rationale Behind Architecture Decomposition
 *******************************************
 
 The decomposition in a wrapper and an implemetation component already comes from the feature definition,
-the main driver is to re-use existing implementation(s), enable switch of implementation but providing a stable API.
+the main driver is to re-use existing implementation(s) and to allow replacing the implementation while providing a stable API.
 
 Static Architecture
 -------------------
