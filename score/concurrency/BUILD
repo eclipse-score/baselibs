@@ -110,14 +110,12 @@ cc_library(
 
 cc_gtest_unit_test(
     name = "type_traits_tests",
-    srcs = [
-        "test_types.h",
-        "type_traits_test.cpp",
-    ],
+    srcs = ["type_traits_test.cpp"],
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
     deps = [
+        ":test_types",
         ":type_traits",
     ],
 )
