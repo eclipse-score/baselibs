@@ -39,6 +39,7 @@ Each plugin uses `alwayslink = True` to ensure its static registrant is linked.
 | `@score_baselibs//score/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
 | `//score/mw/log/backend:file` | DLT file logging | `config_KFile_Logging` flag |
 | `//score/mw/log/backend:remote` | DataRouter remote DLT | `Remote_Logging` flag |
+| `//score/mw/log/backend:remote` | GTL remote DLT ("DLTv2", see [dlt_trace_backend.md](./backend/dlt_trace_backend.md)) | `Remote_Logging` and `shm_dma_enabled` flag |
 | `//score/mw/log/backend:slog` | QNX slog2 | QNX only (`@platforms//os:qnx`) |
 
 Guarantees:
