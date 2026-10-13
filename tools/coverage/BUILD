@@ -49,7 +49,6 @@ SCOPE_DEPS_COMMON = [
     # directly; has a coverage grant.
     "//score/json:interface",
     "//score/json:json_serializer",
-    "//score/json/internal/parser/vajson:vajson_parser",
     "//score/json/internal/writer/vajson:vajson_backend",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
     "//score/language/safecpp/safe_atomics:try_atomic_add",
