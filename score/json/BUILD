@@ -54,6 +54,7 @@ cc_library(
     name = "writer_interface",
     srcs = ["i_json_writer.cpp"],
     hdrs = [
+        "formatting.h",
         "i_json_writer.h",
         "json_writer.h",
     ],
@@ -105,8 +106,7 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer:writer_backend",
-        "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
+        "@score_baselibs//score/json/internal/writer:serializer",
     ],
 )
 
