@@ -24,6 +24,7 @@
  *  INCLUDES
  *********************************************************************************************************************/
 
+#include <cstdint>
 #include <string>
 
 #include "score/json/internal/parser/vajson/vajson_impl/reader/internal/depth_counter.h"
@@ -271,17 +272,64 @@ class StructureParserBase
     /// \reentrant       FALSE
     auto ReadJsonString() noexcept -> Result<CStringView>;
 
-    /// \brief           Unescapes a single character
+    /// \brief           Unescapes a single character of a two character escape sequence
     /// \param[in]       escaped
     ///                  The character to unescape.
     /// \return          The unescaped character.
     /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  If an unknown/unsupported escape sequence was encountered
+    ///                  If an unknown escape sequence was encountered
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     static auto UnescapeChar(char escaped) noexcept -> Result<char>;
+
+    /// \brief           Decodes an escape sequence and appends the decoded characters to a buffer
+    /// \details         A decoded code point is appended UTF-8 encoded.
+    /// \param[in]       escaped
+    ///                  The character following the backslash.
+    /// \param[in,out]   buffer
+    ///                  The buffer to append to.
+    /// \return          An empty Result, or an error.
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    ///                  If an unknown or malformed escape sequence was encountered
+    /// \context         ANY
+    /// \pre             The backslash has already been consumed.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto Unescape(char escaped, String& buffer) noexcept -> Result<void>;
+
+    /// \brief           Decodes a \\uXXXX escape sequence into a Unicode code point
+    /// \details         A high surrogate must be followed by a \\uXXXX escaped low surrogate, both are combined into
+    ///                  a single code point, cf. RFC 8259, section 7.
+    /// \return          The decoded code point, or an error.
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    ///                  If the escape sequence is malformed or encodes an unpaired surrogate
+    /// \context         ANY
+    /// \pre             The backslash and the 'u' have already been consumed.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto UnescapeCodePoint() noexcept -> Result<std::uint32_t>;
+
+    /// \brief           Reads the \\uXXXX escaped low surrogate that completes a surrogate pair
+    /// \return          The decoded low surrogate, or an error.
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    ///                  If no \\uXXXX escape follows, or if it does not encode a low surrogate
+    /// \context         ANY
+    /// \pre             A high surrogate has already been decoded.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto ReadLowSurrogate() noexcept -> Result<std::uint32_t>;
+
+    /// \brief           Reads the four hexadecimal digits of a \\uXXXX escape sequence
+    /// \return          The decoded UTF-16 code unit, or an error.
+    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    ///                  If the four characters are no hexadecimal digits
+    /// \context         ANY
+    /// \pre             The backslash and the 'u' have already been consumed.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto ReadCodeUnit() noexcept -> Result<std::uint32_t>;
 
     /// \brief           Parses the start of an Object
     /// \return          The Result of the implementer callback, or an error.
