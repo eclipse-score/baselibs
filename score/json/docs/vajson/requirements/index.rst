@@ -76,10 +76,10 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
-   :version: 1
+   :version: 2
    :satisfied_by: comp__baselibs_vajson[version==1]
 
-   VaJson shall encode and decode UTF-8 encoded strings.
+   VaJson shall encode and decode UTF-8 encoded strings, including the escape sequences defined by RFC 8259.
 
 Safety Impact
 =============
