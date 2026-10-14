@@ -32,27 +32,6 @@ string_flag(
     ],
 )
 
-string_flag(
-    name = "writer_library",
-    build_setting_default = "json_serialize",
-    values = [
-        "json_serialize",
-        "vajson",
-    ],
-)
-
-config_setting(
-    name = "writer_library_json_serialize",
-    flag_values = {":writer_library": "json_serialize"},
-    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
-)
-
-config_setting(
-    name = "writer_library_vajson",
-    flag_values = {":writer_library": "vajson"},
-    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
-)
-
 cc_library(
     name = "parser_interface",
     srcs = ["i_json_parser.cpp"],
@@ -75,6 +54,7 @@ cc_library(
     name = "writer_interface",
     srcs = ["i_json_writer.cpp"],
     hdrs = [
+        "formatting.h",
         "i_json_writer.h",
         "json_writer.h",
     ],
@@ -126,8 +106,7 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer",
-        "@score_baselibs//score/json/internal/writer:writer_backend",
+        "@score_baselibs//score/json/internal/writer:serializer",
     ],
 )
 
@@ -204,10 +183,7 @@ cc_test(
     ],
 )
 
-# This rule was moved from json/internal/writer/BUILD file due to incorrect functionality of coverage tool.
-# Was found a problem when unit_test_qnx didn't run tests from json_writer_test.cpp and json_serialize_test.cpp.
-# Solution was move json_writer_test.cpp file to the same directory with json_writer.cpp.
-# For json_serialize its BUILD file was modified according to other tests for json.
+# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
 cc_test(
     name = "json_writer_unit_test",
     srcs = [
@@ -217,10 +193,6 @@ cc_test(
         "test_warnings",
         "aborts_upon_exception",
     ],
-    local_defines = select({
-        ":writer_library_json_serialize": ["WRITER_JSON_SERIALIZE"],
-        ":writer_library_vajson": ["WRITER_VAJSON"],
-    }),
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__pkg__",

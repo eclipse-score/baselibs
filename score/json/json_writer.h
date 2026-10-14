@@ -15,9 +15,9 @@
 #define SCORE_LIB_JSON_JSON_WRITER_H
 
 #include "score/filesystem/filestream/file_factory.h"
+#include "score/json/formatting.h"
 #include "score/json/i_json_writer.h"
 
-#include <cstdint>
 #include <string_view>
 
 namespace score
@@ -29,15 +29,6 @@ enum class FileSyncMode
 {
     kSynced,
     kUnsynced,
-};
-
-/// @brief Layout of the serialized JSON representation.
-enum class Formatting : std::uint8_t
-{
-    /// @brief No insignificant whitespace is emitted.
-    kCompact,
-    /// @brief The output is indented and spread over multiple lines to be human readable.
-    kPrettyPrint,
 };
 
 class JsonWriter final : public IJsonWriter
@@ -66,9 +57,6 @@ class JsonWriter final : public IJsonWriter
      *  could still access the file through the shared group.
      *
      *  The `ownership` parameter is ignored when kUnsynced mode is used.
-     *
-     *  The `formatting` parameter only takes effect with the vaJSON writer backend.
-     *  The json_serialize backend always pretty-prints and ignores it.
      *
      *  @param file_sync_mode: Determines the synchronization mode (see above).
      *  @param ownership: When using kSynced mode, determines how to adjust the ownership
@@ -105,7 +93,6 @@ class JsonWriter final : public IJsonWriter
   private:
     FileSyncMode file_sync_mode_;
     const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership_;
-    /// @brief Layout of the output, if the selected writer backend supports it.
     const Formatting formatting_;
 };
 

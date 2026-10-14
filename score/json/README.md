@@ -17,13 +17,10 @@
   - [Constraints](#constraints)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
-  - [Selecting writer library](#selecting-writer-library)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
 
-This JSON library is designed as an abstraction layer which can switch to using
-other serializers under the hood. It uses vaJson from Vector for parsing,
-which is ASIL D certified. For serialization a custom implementation is used by default, with vaJson
-available as an alternative, [selectable via a feature flag](#selecting-writer-library).
+This JSON library is designed as an abstraction layer over the underlying JSON implementation. At the moment it
+uses vaJson from Vector for parsing, which is ASIL D certified. Serialization is built on the vaJson writer.
 
 This library requires to be ASIL B certified, so it can be used in other ASIL B
 certified components.
@@ -431,19 +428,6 @@ buffer used to initialize vaJson where safety requirements are assumed.
 initializing vaJson from a path to the file where safety requirements are assumed.
 
 This library does not provide a way for the user to to initialize vaJson from an input stream.
-
-## Selecting writer library
-
-The serialization backend is selected by the `writer_library` flag. It accepts
-`json_serialize` (the default, a custom implementation) and `vajson` (the vector json library).
-
-bazel test --config=spp_host_clang //score/json/... --//score/json:writer_library="vajson"
-
-Mind that the two backends differ in the representation they emit: `json_serialize` always pretty-prints with a four
-space indentation, whereas `vajson` honors the `Formatting` passed to `JsonWriter`. With `Formatting::kPrettyPrint`
-(the default) it also indents by four spaces, but writes empty arrays and objects as `[]` and `{}`. With
-`Formatting::kCompact` it emits compact JSON without any insignificant whitespace between tokens. Both produce valid,
-equivalent JSON, but consumers comparing serialized output byte-wise are affected by the choice.
 
 ## Deprecated `base_library` flag
 

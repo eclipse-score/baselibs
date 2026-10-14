@@ -14,7 +14,7 @@
 #include "score/json/json_writer.h"
 #include "score/json/i_json_writer.h"
 #include "score/json/internal/model/error.h"
-#include "score/json/internal/writer/writer_backend.h"
+#include "score/json/internal/writer/serializer.h"
 
 #include <ios>
 #include <string>
@@ -59,12 +59,6 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
                 return serializer_result;
             });
         });
-}
-
-template <typename T>
-score::Result<std::string> ToBufferInternal(const T& json_data, const score::json::Formatting formatting)
-{
-    return score::json::internal::writer::SerializeToBuffer(json_data, formatting);
 }
 
 }  // namespace
@@ -117,15 +111,15 @@ score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::Object& json_data)
 {
-    return ToBufferInternal(json_data, formatting_);
+    return score::json::internal::writer::SerializeToBuffer(json_data, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::List& json_data)
 {
-    return ToBufferInternal(json_data, formatting_);
+    return score::json::internal::writer::SerializeToBuffer(json_data, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::Any& json_data)
 {
-    return ToBufferInternal(json_data, formatting_);
+    return score::json::internal::writer::SerializeToBuffer(json_data, formatting_);
 }

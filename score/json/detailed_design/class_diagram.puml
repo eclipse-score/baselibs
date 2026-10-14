@@ -75,7 +75,8 @@ class score::json::JsonWriter {
 }
 
 score::json::JsonWriter --> score::json::Error : use
-score::json::JsonWriter --> score::json::JsonSerialize : use
+score::json::JsonWriter --> score::json::Formatting : use
+score::json::JsonWriter --> score::json::internal::writer::Serializer : use
 
 
 interface score::json::IJsonParser {
@@ -95,17 +96,28 @@ class score::json::JsonParser {
 score::json::JsonParser --> score::json::VajsonParser : use
 
 
-class score::json::JsonSerialize #LightSteelBlue {
-  +JsonSerialize(out_stream: std::ostream)
-  +<T: typename>operator<<(json_data: T): score::Result<void>
+enum score::json::Formatting {
+  kCompact
+  kPrettyPrint
 }
 
-score::json::JsonSerialize --> score::json::Any : use
-score::json::JsonSerialize --> score::json::Object : use
-score::json::JsonSerialize --> score::json::List : use
-score::json::JsonSerialize --> score::json::Null : use
-score::json::JsonSerialize --> score::json::Error : use
-score::json::JsonSerialize --> score::Result : use
+
+class score::json::internal::writer::Serializer <<free functions>> #LightSteelBlue {
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::Object, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::List, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::Any, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToBuffer(json_data: score::json::Object, formatting: score::json::Formatting): score::Result<std::string>
+  {static}+SerializeToBuffer(json_data: score::json::List, formatting: score::json::Formatting): score::Result<std::string>
+  {static}+SerializeToBuffer(json_data: score::json::Any, formatting: score::json::Formatting): score::Result<std::string>
+}
+
+score::json::internal::writer::Serializer --> score::json::Formatting : use
+score::json::internal::writer::Serializer --> score::json::Any : use
+score::json::internal::writer::Serializer --> score::json::Object : use
+score::json::internal::writer::Serializer --> score::json::List : use
+score::json::internal::writer::Serializer --> score::json::Null : use
+score::json::internal::writer::Serializer --> score::json::Error : use
+score::json::internal::writer::Serializer --> score::Result : use
 
 
 enum amsr::json::ParserState #LightSteelBlue
