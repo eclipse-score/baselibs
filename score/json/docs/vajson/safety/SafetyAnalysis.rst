@@ -187,8 +187,22 @@ Safety Analysis of vajson
         .. fm:: FM-VaJson-UnicodeStrings Unicode strings are misinterpreted.
             :details: Unicode code points, e.g. control characters, could be misinterpreted when parsed.
             :effect:  User receives incorrect data and, thus, safety requirements are violated.
-            :measure: VaJson passes strings to the user as-is by design, no transformation or interpretation takes place.
-                      Thus, no misinterpretation can happen and behaviour is not safety relevant.
+            :measure: VaJson decodes the two character escape sequences and the \uXXXX escape sequences into UTF-8,
+                      combining a UTF-16 surrogate pair into the single code point it denotes, and passes all other
+                      string content through unchanged.
+                      Escape sequences that are malformed or that contain an unpaired surrogate are rejected as
+                      invalid JSON, so they cannot reach the user misinterpreted.
+                      Correct behaviour is verified by the following test cases:
+                      - UT__Parser__String__Dynamic__TwoCharacterEscapes
+                      - UT__Parser__String__Dynamic__UnicodeEscape
+                      - UT__Parser__String__Dynamic__UnicodeEscapeInContext
+                      - UT__Parser__String__Dynamic__UnicodeEscapeInKey
+                      - UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape
+                      - UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape
+                      - UT__Parser__Invalid__Dynamic__LoneHighSurrogate
+                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate
+                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape
+                      - UT__Parser__Invalid__Dynamic__LoneLowSurrogate
 
         .. fm:: FM-VaJson-ByteOrderMark Byte order marks can appear inside strings.
             :details: VaJson cannot report the presence of a byte order mark inside of a string.
