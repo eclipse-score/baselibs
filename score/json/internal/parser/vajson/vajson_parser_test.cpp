@@ -14,7 +14,7 @@
 #include "gtest/gtest.h"
 
 #include "score/json/internal/parser/parsers_test_suite.h"
-#include "score/json/internal/parser/vajson/vajson_parser.h"
+#include "score/json/json_parser.h"
 
 namespace score
 {
@@ -23,7 +23,21 @@ namespace json
 namespace
 {
 
-TEST(VajsonParser, CanParseObjectHexadecimalNumber)
+/// @brief Gives the typed test suite a static entry point to JsonParser.
+struct JsonParserEntryPoint
+{
+    static auto FromFile(const std::string_view file_path) -> score::Result<Any>
+    {
+        return JsonParser{}.FromFile(file_path);
+    }
+
+    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>
+    {
+        return JsonParser{}.FromBuffer(buffer);
+    }
+};
+
+TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 {
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
@@ -60,7 +74,7 @@ TEST(VajsonParser, CanParseObjectHexadecimalNumber)
         )"};
 
     // Given a simple JSON buffer
-    auto root = VajsonParser::FromBuffer(buffer_json_hex);
+    auto root = JsonParser{}.FromBuffer(buffer_json_hex);
 
     // When reading a key of an object that is interpreted as floating point number
     auto value = GetValueOfObject<std::uint64_t>(root.value(), "hex");
@@ -69,7 +83,7 @@ TEST(VajsonParser, CanParseObjectHexadecimalNumber)
     EXPECT_EQ(value, 0xdd);
 }
 
-TEST(VajsonParser, CanParseTwoByteBuffer)
+TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
 {
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
@@ -78,7 +92,7 @@ TEST(VajsonParser, CanParseTwoByteBuffer)
     this->RecordProperty("DerivationTechnique", "boundary-value-analysis");
 
     // Given a valid JSON buffer of exactly 2 bytes (shorter than BOM)
-    auto root = VajsonParser::FromBuffer("{}");
+    auto root = JsonParser{}.FromBuffer("{}");
 
     // Then parsing succeeds and returns an empty object
     ASSERT_TRUE(root.has_value());
@@ -87,7 +101,7 @@ TEST(VajsonParser, CanParseTwoByteBuffer)
     EXPECT_TRUE(obj->get().empty());
 }
 
-TEST(VajsonParser, CanParseBufferWithUtf8Bom)
+TEST(JsonParserVajsonTest, CanParseBufferWithUtf8Bom)
 {
     this->RecordProperty("Verifies", "SCR-5310867");
     this->RecordProperty("ASIL", "B");
@@ -98,7 +112,7 @@ TEST(VajsonParser, CanParseBufferWithUtf8Bom)
 
     // Given a JSON buffer with a UTF-8 BOM prefix
     std::string bom_json{"\xEF\xBB\xBF{\"key\": 123}"};
-    auto root = VajsonParser::FromBuffer(bom_json);
+    auto root = JsonParser{}.FromBuffer(bom_json);
 
     // Then parsing succeeds and the value is correct
     ASSERT_TRUE(root.has_value());
@@ -106,7 +120,7 @@ TEST(VajsonParser, CanParseBufferWithUtf8Bom)
     EXPECT_EQ(value, 123U);
 }
 
-INSTANTIATE_TYPED_TEST_SUITE_P(Test, ParserTest, VajsonParser, /*unused*/);
+INSTANTIATE_TYPED_TEST_SUITE_P(Test, ParserTest, JsonParserEntryPoint, /*unused*/);
 
 }  // namespace
 }  // namespace json

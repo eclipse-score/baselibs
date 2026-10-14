@@ -11,27 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
-cc_library(
-    name = "vajson_parser",
-    srcs = ["vajson_parser.cpp"],
-    hdrs = ["vajson_parser.h"],
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
-        "//tools/coverage:__pkg__",
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        "@score_baselibs//score/json:parser_interface",
-        "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
-        "@score_baselibs//score/result",
-    ],
-)
 
 cc_test(
     name = "vajson_parser_test",
@@ -43,8 +24,8 @@ cc_test(
     ],
     deps = [
         "@googletest//:gtest_main",
+        "@score_baselibs//score/json",
         "@score_baselibs//score/json/internal/parser:parser_test_suite",
-        "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
     ],
 )
 
@@ -57,10 +38,10 @@ cc_test(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
-        ":vajson_parser",
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
         "@score_baselibs//score/json/internal/parser:number_parser_test_suite",
+        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )

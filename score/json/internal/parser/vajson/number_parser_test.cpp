@@ -14,7 +14,7 @@
 
 #include "score/json/internal/parser/number_parser_test_suite.h"
 #include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
-#include "score/json/internal/parser/vajson/vajson_parser.h"
+#include "score/json/json_parser.h"
 
 #include <limits>
 #include <optional>
@@ -25,6 +25,15 @@ namespace json
 {
 namespace
 {
+
+/// @brief Gives the typed test suite a static entry point to JsonParser.
+struct JsonParserEntryPoint
+{
+    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>
+    {
+        return JsonParser{}.FromBuffer(buffer);
+    }
+};
 
 // These tests are written in way that they can only be used with vajson parser.
 template <typename T>
@@ -245,7 +254,7 @@ TEST(Number, FloatingPointOverflowIsRejected)
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
 }
 
-INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, VajsonParser, /*unused*/);
+INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, JsonParserEntryPoint, /*unused*/);
 }  // namespace
 }  // namespace json
 }  // namespace score

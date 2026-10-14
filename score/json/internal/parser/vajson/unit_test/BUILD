@@ -24,7 +24,7 @@ cc_test(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
-        "//score/json/internal/parser/vajson:vajson_parser",
+        "//score/json/internal/parser/vajson/vajson_impl",
         "@googletest//:gtest_main",
     ],
 )

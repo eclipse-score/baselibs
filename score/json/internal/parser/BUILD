@@ -14,12 +14,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-alias(
-    name = "parser",
-    actual = "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
-    visibility = ["@score_baselibs//score/json:__pkg__"],
-)
-
 cc_library(
     name = "parser_test_suite",
     testonly = True,
