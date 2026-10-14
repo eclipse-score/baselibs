@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/json/internal/writer/vajson/vajson_serialize.h"
+#include "score/json/internal/writer/serializer.h"
 
 #include <gtest/gtest.h>
 
@@ -25,7 +25,11 @@ namespace score::json
 {
 namespace
 {
-TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
+
+using internal::writer::SerializeToBuffer;
+using internal::writer::SerializeToStream;
+
+TEST(SerializerTest, SerializesNestedAnyToCompactJson)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -44,13 +48,13 @@ TEST(VajsonSerializeTest, SerializesNestedAnyToCompactJson)
     root["boolean"] = Any{true};
     root["list"] = Any{std::move(list)};
     root["string"] = Any{std::string{"line1\n\"quoted\"\\line2"}};
-    const auto result = VajsonToBuffer(Any{std::move(root)}, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(Any{std::move(root)}, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result,
               std::string{
                   "{\"boolean\":true,\"list\":[null,{\"number\":7}],\"string\":\"line1\\n\\\"quoted\\\"\\\\line2\"}"});
 }
-TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
+TEST(SerializerTest, SerializesObjectKeysUsingStringComparisonAdaptor)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -63,12 +67,12 @@ TEST(VajsonSerializeTest, SerializesObjectKeysUsingStringComparisonAdaptor)
     Object object{};
     object[std::string_view{"alpha"}] = Any{std::string{"a"}};
     object["beta"] = Any{std::uint32_t{2U}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"alpha\":\"a\",\"beta\":2}"});
 }
 // RFC 8259, section 7 does not allow characters in the range U+0000 to U+001F to appear unescaped in a string.
-TEST(VajsonSerializeTest, EscapesControlCharactersWithoutShortEscapeSequence)
+TEST(SerializerTest, EscapesControlCharactersWithoutShortEscapeSequence)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -79,11 +83,11 @@ TEST(VajsonSerializeTest, EscapesControlCharactersWithoutShortEscapeSequence)
 
     Object object{};
     object["value"] = Any{std::string{"\x01\x0b\x1f"}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\\u0001\\u000b\\u001f\"}"});
 }
-TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
+TEST(SerializerTest, EscapesNullCharacterInsideString)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -93,11 +97,11 @@ TEST(VajsonSerializeTest, EscapesNullCharacterInsideString)
 
     Object object{};
     object["value"] = Any{std::string{std::string_view{"a\0b", 3U}}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"a\\u0000b\"}"});
 }
-TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
+TEST(SerializerTest, EscapesControlCharactersInObjectKeys)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -109,11 +113,11 @@ TEST(VajsonSerializeTest, EscapesControlCharactersInObjectKeys)
     object[std::string{
         "a\x1e"
         "b"}] = Any{std::string{"v"}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"a\\u001eb\":\"v\"}"});
 }
-TEST(VajsonSerializeTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
+TEST(SerializerTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -125,11 +129,11 @@ TEST(VajsonSerializeTest, PrefersShortEscapeSequencesOverUnicodeEscapes)
 
     Object object{};
     object["value"] = Any{std::string{"\b\f\n\r\t"}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\\b\\f\\n\\r\\t\"}"});
 }
-TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
+TEST(SerializerTest, EscapesEveryControlCharacterAndNothingElse)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -146,7 +150,7 @@ TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
     }
     Object object{};
     object["value"] = Any{value};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
 
     // No unescaped control character may survive in the output.
@@ -159,7 +163,7 @@ TEST(VajsonSerializeTest, EscapesEveryControlCharacterAndNothingElse)
     EXPECT_NE(result->find("!\\\"#$%&'()*+,-./0123456789:;<=>?"), std::string::npos);
     EXPECT_NE(result->find("[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\x7f"), std::string::npos);
 }
-TEST(VajsonSerializeTest, PassesMultiByteUtf8CharactersThrough)
+TEST(SerializerTest, PassesMultiByteUtf8CharactersThrough)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -169,11 +173,11 @@ TEST(VajsonSerializeTest, PassesMultiByteUtf8CharactersThrough)
 
     Object object{};
     object["value"] = Any{std::string{"\u00e4\u20ac"}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"value\":\"\u00e4\u20ac\"}"});
 }
-TEST(VajsonSerializeTest, SerializesFiniteDouble)
+TEST(SerializerTest, SerializesFiniteDouble)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -183,11 +187,11 @@ TEST(VajsonSerializeTest, SerializesFiniteDouble)
 
     Object object{};
     object["number"] = Any{double{1.5}};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"{\"number\":1.5}"});
 }
-TEST(VajsonSerializeTest, PreservesDoublePrecision)
+TEST(SerializerTest, PreservesDoublePrecision)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -200,11 +204,11 @@ TEST(VajsonSerializeTest, PreservesDoublePrecision)
     Object object{};
     object["third"] = Any{1.0 / 3.0};
     object["pi"] = Any{3.14159265358979311599796346854};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({"pi":3.141592653589793,"third":0.3333333333333333})"});
 }
-TEST(VajsonSerializeTest, SerializesNumbersInTheirStoredArithmeticType)
+TEST(SerializerTest, SerializesNumbersInTheirStoredArithmeticType)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -219,14 +223,14 @@ TEST(VajsonSerializeTest, SerializesNumbersInTheirStoredArithmeticType)
     object["i64"] = Any{std::numeric_limits<std::int64_t>::min()};
     object["f"] = Any{0.1F};
     object["d"] = Any{0.1};
-    const auto result = VajsonToBuffer(object, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(object, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result,
               std::string{R"({"d":0.1,"f":0.1,"i64":-9223372036854775808,"i8":-128,"u64":18446744073709551615,)"
                           R"("u8":255})"});
 }
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
-TEST(VajsonSerializeTest, RejectsInfiniteDouble)
+TEST(SerializerTest, RejectsInfiniteDouble)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -238,9 +242,9 @@ TEST(VajsonSerializeTest, RejectsInfiniteDouble)
 
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::infinity()};
-    EXPECT_FALSE(VajsonToBuffer(object).has_value());
+    EXPECT_FALSE(SerializeToBuffer(object, Formatting::kPrettyPrint).has_value());
 }
-TEST(VajsonSerializeTest, RejectsNegativeInfiniteFloat)
+TEST(SerializerTest, RejectsNegativeInfiniteFloat)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -252,9 +256,9 @@ TEST(VajsonSerializeTest, RejectsNegativeInfiniteFloat)
 
     Object object{};
     object["number"] = Any{-std::numeric_limits<float>::infinity()};
-    EXPECT_FALSE(VajsonToBuffer(object).has_value());
+    EXPECT_FALSE(SerializeToBuffer(object, Formatting::kPrettyPrint).has_value());
 }
-TEST(VajsonSerializeTest, RejectsNotANumber)
+TEST(SerializerTest, RejectsNotANumber)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -265,9 +269,9 @@ TEST(VajsonSerializeTest, RejectsNotANumber)
 
     List list{};
     list.emplace_back(Any{std::numeric_limits<double>::quiet_NaN()});
-    EXPECT_FALSE(VajsonToBuffer(list).has_value());
+    EXPECT_FALSE(SerializeToBuffer(list, Formatting::kPrettyPrint).has_value());
 }
-TEST(VajsonSerializeTest, RejectsNotANumberOnStream)
+TEST(SerializerTest, RejectsNotANumberOnStream)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -280,13 +284,12 @@ TEST(VajsonSerializeTest, RejectsNotANumberOnStream)
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::quiet_NaN()};
     std::ostringstream out_stream{};
-    VajsonSerialize serializer{out_stream};
-    const auto result = serializer << object;
+    const auto result = SerializeToStream(out_stream, object, Formatting::kPrettyPrint);
     EXPECT_FALSE(result.has_value());
     // The non-representable number itself must not have been written.
     EXPECT_EQ(out_stream.str().find("nan"), std::string::npos);
 }
-TEST(VajsonSerializeTest, SerializesBothBooleanValues)
+TEST(SerializerTest, SerializesBothBooleanValues)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -297,11 +300,11 @@ TEST(VajsonSerializeTest, SerializesBothBooleanValues)
     List list{};
     list.emplace_back(Any{true});
     list.emplace_back(Any{false});
-    const auto result = VajsonToBuffer(list, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(list, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"[true,false]"});
 }
-TEST(VajsonSerializeTest, SerializesTopLevelList)
+TEST(SerializerTest, SerializesTopLevelList)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -312,11 +315,11 @@ TEST(VajsonSerializeTest, SerializesTopLevelList)
     List list{};
     list.emplace_back(Any{std::uint8_t{5U}});
     list.emplace_back(Any{std::string{"value"}});
-    const auto result = VajsonToBuffer(list, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(list, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"[5,\"value\"]"});
 }
-TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
+TEST(SerializerTest, PrettyPrintsNestedAny)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",
@@ -335,7 +338,7 @@ TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
     Object root{};
     root["list"] = Any{std::move(list)};
     root["string"] = Any{std::string{"text"}};
-    const auto result = VajsonToBuffer(Any{std::move(root)}, vajson::VajsonFormatting::kPrettyPrint);
+    const auto result = SerializeToBuffer(Any{std::move(root)}, Formatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({
     "list": [
@@ -350,7 +353,7 @@ TEST(VajsonSerializeTest, PrettyPrintsNestedAny)
     "string": "text"
 })"});
 }
-TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
+TEST(SerializerTest, PrettyPrintsEmptyContainersOnOneLine)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -366,7 +369,7 @@ TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
     root["empty_list"] = Any{List{}};
     root["empty_object"] = Any{Object{}};
     root["list"] = Any{std::move(list)};
-    const auto result = VajsonToBuffer(root, vajson::VajsonFormatting::kPrettyPrint);
+    const auto result = SerializeToBuffer(root, Formatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({
     "empty_list": [],
@@ -376,10 +379,10 @@ TEST(VajsonSerializeTest, PrettyPrintsEmptyContainersOnOneLine)
         []
     ]
 })"});
-    EXPECT_EQ(VajsonToBuffer(Object{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"{}"});
-    EXPECT_EQ(VajsonToBuffer(List{}, vajson::VajsonFormatting::kPrettyPrint).value(), std::string{"[]"});
+    EXPECT_EQ(SerializeToBuffer(Object{}, Formatting::kPrettyPrint).value(), std::string{"{}"});
+    EXPECT_EQ(SerializeToBuffer(List{}, Formatting::kPrettyPrint).value(), std::string{"[]"});
 }
-TEST(VajsonSerializeTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
+TEST(SerializerTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -387,11 +390,11 @@ TEST(VajsonSerializeTest, PrettyPrintsTopLevelScalarWithoutWhitespace)
     RecordProperty("TestType", "requirements-based");  // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");
 
-    const auto result = VajsonToBuffer(Any{std::string{"value"}}, vajson::VajsonFormatting::kPrettyPrint);
+    const auto result = SerializeToBuffer(Any{std::string{"value"}}, Formatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{"\"value\""});
 }
-TEST(VajsonSerializeTest, PrettyPrintsToStream)
+TEST(SerializerTest, PrettyPrintsToStream)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -403,40 +406,11 @@ TEST(VajsonSerializeTest, PrettyPrintsToStream)
     list.emplace_back(Any{std::uint8_t{5U}});
     list.emplace_back(Any{std::string{"value"}});
     std::ostringstream out_stream{};
-    VajsonSerialize serializer{out_stream, vajson::VajsonFormatting::kPrettyPrint};
-    const auto result = serializer << list;
+    const auto result = SerializeToStream(out_stream, list, Formatting::kPrettyPrint);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(out_stream.str(), std::string{"[\n    5,\n    \"value\"\n]"});
 }
-TEST(VajsonSerializeTest, PrettyPrintsWhenFormattingIsOmitted)
-{
-    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
-    RecordProperty("Description",
-                   "Check that omitting the formatting argument pretty-prints, for every VajsonToBuffer overload and "
-                   "for the stream serializer.");
-    RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "design-analysis");
-
-    Object object{};
-    object["number"] = Any{std::int32_t{7}};
-    const std::string expected_object{"{\n    \"number\": 7\n}"};
-    EXPECT_EQ(VajsonToBuffer(object).value(), expected_object);
-
-    Object object_in_any{};
-    object_in_any["number"] = Any{std::int32_t{7}};
-    EXPECT_EQ(VajsonToBuffer(Any{std::move(object_in_any)}).value(), expected_object);
-
-    List list{};
-    list.emplace_back(Any{std::move(object)});
-    const std::string expected_list{"[\n    {\n        \"number\": 7\n    }\n]"};
-    EXPECT_EQ(VajsonToBuffer(list).value(), expected_list);
-
-    std::ostringstream out_stream{};
-    VajsonSerialize serializer{out_stream};
-    ASSERT_TRUE((serializer << list).has_value());
-    EXPECT_EQ(out_stream.str(), expected_list);
-}
-TEST(VajsonSerializeTest, SerializesEmptyContainersCompactly)
+TEST(SerializerTest, SerializesEmptyContainersCompactly)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -448,7 +422,7 @@ TEST(VajsonSerializeTest, SerializesEmptyContainersCompactly)
     Object root{};
     root["empty_list"] = Any{List{}};
     root["empty_object"] = Any{Object{}};
-    const auto result = VajsonToBuffer(root, vajson::VajsonFormatting::kCompact);
+    const auto result = SerializeToBuffer(root, Formatting::kCompact);
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({"empty_list":[],"empty_object":{}})"});
 }
