@@ -3616,6 +3616,42 @@
               "result_text": ""
             },
             {
+              "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 85,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 251,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 261,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 271,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
               "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
               "line": 134,
@@ -3636,7 +3672,7 @@
             {
               "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
               "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-              "line": 169,
+              "line": 180,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -3645,7 +3681,7 @@
             {
               "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
               "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-              "line": 197,
+              "line": 213,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",

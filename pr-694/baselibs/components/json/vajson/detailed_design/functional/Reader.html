@@ -543,7 +543,8 @@ The JSON data must be provided to the parser as
 <h2>Encoding<a class="headerlink" href="#encoding" title="Link to this heading">#</a></h2>
 <p>JSON syntax is ASCII-based, but JSON strings can contain UTF-8 encoded characters. The
 score::json::vajson::internal::StructureParser decodes JSON string escapes, including the two-character escapes and
-<code class="docutils literal notranslate"><span class="pre">\uXXXX</span></code> escapes for code points below U+0080, before reporting strings and keys to the event handler. UTF-8 bytes
+the <code class="docutils literal notranslate"><span class="pre">\uXXXX</span></code> escapes, before reporting strings and keys to the event handler. An escaped code point is reported
+UTF-8 encoded, and a UTF-16 surrogate pair is combined into the single code point it denotes. UTF-8 bytes
 present directly in the input are passed through without transcoding, so the user must provide input in the expected
 encoding and handle any application-specific encoding needs.</p>
 <p>The method <code class="docutils literal notranslate"><span class="pre">score::json::vajson::JsonData::GetEncoding()</span></code> returns the detected encoding if the input stream contains a byte
