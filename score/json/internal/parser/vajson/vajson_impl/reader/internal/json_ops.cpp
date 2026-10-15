@@ -304,13 +304,13 @@ auto JsonOps::ReadExactly(const std::uint64_t num_to_read,
                      static_cast<void>(buffer.append(view));
                  }
              }).and_then([&num_to_read](const std::uint64_t& read) noexcept {
-            score::Result<void> result{
+            score::Result<void> read_result{
                 MakeErrorResult<void>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
             if (num_to_read == read)
             {
-                result.emplace();
+                read_result.emplace();
             }
-            return result;
+            return read_result;
         }));
 
     if (result && (!callback_executed))

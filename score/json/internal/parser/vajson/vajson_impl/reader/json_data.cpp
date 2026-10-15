@@ -193,7 +193,7 @@ auto JsonData::Restore() noexcept -> Result<void>
         else
         {
             // Seek to position
-            this->stream_.get().seekg(static_cast<std::streampos>(pos), std::ios::beg);
+            this->stream_.get().seekg(static_cast<std::streamoff>(pos), std::ios::beg);
 
             if (this->stream_.get().fail())
             {
