@@ -3602,6 +3602,85 @@
         }
       },
       {
+        "need": "comp_req__vajson__unicode",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonTest__ReadsUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 69,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
+              "line": 134,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscape",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
+              "line": 149,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
+              "line": 169,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
+              "line": 197,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__validation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 231,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 241,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__string_manipulation__cmp_adaptor",
         "links": {
           "CodeLinks": [],

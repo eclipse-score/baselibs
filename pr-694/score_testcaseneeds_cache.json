@@ -282754,7 +282754,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__unicode",
     "FullyVerifies": null
   },
   {
@@ -285478,59 +285478,31 @@
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "231",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__validation",
     "FullyVerifies": null
   },
   {
     "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
-    "line": "236",
+    "line": "241",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__validation",
     "FullyVerifies": null
   },
   {
     "name": "UT__Parser__Invalid__Dynamic__NonAsciiUnicodeEscape",
-    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
-    "line": "242",
-    "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
-    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
-    "line": "247",
-    "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "252",
     "result": "passed",
@@ -285544,7 +285516,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
+    "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "257",
     "result": "passed",
@@ -285558,7 +285530,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "262",
     "result": "passed",
@@ -285572,7 +285544,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "267",
     "result": "passed",
@@ -285586,7 +285558,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "272",
     "result": "passed",
@@ -285600,7 +285572,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "277",
     "result": "passed",
@@ -285614,7 +285586,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "282",
     "result": "passed",
@@ -285628,7 +285600,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "287",
     "result": "passed",
@@ -285642,7 +285614,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "292",
     "result": "passed",
@@ -285656,7 +285628,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
+    "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "297",
     "result": "passed",
@@ -285670,7 +285642,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
+    "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "302",
     "result": "passed",
@@ -285684,7 +285656,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
+    "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "307",
     "result": "passed",
@@ -285698,7 +285670,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
+    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "312",
     "result": "passed",
@@ -285712,7 +285684,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "317",
     "result": "passed",
@@ -285726,7 +285698,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "322",
     "result": "passed",
@@ -285740,7 +285712,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "327",
     "result": "passed",
@@ -285754,7 +285726,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
+    "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "332",
     "result": "passed",
@@ -285768,7 +285740,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
+    "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "337",
     "result": "passed",
@@ -285782,7 +285754,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "342",
     "result": "passed",
@@ -285796,7 +285768,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__Naked",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "347",
     "result": "passed",
@@ -285810,7 +285782,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "352",
     "result": "passed",
@@ -285824,7 +285796,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingColon",
+    "name": "UT__Parser__Invalid__Dynamic__Naked",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "357",
     "result": "passed",
@@ -285838,7 +285810,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "362",
     "result": "passed",
@@ -285852,7 +285824,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
+    "name": "UT__Parser__Invalid__Dynamic__MissingColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "367",
     "result": "passed",
@@ -285866,7 +285838,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
+    "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "372",
     "result": "passed",
@@ -285880,7 +285852,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BadValue",
+    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "377",
     "result": "passed",
@@ -285894,7 +285866,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
+    "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "382",
     "result": "passed",
@@ -285908,7 +285880,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
+    "name": "UT__Parser__Invalid__Dynamic__BadValue",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "387",
     "result": "passed",
@@ -285922,7 +285894,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
+    "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "392",
     "result": "passed",
@@ -285936,7 +285908,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
+    "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "397",
     "result": "passed",
@@ -285950,7 +285922,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
+    "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "402",
     "result": "passed",
@@ -285964,7 +285936,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
+    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "407",
     "result": "passed",
@@ -285978,9 +285950,37 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
+    "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "412",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
+    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+    "line": "417",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
+    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -286428,7 +286428,7 @@
   {
     "name": "UT__Parser__String__Dynamic__StringArray",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-    "line": "93",
+    "line": "106",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -286442,7 +286442,7 @@
   {
     "name": "UT__Parser__String__Dynamic__ParseUnescapedString__Error",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-    "line": "106",
+    "line": "119",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -286456,43 +286456,57 @@
   {
     "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-    "line": "122",
+    "line": "134",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__unicode",
     "FullyVerifies": null
   },
   {
     "name": "UT__Parser__String__Dynamic__UnicodeEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-    "line": "132",
+    "line": "149",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__unicode",
     "FullyVerifies": null
   },
   {
     "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
-    "line": "144",
+    "line": "169",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__unicode",
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
+    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_string.cpp",
+    "line": "197",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__vajson__unicode",
     "FullyVerifies": null
   },
   {
