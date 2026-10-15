@@ -64,6 +64,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          allow-unsafe-pr-checkout: true
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
