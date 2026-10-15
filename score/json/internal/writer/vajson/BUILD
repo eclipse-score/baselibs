@@ -40,7 +40,7 @@ cc_library(
     visibility = [
         # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
         "//tools/coverage:__pkg__",
-        "@score_baselibs//score/json/internal/writer:__pkg__",
+        "@score_baselibs//score/json:__pkg__",
     ],
     deps = [
         ":vajson_serialize",

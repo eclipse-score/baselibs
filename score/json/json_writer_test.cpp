@@ -36,7 +36,6 @@ using ::testing::ByMove;
 using ::testing::Return;
 using ::testing::StrEq;
 
-// Which backend is linked is chosen by the //score/json:writer_library flag and communicated here via local_defines.
 constexpr auto kKeySeparator = "\": ";
 
 class TestJsonList : public json::List
@@ -108,15 +107,10 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     using SampleJson = typename T::SampleJson;
     static constexpr Formatting kFormatting{T::kFormatting};
 
-    /// @brief Returns the representation the linked backend emits for SampleJson written with kFormatting.
+    /// @brief Returns the representation emitted for SampleJson written with kFormatting.
     static std::string_view Expected() noexcept
     {
-#if defined(WRITER_VAJSON)
         return (kFormatting == Formatting::kCompact) ? SampleJson::kExpectedCompact : SampleJson::kExpectedPrettyPrint;
-#else
-        // json_serialize ignores the formatting and always pretty-prints.
-        return SampleJson::kExpectedPrettyPrint;
-#endif
     }
 
     score::filesystem::SimpleStringStreamCollection stream{};
@@ -258,7 +252,6 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
 }
 
-// Holds for either backend: json_serialize always pretty-prints, vajson defaults to it.
 TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
