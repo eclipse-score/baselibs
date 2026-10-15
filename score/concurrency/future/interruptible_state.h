@@ -27,6 +27,8 @@
 #include <atomic>
 #include <memory>
 #include <mutex>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace score
@@ -69,10 +71,17 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         return std::make_shared<InterruptibleState>();
     }
 
-    template <
-        typename V = Value,
-        std::enable_if_t<std::is_move_constructible<V>::value && !std::is_lvalue_reference<V>::value, bool> = true>
-    bool SetValue(Value&& value)
+    /// @brief Sets the held value by constructing it in place from @p args.
+    ///
+    /// The arguments are forwarded into score::Result's in-place constructor instead of being turned into a Value at
+    /// the call site. A Value that can be neither copied nor moved can therefore be set, its converting constructor may
+    /// be explicit, a constructor taking several arguments or none is reachable, and no intermediate Value is moved in.
+    /// The value category of each argument is preserved, so an lvalue is copied from and an rvalue is moved from.
+    ///
+    /// @param args The arguments of a constructor of Value. An existing Value is one such argument.
+    /// @return true if this call set the value, false if a value or an error had already been set.
+    template <typename... Args, std::enable_if_t<std::is_constructible<Value, Args...>::value, bool> = true>
+    bool SetValue(Args&&... args)
     {
         if ((this->TestAndMarkValueAsSet()) == true)
         {
@@ -84,30 +93,7 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         // destructor; destroy explicitly so a non-trivially destructible score::Result releases what it holds.
         std::destroy_at(&value_);
         // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        static_cast<void>(::new (&value_) score::Result<Value>{std::move(value)});
-
-        MakeReady();
-        TriggerContinuations();
-        return true;
-    }
-
-    template <typename V = Value, std::enable_if_t<std::is_copy_constructible<V>::value, bool> = true>
-    // && !std::is_lvalue_reference<V> in move overload prevents call ambiguitiy if
-    // Value is both copy and move constructible
-    // coverity[autosar_cpp14_a13_3_1_violation]
-    bool SetValue(const Value& value)
-    {
-        if ((this->TestAndMarkValueAsSet()) == true)
-        {
-            return false;
-        }
-
-        // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
-        // Placement-new ends the old object's lifetime by reusing its storage, but never runs its
-        // destructor; destroy explicitly so a non-trivially destructible score::Result releases what it holds.
-        std::destroy_at(&value_);
-        // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        static_cast<void>(::new (&value_) score::Result<Value>{value});
+        static_cast<void>(::new (&value_) score::Result<Value>{std::in_place, std::forward<Args>(args)...});
 
         MakeReady();
         TriggerContinuations();
