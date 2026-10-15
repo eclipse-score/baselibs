@@ -282754,7 +282754,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__vajson__unicode",
+    "PartiallyVerifies": "comp_req__json__deserialization",
     "FullyVerifies": null
   },
   {
@@ -282768,7 +282768,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__vajson__unicode",
+    "PartiallyVerifies": "comp_req__json__deserialization",
     "FullyVerifies": null
   },
   {
@@ -284762,7 +284762,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__CountElements",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "965",
+    "line": "966",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284776,7 +284776,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__CountArrayElements",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "982",
+    "line": "983",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284790,7 +284790,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__DetectEmptyDocument",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "999",
+    "line": "1000",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284804,7 +284804,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__NumbersCanBeParsedIntoUserdefinedFormats",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1057",
+    "line": "1058",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284818,7 +284818,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__ParseDecimalIntegers",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1109",
+    "line": "1110",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284832,7 +284832,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__ParseHexadecimalIntegers",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1154",
+    "line": "1155",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284846,7 +284846,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__ParseFloats",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1179",
+    "line": "1180",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -284860,7 +284860,7 @@
   {
     "name": "CT__VaJson__V2__Parsers__VirtualParserGetCurrentKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1242",
+    "line": "1243",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -285498,7 +285498,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__vajson__validation",
+    "PartiallyVerifies": "comp_req__vajson__unicode, comp_req__vajson__validation",
     "FullyVerifies": null
   },
   {
@@ -285512,7 +285512,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__vajson__validation",
+    "PartiallyVerifies": "comp_req__vajson__unicode, comp_req__vajson__validation",
     "FullyVerifies": null
   },
   {
@@ -285544,7 +285544,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+    "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "271",
     "result": "passed",
@@ -285558,35 +285558,21 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
+    "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "281",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__vajson__unicode",
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
-    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
-    "line": "286",
-    "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
+    "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "291",
     "result": "passed",
@@ -285600,7 +285586,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "296",
     "result": "passed",
@@ -285614,7 +285600,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "301",
     "result": "passed",
@@ -285628,7 +285614,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
+    "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "306",
     "result": "passed",
@@ -285642,7 +285628,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "311",
     "result": "passed",
@@ -285656,7 +285642,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "316",
     "result": "passed",
@@ -285670,7 +285656,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "321",
     "result": "passed",
@@ -285684,7 +285670,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
+    "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "326",
     "result": "passed",
@@ -285698,7 +285684,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
+    "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "331",
     "result": "passed",
@@ -285712,7 +285698,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
+    "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "336",
     "result": "passed",
@@ -285726,7 +285712,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
+    "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "341",
     "result": "passed",
@@ -285740,7 +285726,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
+    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "346",
     "result": "passed",
@@ -285754,7 +285740,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "351",
     "result": "passed",
@@ -285768,7 +285754,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "356",
     "result": "passed",
@@ -285782,7 +285768,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
+    "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "361",
     "result": "passed",
@@ -285796,7 +285782,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
+    "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "366",
     "result": "passed",
@@ -285810,7 +285796,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
+    "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "371",
     "result": "passed",
@@ -285824,7 +285810,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "376",
     "result": "passed",
@@ -285838,7 +285824,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__Naked",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "381",
     "result": "passed",
@@ -285852,7 +285838,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "386",
     "result": "passed",
@@ -285866,7 +285852,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__MissingColon",
+    "name": "UT__Parser__Invalid__Dynamic__Naked",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "391",
     "result": "passed",
@@ -285880,7 +285866,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
+    "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "396",
     "result": "passed",
@@ -285894,7 +285880,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
+    "name": "UT__Parser__Invalid__Dynamic__MissingColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "401",
     "result": "passed",
@@ -285908,7 +285894,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
+    "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "406",
     "result": "passed",
@@ -285922,7 +285908,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BadValue",
+    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "411",
     "result": "passed",
@@ -285936,7 +285922,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
+    "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "416",
     "result": "passed",
@@ -285950,7 +285936,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
+    "name": "UT__Parser__Invalid__Dynamic__BadValue",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "421",
     "result": "passed",
@@ -285964,7 +285950,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
+    "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "426",
     "result": "passed",
@@ -285978,7 +285964,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
+    "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "431",
     "result": "passed",
@@ -285992,7 +285978,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
+    "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "436",
     "result": "passed",
@@ -286006,7 +285992,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
+    "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "441",
     "result": "passed",
@@ -286020,9 +286006,37 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
+    "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
     "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
     "line": "446",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
+    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+    "line": "451",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
+    "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+    "line": "456",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287422,7 +287436,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kEmptyDocument",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287436,7 +287450,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType1",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287450,7 +287464,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType2",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287464,7 +287478,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType3",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287478,7 +287492,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType4",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287492,7 +287506,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType5",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287506,7 +287520,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType6",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287520,7 +287534,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType7",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287534,7 +287548,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType8",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287548,7 +287562,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType9",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287562,7 +287576,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType10",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287576,7 +287590,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType11",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287590,7 +287604,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType12",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287604,7 +287618,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType13",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287618,7 +287632,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownType14",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287632,7 +287646,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kKeyWithoutValue",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287646,7 +287660,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kValueWithoutKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287660,7 +287674,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kEofAfterKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287674,7 +287688,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnexpectedObjectClose1",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287688,7 +287702,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnexpectedObjectClose2",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287702,7 +287716,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnexpectedArrayOpen",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287716,7 +287730,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnexpectedArrayClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287730,7 +287744,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingString1",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287744,7 +287758,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingString2",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287758,7 +287772,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingNumber1",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287772,7 +287786,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingNumber2",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287786,7 +287800,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingNumber3",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287800,7 +287814,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonterminatingNumber4",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287814,7 +287828,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonTerminatingObject",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287828,7 +287842,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonTerminatingArray",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287842,7 +287856,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kTopLevelKeys",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287856,7 +287870,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMultipleTopLevelElements",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287870,7 +287884,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMultipleTopLevelObjects",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287884,7 +287898,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMultipleValues",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287898,7 +287912,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kTruncatedUnicodeEscape",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287912,7 +287926,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNonHexadecimalUnicodeEscape",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287926,7 +287940,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kLoneHighSurrogate",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287940,7 +287954,21 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kHighSurrogateFollowedByNonSurrogate",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kHighSurrogateFollowedByOtherEscape",
+    "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287954,7 +287982,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kLoneLowSurrogate",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287968,7 +287996,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnknownEscape",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287982,7 +288010,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNoData",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -287996,7 +288024,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kOnlyWhiteSpace",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288010,7 +288038,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kOnlyArrayClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288024,7 +288052,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kOnlyObjectClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288038,7 +288066,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kObjectOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288052,7 +288080,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kArrayOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288066,7 +288094,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kStringInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288080,7 +288108,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kValueInsteadOfKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288094,7 +288122,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNumberAndString",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288108,7 +288136,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMissingCommaInObject",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288122,7 +288150,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMissingCommaInArray",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288136,7 +288164,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kUnquotedKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288150,7 +288178,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kCommaAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288164,7 +288192,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kExtraArrayAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288178,7 +288206,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kExtraValueAfterClose",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288192,7 +288220,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kIllegalExpression",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288206,7 +288234,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kIllegalInvocation",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288220,7 +288248,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kIllegalEscape",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288234,7 +288262,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kNaked",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288248,7 +288276,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kIllegalEscapeNumber",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288262,7 +288290,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kMissingColon",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288276,7 +288304,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kDoubleColon",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288290,7 +288318,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kCommaInsteadOfColon",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288304,7 +288332,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kColonInsteadOfComma",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288318,7 +288346,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kBadValue",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288332,7 +288360,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kSingleQuote",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288346,7 +288374,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kBackslashinString",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288360,7 +288388,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kBackslashLineBreak",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288374,7 +288402,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kCommaInsteadOfClosing",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288388,7 +288416,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kArrayWithoutComma",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288402,7 +288430,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kTrailingValue",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288416,7 +288444,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kTrailingKey",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288430,7 +288458,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kOctalNumber1",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288444,7 +288472,7 @@
   {
     "name": "InvalidJson/CT__VaJson__V2__Parsers__InvalidJson__DetectInvalidJson/kOctalNumber2",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1028",
+    "line": "1029",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288458,7 +288486,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/BoolParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288472,7 +288500,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/KeyParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288486,7 +288514,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/NumberParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288500,7 +288528,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/StringParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288514,7 +288542,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/SingleArrayParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288528,7 +288556,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/SingleArrayParserFailsOnNesting",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288542,7 +288570,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/SingleArrayParserFailsOnComma",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288556,7 +288584,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/SingleObjectParserFails",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288570,7 +288598,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/NestedObjectParserEnter",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288584,7 +288612,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/NestedObjectParserLeave",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288598,7 +288626,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/CommaOnly",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288612,7 +288640,7 @@
   {
     "name": "InvalidTypes/CT__VaJson__V2__Parsers__Parametrized__InvalidTypes__ParserFails/MultipleTopLevelElements",
     "file": "score/json/internal/parser/vajson/unit_test/ct_vajson_v2_parsers.cpp",
-    "line": "1222",
+    "line": "1223",
     "result": "passed",
     "repo_name": null,
     "hash": null,

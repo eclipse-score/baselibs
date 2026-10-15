@@ -3602,7 +3602,7 @@
         }
       },
       {
-        "need": "comp_req__vajson__unicode",
+        "need": "comp_req__json__deserialization",
         "links": {
           "CodeLinks": [],
           "TestLinks": [
@@ -3610,7 +3610,7 @@
               "name": "JsonTest__ReadsUnicodeEscapeSequences",
               "file": "score/json/json_test.cpp",
               "line": 69,
-              "need": "comp_req__vajson__unicode",
+              "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -3619,6 +3619,32 @@
               "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
               "file": "score/json/json_test.cpp",
               "line": 85,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__unicode",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 231,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 241,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -3643,9 +3669,18 @@
               "result_text": ""
             },
             {
-              "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
               "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
               "line": 271,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+              "file": "score/json/internal/parser/vajson/unit_test/parser/ut_invalid.cpp",
+              "line": 281,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
