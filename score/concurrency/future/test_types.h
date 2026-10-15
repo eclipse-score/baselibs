@@ -176,6 +176,49 @@ class GuardedForwardingType : public CopyAndMovableType
     bool was_copied_;
 };
 
+/// @brief Copyable and movable, with a non-explicit constructor taking two arguments.
+///
+/// It can therefore be copy-list-initialised from a braced-init-list such as `{1, 2}`. The constructor stores the sum
+/// of its arguments, so a test can tell whether both arrived.
+class ListInitialisableType : public CopyAndMovableType
+{
+  public:
+    ListInitialisableType(int first, int second) : CopyAndMovableType{first + second} {}
+};
+
+/// @brief Has a perfect-forwarding converting constructor that is NOT guarded against its own type.
+///
+/// For a non-const lvalue of this type, `T&&` deduced as `UnguardedForwardingType&` is a better match than the copy
+/// constructor's `const UnguardedForwardingType&`. Whether SetValue() ends up copying therefore depends on what it
+/// offers to overload resolution, which is exactly what the tests using this type pin down.
+class UnguardedForwardingType : public CopyAndMovableType
+{
+  public:
+    // Unguarded on purpose: this type exists to reproduce the hazard bugprone-forwarding-reference-overload
+    // describes, so that the tests can show SetValue() still copying in its presence.
+    // NOLINTBEGIN(bugprone-forwarding-reference-overload)
+    template <typename T>
+    explicit UnguardedForwardingType(T&& value) : CopyAndMovableType{std::forward<T>(value)}, was_copied_{false}
+    {
+    }
+    // NOLINTEND(bugprone-forwarding-reference-overload)
+    UnguardedForwardingType(const UnguardedForwardingType& other) : CopyAndMovableType{other}, was_copied_{true} {}
+    UnguardedForwardingType& operator=(const UnguardedForwardingType&) = delete;
+    UnguardedForwardingType(UnguardedForwardingType&&) = delete;
+    UnguardedForwardingType& operator=(UnguardedForwardingType&&) = delete;
+
+    ~UnguardedForwardingType() = default;
+
+    bool WasCopyConstructed() const noexcept
+    {
+        return was_copied_;
+    }
+
+  private:
+    /// @brief true if this object was produced by the copy constructor, false if by the forwarding one.
+    bool was_copied_;
+};
+
 }  // namespace testing
 }  // namespace concurrency
 }  // namespace score

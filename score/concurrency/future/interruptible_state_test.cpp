@@ -446,6 +446,46 @@ TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueWhenTheForw
     EXPECT_EQ(result.value().GetValue(), kFirstValue);
 }
 
+// Handing SetValue() an existing object, or a braced-init-list naming one, must resolve exactly as it did before the
+// in-place overload was added. A braced-init-list has no type and cannot be deduced into a parameter pack, and a
+// non-const lvalue would otherwise be offered as `Value&`, so these cases are the ones that overload has to stay out
+// of.
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsABracedInitList)
+{
+    const auto state = InterruptibleState<testing::ListInitialisableType>::Make();
+
+    EXPECT_TRUE(state->SetValue({kFirstValue, kOtherValue}));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue + kOtherValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsAnEmptyBracedInitList)
+{
+    const auto state = InterruptibleState<testing::DefaultConstructibleType>::Make();
+
+    EXPECT_TRUE(state->SetValue({}));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), testing::DefaultConstructibleType::kDefaultValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenTheForwardingConstructorIsUnguarded)
+{
+    const auto state = InterruptibleState<testing::UnguardedForwardingType>::Make();
+    testing::UnguardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
 }  // namespace
 }  // namespace detail
 }  // namespace concurrency

@@ -71,33 +71,50 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
         return std::make_shared<InterruptibleState>();
     }
 
+    /// @brief Sets the held value from a Value that is moved in.
+    ///
+    /// Kept alongside the variadic overload below because a braced-init-list has no type, so it cannot be deduced
+    /// into a parameter pack: without this overload, `SetValue({...})` would stop compiling.
+    template <
+        typename V = Value,
+        std::enable_if_t<std::is_move_constructible<V>::value && !std::is_lvalue_reference<V>::value, bool> = true>
+    bool SetValue(Value&& value)
+    {
+        return SetValueInPlace(std::move(value));
+    }
+
+    /// @brief Sets the held value from a Value that is copied in.
+    ///
+    /// Kept for the same reason as the overload above, for value types that are copyable but not movable.
+    template <typename V = Value, std::enable_if_t<std::is_copy_constructible<V>::value, bool> = true>
+    // && !std::is_lvalue_reference<V> in move overload prevents call ambiguitiy if
+    // Value is both copy and move constructible
+    // coverity[autosar_cpp14_a13_3_1_violation]
+    bool SetValue(const Value& value)
+    {
+        return SetValueInPlace(value);
+    }
+
     /// @brief Sets the held value by constructing it in place from @p args.
     ///
     /// The arguments are forwarded into score::Result's in-place constructor instead of being turned into a Value at
     /// the call site. A Value that can be neither copied nor moved can therefore be set, its converting constructor may
     /// be explicit, a constructor taking several arguments or none is reachable, and no intermediate Value is moved in.
-    /// The value category of each argument is preserved, so an lvalue is copied from and an rvalue is moved from.
     ///
-    /// @param args The arguments of a constructor of Value. An existing Value is one such argument.
+    /// A single argument that is itself a Value is left to the two overloads above, so handing over an existing
+    /// object resolves exactly as it did before this overload existed.
+    ///
+    /// @param args The arguments of a constructor of Value.
     /// @return true if this call set the value, false if a value or an error had already been set.
-    template <typename... Args, std::enable_if_t<std::is_constructible<Value, Args...>::value, bool> = true>
+    template <typename... Args,
+              std::enable_if_t<std::is_constructible<Value, Args...>::value &&
+                                   !((sizeof...(Args) == 1U) &&
+                                     std::conjunction<std::is_same<std::decay_t<Args>, Value>...>::value),
+                               bool> = true>
+    // coverity[autosar_cpp14_a13_3_1_violation] overloaded with the two above so that braced-init-lists still work
     bool SetValue(Args&&... args)
     {
-        if ((this->TestAndMarkValueAsSet()) == true)
-        {
-            return false;
-        }
-
-        // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
-        // Placement-new ends the old object's lifetime by reusing its storage, but never runs its
-        // destructor; destroy explicitly so a non-trivially destructible score::Result releases what it holds.
-        std::destroy_at(&value_);
-        // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
-        static_cast<void>(::new (&value_) score::Result<Value>{std::in_place, std::forward<Args>(args)...});
-
-        MakeReady();
-        TriggerContinuations();
-        return true;
+        return SetValueInPlace(std::forward<Args>(args)...);
     }
 
     bool SetError(score::result::Error error)
@@ -149,6 +166,27 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
     }
 
   private:
+    /// @brief The single implementation behind every SetValue() overload: constructs the value in place.
+    template <typename... Args>
+    bool SetValueInPlace(Args&&... args)
+    {
+        if ((this->TestAndMarkValueAsSet()) == true)
+        {
+            return false;
+        }
+
+        // Use the constructor instead of assignment operator to circumvent issue with types that are not assignable
+        // Placement-new ends the old object's lifetime by reusing its storage, but never runs its
+        // destructor; destroy explicitly so a non-trivially destructible score::Result releases what it holds.
+        std::destroy_at(&value_);
+        // NOLINTNEXTLINE(score-no-dynamic-raw-memory): Non-assignable types workaround
+        static_cast<void>(::new (&value_) score::Result<Value>{std::in_place, std::forward<Args>(args)...});
+
+        MakeReady();
+        TriggerContinuations();
+        return true;
+    }
+
     // false-positive: the method is used in SetError and SetValue
     // coverity[autosar_cpp14_a0_1_3_violation]
     void TriggerContinuations()
