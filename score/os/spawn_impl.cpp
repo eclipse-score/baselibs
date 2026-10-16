@@ -463,22 +463,30 @@ score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setnode(pos
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_getcred(const posix_spawnattr_t* attrp,
-                                                                             uid_t* uid_p,
-                                                                             gid_t* gid_p) const noexcept
+                                                                             UserId* uid_p,
+                                                                             GroupId* gid_p) const noexcept
 {
-    const std::int32_t result = ::posix_spawnattr_getcred(attrp, uid_p, gid_p);
+    if ((uid_p == nullptr) || (gid_p == nullptr))
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno(EINVAL));
+    }
+    uid_t native_uid{};
+    gid_t native_gid{};
+    const std::int32_t result = ::posix_spawnattr_getcred(attrp, &native_uid, &native_gid);
     if (result != 0)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());
     }
+    *uid_p = UserId{native_uid};
+    *gid_p = GroupId{native_gid};
     return result;
 }
 
 score::cpp::expected<std::int32_t, Error> SpawnImpl::posix_spawnattr_setcred(posix_spawnattr_t* attrp,
-                                                                             uid_t uid,
-                                                                             gid_t gid) const noexcept
+                                                                             UserId uid,
+                                                                             GroupId gid) const noexcept
 {
-    const std::int32_t result = ::posix_spawnattr_setcred(attrp, uid, gid);
+    const std::int32_t result = ::posix_spawnattr_setcred(attrp, uid.native(), gid.native());
     if (result != 0)
     {
         return score::cpp::make_unexpected(Error::createFromErrno());

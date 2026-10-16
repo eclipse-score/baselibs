@@ -34,10 +34,20 @@ namespace
 
 using namespace ::testing;
 
+std::vector<score::os::UserId> ToUserIds(const std::vector<uid_t>& native_ids)
+{
+    std::vector<score::os::UserId> user_ids{};
+    for (const uid_t native_id : native_ids)
+    {
+        user_ids.emplace_back(native_id);
+    }
+    return user_ids;
+}
+
 class AclFixture : public Test
 {
   public:
-    uid_t user_identifier_{42};
+    score::os::UserId user_identifier_{42};
     score::os::MockGuard<score::os::AclMock> os_mock_{};
     score::os::Acl::FileDescriptor file_descriptor_{17};
     std::string file_path_{"/tmp/test_file"};
@@ -418,7 +428,7 @@ TEST_F(AclFixture, FindUserIdsWithPermission_UserFoundWithRequestedPermission)
 {
     uid_t user_uid = 3030U;
     uid_t* uid_ptr = &user_uid;
-    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list{user_uid};
+    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list{score::os::UserId{user_uid}};
     ::score::os::Acl::Permission permission = ::score::os::Acl::Permission::kExecute;
     ::score::os::Acl::Permissions permset{};
 
@@ -452,7 +462,7 @@ TEST_P(FindUsersWithPermissionParam, FindUserIdsWithPermissionTest)
     const auto expected_result = std::get<0>(GetParam());
     std::string acl_text = std::get<1>(GetParam());
     const auto permission = std::get<2>(GetParam());
-    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list = std::get<3>(GetParam());
+    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list = ToUserIds(std::get<3>(GetParam()));
 
     acl_t acl = ::acl_from_text(acl_text.c_str());
     ASSERT_NE(acl, nullptr) << "Failed to create ACL from text";
@@ -534,7 +544,7 @@ TEST_P(FindUsersWithPermissionParamFilePath, FindUserIdsWithPermissionTestFilePa
     const auto expected_result = std::get<0>(GetParam());
     std::string acl_text = std::get<1>(GetParam());
     const auto permission = std::get<2>(GetParam());
-    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list = std::get<3>(GetParam());
+    std::vector<score::os::IAccessControlList::UserIdentifier> expected_user_list = ToUserIds(std::get<3>(GetParam()));
 
     acl_t acl = ::acl_from_text(acl_text.c_str());
     ASSERT_NE(acl, nullptr) << "Failed to create ACL from text";
@@ -691,8 +701,8 @@ TEST_F(AclFixture, AddMultiplePermissionsPerUser)
 {
     const auto dummy_entry2 = reinterpret_cast<score::os::Acl::Entry>(30);
     const auto dummy_entry3 = reinterpret_cast<score::os::Acl::Entry>(60);
-    uid_t wrong_uid = user_identifier_ + 1;
-    uid_t uid = user_identifier_;
+    uid_t wrong_uid = user_identifier_.native() + 1;
+    uid_t uid = user_identifier_.native();
     auto dummy_permissions{reinterpret_cast<score::os::Acl::Permissions>(38)};
 
     // Given a valid constructed unit that already has an entry for a group and two users
@@ -785,9 +795,10 @@ TEST(AclTest, AddRwPermissionForUser)
 
     // when both read and write permissions are granted
     score::os::AccessControlList access_control_list{tempfile};
-    auto allow_result = access_control_list.AllowUser(user_identifer, score::os::Acl::Permission::kRead);
+    auto allow_result =
+        access_control_list.AllowUser(score::os::UserId{user_identifer}, score::os::Acl::Permission::kRead);
     ASSERT_TRUE(allow_result.has_value());
-    allow_result = access_control_list.AllowUser(user_identifer, score::os::Acl::Permission::kWrite);
+    allow_result = access_control_list.AllowUser(score::os::UserId{user_identifer}, score::os::Acl::Permission::kWrite);
     ASSERT_TRUE(allow_result.has_value());
 
     // then the user can be found in the ACL having rw rights
@@ -869,9 +880,10 @@ TEST(AclTest, AddRwPermissionForUserFilePath)
 
     // when both read and write permissions are granted
     score::os::AccessControlList access_control_list{tempfile};
-    auto allow_result = access_control_list.AllowUser(user_identifer, score::os::Acl::Permission::kRead);
+    auto allow_result =
+        access_control_list.AllowUser(score::os::UserId{user_identifer}, score::os::Acl::Permission::kRead);
     ASSERT_TRUE(allow_result.has_value());
-    allow_result = access_control_list.AllowUser(user_identifer, score::os::Acl::Permission::kWrite);
+    allow_result = access_control_list.AllowUser(score::os::UserId{user_identifer}, score::os::Acl::Permission::kWrite);
     ASSERT_TRUE(allow_result.has_value());
 
     // then the user can be found in the ACL having rw rights
