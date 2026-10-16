@@ -834,8 +834,8 @@ Component Requirements Status
    :colors: red, yellow, green
 
    type == 'comp_req' and 'baselibs' in tags and status == 'invalid'
-   type == 'comp_req' and 'baselibs' in tags and status == 'valid' and 'inspected' not in tags
-   type == 'comp_req' and 'baselibs' in tags and status == 'valid' and 'inspected' in tags
+   type == 'comp_req' and 'baselibs' in tags and status == 'valid'
+   type == 'comp_req' and 'baselibs' in tags and status == 'valid_inspected'
 
 Component AoU Status
 --------------------
@@ -854,8 +854,8 @@ Component AoU Status
    :colors: red, yellow, green
 
    type == 'aou_req' and 'baselibs' in tags and status == 'invalid'
-   type == 'aou_req' and 'baselibs' in tags and status == 'valid' and 'inspected' not in tags
-   type == 'aou_req' and 'baselibs' in tags and status == 'valid' and 'inspected' in tags
+   type == 'aou_req' and 'baselibs' in tags and status == 'valid'
+   type == 'aou_req' and 'baselibs' in tags and status == 'valid_inspected'
 
 
 Component Architecture Status
