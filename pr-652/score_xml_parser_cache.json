@@ -4514,7 +4514,7 @@
   {
     "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
     "file": "score/json/json_writer_test.cpp",
-    "line": 262,
+    "line": 255,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
