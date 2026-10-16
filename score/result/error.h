@@ -19,6 +19,8 @@
 #include <ostream>
 #include <string_view>
 
+// DO NOT MERGE: dummy change to invalidate the test cache and retrigger unit test execution.
+
 namespace score
 {
 namespace result
