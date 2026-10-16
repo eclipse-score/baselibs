@@ -152,6 +152,14 @@ bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
 bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
+
+# DO NOT MERGE: test eclipse-score/qnx_unit_tests PR #43.
+git_override(
+    module_name = "score_qnx_unit_tests",
+    commit = "f2e813ea8184838db8ec05fa29da0258d6d788ac",
+    remote = "https://github.com/etas-contrib/score_qnx_unit_tests.git",
+)
+
 bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
