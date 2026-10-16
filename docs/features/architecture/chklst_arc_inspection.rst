@@ -163,10 +163,10 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
 
 Note: If a Review ID is not applicable for your architecture, then state ""n/a" in status and comment accordingly in remarks.
 
-The following static views in "valid" state and with "inspected" tag set are in the scope of this inspection:
+The following static views in "valid_inspected" state are in the scope of this inspection:
 
 .. needtable::
-   :filter: docname is not None and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "architecture" in docname
    :style: table
    :types: feat_arc_sta
    :columns: id;status;tags
@@ -176,7 +176,7 @@ The following static views in "valid" state and with "inspected" tag set are in 
 and the following dynamic views:
 
 .. needtable::
-   :filter: docname is not None and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "architecture" in docname
    :style: table
    :types: feat_arc_dyn
    :columns: id;status;tags

@@ -11,6 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
+
 package(default_visibility = ["@score_baselibs//score/json:__subpackages__"])
 
 cc_library(
@@ -53,6 +55,7 @@ cc_library(
         "util/number.h",
         "util/types.h",
     ],
+    features = COMPILER_WARNING_FEATURES,
     includes = [
         "include",
     ],

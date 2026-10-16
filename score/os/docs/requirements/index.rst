@@ -35,7 +35,6 @@ Functional Requirements
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
 
    The OS component shall provide functions for getting an environment variable.
 
@@ -47,7 +46,6 @@ Functional Requirements
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
 
    The OS component shall provide functions for setting environment variable.
 
@@ -59,7 +57,6 @@ Functional Requirements
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
-   :tags: inspected
 
    The OS component shall provide functions for unsetting environment variable.
 

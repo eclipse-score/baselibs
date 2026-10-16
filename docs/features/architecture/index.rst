@@ -90,10 +90,9 @@ Static Architecture
    :id: feat_arc_sta__baselibs__static_view_arch
    :security: YES
    :safety: ASIL_B
-   :status: valid
+   :status: valid_inspected
    :version: 2
    :includes: logic_arc_int__baselibs__json[version==1], logic_arc_int__baselibs__memory_shared[version==1], logic_arc_int__baselibs__result[version==1], logic_arc_int__baselibs__bit_manipulation[version==1], logic_arc_int__baselibs__bit_mask_operator[version==1], logic_arc_int__baselibs__dynamic_array[version==1], logic_arc_int__baselibs__intrusive_list[version==1], logic_arc_int__baselibs__filesystem[version==1], logic_arc_int__baselibs__utils_base64[version==1], logic_arc_int__baselibs__utils_scoped_op[version==1], logic_arc_int__baselibs__promise[version==1], logic_arc_int__baselibs__future[version==1], logic_arc_int__baselibs__shared_future[version==1], logic_arc_int__baselibs__executor[version==1], logic_arc_int__baselibs__task[version==1], logic_arc_int__baselibs__task_result[version==1], logic_arc_int__baselibs__synchronized_queue[version==1], logic_arc_int__baselibs__condition_variable[version==1], logic_arc_int__baselibs__aborts_upon_ex[version==1], logic_arc_int__baselibs__coverage_termination[version==1], logic_arc_int__baselibs__safemath[version==1], logic_arc_int__baselibs__safeatomics[version==1], logic_arc_int__baselibs__scoped_function[version==1], logic_arc_int__baselibs__string_view[version==1], logic_arc_int__b_r__fixvec[version==1], logic_arc_int__b_r__inlinevec[version==1], logic_arc_int__b_r__fixqueue[version==1], logic_arc_int__b_r__inlqueue[version==1]
-   :tags: inspected
    :belongs_to: feat__baselibs[version==1]
 
    .. needarch::
@@ -106,10 +105,9 @@ Static Architecture
    :id: feat_arc_dyn__baselibs__dynamic_view_arch
    :security: YES
    :safety: ASIL_B
-   :status: valid
+   :status: valid_inspected
    :version: 1
    :belongs_to: feat__baselibs[version==1]
-   :tags: inspected
 
    not needed, simple caller/callee sequence
 

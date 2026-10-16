@@ -18,46 +18,18 @@ load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 LIB_JSON_VISIBILITY = ["//visibility:public"]
 
+# No-op, kept only so consumers who still pass --base_library on the command line or in their
+# .bazelrc don't get a hard "no such target" build failure. vaJson is the only parser backend;
+# this flag no longer selects anything. Remove in the next breaking release.
 string_flag(
     name = "base_library",
     build_setting_default = "vajson",
+    deprecation = "base_library no longer has any effect, vaJson is the only parser backend. " +
+                  "Remove this flag from your build configuration; it will be deleted in a future release.",
     values = [
         "vajson",
         "nlohmann",
     ],
-)
-
-config_setting(
-    name = "base_library_vajson",
-    flag_values = {":base_library": "vajson"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
-)
-
-config_setting(
-    name = "base_library_nlohmann",
-    flag_values = {":base_library": "nlohmann"},
-    visibility = ["@score_baselibs//score/json/internal/parser:__subpackages__"],
-)
-
-string_flag(
-    name = "writer_library",
-    build_setting_default = "json_serialize",
-    values = [
-        "json_serialize",
-        "vajson",
-    ],
-)
-
-config_setting(
-    name = "writer_library_json_serialize",
-    flag_values = {":writer_library": "json_serialize"},
-    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
-)
-
-config_setting(
-    name = "writer_library_vajson",
-    flag_values = {":writer_library": "vajson"},
-    visibility = ["@score_baselibs//score/json/internal/writer:__subpackages__"],
 )
 
 cc_library(
@@ -117,10 +89,6 @@ cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    local_defines = select({
-        ":base_library_nlohmann": ["NLOHMANN"],
-        ":base_library_vajson": ["VAJSON"],
-    }),
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
@@ -137,8 +105,8 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer",
         "@score_baselibs//score/json/internal/writer:writer_backend",
+        "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
     ],
 )
 
@@ -215,10 +183,7 @@ cc_test(
     ],
 )
 
-# This rule was moved from json/internal/writer/BUILD file due to incorrect functionality of coverage tool.
-# Was found a problem when unit_test_qnx didn't run tests from json_writer_test.cpp and json_serialize_test.cpp.
-# Solution was move json_writer_test.cpp file to the same directory with json_writer.cpp.
-# For json_serialize its BUILD file was modified according to other tests for json.
+# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
 cc_test(
     name = "json_writer_unit_test",
     srcs = [
@@ -228,10 +193,6 @@ cc_test(
         "test_warnings",
         "aborts_upon_exception",
     ],
-    local_defines = select({
-        ":writer_library_json_serialize": ["WRITER_JSON_SERIALIZE"],
-        ":writer_library_vajson": ["WRITER_VAJSON"],
-    }),
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__pkg__",

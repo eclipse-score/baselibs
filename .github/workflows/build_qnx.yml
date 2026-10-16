@@ -61,7 +61,7 @@ jobs:
             bazel-disk-cache: aarch64-qnx-integration
             bazel-test-target: "//..."
             extra-bazel-test-flags: "--test_timeout=120,600,1800,7200" # Increase test timeout due to QEMU emulation
-    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@3eb9c766349cf0c2225fef29f76601c6e7858688
+    uses: eclipse-score/cicd-workflows/.github/workflows/qnx-build.yml@77760ad7cdb83fbb157dffa3ba30cc60fe0e141e
     permissions:
       contents: read
       pull-requests: read
@@ -69,6 +69,7 @@ jobs:
       bazel-target: ${{ matrix.bazel-target }}
       bazel-config: ${{ matrix.bazel-config }}
       bazel-test-target: ${{ matrix.bazel-test-target }}
+      test-log-artifact-name: qnx-testlogs-${{ matrix.bazel-disk-cache }}-${{ github.run_attempt }}
       credential-helper: ".github/tools/qnx_credential_helper.py"
       bazel-disk-cache: ${{ matrix.bazel-disk-cache }}
       working-directory: ${{ matrix.working-directory }}

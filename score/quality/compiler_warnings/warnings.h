@@ -37,16 +37,20 @@
 #define DISABLE_WARNING_ATTRIBUTES                              DISABLE_WARNING(-Wattributes)
 #define DISABLE_WARNING_SIGN_CONVERSION                         DISABLE_WARNING(-Wsign-conversion)
 
+#if defined(__clang__) || (defined(__GNUC__) && (__GNUC__ >= 13))
+#define DISABLE_WARNING_SELF_MOVE                               DISABLE_WARNING(-Wself-move)
+#else
+#define DISABLE_WARNING_SELF_MOVE
+#endif
+
 #if defined(__clang__)
 #define DISABLE_WARNING_SELF_ASSIGN_OVERLOADED                  DISABLE_WARNING(-Wself-assign-overloaded)
 #define DISABLE_WARNING_C99_EXTENSIONS                          DISABLE_WARNING(-Wc99-extensions)
-#define DISABLE_WARNING_SELF_MOVE                               DISABLE_WARNING(-Wself-move)
 #define DISABLE_WARNING_MISSING_DESIGNATED_FIELD_INITIALIZERS   DISABLE_WARNING(-Wmissing-designated-field-initializers)
 #define DISABLE_WARNING_MAYBE_UNINITIALIZED
 #else
 #define DISABLE_WARNING_SELF_ASSIGN_OVERLOADED
 #define DISABLE_WARNING_C99_EXTENSIONS
-#define DISABLE_WARNING_SELF_MOVE
 #define DISABLE_WARNING_MISSING_DESIGNATED_FIELD_INITIALIZERS
 #define DISABLE_WARNING_MAYBE_UNINITIALIZED                     DISABLE_WARNING(-Wmaybe-uninitialized)
 #endif

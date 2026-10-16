@@ -18,7 +18,7 @@ JSON Component Architecture
 .. document:: JSON Architecture
    :id: doc__json_architecture
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -41,20 +41,20 @@ implementation provided. But generally there is a "Wrapper" and an "Implementati
 
 Design Decisions:
 
-It was decided to use the nlohman_json OSS library (see `nlohman/json <https://github.com/nlohmann/json>`_). This decision still has to be documented (TBD).
+It was decided to use the vaJson parser from Vector (see :need:`doc__vajson`), which is ASIL D certified.
 
-JSON writing functionality is implemented in the "Wrapper", i.e. the nlohman_json OSS library is not used for this.
-Reasoning is that this functionality is reused from an already qualified baselibs implementation.
+JSON writing functionality is provided by the vaJson serializer, which is wrapped by the "Wrapper" component.
 
 Design Constraints:
 
 The feature description states that this component provides a "JSON abstraction layer that can switch between different parsers/serializers under the hood."
+Currently vaJson is the only implementation, for parsing as well as for serialization, so nothing is selectable.
 
 Rationale Behind Architecture Decomposition
 *******************************************
 
 The decomposition in a wrapper and an implemetation component already comes from the feature definition,
-the main driver is to re-use existing implementation(s), enable switch of implementation but providing a stable API.
+the main driver is to re-use existing implementation(s) and to allow replacing the implementation while providing a stable API.
 
 Static Architecture
 -------------------
@@ -64,9 +64,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :implements: logic_arc_int__baselibs__json[version==1]
-   :consists_of: comp__baselibs_json_wrapper[version==1], comp__baselibs_nlohman_json[version==1]
+   :consists_of: comp__baselibs_json_wrapper[version==1], comp__baselibs_vajson[version==1]
    :belongs_to: feat__baselibs[version==1]
 
 .. comp_arc_sta:: JSON Static view
@@ -74,9 +74,9 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
-   :belongs_to: comp__baselibs_json[version==1]
+   :belongs_to: comp__baselibs_json[version==2]
 
    .. needarch::
       :scale: 50
@@ -93,9 +93,9 @@ Dynamic Architecture
    :security: YES
    :safety: ASIL_B
    :status: invalid
-   :version: 1
+   :version: 2
    :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
-   :belongs_to: comp__baselibs_json[version==1]
+   :belongs_to: comp__baselibs_json[version==2]
 
    put here a sequence diagram (TBD)
 
@@ -131,10 +131,4 @@ Lower Level Components
    :implements: logic_arc_int__baselibs__json[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-.. comp:: nlohman-JSON
-   :id: comp__baselibs_nlohman_json
-   :security: YES
-   :safety:  ASIL_B
-   :status: valid
-   :version: 1
-   :belongs_to: feat__baselibs[version==1]
+See :need:`comp__baselibs_vajson` in :need:`doc__vajson_architecture` for the vaJson lower-level component.

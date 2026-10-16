@@ -17,8 +17,8 @@ Requirements
 
 .. document:: Utils Library Requirements
    :id: doc__utils_lib_requirements
-   :status: draft
-   :version: 1
+   :status: valid
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp[version==1]
@@ -33,10 +33,9 @@ Functional Requirements
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library[version==2]
-   :status: valid
+   :status: valid_inspected
    :version: 1
    :satisfied_by: comp__baselibs_utils[version==1]
-   :tags: inspected
 
    The Utils component shall provide functions for encoding data to Base64 format.
 
@@ -46,10 +45,9 @@ Functional Requirements
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library[version==2]
-   :status: valid
+   :status: valid_inspected
    :version: 1
    :satisfied_by: comp__baselibs_utils[version==1]
-   :tags: inspected
 
    The Utils component shall provide functions for decoding Base64 data back to its original form.
 
@@ -59,10 +57,9 @@ Functional Requirements
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__utils_library[version==2]
-   :status: valid
+   :status: valid_inspected
    :version: 1
    :satisfied_by: comp__baselibs_utils[version==1]
-   :tags: inspected
 
    The Utils component shall provide a thread-safe singleton whose instance is created exactly once when accessed concurrently by multiple threads.
 

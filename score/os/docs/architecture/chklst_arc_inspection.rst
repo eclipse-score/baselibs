@@ -27,10 +27,10 @@ Architecture Inspection Checklist
 No need for component architecture inspection, as there is no additional information as in the
 feature architecture :need:`doc__baselibs_architecture` and this is to be inspected.
 
-The following static views in "valid" state and with "inspected" tag set are in the scope of this inspection:
+The following static views in "valid_inspected" state are in the scope of this inspection:
 
 .. needtable::
-   :filter: docname is not None and "os" in docname and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "os" in docname and "architecture" in docname
    :style: table
    :types: comp_arc_sta
    :columns: id;status;tags
@@ -40,7 +40,7 @@ The following static views in "valid" state and with "inspected" tag set are in 
 and the following dynamic views:
 
 .. needtable::
-   :filter: docname is not None and "os" in docname and "architecture" in docname and status == "valid"
+   :filter: docname is not None and "os" in docname and "architecture" in docname
    :style: table
    :types: comp_arc_dyn
    :columns: id;status;tags

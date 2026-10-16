@@ -16,7 +16,7 @@
 .. document:: Bitmanipulation Requirements Inspection Checklist
    :id: doc__bitmanipulation_req_inspection
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_inspect[version==1]
@@ -33,8 +33,8 @@ Requirement Inspection Checklist
 
    As described in the concept :need:`doc_concept__wp_inspections` the following "inspection roles" are expected to be filled:
 
-   - content responsible (author): `<https://github.com/rutik7>`_
-   - reviewer: `<https://github.com/mihajlo-k>`_
+   - content responsible (author): `<https://github.com/rutik7>`_, `<https://github.com/4og>`_
+   - reviewer: `<https://github.com/mihajlo-k>`_, `<https://github.com/aschemmel-tech>`_
    - moderator: `<https://github.com/aschemmel-tech>`_
    - test expert: `<https://github.com/rahulthakre29>`_
 
@@ -64,12 +64,10 @@ Requirement Inspection Checklist
       * - REQ_02_01
         - Is the requirement description *comprehensible* ?
         - If you think the requirement is hard to understand, comment here.
-        - YES
-        - The inspected requirements are clear and easy to understand. Some grammar mistakes were found and were fixed in PR-2677 and PR-2480:
+        - NO
+        - The following requirement is unclear what it requires "shall provide byte and half-byte types"
 
-          - :need:`comp_req__bitmanipulation__bit_operations`
-          - :need:`aou_req__bitmanipulation__type_constraints`
-          - :need:`aou_req__bitmanipulation__enum_constraints`
+          - :need:`comp_req__bitmanipulation__byte_operations`
         -
       * - REQ_02_02
         - Is the requirement description *unambiguous* ?
@@ -183,10 +181,10 @@ Requirement Inspection Checklist
 
 Note: If a Review ID is not applicable for your requirement, then state ""n/a" in status and comment accordingly in remarks. For example "no stakeholder requirement (no rationale needed)"
 
-The following requirements in "valid" state and with "inspected" tag set are in the scope of this inspection:
+The following requirements in "valid_inspected" state are in the scope of this inspection:
 
 .. needtable::
-   :filter: "bitmanipulation" in docname and "requirements" in docname and docname is not None and status == "valid"
+   :filter: "bitmanipulation" in docname and "requirements" in docname and docname is not None
    :style: table
    :types: comp_req
    :tags: bitmanipulation
@@ -194,10 +192,10 @@ The following requirements in "valid" state and with "inspected" tag set are in 
    :colwidths: 25,25,25
    :sort: title
 
-And also the following AoUs in "valid" state and with "inspected" tag set (for these please answer the questions above as if the AoUs are requirements, except questions REQ_03_01 and REQ_03_02):
+And also the following AoUs in "valid_inspected" state (for these please answer the questions above as if the AoUs are requirements, except questions REQ_03_01 and REQ_03_02):
 
 .. needtable::
-   :filter: "bitmanipulation" in docname and "requirements" in docname and docname is not None and status == "valid"
+   :filter: "bitmanipulation" in docname and "requirements" in docname and docname is not None
    :style: table
    :types: aou_req
    :tags: bitmanipulation
