@@ -343266,6 +343266,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "InterruptibleStateInPlaceSetValueTest__CopiesFromANonConstLvalueEvenWhenTheValueTypeIsConstQualified",
+    "file": "score/concurrency/future/interruptible_state_test.cpp",
+    "line": "489",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "FlagOwnerTest__CreatingFlagOwnerWithTrueInitialValueWillSetTheFlag",
     "file": "score/scope_exit/flag_owner_test.cpp",
     "line": "24",
