@@ -101,15 +101,15 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
     /// the call site. A Value that can be neither copied nor moved can therefore be set, its converting constructor may
     /// be explicit, a constructor taking several arguments or none is reachable, and no intermediate Value is moved in.
     ///
-    /// A single argument that is itself a Value is left to the two overloads above, so handing over an existing
-    /// object resolves exactly as it did before this overload existed.
+    /// A single argument that is itself a Value, ignoring cv-qualifiers on either side, is left to the two overloads
+    /// above, so handing over an existing object resolves exactly as it did before this overload existed.
     ///
     /// @param args The arguments of a constructor of Value.
     /// @return true if this call set the value, false if a value or an error had already been set.
     template <typename... Args,
-              std::enable_if_t<std::is_constructible<Value, Args...>::value &&
+              std::enable_if_t<std::is_constructible_v<Value, Args...> &&
                                    !((sizeof...(Args) == 1U) &&
-                                     std::conjunction<std::is_same<std::decay_t<Args>, Value>...>::value),
+                                     std::conjunction_v<std::is_same<std::decay_t<Args>, std::remove_cv_t<Value>>...>),
                                bool> = true>
     // coverity[autosar_cpp14_a13_3_1_violation] overloaded with the two above so that braced-init-lists still work
     bool SetValue(Args&&... args)

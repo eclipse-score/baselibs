@@ -486,6 +486,22 @@ TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenThe
     EXPECT_EQ(result.value().GetValue(), kFirstValue);
 }
 
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenTheValueTypeIsConstQualified)
+{
+    // For a const-qualified Value the argument decays to the unqualified type, so the in-place overload has to compare
+    // against Value without its cv-qualifiers to recognise it as an existing object.
+    const auto state = InterruptibleState<const testing::UnguardedForwardingType>::Make();
+    testing::UnguardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
 }  // namespace
 }  // namespace detail
 }  // namespace concurrency
