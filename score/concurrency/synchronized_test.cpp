@@ -17,9 +17,13 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <algorithm>
 #include <future>
 #include <string>
+#include <utility>
 #include <vector>
+
+#include <score/optional.hpp>
 
 using score::concurrency::Synchronized;
 
@@ -28,16 +32,27 @@ namespace test
 
 namespace
 {
-constexpr auto clone = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_v<std::decay_t<decltype(*ptr)>>) {
-    static_assert(std::is_copy_constructible_v<std::decay_t<decltype(*ptr)>>,
-                  "clone requires a copy-constructible type");
-    return *ptr;
+constexpr auto clone_opt = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_v<std::decay_t<decltype(*ptr)>>) {
+    using ValueType = std::decay_t<decltype(*ptr)>;
+    static_assert(std::is_copy_constructible_v<ValueType>, "clone_opt requires a copy-constructible type");
+    if (ptr != nullptr)
+    {
+        return score::cpp::optional<ValueType>{*ptr};
+    }
+    return score::cpp::optional<ValueType>{};
 };
 
-template <template <typename> class Synced, typename T>
-auto clone_synced(const Synced<T>& sync)
+template <typename T, typename Lockable>
+auto clone_opt_synced(const score::concurrency::Synchronized<T, Lockable>& sync)
 {
-    return sync.WithLock(clone);
+    return sync.lock().and_then(clone_opt);
+}
+
+// Precondition: sync.lock() returns a non-null pointer.
+template <typename T, typename Lockable>
+auto clone_synced(const score::concurrency::Synchronized<T, Lockable>& sync)
+{
+    return clone_opt_synced(sync).value();
 }
 }  // namespace
 
@@ -51,6 +66,40 @@ class TestStruct
     int plus_50() const
     {
         return value + 50;
+    }
+
+    TestStruct& operator++() noexcept
+    {
+        ++value;
+        return *this;
+    }
+
+    TestStruct operator++(int) noexcept
+    {
+        TestStruct previous{*this};
+        ++value;
+        return previous;
+    }
+
+    TestStruct& operator--() noexcept
+    {
+        --value;
+        return *this;
+    }
+
+    TestStruct operator--(int) noexcept
+    {
+        TestStruct previous{*this};
+        --value;
+        return previous;
+    }
+
+    TestStruct& operator=(const TestStruct&) = default;
+
+    TestStruct& operator=(int assigned_value) noexcept
+    {
+        value = assigned_value;
+        return *this;
     }
 
     [[nodiscard]] explicit operator int() const noexcept
@@ -133,9 +182,19 @@ using SyncNoCopyNoMove_t = Synchronized<NoCopyNoMoveObject>;
 using SyncDefaultConstructible_t = Synchronized<DefaultConstructibleObject>;
 using SyncParameterized_t = Synchronized<ParameterizedObject>;
 
-void set_999(SyncTS_t::pointer p) noexcept
+template <int value_to_set, typename Pointer>
+int set_and_ret_val(Pointer p) noexcept
 {
-    p->value = 999;
+    if constexpr (std::is_assignable_v<decltype(*p), int>)
+    {
+        *p = value_to_set;
+        return static_cast<int>(*p);
+    }
+    else
+    {
+        p->value = value_to_set;
+        return static_cast<int>(p->value);
+    }
 }
 int get_value(SyncTS_t::const_pointer p) noexcept
 {
@@ -170,13 +229,11 @@ TEST(SynchronizedTest, TestSynchronizedWrapperTemplate)
 {
     Syncint_t sync_value(42);
 
-    EXPECT_EQ(sync_value.WithLock(clone), 42);
+    EXPECT_EQ(sync_value.lock().and_then(clone_opt).value(), 42);
 
-    sync_value.WithLock([](Syncint_t::pointer ptr) noexcept {
-        *ptr = 100;
-    });
+    EXPECT_EQ(sync_value.lock().transform(set_and_ret_val<100, Syncint_t::pointer>).value(), 100);
 
-    EXPECT_EQ(sync_value.WithLock(clone), 100);
+    EXPECT_EQ(sync_value.lock().and_then(clone_opt).value(), 100);
 }
 
 // Test for thread safety with multiple threads accessing a synchronized wrapper
@@ -187,26 +244,29 @@ TEST(SynchronizedTest, TestConcurrency)
     const int increments_per_task = 1000;
 
     auto launch_task = [&counter]() {
-        return std::async(std::launch::async, [&counter]() noexcept {
+        return std::async(std::launch::async, [&counter]() {
+            const auto incr_val = [](Syncint_t::pointer ptr) noexcept -> score::cpp::optional<int> {
+                return ++(*ptr);
+            };
+
             for (int i = 0; i < increments_per_task; ++i)
             {
-                counter.WithLock([](Syncint_t::pointer ptr) noexcept {
-                    ++(*ptr);
-                });
+                EXPECT_TRUE(counter.lock().and_then(incr_val)) << "Locking and incrementing the value should not fail";
             }
+            return increments_per_task;
         });
     };
 
-    std::vector<std::future<void>> futures;
+    std::vector<std::future<int>> futures;
     futures.reserve(num_tasks);
     std::generate_n(std::back_inserter(futures), num_tasks, launch_task);
 
     for (auto& future : futures)
     {
-        future.wait();
+        EXPECT_EQ(future.get(), increments_per_task);
     }
 
-    EXPECT_EQ(counter.WithLock(clone), num_tasks * increments_per_task);
+    EXPECT_EQ(counter.lock().and_then(clone_opt).value(), num_tasks * increments_per_task);
 }
 
 TEST(SynchronizedTest, LockMethodBasic)
@@ -220,7 +280,7 @@ TEST(SynchronizedTest, LockMethodBasic)
         EXPECT_EQ(*locked_ptr, 100);
     }
 
-    EXPECT_EQ(sync_int.WithLock(clone), 100);
+    EXPECT_EQ(sync_int.lock().and_then(clone_opt).value(), 100);
 }
 
 TEST(SynchronizedTest, TestStructLockReturnValue)
@@ -232,11 +292,26 @@ TEST(SynchronizedTest, TestStructLockReturnValue)
         ASSERT_TRUE(locked_ptr);
         EXPECT_EQ(locked_ptr->value, 42);
 
-        locked_ptr->value = 100;
+        *locked_ptr = 100;
         EXPECT_EQ(locked_ptr->value, 100);
 
-        EXPECT_EQ((*locked_ptr).value, 100);
-        EXPECT_EQ((*locked_ptr).plus_50(), 150);
+        *locked_ptr = TestStruct{42};
+        EXPECT_EQ(locked_ptr->value, 42);
+
+        const auto post_increment_value = (*locked_ptr)++;
+        EXPECT_EQ(post_increment_value.value, 42);
+        EXPECT_EQ(locked_ptr->value, 43);
+
+        EXPECT_EQ((++(*locked_ptr)).value, 44);
+        EXPECT_EQ(locked_ptr->value, 44);
+
+        const auto post_decrement_value = (*locked_ptr)--;
+        EXPECT_EQ(post_decrement_value.value, 44);
+        EXPECT_EQ(locked_ptr->value, 43);
+
+        EXPECT_EQ((--(*locked_ptr)).value, 42);
+        EXPECT_EQ(locked_ptr->value, 42);
+        EXPECT_EQ((*locked_ptr).plus_50(), 92);
     }
 }
 
@@ -251,44 +326,45 @@ TEST(SynchronizedTest, TestStructConstLockBehavior)
         EXPECT_EQ((*const_locked_ptr).plus_50(), 92);
     }
 
-    EXPECT_EQ(const_sync_struct.WithLock(clone), 42);
+    EXPECT_EQ(const_sync_struct.lock().and_then(clone_opt).value(), 42);
 }
 
-TEST(SynchronizedTest, TestStructWithLockVariations)
+TEST(SynchronizedTest, TestStructTransformVariations)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-        s->value = 100;
-    });
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<100, SyncTS_t::pointer>).value(), 100);
 
-    EXPECT_EQ(sync_struct.WithLock(clone), 100);
+    EXPECT_EQ(sync_struct.lock().and_then(clone_opt).value(), 100);
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-        s->value = s->value * 2;
-    });
+    EXPECT_TRUE(sync_struct.lock()
+                    .transform([](SyncTS_t::pointer s) noexcept {
+                        s->value = s->value * 2;
+                        return true;
+                    })
+                    .value());
 
-    EXPECT_EQ(sync_struct.WithLock(clone), 200);
+    EXPECT_EQ(sync_struct.lock().and_then(clone_opt).value(), 200);
 }
 
 TEST(SynchronizedTest, TestStructMemberFunctionPointers)
 {
     SyncTS_t sync_struct(TestStruct{42});
-    EXPECT_EQ(sync_struct.WithLock(std::mem_fn(&TestStruct::plus_50)), 92);
-    EXPECT_EQ(sync_struct.WithLock(&TestStruct::plus_50), 92);
+    EXPECT_EQ(sync_struct.lock().transform(std::mem_fn(&TestStruct::plus_50)).value(), 92);
+    EXPECT_EQ(sync_struct.lock().transform(&TestStruct::plus_50).value(), 92);
 
     const SyncTS_t sync_const(42);
-    EXPECT_EQ(sync_const.WithLock(std::mem_fn(&TestStruct::plus_50)), 92);
-    EXPECT_EQ(sync_const.WithLock(&TestStruct::plus_50), 92);
+    EXPECT_EQ(sync_const.lock().transform(std::mem_fn(&TestStruct::plus_50)).value(), 92);
+    EXPECT_EQ(sync_const.lock().transform(&TestStruct::plus_50).value(), 92);
 }
 
 TEST(SynchronizedTest, TestStructFreeFunctionPointers)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    sync_struct.WithLock(&set_999);
+    EXPECT_EQ(sync_struct.lock().transform(&set_and_ret_val<999, SyncTS_t::pointer>).value(), 999);
 
-    EXPECT_EQ(sync_struct.WithLock(&get_value), 999);
+    EXPECT_EQ(std::as_const(sync_struct).lock().transform(&get_value).value(), 999);
 }
 
 TEST(SynchronizedTest, TestStructLockNonConst)
@@ -301,7 +377,7 @@ TEST(SynchronizedTest, TestStructLockNonConst)
         EXPECT_EQ(locked_ptr->value, 77);
     }
 
-    EXPECT_EQ(sync_struct.WithLock(clone), 77);
+    EXPECT_EQ(sync_struct.lock().and_then(clone_opt).value(), 77);
 }
 
 TEST(SynchronizedTest, TestStructLockConst)
@@ -313,150 +389,142 @@ TEST(SynchronizedTest, TestStructLockConst)
         EXPECT_EQ(const_locked_ptr->value, 42);
     }
 
-    EXPECT_EQ(const_sync_struct.WithLock(clone), 42);
+    EXPECT_EQ(const_sync_struct.lock().and_then(clone_opt).value(), 42);
 }
 
 TEST(SynchronizedTest, TestStructLambdaCaptureModes)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    int external_value = 10;
-
     // Test lambda with value capture
-    sync_struct.WithLock([external_value](SyncTS_t::pointer s) noexcept {
-        s->value = external_value * 5;
-    });
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<50, SyncTS_t::pointer>).value(), 50);
 
-    auto result = sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
-        return s->value;
-    });
-    EXPECT_EQ(result, 50);
+    EXPECT_EQ(std::as_const(sync_struct).lock().and_then(clone_opt).value().value, 50);
 
     // Test lambda with reference capture
     int multiplier = 4;
-    sync_struct.WithLock([&multiplier](SyncTS_t::pointer s) noexcept {
-        s->value = s->value * multiplier;
-    });
+    EXPECT_EQ(sync_struct.lock()
+                  .transform([&multiplier](SyncTS_t::pointer s) noexcept {
+                      s->value = s->value * multiplier;
+                      return s->value;
+                  })
+                  .value(),
+              200);
 
-    EXPECT_EQ(sync_struct.WithLock(clone), 200);
+    EXPECT_EQ(sync_struct.lock().and_then(clone_opt).value(), 200);
 }
 
 TEST(SynchronizedTest, TestStructVoidReturningLambdas)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept -> void {
-        s->value = 123;
-    });
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<123, SyncTS_t::pointer>).value(), 123);
 
-    EXPECT_EQ(sync_struct.WithLock(clone), 123);
+    EXPECT_EQ(sync_struct.lock().and_then(clone_opt).value(), 123);
 }
 
 TEST(SynchronizedTest, TestStructCopyVsMoveSemantics)
 {
     // Test construction from temporary (move semantics)
     SyncTS_t sync_struct1(TestStruct{42});
-    auto val = sync_struct1.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto val = std::as_const(sync_struct1).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val, 42);
+    EXPECT_EQ(val.value(), 42);
 
     // Test construction from lvalue (copy semantics)
     TestStruct temp_struct{55};
     SyncTS_t sync_struct2(temp_struct);
-    auto val1 = sync_struct2.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto val1 = std::as_const(sync_struct2).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val1, 55);
+    EXPECT_EQ(val1.value(), 55);
 
     // Test in-place construction
     SyncTS_t sync_struct3(TestStruct{77});
-    auto val2 = sync_struct3.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto val2 = std::as_const(sync_struct3).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val2, 77);
+    EXPECT_EQ(val2.value(), 77);
 }
 
 TEST(SynchronizedTest, TestMoveOnlyObject)
 {
     SyncMoveOnly_t sync_obj(150);
 
-    auto result = sync_obj.WithLock([](SyncMoveOnly_t::const_pointer ptr) noexcept {
+    auto result = std::as_const(sync_obj).lock().transform([](SyncMoveOnly_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(result, 150);
+    EXPECT_EQ(result.value(), 150);
 
-    sync_obj.WithLock([](SyncMoveOnly_t::pointer ptr) noexcept {
-        ptr->value = 300;
-    });
+    EXPECT_EQ(sync_obj.lock().transform(set_and_ret_val<300, SyncMoveOnly_t::pointer>).value(), 300);
 
-    auto val = sync_obj.WithLock([](SyncMoveOnly_t::const_pointer ptr) noexcept {
+    auto val = std::as_const(sync_obj).lock().transform([](SyncMoveOnly_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(val, 300);
+    EXPECT_EQ(val.value(), 300);
 }
 
 TEST(SynchronizedTest, TestNoCopyNoMoveObject)
 {
     SyncNoCopyNoMove_t sync_obj(250);
 
-    auto result = sync_obj.WithLock([](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
+    auto result = std::as_const(sync_obj).lock().transform([](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(result, 250);
+    EXPECT_EQ(result.value(), 250);
 
-    sync_obj.WithLock([](SyncNoCopyNoMove_t::pointer ptr) noexcept {
-        ptr->value = 500;
-    });
+    EXPECT_EQ(sync_obj.lock().transform(set_and_ret_val<500, SyncNoCopyNoMove_t::pointer>).value(), 500);
 
-    auto val = sync_obj.WithLock([](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
+    auto val = std::as_const(sync_obj).lock().transform([](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(val, 500);
+    EXPECT_EQ(val.value(), 500);
 }
 
 TEST(SynchronizedTest, TestDefaultConstructedObject)
 {
     SyncDefaultConstructible_t sync_obj{};
 
-    auto result = sync_obj.WithLock([](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
+    auto result = std::as_const(sync_obj).lock().transform([](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(result, 42);
+    EXPECT_EQ(result.value(), 42);
 
-    sync_obj.WithLock([](SyncDefaultConstructible_t::pointer ptr) noexcept {
-        ptr->value = 100;
-    });
+    EXPECT_EQ(sync_obj.lock().transform(set_and_ret_val<100, SyncDefaultConstructible_t::pointer>).value(), 100);
 
-    auto val = sync_obj.WithLock([](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
+    auto val = std::as_const(sync_obj).lock().transform([](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
         return ptr->value;
     });
-    EXPECT_EQ(val, 100);
+    EXPECT_EQ(val.value(), 100);
 }
 
 TEST(SynchronizedTest, TestParameterizedConstruction)
 {
     SyncParameterized_t sync_obj(10, 20, "test_object");
 
-    auto result = sync_obj.WithLock([](SyncParameterized_t::const_pointer ptr) noexcept {
+    auto result = std::as_const(sync_obj).lock().transform([](SyncParameterized_t::const_pointer ptr) noexcept {
         return ptr->x_plus_y();
     });
-    EXPECT_EQ(result, 30);
+    EXPECT_EQ(result.value(), 30);
 
-    auto name = sync_obj.WithLock([](SyncParameterized_t::const_pointer ptr) noexcept {
-        return ptr->GetName();
+    auto name = std::as_const(sync_obj).lock().transform([](SyncParameterized_t::const_pointer ptr) noexcept {
+        return std::string{ptr->GetName()};
     });
-    EXPECT_EQ(name, "test_object");
+    EXPECT_EQ(name.value(), "test_object");
 
-    sync_obj.WithLock([](SyncParameterized_t::pointer ptr) noexcept {
-        ptr->x = 15;
-        ptr->y = 25;
-    });
+    EXPECT_TRUE(sync_obj.lock()
+                    .transform([](SyncParameterized_t::pointer ptr) noexcept {
+                        ptr->x = 15;
+                        ptr->y = 25;
+                        return true;
+                    })
+                    .value());
 
-    result = sync_obj.WithLock([](SyncParameterized_t::const_pointer ptr) noexcept {
+    result = std::as_const(sync_obj).lock().transform([](SyncParameterized_t::const_pointer ptr) noexcept {
         return ptr->x_plus_y();
     });
-    EXPECT_EQ(result, 40);
+    EXPECT_EQ(result.value(), 40);
 }
 
 TEST(SynchronizedTest, TestCtadConstruction)
@@ -493,17 +561,17 @@ TEST(SynchronizedTest, TestPiecewiseConstruction)
         std::forward_as_tuple(5, 'Z'),                      // string args
         std::forward_as_tuple("Literal for mutex"s, 100));  // MockMutexParameterized args
 
-    EXPECT_EQ(sync_piecewise.WithLock(clone), "ZZZZZ");
+    EXPECT_EQ(sync_piecewise.lock().and_then(clone_opt).value(), "ZZZZZ");
 }
 
 TEST(SynchronizedTest, TestConstOperations)
 {
     const SyncTS_t const_sync_struct(TestStruct{42});
 
-    auto result = const_sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto result = const_sync_struct.lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(result, 42);
+    EXPECT_EQ(result.value(), 42);
 
     {
         auto const_locked = const_sync_struct.lock();
@@ -511,7 +579,7 @@ TEST(SynchronizedTest, TestConstOperations)
     }
 }
 
-TEST(SynchronizedTest, LockAndWithLock)
+TEST(SynchronizedTest, LockAndTransform)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
@@ -521,55 +589,55 @@ TEST(SynchronizedTest, LockAndWithLock)
         EXPECT_EQ(locked_ptr->value, 150);
     }
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-        s->value = 200;
-    });
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<200, SyncTS_t::pointer>).value(), 200);
 
-    auto result = sync_struct.WithLock([](SyncTS_t::const_pointer s) {
+    auto result = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) {
         return s->plus_50();
     });
-    EXPECT_EQ(result, 250);
-    auto val1 = sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    EXPECT_EQ(result.value(), 250);
+    auto val1 = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val1, 200);
+    EXPECT_EQ(val1.value(), 200);
 
     EXPECT_NO_THROW({
-        sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+        auto callback_result = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) noexcept {
             EXPECT_EQ(s->value, 200);
+            return true;
         });
+        EXPECT_TRUE(callback_result.value());
     });
 
-    auto val2 = sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto val2 = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val2, 200);
+    EXPECT_EQ(val2.value(), 200);
 }
 
 TEST(SynchronizedTest, ConstNonConstCallableTest)
 {
     {
         Synchronized<TestStruct> sync(TestStruct{42});
-        EXPECT_EQ(sync.WithLock(ConstNonConstCallable<TestStruct>{}), 42);
-        EXPECT_EQ(sync.WithLock(NonConstCallable{}), "42");
+        EXPECT_EQ(sync.lock().transform(ConstNonConstCallable<TestStruct>{}).value(), 42);
+        EXPECT_EQ(sync.lock().transform(NonConstCallable{}).value(), "42");
 
         ConstNonConstCallable<TestStruct> cnc_callable;
-        EXPECT_EQ(sync.WithLock(cnc_callable), 42);
+        EXPECT_EQ(sync.lock().transform(cnc_callable).value(), 42);
 
         NonConstCallable nc_callable;
-        EXPECT_EQ(sync.WithLock(nc_callable), "42");
+        EXPECT_EQ(sync.lock().transform(nc_callable).value(), "42");
     }
 
     {
         const SyncTS_t const_sync(TestStruct{42});
-        EXPECT_EQ(const_sync.WithLock(ConstNonConstCallable<TestStruct>{}), "42");
-        EXPECT_EQ(const_sync.WithLock(NonConstCallable{}), "42");
+        EXPECT_EQ(const_sync.lock().transform(ConstNonConstCallable<TestStruct>{}).value(), "42");
+        EXPECT_EQ(const_sync.lock().transform(NonConstCallable{}).value(), "42");
 
         ConstNonConstCallable<TestStruct> cnc_callable;
-        EXPECT_EQ(const_sync.WithLock(cnc_callable), "42");
+        EXPECT_EQ(const_sync.lock().transform(cnc_callable).value(), "42");
 
         NonConstCallable nc_callable;
-        EXPECT_EQ(const_sync.WithLock(nc_callable), "42");
+        EXPECT_EQ(const_sync.lock().transform(nc_callable).value(), "42");
     }
 }
 
@@ -577,29 +645,23 @@ TEST(SynchronizedTest, TestStructExceptionSafetyDetailed)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-        s->value = 100;
-    });
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<100, SyncTS_t::pointer>).value(), 100);
 
     EXPECT_NO_THROW({
-        sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-            s->value = 999;
-            EXPECT_EQ(s->value, 999);
-        });
+        auto callback_result = sync_struct.lock().transform(set_and_ret_val<999, SyncTS_t::pointer>);
+        EXPECT_EQ(callback_result.value(), 999);
     });
 
-    auto val = sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    auto val = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val, 999);
+    EXPECT_EQ(val.value(), 999);
 
-    sync_struct.WithLock([](SyncTS_t::pointer s) noexcept {
-        s->value = 200;
-    });
-    auto val2 = sync_struct.WithLock([](SyncTS_t::const_pointer s) noexcept {
+    EXPECT_EQ(sync_struct.lock().transform(set_and_ret_val<200, SyncTS_t::pointer>).value(), 200);
+    auto val2 = std::as_const(sync_struct).lock().transform([](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
-    EXPECT_EQ(val2, 200);
+    EXPECT_EQ(val2.value(), 200);
 }
 
 }  // namespace test
