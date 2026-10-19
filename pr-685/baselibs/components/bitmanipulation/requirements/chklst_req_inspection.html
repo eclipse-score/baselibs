@@ -496,7 +496,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-ee87e401">
+  <div class="need_container docutils container" id="SNCB-cd2228db">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_req_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -515,7 +515,7 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/requirements_engineering/requirements_workproducts.html#wp__requirements_inspect">wp__requirements_inspect</a></span></span></div>
 </span></div>
@@ -547,15 +547,15 @@
 <p><strong>Conduct</strong></p>
 <p>As described in the concept <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> the following “inspection roles” are expected to be filled:</p>
 <ul class="simple">
-<li><p>content responsible (author): <a class="github reference external" href="https://github.com/rutik7">rutik7</a></p></li>
-<li><p>reviewer: <a class="github reference external" href="https://github.com/mihajlo-k">mihajlo-k</a></p></li>
+<li><p>content responsible (author): <a class="github reference external" href="https://github.com/rutik7">rutik7</a>, <a class="github reference external" href="https://github.com/4og">4og</a></p></li>
+<li><p>reviewer: <a class="github reference external" href="https://github.com/mihajlo-k">mihajlo-k</a>, <a class="github reference external" href="https://github.com/aschemmel-tech">aschemmel-tech</a></p></li>
 <li><p>moderator: <a class="github reference external" href="https://github.com/aschemmel-tech">aschemmel-tech</a></p></li>
 <li><p>test expert: <a class="github reference external" href="https://github.com/rahulthakre29">rahulthakre29</a></p></li>
 </ul>
 <p><strong>Checklist</strong></p>
 <p>See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-number">Table 22 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-number">Table 22 </span><span class="caption-text">Component Requirement Inspection Checklist</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 9.1%" />
 <col style="width: 27.3%" />
@@ -589,12 +589,10 @@
 <tr class="row-odd"><td><p>REQ_02_01</p></td>
 <td><p>Is the requirement description <em>comprehensible</em> ?</p></td>
 <td><p>If you think the requirement is hard to understand, comment here.</p></td>
-<td><p>YES</p></td>
-<td><p>The inspected requirements are clear and easy to understand. Some grammar mistakes were found and were fixed in PR-2677 and PR-2480:</p>
+<td><p>NO</p></td>
+<td><p>The following requirement is unclear what it requires “shall provide byte and half-byte types”</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__bit_operations" title="comp_req__bitmanipulation__bit_operations"><em class="xref need">Support for Bit Operations (comp_req__bitmanipulation__bit_operations)</em></a></p></li>
-<li><p><a class="reference internal" href="index.html#aou_req__bitmanipulation__type_constraints" title="aou_req__bitmanipulation__type_constraints"><em class="xref need">Integral Type Constraints (aou_req__bitmanipulation__type_constraints)</em></a></p></li>
-<li><p><a class="reference internal" href="index.html#aou_req__bitmanipulation__enum_constraints" title="aou_req__bitmanipulation__enum_constraints"><em class="xref need">Bitmask Enum Value Constraints (aou_req__bitmanipulation__enum_constraints)</em></a></p></li>
+<li><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__byte_operations" title="comp_req__bitmanipulation__byte_operations"><em class="xref need">Support for Byte and Half-B... (comp_req__bitmanipulation__byte_operations)</em></a></p></li>
 </ul>
 </td>
 <td></td>
@@ -738,7 +736,7 @@
 It is mandatory to fill remarks also for checklist entries which are passed, to be able to understand the verdict.</p>
 </div>
 <p>Note: If a Review ID is not applicable for your requirement, then state “”n/a” in status and comment accordingly in remarks. For example “no stakeholder requirement (no rationale needed)”</p>
-<p>The following requirements in “valid” state and with “inspected” tag set are in the scope of this inspection:</p>
+<p>The following requirements in “valid_inspected” state are in the scope of this inspection:</p>
 <div class="needstable_wrapper docutils container" id="needtable-baselibs/components/bitmanipulation/requirements/chklst_req_inspection-0">
 <div class="pst-scrollable-table-container"><table class="NEEDS_TABLE table" id="needtable-baselibs/components/bitmanipulation/requirements/chklst_req_inspection-0-table_node">
 <colgroup>
@@ -754,34 +752,34 @@ It is mandatory to fill remarks also for checklist entries which are passed, to 
 </thead>
 <tbody>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__bounds_safety">comp_req__bitmanipulation__bounds_safety</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__header_only">comp_req__bitmanipulation__header_only</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__bit_operations">comp_req__bitmanipulation__bit_operations</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__bitmask_operators">comp_req__bitmanipulation__bitmask_operators</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__byte_operations">comp_req__bitmanipulation__byte_operations</a></p></td>
-<td class="needs_status"><p>valid</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
 <td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#comp_req__bitmanipulation__byte_extraction">comp_req__bitmanipulation__byte_extraction</a></p></td>
-<td class="needs_status"><p>valid</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
 <td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>And also the following AoUs in “valid” state and with “inspected” tag set (for these please answer the questions above as if the AoUs are requirements, except questions REQ_03_01 and REQ_03_02):</p>
+<p>And also the following AoUs in “valid_inspected” state (for these please answer the questions above as if the AoUs are requirements, except questions REQ_03_01 and REQ_03_02):</p>
 <div class="needstable_wrapper docutils container" id="needtable-baselibs/components/bitmanipulation/requirements/chklst_req_inspection-1">
 <div class="pst-scrollable-table-container"><table class="NEEDS_TABLE table" id="needtable-baselibs/components/bitmanipulation/requirements/chklst_req_inspection-1-table_node">
 <colgroup>
@@ -797,16 +795,16 @@ It is mandatory to fill remarks also for checklist entries which are passed, to 
 </thead>
 <tbody>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#aou_req__bitmanipulation__enum_constraints">aou_req__bitmanipulation__enum_constraints</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="index.html#aou_req__bitmanipulation__concurrent_access">aou_req__bitmanipulation__concurrent_access</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="index.html#aou_req__bitmanipulation__type_constraints">aou_req__bitmanipulation__type_constraints</a></p></td>
-<td class="needs_status"><p>valid</p></td>
-<td class="needs_tags"><p>inspected<em>; </em>baselibs<em>; </em>bitmanipulation</p></td>
+<td class="needs_status"><p>valid_inspected</p></td>
+<td class="needs_tags"><p>baselibs<em>; </em>bitmanipulation</p></td>
 </tr>
 </tbody>
 </table>
