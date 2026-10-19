@@ -77,5 +77,10 @@ coverage:qnx_cov --instrument_test_targets
 # gcov backend drops their counters: score/os showed 0 % on QNX. The LLVM
 # backend on Linux is unaffected (its merger does not consult the filter).
 coverage:qnx_cov --instrumentation_filter=^//score[/:]
+# The scope's baseline .gcno notes of untested files are built in the exec
+# configuration, which takes the HOST options and defaults to opt; without
+# this GCC optimises them and their line tables differ from the test builds
+# (score_coverage 0.4.2, user manual step 4b).
+coverage:qnx_cov --host_cxxopt=-O0
 coverage:qnx_cov --coverage_output_generator=@bazel_tools//tools/test:lcov_merger
 coverage:qnx_cov --coverage_report_generator=//tools/coverage:gcov_reporter_wrapper
