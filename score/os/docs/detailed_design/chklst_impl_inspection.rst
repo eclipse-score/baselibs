@@ -12,8 +12,8 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. document:: OS Implementation Inspection Checklist
-   :id: doc__os_impl_inspection
+.. document:: OSAL Implementation Inspection Checklist
+   :id: doc__osal_impl_inspection
    :status: draft
    :version: 1
    :safety: ASIL_B
