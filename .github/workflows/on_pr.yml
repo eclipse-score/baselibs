@@ -10,17 +10,19 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-name: Formatting checks
-permissions:
-  contents: read
-  actions: write
+name: Checks for Bazel lock, copyright and format
 on:
   pull_request:
     types: [opened, reopened, synchronize]
   merge_group:
     types: [checks_requested]
 jobs:
-  formatting-check:
-    uses: eclipse-score/cicd-workflows/.github/workflows/format.yml@f57b605a284ca117bcfd9f83ea427096faaac7d1
+  checks:
+    uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@016ac00faab049c07fb1270dd7e173e6e8e3e143 # main on: 19-10-2026
     with:
-      bazel-target: "test --test_output=errors //tools:format.check"
+      skip-pre-commit: true
+      skip-python-tests: true
+      format-target: "//tools:format.check"
+      copyright-target: "//tools:copyright-check"
+    permissions:
+      contents: read
