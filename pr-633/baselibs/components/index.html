@@ -417,11 +417,12 @@
 <li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mw_log/index.html">log_frontend</a></li>
-<li class="toctree-l1"><a class="reference internal" href="os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="osal/index.html">Operating System Abstraction Layer (OSAL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="result/index.html">result</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scope_exit/index.html">Scope Exit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -666,13 +667,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="os/index.html">os</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="os/index.html#abstract">Abstract</a></li>
-<li class="toctree-l2"><a class="reference internal" href="os/index.html#motivation-and-rationale">Motivation and Rationale</a></li>
-<li class="toctree-l2"><a class="reference internal" href="os/index.html#specification">Specification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="os/index.html#general-considerations">General considerations</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="osal/index.html">Operating System Abstraction Layer (OSAL)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="osal/index.html#abstract">Abstract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osal/index.html#motivation-and-rationale">Motivation and Rationale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osal/index.html#scope-and-use">Scope and Use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="osal/index.html#safety-and-specification">Safety and Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="result/index.html">result</a><ul>
@@ -736,6 +735,7 @@
 <li class="toctree-l2"><a class="reference internal" href="static_reflection_with_serialization/index.html#motivation-and-rationale">Motivation and Rationale</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/index.html">utils</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="utils/index.html#abstract">Abstract</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils/index.html#motivation-and-rationale">Motivation and Rationale</a></li>
@@ -769,7 +769,7 @@ as well as selected proposals for the C++ Standard Library.</p></li>
 overflow-safe arithmetic, scoped callable execution, abort-on-exception enforcement, atomic overflow
 prevention, null-terminated string view utilities, and coverage data preservation in GTest death tests.</p></li>
 <li><p><a class="reference internal" href="memory/index.html#doc__memory" title="doc__memory"><em class="xref need">Memory Library (doc__memory)</em></a>: Utility library for memory handling, including an abstraction layer for shared memory.</p></li>
-<li><p><a class="reference internal" href="os/index.html#doc__os" title="doc__os"><em class="xref need">OS Library (doc__os)</em></a>: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
+<li><p><a class="reference internal" href="osal/index.html#doc__osal" title="doc__osal"><em class="xref need">OSAL (doc__osal)</em></a>: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
 as Linux and QNX.</p></li>
 <li><p><a class="reference internal" href="result/index.html#doc__result" title="doc__result"><em class="xref need">Result Library (doc__result)</em></a>: Provides a unified approach to error handling without exceptions, conforming to C++23
 <code class="docutils literal notranslate"><span class="pre">std::expected</span></code>.</p></li>
@@ -780,6 +780,8 @@ deserialization, and compile-time type reflection of heterogenuous C++ data stru
 on compile-time safety and efficiency of serialization, as well as efficiency of filtering by
 content during deserialization.</p></li>
 <li><p><em>mw::log</em>: Logging frontend.</p></li>
+<li><p><a class="reference internal" href="string_manipulation/index.html#doc__string_manipulation" title="doc__string_manipulation"><em class="xref need">String Manipulation (doc__string_manipulation)</em></a>: Provides allocation-conscious helpers for command-line arguments,
+lazy string-view splitting, and string-like comparison and hashing.</p></li>
 <li><p><a class="reference internal" href="utils/index.html#doc__utils" title="doc__utils"><em class="xref need">Utils Library (doc__utils)</em></a>: Provides a collection of small, reusable utilities that do not fit into the other
 base libraries.</p></li>
 </ul>

@@ -417,7 +417,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mw_log/index.html">log_frontend</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../osal/index.html">Operating System Abstraction Layer (OSAL)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../result/index.html">result</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Cross-Language Shared-Layout Data Types</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -426,6 +426,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -492,7 +493,7 @@
                   
   <section id="requirements">
 <span id="shared-layout-requirements"></span><h1>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-b4223d79">
+<div class="need_container docutils container" id="SNCB-8e9793f3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__shared_layout_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -540,7 +541,7 @@
 <h2>ABI Compatibility<a class="headerlink" href="#abi-compatibility" title="Link to this heading">#</a></h2>
 <section id="restrictions-on-native-types">
 <h3>Restrictions on Native Types<a class="headerlink" href="#restrictions-on-native-types" title="Link to this heading">#</a></h3>
-<div class="need_container docutils container" id="SNCB-b00feae0">
+<div class="need_container docutils container" id="SNCB-304cfb4b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__bool_sz">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -586,7 +587,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3ce4e8cf">
+<div class="need_container docutils container" id="SNCB-a5e10ea5">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__int_fix">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -632,7 +633,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8aafe1e9">
+<div class="need_container docutils container" id="SNCB-a89ed11a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__flt_sz">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -678,7 +679,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-de43946b">
+<div class="need_container docutils container" id="SNCB-e25e6e58">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__char">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -724,7 +725,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-cf4da9a0">
+<div class="need_container docutils container" id="SNCB-adf0eacc">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__arr_fix">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -770,7 +771,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c3d2f4c7">
+<div class="need_container docutils container" id="SNCB-90af32fd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__st_tpl">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -816,7 +817,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-03fdf82b">
+<div class="need_container docutils container" id="SNCB-c5da0dd9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__enum_udr">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -862,7 +863,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-20ea44bb">
+<div class="need_container docutils container" id="SNCB-fe586bb1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__nop_mt">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -908,7 +909,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-284bbf8e">
+<div class="need_container docutils container" id="SNCB-1b76ac7c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__compabi">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -959,7 +960,7 @@
 <h3>Custom Types<a class="headerlink" href="#custom-types" title="Link to this heading">#</a></h3>
 <section id="vector">
 <h4>Vector<a class="headerlink" href="#vector" title="Link to this heading">#</a></h4>
-<div class="need_container docutils container" id="SNCB-efa6d737">
+<div class="need_container docutils container" id="SNCB-d33f4132">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__prv_abv">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1021,7 +1022,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-73d84a53">
+<div class="need_container docutils container" id="SNCB-7cd83d23">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abv_fld">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1067,7 +1068,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0b3d1d54">
+<div class="need_container docutils container" id="SNCB-0d05d9eb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abv_noa">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1113,7 +1114,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-92eeef74">
+<div class="need_container docutils container" id="SNCB-676af315">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abv_ovf">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1162,7 +1163,7 @@
 </section>
 <section id="string">
 <h4>String<a class="headerlink" href="#string" title="Link to this heading">#</a></h4>
-<div class="need_container docutils container" id="SNCB-6b13e5a7">
+<div class="need_container docutils container" id="SNCB-a99fcbe1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__prv_abs">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1224,7 +1225,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0d37fc02">
+<div class="need_container docutils container" id="SNCB-582a714c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abs_fld">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1270,7 +1271,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d1858857">
+<div class="need_container docutils container" id="SNCB-b5ecf7f4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abs_noa">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1316,7 +1317,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-6c4e6af6">
+<div class="need_container docutils container" id="SNCB-a9d8f4da">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abs_ovf">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1365,7 +1366,7 @@
 </section>
 <section id="option">
 <h4>Option<a class="headerlink" href="#option" title="Link to this heading">#</a></h4>
-<div class="need_container docutils container" id="SNCB-0258e993">
+<div class="need_container docutils container" id="SNCB-ecd5fd0e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__prv_abo">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1427,7 +1428,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-f3d37eb6">
+<div class="need_container docutils container" id="SNCB-6f8ea432">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abo_flg">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1473,7 +1474,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-ffea8bba">
+<div class="need_container docutils container" id="SNCB-d096ada6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__abo_api">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1522,7 +1523,7 @@
 </section>
 <section id="result">
 <h4>Result<a class="headerlink" href="#result" title="Link to this heading">#</a></h4>
-<div class="need_container docutils container" id="SNCB-26eeec21">
+<div class="need_container docutils container" id="SNCB-d3ea9b00">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__prv_ari">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1593,7 +1594,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-1d6bdfdb">
+<div class="need_container docutils container" id="SNCB-eba24f45">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__ari_flg">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1639,7 +1640,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0769a528">
+<div class="need_container docutils container" id="SNCB-87ab47e8">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__shared_layout__ari_api">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
