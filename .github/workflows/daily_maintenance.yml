@@ -20,9 +20,12 @@ permissions:
   pages: write
   id-token: write
 jobs:
-  docs-cleanup:
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs-cleanup.yml@33842dcb0a19ca700d159101a34a7f078bada023
+  daily-cleanup:
+    uses: eclipse-score/cicd-workflows/.github/workflows/daily.yml@b775b8e8e53aa6fcc9f47afc6d62cc8b66bbe18f
+    with:
+      skip-stale-prs: true
     permissions:
       contents: write
       pages: write
       id-token: write
+      actions: write
