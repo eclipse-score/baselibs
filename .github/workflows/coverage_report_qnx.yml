@@ -68,7 +68,7 @@ jobs:
       - name: Setup Bazel Cache
         uses: eclipse-score/cicd-actions/setup-bazel-cache@30740c18c728bc58f9b17c914c5592a5008f6b98
         with:
-          unique-cache-name: ${{ github.job }}
+          disk-cache-key: ${{ github.job }}
       - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30740c18c728bc58f9b17c914c5592a5008f6b98
       - name: Setup QNX SDP usage
         uses: eclipse-score/cicd-actions/setup-qnx-sdp@30740c18c728bc58f9b17c914c5592a5008f6b98
