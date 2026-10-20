@@ -125,7 +125,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 bazel_dep(name = "score_docs_as_code", version = "8.4.0")
 git_override(
     module_name = "score_docs_as_code",
-    commit = "cbb141a39c3abeff0efe2956b35fd86dfb608aee",
+    commit = "14207733d019bd80b770c55a151e8f4614ef30b7",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
