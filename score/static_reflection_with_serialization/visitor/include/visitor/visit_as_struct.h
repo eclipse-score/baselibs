@@ -129,7 +129,7 @@ template <typename... Ts, std::size_t... Is>
 constexpr std::array<const char*, sizeof...(Ts)> tuple_to_array_impl(const std::tuple<Ts...>& tup,
                                                                      std::index_sequence<Is...>)
 {
-    return {std::get<Is>(tup)...};
+    return {{std::get<Is>(tup)...}};
 }
 
 template <typename... Ts>
