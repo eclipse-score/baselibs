@@ -16,7 +16,10 @@ on:
     - cron: "0 3 * * *"
   workflow_dispatch:
 permissions:
+  actions: write
   contents: write
+  issues: write
+  pull-requests: write
   pages: write
   id-token: write
 jobs:
@@ -25,7 +28,9 @@ jobs:
     with:
       skip-stale-prs: true
     permissions:
+      actions: write
       contents: write
+      issues: write
+      pull-requests: write
       pages: write
       id-token: write
-      actions: write
