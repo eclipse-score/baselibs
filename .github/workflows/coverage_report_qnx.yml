@@ -66,12 +66,12 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           allow-unsafe-pr-checkout: true
       - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@30740c18c728bc58f9b17c914c5592a5008f6b98
         with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}
-      - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30ed908edcf367bc38ebff5b386a244f9b6417a7 # 2025-06-04
+          unique-cache-name: ${{ github.job }}
+      - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30740c18c728bc58f9b17c914c5592a5008f6b98
       - name: Setup QNX SDP usage
-        uses: eclipse-score/cicd-actions/setup-qnx-sdp@a2b3c36fc7d1b9d03880d19935c7ac9cfffe58c6 # 2026-05-19
+        uses: eclipse-score/cicd-actions/setup-qnx-sdp@30740c18c728bc58f9b17c914c5592a5008f6b98
         with:
           qnx-license: ${{ secrets.SCORE_QNX_LICENSE }}
           qnx-user: ${{ secrets.SCORE_QNX_USER }}
