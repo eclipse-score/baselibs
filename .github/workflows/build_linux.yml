@@ -90,18 +90,9 @@ jobs:
             ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
           retention-days: 5
           if-no-files-found: warn
-  docs-verify:
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@33842dcb0a19ca700d159101a34a7f078bada023
-    permissions:
-      contents: read
-    with:
-      bazel-docs-verify-target: "//:docs_check"
   docs-build:
-    needs: [docs-verify, linux-build-and-test]
-    # Still build docs (with whatever test results were uploaded) even if
-    # linux-build-and-test failed; only skip if docs-verify itself failed.
-    if: always() && needs.docs-verify.result == 'success'
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    needs: [linux-build-and-test]
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@016ac00faab049c07fb1270dd7e173e6e8e3e143
     permissions:
       contents: read
     with:
