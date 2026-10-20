@@ -125,11 +125,11 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 bazel_dep(name = "score_docs_as_code", version = "8.4.0")
 git_override(
     module_name = "score_docs_as_code",
-    commit = "c6a98bd89f76f36c728c7da8ab56b90a72555e67",
+    commit = "cbb141a39c3abeff0efe2956b35fd86dfb608aee",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
-bazel_dep(name = "score_process_description", version = "2.1.2")
+bazel_dep(name = "score_process_description", version = "2.2.1")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
