@@ -13,6 +13,7 @@
 #ifndef SCORE_LIB_CONCURRENCY_FUTURE_TEST_TYPES_H
 #define SCORE_LIB_CONCURRENCY_FUTURE_TEST_TYPES_H
 
+#include <cstdint>
 #include <type_traits>
 #include <utility>
 
@@ -217,6 +218,44 @@ class UnguardedForwardingType : public CopyAndMovableType
   private:
     /// @brief true if this object was produced by the copy constructor, false if by the forwarding one.
     bool was_copied_;
+};
+
+/// @brief Derived from GuardedForwardingType, whose guard excludes only that exact type.
+///
+/// An lvalue of this type is therefore accepted by the base's forwarding constructor, as a better match than the base's
+/// copy constructor. Handed to SetValue() of the base type, it has always been copied, and the tests pin that down.
+class DerivedFromGuardedForwardingType : public GuardedForwardingType
+{
+  public:
+    using GuardedForwardingType::GuardedForwardingType;
+};
+
+/// @brief Has an implicit converting constructor from std::int64_t and an explicit one from int.
+///
+/// Converting an int to this type implicitly can only use the first; constructing it directly from an int picks the
+/// explicit one, which matches better. Which of the two ran is recorded, so a test can tell whether SetValue()
+/// converted its argument, as it always has, or constructed the value from it directly.
+class ImplicitlyAndExplicitlyConstructibleType : public CopyAndMovableType
+{
+  public:
+    // coverity[autosar_cpp14_a12_1_4_violation] implicit on purpose, see above
+    ImplicitlyAndExplicitlyConstructibleType(std::int64_t value)
+        : CopyAndMovableType{static_cast<int>(value)}, was_converted_implicitly_{true}
+    {
+    }
+    explicit ImplicitlyAndExplicitlyConstructibleType(int value)
+        : CopyAndMovableType{value}, was_converted_implicitly_{false}
+    {
+    }
+
+    bool WasConvertedImplicitly() const noexcept
+    {
+        return was_converted_implicitly_;
+    }
+
+  private:
+    /// @brief true if this object was produced by the implicit constructor, false if by the explicit one.
+    bool was_converted_implicitly_;
 };
 
 }  // namespace testing

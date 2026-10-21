@@ -21,6 +21,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <cstdint>
 #include <future>
 #include <memory>
 #include <type_traits>
@@ -500,6 +501,55 @@ TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenThe
     ASSERT_TRUE(result.has_value());
     EXPECT_TRUE(result.value().WasCopyConstructed());
     EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+// More generally, every single-argument call that compiled before the in-place overload existed must still resolve as
+// it did. These are the cases a forwarding reference would otherwise take over: an object derived from Value, an
+// argument that converts to Value although an explicit constructor would match it better, and a bit-field, which
+// cannot bind to a forwarding reference at all.
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromADerivedLvalueEvenThoughTheForwardingConstructorWouldAcceptIt)
+{
+    const auto state = InterruptibleState<testing::GuardedForwardingType>::Make();
+    testing::DerivedFromGuardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillConvertsImplicitlyWhenAnExplicitConstructorWouldMatchBetter)
+{
+    const auto state = InterruptibleState<testing::ImplicitlyAndExplicitlyConstructibleType>::Make();
+
+    EXPECT_TRUE(state->SetValue(kFirstValue));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasConvertedImplicitly());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsABitFieldOfAnotherType)
+{
+    struct WithBitField
+    {
+        // coverity[autosar_cpp14_a9_6_2_violation] a bit-field is what this test is about
+        std::uint32_t field : 4U;
+    };
+    constexpr std::uint32_t kBitFieldValue{5U};
+    // Not const on purpose: a const bit-field binds to a const reference through a temporary, which always worked.
+    WithBitField holder{kBitFieldValue};
+    const auto state = InterruptibleState<std::int64_t>::Make();
+
+    EXPECT_TRUE(state->SetValue(holder.field));
+
+    auto& result = state->GetValue();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), static_cast<std::int64_t>(kBitFieldValue));
 }
 
 }  // namespace
