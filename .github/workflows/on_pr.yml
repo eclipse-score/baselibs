@@ -18,10 +18,11 @@ on:
     types: [checks_requested]
 jobs:
   checks:
-    uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@016ac00faab049c07fb1270dd7e173e6e8e3e143 # main on: 19-10-2026
+    uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@0bfa9822cc2df460b2172ec18f5acafa65316e68 # main branch as of 21-10-2026
     with:
       skip-pre-commit: true
       skip-python-tests: true
+      require-bzlmod-lock: true
       format-target: "//tools:format.check"
       copyright-target: "//tools:copyright-check"
     permissions:
