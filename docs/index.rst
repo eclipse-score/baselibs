@@ -33,6 +33,16 @@ The Feature documentation covers the feature-level definition of Base Libraries,
 
    features/index
 
+.. needtable::
+   :filter: docname is not None and docname.startswith("features/")
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
+
+.. _documents_docs_modules_baselibs_docs:
+
 Module Documentation
 --------------------
 
@@ -44,6 +54,15 @@ The Module documentation covers the module-level view, including architecture, s
    module/index
    verification_report/module_verification_report
 
+.. needtable::
+   :filter: docname is not None and (docname.startswith("module/") or docname.startswith("verification_report/"))
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
+
+.. _documents_docs_modules_baselibs_components:
 
 Component Documentation
 -----------------------
@@ -55,6 +74,13 @@ The Components documentation provides detailed documentation for each individual
 
    baselibs/components/index
 
+.. needtable::
+   :filter: docname is not None and docname.startswith("baselibs/components/")
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
 
 Quick Start - Building and Testing
 ----------------------------------

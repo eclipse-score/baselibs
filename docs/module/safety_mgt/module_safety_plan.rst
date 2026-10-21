@@ -803,19 +803,13 @@ Module Documents Status
 -----------------------
 
 For all the work product documents the status can be seen by following the "Link to WP".
-A summary of the status is also documented in the project's documentation management plan.
-
-.. TODO: Link to module documents status needs to be created
-.. See :ref:`documents_docs_modules_baselibs_docs`
+A summary of the status is also documented in :ref:`documents_docs_modules_baselibs_docs`
 
 Component Documents Status
 --------------------------
 
 For all the work product documents the status can be seen by following the "Link to WP".
-A summary of the status is also documented in the project's documentation management plan.
-
-.. TODO: Link to module documents status needs to be created
-.. See :ref:`documents_docs_modules_baselibs_components`
+A summary of the status is also documented in :ref:`documents_docs_modules_baselibs_components`
 
 Component Requirements Status
 -----------------------------
