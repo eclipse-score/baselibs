@@ -207,6 +207,20 @@ TYPED_TEST_P(DeSerializeIteratorFixture, CheckBufferNotEmpty)
     EXPECT_TRUE(iterator != iterator.End());
 }
 
+TYPED_TEST_P(DeSerializeIteratorFixture, SetErrorIsReportedThroughGetResult)
+{
+    // Given a deserialization iterator
+    auto iterator = DeSerializeIterator<TypeParam>(this->buffer);
+
+    // When the caller sets an error
+    iterator.SetError(SerializationError::kStringTooBig);
+
+    // Then the error is reported
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kStringTooBig);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty)
 {
     // Given a deserialization iterator for a buffer that contains 0 elements
@@ -227,7 +241,8 @@ REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixture,
                             DoesNotAdvanceOverEndPostfix,
                             PostfixIncrementReturnsPreviousPosition,
                             CanGetEndFromIterator,
-                            CheckBufferNotEmpty);
+                            CheckBufferNotEmpty,
+                            SetErrorIsReportedThroughGetResult);
 
 REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty);
 

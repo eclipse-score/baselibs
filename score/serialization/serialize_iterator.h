@@ -212,6 +212,13 @@ class DeSerializeIterator
         return *iterator_;
     }
 
+    /// @brief Latches a deserialization error detected by the caller (e.g. a declared length that cannot be read).
+    /// Surfaced through GetResult().
+    void SetError(const SerializationError error)
+    {
+        *result_ = MakeUnexpected(error);
+    }
+
     /// @brief Move iterator to next position (but not past end())
     DeSerializeIterator<Container>& operator++()
     {
