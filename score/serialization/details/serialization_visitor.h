@@ -22,6 +22,9 @@
 #include <score/assert.hpp>
 #include <score/type_traits.hpp>
 
+#include <array>
+#include <cstddef>
+
 namespace score
 {
 namespace serialization
@@ -74,8 +77,39 @@ class CommonVisitorLogic
         meta_.field_index_ = field_index;
     }
 
+    /// @brief Maximum supported struct/array nesting depth for the field path below.
+    static constexpr std::size_t kMaxNestingDepth{16U};
+
+    /// @brief Records that traversal descended into the field at the given index of the current struct. Together with
+    /// PopField this maintains the full index path from the root to the element currently visited, letting a format
+    /// resolve per-level configuration for arbitrarily nested types.
+    void PushField(const std::size_t field_index)
+    {
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ < kMaxNestingDepth);
+        field_path_[field_depth_] = field_index;
+        ++field_depth_;
+    }
+
+    void PopField()
+    {
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ > 0U);
+        --field_depth_;
+    }
+
+    const std::size_t* FieldPathData() const
+    {
+        return field_path_.data();
+    }
+
+    std::size_t FieldDepth() const
+    {
+        return field_depth_;
+    }
+
   private:
     MetaInformation meta_{};
+    std::array<std::size_t, kMaxNestingDepth> field_path_{};
+    std::size_t field_depth_{0U};
 };
 
 /// @brief Provides context for serialization but is not user
