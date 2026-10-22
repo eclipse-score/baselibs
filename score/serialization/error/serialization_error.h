@@ -31,7 +31,8 @@ enum class SerializationError : score::result::ErrorCode
 {
     kOutOfBoundsWrite,
     kStringTooBig,
-    kNotAllDataDeserialized
+    kNotAllDataDeserialized,
+    kDeserializedCountExceedsCapacity
 };
 
 /// @brief ADL overload to fulfill design requirements from lib/result
