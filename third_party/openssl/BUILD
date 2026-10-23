@@ -12,30 +12,10 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_test")
-load("//third_party/openssl:openssl_transition.bzl", "openssl_library")
-
-# Allows integrating workspaces to redirect the OpenSSL crypto implementation
-# without modifying this file. The default points to the BCR-provided module.
-# Override example (in the integrating workspace's .bazelrc):
-#   build --@score_baselibs//third_party/openssl:openssl_crypto_impl=//my/openssl:target
-label_flag(
-    name = "openssl_crypto_impl",
-    build_setting_default = "@openssl//:crypto",
-    tags = ["manual"],
-    visibility = ["//visibility:public"],
-)
-
-openssl_library(
-    name = "openssl_default",
-    dep = ":openssl_crypto_impl",
-)
 
 alias(
     name = "openssl",
-    actual = select({
-        "@platforms//os:qnx": "//third_party/qnx:openssl",
-        "//conditions:default": ":openssl_default",
-    }),
+    actual = "@score_openssl//:openssl_link",
     visibility = ["//visibility:public"],
 )
 
