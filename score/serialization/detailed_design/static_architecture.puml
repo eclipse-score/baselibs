@@ -1,0 +1,63 @@
+@startuml static_architecture
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Classes
+class MetaInformation {
+  + is_first_element_in_struct_: bool
+  + is_last_element_in_struct_: bool
+}
+
+class SerializationIterator {
+  + operator=(const ValueTypeOfContainer&): void
+  + operator=(Result): void
+  + GetResult(): Result<std::size_t>
+}
+
+class SerializationVisitor {
+  + SerializationVisitor(SequenceContainer&, SerializationStrategy&)
+  + ManipulateMetaInformation(): void
+  + Serialize(AnyType): void
+  + GetResult(): Result<std::size_t>
+}
+
+interface SerializationStrategy <<concept>> {
+  + Serialize(SerializationIterator, MetaInformation, TypeToSerialize)
+}
+
+class "Serializer<Strategy>" as Serializer {
+  + Serializer(Strategy)
+  + Serialize(TypeToSerialize const&, SequenceContainer&): Result<std::size_T>
+}
+
+class "common::Visitor" as CommonVisitor
+
+' Relationships
+SerializationVisitor --|> CommonVisitor : inherits
+SerializationVisitor ..> CommonVisitor : "uses to find\\nvisit_as overloads\\nvia ADL"
+SerializationVisitor o--> Serializer : "uses to\\nvisit TypeToSerialize"
+SerializationVisitor --> SerializationStrategy : "invoke\\nSerialize\\nwith correct params"
+SerializationIterator ..> SerializationStrategy : write into
+SerializationIterator o-- MetaInformation
+Serializer ..> SerializationStrategy : uses
+
+' Notes
+note left of CommonVisitor
+  Note:
+  Visit logic is hidden for end-user
+end note
+
+note top of SerializationIterator
+  Note:
+  SerializationIterator behaves similar to
+  std:back_insert_iterator
+end note
+
+note right of SerializationStrategy
+  Note:
+  A custom strategy needs
+  to overload Serialize()
+  for any supported type
+end note
+
+@enduml
