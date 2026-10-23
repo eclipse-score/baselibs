@@ -22,6 +22,7 @@ reduces code duplication, and promotes interoperability between components.
 Libraries are developed following the `Eclipse S-CORE Process Description <https://github.com/eclipse-score/process_description>`_
 at ISO 26262 integrity levels from QM up to ASIL-B, depending on their intended use cases.
 
+.. _documents_docs_feature_baselibs_docs:
 
 Feature Documentation
 ---------------------
