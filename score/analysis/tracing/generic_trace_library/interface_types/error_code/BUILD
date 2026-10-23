@@ -25,7 +25,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "//score/analysis:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         "//score/language/futurecpp",
