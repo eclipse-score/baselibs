@@ -51,6 +51,16 @@ cc_library(
 )
 
 cc_library(
+    name = "formatting",
+    hdrs = ["formatting.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/json:__subpackages__",
+    ],
+)
+
+cc_library(
     name = "writer_interface",
     srcs = ["i_json_writer.cpp"],
     hdrs = [
@@ -63,6 +73,7 @@ cc_library(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
+        ":formatting",
         "@score_baselibs//score/filesystem/filestream",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/language/futurecpp",
@@ -101,12 +112,13 @@ cc_library(
     name = "json_writer_impl",
     srcs = ["json_writer.cpp"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/writer:serializer",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer:writer_backend",
-        "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
     ],
 )
 

@@ -10,27 +10,26 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_VAJSON_SERIALIZE_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_VAJSON_SERIALIZE_H
+#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+
 #include "score/json/internal/model/any.h"
-#include "score/json/internal/model/error.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer_impl.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
-#include "score/result/result.h"
 #include "score/string_manipulation/string_comparison_adaptor.h"
-#include <score/assert.hpp>
+
 #include <score/utility.hpp>
+
 #include <cstdint>
 #include <optional>
-#include <ostream>
 #include <string>
 #include <type_traits>
 #include <utility>
 
-namespace score::json
-{
+/// @file
+/// @brief Translation of the JSON data model (Any, Object, List) into calls on the vaJson serializers.
 
-namespace internal::writer::vajson
+namespace score::json::internal::writer::vajson
 {
 class ObjectKeySerializer final
 {
@@ -105,7 +104,7 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
                     const score::json::Any& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next
 {
-    // See SerializeNumber() for why the outcome is parked in an optional rather than returned directly.
+    // The outcome is parked in an optional to keep a single exit point.
     std::optional<typename score::json::vajson::GenericValueSerializer<Next>::Next> serialized{};
 
     if (const auto object = value.As<score::json::Object>(); object.has_value())
@@ -143,66 +142,6 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 
     return *std::move(serialized);
 }
-}  // namespace internal::writer::vajson
+}  // namespace score::json::internal::writer::vajson
 
-class VajsonSerialize final
-{
-  public:
-    /// @brief Constructs a serializer writing into out_stream
-    /// @param out_stream The stream to write the serialized representation to. It must outlive this instance.
-    /// @param formatting Layout of the output, pretty printed by default.
-    explicit VajsonSerialize(
-        std::ostream& out_stream,
-        const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint) noexcept;
-    ~VajsonSerialize() noexcept = default;
-    VajsonSerialize(const VajsonSerialize&) = delete;
-    VajsonSerialize(VajsonSerialize&&) noexcept = default;
-    VajsonSerialize& operator=(const VajsonSerialize&) = delete;
-    VajsonSerialize& operator=(VajsonSerialize&&) = delete;
-    score::Result<void> operator<<(const score::json::Object& json_data);
-    score::Result<void> operator<<(const score::json::List& json_data);
-    score::Result<void> operator<<(const score::json::Any& json_data);
-
-  private:
-    std::ostream& out_stream_;
-    /// @brief Layout of the output
-    vajson::VajsonFormatting formatting_;
-};
-/// @brief Serializes json_data into a string
-/// @param json_data The data to serialize
-/// @param formatting Layout of the output, pretty printed by default.
-/// @return The serialized representation on success, error otherwise
-score::Result<std::string> VajsonToBuffer(
-    const score::json::Object& json_data,
-    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
-score::Result<std::string> VajsonToBuffer(
-    const score::json::List& json_data,
-    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
-score::Result<std::string> VajsonToBuffer(
-    const score::json::Any& json_data,
-    const vajson::VajsonFormatting formatting = vajson::VajsonFormatting::kPrettyPrint);
-}  // namespace score::json
-
-namespace score::json::vajson
-{
-template <typename Next>
-auto operator<<(GenericValueSerializer<Next>&& serializer, const score::json::Object& value) noexcept ->
-    typename GenericValueSerializer<Next>::Next
-{
-    return score::json::internal::writer::vajson::SerializeObject(std::move(serializer), value);
-}
-template <typename Next>
-auto operator<<(GenericValueSerializer<Next>&& serializer, const score::json::List& value) noexcept ->
-    typename GenericValueSerializer<Next>::Next
-{
-    return score::json::internal::writer::vajson::SerializeList(std::move(serializer), value);
-}
-template <typename Next>
-auto operator<<(GenericValueSerializer<Next>&& serializer, const score::json::Any& value) noexcept ->
-    typename GenericValueSerializer<Next>::Next
-{
-    return score::json::internal::writer::vajson::SerializeValue(std::move(serializer), value);
-}
-}  // namespace score::json::vajson
-
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_VAJSON_SERIALIZE_H
+#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
