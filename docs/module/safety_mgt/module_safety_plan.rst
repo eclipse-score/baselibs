@@ -777,10 +777,79 @@ Component json Work products List
           - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
           - <Link to WP>
 
-        * - :need:`wp__sw_component_class`
-          - :need:`tsf__trust__trustable-software`
-          - :ndf:`copy('status', need_id='gd_guidl__component_classification')`
-          - `TSF Report on nlohman/json <https://eclipse-score.github.io/inc_nlohmann_json/main/report.html>`_
+
+Component vajson Work products List
+-----------------------------------
+
+.. list-table:: Component vajson Work products
+        :header-rows: 1
+
+        * - Work product Id
+          - Link to process
+          - Process status
+          - Link to WP
+
+        * - :need:`wp__requirements_comp`
+          - :need:`gd_temp__req_comp_req`
+          - :ndf:`copy('status', need_id='gd_temp__req_comp_req')`
+          - :need:`doc__vajson_requirements`
+
+        * - :need:`wp__requirements_comp_aou`
+          - :need:`gd_temp__req_aou_req`
+          - :ndf:`copy('status', need_id='gd_temp__req_aou_req')`
+          - :need:`doc__vajson_requirements`
+
+        * - :need:`wp__requirements_inspect`
+          - :need:`gd_chklst__req_inspection`
+          - :ndf:`copy('status', need_id='gd_chklst__req_inspection')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+        * - :need:`wp__component_arch`
+          - :need:`gd_temp__arch_comp`
+          - :ndf:`copy('status', need_id='gd_temp__arch_comp')`
+          - :need:`doc__vajson_architecture`
+
+        * - :need:`wp__sw_arch_verification`
+          - :need:`gd_chklst__arch_inspection_checklist`
+          - :ndf:`copy('status', need_id='gd_chklst__arch_inspection_checklist')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+        * - :need:`wp__sw_component_fmea`
+          - :need:`gd_temp__comp_saf_fmea`
+          - :ndf:`copy('status', need_id='gd_temp__comp_saf_fmea')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+        * - :need:`wp__sw_component_dfa`
+          - :need:`gd_temp__comp_saf_dfa`
+          - :ndf:`copy('status', need_id='gd_temp__comp_saf_dfa')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+        * - :need:`wp__sw_implementation`
+          - :need:`gd_guidl__implementation`
+          - :ndf:`copy('status', need_id='gd_guidl__implementation')`
+          - `parser <https://github.com/eclipse-score/baselibs/tree/main/score/json/internal/parser/vajson>`_, `writer <https://github.com/eclipse-score/baselibs/tree/main/score/json/internal/writer/vajson>`_, :need:`doc__vajson_detailed_design`
+
+        * - :need:`wp__verification_sw_unit_test`
+          - :need:`gd_guidl__verification_guide`
+          - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
+          - vajson/test.cpp: `parser <https://github.com/eclipse-score/baselibs/tree/main/score/json/internal/parser/vajson>`_, `writer <https://github.com/eclipse-score/baselibs/tree/main/score/json/internal/writer/vajson>`_
+
+        * - :need:`wp__sw_implementation_inspection`
+          - :need:`gd_chklst__impl_inspection_checklist`
+          - :ndf:`copy('status', need_id='gd_chklst__impl_inspection_checklist')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+        * - :need:`wp__verification_comp_int_test`
+          - :need:`gd_guidl__verification_guide`
+          - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
+          - <Link to WP>, <https://github.com/eclipse-score/baselibs/issues/642>`_
+
+Note: vajson is used as a realization of json read and write. This component was already qualified and used as part of several automotive products.
+In S-CORE vajson is not used as is, but needs to be modified (e.g. to resolve dependencies from the Middleware stack it originates).
+Consequently there is no component qualification planned according to Iso 26262 part 8 clause 12
+
+Other Component
+---------------
 
 All other components of the baselibs module as released in the :need:`doc__baselibs_release_note`
 are not planned to be qualifiable stand alone (as SEooC), but only in context, for example as they are used
@@ -803,19 +872,13 @@ Module Documents Status
 -----------------------
 
 For all the work product documents the status can be seen by following the "Link to WP".
-A summary of the status is also documented in the project's documentation management plan.
-
-.. TODO: Link to module documents status needs to be created
-.. See :ref:`documents_docs_modules_baselibs_docs`
+A summary of the status is also documented in :ref:`documents_docs_modules_baselibs_docs`
 
 Component Documents Status
 --------------------------
 
 For all the work product documents the status can be seen by following the "Link to WP".
-A summary of the status is also documented in the project's documentation management plan.
-
-.. TODO: Link to module documents status needs to be created
-.. See :ref:`documents_docs_modules_baselibs_components`
+A summary of the status is also documented in :ref:`documents_docs_modules_baselibs_components`
 
 Component Requirements Status
 -----------------------------
