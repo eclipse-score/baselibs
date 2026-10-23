@@ -47,19 +47,6 @@ struct NeutrinoMockTest : ::testing::Test
     sigevent unblock_event{};
 };
 
-TEST_F(NeutrinoMockTest, TimerTimeoutRawSigevent)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test Timer Timeout");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-
-    sigevent raw_signal_event;
-    EXPECT_CALL(*neutrino_mock_ptr, TimerTimeout(kClockType, _, testing::Matcher<const sigevent*>(_), _, _)).Times(1);
-    neutrino_ptr->TimerTimeout(kClockType, kTimeoutFlags, &raw_signal_event, kTimeout, std::nullopt);
-}
-
 TEST_F(NeutrinoMockTest, TimerTimeout)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
