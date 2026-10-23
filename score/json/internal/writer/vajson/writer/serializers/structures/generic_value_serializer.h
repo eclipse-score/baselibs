@@ -24,8 +24,8 @@
 #include <system_error>
 #include <type_traits>
 
-#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/parser/vajson/util/json_error_domain.h"
+#include "score/json/internal/parser/vajson/util/types.h"
 #include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
 #include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
 #include "score/json/internal/writer/vajson/writer/types/array_type.h"

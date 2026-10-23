@@ -21,8 +21,8 @@
 #include <type_traits>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/parser/vajson/util/number.h"
+#include "score/json/internal/parser/vajson/util/types.h"
 #include "score/language/futurecpp/include/score/optional.hpp"
 
 namespace score
