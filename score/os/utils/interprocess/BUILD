@@ -21,12 +21,7 @@ cc_library(
     hdrs = ["interprocess_mutex.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/concurrency:__pkg__",
-        "@score_baselibs//score/memory/shared:__pkg__",
-        "@score_baselibs//score/memory/shared/test/sct:__pkg__",
-        "@score_baselibs//score/os/utils/test:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         "@score_baselibs//score/language/futurecpp",
     ],
