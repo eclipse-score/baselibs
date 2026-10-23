@@ -78,6 +78,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
+        ":user_id",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
     ],
 )
@@ -184,6 +185,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
+        ":user_id",
     ],
 )
 
@@ -292,6 +294,7 @@ cc_library(
     deps = [
         ":errno",
         ":object_seam",
+        ":user_id",
         "@score_baselibs//score/bitmanipulation:bitmask_operators",
         "@score_baselibs//score/utils:static_destruction_guard",
     ],
@@ -733,6 +736,14 @@ cc_library(
 )
 
 cc_library(
+    name = "user_id",
+    hdrs = ["user_id.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
     name = "sched",
     srcs = [
         "sched.cpp",
@@ -765,6 +776,7 @@ cc_library(
     tags = ["FFI"],
     visibility = ["//visibility:public"],
     deps = [
+        ":user_id",
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:object_seam",
     ],

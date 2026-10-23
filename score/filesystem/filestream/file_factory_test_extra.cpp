@@ -102,8 +102,8 @@ TEST_F(FileFactoryTestExtra, AtomicUpdateCleansUpWhenCreateFileStreamFails)
 
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IWUSR};
-        buffer.st_uid = static_cast<decltype(buffer.st_uid)>(::getuid());
-        buffer.st_gid = static_cast<decltype(buffer.st_gid)>(::getgid());
+        buffer.st_uid = os::UserId{::getuid()};
+        buffer.st_gid = os::GroupId{::getgid()};
         return score::cpp::expected_blank<os::Error>{};
     };
     EXPECT_CALL(*stat, stat(_, _, _)).WillOnce(Invoke(set_mode));
