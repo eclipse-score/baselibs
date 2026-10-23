@@ -13,7 +13,7 @@
 #include "gtest/gtest.h"
 
 #include "score/json/internal/parser/number_parser_test_suite.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
+#include "score/json/internal/parser/vajson/util/number.h"
 #include "score/json/json_parser.h"
 
 #include <limits>

@@ -94,7 +94,7 @@ cc_library(
     deps = [
         ":parser_interface",
         "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
+        "@score_baselibs//score/json/internal/parser/vajson",
         "@score_baselibs//score/result",
     ],
 )

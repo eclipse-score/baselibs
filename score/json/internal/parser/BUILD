@@ -86,7 +86,7 @@ cc_test(
         ":number_parser_test_suite",
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
+        "@score_baselibs//score/json/internal/parser/vajson",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
