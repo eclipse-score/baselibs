@@ -11,13 +11,13 @@
    #
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
-.. _baselibs_module_architecture:
+.. _baselibs_feature_architecture:
 
 Architecture
-=====================
+============
 
-.. document:: Baselibs Module Architecture
-   :id: doc__baselibs_module_architecture
+.. document:: Baselibs Feature Architecture
+   :id: doc__baselibs_feature_architecture
    :status: valid
    :version: 1
    :safety: ASIL_B
