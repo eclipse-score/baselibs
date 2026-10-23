@@ -112,11 +112,13 @@ cc_library(
     name = "json_writer_impl",
     srcs = ["json_writer.cpp"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/writer:serializer",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer:serializer",
     ],
 )
 

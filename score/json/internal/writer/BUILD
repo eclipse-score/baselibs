@@ -19,12 +19,14 @@ cc_library(
     srcs = ["serializer.cpp"],
     hdrs = ["serializer.h"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__pkg__"],
     deps = [
         "@score_baselibs//score/json:formatting",
         "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
         "@score_baselibs//score/result",
     ],
 )
