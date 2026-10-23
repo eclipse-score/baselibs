@@ -29,11 +29,10 @@ Assigned Committer(s)
 According to `Baselibs Module Codeowners <https://github.com/eclipse-score/baselibs/blob/main/.github/CODEOWNERS>`_
 the following committers are assigned to guard the Baselibs repository:
 
-- `<https://github.com/castler>`_
-- `<https://github.com/hoe-jo>`_
-- `<https://github.com/LittleHuba>`_
-- `<https://github.com/ramceb>`_
-- `<https://github.com/nradakovic>`_
+- `<https://github.com/antonkri>`_
+- `<https://github.com/pawelrutkaq>`_
+- `<https://github.com/arkjedrz>`_
+- `<https://github.com/fbaeuerle>`_
 - `<https://github.com/4og>`_
 
 Skill Check
@@ -43,11 +42,10 @@ For the CODEOWNERS the required skills, knowledge and experience is defined in `
 
 The evidences are not published openly due to personal data confidentiality, but will be checked by the module safety manager.
 
-- `<https://github.com/castler>`_: SW developer and team lead for Safe POSIX SW platform at OEM > 2 years
-- `<https://github.com/hoe-jo>`_: SW developer for Safe POSIX SW platform at OEM > 1.5y and safety manager for camera systems at OEM 1y, member of S-CORE process community
-- `<https://github.com/LittleHuba>`_: SW developer for Safe POSIX SW platform at OEM > 2 years
-- `<https://github.com/ramceb>`_: SW architect for Safe POSIX SW platform at OEM > 2 years
-- `<https://github.com/nradakovic>`_: SW developer and tool expert for Safe POSIX SW platform at OEM > 2 years
+- `<https://github.com/antonkri>`_: SW developer and architect at OEM > 2 years for safety related SW. Contribution to feature teams.
+- `<https://github.com/pawelrutkaq>`_: tbd
+- `<https://github.com/arkjedrz>`_: SW development in automotive and S-CORE around OS and middleware > 2 years. Contribution in Baselibs is mainly in Rust components.
+- `<https://github.com/fbaeuerle>`_: tbd
 - `<https://github.com/4og>`_: SW developer for safety related application at OEM > 2 years
 
 The S-CORE processes are trained on the job by the Baselibs module safety manager to the CODEOWNERS.
