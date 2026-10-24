@@ -22,7 +22,7 @@ cc_library(
     visibility = [
         "//score/analysis/tracing/generic_trace_library:__pkg__",
         "//score/analysis/tracing/generic_trace_library/mock:__pkg__",
-        "//score/analysis/tracing/generic_trace_library/stub_implementation:__pkg__",
+        "//score/analysis/tracing/generic_trace_library/stub_implementation:__subpackages__",
     ],
     deps = [
         ":trace_library_interface",
