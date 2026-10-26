@@ -56,13 +56,13 @@ struct IsScoped<safecpp::CopyableScopedFunction<T>> : std::true_type
 {
 };
 
-/// @brief Whether InterruptibleState<Value>::SetValue(const Value&) or SetValue(Value&&) accepts a single argument of
-/// type Arg.
+/// @brief Whether the typed SetValue() overloads of InterruptibleState<Value> accept one argument of type Arg.
 ///
-/// They accept an existing Value or an object derived from it, and anything implicitly convertible to Value, provided
-/// Value can be copied or moved in. The in-place SetValue() overload leaves these calls to them, because taking them
-/// over would change what they do: a derived lvalue or a converting argument could reach a different constructor of
-/// Value, and a bit-field, which a template cannot tell from any other lvalue, cannot bind to a forwarding reference.
+/// They accept a Value, an object derived from Value, and anything implicitly convertible to Value.
+/// They do so only if Value can be copied or moved in.
+/// The in-place SetValue() overload leaves these calls to them, because taking them over would change what they do.
+/// A derived lvalue or a converting argument could reach a different constructor of Value.
+/// A bit-field cannot bind to a forwarding reference, and a template cannot tell it from any other lvalue.
 template <typename Value, typename Arg>
 struct IsAcceptedByTypedSetValue
     : std::bool_constant<(std::is_copy_constructible_v<Value> || std::is_move_constructible_v<Value>) &&
@@ -88,9 +88,8 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
 
     /// @brief Sets the held value from a Value that is moved in.
     ///
-    /// Kept alongside the variadic overload below so that every single-argument call that compiled before it existed
-    /// still resolves exactly as it did. `SetValue({...})` is one of them: a braced-init-list has no type, so it cannot
-    /// be deduced into a parameter pack.
+    /// Kept next to the variadic overload below, so that single-argument calls that compiled before resolve as before.
+    /// `SetValue({...})` is one of them, because a braced-init-list has no type and cannot be deduced into a pack.
     template <
         typename V = Value,
         std::enable_if_t<std::is_move_constructible<V>::value && !std::is_lvalue_reference<V>::value, bool> = true>
@@ -113,13 +112,12 @@ class InterruptibleState final : public score::concurrency::detail::TypedBaseInt
 
     /// @brief Sets the held value by constructing it in place from @p args.
     ///
-    /// The arguments are forwarded into score::Result's in-place constructor instead of being turned into a Value at
-    /// the call site. A Value that can be neither copied nor moved can therefore be set, its converting constructor may
-    /// be explicit, a constructor taking several arguments or none is reachable, and no intermediate Value is moved in.
+    /// The arguments are forwarded to score::Result's in-place constructor instead of forming a Value at the call site.
+    /// This reaches values that can be neither copied nor moved, explicit constructors, and several arguments or none.
+    /// No intermediate Value is moved in.
     ///
-    /// A single argument that the two overloads above already accept is left to them (see
-    /// detail::IsAcceptedByTypedSetValue), so every call that compiled before this overload existed resolves exactly as
-    /// it did. What this overload adds are the calls that did not compile before.
+    /// A single argument that the overloads above accept is left to them, see detail::IsAcceptedByTypedSetValue.
+    /// Every call that compiled before this overload existed therefore resolves as before.
     ///
     /// @param args The arguments of a constructor of Value.
     /// @return true if this call set the value, false if a value or an error had already been set.

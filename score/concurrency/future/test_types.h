@@ -97,9 +97,9 @@ class ThrowingMoveOnlyType : public CopyAndMovableType
 
 /// @brief Constructible from one argument or from two, but neither copyable nor movable.
 ///
-/// Such a value can only enter a score::Result by being constructed there, so SetValue() accepts it only when it is
-/// handed the constructor arguments rather than an object. The two-argument constructor stores their sum, so a test
-/// can tell whether both arguments arrived.
+/// Such a value can only enter a score::Result by being constructed there.
+/// SetValue() therefore accepts it only when it is handed constructor arguments rather than an object.
+/// The two-argument constructor stores their sum, so a test can tell whether both arguments arrived.
 class NeitherCopyNorMoveType : public CopyAndMovableType
 {
   public:
@@ -127,8 +127,8 @@ class DefaultConstructibleType : public CopyAndMovableType
 
 /// @brief Counts every move construction into a counter supplied at construction.
 ///
-/// Used to show that handing SetValue() constructor arguments moves nothing, which is only meaningful next to the
-/// contrasting case where handing it an object moves exactly once.
+/// It shows that handing SetValue() constructor arguments moves nothing.
+/// That is only meaningful next to the contrasting case, where handing it an object moves exactly once.
 class MoveCountingType : public CopyAndMovableType
 {
   public:
@@ -150,9 +150,10 @@ class MoveCountingType : public CopyAndMovableType
 
 /// @brief Has a perfect-forwarding converting constructor that is guarded against its own type.
 ///
-/// SetValue() preserves the value category of its arguments, so a non-const lvalue of this type is offered to overload
-/// resolution as `GuardedForwardingType&`. Because the forwarding constructor excludes its own type, the copy
-/// constructor is still chosen. Without that guard the forwarding constructor would be the better match and would win.
+/// SetValue() preserves the value category of its arguments.
+/// A non-const lvalue of this type is therefore offered to overload resolution as `GuardedForwardingType&`.
+/// Because the forwarding constructor excludes its own type, the copy constructor is still chosen.
+/// Without that guard the forwarding constructor would be the better match and would win.
 class GuardedForwardingType : public CopyAndMovableType
 {
   public:
@@ -179,8 +180,8 @@ class GuardedForwardingType : public CopyAndMovableType
 
 /// @brief Copyable and movable, with a non-explicit constructor taking two arguments.
 ///
-/// It can therefore be copy-list-initialised from a braced-init-list such as `{1, 2}`. The constructor stores the sum
-/// of its arguments, so a test can tell whether both arrived.
+/// It can therefore be copy-list-initialised from a braced-init-list such as `{1, 2}`.
+/// The constructor stores the sum of its arguments, so a test can tell whether both arrived.
 class ListInitialisableType : public CopyAndMovableType
 {
   public:
@@ -189,14 +190,14 @@ class ListInitialisableType : public CopyAndMovableType
 
 /// @brief Has a perfect-forwarding converting constructor that is NOT guarded against its own type.
 ///
-/// For a non-const lvalue of this type, `T&&` deduced as `UnguardedForwardingType&` is a better match than the copy
-/// constructor's `const UnguardedForwardingType&`. Whether SetValue() ends up copying therefore depends on what it
-/// offers to overload resolution, which is exactly what the tests using this type pin down.
+/// For a non-const lvalue of this type, `T&&` deduced as `UnguardedForwardingType&` beats the copy constructor.
+/// Whether SetValue() copies therefore depends on what it offers to overload resolution.
+/// The tests using this type pin that down.
 class UnguardedForwardingType : public CopyAndMovableType
 {
   public:
-    // Unguarded on purpose: this type exists to reproduce the hazard bugprone-forwarding-reference-overload
-    // describes, so that the tests can show SetValue() still copying in its presence.
+    // Unguarded on purpose, to reproduce the hazard that bugprone-forwarding-reference-overload describes.
+    // The tests use it to show that SetValue() still copies in its presence.
     // NOLINTBEGIN(bugprone-forwarding-reference-overload)
     template <typename T>
     explicit UnguardedForwardingType(T&& value) : CopyAndMovableType{std::forward<T>(value)}, was_copied_{false}
@@ -222,8 +223,8 @@ class UnguardedForwardingType : public CopyAndMovableType
 
 /// @brief Derived from GuardedForwardingType, whose guard excludes only that exact type.
 ///
-/// An lvalue of this type is therefore accepted by the base's forwarding constructor, as a better match than the base's
-/// copy constructor. Handed to SetValue() of the base type, it has always been copied, and the tests pin that down.
+/// The base's forwarding constructor accepts an lvalue of this type and matches it better than the copy constructor.
+/// Handed to SetValue() of the base type, it has always been copied, and the tests pin that down.
 class DerivedFromGuardedForwardingType : public GuardedForwardingType
 {
   public:
@@ -232,9 +233,9 @@ class DerivedFromGuardedForwardingType : public GuardedForwardingType
 
 /// @brief Has an implicit converting constructor from std::int64_t and an explicit one from int.
 ///
-/// Converting an int to this type implicitly can only use the first; constructing it directly from an int picks the
-/// explicit one, which matches better. Which of the two ran is recorded, so a test can tell whether SetValue()
-/// converted its argument, as it always has, or constructed the value from it directly.
+/// An implicit conversion from int can only use the first, while direct construction from int picks the second.
+/// Which of the two ran is recorded.
+/// A test can thus tell whether SetValue() converted its argument, as it always has, or constructed the value directly.
 class ImplicitlyAndExplicitlyConstructibleType : public CopyAndMovableType
 {
   public:
