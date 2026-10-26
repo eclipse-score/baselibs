@@ -76,7 +76,7 @@ User friendly API for information exchange
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
 
    The public API shall support the idioms of the programming language it is written in.
 
@@ -88,7 +88,7 @@ User friendly API for information exchange
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
 
    The public API shall use core infrastructure of its programming language and accompanying standard libraries,
    whenever possible and meaningful.
@@ -103,7 +103,7 @@ User friendly API for information exchange
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
 
    The public API shall enforce strict type compatibility. When a user requests a value, the API shall
    validate that the requested return type is compatible with the type and value of the stored JSON data.
