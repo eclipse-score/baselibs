@@ -15,9 +15,9 @@
 #define SCORE_LIB_JSON_JSON_WRITER_H
 
 #include "score/filesystem/filestream/file_factory.h"
+#include "score/json/formatting.h"
 #include "score/json/i_json_writer.h"
 
-#include <cstdint>
 #include <string_view>
 
 namespace score
@@ -29,15 +29,6 @@ enum class FileSyncMode
 {
     kSynced,
     kUnsynced,
-};
-
-/// @brief Layout of the serialized JSON representation.
-enum class Formatting : std::uint8_t
-{
-    /// @brief No insignificant whitespace is emitted.
-    kCompact,
-    /// @brief The output is indented and spread over multiple lines to be human readable.
-    kPrettyPrint,
 };
 
 class JsonWriter final : public IJsonWriter
