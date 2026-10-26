@@ -289198,9 +289198,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesNestedAnyToCompactJson",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "28",
+    "name": "SerializerTest__SerializesNestedAnyToCompactJson",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "32",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289212,9 +289212,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesObjectKeysUsingStringComparisonAdaptor",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "53",
+    "name": "SerializerTest__SerializesObjectKeysUsingStringComparisonAdaptor",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "57",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289226,9 +289226,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__EscapesControlCharactersWithoutShortEscapeSequence",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "71",
+    "name": "SerializerTest__EscapesControlCharactersWithoutShortEscapeSequence",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "75",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289240,9 +289240,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__EscapesNullCharacterInsideString",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "86",
+    "name": "SerializerTest__EscapesNullCharacterInsideString",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "90",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289254,9 +289254,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__EscapesControlCharactersInObjectKeys",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "100",
+    "name": "SerializerTest__EscapesControlCharactersInObjectKeys",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "104",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289268,9 +289268,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrefersShortEscapeSequencesOverUnicodeEscapes",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "116",
+    "name": "SerializerTest__PrefersShortEscapeSequencesOverUnicodeEscapes",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "120",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289282,9 +289282,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__EscapesEveryControlCharacterAndNothingElse",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "132",
+    "name": "SerializerTest__EscapesEveryControlCharacterAndNothingElse",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "136",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289296,9 +289296,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PassesMultiByteUtf8CharactersThrough",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "162",
+    "name": "SerializerTest__PassesMultiByteUtf8CharactersThrough",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "166",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289310,9 +289310,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesFiniteDouble",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "176",
+    "name": "SerializerTest__SerializesFiniteDouble",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289324,9 +289324,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PreservesDoublePrecision",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "190",
+    "name": "SerializerTest__PreservesDoublePrecision",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289338,9 +289338,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesNumbersInTheirStoredArithmeticType",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "207",
+    "name": "SerializerTest__SerializesNumbersInTheirStoredArithmeticType",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "211",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289352,9 +289352,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__RejectsInfiniteDouble",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "229",
+    "name": "SerializerTest__RejectsInfiniteDouble",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "233",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289366,9 +289366,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__RejectsNegativeInfiniteFloat",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "243",
+    "name": "SerializerTest__RejectsNegativeInfiniteFloat",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "247",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289380,9 +289380,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__RejectsNotANumber",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "257",
+    "name": "SerializerTest__RejectsNotANumber",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "261",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289394,9 +289394,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__RejectsNotANumberOnStream",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "270",
+    "name": "SerializerTest__RejectsNotANumberOnStream",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "274",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289408,9 +289408,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesBothBooleanValues",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "289",
+    "name": "SerializerTest__SerializesBothBooleanValues",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "292",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289422,9 +289422,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__SerializesTopLevelList",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "304",
+    "name": "SerializerTest__SerializesTopLevelList",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "307",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289436,9 +289436,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "319",
+    "name": "SerializerTest__PrettyPrintsNestedAny",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "322",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289450,9 +289450,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrettyPrintsEmptyContainersOnOneLine",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "353",
+    "name": "SerializerTest__PrettyPrintsEmptyContainersOnOneLine",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "356",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289464,9 +289464,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrettyPrintsTopLevelScalarWithoutWhitespace",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "382",
+    "name": "SerializerTest__PrettyPrintsTopLevelScalarWithoutWhitespace",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "385",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289478,9 +289478,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrettyPrintsToStream",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "394",
+    "name": "SerializerTest__PrettyPrintsToStream",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "397",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -289492,23 +289492,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "411",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "design-analysis",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__json__serialization",
-    "FullyVerifies": null
-  },
-  {
-    "name": "VajsonSerializeTest__SerializesEmptyContainersCompactly",
-    "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-    "line": "439",
+    "name": "SerializerTest__SerializesEmptyContainersCompactly",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "413",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
