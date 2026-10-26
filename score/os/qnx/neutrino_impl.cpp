@@ -58,11 +58,6 @@ std::int32_t NeutrinoImpl::InterruptUnmask(std::int32_t intr, std::int32_t id)
     return ::InterruptUnmask(intr, id);
 }
 
-std::int32_t NeutrinoImpl::ChannelCreate(std::uint32_t flags) const noexcept
-{
-    return ::ChannelCreate(flags);
-}
-
 score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ChannelCreate(const Neutrino::ChannelFlag flags) const noexcept
 {
     const std::int32_t created_channel_id = ::ChannelCreate(ChannelFlagToNativeFlag(flags));
@@ -95,22 +90,6 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockAdjust(clockid_t id
     return ret;
 }
 
-score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(clockid_t id,
-                                                                     TimerFlagsType flags,
-                                                                     const sigevent* notify,
-                                                                     const std::uint64_t* ntime,
-                                                                     std::uint64_t* otime) const noexcept
-{
-
-    const std::int32_t ret{::TimerTimeout(id, flags, notify, ntime, otime)};
-
-    if (ret == -1)
-    {
-        return score::cpp::make_unexpected(Error::createFromErrno());
-    }
-    return ret;
-}
-
 std::uint64_t NeutrinoImpl::ClockCycles() const noexcept
 {
     return ::ClockCycles();
@@ -124,42 +103,6 @@ score::cpp::expected<std::int32_t, Error> NeutrinoImpl::ClockId(pid_t pid, std::
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
     return result;
-}
-
-// This is intented, we don't force users to fill the otime parameter unless needed
-// NOLINTNEXTLINE(google-default-arguments): See above
-score::cpp::expected<std::int32_t, Error> NeutrinoImpl::TimerTimeout(
-    const Neutrino::ClockType clock_type,
-    const Neutrino::TimerTimeoutFlag flags,
-    const sigevent* notify,
-    const std::chrono::nanoseconds& ntime,
-    std::optional<std::chrono::nanoseconds> otime) const noexcept
-{
-    const auto nano_in = static_cast<std::uint64_t>(ntime.count());
-    std::uint64_t nano_out{};
-    std::uint64_t* nano_time = otime.has_value() ? &nano_out : nullptr;
-
-    const std::int32_t ret{::TimerTimeout(ClockTypeToNativeClock(clock_type),
-                                          // As clarified in Ticket-145671, TimerTimeout flags in bitmask are unsigned
-                                          // NOLINTNEXTLINE(cppcoreguidelines-narrowing-conversions): See above
-                                          static_cast<TimerFlagsType>(TimerTimeoutFlagToNativeFlag(flags)),
-                                          notify,
-                                          &nano_in,
-                                          nano_time)};
-
-    if (ret == -1)
-    {
-        return score::cpp::make_unexpected(Error::createFromErrno());
-    }
-
-    if (((static_cast<std::uint32_t>(flags) & static_cast<std::uint32_t>(Neutrino::TimerTimeoutFlag::kNanoSleep)) !=
-         0U) ||
-        ((static_cast<std::uint32_t>(flags) &
-          static_cast<std::uint32_t>(Neutrino::TimerTimeoutFlag::kTimerTolerance)) != 0U))
-    {
-        otime = std::chrono::nanoseconds{nano_out};
-    }
-    return ret;
 }
 
 // This is intented, we don't force users to fill the otime parameter unless needed

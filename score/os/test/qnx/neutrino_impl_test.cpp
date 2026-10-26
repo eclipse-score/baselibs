@@ -99,35 +99,6 @@ TEST_F(NeutrinoImplFixture, InterruptAttachAndDetachTest)
     EXPECT_NE(ret, -1);
 }
 
-TEST_F(NeutrinoImplFixture, ChannelCreateDeprecatedSuccess)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test Channel Create Deprecated Success");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-
-    std::uint32_t valid_flags{0U};
-    const auto result = neutrino_.ChannelCreate(valid_flags);
-
-    ASSERT_GE(result, 0);
-}
-
-TEST_F(NeutrinoImplFixture, ChannelCreateDeprecatedFailure)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test Channel Create Deprecated Failure");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-
-    const auto invalid_flags{std::numeric_limits<std::uint32_t>::max()};
-    const auto result = neutrino_.ChannelCreate(invalid_flags);
-
-    ASSERT_EQ(result, -1);
-    // errno value is OS specific
-}
-
 TEST_F(NeutrinoImplFixture, ChannelCreateSuccess)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");
@@ -219,66 +190,6 @@ TEST_F(NeutrinoImplFixture, ClockAdjust_Failure)
 
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::os::Error::Code::kInvalidArgument);
-}
-
-TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedSuccess)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test Timer Timeout Deprecated Success");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-
-    clockid_t clockid{CLOCK_REALTIME};
-    std::int32_t flags{0};
-    const sigevent* notify{nullptr};
-    const std::uint64_t ntime{1000000U};
-    std::uint64_t otime{0U};
-
-    const auto result1 = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
-    ASSERT_TRUE(result1.has_value());
-    EXPECT_EQ(result1.value(), 0);
-
-    std::chrono::milliseconds min_sleep{2};
-    auto result2 =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result2.has_value());
-    result2 =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kMonotonic, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result2.has_value());
-    result2 =
-        neutrino_.TimerTimeout(Neutrino::ClockType::kSoftTime, Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_TRUE(result2.has_value());
-
-    std::chrono::milliseconds sleep_left{0};
-    const auto result3 = neutrino_.TimerTimeout(
-        Neutrino::ClockType::kRealtime, Neutrino::TimerTimeoutFlag::kTimerTolerance, nullptr, sleep_left);
-    ASSERT_TRUE(result3.has_value());
-}
-
-TEST_F(NeutrinoImplFixture, TimerTimeoutDeprecatedFailure)
-{
-    RecordProperty("ParentRequirement", "SCR-46010294");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Test Timer Timeout Deprecated Failure");
-    RecordProperty("TestingTechnique", "Interface test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
-
-    clockid_t clockid{-1};
-    std::int32_t flags{0};
-    const sigevent* notify{nullptr};
-    const std::uint64_t ntime{1000000U};
-    std::uint64_t otime{0U};
-
-    const auto result1 = neutrino_.TimerTimeout(clockid, flags, notify, &ntime, &otime);
-    ASSERT_FALSE(result1.has_value());
-    EXPECT_EQ(result1.error(), score::os::Error::Code::kInvalidArgument);
-
-    std::chrono::milliseconds min_sleep{2};
-    const auto result2 = neutrino_.TimerTimeout(
-        static_cast<Neutrino::ClockType>(-1), Neutrino::TimerTimeoutFlag::kSend, nullptr, min_sleep);
-    ASSERT_FALSE(result2.has_value());
-    EXPECT_EQ(result2.error(), score::os::Error::Code::kInvalidArgument);
 }
 
 TEST_F(NeutrinoImplFixture, TimerTimeoutSuccess)

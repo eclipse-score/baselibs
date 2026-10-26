@@ -13,9 +13,12 @@
 #include "score/os/qnx/channel_impl.h"
 #include "score/os/qnx/dispatch_impl.h"
 #include "score/os/qnx/neutrino_impl.h"
+#include "score/os/qnx/sigevent_qnx_impl.h"
 #include <score/jthread.hpp>
 #include <condition_variable>
+#include <memory>
 #include <thread>
+#include <utility>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -190,7 +193,9 @@ score::cpp::expected<std::int32_t, score::os::Error> NeutrinoTest::SetTimerTimeo
     const Neutrino::TimerTimeoutFlag flags,
     const std::chrono::nanoseconds timeout)
 {
-    return neutrino_->TimerTimeout(clock_type, flags, nullptr, timeout);
+    auto signal_event = std::make_unique<score::os::SigEventQnxImpl>();
+    signal_event->SetUnblock();
+    return neutrino_->TimerTimeout(clock_type, flags, std::move(signal_event), timeout);
 }
 
 score::cpp::expected_blank<score::os::Error> NeutrinoTest::SendMessage(
