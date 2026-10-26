@@ -131,7 +131,7 @@ git_override(
 
 bazel_dep(name = "score_process_description", version = "2.2.1")
 
-bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
+bazel_dep(name = "score_tooling", version = "2.3.1", dev_dependency = True)
 
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and
