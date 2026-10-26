@@ -325670,7 +325670,7 @@
   {
     "name": "SteadyClockTest__IsSteady",
     "file": "score/concurrency/clock_test.cpp",
-    "line": "84",
+    "line": "86",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -325684,7 +325684,7 @@
   {
     "name": "SteadyClockTest__CanNotTurnBackTime",
     "file": "score/concurrency/clock_test.cpp",
-    "line": "89",
+    "line": "91",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -325698,7 +325698,7 @@
   {
     "name": "NonSteadyClockTest__IsNotSteady",
     "file": "score/concurrency/clock_test.cpp",
-    "line": "95",
+    "line": "97",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -325712,7 +325712,7 @@
   {
     "name": "NonSteadyClockTest__CanTurnBackTime",
     "file": "score/concurrency/clock_test.cpp",
-    "line": "100",
+    "line": "102",
     "result": "passed",
     "repo_name": null,
     "hash": null,
