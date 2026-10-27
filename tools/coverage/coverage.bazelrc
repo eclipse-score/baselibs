@@ -84,3 +84,9 @@ coverage:qnx_cov --instrumentation_filter=^//score[/:]
 coverage:qnx_cov --host_cxxopt=-O0
 coverage:qnx_cov --coverage_output_generator=@bazel_tools//tools/test:lcov_merger
 coverage:qnx_cov --coverage_report_generator=//tools/coverage:gcov_reporter_wrapper
+
+# Same as qnx_cov, but with the QNX SDP 8.0.5 from a private GitHub release (see score-qnx-x86_64-sdp_8.0.5).
+coverage:qnx_cov_sdp_8.0.5 --config=qnx_cov
+coverage:qnx_cov_sdp_8.0.5 --extra_toolchains=@score_qcc_x86_64_toolchain_805//:x86_64-qnx-sdp_8.0.0
+coverage:qnx_cov_sdp_8.0.5 --extra_toolchains=@score_qnx_x86_64_ifs_toolchain_805//:ifs-x86_64-qnx-sdp_8.0.0
+coverage:qnx_cov_sdp_8.0.5 --coverage_report_generator=//tools/coverage:gcov_reporter_wrapper_sdp_8.0.5

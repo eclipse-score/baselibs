@@ -21,7 +21,7 @@
 # pushes to main and the merge queue run without approval.
 name: Code coverage (QNX, gcov on target)
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, reopened, synchronize]
   push:
     branches:
@@ -32,15 +32,14 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  actions: write
 concurrency:
   group: coverage-qnx-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request_target' }}
+  cancel-in-progress: ${{ startsWith(github.event_name, 'pull_request') }}
 jobs:
   approval:
     name: Approval (fork PRs only)
     if: >-
-      github.event_name == 'pull_request_target' &&
+      startsWith(github.event_name, 'pull_request') &&
       github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     environment: workflow-approval
     runs-on: ubuntu-24.04
@@ -65,10 +64,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           allow-unsafe-pr-checkout: true
-      - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@30740c18c728bc58f9b17c914c5592a5008f6b98
-        with:
-          disk-cache-key: ${{ github.job }}
       - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30740c18c728bc58f9b17c914c5592a5008f6b98
       - name: Setup QNX SDP usage
         uses: eclipse-score/cicd-actions/setup-qnx-sdp@30740c18c728bc58f9b17c914c5592a5008f6b98
@@ -88,9 +83,12 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Run Bazel Coverage on QNX (gcov, C++)
+        env:
+          # Read by the QNX SDP fetcher of score_bazel_cpp_toolchains, needs read access to eclipse-score/qnx_sdp_pkg.
+          GH_TOKEN: ${{ secrets.SCORE_BOT_QNX_PKG_PAT }}
         run: |
           set -euo pipefail
-          bazel coverage --lockfile_mode=error --config=qnx_cov --build_tests_only \
+          bazel coverage --lockfile_mode=error --config=qnx_cov_sdp_8.0.5 --build_tests_only \
             --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- //score/... \
             -//score/language/futurecpp/tests:memory_resource_test \
             -//score/os/test:asil_qm_test \

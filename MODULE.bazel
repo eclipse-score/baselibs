@@ -16,6 +16,14 @@ module(name = "score_baselibs")
 ## Configure the C++ toolchain
 
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.5", dev_dependency = True)
+
+# TODO: Switch to the next release (after 1.0.5)
+git_override(
+    module_name = "score_bazel_cpp_toolchains",
+    commit = "90c377061e4c3585cb5b11b6e490413664179def",
+    remote = "https://github.com/eclipse-score/bazel_cpp_toolchains.git",
+)
+
 bazel_dep(name = "score_cpp_policies", version = "0.1.2", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
@@ -74,13 +82,49 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+gcc.sdp(
+    name = "score_qcc_x86_64_toolchain_805_pkg",
+    build_file = "@score_bazel_cpp_toolchains//packages/qnx/x86_64/sdp/8.0.0:sdp.BUILD",
+    sha256 = "191a4702783ccb145fc828aa068b9cf0dfad0086c8f78a9912d4530bf5d6dafa",
+    type = "tar.gz",
+    url = "https://api.github.com/repos/eclipse-score/qnx_sdp_pkg/releases/assets/659601437",
+)
+gcc.toolchain(
+    name = "score_qcc_x86_64_toolchain_805",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    sdp_to_link = "score_qcc_x86_64_toolchain_805_pkg",
+    sdp_version = "8.0.4",  # QNX SDP version for this toolchain is in fact 8.0.5
+    target_cpu = "x86_64",
+    target_os = "qnx",
+)
+
+# Same SDP archive as x86_64, it is downloaded once and extracted per architecture.
+gcc.sdp(
+    name = "score_qcc_aarch64_toolchain_805_pkg",
+    build_file = "@score_bazel_cpp_toolchains//packages/qnx/aarch64/sdp/8.0.0:sdp.BUILD",
+    sha256 = "191a4702783ccb145fc828aa068b9cf0dfad0086c8f78a9912d4530bf5d6dafa",
+    type = "tar.gz",
+    url = "https://api.github.com/repos/eclipse-score/qnx_sdp_pkg/releases/assets/659601437",
+)
+gcc.toolchain(
+    name = "score_qcc_aarch64_toolchain_805",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    sdp_to_link = "score_qcc_aarch64_toolchain_805_pkg",
+    sdp_version = "8.0.4",  # QNX SDP version for this toolchain is in fact 8.0.5
+    target_cpu = "aarch64",
+    target_os = "qnx",
+)
 use_repo(
     gcc,
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
+    "score_qcc_aarch64_toolchain_805",
+    "score_qcc_aarch64_toolchain_805_pkg",
     "score_qcc_aarch64_toolchain_pkg",
     "score_qcc_x86_64_toolchain",
+    "score_qcc_x86_64_toolchain_805",
+    "score_qcc_x86_64_toolchain_805_pkg",
     "score_qcc_x86_64_toolchain_pkg",
 )
 
@@ -103,7 +147,29 @@ imagefs.toolchain(
     target_os = "qnx",
     type = "ifs",
 )
-use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
+imagefs.toolchain(
+    name = "score_qnx_x86_64_ifs_toolchain_805",
+    sdp_to_import = "@score_qcc_x86_64_toolchain_805_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    type = "ifs",
+)
+imagefs.toolchain(
+    name = "score_qnx_aarch64_ifs_toolchain_805",
+    sdp_to_import = "@score_qcc_aarch64_toolchain_805_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    type = "ifs",
+)
+use_repo(
+    imagefs,
+    "score_qnx_aarch64_ifs_toolchain",
+    "score_qnx_aarch64_ifs_toolchain_805",
+    "score_qnx_x86_64_ifs_toolchain",
+    "score_qnx_x86_64_ifs_toolchain_805",
+)
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
