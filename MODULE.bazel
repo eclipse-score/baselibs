@@ -139,7 +139,7 @@ bazel_dep(name = "score_tooling", version = "3.0.1", dev_dependency = True)
 # tested through futurecpp_internal, files without coverage data listed).
 bazel_dep(name = "score_coverage", version = "0.4.2", dev_dependency = True)
 
-bazel_dep(name = "score_platform", version = "0.7.3")
+bazel_dep(name = "score_platform", version = "0.7.4")
 
 ## Configure the python toolchain
 
