@@ -109,10 +109,10 @@ bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
 bazel_dep(name = "download_utils", version = "1.2.2")
 bazel_dep(name = "rules_cc", version = "0.2.17")
-bazel_dep(name = "score_openssl", version = "3.6.1")
+bazel_dep(name = "score_openssl", version = "0.1.0")
 git_override(
     module_name = "score_openssl",
-    commit = "b4d1f90cf761eeb588c0920c708ae6a4ffb6b71b",
+    commit = "e34e971d33a6d45283a07a4d1f34a0c8769f1a6d",
     remote = "https://github.com/Valeo-S-CORE-Organization/openssl.git",
 )
 
@@ -121,6 +121,12 @@ git_override(
 bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.13")
+git_override(
+    module_name = "score_crates",
+    commit = "d153a71dd19cf66f34c434a4c73bf74973967b4b",
+    remote = "https://github.com/Valeo-S-CORE-Organization/score-crates.git",
+)
+
 bazel_dep(name = "cxx.rs", version = "1.0.186")
 
 bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
