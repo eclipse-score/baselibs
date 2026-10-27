@@ -13,6 +13,8 @@
 
 #include "gmock/gmock.h"
 
+#include <utility>
+
 namespace test
 {
 
@@ -40,8 +42,45 @@ class BasicLockableArchetype
   public:
     void lock() {}
     void unlock() {}
+};
 
-    void swap(BasicLockableArchetype&) noexcept {}
+class LockableWithOwnsLock : public BasicLockableArchetype
+{
+  public:
+    LockableWithOwnsLock() = default;
+    LockableWithOwnsLock(const LockableWithOwnsLock&) = delete;
+    LockableWithOwnsLock& operator=(const LockableWithOwnsLock&) = delete;
+
+    LockableWithOwnsLock(LockableWithOwnsLock&& other) noexcept : owns_lock_{std::exchange(other.owns_lock_, false)} {}
+
+    LockableWithOwnsLock& operator=(LockableWithOwnsLock&& other) noexcept
+    {
+        owns_lock_ = std::exchange(other.owns_lock_, false);
+        return *this;
+    }
+
+    void lock()
+    {
+        owns_lock_ = true;
+    }
+
+    void unlock()
+    {
+        owns_lock_ = false;
+    }
+
+    bool owns_lock() const
+    {
+        return owns_lock_;
+    }
+
+    void swap(LockableWithOwnsLock& other) noexcept
+    {
+        std::swap(owns_lock_, other.owns_lock_);
+    }
+
+  private:
+    bool owns_lock_{false};
 };
 
 class MockMutex

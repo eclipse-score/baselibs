@@ -71,8 +71,10 @@ TYPED_TEST(CommonClockTest, CanUseWithInterruptiblePromise)
     InterruptibleSharedFuture<void> future{promise.GetInterruptibleFuture().value().Share()};
     score::cpp::stop_source stop_source{};
 
-    auto async_future = std::async([offset, future, stop_source]() {
-        typename TypeParam::time_point time_point = TypeParam::now() + offset;
+    // Take the deadline before the waiter starts. Taken inside it, a waiter that only starts after modify_time() below
+    // would wait for a time the clock never reaches, since nothing advances it again.
+    const typename TypeParam::time_point time_point = TypeParam::now() + offset;
+    auto async_future = std::async([time_point, future, stop_source]() {
         future.WaitUntil(stop_source.get_token(), time_point);
     });
 
