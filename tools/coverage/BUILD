@@ -213,3 +213,12 @@ score_coverage_reporter(
     # Linux host without QNX credentials must not try to fetch.
     tags = ["manual"],
 )
+
+score_coverage_reporter(
+    name = "gcov_reporter_wrapper_805",
+    testonly = True,
+    backend = "gcov",
+    coverage_scope = ":coverage_scope_qnx",
+    gcov = "@score_qcc_x86_64_toolchain_805_pkg//:gcov",
+    tags = ["manual"],
+)
