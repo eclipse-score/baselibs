@@ -92,3 +92,9 @@ use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolc
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 
 bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
+
+git_override(
+    module_name = "score_openssl",
+    commit = "040d3b605d2d027d475750f489b3b70b7ad7d1fc",
+    remote = "https://github.com/Valeo-S-CORE-Organization/openssl.git",
+)
