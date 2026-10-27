@@ -406,7 +406,6 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../abi_compatible_data_types/docs/index.html">ABI Compatible Data Types</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">bitmanipulation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -429,7 +428,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mw_log/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../os/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
 </ul>
 </div>
@@ -496,7 +498,7 @@
                   
   <section id="bitmanipulation-component-architecture">
 <h1>Bitmanipulation Component Architecture<a class="headerlink" href="#bitmanipulation-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-24daba26">
+<div class="need_container docutils container" id="SNCB-90ba96e6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -545,7 +547,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-17c3e3ba">
+<div class="need_container docutils container" id="SNCB-2da74c35">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -565,6 +567,8 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_bit_manipulation</span></span></span></div>
+<div class="line"><span class="needs_bazel_target"><span class="needs_label">bazel_target: </span><span class="needs_data">[&quot;&#64;&#64;//score/bitmanipulation:bitmanipulation&quot;,&quot;&#64;&#64;//score/bitmanipulation:bitmask_operators&quot;]</span></span></div>
+<div class="line"><span class="needs_bazel_type"><span class="needs_label">bazel_type: </span><span class="needs_data">[&quot;cc_library&quot;,&quot;cc_library&quot;]</span></span></div>
 <div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#feat__baselibs">feat__baselibs</a></span></span></div>
@@ -593,7 +597,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a8d112c7">
+<div class="need_container docutils container" id="SNCB-71282da9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -647,7 +651,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-1dc855f4">
+<div class="need_container docutils container" id="SNCB-95c63dab">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -690,7 +694,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a8cbc8c0">
+<div class="need_container docutils container" id="SNCB-404ae2c6">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__clear_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -733,7 +737,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b00c12b1">
+<div class="need_container docutils container" id="SNCB-c3bcf653">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__toggle_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -776,7 +780,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-d4bdc426">
+<div class="need_container docutils container" id="SNCB-d870e1e1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__test_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -819,7 +823,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8ee2b6ad">
+<div class="need_container docutils container" id="SNCB-a97adb10">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__extract_byte">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -862,7 +866,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-04ef370f">
+<div class="need_container docutils container" id="SNCB-58c08bca">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_or">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -905,7 +909,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-86bd0313">
+<div class="need_container docutils container" id="SNCB-2386cefa">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_and">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -948,7 +952,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-96605f46">
+<div class="need_container docutils container" id="SNCB-f8df3b70">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_xor">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -991,7 +995,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-2581dfa0">
+<div class="need_container docutils container" id="SNCB-687e1b51">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_not">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1034,7 +1038,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b65a2b7c">
+<div class="need_container docutils container" id="SNCB-05d9a814">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_assignmnt">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
