@@ -129,7 +129,7 @@ git_override(
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
-bazel_dep(name = "score_process_description", version = "2.2.1")
+bazel_dep(name = "score_process_description", version = "2.2.2")
 
 bazel_dep(name = "score_tooling", version = "2.2.1", dev_dependency = True)
 
