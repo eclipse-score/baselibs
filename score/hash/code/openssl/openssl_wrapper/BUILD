@@ -32,7 +32,7 @@ cc_library(
     deps = [
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
-        "@score_baselibs//third_party/openssl",
+        "@score_openssl//:openssl",
     ],
 )
 
