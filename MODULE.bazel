@@ -123,7 +123,6 @@ bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = T
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "8.6.0")
-
 bazel_dep(name = "score_process_description", version = "2.2.2")
 
 bazel_dep(name = "score_tooling", version = "3.0.1", dev_dependency = True)
