@@ -72,7 +72,7 @@ class Registry_string_view final
     ///
     /// \brief Get string data
     ///
-    constexpr const_pointer data() const noexcept
+    [[nodiscard]] constexpr const_pointer data() const noexcept
     {
         return m_string_view.data();
     }
@@ -80,7 +80,7 @@ class Registry_string_view final
     ///
     /// \brief Get string length
     ///
-    constexpr size_type length() const noexcept
+    [[nodiscard]] constexpr size_type length() const noexcept
     {
         return m_string_view.length();
     }
@@ -88,7 +88,7 @@ class Registry_string_view final
     ///
     /// \brief Get string length
     ///
-    constexpr size_type size() const noexcept
+    [[nodiscard]] constexpr size_type size() const noexcept
     {
         return m_string_view.size();
     }
@@ -96,7 +96,7 @@ class Registry_string_view final
     ///
     /// \brief Get whether the string is empty
     ///
-    constexpr bool empty() const noexcept
+    [[nodiscard]] constexpr bool empty() const noexcept
     {
         return m_string_view.empty();
     }
@@ -104,7 +104,7 @@ class Registry_string_view final
     ///
     /// \brief Const iterator to the beginning
     ///
-    constexpr const_iterator begin() const noexcept
+    [[nodiscard]] constexpr const_iterator begin() const noexcept
     {
         return data();
     }
@@ -112,7 +112,7 @@ class Registry_string_view final
     ///
     /// \brief Const iterator to the beginning
     ///
-    constexpr const_iterator cbegin() const noexcept
+    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
     {
         return data();
     }
@@ -120,7 +120,7 @@ class Registry_string_view final
     ///
     /// \brief Iterator to end
     ///
-    const_iterator end() const noexcept
+    [[nodiscard]] const_iterator end() const noexcept
     {
         return std::next(data(), static_cast<difference_type>(length()));
     }
@@ -128,12 +128,12 @@ class Registry_string_view final
     ///
     /// \brief Const iterator to the end
     ///
-    const_iterator cend() const noexcept
+    [[nodiscard]] const_iterator cend() const noexcept
     {
         return std::next(data(), static_cast<difference_type>(length()));
     }
 
-    constexpr std::string_view string_view() const noexcept
+    [[nodiscard]] constexpr std::string_view string_view() const noexcept
     {
         return m_string_view;
     }
@@ -141,7 +141,7 @@ class Registry_string_view final
   private:
     std::string_view m_string_view;
 
-    explicit constexpr Registry_string_view(std::string_view view) : m_string_view{std::move(view)} {}
+    explicit constexpr Registry_string_view(std::string_view view) : m_string_view{view} {}
 };
 
 ///
