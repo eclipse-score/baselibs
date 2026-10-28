@@ -78,6 +78,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>&,
                              LengthPrefixedVector<UnderlyingType, LengthType>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         LengthType counter{};
         visitor.Next(counter);
         if (!visitor.GetResult().has_value())
@@ -126,6 +127,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
     template <typename Visitor, typename Container>
     Result<void> DeSerialize(Visitor&, DeSerializeIterator<Container>& iterator, score::cpp::pmr::string& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         if (iterator == iterator.End())
         {
             return {};
@@ -183,6 +185,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>& iterator,
                              score::cpp::static_vector<UnderlyingType, MaxSize>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         if (iterator == iterator.End())
         {
             return {};
@@ -231,6 +234,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>& iterator,
                              score::cpp::pmr::vector<UnderlyingType>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         const auto end = iterator.End();
         while (iterator != end)
         {

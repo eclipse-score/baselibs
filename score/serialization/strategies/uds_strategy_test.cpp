@@ -431,6 +431,88 @@ TEST_F(UDSStrategyFixture, DeserializeLengthPrefixedVectorFailsWhenPrefixExceeds
     EXPECT_FALSE(result.has_value());
 }
 
+TEST_F(UDSStrategyFixture, DeserializeClearsReusedDestinations_LengthPrefixedVector)
+{
+    // Given
+    const score::serialization::LengthPrefixedVector<std::uint16_t, std::uint16_t> length_prefixed{0x0A0B, 0x0C0D};
+    score::serialization::LengthPrefixedVector<std::uint16_t, std::uint16_t> out{0xDEAD, 0xBEEF, 0xFEED};
+
+    // When
+    buffer_.clear();
+    auto serialize_result = unit_.Serialize(length_prefixed, buffer_);
+    auto deserialize_result = unit_.DeSerialize(buffer_, out);
+
+    // Then
+    ASSERT_TRUE(serialize_result.has_value());
+    ASSERT_TRUE(deserialize_result.has_value());
+    EXPECT_EQ(out, length_prefixed);
+}
+
+TEST_F(UDSStrategyFixture, DeserializeClearsReusedDestinations_String)
+{
+    // Given
+    const score::cpp::pmr::string string_value{"Hi"};
+    score::cpp::pmr::string out{"stale"};
+
+    // When
+    buffer_.clear();
+    auto serialize_result = unit_.Serialize(string_value, buffer_);
+    auto deserialize_result = unit_.DeSerialize(buffer_, out);
+
+    // Then
+    ASSERT_TRUE(serialize_result.has_value());
+    ASSERT_TRUE(deserialize_result.has_value());
+    EXPECT_EQ(out, string_value);
+}
+
+TEST_F(UDSStrategyFixture, DeserializeClearsReusedDestinations_PmrVector)
+{
+    // Given
+    const score::cpp::pmr::vector<std::uint16_t> pmr_vector{0x0A0B};
+    score::cpp::pmr::vector<std::uint16_t> out{0xDEAD, 0xBEEF, 0xFEED};
+
+    // When
+    buffer_.clear();
+    auto serialize_result = unit_.Serialize(pmr_vector, buffer_);
+    auto deserialize_result = unit_.DeSerialize(buffer_, out);
+
+    // Then
+    ASSERT_TRUE(serialize_result.has_value());
+    ASSERT_TRUE(deserialize_result.has_value());
+    EXPECT_EQ(out, pmr_vector);
+}
+
+TEST_F(UDSStrategyFixture, DeserializeClearsReusedDestinations_StaticVector)
+{
+    // Given
+    const score::cpp::static_vector<std::uint16_t, 4> static_vector_value{0x0A0B, 0x0C0D};
+    score::cpp::static_vector<std::uint16_t, 4> out{0xDEAD, 0xBEEF, 0xFEED};
+
+    // When
+    buffer_.clear();
+    auto serialize_result = unit_.Serialize(static_vector_value, buffer_);
+    auto deserialize_result = unit_.DeSerialize(buffer_, out);
+
+    // Then
+    ASSERT_TRUE(serialize_result.has_value());
+    ASSERT_TRUE(deserialize_result.has_value());
+    EXPECT_EQ(out, static_vector_value);
+}
+
+TEST_F(UDSStrategyFixture, DeserializeEmptyInputClearsReusedStaticVector)
+{
+    // Given a static_vector destination with stale data and an empty input buffer
+    score::cpp::static_vector<std::uint16_t, 4> value{0xDEAD, 0xBEEF};
+    buffer_.clear();
+
+    // When deserializing
+    const auto result = unit_.DeSerialize(buffer_, value);
+
+    // Then the accepted empty input yields an empty destination rather than retaining stale data
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(value.empty());
+}
+
 TEST(UnsignedIntegralOnlyStrategyTest, SerializeNormalByteOrder)
 {
     score::serialization::UnsignedIntegralOnlyStrategy strategy(/*reverse_byte_order=*/false);
