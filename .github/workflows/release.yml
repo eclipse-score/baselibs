@@ -50,7 +50,7 @@ jobs:
     uses: ./.github/workflows/sanitizers_linux.yml
   create-release:
     needs: [build-linux, build-qnx, coverage-report, lint, sanitizers]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     env:
