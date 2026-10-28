@@ -19,10 +19,10 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/number_parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/virtual_parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/json_data.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
+#include "score/json/internal/parser/vajson/reader/internal/parsers/number_parser.h"
+#include "score/json/internal/parser/vajson/reader/internal/parsers/virtual_parser.h"
+#include "score/json/internal/parser/vajson/reader/json_data.h"
+#include "score/json/internal/parser/vajson/util/json_error_domain.h"
 
 namespace score
 {

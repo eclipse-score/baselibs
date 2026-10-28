@@ -18,7 +18,7 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/internal/json_ops.h"
+#include "score/json/internal/parser/vajson/reader/internal/json_ops.h"
 
 namespace score
 {

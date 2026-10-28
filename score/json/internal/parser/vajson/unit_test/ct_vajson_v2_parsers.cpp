@@ -26,14 +26,14 @@
 
 #include "gtest/gtest.h"
 
-#include "score/json/internal/parser/vajson/vajson_impl/reader/internal/parsers/composition_parser_impl.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/json_data.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/v2/parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_array_parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/reader/v2/single_object_parser.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/json_error_domain.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/number.h"
-#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/parser/vajson/reader/internal/parsers/composition_parser_impl.h"
+#include "score/json/internal/parser/vajson/reader/json_data.h"
+#include "score/json/internal/parser/vajson/reader/v2/parser.h"
+#include "score/json/internal/parser/vajson/reader/v2/single_array_parser.h"
+#include "score/json/internal/parser/vajson/reader/v2/single_object_parser.h"
+#include "score/json/internal/parser/vajson/util/json_error_domain.h"
+#include "score/json/internal/parser/vajson/util/number.h"
+#include "score/json/internal/parser/vajson/util/types.h"
 #include "score/result/result.h"
 
 namespace score

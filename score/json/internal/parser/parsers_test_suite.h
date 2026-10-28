@@ -84,12 +84,11 @@ TYPED_TEST_SUITE_P(ParserTest);
 
 TYPED_TEST_P(ParserTest, CanParseObjectBool)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse boolean value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a boolean value from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -103,12 +102,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectBool)
 
 TYPED_TEST_P(ParserTest, CanParseObjectString)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse string value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a string value from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -122,12 +120,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectString)
 
 TYPED_TEST_P(ParserTest, CanParseObjectNull)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse Null value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a null value from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -141,12 +138,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectNull)
 
 TYPED_TEST_P(ParserTest, CanParseObjectNumber)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse uint64_t value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a uint64_t value from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -160,12 +156,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectNumber)
 
 TYPED_TEST_P(ParserTest, CanParseObjectFloatingPointNumber)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse float value from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a float value from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -184,12 +179,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectFloatingPointNumber)
 
 TYPED_TEST_P(ParserTest, CanParseObjectInObject)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse an object from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a nested object from a JSON buffer returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -203,12 +197,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObject)
 
 TYPED_TEST_P(ParserTest, CanParseListInObject)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "parse a list from json buffer, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a list from a JSON buffer returns the correct values in order.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
     auto root = TypeParam::FromBuffer(buffer_simple_json);
@@ -224,13 +217,12 @@ TYPED_TEST_P(ParserTest, CanParseListInObject)
 
 TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description",
-                         "parse an object where the keys are unknown to the program, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "1");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty(
+        "Description",
+        "Check that parsing and iterating over an object whose keys are unknown to the program returns all entries.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a JSON structure that contains objects in objects where the keys are unknown to the program
     std::string buffer{R"(
@@ -275,12 +267,11 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
 
 TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithValueButNoKey)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "failure in parsing an object with no keys, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");  // requirements test
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing an object value without a preceding key is rejected as malformed.");
+    this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "error-guessing");
-    this->RecordProperty("Priority", "3");
 
     std::string buffer{R"(
 {
@@ -296,13 +287,11 @@ false
 
 TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description",
-                         "failure in parsing an object with binary value element, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");  // requirements test
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty(
+        "Description", "Check that parsing an object with a non-UTF-8 binary value element is rejected as malformed.");
+    this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "error-guessing");
-    this->RecordProperty("Priority", "3");
 
     // Binary content - format specific to vaJSON Parser
     // First 4 bytes represent length of binary content in std::uint64_t
@@ -330,13 +319,11 @@ TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
 
 TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     this->RecordProperty("Description",
-                         "failure in parsing an object with very large value element, cf. RFC-8259 section 9");
-    this->RecordProperty("TestType", "requirements-based");  // requirements test
+                         "Check that parsing a number too large to be represented is rejected as malformed.");
+    this->RecordProperty("TestType", "requirements-based");
     this->RecordProperty("DerivationTechnique", "error-guessing");
-    this->RecordProperty("Priority", "3");
 
     std::string buffer{R"({ "number": 1e+500 })"};
 
@@ -350,12 +337,10 @@ TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
 
 TYPED_TEST_P(ParserTest, FromFileFail)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "Invalid file path returns error");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "3");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description", "Check that parsing from a non-existent file path returns an error.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
     // Pass invalid file path
     auto foo = TypeParam::FromFile("foo");
 
@@ -364,12 +349,11 @@ TYPED_TEST_P(ParserTest, FromFileFail)
 
 TYPED_TEST_P(ParserTest, ParsingFromFileWorks)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "Verifies that parsing JSON from a file works correctly");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "3");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    this->RecordProperty("Description",
+                         "Check that parsing a JSON buffer written to a file returns the correct value.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a simple JSON File
     std::string file_name{"test.json"};
     auto root = TypeParam::FromFile(this->CreateJsonFile(file_name, buffer_simple_json));

@@ -93,7 +93,8 @@ class score::json::JsonParser {
   +FromBuffer(buffer: std::string_view): score::Result<Any>
 }
 
-score::json::JsonParser --> score::json::VajsonParser : use
+score::json::JsonParser --> score::json::Error : use
+score::json::JsonParser --> amsr::json::JsonData : use
 
 
 enum score::json::Formatting {
@@ -134,21 +135,20 @@ class amsr::json::v2::Parser #LightSteelBlue
 
 class amsr::json::JsonData #LightSteelBlue
 
-amsr::json::v2::Parser <|-- score::json::VajsonParser
+amsr::json::v2::Parser <|-- AnyTreeBuilder
 
 
-class score::json::VajsonParser #LightSteelBlue {
-  {static}+FromFile(file_path: std::string_view): score::Result<Any>
-  {static}+FromBuffer(buffer: std::string_view): score::Result<Any>
+class AnyTreeBuilder <<internal to JsonParser>> #LightSteelBlue {
+  +GetData(): score::Result<Any>
 }
 
-score::json::VajsonParser *-- score::json::Any
-score::json::VajsonParser --> score::json::Error : use
-score::json::VajsonParser --> score::Result : use
-score::json::VajsonParser --> amsr::json::ParserResult : use
-score::json::VajsonParser --> amsr::json::ParserState : use
-score::json::VajsonParser --> amsr::json::JsonErrc : use
-score::json::VajsonParser --> amsr::json::JsonData : use
+score::json::JsonParser --> AnyTreeBuilder : use
+AnyTreeBuilder *-- score::json::Any
+AnyTreeBuilder --> score::json::Error : use
+AnyTreeBuilder --> score::Result : use
+AnyTreeBuilder --> amsr::json::ParserResult : use
+AnyTreeBuilder --> amsr::json::ParserState : use
+AnyTreeBuilder --> amsr::json::JsonErrc : use
 
 
 class score::json::Any {
