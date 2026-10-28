@@ -228,9 +228,64 @@ TEST(UT__Parser__Invalid, Dynamic__MultipleValues)
     AssertInvalid(R"(2 3 4)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnicodeEscape)
+TEST(UT__Parser__Invalid, Dynamic__TruncatedUnicodeEscape)
 {
-    AssertInvalid(R"("test\u1234")");
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that an incomplete Unicode escape at end of input is rejected.");
+
+    AssertInvalid(R"("test\u12)");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__NonHexadecimalUnicodeEscape)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a Unicode escape with a non-hexadecimal digit is rejected.");
+
+    AssertInvalid(R"("test\u12g4")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__LoneHighSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate without a following low surrogate is rejected.");
+
+    AssertInvalid(R"("test\ud83d")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByNonSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate followed by a non-surrogate escape is rejected.");
+
+    AssertInvalid(R"("test\ud83d\u0041")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByOtherEscape)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate followed by an escape other than \\u is rejected.");
+
+    AssertInvalid(R"("test\ud83d\n")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__LoneLowSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a low surrogate without a preceding high surrogate is rejected.");
+
+    AssertInvalid(R"("test\ude00")");
 }
 
 TEST(UT__Parser__Invalid, Dynamic__UnknownEscape)
