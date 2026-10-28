@@ -148,10 +148,6 @@
     "url": "https://eclipse-score.github.io/baselibs/pr-702/"
   },
   {
-    "version": "pr-711",
-    "url": "https://eclipse-score.github.io/baselibs/pr-711/"
-  },
-  {
     "version": "pr-716",
     "url": "https://eclipse-score.github.io/baselibs/pr-716/"
   },
@@ -160,24 +156,20 @@
     "url": "https://eclipse-score.github.io/baselibs/pr-725/"
   },
   {
-    "version": "pr-727",
-    "url": "https://eclipse-score.github.io/baselibs/pr-727/"
-  },
-  {
-    "version": "pr-732",
-    "url": "https://eclipse-score.github.io/baselibs/pr-732/"
-  },
-  {
-    "version": "pr-733",
-    "url": "https://eclipse-score.github.io/baselibs/pr-733/"
-  },
-  {
     "version": "pr-734",
     "url": "https://eclipse-score.github.io/baselibs/pr-734/"
   },
   {
     "version": "pr-735",
     "url": "https://eclipse-score.github.io/baselibs/pr-735/"
+  },
+  {
+    "version": "pr-737",
+    "url": "https://eclipse-score.github.io/baselibs/pr-737/"
+  },
+  {
+    "version": "pr-738",
+    "url": "https://eclipse-score.github.io/baselibs/pr-738/"
   },
   {
     "version": "pr-83",
@@ -206,13 +198,5 @@
   {
     "version": "v0.2.16",
     "url": "https://eclipse-score.github.io/baselibs/v0.2.16/"
-  },
-  {
-    "version": "pr-737",
-    "url": "https://eclipse-score.github.io/baselibs/pr-737/"
-  },
-  {
-    "version": "pr-738",
-    "url": "https://eclipse-score.github.io/baselibs/pr-738/"
   }
 ]
