@@ -103,6 +103,67 @@ cc_test(
     ],
 )
 
+cc_library(
+    name = "string_registry",
+    srcs = [
+        "string_registry.cpp",
+    ],
+    hdrs = [
+        "string_registry.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+    deps = [":registry_string_view"],
+)
+
+cc_test(
+    name = "string_registry_unit_test",
+    srcs = [
+        "string_registry_tests.cpp",
+    ],
+    features = [
+        "aborts_upon_exception",
+        "strict_warnings",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":string_registry",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_library(
+    name = "registry_string_view",
+    hdrs = [
+        "registry_string_view.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+cc_test(
+    name = "registry_string_view_unit_tests",
+    srcs = [
+        "registry_string_view_tests.cpp",
+    ],
+    features = [
+        "aborts_upon_exception",
+        "strict_warnings",
+    ],
+    tags = ["unit"],
+    deps = [
+        ":registry_string_view",
+        ":string_registry",
+        "@googletest//:gtest_main",
+    ],
+)
+
 docs_bundle(
     name = "docs",
     source_dir = "docs",
