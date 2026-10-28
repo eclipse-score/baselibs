@@ -413,6 +413,7 @@
 <li class="toctree-l2"><a class="reference internal" href="chklst_arc_inspection.html">Architecture Inspection Checklist</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../safety_analysis/dfa.html">DFA (Dependent Failure Analysis)</a></li>
+
 <li class="toctree-l2"><a class="reference internal" href="../detailed_design/chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
@@ -498,7 +499,7 @@
                   
   <section id="bitmanipulation-component-architecture">
 <h1>Bitmanipulation Component Architecture<a class="headerlink" href="#bitmanipulation-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-5c37b6bd">
+<div class="need_container docutils container" id="SNCB-54f12c4a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__bitmanipulation_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -547,7 +548,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c370c04f">
+<div class="need_container docutils container" id="SNCB-ffcac5df">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -597,7 +598,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-a2de8e63">
+<div class="need_container docutils container" id="SNCB-90b4d3ef">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__bit_manipulation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -620,7 +621,7 @@
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_bit_manipulation" title="comp_arc_sta__baselibs__bit_manipulation">comp__baselibs_bit_manipulation</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bit_operations" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bit_operations</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bitmask_operators" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bitmask_operators</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__bounds_safety" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__bounds_safety</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__byte_extraction" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__byte_extraction</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__byte_operations" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__byte_operations</a>, <a class="reference internal" href="../requirements/index.html#comp_req__bitmanipulation__header_only" title="comp_arc_sta__baselibs__bit_manipulation">comp_req__bitmanipulation__header_only</a></span></span></div>
-<div class="line">violated_by: <span class="violates"><span><a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__constraints" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__constraints</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__late_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__late_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__no_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__no_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__wrong_input" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__wrong_input</a></span></span></div>
+<div class="line">violated_by: <span class="violates"><span><a class="reference internal" href="../safety_analysis/dfa.html#comp_saf_dfa__bitmanipulation__ffi" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_dfa__bitmanipulation__ffi</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__constraints" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__constraints</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__late_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__late_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__no_return" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__no_return</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__bitmanipulation__wrong_input" title="comp_arc_sta__baselibs__bit_manipulation">comp_saf_fmea__bitmanipulation__wrong_input</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -651,7 +652,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c30e76b5">
+<div class="need_container docutils container" id="SNCB-7fefd69a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -694,7 +695,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-96eae977">
+<div class="need_container docutils container" id="SNCB-73cdfb11">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__clear_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -737,7 +738,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e25d9f7e">
+<div class="need_container docutils container" id="SNCB-8de44fd4">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__toggle_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -780,7 +781,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-1f792190">
+<div class="need_container docutils container" id="SNCB-6aeefe75">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__test_bit">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -823,7 +824,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3b5575c3">
+<div class="need_container docutils container" id="SNCB-03e5b3dd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__extract_byte">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -866,7 +867,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-425868c1">
+<div class="need_container docutils container" id="SNCB-a4ce48f9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_or">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -909,7 +910,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-20b0fe22">
+<div class="need_container docutils container" id="SNCB-1e933e7f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_and">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -952,7 +953,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-526ffffb">
+<div class="need_container docutils container" id="SNCB-39b325b1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_xor">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -995,7 +996,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-4e34f338">
+<div class="need_container docutils container" id="SNCB-ef0a0ec1">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_not">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1038,7 +1039,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-dbb6afa0">
+<div class="need_container docutils container" id="SNCB-767f7003">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__bitmask_assignmnt">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
