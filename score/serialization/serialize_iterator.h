@@ -112,7 +112,7 @@ class SerializeIterator
     explicit SerializeIterator(Container& container)
         : container_(container),
           iterator_{std::make_shared<typename Container::iterator>(container_.begin())},
-          result_{std::make_shared<Result<std::size_t>>()}
+          result_{std::make_shared<Result<std::size_t>>(0U)}
     {
         static_assert(details::is_supported_sequence_container<Container>::value,
                       "Provided Container is not supported.");
@@ -127,6 +127,11 @@ class SerializeIterator
         if (!result)
         {
             *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
+        else if (result_->has_value())
+        {
+            // result_'s success value counts bytes stored through this iterator; skip once an error is latched.
+            ++result_->value();
         }
         return *this;
     }
@@ -157,29 +162,12 @@ class SerializeIterator
         return *this;
     }
 
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
-        if (not result_->has_value())
-        {
-            return *result_;
-        }
-
-        return GetNumberOfBytesWritten();
+        return *result_;
     }
 
   private:
-    // Suppress "AUTOSAR C++14 A0-1-3" rule findings. This rule states: "Every function defined in an anonymous
-    // namespace, or static function with internal linkage, or private member function shall be used." False-positive,
-    // method is used in GetResult().
-    // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
-    std::size_t GetNumberOfBytesWritten() const
-    {
-        const auto distance = std::distance(container_.begin(), *iterator_);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
-                                            0);  // we start at begin and go on from there, it can not be negative.
-        return static_cast<std::size_t>(distance);
-    }
-
     Container& container_;
     std::shared_ptr<typename Container::iterator> iterator_;
     std::shared_ptr<Result<std::size_t>> result_;
@@ -250,7 +238,7 @@ class DeSerializeIterator
     }
 
     /// @brief Indicate how much the iterator was moved and if an out-of-bound access happend
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         if (not result_->has_value())
         {
