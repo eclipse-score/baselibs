@@ -22,7 +22,6 @@
 #include <score/assert.hpp>
 
 #include <iterator>
-#include <limits>
 #include <type_traits>
 
 namespace score
@@ -287,9 +286,7 @@ class DeSerializeIterator
     DeSerializeIterator End() const
     {
         DeSerializeIterator end{container_};
-        constexpr difference_type max_difference_type = std::numeric_limits<difference_type>::max();
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(static_cast<difference_type>(container_.size()) < max_difference_type);
-        std::advance(end, static_cast<difference_type>(container_.size()));
+        end.iterator_ = container_.cend();
         return end;
     }
 
