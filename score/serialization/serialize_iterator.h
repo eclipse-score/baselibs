@@ -33,19 +33,47 @@ namespace serialization
 namespace helper
 {
 
-/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
-/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
-/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
-template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value, bool> = true>
-bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+/// @brief Appends value via emplace_back and moves the iterator to end(). Caller must ensure capacity is available.
+template <typename Container>
+bool EmplaceBackInto(Container& container,
+                     typename Container::iterator& iterator,
+                     const typename Container::value_type& value)
 {
     // Suppress "AUTOSAR C++14 A0-1-2", The rule states: "The value returned by a function having a non-void return type
     // that is not an overloaded operator shall be used." This is false positive. API returns void.
     // coverity[autosar_cpp14_a0_1_2_violation : FALSE]
     container.emplace_back(value);
     iterator = container.end();  // we cannot be sure that the iterator stays valid (most certainly it did not)
-    return true;  // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up
-                  // with a more robust solution once we switched to PMR.
+    return true;
+}
+
+/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
+/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
+/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               (details::has_bounded_capacity<Container>::value == false),
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up with a more
+    // robust solution once we switched to PMR.
+    return EmplaceBackInto(container, iterator, value);
+}
+
+/// @brief Overload for bounded containers (e.g. score::cpp::static_vector) whose emplace_back has a size() < capacity()
+/// precondition. We check capacity ourselves and report an out-of-bounds write instead of terminating.
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               details::has_bounded_capacity<Container>::value,
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    if (container.size() >= container.capacity())
+    {
+        return false;
+    }
+    return EmplaceBackInto(container, iterator, value);
 }
 
 template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value == false, bool> = true>

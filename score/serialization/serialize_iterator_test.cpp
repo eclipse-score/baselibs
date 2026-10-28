@@ -259,6 +259,22 @@ TEST(SerializeIteratorTest, OverflowsOnStaticTypes)
     ASSERT_FALSE(result.has_value());
 }
 
+TEST(SerializeIteratorTest, OverflowsOnBoundedContainer)
+{
+    // Given a static_vector whose capacity is smaller than the data we want to write
+    score::cpp::static_vector<std::uint8_t, 1> buffer{};
+    auto iterator = SerializeInto(buffer);
+
+    // When writing more data than the capacity allows
+    iterator = 0x01;
+    iterator = 0x02;
+
+    // Then our serialization was not successful instead of aborting
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kOutOfBoundsWrite);
+}
+
 TEST(SerializeIteratorTest, ProvideSerializationWindows)
 {
     // Given a buffer where we want to serialize into an offset
