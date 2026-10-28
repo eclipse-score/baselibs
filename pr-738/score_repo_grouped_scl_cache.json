@@ -3593,6 +3593,401 @@
         }
       },
       {
+        "need": "comp_req__json__deserialization",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
+              "file": "score/json/internal/parser/vajson_parser_test.cpp",
+              "line": 40,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
+              "file": "score/json/internal/parser/vajson_parser_test.cpp",
+              "line": 90,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
+              "file": "score/json/internal/parser/vajson_parser_test.cpp",
+              "line": 109,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectBool",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 85,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectString",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 103,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectNull",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 121,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectNumber",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 139,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectFloatingPointNumber",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 157,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectInObject",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 180,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseListInObject",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 198,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__CanParseObjectInObjectAndIterateOverKeys",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 218,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__EmitsErrorWhenParsingObjectWithValueButNoKey",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 268,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__EmitsErrorWhenParsingObjectWithBinaryValue",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 288,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__EmitsErrorWhenParsingTooLargeNumber",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 320,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__FromFileFail",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 338,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/ParserTest/0__ParsingFromFileWorks",
+              "file": "score/json/internal/parser/parsers_test_suite.h",
+              "line": 350,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Bool",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 61,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Uint8",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 72,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Uint16",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 83,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Uint32",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 94,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Uint64",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 105,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Int8",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 116,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Int16",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 127,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Int32",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 138,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Int64",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 149,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Float",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 160,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__Double",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 171,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 182,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 194,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__FloatingPointWithoutDecimalPoint",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 207,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__NearDoubleLimitsIsParsable",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 219,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__FloatingPointOverflowIsRejected",
+              "file": "score/json/internal/parser/number_parser_test.cpp",
+              "line": 230,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 96,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 118,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 141,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 164,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 187,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 210,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 233,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 256,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 279,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 301,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Test/NumberTest/0__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+              "file": "score/json/internal/parser/number_parser_test_suite.h",
+              "line": 324,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__string_manipulation__cmp_adaptor",
         "links": {
           "CodeLinks": [],
