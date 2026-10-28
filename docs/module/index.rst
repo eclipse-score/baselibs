@@ -22,7 +22,7 @@
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
               comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
-              comp__baselibs_static_reflection[version==1]
+              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1]
    :status: valid
    :version: 2
    :safety: ASIL_B
@@ -39,7 +39,7 @@
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
               comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
-              comp__baselibs_static_reflection[version==1]
+              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1]
 
    .. needarch::
       :scale: 50
