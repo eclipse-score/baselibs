@@ -19,7 +19,6 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/reader/internal/parsers/number_parser.h"
 #include "score/json/internal/parser/vajson/reader/internal/parsers/virtual_parser.h"
 #include "score/json/internal/parser/vajson/reader/json_data.h"
 #include "score/json/internal/parser/vajson/util/json_error_domain.h"
@@ -82,26 +81,6 @@ TEST(UT__Parser__Number, Dynamic__FloatArray)
     DynamicNumberParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
     EXPECT_EQ(parser.number_, 3U);
-}
-
-/*!
- * Tests that when OnNumber is called with a number not convertible to the NumberParser's number type,
- * that error is propagated to the Parse() call.
- * \trace           score::json::vajson::internal::NumberParser::OnNumber
- */
-TEST(UT__Parser__Number, TryAs__Error)
-{
-    auto json_data_result = JsonData::FromBuffer(std::string_view{"-123"});
-    ASSERT_TRUE(json_data_result.has_value());
-    internal::NumberParser<std::uint8_t> parser{json_data_result.value(),
-                                                [](std::uint8_t) noexcept -> score::Result<void> {
-                                                    return score::Result<void>{};
-                                                }};
-
-    const auto result = parser.Parse();
-    ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
-    ASSERT_EQ(result.error().UserMessage(), std::string_view{"Could not convert number."});
 }
 
 }  // namespace unit_test

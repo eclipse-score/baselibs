@@ -71,8 +71,8 @@ class DepthCounter final
     /// \reentrant       FALSE
     DepthCounter(DepthCounter&& that) noexcept : stack_{std::move(that.stack_)}, counter_{std::move(that.counter_)} {}
 
-    /// \brief           Default copy constructor
-    DepthCounter(const DepthCounter&) noexcept = default;
+    /// \brief           Deleted copy constructor
+    DepthCounter(const DepthCounter&) = delete;
 
     /// \brief           Move assignment
     /// \return          Reference to the moved to object.
@@ -81,12 +81,8 @@ class DepthCounter final
     /// \threadsafe      TRUE, for different this pointer
     auto operator=(DepthCounter&&) & noexcept -> DepthCounter& = default;
 
-    /// \brief           Default copy assignment
-    /// \return          Reference to the copied object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto operator=(const DepthCounter&) & noexcept(false) -> DepthCounter& = default;
+    /// \brief           Deleted copy assignment
+    auto operator=(const DepthCounter&) -> DepthCounter& = delete;
 
     /// \brief           Default destructor
     /// \context         ANY

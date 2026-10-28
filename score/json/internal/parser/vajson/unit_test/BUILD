@@ -18,7 +18,6 @@ cc_test(
     name = "vajson_impl_unit_tests",
     srcs = glob(["**/*.cpp"]),
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    local_defines = ["VAJSON"],
     tags = ["unit"],
     visibility = [
         "@score_baselibs//score/json:__subpackages__",

@@ -160,7 +160,6 @@ auto StructureParserBase::ParseString() noexcept -> ParserResult
  * \internal
  * - Skip all whitespace characters.
  * - If the string is followed by a colon and a key is expected:
- *   - Store the string as the current key.
  *   - Call the OnKey callback with the key.
  * - If the string is not followed by a colon a value is expected:
  *   - Call the OnString callback with the string.
@@ -178,9 +177,6 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
     if (this->GetJsonOps().Skip(':'))
     {
         result = this->GetState().AddKey().and_then([this, &string](void) noexcept {
-            const std::string_view view{string};
-            this->GetJsonDocument().StoreCurrentKey(view);
-
             return this->OnKey(string);
         });
     }
@@ -490,12 +486,6 @@ auto StructureParserBase::GetNumber(const char first) noexcept -> CStringView
 }
 
 auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
-{
-
-    return this->GetJsonOps().GetJsonDocument();
-}
-
-auto StructureParserBase::GetJsonDocument() const noexcept -> const JsonData&
 {
 
     return this->GetJsonOps().GetJsonDocument();

@@ -85,20 +85,6 @@ auto JsonOps::Move() noexcept -> bool
     return !stream.fail();
 }
 
-auto JsonOps::Tell() const noexcept -> Result<std::uint64_t>
-{
-    std::istream& stream = const_cast<std::istream&>(this->GetStream());
-    std::streampos pos = stream.tellg();
-    Result<std::uint64_t> result{static_cast<std::uint64_t>(pos)};
-    if (pos == std::streampos(-1))
-    {
-        result =
-            MakeErrorResult<std::uint64_t>(JsonErrc::kStreamFailure, "JsonOps::Tell: Could not get stream position.");
-    }
-
-    return result;
-}
-
 /*!
  /// \internal
  * - Peek at the next character
@@ -275,55 +261,6 @@ auto JsonOps::Read(const std::uint64_t num_to_read,
 
 /*!
  * \internal
- * - Read the requested amount of characters from the stream.
- * - If the number of read characters is as requested:
- *   - Execute the callback.
- * - Otherwise:
- *   - Buffer the characters.
- * - If the requested number of characters could not be read, return an error.
- * - If the callback has not been executed and there was no error, execute the callback.
- * \endinternal
- */
-auto JsonOps::ReadExactly(const std::uint64_t num_to_read,
-                          const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
-    -> Result<void>
-{
-
-    String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
-
-    bool callback_executed{false};
-    Result<void> result =
-        Drop(Read(num_to_read, [&buffer, &callback, &num_to_read, &callback_executed](std::string_view view) noexcept {
-                 if (view.size() == num_to_read)
-                 {
-                     callback(view);
-                     callback_executed = true;
-                 }
-                 else
-                 {
-                     static_cast<void>(buffer.append(view));
-                 }
-             }).and_then([&num_to_read](const std::uint64_t& read) noexcept {
-            score::Result<void> read_result{
-                MakeErrorResult<void>(JsonErrc::kInvalidJson, "JsonOps::ReadExactly: Unexpected EOF.")};
-            if (num_to_read == read)
-            {
-                read_result.emplace();
-            }
-            return read_result;
-        }));
-
-    if (result && (!callback_executed))
-    {
-        const StringView buf_view{buffer};
-        callback(buf_view);
-    }
-
-    return result;
-}
-
-/*!
- * \internal
  * - As long as there are new elements in the stream and the delimiter is not found:
  *   - Trigger the given action on the returned span.
  * - Otherwise:
@@ -390,19 +327,7 @@ auto JsonOps::GetJsonDocument() & noexcept -> JsonData&
     return this->data_.get();
 }
 
-auto JsonOps::GetJsonDocument() const& noexcept -> const JsonData&
-{
-
-    return this->data_.get();
-}
-
 auto JsonOps::GetStream() & noexcept -> std::istream&
-{
-
-    return this->GetJsonDocument().GetStream();
-}
-
-auto JsonOps::GetStream() const& noexcept -> const std::istream&
 {
 
     return this->GetJsonDocument().GetStream();

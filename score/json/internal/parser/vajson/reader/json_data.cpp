@@ -21,7 +21,6 @@
 #include "score/json/internal/parser/vajson/reader/json_data.h"
 #include <array>
 #include <istream>
-#include <limits>
 #include <memory>
 #include <sstream>
 #include <utility>
@@ -40,15 +39,12 @@ namespace vajson
 /*!
  * \internal
  * - Initialize the stream buffer from the given input stream.
- * - Set the capacity for the key and string buffer to the values defined in the static configuration.
+ * - Set the capacity for the string buffer to the value defined in the static configuration.
  * - Parse the BOM.
  * \endinternal
  */
 JsonData::JsonData(std::istream& input_stream) noexcept : stream_{input_stream}
 {
-
-    this->current_key_.reserve(internal::config::kKeyBufferSize);
-
     this->current_buffer_.reserve(internal::config::kStringBufferSize);
     this->ParseBom();
 }
@@ -85,9 +81,8 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     if (file_result.has_value())
     {
         // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
-        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader's
-        // Snap/Restore backtracking issues repeated seekg/tellg calls, which are expensive on a filebuf but O(1)
-        // on an in-memory stringbuf.
+        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader issues
+        // seekg calls, which are expensive on a filebuf but O(1) on an in-memory stringbuf.
         std::istream& file{*file_result.value()};
         file.seekg(0, std::ios::end);
         const std::streamoff size{file.tellg()};
@@ -143,81 +138,6 @@ auto JsonData::FromBuffer(const score::cpp::span<const char> buffer) noexcept ->
     // Create istringstream from the buffer
     std::unique_ptr<std::istream> iss{std::make_unique<std::istringstream>(std::string(buffer.data(), buffer.size()))};
     return Result<JsonData>{JsonData{std::move(iss)}};
-}
-
-/*!
- * \internal
- * - Get the current position from the stream.
- * - Store the DepthCounter and the current position internally.
- * - Return the Result of the operation.
- * \endinternal
- */
-auto JsonData::Snap() noexcept -> Result<void>
-{
-    std::streampos pos = this->GetStream().tellg();
-    auto result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "JsonData::Snap: Could not get stream position.");
-    if (!this->GetStream().fail())
-    {
-        result.emplace();
-        this->depth_counter_backup_ = this->depth_counter_;
-        this->pos_backup_ = static_cast<std::uint64_t>(pos);
-        this->has_backup_ = true;
-    }
-
-    return result;
-}
-
-/*!
- * \internal
- * - Check that a snapshot is available.
- * - Check that the stream position contained in the snapshot is small enough to be passed to seekg().
- * - Seek to the stream position.
- * - Check that the current position matches the requested seek position.
- * - Restore the internal DepthCounter using the stack and counter from the snapshot.
- * - Return the Result of the operation.
- * \endinternal
- */
-auto JsonData::Restore() noexcept -> Result<void>
-{
-    Result<void> result{MakeErrorResult<void>(JsonErrc::kStreamFailure, "JsonData::Restore: No snapshot available.")};
-
-    if (this->has_backup_)
-    {
-        const std::uint64_t pos{this->pos_backup_};
-
-        if (pos > static_cast<std::uint64_t>(std::numeric_limits<std::int64_t>::max()))
-        {
-            result = MakeErrorResult<void>(JsonErrc::kStreamFailure,
-                                           "JsonData::Restore: Stream position exceeds max seek count.");
-        }
-        else
-        {
-            // Seek to position
-            this->stream_.get().seekg(static_cast<std::streamoff>(pos), std::ios::beg);
-
-            if (this->stream_.get().fail())
-            {
-                result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "Unable to restore original position.");
-            }
-            else
-            {
-                // Verify position
-                const std::uint64_t curr{static_cast<std::uint64_t>(this->stream_.get().tellg())};
-                if (curr != this->pos_backup_)
-                {
-                    result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "Unable to restore original position.");
-                }
-                else
-                {
-                    this->depth_counter_ = std::move(this->depth_counter_backup_);
-                    this->has_backup_ = false;
-                    result = Result<void>{};
-                }
-            }
-        }
-    }
-
-    return result;
 }
 
 /*!

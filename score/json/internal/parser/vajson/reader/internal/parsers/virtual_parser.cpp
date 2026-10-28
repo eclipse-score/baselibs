@@ -41,31 +41,6 @@ auto VirtualParser::Parse() noexcept -> Result<void>
     return this->parser_.Parse();
 }
 
-auto VirtualParser::SubParse() const noexcept -> ParserResult
-{
-    return this->parser_.SubParse();
-}
-
-auto VirtualParser::GetChild() & noexcept -> VirtualParser&
-{
-    return *this;
-}
-
-auto VirtualParser::GetCurrentKey() const noexcept -> CStringView
-{
-    return this->GetJsonDocument().GetCurrentKey();
-}
-
-auto VirtualParser::GetJsonDocument() noexcept -> JsonData&
-{
-    return this->parser_.GetJsonDocument();
-}
-
-auto VirtualParser::GetJsonDocument() const noexcept -> const JsonData&
-{
-    return this->parser_.GetJsonDocument();
-}
-
 /// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnNull() noexcept -> ParserResult
 {

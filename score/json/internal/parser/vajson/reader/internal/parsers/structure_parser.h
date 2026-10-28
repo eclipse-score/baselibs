@@ -176,19 +176,6 @@ class StructureParser : public StructureParserBase
     /// \reentrant       FALSE
     ~StructureParser() noexcept override = default;
 
-    /// \brief           Parses the file until the current parser is finished
-    /// \details         Parserstate will be kRunning to allow for further parsing.
-    /// \return          kRunning, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if parsing has failed due to invalid JSON data.
-    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
-    ///                  if an unknown value has been encountered.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    auto SubParse() const noexcept -> ParserResult;
-
   private:
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file.

@@ -13,7 +13,8 @@
 
 #include "score/json/json_parser.h"
 
-#include "score/json/internal/parser/vajson/reader.h"
+#include "score/json/internal/parser/vajson/reader/internal/parsers/virtual_parser.h"
+#include "score/json/internal/parser/vajson/reader/json_data.h"
 
 #include <iostream>
 #include <stack>
@@ -30,10 +31,10 @@ namespace
 {
 
 /// @brief Builds the tree of data elements from the events reported by the vaJson parser.
-class AnyTreeBuilder final : private score::json::vajson::v2::Parser
+class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParser
 {
   public:
-    using score::json::vajson::v2::Parser::Parser;
+    using score::json::vajson::internal::VirtualParser::VirtualParser;
 
     /// @brief Parses the data given to the constructor
     /// @return Any as root of the tree, error on error

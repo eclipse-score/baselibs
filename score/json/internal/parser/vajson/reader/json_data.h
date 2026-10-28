@@ -28,7 +28,6 @@
 #include "score/json/internal/parser/vajson/reader/parser_state.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
 #include "score/json/internal/parser/vajson/util/types.h"
-#include <cstdint>
 #include <functional>
 #include <memory>
 
@@ -50,18 +49,10 @@ class JsonData final
     std::unique_ptr<std::istream> owned_stream_{nullptr};
     /// \brief           JSON structure state
     internal::DepthCounter depth_counter_{};
-    /// \brief           Current key
-    String current_key_{};
     /// \brief           Current buffer
     String current_buffer_{};
     /// \brief           Flag to indicate if the document has a UTF-8 BOM
     EncodingType encoding_{EncodingType::kNone};
-    /// \brief           Backup of the structure state
-    internal::DepthCounter depth_counter_backup_{};
-    /// \brief           Backup of the document position
-    std::uint64_t pos_backup_{0U};
-    /// \brief           Flag to indicate if a backup state is available
-    bool has_backup_{false};
 
   public:
     /// \brief           Class JsonOps must have access to the InputStream but no other classes
@@ -171,29 +162,6 @@ class JsonData final
         return this->depth_counter_;
     }
 
-    /// \brief           Sets the current key
-    /// \param[in]       key
-    ///                  to store.
-    /// \return          The current key.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    void StoreCurrentKey(StringView key) noexcept
-    {
-
-        this->current_key_ = std::string(key);
-    }
-
-    /// \brief           Returns the current key
-    /// \return          The current key.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetCurrentKey() const noexcept -> CStringView
-    {
-        return CStringView{this->current_key_};
-    }
-
     /// \brief           Returns the current string
     /// \return          The current string.
     /// \context         ANY
@@ -239,20 +207,6 @@ class JsonData final
         return this->encoding_;
     }
 
-    /// \brief           Stores a snapshot of the parser's current state
-    /// \return          A Result being empty, or the error that occurred.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto Snap() noexcept -> Result<void>;
-
-    /// \brief           Restores the parser's state from the previous snapshot
-    /// \return          A Result being empty, or the error that occurred.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto Restore() noexcept -> Result<void>;
-
   private:
     /// \brief           Returns the stream
     /// \return          The stream.
@@ -260,16 +214,6 @@ class JsonData final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
     auto GetStream() noexcept -> std::istream&
-    {
-        return this->stream_.get();
-    }
-
-    /// \brief           Returns the stream
-    /// \return          The stream.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetStream() const noexcept -> const std::istream&
     {
         return this->stream_.get();
     }
