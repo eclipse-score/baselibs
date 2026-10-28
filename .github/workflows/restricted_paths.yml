@@ -38,7 +38,6 @@ jobs:
             restricted:
               - 'score/language/futurecpp/**'
               - 'score/language/safecpp/test/**'
-              - 'score/mw/**'
               - '!score/**/docs/**'
       - name: Block PR if restricted files are changed
         if: steps.filter.outputs.restricted == 'true' && github.event_name != 'merge_group'
