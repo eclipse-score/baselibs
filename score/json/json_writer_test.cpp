@@ -13,6 +13,7 @@
 #include "score/json/json_writer.h"
 #include "score/filesystem/filestream/file_factory_fake.h"
 #include "score/filesystem/filestream/simple_string_stream_collection.h"
+#include "score/quality/compiler_warnings/warnings.h"
 
 #include <gtest/gtest.h>
 
@@ -114,20 +115,20 @@ class JsonWriterWriteToFileTest : public ::testing::Test
     }
 
     score::filesystem::SimpleStringStreamCollection stream{};
-    std::shared_ptr<score::filesystem::FileFactoryFake> file_factory_fake{
-        std::make_shared<score::filesystem::FileFactoryFake>(stream)};
+    score::filesystem::FileFactoryFake file_factory_fake{stream};
 
-    template <typename Json, typename... OpenArgs>
-    std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type, OpenArgs&&... open_args)
+    template <typename Json>
+    std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type)
     {
-        score::json::JsonWriter writer{
-            type, score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID, kFormatting};
-        std::string_view path_view{path};
-        auto result = writer.ToFile(json, path_view, file_factory_fake, std::forward<OpenArgs>(open_args)...);
+        score::json::JsonWriter writer{file_factory_fake,
+                                       type,
+                                       score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                       kFormatting};
+        auto result = writer.ToFile(json, path);
 
         EXPECT_EQ(result.has_value(), true);
 
-        auto& file = file_factory_fake->Get("/foo/foo.json");
+        auto& file = file_factory_fake.Get("/foo/foo.json");
         return file.str();
     }
 };
@@ -163,7 +164,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .Times(1);
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
@@ -182,7 +183,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc)).Times(1);
+    EXPECT_CALL(this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc)).Times(1);
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kUnsynced);
 
@@ -200,7 +201,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .Times(1);
 
     auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
@@ -219,12 +220,11 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
+    EXPECT_CALL(this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
-    score::json::JsonWriter writer{FileSyncMode::kUnsynced};
-    std::string_view path_view{"/foo/foo.json"};
-    auto result = writer.ToFile(json, path_view, this->file_factory_fake);
+    score::json::JsonWriter writer{this->file_factory_fake, FileSyncMode::kUnsynced};
+    auto result = writer.ToFile(json, "/foo/foo.json");
 
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
@@ -241,12 +241,67 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
-    score::json::JsonWriter writer{FileSyncMode::kSynced};
-    std::string_view path_view{"/foo/foo.json"};
-    auto result = writer.ToFile(json, path_view, this->file_factory_fake);
+    score::json::JsonWriter writer{this->file_factory_fake, FileSyncMode::kSynced};
+    auto result = writer.ToFile(json, "/foo/foo.json");
+
+    EXPECT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
+}
+
+TYPED_TEST(JsonWriterWriteToFileTest, DeprecatedToFileWritesThroughGivenFileFactory)
+{
+    this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
+    this->RecordProperty("ASIL", "B");
+    this->RecordProperty("Description", "The deprecated overload writes through the file factory passed to it.");
+    this->RecordProperty("TestType", "interface-test");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("Priority", "3");
+
+    typename TestFixture::SampleJson json;
+    score::filesystem::SimpleStringStreamCollection other_stream{};
+    auto other_file_factory = std::make_shared<score::filesystem::FileFactoryFake>(other_stream);
+
+    EXPECT_CALL(this->file_factory_fake, Open(_, _)).Times(0);
+    EXPECT_CALL(*other_file_factory, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc)).Times(1);
+
+    score::json::JsonWriter writer{this->file_factory_fake,
+                                   FileSyncMode::kUnsynced,
+                                   score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                                   TestFixture::kFormatting};
+    // clang-format off
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING(-Wdeprecated-declarations)
+    auto result = writer.ToFile(json, "/foo/foo.json", other_file_factory);
+    DISABLE_WARNING_POP
+    // clang-format on
+
+    EXPECT_TRUE(result.has_value());
+    EXPECT_EQ(other_file_factory->Get("/foo/foo.json").str(), TestFixture::Expected());
+}
+
+TYPED_TEST(JsonWriterWriteToFileTest, DeprecatedToFileWithNullFileFactoryResultsInError)
+{
+    this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
+    this->RecordProperty("ASIL", "B");
+    this->RecordProperty("Description", "The deprecated overload returns an error instead of dereferencing null.");
+    this->RecordProperty("TestType", "interface-test");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("Priority", "3");
+
+    typename TestFixture::SampleJson json;
+
+    EXPECT_CALL(this->file_factory_fake, Open(_, _)).Times(0);
+
+    score::json::JsonWriter writer{this->file_factory_fake};
+    // clang-format off
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING(-Wdeprecated-declarations)
+    auto result = writer.ToFile(json, "/foo/foo.json", nullptr);
+    DISABLE_WARNING_POP
+    // clang-format on
 
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);

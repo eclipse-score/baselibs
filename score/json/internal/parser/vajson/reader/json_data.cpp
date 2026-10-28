@@ -25,10 +25,6 @@
 #include <sstream>
 #include <utility>
 
-#include "score/filesystem/filestream/file_factory.h"
-#include "score/filesystem/filestream/file_stream.h"
-#include "score/filesystem/path.h"
-
 #include "score/json/internal/parser/vajson/reader/internal/json_ops.h"
 namespace score
 {
@@ -60,49 +56,6 @@ JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonDa
 {
 
     this->owned_stream_ = std::move(input_stream);
-}
-
-/*!
- * \internal
- * - Create the input stream from the file.
- * - If the file has been opened successfully.
- *   - Then create & return the JsonData object.
- * - Else return a JsonErrc containing the original error message.
- * \endinternal
- */
-auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData>
-{
-    // Open file using score filesystem
-    score::filesystem::FileFactory factory{};
-    score::filesystem::Path file_path{std::string(path.data(), path.size())};
-
-    auto file_result = factory.Open(file_path, std::ios::in | std::ios::binary);
-    auto result = MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file");
-    if (file_result.has_value())
-    {
-        // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
-        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader issues
-        // seekg calls, which are expensive on a filebuf but O(1) on an in-memory stringbuf.
-        std::istream& file{*file_result.value()};
-        file.seekg(0, std::ios::end);
-        const std::streamoff size{file.tellg()};
-        file.seekg(0, std::ios::beg);
-        if (file.fail() || (size < 0))
-        {
-            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
-        }
-        std::string content(static_cast<std::size_t>(size), '\0');
-        // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
-        static_cast<void>(file.read(content.data(), size));
-        if (file.bad() || (file.gcount() != size))
-        {
-            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
-        }
-        std::unique_ptr<std::istream> stream{std::make_unique<std::istringstream>(std::move(content))};
-        result.emplace(JsonData{std::move(stream)});
-    }
-
-    return result;
 }
 
 /*!

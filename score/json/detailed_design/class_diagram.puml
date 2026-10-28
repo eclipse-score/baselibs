@@ -50,30 +50,32 @@ class score::string_manipulation::StringComparisonAdaptor
 
 
 interface score::json::IJsonWriter {
-  +ToFile(json_data: score::json::Object, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
-  +ToFile(json_data: score::json::List, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
-  +ToFile(json_data: score::json::Any, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
+  +ToFile(json_data: score::json::Object, file_path: std::string_view): score::Result<void>
+  +ToFile(json_data: score::json::List, file_path: std::string_view): score::Result<void>
+  +ToFile(json_data: score::json::Any, file_path: std::string_view): score::Result<void>
   +ToBuffer(json_data: score::json::Object): score::Result<std::string>
   +ToBuffer(json_data: score::json::List): score::Result<std::string>
   +ToBuffer(json_data: score::json::Any): score::Result<std::string>
 }
 
 score::json::IJsonWriter <|.. score::json::JsonWriter
-score::json::IJsonWriter --> score::filesystem::IFileFactory : use
 score::json::IJsonWriter --> score::json::Object : use
 score::json::IJsonWriter --> score::json::List : use
 score::json::IJsonWriter --> score::Result : use
 
 
 class score::json::JsonWriter {
-  +ToFile(json_data: score::json::Object, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
-  +ToFile(json_data: score::json::List, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
-  +ToFile(json_data: score::json::Any, file_path: std::string_view, file_factory: std::shared_ptr<score::filesystem::IFileFactory>): score::Result<void>
+  +JsonWriter(file_factory: score::filesystem::IFileFactory&, file_sync_mode: FileSyncMode, ownership: AtomicUpdateOwnershipFlags, formatting: Formatting)
+  +ToFile(json_data: score::json::Object, file_path: std::string_view): score::Result<void>
+  +ToFile(json_data: score::json::List, file_path: std::string_view): score::Result<void>
+  +ToFile(json_data: score::json::Any, file_path: std::string_view): score::Result<void>
   +ToBuffer(json_data: score::json::Object): score::Result<std::string>
   +ToBuffer(json_data: score::json::List): score::Result<std::string>
   +ToBuffer(json_data: score::json::Any): score::Result<std::string>
+  -file_factory_: score::filesystem::IFileFactory&
 }
 
+score::json::JsonWriter --> score::filesystem::IFileFactory : use
 score::json::JsonWriter --> score::json::Error : use
 score::json::JsonWriter --> score::json::Formatting : use
 score::json::JsonWriter --> score::json::internal::writer::Serializer : use
@@ -89,10 +91,13 @@ score::json::IJsonParser --> score::Result : use
 
 
 class score::json::JsonParser {
+  +JsonParser(file_factory: score::filesystem::IFileFactory&)
   +FromFile(file_path: std::string_view): score::Result<Any>
   +FromBuffer(buffer: std::string_view): score::Result<Any>
+  -file_factory_: score::filesystem::IFileFactory&
 }
 
+score::json::JsonParser --> score::filesystem::IFileFactory : use
 score::json::JsonParser --> score::json::Error : use
 score::json::JsonParser --> amsr::json::JsonData : use
 

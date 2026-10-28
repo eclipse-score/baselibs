@@ -11,7 +11,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/json/json_parser.h"
+#include "score/filesystem/filestream/file_factory_fake.h"
+#include "score/filesystem/filestream/simple_string_stream_collection.h"
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <cstdio>
@@ -135,6 +138,47 @@ TEST(JsonParserTest, FromFileParseError)
     auto result = json_parser.FromFile(file_path);
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kParsingError);
+}
+
+TEST(JsonParserTest, FromFileReadsThroughInjectedFileFactory)
+{
+    RecordProperty("Verifies", "::score::json::JsonParser::FromFile");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "FromFile() reads the file through the injected file factory.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Priority", "3");
+
+    score::filesystem::SimpleStringStreamCollection files{};
+    files.OpenStringStream("/foo/foo.json").value().get() << JSON_INPUT;
+    score::filesystem::FileFactoryFake file_factory{files};
+    EXPECT_CALL(file_factory, Open(::testing::StrEq("/foo/foo.json"), ::testing::_)).Times(1);
+
+    const json::JsonParser json_parser{file_factory};
+    auto result = json_parser.FromFile("/foo/foo.json");
+    ASSERT_TRUE(result.has_value());
+    json_verify(result.value());
+}
+
+TEST(JsonParserTest, FromFileOpenErrorResultsInInvalidFilePath)
+{
+    RecordProperty("Verifies", "5310867");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "FromFile() returns kInvalidFilePath if the file factory cannot open the file.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("Priority", "3");
+
+    score::filesystem::SimpleStringStreamCollection files{};
+    score::filesystem::FileFactoryFake file_factory{files};
+    EXPECT_CALL(file_factory, Open(::testing::StrEq("/foo/foo.json"), ::testing::_))
+        .WillOnce(::testing::Return(
+            ::testing::ByMove(score::MakeUnexpected(score::filesystem::ErrorCode::kCouldNotOpenFileStream))));
+
+    const json::JsonParser json_parser{file_factory};
+    auto result = json_parser.FromFile("/foo/foo.json");
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
 }
 
 }  // namespace

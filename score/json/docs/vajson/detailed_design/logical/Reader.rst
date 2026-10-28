@@ -182,7 +182,6 @@ JsonData
         }
 
         class JsonData {
-          + {static} auto FromFile(StringView path) -> Result<JsonData>
           + {static} auto FromBuffer(StringView buffer) -> Result<JsonData>
           + {static} auto FromBuffer(ara::core::Span<char const> buffer) -> Result<JsonData>
           + auto GetEncoding() noexcept -> EncodingType&
