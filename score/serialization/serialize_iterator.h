@@ -246,11 +246,12 @@ class DeSerializeIterator
     /// @brief Move iterator to next position (but not past end())
     DeSerializeIterator<Container> operator++(int)
     {
+        DeSerializeIterator<Container> previous{*this};
         if (iterator_ != container_.cend())
         {
             ++iterator_;
         }
-        return *this;
+        return previous;
     }
 
     /// @brief Indicate how much the iterator was moved and if an out-of-bound access happend
