@@ -260,6 +260,11 @@ class DeSerializeIterator
         return GetNumberOfBytesWritten();
     }
 
+    bool HasError() const noexcept
+    {
+        return not result_->has_value();
+    }
+
     // Suppress "AUTOSAR C++14 A3-3-1" rule finding. This rule states:"Objects or functions with external linkage
     // (including members of named namespaces) shall be declared in a header file."
     // Rationale: This function is declared in a header file
@@ -290,7 +295,7 @@ class DeSerializeIterator
 
   private:
     // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
-    std::size_t GetNumberOfBytesWritten() const
+    [[nodiscard]] std::size_t GetNumberOfBytesWritten() const
     {
         const auto distance = std::distance(container_.cbegin(), iterator_);
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
@@ -300,6 +305,9 @@ class DeSerializeIterator
 
     const Container& container_;
     typename Container::const_iterator iterator_;
+    // Sticky, copy-shared flag that latches an out-of-bounds read so GetResult()/HasError() can report it later.
+    // Needed because operator++ must return an iterator (and this repo forbids exceptions), so it cannot return the
+    // error directly.
     std::shared_ptr<Result<std::size_t>> result_;
 };
 

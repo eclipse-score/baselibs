@@ -80,7 +80,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
     {
         LengthType counter{};
         visitor.Next(counter);
-        if (!visitor.GetResult().has_value())
+        if (visitor.HasError())
         {
             return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
         }
@@ -89,7 +89,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
         {
             UnderlyingType underlying_type{};
             visitor.Next(underlying_type);
-            if (!visitor.GetResult().has_value())
+            if (visitor.HasError())
             {
                 return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
             }
@@ -234,8 +234,16 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
         const auto end = iterator.End();
         while (iterator != end)
         {
+            const auto position_before = iterator;
             UnderlyingType underlying_type{};
             visitor.Next(underlying_type);
+
+            // A latched failure turns Next into a no-op and an element consuming no input never advances;
+            // either case would loop forever, so bail out before appending when the decode failed or made no progress.
+            if (visitor.HasError() || (iterator == position_before))
+            {
+                return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            }
             value.push_back(underlying_type);
         }
 

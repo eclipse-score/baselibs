@@ -155,7 +155,13 @@ class DeSerializationVisitor : public CommonVisitorLogic
         return iterator_.GetResult();
     }
 
-    bool IsSerializedDataRemaining() const
+    [[nodiscard]] bool HasError() const noexcept
+    {
+        // The iterator latches errors (e.g. too few bytes left) that are not mirrored in result_.
+        return (not result_.has_value()) || iterator_.HasError();
+    }
+
+    [[nodiscard]] bool IsSerializedDataRemaining() const
     {
         const auto end = iterator_.End();
         return iterator_ != end;
