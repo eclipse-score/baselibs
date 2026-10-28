@@ -305,6 +305,27 @@ TEST(SerializeIteratorTest, ProvideSerializationWindows)
     EXPECT_EQ(*data++, 0x00);
 }
 
+TEST(SerializeIteratorTest, CountsOnlyBytesWrittenIntoNonEmptyGrowableContainer)
+{
+    // Given a growable container that already holds two bytes
+    std::vector<std::uint8_t> buffer{0xAA, 0xBB};
+    auto iterator = SerializeInto(buffer);
+
+    // When serializing one more byte
+    iterator = 0x01;
+
+    // Then only the byte written through this iterator is counted, not the preexisting content
+    const auto result = iterator.GetResult();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), 1);
+
+    // And the preexisting content is preserved, the new byte appended
+    ASSERT_EQ(buffer.size(), 3U);
+    EXPECT_EQ(buffer[0], 0xAA);
+    EXPECT_EQ(buffer[1], 0xBB);
+    EXPECT_EQ(buffer[2], 0x01);
+}
+
 }  // namespace
 }  // namespace serialization
 }  // namespace score

@@ -112,7 +112,8 @@ class SerializeIterator
     explicit SerializeIterator(Container& container)
         : container_(container),
           iterator_{std::make_shared<typename Container::iterator>(container_.begin())},
-          result_{std::make_shared<Result<std::size_t>>()}
+          result_{std::make_shared<Result<std::size_t>>()},
+          number_of_bytes_written_{std::make_shared<std::size_t>(0U)}
     {
         static_assert(details::is_supported_sequence_container<Container>::value,
                       "Provided Container is not supported.");
@@ -127,6 +128,10 @@ class SerializeIterator
         if (result == false)
         {
             *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
+        else
+        {
+            ++(*number_of_bytes_written_);
         }
         return *this;
     }
@@ -174,15 +179,14 @@ class SerializeIterator
     // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
     std::size_t GetNumberOfBytesWritten() const
     {
-        const auto distance = std::distance(container_.begin(), *iterator_);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
-                                            0);  // we start at begin and go on from there, it can not be negative.
-        return static_cast<std::size_t>(distance);
+        // Counts only elements stored through this iterator, excluding any content the container held beforehand.
+        return *number_of_bytes_written_;
     }
 
     Container& container_;
     std::shared_ptr<typename Container::iterator> iterator_;
     std::shared_ptr<Result<std::size_t>> result_;
+    std::shared_ptr<std::size_t> number_of_bytes_written_;
 };
 
 /// @brief Creates a SerializeIterator for a given Container
