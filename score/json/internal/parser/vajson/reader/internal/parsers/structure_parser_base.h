@@ -178,13 +178,6 @@ class StructureParserBase
     /// \threadsafe      TRUE, for different this pointer
     auto GetJsonDocument() noexcept -> JsonData&;
 
-    /// \brief           Returns a reference to the Json file
-    /// \return          Const reference to the Json file.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetJsonDocument() const noexcept -> const JsonData&;
-
     /// \brief           Parses the file until the current parser is finished
     /// \return          The empty Result, or an error.
     /// \error           score::json::vajson::JsonErrc::kInvalidJson

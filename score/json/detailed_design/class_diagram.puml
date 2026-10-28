@@ -130,12 +130,12 @@ enum amsr::json::JsonErrc #LightSteelBlue
 class amsr::json::ParserResult <<typedef>> #LightSteelBlue
 
 
-class amsr::json::v2::Parser #LightSteelBlue
+class amsr::json::internal::VirtualParser #LightSteelBlue
 
 
 class amsr::json::JsonData #LightSteelBlue
 
-amsr::json::v2::Parser <|-- AnyTreeBuilder
+amsr::json::internal::VirtualParser <|-- AnyTreeBuilder
 
 
 class AnyTreeBuilder <<internal to JsonParser>> #LightSteelBlue {

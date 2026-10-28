@@ -32,19 +32,6 @@ namespace internal
 /// \brief           Forward declaration for JsonOps
 class JsonOps;
 }  // namespace internal
-
-/// \brief           Forward declaration for JsonParser
-class JsonParser;
-
-namespace v2
-{
-/// \brief           Forward declaration for SingleArrayParser
-class SingleArrayParser;
-/// \brief           Forward declaration for SingleObjectParser
-class SingleObjectParser;
-/// \brief           Forward declaration for Parser
-class Parser;
-}  // namespace v2
 }  // namespace vajson
 }  // namespace json
 }  // namespace score

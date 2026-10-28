@@ -154,27 +154,6 @@ TEST(UT__JsonOps__JsonData, GetState)
 }
 
 /*!
- * Test that JsonData can store/retrieve the current key.
- *
- * - Assert that initially the current key is empty.
- * - Store a new key.
- * - Assert that the new key is returned.
- */
-TEST(UT__JsonOps__JsonData, CurrentKey)
-{
-    Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
-    ASSERT_TRUE(result.has_value());
-
-    JsonData doc{std::move(result.value())};
-    const CStringView curr{doc.GetCurrentKey()};
-    ASSERT_TRUE(curr.empty());
-
-    const StringView new_key{"key"};
-    doc.StoreCurrentKey(new_key);
-    ASSERT_EQ(new_key, doc.GetCurrentKey());
-}
-
-/*!
  * Test that JsonData can store/retrieve the current string buffer.
  *
  * - Assert that initially the string buffer is empty.
@@ -196,36 +175,6 @@ TEST(UT__JsonOps__JsonData, CurrentStringBuffer)
     ASSERT_EQ(new_string, doc.GetCurrentString());
 
     ASSERT_TRUE(doc.GetClearedStringBuffer().empty());
-}
-
-/*!
- * Test that JsonData can take a snapshot and restore it.
- *
- * - Assert that a snapshot can be created.
- * - Assert that the snapshot can be restored.
- */
-TEST(UT__JsonOps__JsonData, SnapAndRestore)
-{
-    Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
-    ASSERT_TRUE(result.has_value());
-    JsonData doc{std::move(result.value())};
-
-    ASSERT_TRUE(doc.Snap().has_value());
-    ASSERT_TRUE(doc.Restore().has_value());
-}
-
-/*!
- * Test that JsonData restore fails if no backup is available.
- */
-TEST(UT__JsonOps__JsonData, RestoreFailsWithoutBackup)
-{
-    Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
-    ASSERT_TRUE(result.has_value());
-    JsonData doc{std::move(result.value())};
-
-    const auto restore_result = doc.Restore();
-    ASSERT_FALSE(restore_result.has_value());
-    ASSERT_EQ(restore_result.error(), JsonErrc::kStreamFailure);
 }
 
 }  // namespace unit_test

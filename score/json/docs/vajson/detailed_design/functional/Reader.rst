@@ -120,16 +120,3 @@ Error reporting
 Upon detection of an error, the parser returns from Parse() with an ara::core::Result<void> and one of the errors
 defined in score::json::vajson::JsonErrc.
 Also, the position in the stream where the error has occurred is reported.
-
-
-Composition Parser
-------------------
-
-..
-  DesignFeature:: DSGN-JSON-Reader-Composition-Parser
-    :trace: DSGN-Concept-Parser-Mixins
-
-The class CompositionParser takes a template parameter from which it inherits.
-In order to use the class and the provided convenience methods, a user defined class must inherit from
-CompositionParser and provide its own type as the template argument.
-This way, the public methods of CompositionParser are available in the child class.

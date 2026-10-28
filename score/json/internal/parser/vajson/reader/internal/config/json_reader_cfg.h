@@ -32,9 +32,6 @@ namespace internal
 {
 namespace config
 {
-/// \brief           Size of the key buffer
-constexpr static std::size_t kKeyBufferSize{1024};
-
 /// \brief           Size of the string buffer
 constexpr static std::size_t kStringBufferSize{1024};
 }  // namespace config

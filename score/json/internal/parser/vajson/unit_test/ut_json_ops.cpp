@@ -100,29 +100,15 @@ TEST(UT__JsonOps, TryTake__Error)
 }
 
 /*!
- * Test that Move moves the stream position and Tell returns the correct position.
- *
- * - Assert that the initial position returned by Tell is 0.
- * - Assert that Move succeeds if there are still characters in the stream.
- * - Assert that Tell returns the new position.
- * \trace           score::json::vajson::internal::JsonOps::Tell
+ * Test that Move skips the current character.
  * \trace           score::json::vajson::internal::JsonOps::Move
  */
-TEST(UT__JsonOps, MoveAndTell)
+TEST(UT__JsonOps, Move)
 {
     TestStream ts{"ab"};
 
-    {
-        const auto tell_result = ts.ops.Tell();
-        ASSERT_TRUE(tell_result.has_value());
-        ASSERT_EQ(tell_result.value(), 0U);
-    }
     ASSERT_TRUE(ts.ops.Move());
-    {
-        const auto tell_result = ts.ops.Tell();
-        ASSERT_TRUE(tell_result.has_value());
-        ASSERT_EQ(tell_result.value(), 1U);
-    }
+    ASSERT_EQ(ts.ops.Take(), 'b');
 }
 
 /*!
@@ -178,50 +164,6 @@ TEST(UT__JsonOps, SkipWhitespace)
         TestStream ts{"  \t\n\r  "};
         ASSERT_FALSE(ts.ops.SkipWhitespace());
     }
-}
-
-/*!
- * Test that ReadExactly can read characters without buffering.
- *
- * - Create an input stream that is small enough to be read at once.
- * - Assert that the callback is invoked only once and gets the entire input.
- * \trace           score::json::vajson::internal::JsonOps::ReadExactly
- */
-TEST(UT__JsonOps, ReadExactly__Unbuffered)
-{
-    const std::string input{"123456789"};
-    TestStream ts{input};
-
-    std::size_t count{0};
-    std::size_t read{0};
-
-    const auto result = ts.ops.ReadExactly(input.size(), [&count, &read](std::string_view view) noexcept {
-        ++count;
-        read = view.size();
-    });
-    ASSERT_TRUE(result.has_value());
-    ASSERT_EQ(count, 1U);
-    ASSERT_EQ(read, input.size());
-}
-
-/*!
- * Test that ReadExactly detects an unexpected EOF.
- *
- * - Assert that when requesting more characters than available in the stream the callback is never called and an error
- *   is returned instead.
- * \trace           score::json::vajson::internal::JsonOps::ReadExactly
- */
-TEST(UT__JsonOps, ReadExactly__UnexpectedEof)
-{
-    const std::string input{"123456789"};
-    TestStream ts{input};
-
-    const auto result = ts.ops.ReadExactly(input.size() + 1U, [](std::string_view) noexcept {
-        FAIL();
-    });
-    ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
-    ASSERT_EQ(result.error().UserMessage(), std::string_view{"JsonOps::ReadExactly: Unexpected EOF."});
 }
 
 /*!

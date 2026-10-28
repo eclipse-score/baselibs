@@ -93,48 +93,6 @@ class VirtualParser
     /// \reentrant       FALSE
     virtual auto Parse() noexcept -> Result<void>;
 
-    /// \brief           Parses file until the current parser is finished
-    /// \details         Parserstate will be kRunning to allow for further parsing.
-    /// \return          A ParserResult.
-    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
-    ///                  if an unknown value has been encountered.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if parsing has failed due to invalid JSON data.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    auto SubParse() const noexcept -> ParserResult;
-
-    /// \brief           Returns a reference to the CRTP child
-    /// \return          Reference to the CRTP child.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetChild() & noexcept -> VirtualParser&;
-
-  protected:
-    /// \brief           Returns the current key
-    /// \return          THe current key.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetCurrentKey() const noexcept -> CStringView;
-
-    /// \brief           Returns a reference to the JSON file
-    /// \return          Reference to the JSON file.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetJsonDocument() noexcept -> JsonData&;
-
-    /// \brief           Returns a reference to the JSON file
-    /// \return          Const reference to the JSON file.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetJsonDocument() const noexcept -> const JsonData&;
-
   private:
     /// \brief           Default event for Null
     /// \return          The result of the OnUnexpectedEvent callback or its error.

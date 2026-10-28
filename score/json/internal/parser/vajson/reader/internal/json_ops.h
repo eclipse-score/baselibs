@@ -166,13 +166,6 @@ class JsonOps final
     /// \reentrant       FALSE
     auto Move() noexcept -> bool;
 
-    /// \brief           Gets the current position
-    /// \return          The current position.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto Tell() const noexcept -> Result<std::uint64_t>;
-
     /// \brief           Moves the cursor to the next position if the passed character is equal to the current character
     /// \param[in]       character
     ///                  to compare to.
@@ -233,21 +226,6 @@ class JsonOps final
               const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
         -> Result<std::uint64_t>;
 
-    /// \brief           Reads exactly num_to_read characters and executes the action
-    /// \details         Buffers the data if necessary. The callback is either executed once (requested amount of
-    ///                  characters has been read) or never (less characters available or EOF).
-    /// \param[in]       num_to_read
-    ///                  The number of characters to read.
-    /// \param[in]       callback
-    ///                  Callback to call once all characters have been read.
-    /// \return          An empty Result or an error if less characters are available.
-    /// \context         ANY
-    /// \pre             callback does not throw exceptions.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    auto ReadExactly(std::uint64_t num_to_read,
-                     const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept -> Result<void>;
-
     /// \brief            Reads characters as long as the delimiter is not found and executes the action for each span
     /// of characters \param[in]       delimiter                  to decide if the character should be skipped.
     /// \param[in]       callback                  Callback to call per view.
@@ -265,13 +243,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
     auto GetJsonDocument() & noexcept -> JsonData&;
-
-    /// \brief           Returns a reference to the Json file
-    /// \return          Const reference to the Json file.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetJsonDocument() const& noexcept -> const JsonData&;
 
   private:
     /// \brief           Rewind the position of the document if a condition is fulfilled
@@ -292,13 +263,6 @@ class JsonOps final
     /// \pre             -
     /// \threadsafe      TRUE, for different this pointer
     auto GetStream() & noexcept -> std::istream&;
-
-    /// \brief           Get direct access to the input stream
-    /// \return          Const reference to the input stream.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    auto GetStream() const& noexcept -> const std::istream&;
 
     /// \brief           JsonData to operate on
     std::reference_wrapper<JsonData> data_;
