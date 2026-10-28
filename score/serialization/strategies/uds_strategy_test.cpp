@@ -416,6 +416,21 @@ TEST_F(UDSStrategyFixture, CanDeserializeEmptyLengthPrefixedVector)
     EXPECT_EQ(buffer_.at(1), 0x00);
 }
 
+TEST_F(UDSStrategyFixture, DeserializeLengthPrefixedVectorFailsWhenPrefixExceedsBuffer)
+{
+    // Given a length prefix claiming more elements than the buffer actually contains
+    score::serialization::LengthPrefixedVector<std::uint16_t, std::uint16_t> value{};
+    buffer_.clear();
+    buffer_.push_back(0xFF);  // length prefix high byte
+    buffer_.push_back(0xFF);  // length prefix low byte -> claims 0xFFFF elements, none present
+
+    // When deserializing
+    const auto result = unit_.DeSerialize(buffer_, value);
+
+    // Then an out-of-bounds error is returned instead of iterating over absent data
+    EXPECT_FALSE(result.has_value());
+}
+
 TEST(UnsignedIntegralOnlyStrategyTest, SerializeNormalByteOrder)
 {
     score::serialization::UnsignedIntegralOnlyStrategy strategy(/*reverse_byte_order=*/false);

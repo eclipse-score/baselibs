@@ -80,11 +80,19 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
     {
         LengthType counter{};
         visitor.Next(counter);
+        if (!visitor.GetResult().has_value())
+        {
+            return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
 
         for (; counter > static_cast<decltype(counter)>(0); counter--)
         {
             UnderlyingType underlying_type{};
             visitor.Next(underlying_type);
+            if (!visitor.GetResult().has_value())
+            {
+                return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            }
             value.push_back(underlying_type);
         }
 
