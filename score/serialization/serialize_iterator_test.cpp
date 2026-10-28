@@ -172,6 +172,19 @@ TYPED_TEST_P(DeSerializeIteratorFixture, DoesNotAdvanceOverEndPostfix)
     ASSERT_EQ(result.value(), this->buffer.size());
 }
 
+TYPED_TEST_P(DeSerializeIteratorFixture, PostfixIncrementReturnsPreviousPosition)
+{
+    // Given a deserialization iterator for a buffer that starts at the first element {1, 2, 3}
+    auto iterator = DeSerializeIterator<TypeParam>(this->buffer);
+
+    // When using the forward-iterator idiom *iterator++
+    const auto first = *iterator++;
+
+    // Then the returned iterator referred to the old position and the live iterator advanced
+    EXPECT_EQ(first, 1);
+    EXPECT_EQ(*iterator, 2);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixture, CanGetEndFromIterator)
 {
     // Given a deserialization iterator for a buffer that contains three data elements and its respective end iterator
@@ -212,6 +225,7 @@ REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixture,
                             CanIncrement,
                             DoesNotAdvanceOverEnd,
                             DoesNotAdvanceOverEndPostfix,
+                            PostfixIncrementReturnsPreviousPosition,
                             CanGetEndFromIterator,
                             CheckBufferNotEmpty);
 
