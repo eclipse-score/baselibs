@@ -3581,18 +3581,9 @@
               "result_text": ""
             },
             {
-              "name": "VajsonSerializeTest__PrettyPrintsNestedAny",
-              "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-              "line": 319,
-              "need": "comp_req__json__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VajsonSerializeTest__PrettyPrintsWhenFormattingIsOmitted",
-              "file": "score/json/internal/writer/vajson/vajson_serialize_test.cpp",
-              "line": 411,
+              "name": "SerializerTest__PrettyPrintsNestedAny",
+              "file": "score/json/internal/writer/serializer_test.cpp",
+              "line": 322,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
