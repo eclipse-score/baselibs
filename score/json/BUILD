@@ -100,11 +100,15 @@ cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json/internal/parser/vajson",
+        "@score_baselibs//score/result",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":parser_interface",
-        "@score_baselibs//score/json/internal/parser",
     ],
 )
 

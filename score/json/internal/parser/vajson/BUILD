@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,56 +11,59 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+package(default_visibility = ["@score_baselibs//score/json:__subpackages__"])
+
 cc_library(
-    name = "vajson_parser",
-    srcs = ["vajson_parser.cpp"],
-    hdrs = ["vajson_parser.h"],
+    name = "vajson",
+    srcs = [
+        "reader/internal/json_ops.cpp",
+        "reader/internal/parsers/structure_parser_base.cpp",
+        "reader/internal/parsers/virtual_parser.cpp",
+        "reader/json_data.cpp",
+    ],
+    hdrs = [
+        "reader.h",
+        "reader/internal/config/json_reader_cfg.h",
+        "reader/internal/depth_counter.h",
+        "reader/internal/json_ops.h",
+        "reader/internal/level_validator.h",
+        "reader/internal/parsers/array_parser.h",
+        "reader/internal/parsers/bool_parser.h",
+        "reader/internal/parsers/composition_parser.h",
+        "reader/internal/parsers/composition_parser_impl.h",
+        "reader/internal/parsers/key_parser.h",
+        "reader/internal/parsers/number_parser.h",
+        "reader/internal/parsers/object_parser.h",
+        "reader/internal/parsers/string_parser.h",
+        "reader/internal/parsers/structure_parser.h",
+        "reader/internal/parsers/structure_parser_base.h",
+        "reader/internal/parsers/structure_parser_impl.h",
+        "reader/internal/parsers/virtual_parser.h",
+        "reader/json_data.h",
+        "reader/parser.h",
+        "reader/parser_state.h",
+        "reader/single_array_parser.h",
+        "reader/single_object_parser.h",
+        "reader/v2.h",
+        "reader/v2/parser.h",
+        "reader/v2/single_array_parser.h",
+        "reader/v2/single_object_parser.h",
+        "reader_fwd.h",
+        "util/json_error_domain.h",
+        "util/number.h",
+        "util/types.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
+    includes = [
+        "include",
+    ],
     tags = ["FFI"],
-    visibility = [
-        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
-        "//tools/coverage:__pkg__",
-        "@score_baselibs//score/json:__subpackages__",
-    ],
     deps = [
-        "@score_baselibs//score/json:parser_interface",
-        "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson/vajson_impl",
+        "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/result",
-    ],
-)
-
-cc_test(
-    name = "vajson_parser_test",
-    srcs = ["vajson_parser_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json/internal/parser:parser_test_suite",
-        "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
-    ],
-)
-
-cc_test(
-    name = "number_parser_test",
-    srcs = ["number_parser_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        ":vajson_parser",
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
-        "@score_baselibs//score/json/internal/parser:number_parser_test_suite",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )

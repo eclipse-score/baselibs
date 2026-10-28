@@ -14,12 +14,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-alias(
-    name = "parser",
-    actual = "@score_baselibs//score/json/internal/parser/vajson:vajson_parser",
-    visibility = ["@score_baselibs//score/json:__pkg__"],
-)
-
 cc_library(
     name = "parser_test_suite",
     testonly = True,
@@ -61,6 +55,38 @@ cc_library(
     deps = [
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+    ],
+)
+
+cc_test(
+    name = "vajson_parser_test",
+    srcs = ["vajson_parser_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    visibility = [
+        "@score_baselibs//score/json:__subpackages__",
+    ],
+    deps = [
+        ":parser_test_suite",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/json",
+    ],
+)
+
+cc_test(
+    name = "number_parser_test",
+    srcs = ["number_parser_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    visibility = [
+        "@score_baselibs//score/json:__subpackages__",
+    ],
+    deps = [
+        ":number_parser_test_suite",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/json",
+        "@score_baselibs//score/json/internal/parser/vajson",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
