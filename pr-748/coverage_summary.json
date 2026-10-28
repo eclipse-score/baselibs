@@ -1,0 +1,230 @@
+{
+  "coverage_summaries": [
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 4
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_bit_manipulation"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 71
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_concurrency"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 6
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_containers"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 19
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_containers_rust"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 36
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_filesystem"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 30
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_flatbuffers"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 28
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_hash"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 22
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_json"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 5
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_memory_shared"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 0
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_os"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 15
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_result"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 69
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_safecpp"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 7
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_static_reflection"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 5
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__baselibs_utils"
+    },
+    {
+      "branches": {
+        "percent": null,
+        "total": null
+      },
+      "files": {
+        "measured": 0,
+        "total": 0
+      },
+      "lines": {
+        "percent": null,
+        "total": null
+      },
+      "primary_need_id": "comp__log"
+    }
+  ],
+  "version": 1
+}
