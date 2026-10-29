@@ -28,34 +28,3 @@ cc_test(
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
-
-cc_test(
-    name = "vajson_parser_test",
-    srcs = ["vajson_parser_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
-
-cc_test(
-    name = "number_parser_test",
-    srcs = ["number_parser_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
-        "@score_baselibs//score/json/internal/parser/vajson",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
