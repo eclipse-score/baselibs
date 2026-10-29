@@ -18,7 +18,7 @@
     {
       "branches": {
         "percent": 95,
-        "total": 264
+        "total": 270
       },
       "files": {
         "measured": 43,
@@ -26,7 +26,7 @@
       },
       "lines": {
         "percent": 99,
-        "total": 1891
+        "total": 1912
       },
       "primary_need_id": "comp__baselibs_concurrency"
     },
