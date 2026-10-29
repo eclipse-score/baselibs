@@ -288920,7 +288920,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint8_to_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "37",
+    "line": "35",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288934,7 +288934,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint8_to_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "52",
+    "line": "50",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288948,7 +288948,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "69",
+    "line": "67",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288962,7 +288962,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_static_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "84",
+    "line": "82",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288976,7 +288976,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "99",
+    "line": "97",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288990,7 +288990,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_span_of_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "115",
+    "line": "113",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289004,7 +289004,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "132",
+    "line": "130",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289018,7 +289018,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "149",
+    "line": "147",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289032,7 +289032,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "166",
+    "line": "164",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289046,7 +289046,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "184",
+    "line": "182",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289060,7 +289060,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_vector_buffer_swap",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "201",
+    "line": "199",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289074,7 +289074,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "218",
+    "line": "216",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289088,7 +289088,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "235",
+    "line": "233",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289102,7 +289102,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "253",
+    "line": "251",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289116,7 +289116,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_static_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "269",
+    "line": "267",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289130,7 +289130,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "285",
+    "line": "283",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289144,7 +289144,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "301",
+    "line": "299",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289158,7 +289158,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint32_to_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "318",
+    "line": "316",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289172,7 +289172,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint32_to_static_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "334",
+    "line": "332",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289186,7 +289186,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint32_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "350",
+    "line": "348",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289200,7 +289200,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint32_to_span_of_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "366",
+    "line": "364",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289214,7 +289214,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_readonly_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "383",
+    "line": "381",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289228,7 +289228,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_readonly_span",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "400",
+    "line": "398",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289242,7 +289242,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "418",
+    "line": "416",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289256,7 +289256,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset_at_end",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "435",
+    "line": "433",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289270,7 +289270,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_with_offset_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "452",
+    "line": "450",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289284,7 +289284,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset_exceeding_end_returns_false",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "469",
+    "line": "467",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289298,7 +289298,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_insufficient_size_returns_false",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "486",
+    "line": "484",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326524,7 +326524,7 @@
   {
     "name": "LockedPtrTest__ConstructionWithTypes",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "101",
+    "line": "118",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326538,7 +326538,7 @@
   {
     "name": "LockedPtrTest__ConstructionMaintainsLockOwnershipInvariant",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "124",
+    "line": "141",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326552,7 +326552,7 @@
   {
     "name": "LockedPtrTest__SwappingWithTypes",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "160",
+    "line": "177",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326566,7 +326566,7 @@
   {
     "name": "LockedPtrTest__DereferenceTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "170",
+    "line": "187",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326580,7 +326580,7 @@
   {
     "name": "LockedPtrTest__PtrUsageTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "189",
+    "line": "206",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326594,7 +326594,7 @@
   {
     "name": "LockedPtrTest__GetTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "203",
+    "line": "220",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326608,7 +326608,7 @@
   {
     "name": "LockedPtrTest__UnlockGuardBasicLockableArchetypeTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "220",
+    "line": "237",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326622,7 +326622,7 @@
   {
     "name": "LockedPtrTest__UnlockGuardUniqueLockTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "239",
+    "line": "256",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326636,7 +326636,7 @@
   {
     "name": "LockedPtrTest__UnlockGuardSharedLockTests",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "283",
+    "line": "300",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326650,7 +326650,7 @@
   {
     "name": "LockedPtrTest__NonConstWithUniqueLock",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "327",
+    "line": "344",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326664,7 +326664,7 @@
   {
     "name": "LockedPtrTest__ConstWithUniqueLock",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "354",
+    "line": "371",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326678,7 +326678,7 @@
   {
     "name": "LockedPtrTest__NonConstWithSharedLock",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "381",
+    "line": "398",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326692,7 +326692,7 @@
   {
     "name": "LockedPtrTest__ConstWithSharedLock",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "408",
+    "line": "425",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326706,7 +326706,7 @@
   {
     "name": "LockedPtrTest__Swap",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "435",
+    "line": "452",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326720,7 +326720,7 @@
   {
     "name": "LockedPtrTest__Move",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "470",
+    "line": "487",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326734,7 +326734,7 @@
   {
     "name": "LockedPtrTest__UnlockGuard",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "531",
+    "line": "548",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326748,7 +326748,7 @@
   {
     "name": "LockedPtrTest__TransformLvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "559",
+    "line": "576",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326762,7 +326762,7 @@
   {
     "name": "LockedPtrTest__TransformLvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "579",
+    "line": "596",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326776,7 +326776,7 @@
   {
     "name": "LockedPtrTest__TransformRvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "589",
+    "line": "606",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326790,7 +326790,7 @@
   {
     "name": "LockedPtrTest__TransformRvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "598",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326804,7 +326804,7 @@
   {
     "name": "LockedPtrTest__AndThenLvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "607",
+    "line": "624",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326818,7 +326818,7 @@
   {
     "name": "LockedPtrTest__AndThenLvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "621",
+    "line": "638",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326832,7 +326832,7 @@
   {
     "name": "LockedPtrTest__AndThenLvalueRefCallableReturnsNullopt",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "644",
+    "line": "661",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326846,7 +326846,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "656",
+    "line": "673",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326860,7 +326860,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "669",
+    "line": "686",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326874,7 +326874,7 @@
   {
     "name": "LockedPtrTest__AndThenConstLvalueRefCallableReturnsNullopt",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "684",
+    "line": "701",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326888,7 +326888,7 @@
   {
     "name": "LockedPtrTest__AndThenRvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "696",
+    "line": "713",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326902,7 +326902,7 @@
   {
     "name": "LockedPtrTest__AndThenRvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "711",
+    "line": "728",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326916,7 +326916,7 @@
   {
     "name": "LockedPtrTest__AndThenConstRvalueRefNotNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "721",
+    "line": "738",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326930,7 +326930,133 @@
   {
     "name": "LockedPtrTest__AndThenConstRvalueRefNull",
     "file": "score/concurrency/locked_ptr_test.cpp",
-    "line": "734",
+    "line": "751",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseRvalueRefNonNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "766",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseLvalueRefNonNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "786",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseLvalueRefNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "808",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseRvalueRefNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "831",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseRvalueRefNullReturnsFallbackLockedPtr",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "851",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseRvalueRefReturnType",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "871",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseConstLvalueRefNonNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "891",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseConstLvalueRefNull",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "913",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "LockedPtrTest__OrElseConstRvalueRefIsDisabled",
+    "file": "score/concurrency/locked_ptr_test.cpp",
+    "line": "936",
     "result": "passed",
     "repo_name": null,
     "hash": null,
