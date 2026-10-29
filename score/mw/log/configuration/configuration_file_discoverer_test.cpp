@@ -129,6 +129,8 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfigurationFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__global_config");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1634075");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall find the global configuration file.");
@@ -146,6 +148,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfiguratio
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInCwdEtc)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -168,6 +172,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInCwd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -188,6 +194,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInExecPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -211,6 +219,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -232,6 +242,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -254,6 +266,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -276,6 +290,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",

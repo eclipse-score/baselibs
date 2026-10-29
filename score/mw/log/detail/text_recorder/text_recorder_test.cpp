@@ -416,9 +416,12 @@ TEST_F(TextRecorderFixture, LogRawBuffer)
 
 TEST_F(TextRecorderFixture, LogSlog2Message)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__system_logger");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log LogSlog2Message.");
     RecordProperty("TestingTechnique", "Requirements-based test");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     recorder_->Log(SlotHandle{}, LogSlog2Message{11, "slog message"});
 }
 
