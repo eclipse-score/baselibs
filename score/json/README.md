@@ -15,6 +15,7 @@
     - [Declarative parsing of JSON data](#declarative-parsing-of-json-data)
   - [Design](#design)
   - [Constraints](#constraints)
+    - [Number grammar](#number-grammar)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
@@ -392,6 +393,24 @@ since they would require high amount of work. Please be aware and note:
 - No support for empty keys
 - No support for online schema validation (we expect that this is done offline)
 - Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259)
+
+### Number grammar
+
+The parser accepts exactly the number grammar of [RFC 8259, section 6](https://datatracker.ietf.org/doc/html/rfc8259#section-6):
+
+```text
+number = [ "-" ] int [ frac ] [ exp ]
+int    = "0" / ( digit1-9 *DIGIT )
+frac   = "." 1*DIGIT
+exp    = ( "e" / "E" ) [ "-" / "+" ] 1*DIGIT
+```
+
+Any other number literal is rejected with a parse error, e.g. `0x1F`, `010`, `+1`, `.5`, `1.`, `1e`, `-inf`.
+Integers are always converted as decimal numbers.
+
+Earlier versions also accepted hexadecimal integers such as `0xdd` as an undocumented extension.
+This extension was removed because it is not RFC 8259 JSON, the writer cannot produce it, and the former nlohmann backend never accepted it either.
+Documents that contain hexadecimal numbers fail to parse and must be converted to decimal numbers.
 
 ## Requirements
 
