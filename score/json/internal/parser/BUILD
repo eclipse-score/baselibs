@@ -11,23 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
-cc_library(
-    name = "parser_test_suite",
-    testonly = True,
-    srcs = ["parsers_test_suite.cpp"],
-    hdrs = ["parsers_test_suite.h"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
-    deps = [
-        "@googletest//:gtest",
-        "@score_baselibs//score/json",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
 
 cc_test(
     name = "json_parser_test",
@@ -44,21 +29,6 @@ cc_test(
     ],
 )
 
-cc_library(
-    name = "number_parser_test_suite",
-    testonly = True,
-    srcs = ["number_parser_test_suite.cpp"],
-    hdrs = ["number_parser_test_suite.h"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
-    deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
-        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
-    ],
-)
-
 cc_test(
     name = "vajson_parser_test",
     srcs = ["vajson_parser_test.cpp"],
@@ -68,9 +38,9 @@ cc_test(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
-        ":parser_test_suite",
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
 
@@ -83,7 +53,6 @@ cc_test(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
-        ":number_parser_test_suite",
         "@googletest//:gtest_main",
         "@score_baselibs//score/json",
         "@score_baselibs//score/json/internal/parser/vajson",
