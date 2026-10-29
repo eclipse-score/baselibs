@@ -298,7 +298,7 @@ Component containers Work products List
         * - :need:`wp__sw_implementation`
           - :need:`gd_guidl__implementation`
           - :ndf:`copy('status', need_id='gd_guidl__implementation')`
-          - `containers .h/.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/containers>`_, `containers/design <https://github.com/eclipse-score/baselibs/tree/main/score/containers/design>`_
+          - `containers .h/.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/containers>`_, <link to DD>
 
         * - :need:`wp__verification_sw_unit_test`
           - :need:`gd_guidl__verification_guide`
@@ -496,7 +496,7 @@ Component result Work products List
         * - :need:`wp__sw_implementation`
           - :need:`gd_guidl__implementation`
           - :ndf:`copy('status', need_id='gd_guidl__implementation')`
-          - `result .h/.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/result>`_, `result/design <https://github.com/eclipse-score/baselibs/tree/main/score/result/design>`_
+          - `result .h/.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/result>`_, `result/design <https://github.com/eclipse-score/baselibs/blob/main/score/result/README.md>`_
 
         * - :need:`wp__verification_sw_unit_test`
           - :need:`gd_guidl__verification_guide`
@@ -567,7 +567,7 @@ Component SafeCpp Work products List
         * - :need:`wp__verification_sw_unit_test`
           - :need:`gd_guidl__verification_guide`
           - :ndf:`copy('status', need_id='gd_guidl__verification_guide')`
-          - `safecpp/test.cpp <https://github.com/eclipse-score/baselibs/blob/main/score/language/safecpp/Readme.md>`_
+          - `safecpp/test.cpp <https://github.com/eclipse-score/baselibs/tree/main/score/language/safecpp>`_
 
         * - :need:`wp__sw_implementation_inspection`
           - :need:`gd_chklst__impl_inspection_checklist`
