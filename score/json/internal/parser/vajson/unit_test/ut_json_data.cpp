@@ -22,9 +22,9 @@
 #include <utility>
 
 #include "gtest/gtest.h"
+#include "score/json/internal/common/json_error_domain.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/reader/json_data.h"
-#include "score/json/internal/parser/vajson/util/json_error_domain.h"
-#include "score/json/internal/parser/vajson/util/types.h"
 #include "score/span.hpp"
 
 namespace score

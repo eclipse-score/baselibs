@@ -17,8 +17,8 @@
  *
  *********************************************************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H
+#ifndef SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H
+#define SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H
 
 /**********************************************************************************************************************
  *  INCLUDES
@@ -26,7 +26,7 @@
 #include <iostream>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/util/types.h"
+#include "score/json/internal/common/types.h"
 #include "score/result/error_code.h"
 #include "score/result/error_domain.h"
 #include "score/result/result.h"
@@ -311,4 +311,4 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_UTIL_JSON_ERROR_DOMAIN_H
+#endif  // SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H

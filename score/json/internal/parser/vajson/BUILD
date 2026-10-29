@@ -11,9 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-
-package(default_visibility = ["@score_baselibs//score/json:__subpackages__"])
 
 cc_library(
     name = "vajson",
@@ -34,16 +33,22 @@ cc_library(
         "reader/json_data.h",
         "reader/parser_state.h",
         "reader_fwd.h",
-        "util/json_error_domain.h",
         "util/number.h",
-        "util/types.h",
     ],
     features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    deps = [
+    implementation_deps = [
         "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/filesystem/filestream",
+    ],
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/json:__pkg__",
+        "@score_baselibs//score/json/internal/parser:__pkg__",
+        "@score_baselibs//score/json/internal/parser/vajson/unit_test:__pkg__",
+    ],
+    deps = [
+        "@score_baselibs//score/json/internal/common",
         "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/result",
     ],
 )
