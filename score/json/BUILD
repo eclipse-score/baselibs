@@ -200,6 +200,22 @@ cc_test(
 )
 
 cc_test(
+    name = "json_parser_test",
+    srcs = ["json_parser_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    visibility = [
+        "@score_baselibs//score/json:__pkg__",
+    ],
+    deps = [
+        ":json",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+    ],
+)
+
+# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
+cc_test(
     name = "json_writer_test",
     srcs = [
         "json_writer_test.cpp",
