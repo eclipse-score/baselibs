@@ -28,8 +28,8 @@
 #include <string>
 #include <utility>
 
+#include "score/json/internal/common/json_error_domain.h"
 #include "score/json/internal/parser/vajson/reader/parser_state.h"
-#include "score/json/internal/parser/vajson/util/json_error_domain.h"
 #include "score/result/result.h"
 
 namespace score

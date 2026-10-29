@@ -22,7 +22,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/util/types.h"
+#include "score/json/internal/common/types.h"
 
 namespace score::json::vajson
 {

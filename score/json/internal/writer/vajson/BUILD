@@ -24,9 +24,10 @@ cc_library(
     visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
     deps = [
         "@score_baselibs//score/json:formatting",
+        "@score_baselibs//score/json/internal/common",
         "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson",
         "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result",
         "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
     ],
 )

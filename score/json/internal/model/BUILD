@@ -33,7 +33,12 @@ cc_library(
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
+    visibility = [
+        "@score_baselibs//score/json:__pkg__",
+        "@score_baselibs//score/json/internal/parser:__pkg__",
+        "@score_baselibs//score/json/internal/writer:__pkg__",
+        "@score_baselibs//score/json/internal/writer/vajson:__pkg__",
+    ],
     deps = [
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",

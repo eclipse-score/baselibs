@@ -23,11 +23,11 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/reader/internal/config/json_reader_cfg.h"
 #include "score/json/internal/parser/vajson/reader/internal/depth_counter.h"
 #include "score/json/internal/parser/vajson/reader/parser_state.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
-#include "score/json/internal/parser/vajson/util/types.h"
 #include <functional>
 #include <memory>
 

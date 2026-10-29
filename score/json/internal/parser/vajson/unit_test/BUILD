@@ -23,7 +23,10 @@ cc_test(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
+        "//score/json/internal/common",
         "//score/json/internal/parser/vajson",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result",
     ],
 )

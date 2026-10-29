@@ -26,11 +26,11 @@
 
 #include <string>
 
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/reader/internal/depth_counter.h"
 #include "score/json/internal/parser/vajson/reader/internal/json_ops.h"
 #include "score/json/internal/parser/vajson/reader/parser_state.h"
 #include "score/json/internal/parser/vajson/util/number.h"
-#include "score/json/internal/parser/vajson/util/types.h"
 
 namespace score
 {

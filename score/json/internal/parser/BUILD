@@ -21,10 +21,9 @@ cc_library(
     hdrs = ["parsers_test_suite.h"],
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
     tags = ["unit"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         "@googletest//:gtest",
-        "@score_baselibs//score/json",
+        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
@@ -39,7 +38,7 @@ cc_test(
     ],
     deps = [
         "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
+        "@score_baselibs//score/json:json_parser_impl",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
 )
@@ -51,11 +50,11 @@ cc_library(
     hdrs = ["number_parser_test_suite.h"],
     features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
     tags = ["unit"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
-        "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
+        "@googletest//:gtest",
+        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+        "@score_baselibs//score/result",
     ],
 )
 
@@ -70,7 +69,7 @@ cc_test(
     deps = [
         ":parser_test_suite",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
+        "@score_baselibs//score/json:json_parser_impl",
     ],
 )
 
@@ -85,7 +84,7 @@ cc_test(
     deps = [
         ":number_parser_test_suite",
         "@googletest//:gtest_main",
-        "@score_baselibs//score/json",
+        "@score_baselibs//score/json:json_parser_impl",
         "@score_baselibs//score/json/internal/parser/vajson",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],
