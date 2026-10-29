@@ -336,6 +336,25 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
 class UT__Number : public ::testing::Test
 {
 };
+
+template <typename T>
+std::optional<T> ParseNumberAs(const std::string& json_number)
+{
+    const auto result = UUT::New(json_number).value().As<T>();
+    if (result.has_value())
+    {
+        return result.value();
+    }
+    return {};
+}
+
+/// @brief Smoke tests that the values just below and just above the range of T are rejected.
+template <typename T>
+void range_test(const ::std::string& underflow, const std::string& overflow)
+{
+    EXPECT_FALSE(ParseNumberAs<T>(underflow).has_value());
+    EXPECT_FALSE(ParseNumberAs<T>(overflow).has_value());
+}
 }  // namespace
 
 /*!
@@ -734,31 +753,6 @@ INSTANTIATE_TEST_SUITE_P(FloatTestFailDouble,
                                 DoubleValue("0e+"),
                                 DoubleValue("0e+ - 1")));
 
-namespace
-{
-
-template <typename T>
-std::optional<T> ParseNumberAs(const std::string& json_number)
-{
-    const auto result = score::json::vajson::JsonNumber::New(json_number).value().As<T>();
-    if (result.has_value())
-    {
-        return result.value();
-    }
-    return {};
-}
-
-/**
- * @brief Smoke testing the basic ranges plus underflow and overflow.
- * Note: Exhausitve parser testing shall be done by the supplier of the underlying JSON parser.
- */
-template <typename T>
-void range_test(const ::std::string& underflow, const std::string& overflow)
-{
-    EXPECT_FALSE(ParseNumberAs<T>(underflow).has_value());
-    EXPECT_FALSE(ParseNumberAs<T>(overflow).has_value());
-}
-
 TEST(Number, Bool)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
@@ -938,8 +932,6 @@ TEST(Number, FloatingPointOverflowIsRejected)
     EXPECT_FALSE(ParseNumberAs<double>("1e309").has_value());
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
 }
-
-}  // namespace
 
 }  // namespace unit_test
 }  // namespace vajson
