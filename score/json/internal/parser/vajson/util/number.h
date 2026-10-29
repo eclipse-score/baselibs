@@ -25,14 +25,16 @@
  *********************************************************************************************************************/
 #include <cassert>
 
+#include <charconv>
 #include <cctype>
-#include <cerrno>
 #include <cmath>
+#include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <iterator>
 #include <limits>
 #include <string>
+#include <system_error>
 #include <type_traits>
 #include <utility>
 
@@ -55,23 +57,8 @@ namespace internal
 template <typename T>
 using IsInt = std::conjunction<std::negation<std::is_same<T, bool>>, std::is_integral<T>>;
 
-/// \brief            Typedef for longlong
-/// \details         Return type of std::strtoll and transformed to fixed-size type later.
-using SignedLL = long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
-
-/// \brief            Typedef for unsigned longlong
-/// \details         Return type of std::strtoull and transformed to fixed-size type later.
-using UnsignedLL = unsigned long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
-
 namespace util
 {
-/// \brief           Resets the value of errno to zero
-inline void ResetErrno() noexcept
-{
-
-    errno = 0;
-}
-
 /// \brief Helper function to check if character is a digit, in ASCII/UTF-8.
 inline auto IsDigit(const char chr) noexcept -> bool
 {
@@ -106,58 +93,31 @@ class NumberParser
     // Deleted rvalue-qualified version to prevent dangling reference
     auto End() const&& noexcept -> const char* = delete;
 
-    /// \brief           Parses a StringView as a long long
-    /// \param[in]       view
+    /// @brief           Parses a StringView as a decimal integer
+    /// @tparam          Integer
+    ///                  Type of integer to parse into.
+    /// @param[in]       view
     ///                  to parse.
-    /// \return          The parsed number.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
-    /// - Reset errno.
-    /// - Convert the view to a long long.
-    /// \endinternal
-    auto LongLong(StringView view) noexcept -> SignedLL
+    /// @return          The Optional containing the number if the whole view is a decimal integer that fits into
+    ///                  Integer, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE
+    /// @reentrant       TRUE
+    template <typename Integer>
+    static auto ParseInteger(const StringView view) noexcept -> Optional<Integer>
     {
-        ResetErrno();
+        Integer value{};
+        const char* const first{view.data()};
+        const char* const last{std::next(first, static_cast<std::ptrdiff_t>(view.size()))};
+        const std::from_chars_result conversion{std::from_chars(first, last, value, kDecimalBase)};
 
-        return std::strtoll(view.data(), &this->end_, 0);
-    }
-
-    /// \brief           Parses a StringView as an unsigned long long
-    /// \param[in]       view
-    ///                  to parse. Must be pointing to a mutable buffer.
-    /// \return          The parsed number.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
-    /// - If the view starts with a dash:
-    ///   - Skip the parsing.
-    /// - Otherwise:
-    ///   - Reset errno.
-    ///   - Convert the view to an unsigned long long.
-    /// \endinternal
-    auto UnsignedLongLong(StringView view) noexcept -> UnsignedLL
-    {
-        UnsignedLL result{0};
-        // strtoull accepts negative values!!
-
-        if (view[0] == '-')
+        Optional<Integer> opt{};
+        if ((conversion.ec == std::errc{}) && (conversion.ptr == last))
         {
-            // Set end_ so that it will be reported as 'parsed unsuccessfully'
-
-            this->end_ = const_cast<char*>(view.data());
+            static_cast<void>(opt.emplace(value));
         }
-        else
-        {
-            ResetErrno();
-
-            result = std::strtoull(view.data(), &this->end_, 0);
-        }
-        return result;
+        return opt;
     }
 
     /// \brief           Parses a StringView as a double
@@ -169,17 +129,17 @@ class NumberParser
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \internal
-    /// - Reset errno.
     /// - Convert the view to a double.
     /// \endinternal
     auto Double(StringView view) noexcept -> double
     {
-        ResetErrno();
-
         return std::strtod(view.data(), &this->end_);
     }
 
   private:
+    /// @brief           JSON integers are always decimal.
+    static constexpr std::int32_t kDecimalBase{10};
+
     /// \brief            Pointer beyond the last parsed character
     /// \details         Set by character conversion functions. Null if the parse did not work.
     char* end_{nullptr};
@@ -288,57 +248,26 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief            Tries to convert the number to a signed integer
-    /// \tparam          Integer Type of signed integer to convert to.
-    /// \return          The Optional containing the signed integer if the conversion was successful, or empty.
+    /// \brief            Tries to convert the number to an integer
+    /// \tparam          Integer Type of integer to convert to.
+    /// \return          The Optional containing the integer if the conversion was successful, or empty.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /*!
      * \internal
-     * - Convert the number to a signed number.
+     * - Convert the number to an integer.
      * - If the conversion was successful:
      *   - Return a Result containing the number.
      * - Otherwise:
      *   - Return an error.
      * \endinternal
      */
-    template <typename Integer,
-              std::enable_if_t<internal::IsInt<Integer>::value && std::is_signed<Integer>::value>* = nullptr>
+    template <typename Integer, std::enable_if_t<internal::IsInt<Integer>::value>* = nullptr>
     auto As() const noexcept -> Optional<Integer>
     {
-        internal::util::NumberParser parser{};
-        const internal::SignedLL result{parser.LongLong(this->view_)};
-
-        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
-    }
-
-    /// \brief           Tries to convert the number to an unsigned integer
-    /// \tparam          Integer
-    ///                  Type of unsigned integer to convert to.
-    /// \return          The Optional containing the unsigned integer if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
-    /// - Convert the number to an unsigned number.
-    /// - If the conversion was successful:
-    ///   - Return a Result containing the number.
-    /// - Otherwise:
-    ///   - Return an error.
-    /// \endinternal
-    template <typename Integer,
-              std::enable_if_t<internal::IsInt<Integer>::value && (!std::is_signed<Integer>::value)>* = nullptr>
-
-    auto As() const noexcept -> Optional<Integer>
-    {
-        internal::util::NumberParser parser{};
-        const internal::UnsignedLL result{parser.UnsignedLongLong(this->view_)};
-
-        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
+        return internal::util::NumberParser::ParseInteger<Integer>(this->view_);
     }
 
     /// \brief           Tries to convert the number to a floating point type
@@ -473,11 +402,6 @@ class JsonNumber final
         return (end == this->view_.cend());
     }
 
-    auto ParseIntegerSuccessful(const char* end) const noexcept -> bool
-    {
-        return ((errno != ERANGE) && this->ParseFormatSuccessful(end));
-    }
-
     template <typename Float>
     auto ParseFloatingSuccessful(const char* end, const double conversion_result) const noexcept -> bool
     {
@@ -485,39 +409,6 @@ class JsonNumber final
         return (this->ParseFormatSuccessful(end) &&  // LCOV_EXCL_BR_LINE (Not reachable in the "C" locale; kept
                                                      // because strtod reads a locale-specific decimal separator.)
                 std::isfinite(conversion_result) && JsonNumber::Cast<Float>(conversion_result).has_value());
-    }
-
-    /// \brief           Converts the parsed integer to target type when parsing was successful
-    /// \tparam          TargetType
-    ///                  Type to convert to.
-    /// \tparam          SourceType
-    ///                  Type to convert from.
-    /// \param[in]       num
-    ///                  The source value.
-    /// \param[in]       end
-    ///                  The end iterator of the buffer.
-    /// \return          The Optional containing the number if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
-    /// - If the number has been successfully parsed and casted to the target type:
-    ///   - Return an Optional containing the number.
-    /// - Otherwise:
-    ///   - Return an empty Optional.
-    /// \endinternal
-    template <typename TargetType, typename SourceType>
-    auto ExtractIfIntegerSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
-    {
-        Optional<TargetType> opt{};
-
-        if (this->ParseIntegerSuccessful(end))
-        {
-            opt = JsonNumber::Cast<TargetType>(num);
-        }
-
-        return opt;
     }
 
     template <typename TargetType>

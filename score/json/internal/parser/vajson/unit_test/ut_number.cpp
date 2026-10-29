@@ -384,10 +384,10 @@ TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
 }
 
 /*!
- * \brief           Tests that errno is unset before the next conversion
+ * \brief           Tests that a failed conversion due to overflow does not affect the next conversion
  * \trace           score::json::vajson::JsonNumber::New
  */
-TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
+TEST_F(UT__Number, OverflowDoesNotAffectNextConversion)
 {
     Result<std::uint64_t> result_64{UUT::New("36893488147419103231").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
