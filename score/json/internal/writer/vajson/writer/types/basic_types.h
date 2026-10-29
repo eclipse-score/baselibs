@@ -20,9 +20,6 @@
 #include <string>
 #include <string_view>
 #include <type_traits>
-#include <utility>
-
-#include "score/json/internal/parser/vajson/util/types.h"
 
 namespace score::json::vajson
 {
@@ -82,30 +79,6 @@ constexpr auto JKey(std::string_view s) noexcept -> JKeyType
 {
     return JKeyType{s};
 }
-
-/// \brief Serializes a Key value
-/// \param[in] s Key to serialize.
-/// \return The serializable key type.
-inline auto JKey(const std::string& s) noexcept -> JKeyType
-{
-    return JKey(std::string_view(s));
-}
-
-inline namespace literals
-{
-/// \brief Serializes a Key value
-/// \param[in] s String literal to serialize.
-/// \param[in] size Size of the pointer.
-/// \return The serializable key type.
-// coverity[autosar_cpp14_a13_1_3_violation]
-constexpr auto operator""_key(const char* s, std::size_t size) noexcept -> JKeyType
-{
-    return JKey(score::safecpp::zstring_view{s, size});
-}
-
-// clang-format off
-}  // namespace literals
-// clang-format on
 
 /// \brief A Number type
 /// \details bool is excluded: it is a JSON boolean, not a JSON number, and has no std::to_chars overload.
@@ -177,25 +150,6 @@ inline auto JString(const std::string& s) noexcept -> JStringType
 {
     return JString(std::string_view{s});
 }
-
-/// \brief A function object used to serialize predefined serializers
-/// \tparam Container Type of container to serialize.
-template <typename Container>
-class IdSerializer
-{
-  public:
-    /// \brief Value Type of container
-    using value_type = typename Container::value_type;
-
-    /// \brief Returns the unchanged value
-    /// \param[in] v Value to return.
-    /// \return The unchanged value.
-    template <typename Value = value_type>
-    auto operator()(Value&& v) const noexcept -> Value
-    {
-        return std::forward<Value>(v);
-    }
-};
 
 // clang-format off
 }  // namespace types

@@ -252,6 +252,5 @@ Util
       Reader -down-> JsonErrc
 
       Writer -down-> JsonErrorDomain
-      Writer -down-> EncodingType
 
     @enduml
