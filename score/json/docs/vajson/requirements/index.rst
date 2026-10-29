@@ -56,8 +56,8 @@ In addition, the following VaJson-specific requirements apply:
    VaJson shall ignore trailing commas.
    This behavior extends RFC 8259.
 
-.. comp_req:: JSON Deserialization RFC extension hexadecimal integers
-   :id: comp_req__vajson__hex_integers
+.. comp_req:: JSON Deserialization number grammar
+   :id: comp_req__vajson__number_grammar
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -66,8 +66,10 @@ In addition, the following VaJson-specific requirements apply:
    :version: 1
    :satisfied_by: comp__baselibs_vajson[version==1]
 
-   VaJson shall accept hexadecimal integers.
-   This behavior extends RFC 8259.
+   VaJson shall reject a number that does not match the number grammar of RFC 8259, section 6, as malformed JSON.
+
+   Examples are hexadecimal or octal literals, leading zeros, a leading plus sign, or an incomplete fraction or
+   exponent.
 
 .. comp_req:: Unicode Support
    :id: comp_req__vajson__unicode
