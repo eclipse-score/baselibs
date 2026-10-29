@@ -2,136 +2,136 @@
   "coverage_summaries": [
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 100,
+        "total": 10
       },
       "files": {
-        "measured": 0,
+        "measured": 2,
         "total": 4
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 90,
+        "total": 103
       },
       "primary_need_id": "comp__baselibs_bit_manipulation"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 95,
+        "total": 264
       },
       "files": {
-        "measured": 0,
+        "measured": 43,
         "total": 71
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 99,
+        "total": 1891
       },
       "primary_need_id": "comp__baselibs_concurrency"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 77,
+        "total": 78
       },
       "files": {
-        "measured": 0,
+        "measured": 3,
         "total": 6
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 99,
+        "total": 528
       },
       "primary_need_id": "comp__baselibs_containers"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 95,
+        "total": 88
       },
       "files": {
-        "measured": 0,
+        "measured": 16,
         "total": 19
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 89,
+        "total": 2128
       },
       "primary_need_id": "comp__baselibs_containers_rust"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 97,
+        "total": 666
       },
       "files": {
-        "measured": 0,
+        "measured": 23,
         "total": 36
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 99,
+        "total": 2015
       },
       "primary_need_id": "comp__baselibs_filesystem"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 74,
+        "total": 316
       },
       "files": {
-        "measured": 0,
+        "measured": 25,
         "total": 30
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 81,
+        "total": 1351
       },
       "primary_need_id": "comp__baselibs_flatbuffers"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 88,
+        "total": 254
       },
       "files": {
-        "measured": 0,
+        "measured": 21,
         "total": 28
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 100,
+        "total": 760
       },
       "primary_need_id": "comp__baselibs_hash"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 83,
+        "total": 162
       },
       "files": {
-        "measured": 0,
+        "measured": 16,
         "total": 22
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 73,
+        "total": 1012
       },
       "primary_need_id": "comp__baselibs_json"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 92,
+        "total": 24
       },
       "files": {
-        "measured": 0,
+        "measured": 5,
         "total": 5
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 96,
+        "total": 126
       },
       "primary_need_id": "comp__baselibs_memory_shared"
     },
@@ -152,61 +152,61 @@
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 83,
+        "total": 164
       },
       "files": {
-        "measured": 0,
+        "measured": 8,
         "total": 15
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 72,
+        "total": 1235
       },
       "primary_need_id": "comp__baselibs_result"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 91,
+        "total": 278
       },
       "files": {
-        "measured": 0,
+        "measured": 32,
         "total": 69
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 99,
+        "total": 1372
       },
       "primary_need_id": "comp__baselibs_safecpp"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 82,
+        "total": 142
       },
       "files": {
-        "measured": 0,
+        "measured": 6,
         "total": 7
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 86,
+        "total": 797
       },
       "primary_need_id": "comp__baselibs_static_reflection"
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 91,
+        "total": 32
       },
       "files": {
-        "measured": 0,
+        "measured": 3,
         "total": 5
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 100,
+        "total": 177
       },
       "primary_need_id": "comp__baselibs_utils"
     },

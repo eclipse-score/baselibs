@@ -425,6 +425,7 @@
 <li class="toctree-l2"><a class="reference internal" href="chklst_arc_inspection.html">Architecture Inspection Checklist</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../safety_analysis/dfa.html">DFA (Dependent Failure Analysis)</a></li>
+
 <li class="toctree-l2"><a class="reference internal" href="../detailed_design/chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
@@ -498,7 +499,7 @@
                   
   <section id="result-component-architecture">
 <h1>Result Component Architecture<a class="headerlink" href="#result-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-2f0e09dd">
+<div class="need_container docutils container" id="SNCB-d8021625">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__result_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -547,7 +548,7 @@
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-384f6d24">
+<div class="need_container docutils container" id="SNCB-c192696d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_result">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -577,7 +578,7 @@
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__result">logic_arc_int__baselibs__result</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../module/index.html#mod__baselibs" title="comp__baselibs_result">mod__baselibs</a>, <a class="reference internal" href="../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_result">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
-<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines no data · branches no data · files 0/15</span></div>
+<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines 72% · branches 83% · files 8/15</span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
@@ -598,7 +599,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-69727b56">
+<div class="need_container docutils container" id="SNCB-e61a294c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__result">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -621,7 +622,7 @@
 </span></span></div>
 <div class="line"><span><div class="line">belongs to: <span class="belongs_to"><span><a class="reference internal" href="#comp__baselibs_result" title="comp_arc_sta__baselibs__result">comp__baselibs_result</a></span></span></div>
 <div class="line">fulfils: <span class="fulfils"><span><a class="reference internal" href="../requirements/index.html#comp_req__result__deterministic_behavior" title="comp_arc_sta__baselibs__result">comp_req__result__deterministic_behavior</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__domain_error_information" title="comp_arc_sta__baselibs__result">comp_req__result__domain_error_information</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__error_handling" title="comp_arc_sta__baselibs__result">comp_req__result__error_handling</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__exception_free_operation" title="comp_arc_sta__baselibs__result">comp_req__result__exception_free_operation</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__set_result" title="comp_arc_sta__baselibs__result">comp_req__result__set_result</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__std_integration" title="comp_arc_sta__baselibs__result">comp_req__result__std_integration</a>, <a class="reference internal" href="../requirements/index.html#comp_req__result__type_safety" title="comp_arc_sta__baselibs__result">comp_req__result__type_safety</a></span></span></div>
-<div class="line">violated_by: <span class="violates"><span><a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__error_code" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__error_code</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__error_message_life" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__error_message_life</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__stop_user" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__stop_user</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__unchecked" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__unchecked</a></span></span></div>
+<div class="line">violated_by: <span class="violates"><span><a class="reference internal" href="../safety_analysis/dfa.html#comp_saf_dfa__result__ffi" title="comp_arc_sta__baselibs__result">comp_saf_dfa__result__ffi</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__error_code" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__error_code</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__error_message_life" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__error_message_life</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__stop_user" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__stop_user</a>, <a class="reference internal" href="../safety_analysis/fmea.html#comp_saf_fmea__result__unchecked" title="comp_arc_sta__baselibs__result">comp_saf_fmea__result__unchecked</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -652,7 +653,7 @@
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-4d3db759">
+<div class="need_container docutils container" id="SNCB-12e5091e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__set_result">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -695,7 +696,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-192f21a3">
+<div class="need_container docutils container" id="SNCB-7451f516">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_value">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -738,7 +739,7 @@
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-45f69ecb">
+<div class="need_container docutils container" id="SNCB-2e3db944">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__get_error">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
