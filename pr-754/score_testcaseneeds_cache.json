@@ -288920,7 +288920,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint8_to_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "37",
+    "line": "35",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288934,7 +288934,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint8_to_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "52",
+    "line": "50",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288948,7 +288948,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "69",
+    "line": "67",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288962,7 +288962,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_static_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "84",
+    "line": "82",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288976,7 +288976,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "99",
+    "line": "97",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -288990,7 +288990,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_span_of_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "115",
+    "line": "113",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289004,7 +289004,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "132",
+    "line": "130",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289018,7 +289018,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "149",
+    "line": "147",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289032,7 +289032,7 @@
   {
     "name": "SerializationTest__deserialize_uint8_from_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "166",
+    "line": "164",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289046,7 +289046,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "184",
+    "line": "182",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289060,7 +289060,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_vector_buffer_swap",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "201",
+    "line": "199",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289074,7 +289074,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "218",
+    "line": "216",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289088,7 +289088,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "235",
+    "line": "233",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289102,7 +289102,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "253",
+    "line": "251",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289116,7 +289116,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint16_to_static_vector_buffer",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "269",
+    "line": "267",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289130,7 +289130,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "285",
+    "line": "283",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289144,7 +289144,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_span_of_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "301",
+    "line": "299",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289158,7 +289158,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint32_to_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "318",
+    "line": "316",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289172,7 +289172,7 @@
   {
     "name": "SerializationTest__serialize_and_allocate_uint32_to_static_vector_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "334",
+    "line": "332",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289186,7 +289186,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint32_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "350",
+    "line": "348",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289200,7 +289200,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint32_to_span_of_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "366",
+    "line": "364",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289214,7 +289214,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_readonly_array",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "383",
+    "line": "381",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289228,7 +289228,7 @@
   {
     "name": "SerializationTest__deserialize_uint32_from_readonly_span",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "400",
+    "line": "398",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289242,7 +289242,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "418",
+    "line": "416",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289256,7 +289256,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset_at_end",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "435",
+    "line": "433",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289270,7 +289270,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_with_offset_to_array_without_swapping_bytes",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "452",
+    "line": "450",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289284,7 +289284,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_offset_exceeding_end_returns_false",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "469",
+    "line": "467",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -289298,7 +289298,7 @@
   {
     "name": "SerializationTest__serialize_in_place_uint16_to_array_with_insufficient_size_returns_false",
     "file": "score/serialization/test/unit/SerializationTest.cpp",
-    "line": "486",
+    "line": "484",
     "result": "passed",
     "repo_name": null,
     "hash": null,
