@@ -61,7 +61,7 @@ std::string buffer_json{R"(
 )"};
 
 template <typename T, std::enable_if_t<std::is_arithmetic<T>::value, bool> = true>
-score::Result<T> GetValueOfObject(const score::json::Any& any, const std::string& key)
+score::Result<T> GetNumberOfObject(const score::json::Any& any, const std::string& key)
 {
     return any.As<score::json::Object>().value().get().at(key).As<T>();
 }
@@ -87,284 +87,256 @@ void CheckReturnedValues(score::Result<T> min, score::Result<T> max)
     EXPECT_TRUE(diff < std::numeric_limits<T>::epsilon());
 }
 
-template <typename T>
-class NumberTest : public testing::Test
+TEST(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-};
-TYPED_TEST_SUITE_P(NumberTest);
-
-TYPED_TEST_P(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
-{
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing the JSON boolean values false and true returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing the JSON boolean values false and true returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<bool>(root.value(), "bool_min");
-    auto max = GetValueOfObject<bool>(root.value(), "bool_max");
+    auto min = GetNumberOfObject<bool>(root.value(), "bool_min");
+    auto max = GetNumberOfObject<bool>(root.value(), "bool_max");
 
     // Then the correct values are returned
     CheckReturnedValues<bool>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the uint8_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as std::uint8_t
-    auto min = GetValueOfObject<std::uint8_t>(root.value(), "uint8_min");
-    auto max = GetValueOfObject<std::uint8_t>(root.value(), "uint8_max");
+    auto min = GetNumberOfObject<std::uint8_t>(root.value(), "uint8_min");
+    auto max = GetNumberOfObject<std::uint8_t>(root.value(), "uint8_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint8_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the uint16_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::uint16_t>(root.value(), "uint16_min");
-    auto max = GetValueOfObject<std::uint16_t>(root.value(), "uint16_max");
+    auto min = GetNumberOfObject<std::uint16_t>(root.value(), "uint16_min");
+    auto max = GetNumberOfObject<std::uint16_t>(root.value(), "uint16_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint16_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the uint32_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::uint32_t>(root.value(), "uint32_min");
-    auto max = GetValueOfObject<std::uint32_t>(root.value(), "uint32_max");
+    auto min = GetNumberOfObject<std::uint32_t>(root.value(), "uint32_min");
+    auto max = GetNumberOfObject<std::uint32_t>(root.value(), "uint32_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint32_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the uint64_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::uint64_t>(root.value(), "uint64_min");
-    auto max = GetValueOfObject<std::uint64_t>(root.value(), "uint64_max");
+    auto min = GetNumberOfObject<std::uint64_t>(root.value(), "uint64_min");
+    auto max = GetNumberOfObject<std::uint64_t>(root.value(), "uint64_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint64_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the int8_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::int8_t>(root.value(), "int8_min");
-    auto max = GetValueOfObject<std::int8_t>(root.value(), "int8_max");
+    auto min = GetNumberOfObject<std::int8_t>(root.value(), "int8_min");
+    auto max = GetNumberOfObject<std::int8_t>(root.value(), "int8_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::int8_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the int16_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::int16_t>(root.value(), "int16_min");
-    auto max = GetValueOfObject<std::int16_t>(root.value(), "int16_max");
+    auto min = GetNumberOfObject<std::int16_t>(root.value(), "int16_min");
+    auto max = GetNumberOfObject<std::int16_t>(root.value(), "int16_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::int16_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the int32_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::int32_t>(root.value(), "int32_min");
-    auto max = GetValueOfObject<std::int32_t>(root.value(), "int32_max");
+    auto min = GetNumberOfObject<std::int32_t>(root.value(), "int32_min");
+    auto max = GetNumberOfObject<std::int32_t>(root.value(), "int32_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::int32_t>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a JSON number at the int64_t limits, cf. RFC-8259 section 9, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetValueOfObject<std::int64_t>(root.value(), "int64_min");
-    auto max = GetValueOfObject<std::int64_t>(root.value(), "int64_max");
+    auto min = GetNumberOfObject<std::int64_t>(root.value(), "int64_min");
+    auto max = GetNumberOfObject<std::int64_t>(root.value(), "int64_max");
 
     // Then the correct values are returned
     CheckReturnedValues<std::int64_t>(min, max);
 }
-TYPED_TEST_P(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a JSON number at the float limits, cf. RFC-8259 section 9, returns the "
-                         "correct value within its precision.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing a JSON number at the float limits, cf. RFC-8259 section 9, returns the "
+                   "correct value within its precision.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as double
-    auto min = GetValueOfObject<double>(root.value(), "float_min");
-    auto max = GetValueOfObject<double>(root.value(), "float_max");
+    auto min = GetNumberOfObject<double>(root.value(), "float_min");
+    auto max = GetNumberOfObject<double>(root.value(), "float_max");
 
     // Then the correct values are returned
     CheckReturnedValues<float>(min, max);
 }
 
-TYPED_TEST_P(NumberTest, WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST(NumberTest, WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a JSON number at the double limits, cf. RFC-8259 section 9, returns the "
-                         "correct value within its precision.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing a JSON number at the double limits, cf. RFC-8259 section 9, returns the "
+                   "correct value within its precision.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = TypeParam::FromBuffer(buffer_json);
+    auto root = JsonParser{}.FromBuffer(buffer_json);
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as double
-    auto min = GetValueOfObject<double>(root.value(), "double_min");
-    auto max = GetValueOfObject<double>(root.value(), "double_max");
+    auto min = GetNumberOfObject<double>(root.value(), "double_min");
+    auto max = GetNumberOfObject<double>(root.value(), "double_max");
 
     // Then the correct values are returned
     CheckReturnedValues<double>(min, max);
 }
-
-REGISTER_TYPED_TEST_SUITE_P(NumberTest,
-                            WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned,
-                            WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned);
-
-/// @brief Gives the typed test suite a static entry point to JsonParser.
-struct JsonParserEntryPoint
-{
-    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>
-    {
-        return JsonParser{}.FromBuffer(buffer);
-    }
-};
 
 // These tests are written in way that they can only be used with vajson parser.
 template <typename T>
@@ -569,7 +541,6 @@ TEST(Number, FloatingPointOverflowIsRejected)
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
 }
 
-INSTANTIATE_TYPED_TEST_SUITE_P(Test, NumberTest, JsonParserEntryPoint, /*unused*/);
 }  // namespace
 }  // namespace json
 }  // namespace score

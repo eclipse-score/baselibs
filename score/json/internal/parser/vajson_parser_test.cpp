@@ -66,7 +66,6 @@ std::string buffer_simple_json{R"(
 }
 )"};
 
-template <typename T>
 class ParserTest : public testing::Test
 {
   protected:
@@ -79,18 +78,16 @@ class ParserTest : public testing::Test
         return file_path;
     }
 };
-TYPED_TEST_SUITE_P(ParserTest);
 
-TYPED_TEST_P(ParserTest, CanParseObjectBool)
+TEST_F(ParserTest, CanParseObjectBool)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a boolean value from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a boolean value from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as bool
     auto value = GetValueOfObject<bool>(root.value(), "boolean");
@@ -99,16 +96,15 @@ TYPED_TEST_P(ParserTest, CanParseObjectBool)
     EXPECT_EQ(value, true);
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectString)
+TEST_F(ParserTest, CanParseObjectString)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a string value from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a string value from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as std::string
     auto& value = GetValueOfObject<std::string>(root.value(), "color");
@@ -117,16 +113,15 @@ TYPED_TEST_P(ParserTest, CanParseObjectString)
     EXPECT_EQ(value, "gold");
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectNull)
+TEST_F(ParserTest, CanParseObjectNull)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a null value from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a null value from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as Null
     auto& value = GetValueOfObject<Null>(root.value(), "null");
@@ -135,16 +130,15 @@ TYPED_TEST_P(ParserTest, CanParseObjectNull)
     EXPECT_EQ(value, Null{});
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectNumber)
+TEST_F(ParserTest, CanParseObjectNumber)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a uint64_t value from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a uint64_t value from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as number
     auto value = GetValueOfObject<std::uint64_t>(root.value(), "number");
@@ -153,22 +147,20 @@ TYPED_TEST_P(ParserTest, CanParseObjectNumber)
     EXPECT_EQ(value, 123);
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectFloatingPointNumber)
+TEST_F(ParserTest, CanParseObjectFloatingPointNumber)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a float value from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a float value from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as floating point number
     auto float_value = GetValueOfObject<float>(root.value(), "float");
     double double_value = GetValueOfObject<double>(root.value(), "double");
-    auto double_as_float_value =
-        root->template As<score::json::Object>().value().get().at("double").template As<float>().has_value();
+    auto double_as_float_value = root->As<score::json::Object>().value().get().at("double").As<float>().has_value();
 
     // Then the correct value is returned
     EXPECT_FLOAT_EQ(float_value, 2.3F);
@@ -176,52 +168,50 @@ TYPED_TEST_P(ParserTest, CanParseObjectFloatingPointNumber)
     EXPECT_FALSE(double_as_float_value);
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectInObject)
+TEST_F(ParserTest, CanParseObjectInObject)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a nested object from a JSON buffer returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a nested object from a JSON buffer returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as number
     auto& value = GetValueOfObject<Object>(root.value(), "object");
 
     // Then the correct value is returned
-    EXPECT_EQ(value.at("a").template As<std::string>().value().get(), "b");
+    EXPECT_EQ(value.at("a").As<std::string>().value().get(), "b");
 }
 
-TYPED_TEST_P(ParserTest, CanParseListInObject)
+TEST_F(ParserTest, CanParseListInObject)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a list from a JSON buffer returns the correct values in order.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a list from a JSON buffer returns the correct values in order.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = TypeParam::FromBuffer(buffer_simple_json);
+    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
 
     // When reading a key of an object that is interpreted as number
     auto& value = GetValueOfObject<List>(*root, "list");
 
     // Then the correct value is returned
-    EXPECT_EQ(value[0].template As<std::string>().value().get(), "first");
-    EXPECT_EQ(value[1].template As<std::uint64_t>().value(), 2UL);
-    EXPECT_EQ(value[2].template As<std::string>().value().get(), "third");
+    EXPECT_EQ(value[0].As<std::string>().value().get(), "first");
+    EXPECT_EQ(value[1].As<std::uint64_t>().value(), 2UL);
+    EXPECT_EQ(value[2].As<std::string>().value().get(), "third");
 }
 
-TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
+TEST_F(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing and iterating over an object whose keys are unknown to the program returns all entries.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a JSON structure that contains objects in objects where the keys are unknown to the program
     std::string buffer{R"(
@@ -247,15 +237,14 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
    }
 }
 )"};
-    auto root = TypeParam::FromBuffer(buffer);
+    auto root = JsonParser{}.FromBuffer(buffer);
 
     // When iterating over the unknown keys
-    const auto& storage_list = root.value().template As<Object>().value().get()["storage_list"];
+    const auto& storage_list = root.value().As<Object>().value().get()["storage_list"];
     std::vector<std::string> collected_paths{};
-    for (const auto& element : storage_list.template As<Object>().value().get())
+    for (const auto& element : storage_list.As<Object>().value().get())
     {
-        collected_paths.push_back(
-            element.second.template As<Object>().value().get().at("path").template As<std::string>().value().get());
+        collected_paths.push_back(element.second.As<Object>().value().get().at("path").As<std::string>().value().get());
     }
 
     // Then we can store them and thus also access them
@@ -264,13 +253,13 @@ TYPED_TEST_P(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
     EXPECT_EQ(collected_paths.at(1), "/persistent/cdc/nvmblock/key_value_storage");
 }
 
-TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithValueButNoKey)
+TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithValueButNoKey)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing an object value without a preceding key is rejected as malformed.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing an object value without a preceding key is rejected as malformed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     std::string buffer{R"(
 {
@@ -279,18 +268,18 @@ false
 )"};
 
     score::Result<Any> root{};
-    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = TypeParam::FromBuffer(buffer)));
+    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = JsonParser{}.FromBuffer(buffer)));
     EXPECT_FALSE(root.has_value());
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
+TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
-        "Description", "Check that parsing an object with a non-UTF-8 binary value element is rejected as malformed.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing an object with a non-UTF-8 binary value element is rejected as malformed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     // Binary content - format specific to vaJSON Parser
     // First 4 bytes represent length of binary content in std::uint64_t
@@ -309,53 +298,51 @@ TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
 
     // When trying to read this JSON object there is no fatal failure or exception and...
     score::Result<Any> root{};
-    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = TypeParam::FromBuffer(buffer)));
+    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = JsonParser{}.FromBuffer(buffer)));
 
     // We get an error returned that specifies that parsing failed
     EXPECT_FALSE(root.has_value());
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TYPED_TEST_P(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
+TEST_F(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a number too large to be represented is rejected as malformed.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a number too large to be represented is rejected as malformed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
 
     std::string buffer{R"({ "number": 1e+500 })"};
 
     score::Result<Any> root{};
-    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = TypeParam::FromBuffer(buffer)));
+    EXPECT_NO_FATAL_FAILURE(EXPECT_NO_THROW(root = JsonParser{}.FromBuffer(buffer)));
 
     // We get an error returned that specifies that parsing failed
     EXPECT_FALSE(root.has_value());
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TYPED_TEST_P(ParserTest, FromFileFail)
+TEST_F(ParserTest, FromFileFail)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description", "Check that parsing from a non-existent file path returns an error.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing from a non-existent file path returns an error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
     // Pass invalid file path
-    auto foo = TypeParam::FromFile("foo");
+    auto foo = JsonParser{}.FromFile("foo");
 
     EXPECT_FALSE(foo.has_value());
 }
 
-TYPED_TEST_P(ParserTest, ParsingFromFileWorks)
+TEST_F(ParserTest, ParsingFromFileWorks)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a JSON buffer written to a file returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description", "Check that parsing a JSON buffer written to a file returns the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a simple JSON File
     std::string file_name{"test.json"};
-    auto root = TypeParam::FromFile(this->CreateJsonFile(file_name, buffer_simple_json));
+    auto root = JsonParser{}.FromFile(CreateJsonFile(file_name, buffer_simple_json));
 
     // Then json file is successfully parsed
     EXPECT_TRUE(root.has_value());
@@ -367,46 +354,17 @@ TYPED_TEST_P(ParserTest, ParsingFromFileWorks)
     EXPECT_EQ(value, true);
 }
 
-REGISTER_TYPED_TEST_SUITE_P(ParserTest,
-                            CanParseObjectBool,
-                            CanParseObjectString,
-                            CanParseObjectNull,
-                            CanParseObjectNumber,
-                            CanParseObjectFloatingPointNumber,
-                            CanParseObjectInObject,
-                            CanParseListInObject,
-                            CanParseObjectInObjectAndIterateOverKeys,
-                            EmitsErrorWhenParsingObjectWithValueButNoKey,
-                            EmitsErrorWhenParsingObjectWithBinaryValue,
-                            EmitsErrorWhenParsingTooLargeNumber,
-                            FromFileFail,
-                            ParsingFromFileWorks);
-
-/// @brief Gives the typed test suite a static entry point to JsonParser.
-struct JsonParserEntryPoint
-{
-    static auto FromFile(const std::string_view file_path) -> score::Result<Any>
-    {
-        return JsonParser{}.FromFile(file_path);
-    }
-
-    static auto FromBuffer(const std::string_view buffer) -> score::Result<Any>
-    {
-        return JsonParser{}.FromBuffer(buffer);
-    }
-};
-
 TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 {
     // vaJson accepts hexadecimal number syntax as a lenient extension beyond the RFC 8259 well-formedness
     // that comp_req__json__deserialization mandates, so this documents the parser's actual behavior rather than
     // normative text.
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a hexadecimal number, an accepted extension beyond RFC-8259, returns "
-                         "the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing a hexadecimal number, an accepted extension beyond RFC-8259, returns "
+                   "the correct value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     std::string buffer_json_hex{R"(
         {
@@ -448,12 +406,12 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 
 TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty(
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty(
         "Description",
         "Check that parsing a two-byte JSON object, shorter than the 3-byte UTF-8 BOM, returns the correct value.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a valid JSON buffer of exactly 2 bytes (shorter than BOM)
     auto root = JsonParser{}.FromBuffer("{}");
@@ -467,11 +425,11 @@ TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
 
 TEST(JsonParserVajsonTest, CanParseBufferWithUtf8Bom)
 {
-    this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    this->RecordProperty("Description",
-                         "Check that parsing a JSON buffer prefixed with a UTF-8 BOM consumes the BOM correctly.");
-    this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that parsing a JSON buffer prefixed with a UTF-8 BOM consumes the BOM correctly.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a JSON buffer with a UTF-8 BOM prefix
     std::string bom_json{"\xEF\xBB\xBF{\"key\": 123}"};
@@ -482,8 +440,6 @@ TEST(JsonParserVajsonTest, CanParseBufferWithUtf8Bom)
     auto value = GetValueOfObject<std::uint64_t>(root.value(), "key");
     EXPECT_EQ(value, 123U);
 }
-
-INSTANTIATE_TYPED_TEST_SUITE_P(Test, ParserTest, JsonParserEntryPoint, /*unused*/);
 
 }  // namespace
 }  // namespace json
