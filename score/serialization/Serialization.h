@@ -29,8 +29,6 @@
 
 namespace score
 {
-namespace platform
-{
 
 namespace helper
 {
@@ -133,7 +131,6 @@ auto deserialize(const score::cpp::span<const std::uint8_t> bytes, std::size_t& 
     return value;
 }
 
-}  // namespace platform
 }  // namespace score
 
 #endif  // SCORE_PLATFORM_SERIALIZATION_H
