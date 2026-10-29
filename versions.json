@@ -246,5 +246,9 @@
   {
     "version": "pr-761",
     "url": "https://eclipse-score.github.io/baselibs/pr-761/"
+  },
+  {
+    "version": "pr-762",
+    "url": "https://eclipse-score.github.io/baselibs/pr-762/"
   }
 ]
