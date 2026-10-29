@@ -23,7 +23,6 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <algorithm>
 #include <cassert>
 
 #include <cctype>
@@ -199,14 +198,14 @@ class JsonNumber final
     ///                  to parse.
     /// \return          A Result containing the number or the error that occurred.
     /// \error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if the number contains invalid characters
+    ///                  if the number does not match the RFC 8259 number grammar
     /// \context         ANY
     /// \pre             All whitespace must have been stripped.
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     /// \synchronous     TRUE
     /// \internal
-    /// - If the input is not empty and a valid JSON number:
+    /// - If the input is not empty and matches the RFC 8259 number grammar:
     ///   - Return the number.
     /// - Otherwise:
     ///   - Return an error.
@@ -224,7 +223,7 @@ class JsonNumber final
                 return num.Validate();
             },
             MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
-                      "JsonNumber::New: Number contains invalid characters."));
+                      "JsonNumber::New: Number does not match the RFC 8259 number grammar."));
     };
 
     /// \brief           Tries to convert the number to a type
@@ -464,16 +463,14 @@ class JsonNumber final
     /// \brief           Checks if the parsed token format is valid
     /// \param[in]       end
     ///                  The end-pointer that is used to verify the parse.
-    /// \return          True if parsing consumed the whole token and does not end with '.'.
+    /// \return          True if parsing consumed the whole token.
     /// \context         ANY
     /// \pre             -
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     auto ParseFormatSuccessful(const char* end) const noexcept -> bool
     {
-        // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
-
-        return ((end == this->view_.cend()) && (this->view_.back() != '.'));
+        return (end == this->view_.cend());
     }
 
     auto ParseIntegerSuccessful(const char* end) const noexcept -> bool
@@ -485,8 +482,9 @@ class JsonNumber final
     auto ParseFloatingSuccessful(const char* end, const double conversion_result) const noexcept -> bool
     {
         // Some libc implementations set ERANGE for near-limit finite values; accept those when representable.
-        return (this->ParseFormatSuccessful(end) && std::isfinite(conversion_result) &&
-                JsonNumber::Cast<Float>(conversion_result).has_value());
+        return (this->ParseFormatSuccessful(end) &&  // LCOV_EXCL_BR_LINE (Not reachable in the "C" locale; kept
+                                                     // because strtod reads a locale-specific decimal separator.)
+                std::isfinite(conversion_result) && JsonNumber::Cast<Float>(conversion_result).has_value());
     }
 
     /// \brief           Converts the parsed integer to target type when parsing was successful
@@ -535,44 +533,68 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief           Validates the contained number
-    /// \return          True if the number is valid, otherwise false.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
-    /// - If the number has multiple digits:
-    ///   - Check that if it has a leading zero, it is a valid hex or float number.
-    /// - Otherwise:
-    ///   - Check that it is a valid digit.
-    /// \endinternal
+    /// @brief           Validates the contained number against the RFC 8259 number grammar
+    /// @details         number = [ "-" ] int [ frac ] [ exp ]
+    ///                  int    = "0" / ( digit1-9 *DIGIT )
+    ///                  frac   = "." 1*DIGIT
+    ///                  exp    = ( "e" / "E" ) [ "-" / "+" ] 1*DIGIT
+    /// @return          True if the whole number matches the grammar, otherwise false.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
+    /// - Skip an optional minus sign.
+    /// - Skip either a single zero or a non-empty sequence of digits starting with 1-9.
+    /// - If a decimal point follows, skip it and require a non-empty sequence of digits.
+    /// - If an exponent marker follows, skip it and an optional sign, and require a non-empty sequence of digits.
+    /// - Return whether all parts are well-formed and the whole number has been consumed.
+    /// @endinternal
     auto Validate() const noexcept -> bool
     {
-        const std::size_t size{this->view_.size()};
+        StringView rest{this->view_};
 
-        const std::size_t first_digit_pos{(this->view_[0] == '-') ? std::size_t{1} : std::size_t{0}};
+        const auto skip_one_of = [&rest](const StringView chars) noexcept -> bool {
+            const bool matches{(!rest.empty()) && (chars.find(rest.front()) != StringView::npos)};
+            if (matches)
+            {
+                rest.remove_prefix(1U);
+            }
+            return matches;
+        };
+        const auto skip_digits = [&rest]() noexcept -> bool {
+            const std::size_t size_before{rest.size()};
+            while ((!rest.empty()) && internal::util::IsDigit(rest.front()))
+            {
+                rest.remove_prefix(1U);
+            }
+            return rest.size() < size_before;
+        };
 
-        const bool is_multiple_digits{size > (first_digit_pos + 1)};
-        bool is_valid{false};
-        if (is_multiple_digits)
+        bool is_valid{true};
+
+        static_cast<void>(skip_one_of("-"));
+
+        // A leading zero must stand alone; otherwise the integer part starts with 1-9.
+        if (!skip_one_of("0"))
         {
-            constexpr static StringView kValidLetters{".eExX"};
-
-            // If it has a leading '0' character, it must be followed by a valid letter character in order to be a valid
-            // hex or float number.
-
-            is_valid =
-                (this->view_[first_digit_pos] != '0') ||
-                std::any_of(kValidLetters.cbegin(), kValidLetters.cend(), [this, first_digit_pos](char ch) noexcept {
-                    return this->view_[first_digit_pos + 1] == ch;
-                });
+            is_valid = skip_digits();
         }
-        else
+
+        if (skip_one_of("."))
         {
-            is_valid = (size == (first_digit_pos + 1)) && internal::util::IsDigit(this->view_[first_digit_pos]);
+            const bool has_fraction_digits{skip_digits()};
+            is_valid = is_valid && has_fraction_digits;
         }
-        return is_valid;
+
+        if (skip_one_of("eE"))
+        {
+            static_cast<void>(skip_one_of("+-"));
+            const bool has_exponent_digits{skip_digits()};
+            is_valid = is_valid && has_exponent_digits;
+        }
+
+        return is_valid && rest.empty();
     }
 
     /// \brief           Stored view onto the buffer

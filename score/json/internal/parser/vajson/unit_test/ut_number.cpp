@@ -389,7 +389,7 @@ TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
  */
 TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
 {
-    Result<std::uint64_t> result_64{UUT::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
+    Result<std::uint64_t> result_64{UUT::New("36893488147419103231").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
     })};
     ASSERT_FALSE(result_64.has_value());
@@ -401,7 +401,7 @@ TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
 
-    result_64 = UUT::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
+    result_64 = UUT::New("36893488147419103231").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
     });
     ASSERT_FALSE(result_64.has_value());
@@ -464,10 +464,19 @@ TEST_F(UT__Number, AsJsonNumber)
  * - Assert that a single minus sign is detected as invalid.
  * - Assert that an empty view is detected as invalid.
  * - Assert that a number to a negative char is detected as invalid.
+ * - Assert that literals outside the RFC 8259 number grammar are detected as invalid.
  * \trace           score::json::vajson::JsonNumber::New
  */
 TEST_F(UT__Number, InvalidNumber)
 {
+    for (const view sv :
+         {"0x1F", "0X1F", "-0x1", "0x1p3", "+1", ".5", "1.", "1.e5", "-.5", "1e", "1e+", "-inf", "1abc"})
+    {
+        SCOPED_TRACE(sv);
+        Result<UUT> uut{UUT::New(sv)};
+        ASSERT_FALSE(uut.has_value());
+        ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
+    }
     {
         view sv = "0a";
         Result<UUT> uut{UUT::New(sv)};

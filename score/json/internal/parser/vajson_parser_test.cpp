@@ -16,6 +16,11 @@
 #include "score/json/internal/parser/parsers_test_suite.h"
 #include "score/json/json_parser.h"
 
+#include <array>
+#include <string>
+#include <string_view>
+#include <utility>
+
 namespace score
 {
 namespace json
@@ -37,54 +42,73 @@ struct JsonParserEntryPoint
     }
 };
 
-TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
+TEST(JsonParserVajsonTest, AcceptsNumbersMatchingRfc8259Grammar)
 {
-    // vaJson accepts hexadecimal number syntax as a lenient extension beyond the RFC 8259 well-formedness
-    // that comp_req__json__deserialization mandates, so this documents the parser's actual behavior rather than
-    // normative text.
     this->RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     this->RecordProperty("Description",
-                         "Check that parsing a hexadecimal number, an accepted extension beyond RFC-8259, returns "
-                         "the correct value.");
+                         "Check that numbers at the edges of the RFC 8259 number grammar are parsed to their value.");
     this->RecordProperty("TestType", "requirements-based");
-    this->RecordProperty("DerivationTechnique", "design-analysis");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
 
-    std::string buffer_json_hex{R"(
-        {
-          "boolean": true,
-          "color": "gold",
-          "null": null,
-          "number": 123,
-          "number_u16": 65535,
-          "number_u32": 4294967295,
-          "number_u64": 18446744073709551615,
-          "number_i": -123,
-          "number_i16": -32768,
-          "number_i32": -2147483648,
-          "number_i64": -922337203685477580,
-          "float": 2.3,
-          "double": 1.79769e+308,
-          "hex" : 0xdd,
-          "object": {
-            "a": "b",
-            "c": "d"
-          },
-          "list": [
-            "first",
-            2,
-            "third"
-          ]
-        }
-        )"};
+    const std::array<std::pair<std::string_view, double>, 9> numbers{{{"0", 0.0},
+                                                                      {"-0", 0.0},
+                                                                      {"0.5", 0.5},
+                                                                      {"0e0", 0.0},
+                                                                      {"0E+1", 0.0},
+                                                                      {"10", 10.0},
+                                                                      {"1E+2", 100.0},
+                                                                      {"-1.5e-3", -1.5e-3},
+                                                                      {"123.456E2", 12345.6}}};
 
-    // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_json_hex);
+    for (const auto& [literal, expected] : numbers)
+    {
+        SCOPED_TRACE(literal);
+        const std::string buffer{R"({"number": )" + std::string{literal} + "}"};
 
-    // When reading a key of an object that is interpreted as floating point number
-    auto value = GetValueOfObject<std::uint64_t>(root.value(), "hex");
+        const auto root = JsonParser{}.FromBuffer(buffer);
 
-    // Then the correct value is returned
-    EXPECT_EQ(value, 0xdd);
+        ASSERT_TRUE(root.has_value());
+        EXPECT_DOUBLE_EQ(GetValueOfObject<double>(root.value(), "number"), expected);
+    }
+}
+
+TEST(JsonParserVajsonTest, RejectsNumbersOutsideRfc8259Grammar)
+{
+    this->RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar, comp_req__vajson__validation");
+    this->RecordProperty("Description",
+                         "Check that number literals outside the RFC 8259 number grammar, e.g. hexadecimal, leading "
+                         "zeros or incomplete fractions and exponents, are rejected as malformed JSON.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const std::array<std::string_view, 18> literals{"0xdd",
+                                                    "0XDD",
+                                                    "-0x1",
+                                                    "0x1p3",
+                                                    "01",
+                                                    "-01",
+                                                    "00",
+                                                    "1.",
+                                                    "-.5",
+                                                    "1.e5",
+                                                    "1e",
+                                                    "1e+",
+                                                    "1E-",
+                                                    "--1",
+                                                    "-inf",
+                                                    "-nan",
+                                                    "1abc",
+                                                    "1e5.0"};
+
+    for (const auto literal : literals)
+    {
+        SCOPED_TRACE(literal);
+        const std::string buffer{R"({"number": )" + std::string{literal} + "}"};
+
+        const auto root = JsonParser{}.FromBuffer(buffer);
+
+        EXPECT_FALSE(root.has_value());
+    }
 }
 
 TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
