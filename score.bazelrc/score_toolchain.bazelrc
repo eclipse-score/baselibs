@@ -52,6 +52,17 @@ test:score-qnx-aarch64 --test_timeout=300
 test:score-qnx-aarch64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:score-qnx-aarch64 --test_lang_filters=cc,rust
 
+# Same as the QNX configs above, but with the QNX SDP 8.0.5 from a private GitHub release.
+# Fetching the SDP requires a GitHub token with read access to eclipse-score/qnx_sdp_pkg (GH_TOKEN or ~/.netrc).
+# The toolchains registered last via --extra_toolchains have the highest priority and override the inherited ones.
+# The overridden SDP is not downloaded.
+build:score-qnx-x86_64-sdp_8.0.5 --config=score-qnx-x86_64
+build:score-qnx-x86_64-sdp_8.0.5 --extra_toolchains=@score_qcc_x86_64_toolchain_805//:x86_64-qnx-sdp_8.0.0
+build:score-qnx-x86_64-sdp_8.0.5 --extra_toolchains=@score_qnx_x86_64_ifs_toolchain_805//:ifs-x86_64-qnx-sdp_8.0.0
+build:score-qnx-aarch64-sdp_8.0.5 --config=score-qnx-aarch64
+build:score-qnx-aarch64-sdp_8.0.5 --extra_toolchains=@score_qcc_aarch64_toolchain_805//:aarch64-qnx-sdp_8.0.0
+build:score-qnx-aarch64-sdp_8.0.5 --extra_toolchains=@score_qnx_aarch64_ifs_toolchain_805//:ifs-aarch64-qnx-sdp_8.0.0
+
 # Deprecated aliases for the previous config names.
 # `test` inherits `build:` entries, so the aliased config's `test:` entries are pulled in too.
 build:bl-x86_64-linux --config=score-linux-x86_64

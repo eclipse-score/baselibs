@@ -213,3 +213,15 @@ score_coverage_reporter(
     # Linux host without QNX credentials must not try to fetch.
     tags = ["manual"],
 )
+
+# Same as gcov_reporter_wrapper, but with gcov from the QNX SDP 8.0.5.
+# Selected by the coverage:qnx_cov_sdp_8.0.5 config (see coverage.bazelrc).
+score_coverage_reporter(
+    name = "gcov_reporter_wrapper_sdp_8.0.5",
+    testonly = True,
+    backend = "gcov",
+    coverage_scope = ":coverage_scope_qnx",
+    gcov = "@score_qcc_x86_64_toolchain_805_pkg//:gcov",
+    # Manual: depends on the QNX SDP package from a private GitHub release.
+    tags = ["manual"],
+)
