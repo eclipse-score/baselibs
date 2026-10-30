@@ -311516,7 +311516,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311530,7 +311530,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311544,7 +311544,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311558,7 +311558,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311572,7 +311572,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311586,7 +311586,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311600,7 +311600,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311614,7 +311614,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/7",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311628,7 +311628,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/8",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "536",
+    "line": "537",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311642,7 +311642,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311656,7 +311656,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311670,7 +311670,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311684,7 +311684,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311698,7 +311698,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311712,7 +311712,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311726,7 +311726,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "565",
+    "line": "566",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311740,7 +311740,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311754,7 +311754,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311768,7 +311768,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311782,7 +311782,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311796,7 +311796,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311810,7 +311810,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "613",
+    "line": "614",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311824,7 +311824,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311838,7 +311838,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311852,7 +311852,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311866,7 +311866,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311880,7 +311880,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311894,7 +311894,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311908,7 +311908,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311922,7 +311922,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/7",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311936,7 +311936,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/8",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "639",
+    "line": "640",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311950,7 +311950,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311964,7 +311964,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311978,7 +311978,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -311992,7 +311992,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312006,7 +312006,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312020,7 +312020,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312034,7 +312034,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/6",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312048,7 +312048,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/7",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312062,7 +312062,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/8",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312076,7 +312076,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/9",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312090,7 +312090,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/10",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312104,7 +312104,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/11",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "689",
+    "line": "690",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312118,7 +312118,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/0",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312132,7 +312132,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/1",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312146,7 +312146,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/2",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312160,7 +312160,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/3",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312174,7 +312174,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/4",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312188,7 +312188,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/5",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -312202,7 +312202,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/6",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-    "line": "720",
+    "line": "721",
     "result": "passed",
     "repo_name": null,
     "hash": null,
