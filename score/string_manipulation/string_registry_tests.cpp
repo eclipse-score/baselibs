@@ -92,6 +92,76 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
     EXPECT_TRUE(insert3.first.string_view() == string_view);
 }
 
+TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
+{
+    String_registry registry;
+
+    // Two independently heap-allocated strings with equal content
+    const auto [view1, inserted1] = registry.insert(std::string{"Deduplicated"});
+    EXPECT_TRUE(inserted1);
+
+    const auto [view2, inserted2] = registry.insert(std::string{"Deduplicated"});
+    EXPECT_FALSE(inserted2);
+
+    // Registry contract: equal content must map to identical backing storage
+    EXPECT_EQ(view1, view2);
+    EXPECT_EQ(view1.data(), view2.data());
+}
+
+TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
+{
+    String_registry registry;
+
+    // First insertion via string_view: allocates a copy in the registry
+    const auto [view1, inserted1] = registry.insert(std::string_view{"CrossOverload"});
+    EXPECT_TRUE(inserted1);
+
+    // Second insertion via string&&: must find the existing entry, not create a new allocation
+    const auto [view2, inserted2] = registry.insert(std::string{"CrossOverload"});
+    EXPECT_FALSE(inserted2);
+
+    EXPECT_EQ(view1, view2);
+    EXPECT_EQ(view1.data(), view2.data());
+}
+
+TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
+{
+    String_registry registry;
+
+    // Literal_tag insertion: stores a view directly into static storage — no heap allocation
+    const std::string_view literal{"CrossLiteral"};
+    const auto [view1, inserted1] = registry.insert(literal, Literal_tag{});
+    EXPECT_TRUE(inserted1);
+
+    // string&& insertion: must find the existing literal-backed entry
+    const auto [view2, inserted2] = registry.insert(std::string{"CrossLiteral"});
+    EXPECT_FALSE(inserted2);
+
+    EXPECT_EQ(view1, view2);
+    EXPECT_EQ(view1.data(), view2.data());
+}
+
+TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
+{
+    String_registry registry;
+
+    const auto [view1, inserted1] = registry.insert(std::string{"Stable"});
+    EXPECT_TRUE(inserted1);
+
+    // Grow the registry to trigger potential unordered_set rehashing
+    for (int i = 0; i < 128; ++i)
+    {
+        registry.insert(std::string{"Growth"} + std::to_string(i));
+    }
+
+    // The original entry must still be found and return the same backing storage
+    const auto [view2, inserted2] = registry.insert(std::string{"Stable"});
+    EXPECT_FALSE(inserted2);
+
+    EXPECT_EQ(view1, view2);
+    EXPECT_EQ(view1.data(), view2.data());
+}
+
 TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
 {
     String_registry registry;
