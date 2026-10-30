@@ -11,9 +11,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "acl_system",
+    linkopts = ["-lacl"],
+    visibility = ["//:__subpackages__"],
+)
+
 alias(
     name = "acl",
     actual = select({
+        "//third_party:use_system_libs": ":acl_system",
         "@platforms//cpu:aarch64": "@acl-deb-aarch64//:acl",
         "//conditions:default": "@acl-deb//:acl",
     }),
