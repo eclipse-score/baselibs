@@ -55,6 +55,18 @@ Configuration
     ``mw::log`` shall load configurations from an application-specific
     configuration file.
 
+.. comp_req:: Inactive LogStream Behavior
+   :id: comp_req__log__inactive_logstream
+   :version: 1
+   :reqtype: Functional
+   :security: NO
+   :safety: QM
+   :derived_from: feat_req__logging__filtering_log_levels, feat_req__logging__resource_performance
+   :status: valid
+   :satisfied_by: comp__mw_log_backend
+
+    ``mw::log`` LogStream object shall not generate serialized messages if the
+    severity of the message does not allow it to be sent.
 
 .. comp_req:: Logging Configuration File Location
    :id: comp_req__log__cfg_file_loc
