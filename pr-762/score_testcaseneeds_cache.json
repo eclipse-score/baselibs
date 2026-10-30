@@ -311416,7 +311416,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Number__ErrnoIsUnsetBeforeConversion",
+    "name": "UT__Number__OverflowDoesNotAffectNextConversion",
     "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
     "line": "390",
     "result": "passed",
