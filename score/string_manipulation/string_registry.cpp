@@ -13,8 +13,6 @@
 
 #include "score/string_manipulation/string_registry.h"
 
-#include <algorithm>
-
 namespace score::string_manipulation
 {
 
@@ -53,11 +51,7 @@ std::pair<Registry_string_view, bool> String_registry::insert(std::string&& new_
 {
     const std::lock_guard<std::mutex> locked{m_mutex};
 
-    const auto iter =
-        std::find_if(m_registered_strings.begin(), m_registered_strings.end(), [&new_string](const auto& entry) {
-            return entry.data() == new_string;
-        });
-
+    const auto iter = m_registered_strings.find(new_string);
     if (iter == m_registered_strings.end())
     {
         auto& inserted_string = m_dynamic_allocated.emplace_front(std::move(new_string));

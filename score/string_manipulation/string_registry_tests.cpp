@@ -92,4 +92,39 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
     EXPECT_TRUE(insert3.first.string_view() == string_view);
 }
 
+TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
+{
+    String_registry registry;
+
+    // Register only "abc" (first 3 chars of a longer buffer) via Literal_tag
+    const auto insert1 = registry.insert(std::string_view{"abcdef", 3}, Literal_tag{});
+    EXPECT_TRUE(insert1.second);
+    EXPECT_EQ(insert1.first.string_view(), std::string_view{"abc"});
+
+    // Inserting the full 6-char string must NOT return the existing 3-char entry
+    const auto insert2 = registry.insert(std::string{"abcdef"});
+    EXPECT_TRUE(insert2.second);
+    EXPECT_EQ(insert2.first.string_view(), std::string_view{"abcdef"});
+}
+
+TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
+{
+    String_registry registry;
+
+    // Register a 5-char string containing an embedded NUL
+    const auto insert1 = registry.insert(std::string("ab\0cd", 5));
+    EXPECT_TRUE(insert1.second);
+    EXPECT_EQ(insert1.first.string_view().size(), 5U);
+
+    // "ab" (2 chars) must not match "ab\0cd" (5 chars)
+    const auto insert2 = registry.insert(std::string{"ab"});
+    EXPECT_TRUE(insert2.second);
+    EXPECT_EQ(insert2.first.string_view().size(), 2U);
+
+    // Re-inserting the same 5-char string must find the existing entry
+    const auto insert3 = registry.insert(std::string("ab\0cd", 5));
+    EXPECT_FALSE(insert3.second);
+    EXPECT_EQ(insert3.first.string_view().size(), 5U);
+}
+
 }  // namespace score::string_manipulation
