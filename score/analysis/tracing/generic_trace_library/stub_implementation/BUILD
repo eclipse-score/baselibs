@@ -12,6 +12,7 @@
 # *******************************************************************************
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -29,5 +30,17 @@ cc_library(
         "//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api",
         "//score/analysis/tracing/generic_trace_library/interface_types:trace_library_interface",
         "//score/language/futurecpp",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "generic_trace_api_stub_test",
+    srcs = [
+        "generic_trace_api_stub_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":stub_implementation",
+        "//score/analysis/tracing/generic_trace_library/interface_types:generic_trace_api",
     ],
 )
