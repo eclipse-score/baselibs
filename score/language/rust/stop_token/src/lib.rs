@@ -19,11 +19,13 @@ mod ffi {
         include!("score/language/rust/stop_token/cpp/stop_token_adapter.h");
 
         /// Opaque C++ `score::cpp::stop_token`.
-        #[namespace = "score::cpp"]
+        #[namespace = "score"]
+        #[cxx_name = "cxx_stop_token"]
         type stop_token;
 
         /// Opaque C++ `score::cpp::stop_source`.
-        #[namespace = "score::cpp"]
+        #[namespace = "score"]
+        #[cxx_name = "cxx_stop_source"]
         type stop_source;
 
         #[namespace = "score::language::rust::stop_token"]
@@ -71,7 +73,28 @@ mod ffi {
     impl UniquePtr<stop_source> {}
 }
 
-impl PartialEq for ffi::stop_token {
+/// Opaque C++ stop token for consumers that receive a borrowed token through
+/// another CXX bridge.
+pub use ffi::stop_token as RawStopToken;
+
+// SAFETY: `score::cpp::stop_token` exposes only read-only stop-state
+// observation through this public raw API. The underlying stop state is
+// designed for concurrent observation by FutureCpp.
+unsafe impl Sync for RawStopToken {}
+
+impl RawStopToken {
+    /// Returns whether a stop request has been made on the associated stop state.
+    pub fn stop_requested(&self) -> bool {
+        ffi::stop_token_stop_requested(self)
+    }
+
+    /// Returns whether this token has associated stop state that can be stopped.
+    pub fn stop_possible(&self) -> bool {
+        ffi::stop_token_stop_possible(self)
+    }
+}
+
+impl PartialEq for RawStopToken {
     fn eq(&self, other: &Self) -> bool {
         ffi::stop_token_equal(self, other)
     }
@@ -98,6 +121,13 @@ impl StopToken {
         }
 
         Self(inner)
+    }
+
+    /// Returns the borrowed C++ token for APIs that do not take ownership.
+    pub fn as_raw(&self) -> &RawStopToken {
+        self.0
+            .as_ref()
+            .expect("StopToken unexpectedly contained a null pointer")
     }
 
     /// Returns whether a stop request has been made on this token's stop state.
@@ -177,9 +207,10 @@ impl Default for StopSource {
 
 #[cfg(test)]
 mod tests {
-    use super::{StopSource, StopToken};
+    use super::{RawStopToken, StopSource, StopToken};
 
-    #[cfg(all(test, not(miri)))]
+    #[test]
+    #[cfg(not(miri))]
     fn default_token_has_no_stop_state() {
         let token = StopToken::new();
 
@@ -187,7 +218,24 @@ mod tests {
         assert!(!token.stop_possible());
     }
 
-    #[cfg(all(test, not(miri)))]
+    #[test]
+    #[cfg(not(miri))]
+    fn raw_token_borrow_observes_stop_requests() {
+        fn assert_sync<T: Sync>() {}
+
+        let source = StopSource::new();
+        let token = source.get_token();
+        let raw_token: &RawStopToken = token.as_raw();
+
+        assert_sync::<RawStopToken>();
+        assert!(raw_token.stop_possible());
+        assert!(!raw_token.stop_requested());
+        assert!(source.request_stop());
+        assert!(raw_token.stop_requested());
+    }
+
+    #[test]
+    #[cfg(not(miri))]
     fn source_requests_stop_visible_to_its_token() {
         let source = StopSource::new();
         let token = source.get_token();
