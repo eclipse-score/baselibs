@@ -16,7 +16,10 @@
 #include "score/json/internal/parser/vajson/reader/internal/parsers/virtual_parser.h"
 #include "score/json/internal/parser/vajson/reader/json_data.h"
 
+#include <cstddef>
+#include <ios>
 #include <iostream>
+#include <istream>
 #include <stack>
 #include <string>
 #include <string_view>
@@ -269,7 +272,43 @@ auto AnyTreeBuilder::OnUnexpectedEvent() noexcept -> score::json::vajson::Parser
         score::json::vajson::JsonErrc::kUserValidationFailed);
 }
 
+// NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
+auto ReadFile(score::filesystem::IFileFactory& file_factory, const std::string_view file_path) noexcept
+    -> score::Result<std::string>
+{
+    const auto file =
+        file_factory.Open(score::filesystem::Path{std::string{file_path}}, std::ios::in | std::ios::binary);
+    if (!file.has_value())
+    {
+        return MakeUnexpected(Error::kInvalidFilePath, "Failed to open file");
+    }
+
+    // Seeking for the size and reading in one call is much faster on a filebuf than streaming character-wise.
+    std::istream& stream{**file};
+    static_cast<void>(stream.seekg(0, std::ios::end));
+    const std::streamoff size{stream.tellg()};
+    static_cast<void>(stream.seekg(0, std::ios::beg));
+    if (stream.fail() || (size < 0))
+    {
+        return MakeUnexpected(Error::kParsingError, "Failed to read file");
+    }
+    std::string content(static_cast<std::size_t>(size), '\0');
+    static_cast<void>(stream.read(content.data(), size));
+    if (stream.bad() || (stream.gcount() != size))
+    {
+        return MakeUnexpected(Error::kParsingError, "Failed to read file");
+    }
+    return content;
+}
+
 }  // namespace
+
+JsonParser::JsonParser() noexcept : JsonParser{score::filesystem::IFileFactory::instance()} {}
+
+JsonParser::JsonParser(score::filesystem::IFileFactory& file_factory) noexcept
+    : IJsonParser{}, file_factory_{file_factory}
+{
+}
 
 // Suppress "AUTOSAR C++14 A15-5-3" rule findings: "The std::terminate() function shall not be called implicitly".
 // Calling std::terminate() if any exceptions are thrown is expected as per safety requirements
@@ -277,18 +316,9 @@ auto AnyTreeBuilder::OnUnexpectedEvent() noexcept -> score::json::vajson::Parser
 // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
 auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<Any>
 {
-    score::Result<Any> result = MakeUnexpected(Error::kParsingError);
-    // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
-    auto json_data = score::json::vajson::JsonData::FromFile(file_path);
-    if (json_data.has_value())
-    {
-        score::Result<Any> json_object = AnyTreeBuilder{json_data.value()}.GetData();
-        if (json_object.has_value())
-        {
-            result = std::move(*json_object);
-        }
-    }
-    return result;
+    return ReadFile(file_factory_, file_path).and_then([this](const std::string& content) noexcept {
+        return FromBuffer(content);
+    });
 }
 
 // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept

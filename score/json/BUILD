@@ -45,6 +45,7 @@ cc_library(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
+        "@score_baselibs//score/filesystem/filestream",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],
@@ -216,6 +217,7 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/filesystem:mock",
         "@score_baselibs//score/json",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 
