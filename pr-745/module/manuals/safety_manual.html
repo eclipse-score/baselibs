@@ -477,7 +477,7 @@
                   
   <section id="safety-manual">
 <h1>Safety Manual<a class="headerlink" href="#safety-manual" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-a47472bb">
+<div class="need_container docutils container" id="SNCB-1ef02cfe">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__baselibs_safety_manual">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -544,7 +544,7 @@ So for Baselibs the definition of the assumed safety requirement(s) of each of t
 <li><p>flatbuffers library: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__flatbuffers_library">feat_req__baselibs__flatbuffers_library</a></p></li>
 <li><p>json library: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></p></li>
 <li><p>memory library: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__memory_library">feat_req__baselibs__memory_library</a></p></li>
-<li><p>os library:</p></li>
+<li><p>os library: feat_req__baselibs__osal</p></li>
 <li><p>result library: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__result_library">feat_req__baselibs__result_library</a></p></li>
 <li><p>safecpp, utils: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__utils_library">feat_req__baselibs__utils_library</a></p></li>
 <li><p>static_reflection_with_serialization: <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__static_reflection_library">feat_req__baselibs__static_reflection_library</a></p></li>
@@ -558,7 +558,7 @@ So for Baselibs the definition of the assumed safety requirement(s) of each of t
 <p>The platform-wide AoUs are collected in <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#doc__platform_assumptions">doc__platform_assumptions</a></p>
 <p>To support <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__safety_matching">aou_req__platform__safety_matching</a>, here are all the OS/libcxx calls the module expects to be safe:</p>
 <ul class="simple">
-<li><p>climits, cstdint, type_traits (this list is not complete, it is based on currently performed component DFA)</p></li>
+<li><p>climits, cstdint, functional, optional, ostream, string_view, type_traits, utility, variant (this list is not complete, it is based on currently performed component DFA)</p></li>
 </ul>
 <p>List of additional AoUs expected from the environment the module runs on:</p>
 <p class="needs_filter_warning" id="needtable-module/manuals/safety_manual-0">No needs passed the filters</p>
